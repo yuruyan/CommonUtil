@@ -3,12 +3,72 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CommonUtil.View"
+      xmlns:local="clr-namespace:CommonUtil.View" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Base64ToolView">
 
-  <Grid>
+  <Grid Background="White">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
 
+    <ui:SimpleStackPanel Spacing="8"
+                         Margin="10,0,10,0"
+                         Orientation="Horizontal">
+      <ui:SimpleStackPanel.Resources>
+        <Style TargetType="StackPanel">
+          <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+        <Style x:Key="IconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
+          <Setter Property="Margin" Value="0,0,4,0"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+          <Setter Property="Height" Value="36"/>
+          <!--<Setter Property="Padding" Value="16,8,16,8"/>-->
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <Button Click="EncodeString">
+        <StackPanel>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe643;"/>
+          <TextBlock Text="字符串编码"/>
+        </StackPanel>
+      </Button>
+      <Button Click="DecodeString">
+        <StackPanel>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe644;"/>
+          <TextBlock Text="字符串解码"/>
+        </StackPanel>
+      </Button>
+      <Button Click="EncodeImage">
+        <StackPanel>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe643;"/>
+          <TextBlock Text="图片编码"/>
+        </StackPanel>
+      </Button>
+      <Button Click="DecodeImage">
+        <StackPanel>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe644;"/>
+          <TextBlock Text="图片解码"/>
+        </StackPanel>
+      </Button>
+    </ui:SimpleStackPanel>
+
+    <UniformGrid Grid.Row="1" Columns="2">
+      <UniformGrid.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+          <Setter Property="Padding" Value="12"/>
+          <Setter Property="Margin" Value="10"/>
+          <Setter Property="TextWrapping" Value="Wrap"/>
+          <Setter Property="AcceptsReturn" Value="True"/>
+          <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+          <Setter Property="VerticalContentAlignment" Value="Top"/>
+        </Style>
+      </UniformGrid.Resources>
+      <TextBox x:Name="InputTextBox" />
+      <TextBox x:Name="OutputTextBox" />
+    </UniformGrid>
   </Grid>
 </Page>

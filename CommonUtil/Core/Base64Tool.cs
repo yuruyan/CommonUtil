@@ -10,10 +10,10 @@ namespace CommonUtil.Core {
         /// <summary>
         /// base64 解码
         /// </summary>
-        /// <param name="encodeType">字符串编码方式</param>
         /// <param name="encoded"></param>
+        /// <param name="encodeType">字符串编码方式</param>
         /// <returns></returns>
-        public static string Base64StringDecode(Encoding encodeType, string encoded) {
+        public static string Base64StringDecode(string encoded, Encoding encodeType) {
             string decode = string.Empty;
             byte[] bytes = Convert.FromBase64String(encoded);
             try {
@@ -25,12 +25,21 @@ namespace CommonUtil.Core {
         }
 
         /// <summary>
+        /// base64 解码
+        /// </summary>
+        /// <param name="encoded">以 UTF8 编码的字符串</param>
+        /// <returns></returns>
+        public static string Base64StringDecode(string encoded) {
+            return Base64StringDecode(encoded, Encoding.UTF8);
+        }
+
+        /// <summary>
         /// base64 编码
         /// </summary>
-        /// <param name="encodeType">编码方式</param>
         /// <param name="source"></param>
+        /// <param name="encodeType">编码方式</param>
         /// <returns></returns>
-        public static string Base64StringEncode(Encoding encodeType, string source) {
+        public static string Base64StringEncode(string source, Encoding encodeType) {
             string encode = string.Empty;
             byte[] bytes = encodeType.GetBytes(source);
             try {
@@ -39,6 +48,15 @@ namespace CommonUtil.Core {
                 Logger.Info(e);
             }
             return encode;
+        }
+
+        /// <summary>
+        /// base64 编码，以 UTF8 进行编码
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string Base64StringEncode(string source) {
+            return Base64StringEncode(source, Encoding.UTF8);
         }
 
         /// <summary>
@@ -56,18 +74,19 @@ namespace CommonUtil.Core {
         }
 
         /// <summary>
-        /// base64转 图片
+        /// base64 转图片
         /// </summary>
         /// <param name="encoded"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static byte[] Base64ImageDecode(string encoded, string path) {
+        public static bool Base64ImageDecode(string encoded, string path) {
             try {
-                return Convert.FromBase64String(encoded);
+                File.WriteAllBytes(path, Convert.FromBase64String(encoded));
+                return true;
             } catch (Exception e) {
                 Logger.Info(e);
             }
-            return null;
+            return false;
         }
     }
 }
