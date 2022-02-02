@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:converter="clr-namespace:CommonUtil.Converter">
+  <converter:SafeDoubleConverter x:Key="SafeDoubleConverter"/>
+  <converter:DivideHalfThreeConverter x:Key="DivideHalfThreeConverter" />
+  <converter:DivideTwoConverter x:Key="DivideTwoConverter" />
+  <converter:DivideThreeConverter x:Key="DivideThreeConverter" />
+  <converter:BrushToColorConverter x:Key="BrushToColorConverter" />
+  <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+  <converter:StringToBrushConverter x:Key="StringToBrushConverter" />
+  <converter:StringToColorConverter x:Key="StringToColorConverter" />
+  <converter:StringAppendConverter x:Key="StringAppendConverter" />
+  <converter:SubtractConverter x:Key="SubtractConverter" />
+  <converter:DateTimeToDateTimeStringConverter x:Key="DateTimeToDateTimeStringConverter" />
+  <converter:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter" />
+  <converter:EqualConverter x:Key="EqualConverter" />
+  <converter:NotEqualConverter x:Key="NotEqualConverter" />
+  <converter:VisibilityEqualConverter x:Key="VisibilityEqualConverter" />
+  <converter:VisibilityNotEqualConverter x:Key="VisibilityNotEqualConverter" />
+  <converter:VisibilityIncludesConverter x:Key="VisibilityIncludesConverter"/>
+  <converter:VisibilityNotIncludesConverter x:Key="VisibilityNotIncludesConverter"/>
+  <converter:HideIfEmptyConverter x:Key="HideIfEmptyConverter"/>
+  <converter:HideIfNotEmptyConverter x:Key="HideIfNotEmptyConverter"/>
+</ResourceDictionary>

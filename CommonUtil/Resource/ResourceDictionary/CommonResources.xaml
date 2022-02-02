@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+  <FontFamily x:Key="SystemFontFamily">等线</FontFamily>
+  <system:Double x:Key="SystemFontSize">17</system:Double>
+  <!-- ContextMenu StackPanelSpacing -->
+  <system:Double x:Key="ContextMenuSimpleStackPanelSpacing">8</system:Double>
+  <system:Double x:Key="ContextMenuItemHeight">40</system:Double>
+  <system:TimeSpan x:Key="AnimationTimeSpan">0:0:0.3</system:TimeSpan>
+  <Duration x:Key="AnimationDuration">0:0:0.3</Duration>
+  <system:Int32 x:Key="ToolTipServiceInitialShowDelay">250</system:Int32>
+  <!-- ZoomIn 动画起始缩放大小级别 -->
+  <system:Double x:Key="ZoomInStartScale">0.97</system:Double>
+  <ExponentialEase x:Key="AnimationEaseFunction" EasingMode="EaseOut" Exponent="4" />
+  <FontFamily x:Key="IconFontUrI">pack://application:,,,/resource/#IconFont</FontFamily>
+
+  <!--#region SolidColorBrush-->
+  <system:String x:Key="TitleBarHoverBackgroundColor">#d7d7d7</system:String>
+  <SolidColorBrush x:Key="TitleBarHoverBackground" Color="#d7d7d7"/>
+  <SolidColorBrush x:Key="TitleBarTextForeground" Color="#464646"/>
+  <SolidColorBrush x:Key="TitleBarHoverBackgroundDraker" Color="Silver"/>
+  
+  <SolidColorBrush x:Key="AppDefaultTheme" Color="#45BDF2" />
+  <SolidColorBrush x:Key="AppBackground" Color="#f3f3f3" />
+  <SolidColorBrush x:Key="WarningIconForeground" Color="#f2a416" />
+  <SolidColorBrush x:Key="DeleteConfirmButtonForeground" Color="#de383b" />
+  <SolidColorBrush x:Key="DeleteButtonForeground" Color="{Binding Source={StaticResource Red4},Path=Color}" />
+  <!--#endregion-->
+</ResourceDictionary>

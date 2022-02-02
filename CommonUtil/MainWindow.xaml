@@ -3,11 +3,52 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:local="clr-namespace:CommonUtil"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="450" Width="800">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        WindowStartupLocation="CenterScreen"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:TitleBar.IsIconVisible="True"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        Height="600" 
+        Width="1000">
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
 
+    <!-- 标题 -->
+    <StackPanel Orientation="Horizontal">
+      <ui:TitleBarButton Click="ToBackClick"
+                         Visibility="{Binding IsBackIconVisible,Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}"
+                         Margin="12,0,0,0">
+        <TextBlock Text="&#xe60f;" 
+                   FontSize="20"
+                   Style="{StaticResource IconFontStyle}">
+        </TextBlock>
+      </ui:TitleBarButton>
+      <TextBlock Margin="12,0,0,0" Text="{Binding RouteViewTitle}" FontSize="20"/>
+    </StackPanel>
+    
+    <ui:Frame Grid.Row="1" x:Name="ContentFrame">
+      <ui:Frame.ContentTransitions>
+        <ui:TransitionCollection>
+          <ui:NavigationThemeTransition />
+        </ui:TransitionCollection>
+      </ui:Frame.ContentTransitions>
+    </ui:Frame>
+
+    <!-- MessageBoxPanel -->
+    <StackPanel x:Name="MessageBoxPanel"
+                Panel.ZIndex="10000"
+                Margin="0,10,0,0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top">
+    </StackPanel>
   </Grid>
 </Window>

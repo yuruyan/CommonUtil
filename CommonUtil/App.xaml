@@ -2,8 +2,19 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CommonUtil"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+             xmlns:ui="http://schemas.modernwpf.com/2019">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:ThemeResources />
+        <ui:XamlControlsResources />
+        <!-- 以下资源位置不能颠倒 -->
+        <ResourceDictionary x:Uid="ColorResources" Source="/Resource/ResourceDictionary/ColorResources.xaml" />
+        <ResourceDictionary Source="/Resource/ResourceDictionary/CommonResources.xaml"/>
+        <ResourceDictionary Source="/Resource/ResourceDictionary/ConverterResources.xaml"/>
+        <ResourceDictionary Source="/Resource/ResourceDictionary/StyleResources.xaml"/>
+        <ResourceDictionary Source="/Resource/ResourceDictionary/DateTemplateResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

@@ -7,7 +7,39 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\Base64ToolView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\MainContentView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\ColorResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\CommonResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\ConverterResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\DateTemplateResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\StyleResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Base64ToolView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\MainContentView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Widget\MessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
