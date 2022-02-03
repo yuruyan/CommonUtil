@@ -15,6 +15,7 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="270"/>
+      <ColumnDefinition Width="8"/>
       <ColumnDefinition/>
     </Grid.ColumnDefinitions>
 
@@ -28,7 +29,7 @@
           <ui:NavigationViewItem x:Name="RandomStringGeneratorView" Content="生成字符串"/>
           <ui:NavigationViewItem x:Name="RandomNumberGeneratorView" Content="生成随机数"/>
         </ui:NavigationView.MenuItems>
-        <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0"/>
+        <ui:Frame x:Name="ContentFrame" Padding="0,0,40,0" Margin="0,8,0,0"/>
       </ui:NavigationView>
       <ui:SimpleStackPanel Spacing="20" 
                            Orientation="Horizontal"
@@ -58,7 +59,7 @@
     </ui:SimpleStackPanel>
 
     <TextBox x:Name="OutputTextBox"
-             Grid.Column="1"
+             Grid.Column="2"
              IsReadOnly="True"
              Style="{StaticResource MultilineTextBoxStyle}"
              Padding="8"

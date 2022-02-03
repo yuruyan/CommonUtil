@@ -76,7 +76,7 @@ namespace CommonUtil.View {
         }
 
         /// <summary>
-        /// 生成
+        /// 对外提供，生成
         /// </summary>
         /// <returns></returns>
         public static string[] Generate() {

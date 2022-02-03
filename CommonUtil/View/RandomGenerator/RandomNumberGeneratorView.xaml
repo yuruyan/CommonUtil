@@ -15,18 +15,21 @@
       <Style TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal"/>
       </Style>
+      <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+        <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=90}"/>
+      </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
       <TextBlock Width="80" Text="最小值："/>
-      <TextBox Text="0"/>
+      <TextBox Text="{Binding MinValue}"/>
     </StackPanel>
     <StackPanel>
       <TextBlock Width="80" Text="最大值："/>
-      <TextBox/>
+      <TextBox Text="{Binding MaxValue}"/>
     </StackPanel>
     <StackPanel>
       <TextBlock Width="80" Text="生成数量："/>
-      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="0"/>
+      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="0" SelectedValue="{Binding GenerateCount}"/>
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>
