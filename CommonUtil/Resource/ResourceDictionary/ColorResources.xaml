@@ -1,12 +1,7 @@
 ﻿<!-- 名称已被引用 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <!--#region SecurityLevel-->
-  <SolidColorBrush x:Key="WEAK" Color="#ff6666" />
-  <SolidColorBrush x:Key="MEDIUM" Color="#139fec" />
-  <SolidColorBrush x:Key="STRONG" Color="#00aa8d" />
-  <!--#endregion-->
-  
+
   <SolidColorBrush x:Key="Gray1" Color="#f7f7f7"/>
   <SolidColorBrush x:Key="Gray2" Color="#efefef"/>
   <SolidColorBrush x:Key="Gray3" Color="#e7e7e7"/>

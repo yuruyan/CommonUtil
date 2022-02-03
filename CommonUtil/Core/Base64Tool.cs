@@ -1,12 +1,9 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 
 namespace CommonUtil.Core {
     class Base64Tool {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         /// <summary>
         /// base64 解码
         /// </summary>
@@ -14,14 +11,7 @@ namespace CommonUtil.Core {
         /// <param name="encodeType">字符串编码方式</param>
         /// <returns></returns>
         public static string Base64StringDecode(string encoded, Encoding encodeType) {
-            string decode = string.Empty;
-            byte[] bytes = Convert.FromBase64String(encoded);
-            try {
-                return encodeType.GetString(bytes);
-            } catch (Exception e) {
-                Logger.Info(e);
-            }
-            return decode;
+            return encodeType.GetString(Convert.FromBase64String(encoded));
         }
 
         /// <summary>
@@ -40,14 +30,7 @@ namespace CommonUtil.Core {
         /// <param name="encodeType">编码方式</param>
         /// <returns></returns>
         public static string Base64StringEncode(string source, Encoding encodeType) {
-            string encode = string.Empty;
-            byte[] bytes = encodeType.GetBytes(source);
-            try {
-                return Convert.ToBase64String(bytes);
-            } catch (Exception e) {
-                Logger.Info(e);
-            }
-            return encode;
+            return Convert.ToBase64String(encodeType.GetBytes(source));
         }
 
         /// <summary>
@@ -65,12 +48,7 @@ namespace CommonUtil.Core {
         /// <param name="path"></param>
         /// <returns></returns>
         public static string Base64ImageEncode(string path) {
-            try {
-                return Convert.ToBase64String(File.ReadAllBytes(path));
-            } catch (Exception e) {
-                Logger.Info(e);
-            }
-            return string.Empty;
+            return Convert.ToBase64String(File.ReadAllBytes(path));
         }
 
         /// <summary>
@@ -79,14 +57,8 @@ namespace CommonUtil.Core {
         /// <param name="encoded"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool Base64ImageDecode(string encoded, string path) {
-            try {
-                File.WriteAllBytes(path, Convert.FromBase64String(encoded));
-                return true;
-            } catch (Exception e) {
-                Logger.Info(e);
-            }
-            return false;
+        public static void Base64ImageDecode(string encoded, string path) {
+            File.WriteAllBytes(path, Convert.FromBase64String(encoded));
         }
     }
 }

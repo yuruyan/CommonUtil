@@ -1,9 +1,13 @@
 ﻿using CommonUtil.Core;
+using NLog;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CommonUtil.View {
     public partial class Base64ToolView : Page {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         public Base64ToolView() {
             InitializeComponent();
         }
@@ -23,7 +27,12 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void DecodeString(object sender, RoutedEventArgs e) {
             if (CheckInputValidation()) {
-                OutputTextBox.Text = Base64Tool.Base64StringDecode(InputTextBox.Text);
+                try {
+                    OutputTextBox.Text = Base64Tool.Base64StringDecode(InputTextBox.Text);
+                } catch (Exception error) {
+                    Logger.Info(error);
+                    Widget.MessageBox.Error($"解码失败，{error.Message}");
+                }
             }
         }
 
@@ -34,7 +43,12 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void EncodeString(object sender, RoutedEventArgs e) {
             if (CheckInputValidation()) {
-                OutputTextBox.Text = Base64Tool.Base64StringEncode(InputTextBox.Text);
+                try {
+                    OutputTextBox.Text = Base64Tool.Base64StringEncode(InputTextBox.Text);
+                } catch (Exception error) {
+                    Logger.Info(error);
+                    Widget.MessageBox.Error($"编码失败，{error.Message}");
+                }
             }
         }
 

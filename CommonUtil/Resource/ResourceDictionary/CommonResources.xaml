@@ -20,8 +20,6 @@
   <SolidColorBrush x:Key="TitleBarTextForeground" Color="#464646"/>
   <SolidColorBrush x:Key="TitleBarHoverBackgroundDraker" Color="Silver"/>
   
-  <SolidColorBrush x:Key="AppDefaultTheme" Color="#45BDF2" />
-  <SolidColorBrush x:Key="AppBackground" Color="#f3f3f3" />
   <SolidColorBrush x:Key="WarningIconForeground" Color="#f2a416" />
   <SolidColorBrush x:Key="DeleteConfirmButtonForeground" Color="#de383b" />
   <SolidColorBrush x:Key="DeleteButtonForeground" Color="{Binding Source={StaticResource Red4},Path=Color}" />

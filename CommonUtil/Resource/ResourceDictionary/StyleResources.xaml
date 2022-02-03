@@ -1,32 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="http://schemas.modernwpf.com/2019">
-  <!-- 全局 TextBlock -->
-  <Style TargetType="TextBlock">
-    <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
-    <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="ToolTipService.InitialShowDelay" Value="100" />
-  </Style>
-  <!-- 带 key 全局 TextBlock -->
+  <!-- TextBlockStyle -->
   <Style x:Key="GlobalTextBlockStyle" TargetType="TextBlock">
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="ToolTipService.InitialShowDelay" Value="100" />
   </Style>
-  <!-- 全局 TextBox -->
-  <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
-    <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
-    <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
-  </Style>
-  <!-- 带 key 全局 TextBox -->
+  <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}"/>
+  <!-- TextBoxStyle -->
   <Style x:Key="GlobalTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
+  <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}"/>
   <!-- MenuButton 样式 -->
   <Style x:Key="MenuButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
     <Setter Property="Padding" Value="4" />
@@ -126,4 +115,48 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <!-- ButtonStyle -->
+  <Style x:Key="GlobalButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Background"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                        SnapsToDevicePixels="True">
+            <Border x:Name="Border"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Padding="{TemplateBinding Padding}"
+                          CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter x:Name="ContentPresenter"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Focusable="False"
+                                      RecognizesAccessKey="True"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ApplicationBackgroundDark1}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ApplicationBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ApplicationBackground}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ApplicationBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ApplicationBackgroundDark2}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ApplicationBackgroundDark2}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}"/>
 </ResourceDictionary>
