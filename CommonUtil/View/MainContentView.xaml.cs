@@ -25,8 +25,7 @@ namespace CommonUtil.View {
         }
 
         private void RootLoaded(object sender, RoutedEventArgs e) {
-            //RouterView = MainWindowRouter.RouterView.MainContent;
-            //RouterViewTitle = string.Empty;
+
         }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuMouseUp(object sender, MouseButtonEventArgs e) {
+        private void MenuMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             if(sender is FrameworkElement element) {
                 if(element.DataContext is ToolMenuItem menuItem) {
                     //RouterView = menuItem.RouteView;

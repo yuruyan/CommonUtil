@@ -14,6 +14,21 @@
         ui:TitleBar.ExtendViewIntoTitleBar="True"
         Height="600" 
         Width="1000">
+  <Window.Resources>
+    <Storyboard x:Key="TitleBarStoryboard">
+      <DoubleAnimation x:Name="TranslateTransformX"
+                       Duration="0:0:0.5"
+                       Storyboard.TargetName="TitleBarTranslateTransform"
+                       Storyboard.TargetProperty="(TranslateTransform.X)"
+                       EasingFunction="{StaticResource AnimationEaseFunction}"/>
+      <DoubleAnimation Duration="0:0:0.5"
+                       Storyboard.TargetName="TitleBar"
+                       Storyboard.TargetProperty="Opacity"
+                       From="0"
+                       To="1"/>
+    </Storyboard>
+  </Window.Resources>
+  
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="60"/>
@@ -21,7 +36,10 @@
     </Grid.RowDefinitions>
 
     <!-- 标题 -->
-    <StackPanel Orientation="Horizontal">
+    <StackPanel x:Name="TitleBar" Orientation="Horizontal">
+      <StackPanel.RenderTransform>
+        <TranslateTransform x:Name="TitleBarTranslateTransform"/>
+      </StackPanel.RenderTransform>
       <ui:TitleBarButton Click="ToBackClick"
                          Visibility="{Binding IsBackIconVisible,Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}"
                          Margin="12,0,0,0">

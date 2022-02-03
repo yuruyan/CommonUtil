@@ -2,7 +2,9 @@
 using CommonUtil.Store;
 using CommonUtil.View;
 using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace CommonUtil {
@@ -24,11 +26,21 @@ namespace CommonUtil {
             get { return (string)GetValue(RouteViewTitleProperty); }
             set { SetValue(RouteViewTitleProperty, value); }
         }
+        // 标题动画
+        private Storyboard? TitleBarStoryboard;
+        private DoubleAnimation? TranslateTransformXAnimation;
 
         public MainWindow() {
             InitializeComponent();
+            if (Resources["TitleBarStoryboard"] is Storyboard storyboard) {
+                TitleBarStoryboard = storyboard;
+                Timeline? timeline = storyboard.Children.FirstOrDefault(t => t.Name == "TranslateTransformX");
+                if (timeline is DoubleAnimation animation) {
+                    TranslateTransformXAnimation = animation;
+                }
+            }
             _ = new MainWindowRouter(ContentFrame);
-            ContentFrame.Navigated += ContentFrameNavigated;
+            ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
             Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
             MainWindowRouter.ToView(MainWindowRouter.RouterView.MainContent);
         }
@@ -38,11 +50,15 @@ namespace CommonUtil {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ContentFrameNavigated(object sender, NavigationEventArgs e) {
+        private void ContentFrameNavigatedHandler(object sender, NavigationEventArgs e) {
             Type contentType = e.Content.GetType();
             IsBackIconVisible = contentType != typeof(MainContentView);
+            // 主窗口菜单列表
             if (contentType == typeof(MainContentView)) {
                 RouteViewTitle = Global.AppTitle;
+                if (TranslateTransformXAnimation != null) { 
+                    TranslateTransformXAnimation.From = -100;
+                }
             } else {
                 foreach (var item in Global.MenuItems) {
                     if (item.ClassType == contentType) {
@@ -50,7 +66,11 @@ namespace CommonUtil {
                         break;
                     }
                 }
+                if (TranslateTransformXAnimation != null) {
+                    TranslateTransformXAnimation.From = 100;
+                }
             }
+            TitleBarStoryboard?.Begin();
         }
 
         private void ToBackClick(object sender, RoutedEventArgs e) {

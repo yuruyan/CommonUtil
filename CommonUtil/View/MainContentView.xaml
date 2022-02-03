@@ -24,8 +24,19 @@
                   Height="50"
                   Width="200" 
                   Margin="8,4,8,4"
-                  Background="{StaticResource Gray2}"
-                  MouseUp="MenuMouseUp">
+                  MouseLeftButtonUp="MenuMouseLeftButtonUp">
+            <Border.Style>
+              <Style TargetType="Border">
+                <Style.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource Gray3}"/>
+                  </Trigger>
+                  <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="{StaticResource Gray2}"/>
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </Border.Style>
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
