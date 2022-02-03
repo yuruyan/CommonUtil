@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainContentView"
+      Title="MainContent"
       Loaded="RootLoaded">
 
   <Grid>
@@ -22,7 +22,7 @@
         <DataTemplate>
           <Border CornerRadius="4" 
                   Height="50"
-                  Width="200" 
+                  Width="230" 
                   Margin="8,4,8,4"
                   MouseLeftButtonUp="MenuMouseLeftButtonUp">
             <Border.Style>

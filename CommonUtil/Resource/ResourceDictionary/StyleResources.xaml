@@ -117,6 +117,7 @@
   </Style>
   <!-- ButtonStyle -->
   <Style x:Key="GlobalButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+    <Setter Property="Padding" Value="16,8,16,8"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
@@ -159,4 +160,12 @@
     </Setter>
   </Style>
   <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}"/>
+  <!-- 多行文本框 -->
+  <Style x:Key="MultilineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+    <!--<Setter Property="TextWrapping" Value="WrapWithOverflow"/>-->
+    <Setter Property="AcceptsReturn" Value="True"/>
+    <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+    <Setter Property="VerticalContentAlignment" Value="Top"/>
+    <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+  </Style>
 </ResourceDictionary>

@@ -13,6 +13,15 @@
     <Compile Update="View\MainContentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\RandomGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\RandomGenerator\RandomStringGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\RandomGenerator\RandomNumberGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -40,6 +49,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MainContentView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomStringGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomNumberGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Widget\MessageBox.xaml">

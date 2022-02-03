@@ -1,9 +1,11 @@
 ﻿using CommonUtil.Route;
 using CommonUtil.Store;
 using CommonUtil.View;
+using ModernWpf;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
@@ -43,6 +45,12 @@ namespace CommonUtil {
             ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
             Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
             MainWindowRouter.ToView(MainWindowRouter.RouterView.MainContent);
+            // 设置 AppTheme
+            foreach (var res in Application.Current.Resources.MergedDictionaries) {
+                if (res.Source != null && res.Source.ToString().Contains("ThemeResources")) {
+                    ThemeManager.Current.AccentColor = (res["ApplicationBackground"] as SolidColorBrush).Color;
+                }
+            }
         }
 
         /// <summary>
