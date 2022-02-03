@@ -43,22 +43,36 @@ namespace CommonUtil.Core {
         }
 
         /// <summary>
-        /// 图片转base64
+        /// 文件转base64
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static string Base64ImageEncode(string path) {
+        public static string Base64Encode(string path) {
             return Convert.ToBase64String(File.ReadAllBytes(path));
         }
 
         /// <summary>
-        /// base64 转图片
+        /// base64 转文件
         /// </summary>
         /// <param name="encoded"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static void Base64ImageDecode(string encoded, string path) {
+        public static void Base64Decode(string encoded, string path) {
             File.WriteAllBytes(path, Convert.FromBase64String(encoded));
         }
+
+        /// <summary>
+        /// 尝试解码
+        /// </summary>
+        /// <param name="encoded"></param>
+        /// <returns>失败返回 null</returns>
+        public static byte[]? TryDecode(string encoded) {
+            try {
+                return Convert.FromBase64String(encoded);
+            } catch {
+                return null;
+            }
+        }
+
     }
 }

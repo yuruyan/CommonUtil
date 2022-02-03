@@ -45,16 +45,16 @@
           <TextBlock Text="字符串解码"/>
         </StackPanel>
       </Button>
-      <Button Click="EncodeImage">
+      <Button Click="EncodeFile">
         <StackPanel>
           <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe643;"/>
-          <TextBlock Text="图片编码"/>
+          <TextBlock Text="文件编码"/>
         </StackPanel>
       </Button>
-      <Button Click="DecodeImage">
+      <Button Click="DecodeFile">
         <StackPanel>
           <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe644;"/>
-          <TextBlock Text="图片解码"/>
+          <TextBlock Text="文件解码"/>
         </StackPanel>
       </Button>
     </ui:SimpleStackPanel>
