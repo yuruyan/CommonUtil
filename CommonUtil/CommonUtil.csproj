@@ -14,17 +14,18 @@
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
     <None Remove="Resource\image\base64.svg" />
+    <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\SplashWindow.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="favicon.ico" />
-    <Resource Include="Resource\iconfont.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resource\iconfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resource\image\base64.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -47,6 +48,7 @@
     <Resource Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\random.svg" />
     <Resource Include="Resource\SplashWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

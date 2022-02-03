@@ -10,6 +10,7 @@ namespace CommonUtil.Store {
 
         public static readonly List<ToolMenuItem> MenuItems = new() {
             new() { Name = "Base64 编码/解码", RouteView = MainWindowRouter.RouterView.Base64Tool, ImagePath = ImagePath + "base64.svg", ClassType = typeof(Base64ToolView) },
+            new() { Name = "随机数/字符串生成器", RouteView = MainWindowRouter.RouterView.RandomGenerator, ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
         };
     }
 
