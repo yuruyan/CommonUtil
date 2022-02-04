@@ -36,7 +36,8 @@ namespace CommonUtil.Route {
             MainContent,
             Base64Tool,
             RandomGenerator,
-            ChineseTransform
+            ChineseTransform,
+            TimeStamp
         }
     }
 }

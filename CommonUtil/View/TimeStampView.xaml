@@ -1,0 +1,147 @@
+﻿<Page x:Class="CommonUtil.View.TimeStampView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CommonUtil.View"
+      xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+      mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="White"
+      Title="TimeStampView">
+
+  <ScrollViewer>
+    <ui:SimpleStackPanel Spacing="16" Margin="8,0,8,0">
+      <Grid Margin="8" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50"/>
+          <RowDefinition Height="50"/>
+          <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="70"/>
+          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="120"/>
+          <ColumnDefinition Width="110"/>
+          <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+          <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,0,4,0"/>
+          </Style>
+        </Grid.Resources>
+
+        <!--#region 现在-->
+        <TextBlock Text="现在："/>
+        <TextBox Grid.Column="1" 
+             BorderThickness="0"
+             IsReadOnly="True"
+             Text="{Binding CurrentTimeStamp}"/>
+        <Grid Grid.Column="2">
+          <Button HorizontalAlignment="Center"
+              Visibility="{Binding IsRunning,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='True|Collapsed'}"
+              Click="StartClick">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe607;"/>
+              <TextBlock Style="{StaticResource ButtonTextBlockStyle}" Text="开始"/>
+            </StackPanel>
+          </Button>
+          <Button HorizontalAlignment="Center"
+              Visibility="{Binding IsRunning,Converter={StaticResource VisibilityNotEqualConverter},ConverterParameter='True|Collapsed'}"
+              Click="PauseClick">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe662;"/>
+              <TextBlock Style="{StaticResource ButtonTextBlockStyle}" Text="暂停"/>
+            </StackPanel>
+          </Button>
+        </Grid>
+        <Button Grid.Column="3" HorizontalAlignment="Center" Click="CopyTimeStampClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xe6ef;" Style="{StaticResource ButtonIconFontStyle}"/>
+            <TextBlock Text="复制" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <!--#endregion-->
+
+        <!--#region 时间戳转字符串时间-->
+        <TextBlock Grid.Row="1" Text="时间戳："/>
+        <TextBox Grid.Row="1"
+             Grid.Column="1"
+             Text="{Binding TimeStampToStringInput}"/>
+        <ComboBox Grid.Row="1"
+              Grid.Column="2"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              SelectedValue="{Binding TimeStampToStringOption}">
+          <sys:String>毫秒(ms)</sys:String>
+          <sys:String>秒(s)</sys:String>
+        </ComboBox>
+        <Button Grid.Row="1"
+            Grid.Column="3"
+            HorizontalAlignment="Center"
+            Click="TimeStampToStringClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xe606;" Style="{StaticResource ButtonIconFontStyle}"/>
+            <TextBlock Text="转换" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <TextBox Grid.Row="1"
+             Grid.Column="4"
+             IsReadOnly="True"
+             Text="{Binding TimeStampToStringOutput}"/>
+        <!--#endregion-->
+
+        <!--#region 日期转时间戳-->
+        <TextBlock Grid.Row="2" Text="时间："/>
+        <TextBox Grid.Row="2"
+             Grid.Column="1"
+             Text="{Binding StringToTimeStampInput}"/>
+        <ComboBox Grid.Row="2"
+              Grid.Column="2"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              SelectedValue="{Binding StringToTimeStampChoice}">
+          <sys:String>毫秒(ms)</sys:String>
+          <sys:String>秒(s)</sys:String>
+        </ComboBox>
+        <Button Grid.Row="2"
+            Grid.Column="3"
+            HorizontalAlignment="Center"
+            Click="StringToTimeStampClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xe606;" Style="{StaticResource ButtonIconFontStyle}"/>
+            <TextBlock Text="转换" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <TextBox Grid.Row="2"
+             Grid.Column="4"
+             IsReadOnly="True"
+             Text="{Binding StringToTimeStampOutput}"/>
+        <!--#endregion-->
+      </Grid>
+      <Rectangle Height="1" Fill="#BDBDBD"/>
+      <TextBlock HorizontalAlignment="Center" Text="各编程语言获取时间戳代码" FontWeight="Bold" FontSize="23"/>
+      <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding ProgramingGetTimeStampCodeList}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,4">
+              <TextBlock Text="{Binding Key,Mode=OneWay}"
+                         Foreground="#238080"
+                         FontSize="19"
+                         Width="100"/>
+              <TextBox Text="{Binding Value,Mode=OneWay}" 
+                       IsReadOnly="True"
+                       BorderThickness="0"
+                       Width="500"
+                       TextWrapping="WrapWithOverflow"/>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ui:SimpleStackPanel>
+  </ScrollViewer>
+
+</Page>
