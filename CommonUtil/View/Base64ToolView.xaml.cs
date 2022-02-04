@@ -10,6 +10,24 @@ namespace CommonUtil.View {
     public partial class Base64ToolView : Page {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
+        public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
+        
+        /// <summary>
+        /// 输入
+        /// </summary>
+        public string InputText {
+            get { return (string)GetValue(InputTextProperty); }
+            set { SetValue(InputTextProperty, value); }
+        }
+        /// <summary>
+        /// 输出结果
+        /// </summary>
+        public string OutputText {
+            get { return (string)GetValue(OutputTextProperty); }
+            set { SetValue(OutputTextProperty, value); }
+        }
+
         public Base64ToolView() {
             InitializeComponent();
         }
@@ -21,7 +39,7 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void DecodeFile(object sender, RoutedEventArgs e) {
             if (CheckInputValidation()) {
-                byte[]? result = Base64Tool.TryDecode(InputTextBox.Text);
+                byte[]? result = Base64Tool.TryDecode(InputText);
                 if (result != null) {
                     var openFileDialog = new OpenFileDialog() {
                         Title = "保存文件",
@@ -54,7 +72,7 @@ namespace CommonUtil.View {
             };
             if (openFileDialog.ShowDialog() == true) {
                 try {
-                    OutputTextBox.Text = Base64Tool.Base64Encode(openFileDialog.FileName);
+                    OutputText = Base64Tool.Base64Encode(openFileDialog.FileName);
                 } catch (Exception error) {
                     Logger.Info(error);
                     Widget.MessageBox.Error($"编码失败，{error.Message}");
@@ -70,7 +88,7 @@ namespace CommonUtil.View {
         private void DecodeString(object sender, RoutedEventArgs e) {
             if (CheckInputValidation()) {
                 try {
-                    OutputTextBox.Text = Base64Tool.Base64StringDecode(InputTextBox.Text);
+                    OutputText = Base64Tool.Base64StringDecode(InputText);
                 } catch (Exception error) {
                     Logger.Info(error);
                     Widget.MessageBox.Error($"解码失败，{error.Message}");
@@ -86,7 +104,7 @@ namespace CommonUtil.View {
         private void EncodeString(object sender, RoutedEventArgs e) {
             if (CheckInputValidation()) {
                 try {
-                    OutputTextBox.Text = Base64Tool.Base64StringEncode(InputTextBox.Text);
+                    OutputText = Base64Tool.Base64StringEncode(InputText);
                 } catch (Exception error) {
                     Logger.Info(error);
                     Widget.MessageBox.Error($"编码失败，{error.Message}");
@@ -95,15 +113,34 @@ namespace CommonUtil.View {
         }
 
         /// <summary>
+        /// 复制结果
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyResultClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(OutputText);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        /// <summary>
         /// 检查输入是否合法
         /// </summary>
         /// <returns></returns>
         private bool CheckInputValidation() {
-            if (string.IsNullOrEmpty(InputTextBox.Text)) {
-                Widget.MessageBox.Info("输入不能为空！");
+            if (string.IsNullOrEmpty(InputText)) {
+                Widget.MessageBox.Info("请输入文本");
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 清空输入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearInputClick(object sender, RoutedEventArgs e) {
+            InputText = string.Empty;
         }
     }
 }

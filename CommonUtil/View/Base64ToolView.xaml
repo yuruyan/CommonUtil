@@ -6,15 +6,18 @@
       xmlns:local="clr-namespace:CommonUtil.View" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Base64Tool">
 
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="50"/>
+      <RowDefinition Height="30"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
 
+    <!-- Control -->
     <ui:SimpleStackPanel Spacing="8"
                          Margin="10,0,10,0"
                          Orientation="Horizontal">
@@ -47,17 +50,34 @@
           <TextBlock Text="文件解码" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
+      <Button Click="CopyResultClick">
+        <StackPanel>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
+          <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
+        </StackPanel>
+      </Button>
+      <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
+        <StackPanel>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
+          <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
+        </StackPanel>
+      </Button>
     </ui:SimpleStackPanel>
-
+    <!-- Description -->
     <UniformGrid Grid.Row="1" Columns="2">
+      <TextBlock Padding="10,0,0,0" FontSize="20" Text="输入："/>
+      <TextBlock Padding="10,0,0,0" FontSize="20" Text="结果："/>
+    </UniformGrid>
+    <!-- Input,Output -->
+    <UniformGrid Grid.Row="2" Columns="2">
       <UniformGrid.Resources>
         <Style TargetType="TextBox" BasedOn="{StaticResource MultilineTextBoxStyle}">
           <Setter Property="Padding" Value="12"/>
           <Setter Property="Margin" Value="10"/>
         </Style>
       </UniformGrid.Resources>
-      <TextBox x:Name="InputTextBox" />
-      <TextBox x:Name="OutputTextBox" />
+      <TextBox Text="{Binding InputText}"/>
+      <TextBox Text="{Binding OutputText,Mode=OneWay}" IsReadOnly="True"/>
     </UniformGrid>
   </Grid>
 </Page>

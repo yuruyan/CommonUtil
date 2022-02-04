@@ -29,7 +29,7 @@
           <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
-      <Button Click="ClearInputClick">
+      <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="&#xe946;" Style="{StaticResource ButtonIconFontStyle}"/>
           <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
