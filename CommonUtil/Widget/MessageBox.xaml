@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:CommonUtil.Widget"
+             xmlns:local="clr-namespace:CommonUtil.Widget" 
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d"
              d:DesignHeight="50"
              d:DesignWidth="300"
@@ -47,26 +48,32 @@
                        Storyboard.TargetName="Root" />
     </Storyboard>
   </UserControl.Resources>
-  <Border MinWidth="250"
-          MaxWidth="450"
-          MinHeight="43"
-          CornerRadius="4"
-          BorderThickness="1"
-          BorderBrush="{Binding ElementName=Root,Path=BorderColor}"
-          Background="{Binding ElementName=Root,Path=BoxBackground}">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-      <TextBlock Text="{Binding ElementName=Root,Path=Icon}"
-                 Style="{StaticResource IconFontStyle}"
-                 Foreground="{Binding ElementName=Root,Path=BoxForeground}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center" 
-                 Margin="12,0,8,0"/>
-      <TextBlock Text="{Binding ElementName=Root,Path=Text}"
-                 MaxWidth="400"
-                 Foreground="{Binding ElementName=Root,Path=BoxForeground}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center" 
-                 TextWrapping="WrapWithOverflow"/>
-    </StackPanel>
-  </Border>
+  <ui:ThemeShadowChrome IsShadowEnabled="True"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Depth="20">
+    <Border MinWidth="250"
+            MaxWidth="450"
+            MinHeight="43"
+            CornerRadius="4"
+            BorderThickness="1"
+            BorderBrush="{Binding ElementName=Root,Path=BorderColor}"
+            Background="{Binding ElementName=Root,Path=BoxBackground}">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <TextBlock Text="{Binding ElementName=Root,Path=Icon}"
+                   Style="{StaticResource IconFontStyle}"
+                   Foreground="{Binding ElementName=Root,Path=BoxForeground}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" 
+                   Margin="12,0,8,0"/>
+        <TextBlock Text="{Binding ElementName=Root,Path=Text}"
+                   MaxWidth="400"
+                   Foreground="{Binding ElementName=Root,Path=BoxForeground}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" 
+                   TextWrapping="WrapWithOverflow"/>
+      </StackPanel>
+    </Border>
+  </ui:ThemeShadowChrome>
+
 </UserControl>
