@@ -122,20 +122,20 @@
       <Setter.Value>
         <ControlTemplate TargetType="Button">
           <Border x:Name="Background"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                        SnapsToDevicePixels="True">
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                  SnapsToDevicePixels="True">
             <Border x:Name="Border"
-                          BorderBrush="{TemplateBinding BorderBrush}"
-                          BorderThickness="{TemplateBinding BorderThickness}"
-                          Padding="{TemplateBinding Padding}"
-                          CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
               <ContentPresenter x:Name="ContentPresenter"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Focusable="False"
-                                      RecognizesAccessKey="True"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
           </Border>
           <ControlTemplate.Triggers>
@@ -160,9 +160,140 @@
     </Setter>
   </Style>
   <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}"/>
+  <!-- ErrorButtonStyle -->
+  <Style x:Key="GlobalErrorButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+    <Setter Property="Padding" Value="16,8,16,8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Background"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                  SnapsToDevicePixels="True">
+            <Border x:Name="Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter x:Name="ContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ErrorBackgroundDark1}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ErrorBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ErrorBackground}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ErrorBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource ErrorBackgroundDark2}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ErrorBackgroundDark2}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!-- SuccessButtonStyle -->
+  <Style x:Key="GlobalSuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+    <Setter Property="Padding" Value="16,8,16,8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Background"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                  SnapsToDevicePixels="True">
+            <Border x:Name="Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter x:Name="ContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource SuccessBackgroundDark1}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SuccessBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource SuccessBackground}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SuccessBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource SuccessBackgroundDark2}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SuccessBackgroundDark2}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <!-- WaringButtonStyle -->
+  <Style x:Key="GlobalWaringButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+    <Setter Property="Padding" Value="16,8,16,8"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Background"
+                  Background="{TemplateBinding Background}"
+                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                  SnapsToDevicePixels="True">
+            <Border x:Name="Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter x:Name="ContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource WaringBackgroundDark1}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource WaringBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource WaringBackground}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource WaringBackgroundDark1}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Background" Property="Background" Value="{DynamicResource WaringBackgroundDark2}" />
+              <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource WaringBackgroundDark2}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ApplicationForeground}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
   <!-- 多行文本框 -->
   <Style x:Key="MultilineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
-    <!--<Setter Property="TextWrapping" Value="WrapWithOverflow"/>-->
     <Setter Property="AcceptsReturn" Value="True"/>
     <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
     <Setter Property="VerticalContentAlignment" Value="Top"/>
