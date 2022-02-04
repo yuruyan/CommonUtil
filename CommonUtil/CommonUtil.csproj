@@ -14,6 +14,7 @@
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
     <None Remove="Resource\image\base64.svg" />
+    <None Remove="Resource\image\ChineseTransform.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\SplashWindow.png" />
   </ItemGroup>
@@ -48,6 +49,7 @@
     <Resource Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\ChineseTransform.svg" />
     <Resource Include="Resource\image\random.svg" />
     <Resource Include="Resource\SplashWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -56,6 +58,9 @@
 
   <ItemGroup>
     <None Update="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\WordMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

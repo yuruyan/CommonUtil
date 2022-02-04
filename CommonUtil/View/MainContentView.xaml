@@ -39,11 +39,11 @@
             </Border.Style>
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="54"/>
                 <ColumnDefinition/>
               </Grid.ColumnDefinitions>
-              <Grid Margin="4">
-                <svgc:SvgViewbox Source="{Binding ImagePath}" Stretch="UniformToFill"/>
+              <Grid Margin="10,4,4,4">
+                <svgc:SvgViewbox Source="{Binding ImagePath}" Stretch="Uniform"/>
               </Grid>
               <Grid Grid.Column="1">
                 <TextBlock Padding="4,0,0,0" VerticalAlignment="Center" Text="{Binding Name}"/>

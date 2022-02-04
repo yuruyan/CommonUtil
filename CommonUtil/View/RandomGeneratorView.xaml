@@ -34,25 +34,16 @@
       <ui:SimpleStackPanel Spacing="20" 
                            Orientation="Horizontal"
                            HorizontalAlignment="Center">
-        <ui:SimpleStackPanel.Resources>
-          <Style x:Key="IconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
-            <Setter Property="Margin" Value="0,0,8,0"/>
-            <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
-          </Style>
-          <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
-            <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
-          </Style>
-        </ui:SimpleStackPanel.Resources>
         <Button Click="GenerateClick">
           <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe601;"/>
-            <TextBlock Text="生成"/>
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe601;"/>
+            <TextBlock Text="生成" Style="{StaticResource ButtonTextBlockStyle}"/>
           </StackPanel>
         </Button>
-        <Button Click="CopyClick">
+        <Button Click="CopyResultClick">
           <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;"/>
-            <TextBlock Text="复制"/>
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
+            <TextBlock Text="复制" Style="{StaticResource ButtonTextBlockStyle}"/>
           </StackPanel>
         </Button>
       </ui:SimpleStackPanel>

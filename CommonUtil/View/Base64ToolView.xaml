@@ -22,36 +22,29 @@
         <Style TargetType="StackPanel">
           <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
-        <Style x:Key="IconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
-          <Setter Property="Margin" Value="0,0,8,0"/>
-          <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
-        </Style>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
-          <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
-        </Style>
       </ui:SimpleStackPanel.Resources>
       <Button Click="EncodeString">
         <StackPanel>
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe643;"/>
-          <TextBlock Text="字符串编码"/>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe643;"/>
+          <TextBlock Text="字符串编码" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
       <Button Click="DecodeString">
         <StackPanel>
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe644;"/>
-          <TextBlock Text="字符串解码"/>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe644;"/>
+          <TextBlock Text="字符串解码" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
       <Button Click="EncodeFile">
         <StackPanel>
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe643;"/>
-          <TextBlock Text="文件编码"/>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe643;"/>
+          <TextBlock Text="文件编码" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
       <Button Click="DecodeFile">
         <StackPanel>
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe644;"/>
-          <TextBlock Text="文件解码"/>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe644;"/>
+          <TextBlock Text="文件解码" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
     </ui:SimpleStackPanel>

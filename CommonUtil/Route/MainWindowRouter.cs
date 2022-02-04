@@ -35,7 +35,8 @@ namespace CommonUtil.Route {
         public enum RouterView {
             MainContent,
             Base64Tool,
-            RandomGenerator
+            RandomGenerator,
+            ChineseTransform
         }
     }
 }
