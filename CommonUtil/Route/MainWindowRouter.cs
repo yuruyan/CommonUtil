@@ -9,18 +9,19 @@ namespace CommonUtil.Route {
     public class MainWindowRouter {
         private static Frame Frame;
         private static NavigationTransitionInfo NavigationTransitionInfo = new DrillInNavigationTransitionInfo();
-        private static readonly Dictionary<RouterView, Type> NavigationMap = new();
+        private static readonly Dictionary<RouterView, RouterInfo> NavigationMap = new();
 
         public MainWindowRouter(Frame frame) {
             Frame = frame;
-            NavigationMap.Add(RouterView.MainContent, typeof(MainContentView));
+            NavigationMap.Add(RouterView.MainContent, new() { ClassType = typeof(MainContentView) });
             foreach (var item in Global.MenuItems) {
-                NavigationMap.Add(item.RouteView, item.ClassType);
+                NavigationMap.Add(item.RouteView, new() { ClassType = item.ClassType });
             }
         }
 
         public static void ToView(RouterView view, object? args = null) {
-            Frame?.Navigate(NavigationMap[view], args, NavigationTransitionInfo);
+            NavigationMap[view].Instance = NavigationMap[view].Instance ?? Activator.CreateInstance(NavigationMap[view].ClassType);
+            Frame?.Navigate(NavigationMap[view].Instance, args);
         }
 
         public static void ToBack() {
@@ -30,6 +31,11 @@ namespace CommonUtil.Route {
             if (Frame.CanGoBack) {
                 Frame.GoBack(NavigationTransitionInfo);
             }
+        }
+
+        private class RouterInfo {
+            public Type ClassType { get; set; } = typeof(object);
+            public object Instance { get; set; }
         }
 
         public enum RouterView {
