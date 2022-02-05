@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -9,6 +10,8 @@ namespace CommonUtil {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public App() {
+            ThreadPool.SetMaxThreads(16, 8);
+            ThreadPool.SetMinThreads(8, 4);
             new SplashScreen("/Resource/SplashWindow.png").Show(true);
         }
 

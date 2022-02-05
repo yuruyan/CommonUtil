@@ -21,4 +21,8 @@
   <converter:VisibilityNotIncludesConverter x:Key="VisibilityNotIncludesConverter"/>
   <converter:HideIfEmptyConverter x:Key="HideIfEmptyConverter"/>
   <converter:HideIfNotEmptyConverter x:Key="HideIfNotEmptyConverter"/>
+  <converter:HideIfZeroConverter x:Key="HideIfZeroConverter"/>
+  <converter:HideIfNotZeroConverter x:Key="HideIfNotZeroConverter"/>
+  <converter:FileNameConverter x:Key="FileNameConverter"/>
+  <converter:FileSizeConverter x:Key="FileSizeConverter"/>
 </ResourceDictionary>

@@ -13,6 +13,9 @@
     <Compile Update="View\ChineseTransformView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\FileMergeSplitView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\MainContentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ChineseTransformView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FileMergeSplitView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\MainContentView.xaml">

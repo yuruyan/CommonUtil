@@ -13,6 +13,7 @@ namespace CommonUtil.Store {
             new() { Name = "随机数/字符串生成器", RouteView = MainWindowRouter.RouterView.RandomGenerator, ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
             new() { Name = "简体繁体转换", RouteView = MainWindowRouter.RouterView.ChineseTransform, ImagePath = ImagePath + "ChineseTransform.svg", ClassType = typeof(ChineseTransformView) },
             new() { Name = "时间戳转换", RouteView = MainWindowRouter.RouterView.TimeStamp, ImagePath = ImagePath + "DateTime.svg", ClassType = typeof(TimeStampView) },
+            new() { Name = "文件分割/合并", RouteView = MainWindowRouter.RouterView.FileMergeSplit, ImagePath = ImagePath + "Merge.svg", ClassType = typeof(FileMergeSplitView) },
         };
     }
 
