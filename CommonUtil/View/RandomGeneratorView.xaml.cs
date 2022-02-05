@@ -1,5 +1,4 @@
 ﻿using ModernWpf.Controls;
-using ModernWpf.Media.Animation;
 using NLog;
 using System;
 using System.Linq;
@@ -9,7 +8,6 @@ using System.Windows;
 namespace CommonUtil.View {
     public partial class RandomGeneratorView : System.Windows.Controls.Page {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private NavigationTransitionInfo NavigationTransitionInfo = new SlideNavigationTransitionInfo();
 
         /// <summary>
         /// 输出
@@ -20,12 +18,15 @@ namespace CommonUtil.View {
         }
         public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RandomGeneratorView), new PropertyMetadata(""));
 
+        private RandomStringGeneratorView RandomStringGeneratorViewInstance = new();
+        private RandomNumberGeneratorView RandomNumberGeneratorViewInstance = new();
+
         public RandomGeneratorView() {
             InitializeComponent();
             NavigationView.SelectedItem = RandomStringGeneratorView;
             // 在 NavigationView.SelectedItem 设置之后
             NavigationView.SelectionChanged += NavigationViewSelectionChanged;
-            ContentFrame.Navigate(typeof(RandomStringGeneratorView), NavigationTransitionInfo);
+            ContentFrame.Navigate(RandomStringGeneratorViewInstance);
         }
 
         /// <summary>
@@ -70,9 +71,9 @@ namespace CommonUtil.View {
                     return;
                 }
                 if (element.Name == "RandomNumberGeneratorView") {
-                    ContentFrame.Navigate(typeof(RandomNumberGeneratorView), NavigationTransitionInfo);
+                    ContentFrame.Navigate(RandomNumberGeneratorViewInstance);
                 } else if (element.Name == "RandomStringGeneratorView") {
-                    ContentFrame.Navigate(typeof(RandomStringGeneratorView), NavigationTransitionInfo);
+                    ContentFrame.Navigate(RandomStringGeneratorViewInstance);
                 }
             }
         }
