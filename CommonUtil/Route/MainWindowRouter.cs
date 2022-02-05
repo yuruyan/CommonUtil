@@ -37,7 +37,8 @@ namespace CommonUtil.Route {
             Base64Tool,
             RandomGenerator,
             ChineseTransform,
-            TimeStamp
+            TimeStamp,
+            FileMergeSplit
         }
     }
 }
