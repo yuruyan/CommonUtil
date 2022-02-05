@@ -116,6 +116,14 @@ namespace CommonUtil.View {
         /// 合并文件进度监控 Timer
         /// </summary>
         private System.Timers.Timer MergeFileProcessTimer;
+        /// <summary>
+        /// 是否正在分割文件
+        /// </summary>
+        private bool IsSplitingFile = false;
+        /// <summary>
+        /// 是否正在合并文件
+        /// </summary>
+        private bool IsMergingFile = false;
 
         public FileMergeSplitView() {
             FileSizeOptions = new() {
@@ -213,6 +221,10 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SplitFileClick(object sender, RoutedEventArgs e) {
+            if (IsSplitingFile) {
+                Widget.MessageBox.Info("正在分割文件");
+                return;
+            }
             if (!CheckSplitFileInputValidation()) {
                 return;
             }
@@ -262,6 +274,7 @@ namespace CommonUtil.View {
             string saveDir = SplitFileSaveDirectory;
             ThreadPool.QueueUserWorkItem(o => {
                 try {
+                    IsSplitingFile = true;
                     SplitFileProcessTimer.Start();
                     FileMergeSplit.SplitFile(filepath, saveDir, perSize, SplitFileProcessMonitor);
                     // 等待一段时间后再停止更新
@@ -272,6 +285,8 @@ namespace CommonUtil.View {
                 } catch (Exception error) {
                     Logger.Error(error);
                     Widget.MessageBox.Error("分割失败！");
+                } finally {
+                    IsSplitingFile = false;
                 }
                 Dispatcher.Invoke(() => {
                     Widget.MessageBox.Success("分割完成！");
@@ -370,6 +385,10 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MergeFileClick(object sender, RoutedEventArgs e) {
+            if (IsMergingFile) {
+                Widget.MessageBox.Info("正在合并文件");
+                return;
+            }
             if (!CheckMergeFileInputValidation()) {
                 return;
             }
@@ -386,6 +405,7 @@ namespace CommonUtil.View {
             string savePath = MergeFileSavePath;
             ThreadPool.QueueUserWorkItem(o => {
                 try {
+                    IsMergingFile = true;
                     MergeFileProcessTimer.Start();
                     FileMergeSplit.MergeFile(files, savePath, MergeFileProcessMonitor);
                     // 等待一段时间后再停止更新
@@ -396,6 +416,8 @@ namespace CommonUtil.View {
                 } catch (Exception error) {
                     Logger.Error(error);
                     Widget.MessageBox.Error("合并文件失败！");
+                } finally {
+                    IsMergingFile = false;
                 }
                 Dispatcher.Invoke(() => {
                     Widget.MessageBox.Success("合并成功！");
