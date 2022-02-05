@@ -4,19 +4,12 @@ using NLog;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CommonUtil.View {
     public partial class FileMergeSplitView : Page {
@@ -25,10 +18,13 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty IsSizeOptionSelectedProperty = DependencyProperty.Register("IsSizeOptionSelected", typeof(bool), typeof(FileMergeSplitView), new PropertyMetadata(true));
         public static readonly DependencyProperty SplitSizeOptionInputTextProperty = DependencyProperty.Register("SplitSizeOptionInputText", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata("100"));
         public static readonly DependencyProperty SplitNumberOptionInputTextProperty = DependencyProperty.Register("SplitNumberOptionInputText", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata("10"));
-        public static readonly DependencyProperty SplitSelectedFileNameProperty = DependencyProperty.Register("SplitSelectedFileName", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
-        public static readonly DependencyProperty SplitSelectedFileSizeProperty = DependencyProperty.Register("SplitSelectedFileSize", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
+        public static readonly DependencyProperty SplitFilePathProperty = DependencyProperty.Register("SplitFilePath", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
+        public static readonly DependencyProperty SplitFileSizeProperty = DependencyProperty.Register("SplitFileSize", typeof(long), typeof(FileMergeSplitView), new PropertyMetadata(0L));
         public static readonly DependencyProperty SplitFileSaveDirectoryProperty = DependencyProperty.Register("SplitFileSaveDirectory", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
         public static readonly DependencyProperty FileSizeOptionsProperty = DependencyProperty.Register("FileSizeOptions", typeof(List<string>), typeof(FileMergeSplitView), new PropertyMetadata());
+        public static readonly DependencyProperty MergeFileDirectoryProperty = DependencyProperty.Register("MergeFileDirectory", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
+        public static readonly DependencyProperty MergeFileSavePathProperty = DependencyProperty.Register("MergeFileSavePath", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
+        public static readonly DependencyProperty MergeFilesProperty = DependencyProperty.Register("MergeFiles", typeof(ObservableCollection<string>), typeof(FileMergeSplitView), new PropertyMetadata());
 
         /// <summary>
         /// 是否选中按文件大小分割
@@ -52,18 +48,18 @@ namespace CommonUtil.View {
             set { SetValue(SplitNumberOptionInputTextProperty, value); }
         }
         /// <summary>
-        /// 分割文件名
+        /// 分割文件路径
         /// </summary>
-        public string SplitSelectedFileName {
-            get { return (string)GetValue(SplitSelectedFileNameProperty); }
-            set { SetValue(SplitSelectedFileNameProperty, value); }
+        public string SplitFilePath {
+            get { return (string)GetValue(SplitFilePathProperty); }
+            set { SetValue(SplitFilePathProperty, value); }
         }
         /// <summary>
         /// 分割文件大小
         /// </summary>
-        public string SplitSelectedFileSize {
-            get { return (string)GetValue(SplitSelectedFileSizeProperty); }
-            set { SetValue(SplitSelectedFileSizeProperty, value); }
+        public long SplitFileSize {
+            get { return (long)GetValue(SplitFileSizeProperty); }
+            set { SetValue(SplitFileSizeProperty, value); }
         }
         /// <summary>
         /// 分割文件保存文件夹
@@ -79,15 +75,27 @@ namespace CommonUtil.View {
             get { return (List<string>)GetValue(FileSizeOptionsProperty); }
             set { SetValue(FileSizeOptionsProperty, value); }
         }
-
         /// <summary>
-        /// 分割文件路径
+        /// 合并文件输入
         /// </summary>
-        private string SplitFilePath = string.Empty;
+        public string MergeFileDirectory {
+            get { return (string)GetValue(MergeFileDirectoryProperty); }
+            set { SetValue(MergeFileDirectoryProperty, value); }
+        }
         /// <summary>
-        /// 分割文件大小
+        /// 合并文件保存路径
         /// </summary>
-        private long SplitFileSize = 0;
+        public string MergeFileSavePath {
+            get { return (string)GetValue(MergeFileSavePathProperty); }
+            set { SetValue(MergeFileSavePathProperty, value); }
+        }
+        /// <summary>
+        /// 合并文件路径列表
+        /// </summary>
+        public ObservableCollection<string> MergeFiles {
+            get { return (ObservableCollection<string>)GetValue(MergeFilesProperty); }
+            set { SetValue(MergeFilesProperty, value); }
+        }
 
         public FileMergeSplitView() {
             FileSizeOptions = new() {
@@ -96,8 +104,8 @@ namespace CommonUtil.View {
                 "GB",
                 "%百分比",
             };
+            MergeFiles = new();
             InitializeComponent();
-
         }
 
         /// <summary>
@@ -130,14 +138,6 @@ namespace CommonUtil.View {
                 var fileInfo = new FileInfo(openFileDialog.FileName);
                 SplitFilePath = fileInfo.FullName;
                 SplitFileSize = fileInfo.Length;
-                SplitSelectedFileName = fileInfo.Name;
-                if (fileInfo.Length < 1024) {
-                    SplitSelectedFileSize = string.Format("{0} B", fileInfo.Length);
-                } else if (fileInfo.Length < 1048576) {
-                    SplitSelectedFileSize = string.Format("{0:F2} KB", fileInfo.Length / (double)1024);
-                } else {
-                    SplitSelectedFileSize = string.Format("{0:F2} MB", fileInfo.Length / (double)1048576);
-                }
             } catch (Exception error) {
                 Logger.Info(error);
                 Widget.MessageBox.Error("文件不存在！");
@@ -165,7 +165,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SplitFileClick(object sender, RoutedEventArgs e) {
-            if (!CheckInputValidation()) {
+            if (!CheckSplitFileInputValidation()) {
                 return;
             }
             long perSize = 0;
@@ -182,13 +182,18 @@ namespace CommonUtil.View {
                     return;
                 }
                 string? value = FileSizeOptionComboBox.SelectedValue.ToString();
+                if (value == null) {
+                    Logger.Error("选择错误");
+                    Widget.MessageBox.Error("选择错误！");
+                    return;
+                }
                 if (value == "KB") {
                     perSize = (long)(size * 0x400);
                 } else if (value == "MB") {
                     perSize = (long)(size * 0x100000);
                 } else if (value == "GB") {
                     perSize = (long)(size * 0x40000000);
-                } else if (value.Contains("%")) {
+                } else if (value.Contains('%')) {
                     perSize = (long)(SplitFileSize * (size / 100));
                 }
             } else {
@@ -205,8 +210,14 @@ namespace CommonUtil.View {
                 return;
             }
             try {
-                FileMergeSplit.SplitFile(SplitFilePath, SplitFileSaveDirectory, perSize);
-                Widget.MessageBox.Success("分割完成！");
+                string filepath = SplitFilePath;
+                string saveDir = SplitFileSaveDirectory;
+                ThreadPool.QueueUserWorkItem(o => {
+                    FileMergeSplit.SplitFile(filepath, saveDir, perSize);
+                    Dispatcher.Invoke(() => {
+                        Widget.MessageBox.Success("分割完成！");
+                    });
+                });
             } catch (Exception error) {
                 Logger.Error(error);
                 Widget.MessageBox.Error("分割失败！");
@@ -214,16 +225,16 @@ namespace CommonUtil.View {
         }
 
         /// <summary>
-        /// 检查输入有效性
+        /// 检查分割文件输入有效性
         /// </summary>
         /// <returns></returns>
-        private bool CheckInputValidation() {
+        private bool CheckSplitFileInputValidation() {
             if (string.IsNullOrEmpty(SplitFilePath)) {
-                Widget.MessageBox.Error("请选择要分割的文件！");
+                Widget.MessageBox.Info("请选择要分割的文件！");
                 return false;
             }
             if (string.IsNullOrEmpty(SplitFileSaveDirectory)) {
-                Widget.MessageBox.Error("请选择保存目录！");
+                Widget.MessageBox.Info("请选择保存目录！");
                 return false;
             }
             string inputNumber = string.Empty;
@@ -243,5 +254,87 @@ namespace CommonUtil.View {
             return true;
         }
 
+        /// <summary>
+        /// 检查合并文件输入有效性
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckMergeFileInputValidation() {
+            if (string.IsNullOrEmpty(MergeFileSavePath)) {
+                Widget.MessageBox.Info("请输入文件保存路径！");
+                return false;
+            }
+            if (string.IsNullOrEmpty(MergeFileDirectory)) {
+                Widget.MessageBox.Info("请输入合并文件目录！");
+                return false;
+            }
+            if (!Directory.Exists(MergeFileDirectory)) {
+                Widget.MessageBox.Error("合并文件目录不存在！");
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 选择合并文件保存路径
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectMergeFileSaveClick(object sender, RoutedEventArgs e) {
+            var dialog = new SaveFileDialog {
+                Filter = "All Files|*.*"
+            };
+            if (dialog.ShowDialog() != true) {
+                return;
+            }
+            MergeFileSavePath = dialog.FileName;
+        }
+
+        /// <summary>
+        /// 选择合并文件目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectMergeFileDirClick(object sender, RoutedEventArgs e) {
+            var dialog = new VistaFolderBrowserDialog {
+                Description = "选择合并文件夹",
+                UseDescriptionForTitle = true // This applies to the Vista style dialog only, not the old dialog.
+            };
+            if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
+                MergeFileDirectory = dialog.SelectedPath;
+                try {
+                    MergeFiles = new(new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.FullName));
+                } catch (Exception error) {
+                    Logger.Error(error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 合并文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MergeFileClick(object sender, RoutedEventArgs e) {
+            if (!CheckMergeFileInputValidation()) {
+                return;
+            }
+            string[] files = new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.FullName).ToArray();
+            if (files.Length == 0) {
+                Widget.MessageBox.Error("合并文件为空！");
+                return;
+            }
+            try {
+                string savePath = MergeFileSavePath;
+                ThreadPool.QueueUserWorkItem(o => {
+                    FileMergeSplit.MergeFile(files, savePath);
+                    Dispatcher.Invoke(() => {
+                        Widget.MessageBox.Success("合并成功！");
+                    });
+                });
+            } catch (Exception error) {
+                Logger.Error(error);
+                Widget.MessageBox.Error("合并文件失败！");
+            }
+        }
     }
 }

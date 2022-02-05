@@ -5,7 +5,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
       xmlns:ui="http://schemas.modernwpf.com/2019" 
-      xmlns:sys="clr-namespace:System;assembly=System.Runtime"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -13,53 +12,107 @@
       Margin="8"
       Title="FileMergeSplitView">
 
-  <UniformGrid Columns="2">
-    <ui:SimpleStackPanel Spacing="12">
-      <!-- 选择分割文件 -->
-      <StackPanel Orientation="Horizontal" Height="50">
-        <StackPanel Width="150" VerticalAlignment="Center">
-          <Button Content="选择分割文件" Click="SelectFileClick"/>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+
+    <UniformGrid Columns="2">
+      <TextBlock Text="分割文件" FontSize="23"/>
+      <TextBlock Text="合并文件" FontSize="23"/>
+    </UniformGrid>
+
+    <UniformGrid Columns="2" Grid.Row="1">
+      <ui:SimpleStackPanel Spacing="12">
+        <!-- 选择分割文件 -->
+        <StackPanel Orientation="Horizontal" Height="50">
+          <StackPanel Width="150" VerticalAlignment="Center">
+            <Button Content="选择分割文件" Click="SelectFileClick"/>
+          </StackPanel>
+          <UniformGrid Rows="2">
+            <TextBlock Text="{Binding SplitFilePath,Converter={StaticResource FileNameConverter}}" 
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#D15509"/>
+            <TextBlock Text="{Binding SplitFileSize,Converter={StaticResource FileSizeConverter}}" 
+                       FontWeight="Bold"
+                       Visibility="{Binding SplitFileSize,Converter={StaticResource HideIfZeroConverter}}"
+                       Foreground="{StaticResource ApplicationBackground}"/>
+          </UniformGrid>
         </StackPanel>
-        <UniformGrid Rows="2">
-          <TextBlock Text="{Binding SplitSelectedFileName}" 
-                     FontSize="20"
-                     FontWeight="Bold"
-                     Foreground="#D15509"/>
-          <TextBlock Text="{Binding SplitSelectedFileSize}" 
+        <!-- 选择保存目录 -->
+        <StackPanel Orientation="Horizontal">
+          <StackPanel Width="150">
+            <Button Content="选择保存目录" Click="SelectFileSplitSaveDirClick"/>
+          </StackPanel>
+          <TextBlock Text="{Binding SplitFileSaveDirectory}"
                      FontWeight="Bold"
                      Foreground="{StaticResource ApplicationBackground}"/>
-        </UniformGrid>
-      </StackPanel>
-      <!-- 选择保存目录 -->
-      <StackPanel Orientation="Horizontal">
-        <StackPanel Width="150">
-          <Button Content="选择保存目录" Click="SelectFileSplitSaveDirClick"/>
         </StackPanel>
-        <TextBlock Text="{Binding SplitFileSaveDirectory}"
-                   FontWeight="Bold"
-                   Foreground="{StaticResource ApplicationBackground}"/>
-      </StackPanel>
-      <ui:RadioButtons Header="分割方式"
-                       SelectedIndex="0"
-                       SelectionChanged="SplitOptionChanged">
-        <RadioButton x:Name="SplitSizeOption" Content="按大小分割" />
-        <RadioButton x:Name="SplitNumberOption" Content="按数量分割" />
-      </ui:RadioButtons>
-      <!-- 输入 -->
-      <Grid HorizontalAlignment="Left">
-        <StackPanel Orientation="Horizontal"
-                    Visibility="{Binding IsSizeOptionSelected,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='False|Collapsed'}">
-          <TextBox MinWidth="120" Text="{Binding SplitSizeOptionInputText}"/>
-          <ComboBox x:Name="FileSizeOptionComboBox"
-                    ItemsSource="{Binding FileSizeOptions}"
-                    SelectedIndex="1"
-                    Margin="4,0,0,0"/>
-        </StackPanel>
-        <StackPanel Visibility="{Binding IsSizeOptionSelected,Converter={StaticResource VisibilityNotEqualConverter},ConverterParameter='False|Collapsed'}">
-          <TextBox Text="{Binding SplitNumberOptionInputText}"/>
-        </StackPanel>
+        <ui:RadioButtons Header="分割方式"
+                         SelectedIndex="0"
+                         SelectionChanged="SplitOptionChanged">
+          <RadioButton x:Name="SplitSizeOption" Content="按大小分割" />
+          <RadioButton x:Name="SplitNumberOption" Content="按数量分割" />
+        </ui:RadioButtons>
+        <!-- 输入 -->
+        <Grid HorizontalAlignment="Left">
+          <StackPanel Orientation="Horizontal"
+                      Visibility="{Binding IsSizeOptionSelected,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='False|Collapsed'}">
+            <TextBox MinWidth="120" Text="{Binding SplitSizeOptionInputText}"/>
+            <ComboBox x:Name="FileSizeOptionComboBox"
+                      ItemsSource="{Binding FileSizeOptions}"
+                      SelectedIndex="1"
+                      Margin="4,0,0,0"/>
+          </StackPanel>
+          <StackPanel Visibility="{Binding IsSizeOptionSelected,Converter={StaticResource VisibilityNotEqualConverter},ConverterParameter='False|Collapsed'}">
+            <TextBox Text="{Binding SplitNumberOptionInputText}"/>
+          </StackPanel>
+        </Grid>
+        <Button Content="开始" Click="SplitFileClick"/>
+      </ui:SimpleStackPanel>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto"/>
+          <RowDefinition />
+          <RowDefinition Height="auto" MinHeight="60"/>
+        </Grid.RowDefinitions>
+        <ui:SimpleStackPanel Spacing="12">
+          <!-- 选择合并目录 -->
+          <StackPanel Orientation="Horizontal" Height="50">
+            <StackPanel Width="150" VerticalAlignment="Center">
+              <Button Content="选择合并目录" Click="SelectMergeFileDirClick"/>
+            </StackPanel>
+            <TextBlock Text="{Binding MergeFileDirectory}"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource ApplicationBackground}"/>
+          </StackPanel>
+          <!-- 选择保存路径 -->
+          <StackPanel Orientation="Horizontal">
+            <StackPanel Width="150">
+              <Button Content="选择保存路径" Click="SelectMergeFileSaveClick"/>
+            </StackPanel>
+            <TextBlock Text="{Binding MergeFileSavePath}"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource ApplicationBackground}"/>
+          </StackPanel>
+        </ui:SimpleStackPanel>
+        <ListBox Grid.Row="1" 
+                 ItemsSource="{Binding MergeFiles}" 
+                 Padding="0,4,0,4"
+                 Background="White">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Path=.,Converter={StaticResource FileNameConverter}}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="2" Content="开始" Click="MergeFileClick"/>
       </Grid>
-      <Button Content="开始" Click="SplitFileClick"/>
-    </ui:SimpleStackPanel>
-  </UniformGrid>
+    </UniformGrid>
+  </Grid>
+
 </Page>

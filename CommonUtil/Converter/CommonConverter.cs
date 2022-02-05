@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -65,6 +66,40 @@ namespace CommonUtil.Converter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             int v = System.Convert.ToInt32(value);
             return v <= 0 ? "" : v;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 为 0 则隐藏
+    /// </summary>
+    public class HideIfZeroConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            try {
+                return System.Convert.ToUInt64(value) == 0 ? Visibility.Collapsed : Visibility.Visible;
+            } catch {
+                return Visibility.Collapsed;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 不为 0 则隐藏
+    /// </summary>
+    public class HideIfNotZeroConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            try {
+                return System.Convert.ToUInt64(value) != 0 ? Visibility.Collapsed : Visibility.Visible;
+            } catch {
+                return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -382,6 +417,47 @@ namespace CommonUtil.Converter {
                 }
             }
             return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 显示文件名 Converter
+    /// </summary>
+    public class FileNameConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (!File.Exists((string?)value)) {
+                return string.Empty;
+            }
+            return new FileInfo((string)value).Name;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 文件大小 Converter，自动显示相应大小
+    /// </summary>
+    public class FileSizeConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var size = System.Convert.ToUInt64(value);
+            if (size == 0) {
+                return 0;
+            }
+            if (size < 1024) {
+                return string.Format("{0} B", size);
+            } else if (size < 0x100000) {
+                return string.Format("{0:F2} KB", size / (double)1024);
+            } else if (size < 0x40000000) {
+                return string.Format("{0:F2} MB", size / (double)0x100000);
+            } else {
+                return string.Format("{0:F2} GB", size / (double)0x40000000);
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
