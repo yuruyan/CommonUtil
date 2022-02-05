@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 
 namespace CommonUtil.Utils {
     public class CommonUtils {
@@ -66,6 +69,27 @@ namespace CommonUtil.Utils {
             long lTime = long.Parse(timestamp + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
             return TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0), TimeZoneInfo.Local).Add(toNow);
+        }
+
+        /// <summary>
+        /// 获取集合相同前缀
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static string GetSamePrefix(IEnumerable<string> list) {
+            if (!list.Any()) {
+                return "";
+            }
+            var sb = new StringBuilder();
+            foreach (var s in list.FirstOrDefault()) {
+                foreach (var item in list) {
+                    if (item[sb.Length] != s) {
+                        return sb.ToString();
+                    }
+                }
+                sb.Append(s);
+            }
+            return sb.ToString();
         }
     }
 }

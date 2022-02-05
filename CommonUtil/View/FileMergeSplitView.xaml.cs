@@ -1,4 +1,5 @@
 ﻿using CommonUtil.Core;
+using CommonUtil.Utils;
 using Microsoft.Win32;
 using NLog;
 using Ookii.Dialogs.Wpf;
@@ -7,6 +8,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -302,7 +305,7 @@ namespace CommonUtil.View {
             if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
                 MergeFileDirectory = dialog.SelectedPath;
                 try {
-                    MergeFiles = new(new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.FullName));
+                    MergeFiles = new(GetSortedFileList(new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)));
                 } catch (Exception error) {
                     Logger.Error(error);
                 }
@@ -318,10 +321,15 @@ namespace CommonUtil.View {
             if (!CheckMergeFileInputValidation()) {
                 return;
             }
-            string[] files = new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.FullName).ToArray();
+            string[] files = GetSortedFileList(
+                                new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)
+                             ).ToArray();
             if (files.Length == 0) {
                 Widget.MessageBox.Error("合并文件为空！");
                 return;
+            }
+            for (int i = 0; i < files.Length; i++) {
+                files[i] = Path.Combine(MergeFileDirectory, files[i]);
             }
             try {
                 string savePath = MergeFileSavePath;
@@ -336,5 +344,38 @@ namespace CommonUtil.View {
                 Widget.MessageBox.Error("合并文件失败！");
             }
         }
+
+        /// <summary>
+        /// 对文件进行排序
+        /// </summary>
+        /// <param name="filenameList"></param>
+        /// <returns></returns>
+        private IEnumerable<string> GetSortedFileList(IEnumerable<string> filenameList) {
+            string prefix = CommonUtils.GetSamePrefix(filenameList);
+            if (string.IsNullOrEmpty(prefix)) {
+                return filenameList;
+            }
+
+            var fileDict = new Dictionary<int, string>();
+            var regex = new Regex($@"{prefix}(\d+)(?:\..+)*");
+            // 填充 fileDict
+            foreach (var file in filenameList) {
+                var match = regex.Match(file);
+                if (match.Success) {
+                    try {
+                        fileDict[Convert.ToInt32(match.Groups[1].Value)] = file;
+                    } catch {
+                    }
+                }
+            }
+            var keys = fileDict.Keys.ToList();
+            keys.Sort();
+            var resultList = new List<string>();
+            foreach (var n in keys) {
+                resultList.Add(fileDict[n]);
+            }
+            return resultList;
+        }
+
     }
 }

@@ -105,7 +105,7 @@
           <ListBox.ItemTemplate>
             <DataTemplate>
               <StackPanel>
-                <TextBlock Text="{Binding Path=.,Converter={StaticResource FileNameConverter}}"/>
+                <TextBlock Text="{Binding }"/>
               </StackPanel>
             </DataTemplate>
           </ListBox.ItemTemplate>
