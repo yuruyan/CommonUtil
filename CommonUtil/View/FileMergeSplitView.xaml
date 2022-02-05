@@ -9,18 +9,56 @@
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Background="White"
-      Margin="8"
+      Margin="8,0,8,0"
       Title="FileMergeSplitView">
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="50"/>
+      <RowDefinition Height="40"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
 
     <UniformGrid Columns="2">
-      <TextBlock Text="分割文件" FontSize="23"/>
-      <TextBlock Text="合并文件" FontSize="23"/>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto"/>
+          <ColumnDefinition Width="auto"/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="分割文件" FontSize="23"/>
+        <TextBlock Grid.Column="1"
+                   Visibility="{Binding ElementName=SplitFileProgressBar,Path=Value,Converter={StaticResource HideIfZeroConverter}}"
+                   Text="{Binding ElementName=SplitFileProgressBar,Path=Value,StringFormat={}{0}%}"
+                   Foreground="#17804A"
+                   FontFamily="Arial"
+                   Margin="16,0,16,0"
+                   FontSize="20"/>
+        <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,8,0">
+          <ui:ProgressBar x:Name="SplitFileProgressBar"
+                          Background="Transparent"
+                          Height="10"/>
+        </StackPanel>
+      </Grid>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto"/>
+          <ColumnDefinition Width="auto"/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="合并文件" FontSize="23"/>
+        <TextBlock Grid.Column="1"
+                   Visibility="{Binding ElementName=MergeFileProgressBar,Path=Value,Converter={StaticResource HideIfZeroConverter}}"
+                   Text="{Binding ElementName=MergeFileProgressBar,Path=Value,StringFormat={}{0}%}"
+                   Foreground="#17804A"
+                   FontFamily="Arial"
+                   Margin="16,0,16,0"
+                   FontSize="20"/>
+        <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,8,0">
+          <ui:ProgressBar x:Name="MergeFileProgressBar"
+                          Background="Transparent"
+                          Height="10"/>
+        </StackPanel>
+      </Grid>
     </UniformGrid>
 
     <UniformGrid Columns="2" Grid.Row="1">
@@ -34,6 +72,7 @@
             <TextBlock Text="{Binding SplitFilePath,Converter={StaticResource FileNameConverter}}" 
                        FontSize="20"
                        FontWeight="Bold"
+                       TextTrimming="CharacterEllipsis"
                        Foreground="#D15509"/>
             <TextBlock Text="{Binding SplitFileSize,Converter={StaticResource FileSizeConverter}}" 
                        FontWeight="Bold"
@@ -75,8 +114,8 @@
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="auto"/>
-          <RowDefinition />
           <RowDefinition Height="auto" MinHeight="60"/>
+          <RowDefinition />
         </Grid.RowDefinitions>
         <ui:SimpleStackPanel Spacing="12">
           <!-- 选择合并目录 -->
@@ -98,7 +137,8 @@
                        Foreground="{StaticResource ApplicationBackground}"/>
           </StackPanel>
         </ui:SimpleStackPanel>
-        <ListBox Grid.Row="1" 
+        <Button Grid.Row="1" Content="开始" Click="MergeFileClick"/>
+        <ListBox Grid.Row="2" 
                  ItemsSource="{Binding MergeFiles}" 
                  Padding="0,4,0,4"
                  Background="White">
@@ -110,7 +150,6 @@
             </DataTemplate>
           </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="开始" Click="MergeFileClick"/>
       </Grid>
     </UniformGrid>
   </Grid>

@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -100,6 +100,23 @@ namespace CommonUtil.View {
             set { SetValue(MergeFilesProperty, value); }
         }
 
+        /// <summary>
+        /// 分割文件进度监控
+        /// </summary>
+        private FileMergeSplit.ProcessMonitor SplitFileProcessMonitor = new();
+        /// <summary>
+        /// 合并文件进度监控
+        /// </summary>
+        private FileMergeSplit.ProcessMonitor MergeFileProcessMonitor = new();
+        /// <summary>
+        /// 分割文件进度监控 Timer
+        /// </summary>
+        private System.Timers.Timer SplitFileProcessTimer;
+        /// <summary>
+        /// 合并文件进度监控 Timer
+        /// </summary>
+        private System.Timers.Timer MergeFileProcessTimer;
+
         public FileMergeSplitView() {
             FileSizeOptions = new() {
                 "KB",
@@ -108,7 +125,35 @@ namespace CommonUtil.View {
                 "%百分比",
             };
             MergeFiles = new();
+            SplitFileProcessTimer = new System.Timers.Timer(250);
+            SplitFileProcessTimer.Elapsed += UpdateSplitFileProcess;
+            MergeFileProcessTimer = new System.Timers.Timer(250);
+            MergeFileProcessTimer.Elapsed += UpdateMergeFileProcess;
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 更新 MergeFileProcess
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateMergeFileProcess(object? sender, ElapsedEventArgs e) {
+            Dispatcher.Invoke(() => {
+                MergeFileProgressBar.Value = (int)(MergeFileProcessMonitor.Process * 100);
+            });
+        }
+
+        /// <summary>
+        /// 更新 SplitFileProcess
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateSplitFileProcess(object? sender, ElapsedEventArgs e) {
+            Dispatcher.Invoke(() => {
+                SplitFileProgressBar.Value = (int)(SplitFileProcessMonitor.Process * 100);
+            });
         }
 
         /// <summary>
@@ -212,19 +257,26 @@ namespace CommonUtil.View {
                 Widget.MessageBox.Error("输入无效！");
                 return;
             }
-            try {
-                string filepath = SplitFilePath;
-                string saveDir = SplitFileSaveDirectory;
-                ThreadPool.QueueUserWorkItem(o => {
-                    FileMergeSplit.SplitFile(filepath, saveDir, perSize);
-                    Dispatcher.Invoke(() => {
-                        Widget.MessageBox.Success("分割完成！");
+
+            string filepath = SplitFilePath;
+            string saveDir = SplitFileSaveDirectory;
+            ThreadPool.QueueUserWorkItem(o => {
+                try {
+                    SplitFileProcessTimer.Start();
+                    FileMergeSplit.SplitFile(filepath, saveDir, perSize, SplitFileProcessMonitor);
+                    // 等待一段时间后再停止更新
+                    ThreadPool.QueueUserWorkItem(p => {
+                        Thread.Sleep((int)(SplitFileProcessTimer.Interval * 2));
+                        SplitFileProcessTimer.Stop();
                     });
+                } catch (Exception error) {
+                    Logger.Error(error);
+                    Widget.MessageBox.Error("分割失败！");
+                }
+                Dispatcher.Invoke(() => {
+                    Widget.MessageBox.Success("分割完成！");
                 });
-            } catch (Exception error) {
-                Logger.Error(error);
-                Widget.MessageBox.Error("分割失败！");
-            }
+            });
         }
 
         /// <summary>
@@ -331,18 +383,24 @@ namespace CommonUtil.View {
             for (int i = 0; i < files.Length; i++) {
                 files[i] = Path.Combine(MergeFileDirectory, files[i]);
             }
-            try {
-                string savePath = MergeFileSavePath;
-                ThreadPool.QueueUserWorkItem(o => {
-                    FileMergeSplit.MergeFile(files, savePath);
-                    Dispatcher.Invoke(() => {
-                        Widget.MessageBox.Success("合并成功！");
+            string savePath = MergeFileSavePath;
+            ThreadPool.QueueUserWorkItem(o => {
+                try {
+                    MergeFileProcessTimer.Start();
+                    FileMergeSplit.MergeFile(files, savePath, MergeFileProcessMonitor);
+                    // 等待一段时间后再停止更新
+                    ThreadPool.QueueUserWorkItem(p => {
+                        Thread.Sleep((int)(MergeFileProcessTimer.Interval * 2));
+                        MergeFileProcessTimer.Stop();
                     });
+                } catch (Exception error) {
+                    Logger.Error(error);
+                    Widget.MessageBox.Error("合并文件失败！");
+                }
+                Dispatcher.Invoke(() => {
+                    Widget.MessageBox.Success("合并成功！");
                 });
-            } catch (Exception error) {
-                Logger.Error(error);
-                Widget.MessageBox.Error("合并文件失败！");
-            }
+            });
         }
 
         /// <summary>
