@@ -308,4 +308,28 @@
     <Setter Property="VerticalContentAlignment" Value="Top"/>
     <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
   </Style>
+  <!-- 无边框 TextBox -->
+  <Style x:Key="BorderlessTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TextBox">
+          <ScrollViewer x:Name="PART_ContentHost"
+                        Background="{TemplateBinding Background}"
+                        FontSize="{TemplateBinding FontSize}"
+                        Style="{DynamicResource TextControlContentHostStyle}"
+                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}"
+                        IsTabStop="False"
+                        Focusable="False"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 </ResourceDictionary>
