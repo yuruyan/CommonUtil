@@ -14,6 +14,8 @@ namespace CommonUtil.Store {
             new() { Name = "简体繁体转换", RouteView = MainWindowRouter.RouterView.ChineseTransform, ImagePath = ImagePath + "ChineseTransform.svg", ClassType = typeof(ChineseTransformView) },
             new() { Name = "时间戳转换", RouteView = MainWindowRouter.RouterView.TimeStamp, ImagePath = ImagePath + "DateTime.svg", ClassType = typeof(TimeStampView) },
             new() { Name = "文件分割/合并", RouteView = MainWindowRouter.RouterView.FileMergeSplit, ImagePath = ImagePath + "Merge.svg", ClassType = typeof(FileMergeSplitView) },
+            new() { Name = "数据散列工具", RouteView = MainWindowRouter.RouterView.DataDigest, ImagePath = ImagePath + "Encryption.svg", ClassType = typeof(DataDigestView) },
+            new() { Name = "ASCII 表", RouteView = MainWindowRouter.RouterView.AsciiTable, ImagePath = ImagePath + "ascii.svg", ClassType = typeof(AsciiTableView) },
         };
     }
 

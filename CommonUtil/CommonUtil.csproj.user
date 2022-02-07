@@ -7,10 +7,16 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\AsciiTableView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Base64ToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\ChineseTransformView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\DataDigestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FileMergeSplitView.xaml.cs">
@@ -54,10 +60,16 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\AsciiTableView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\Base64ToolView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ChineseTransformView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\DataDigestView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FileMergeSplitView.xaml">
