@@ -15,6 +15,7 @@
     <None Remove="Resource\iconfont.ttf" />
     <None Remove="Resource\image\ascii.svg" />
     <None Remove="Resource\image\base64.svg" />
+    <None Remove="Resource\image\BMI.svg" />
     <None Remove="Resource\image\ChineseTransform.svg" />
     <None Remove="Resource\image\DateTime.svg" />
     <None Remove="Resource\image\Encryption.svg" />
@@ -52,6 +53,9 @@
 
   <ItemGroup>
     <Resource Include="favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\image\BMI.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\ChineseTransform.svg" />
