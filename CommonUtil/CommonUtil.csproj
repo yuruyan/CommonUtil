@@ -13,9 +13,11 @@
   <ItemGroup>
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
+    <None Remove="Resource\image\ascii.svg" />
     <None Remove="Resource\image\base64.svg" />
     <None Remove="Resource\image\ChineseTransform.svg" />
     <None Remove="Resource\image\DateTime.svg" />
+    <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\SplashWindow.png" />
@@ -29,13 +31,12 @@
     <Content Include="Resource\iconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resource\image\ascii.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\base64.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="4.7.13" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="RandomDataGenerator.Net" Version="1.0.13" />
     <PackageReference Include="SharpVectors" Version="1.7.7" />
   </ItemGroup>
@@ -53,6 +55,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\ChineseTransform.svg" />
+    <Resource Include="Resource\image\Encryption.svg" />
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\random.svg" />
     <Resource Include="Resource\image\DateTime.svg" />
@@ -63,6 +66,9 @@
 
   <ItemGroup>
     <None Update="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\ascii.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\ProgramingGetTimeStamp.json">

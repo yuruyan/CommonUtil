@@ -31,12 +31,12 @@
   
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="60"/>
+      <RowDefinition Height="50"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
 
     <!-- 标题 -->
-    <StackPanel x:Name="TitleBar" Orientation="Horizontal">
+    <StackPanel x:Name="TitleBar" Orientation="Horizontal" >
       <StackPanel.RenderTransform>
         <TranslateTransform x:Name="TitleBarTranslateTransform"/>
       </StackPanel.RenderTransform>

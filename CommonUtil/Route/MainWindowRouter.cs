@@ -44,7 +44,9 @@ namespace CommonUtil.Route {
             RandomGenerator,
             ChineseTransform,
             TimeStamp,
-            FileMergeSplit
+            FileMergeSplit,
+            DataDigest,
+            AsciiTable,
         }
     }
 }

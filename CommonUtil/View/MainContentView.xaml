@@ -15,7 +15,7 @@
     <ItemsControl ItemsSource="{Binding ToolMenuItems}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-          <WrapPanel/>
+          <WrapPanel HorizontalAlignment="Center"/>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
