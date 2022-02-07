@@ -47,6 +47,7 @@ namespace CommonUtil.Route {
             FileMergeSplit,
             DataDigest,
             AsciiTable,
+            BMICalculator,
         }
     }
 }
