@@ -38,7 +38,7 @@ namespace CommonUtil.View {
                 if(element.DataContext is ToolMenuItem menuItem) {
                     //RouterView = menuItem.RouteView;
                     //RouterViewTitle = menuItem.Name;
-                    MainWindowRouter.ToView(menuItem.RouteView);
+                    MainWindowRouter.Navigate(menuItem.ClassType);
                 }
             }
         }
