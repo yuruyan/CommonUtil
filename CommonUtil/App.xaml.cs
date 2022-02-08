@@ -21,7 +21,7 @@ namespace CommonUtil {
 
             #region 全局错误处理
             // UI线程未捕获异常处理事件
-            DispatcherUnhandledException += GlobalDispatcherUnhandledException;
+            Current.DispatcherUnhandledException += GlobalDispatcherUnhandledException;
             // 非UI线程未捕获异常处理事件(例如自己创建的一个子线程)
             AppDomain.CurrentDomain.UnhandledException += DomainUnhandledException;
             // Task线程内未捕获异常处理事件
@@ -37,14 +37,13 @@ namespace CommonUtil {
         private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
             if (e.ExceptionObject is Exception exception) {
                 Logger.Error(exception);
-                MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
             }
         }
 
         private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
             Logger.Error(e.Exception);
-            e.Handled = true;
-            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application.Current.Shutdown();
         }
     }
 }

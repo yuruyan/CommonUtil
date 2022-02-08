@@ -13,6 +13,9 @@
     <Compile Update="View\Base64ToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\BaseConversionView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\BMICalculatorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -67,6 +70,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Base64ToolView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\BaseConversionView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\BMICalculatorView.xaml">
