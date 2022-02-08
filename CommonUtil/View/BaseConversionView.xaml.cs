@@ -2,18 +2,10 @@
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CommonUtil.View {
     public partial class BaseConversionView : Page {
@@ -99,7 +91,7 @@ namespace CommonUtil.View {
                     continue;
                 }
                 try {
-                    sb.Append($"{BaseConversion.ConvertFromDecimal(BaseConversion.ConvertToDecimal(number, SourceBaseIndex + 2), TargetBaseIndex + 2)}\n");
+                    sb.Append($"{BaseConversion.ConvertFromDecimal(BaseConversion.ConvertToDecimal(number, SourceBaseIndex + BaseOptions[0]), TargetBaseIndex + BaseOptions[0])}\n");
                 } catch (Exception error) {
                     //Logger.Info(error);
                     sb.Append('\n');
