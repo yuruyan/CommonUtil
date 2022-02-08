@@ -17,6 +17,7 @@ namespace CommonUtil.Store {
             new() { Name = "数据散列工具", ImagePath = ImagePath + "Encryption.svg", ClassType = typeof(DataDigestView) },
             new() { Name = "ASCII 表格", ImagePath = ImagePath + "ascii.svg", ClassType = typeof(AsciiTableView) },
             new() { Name = "BMI 计算", ImagePath = ImagePath + "bmi.svg", ClassType = typeof(BMICalculatorView) },
+            new() { Name = "进制转换", ImagePath = ImagePath + "BaseConversion.svg", ClassType = typeof(BaseConversionView) },
         };
     }
 
