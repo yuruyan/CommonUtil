@@ -32,7 +32,7 @@
       </Button>
       <Button Click="DecodingTextClick">
         <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe63e;"/>
+          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe640;"/>
           <TextBlock Text="{Binding ElementName=Root,Path=DecodingButtonText}" Style="{StaticResource ButtonTextBlockStyle}"/>
         </StackPanel>
       </Button>
