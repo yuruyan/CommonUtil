@@ -19,6 +19,7 @@
     <None Remove="Resource\image\BMI.svg" />
     <None Remove="Resource\image\ChineseTransform.svg" />
     <None Remove="Resource\image\DateTime.svg" />
+    <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\random.svg" />
@@ -63,6 +64,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\ChineseTransform.svg" />
+    <Resource Include="Resource\image\encoding.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\Encryption.svg" />
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\random.svg" />

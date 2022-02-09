@@ -22,6 +22,24 @@
     <Compile Update="View\ChineseTransformView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\CommonEncodingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommonEncoding\EncodingTemplate.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommonEncoding\HexEncodingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommonEncoding\UnicodeEncodingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommonEncoding\URLEncodingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CommonEncoding\UTF8EncodingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\DataDigestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +97,24 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ChineseTransformView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncodingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncoding\EncodingTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncoding\HexEncodingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncoding\UnicodeEncodingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncoding\URLEncodingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CommonEncoding\UTF8EncodingView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\DataDigestView.xaml">
