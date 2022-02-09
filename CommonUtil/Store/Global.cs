@@ -18,7 +18,7 @@ namespace CommonUtil.Store {
             new() { Name = "ASCII 表格", ImagePath = ImagePath + "ascii.svg", ClassType = typeof(AsciiTableView) },
             new() { Name = "BMI 计算", ImagePath = ImagePath + "bmi.svg", ClassType = typeof(BMICalculatorView) },
             new() { Name = "进制转换", ImagePath = ImagePath + "BaseConversion.svg", ClassType = typeof(BaseConversionView) },
-            new() { Name = "常用编码/解码", ImagePath = ImagePath + "encoding.svg", ClassType = typeof(CommonEncodingView) },
+            new() { Name = "顺序文本生成", ImagePath = ImagePath + "order.svg", ClassType = typeof(OrdinalTextGeneratorView) },
         };
     }
 
