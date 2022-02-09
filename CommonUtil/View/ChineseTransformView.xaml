@@ -13,7 +13,7 @@
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="70"/>
+      <RowDefinition Height="60"/>
       <RowDefinition Height="30"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
@@ -39,7 +39,7 @@
     <!-- Description -->
     <UniformGrid Grid.Row="1" Columns="2">
       <TextBlock Padding="8,0,0,0" FontSize="20" Text="待转换文本："/>
-      <TextBlock Padding="8,0,0,0" FontSize="20" Text="转换结果："/>
+      <TextBlock Padding="8,0,0,0" FontSize="21" Text="转换结果："/>
     </UniformGrid>
     <!-- Input,Output -->
     <UniformGrid Grid.Row="2" Columns="2">

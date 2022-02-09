@@ -31,24 +31,23 @@
   
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="50"/>
+      <RowDefinition Height="35"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
 
     <!-- 标题 -->
-    <StackPanel x:Name="TitleBar" Orientation="Horizontal" >
+    <StackPanel x:Name="TitleBar" Orientation="Horizontal" VerticalAlignment="Top">
       <StackPanel.RenderTransform>
         <TranslateTransform x:Name="TitleBarTranslateTransform"/>
       </StackPanel.RenderTransform>
       <ui:TitleBarButton Click="ToBackClick"
                          Visibility="{Binding IsBackIconVisible,Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}"
-                         Margin="12,0,0,0">
+                         Margin="0,0,0,0">
         <TextBlock Text="&#xe60f;" 
                    FontSize="20"
-                   Style="{StaticResource IconFontStyle}">
-        </TextBlock>
+                   Style="{StaticResource IconFontStyle}"/>
       </ui:TitleBarButton>
-      <TextBlock Margin="12,0,0,0" Text="{Binding RouteViewTitle}" FontSize="20"/>
+      <TextBlock Margin="4" Text="{Binding RouteViewTitle}" />
     </StackPanel>
     
     <ui:Frame Grid.Row="1" x:Name="ContentFrame">
