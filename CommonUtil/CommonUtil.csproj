@@ -22,6 +22,7 @@
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\Merge.svg" />
+    <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\SplashWindow.png" />
   </ItemGroup>
@@ -69,6 +70,9 @@
     </Resource>
     <Resource Include="Resource\image\Encryption.svg" />
     <Resource Include="Resource\image\Merge.svg" />
+    <Resource Include="Resource\image\order.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\random.svg" />
     <Resource Include="Resource\image\DateTime.svg" />
     <Resource Include="Resource\SplashWindow.png">
