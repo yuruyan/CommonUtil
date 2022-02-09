@@ -8,7 +8,6 @@
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
-      Background="White"
       Margin="8,0,8,0"
       Title="FileMergeSplitView">
 

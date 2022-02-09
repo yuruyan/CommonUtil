@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:CommonUtil.View"
       xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
-      Background="White"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BMICalculatorView">

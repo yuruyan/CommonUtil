@@ -9,7 +9,6 @@
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Margin="8"
-      Background="White"
       Title="RandomGenerator">
 
   <Grid>
