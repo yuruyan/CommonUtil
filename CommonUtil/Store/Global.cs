@@ -19,6 +19,7 @@ namespace CommonUtil.Store {
             new() { Name = "BMI 计算", ImagePath = ImagePath + "bmi.svg", ClassType = typeof(BMICalculatorView) },
             new() { Name = "进制转换", ImagePath = ImagePath + "BaseConversion.svg", ClassType = typeof(BaseConversionView) },
             new() { Name = "顺序文本生成", ImagePath = ImagePath + "order.svg", ClassType = typeof(OrdinalTextGeneratorView) },
+            new() { Name = "文件内容搜索", ImagePath = ImagePath + "FileSearch.svg", ClassType = typeof(KeywordFinderView) },
         };
     }
 
