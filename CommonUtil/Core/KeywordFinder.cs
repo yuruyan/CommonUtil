@@ -119,7 +119,7 @@ public class KeywordFinder {
             }
         } else {
             for (int i = 0; i < ThreadCount; i++) {
-                keyList[i] = filterKeys[(i * perThreadCount)..Math.Min((i + 1) * perThreadCount, filterKeys.Length)].ToList();
+                keyList[i] = filterKeys[Math.Min(i * perThreadCount, filterKeys.Length)..Math.Min((i + 1) * perThreadCount, filterKeys.Length)].ToList();
             }
         }
         // 查找
