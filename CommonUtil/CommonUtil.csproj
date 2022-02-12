@@ -21,6 +21,7 @@
     <None Remove="Resource\image\DateTime.svg" />
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
+    <None Remove="Resource\image\FileSearch.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\random.svg" />
@@ -69,6 +70,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\Encryption.svg" />
+    <Resource Include="Resource\image\FileSearch.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\order.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
