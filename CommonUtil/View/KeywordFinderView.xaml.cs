@@ -231,7 +231,7 @@ namespace CommonUtil.View {
             if (sender is FrameworkElement element) {
                 if (element.DataContext is KeywordResult result) {
                     try {
-                        Process.Start("explorer.exe", new FileInfo(System.IO.Path.Combine(SearchDirectory, result.File)).DirectoryName);
+                        Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(SearchDirectory, result.File));
                     } catch (Exception error) {
                         Widget.MessageBox.Error("打开失败," + error.Message);
                         Logger.Error(error);
@@ -246,7 +246,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenSearchDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
-            if(sender is TextBlock element) {
+            if (sender is TextBlock element) {
                 try {
                     Process.Start("explorer.exe", element.Text);
                 } catch (Exception error) {
