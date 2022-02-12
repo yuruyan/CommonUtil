@@ -21,7 +21,13 @@
                    MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=200}"
                    FontWeight="Bold"
                    TextWrapping="Wrap"
-                   Foreground="#0087B6"/>
+                   Foreground="#0087B6"
+                   Style="{StaticResource HyperLinkStyle}"
+                   MouseLeftButtonUp="OpenSearchDirectoryMouseUp">
+          <TextBlock.ToolTip>
+            <ToolTip Content="打开文件夹"/>
+          </TextBlock.ToolTip>
+        </TextBlock>
       </StackPanel>
       <DockPanel LastChildFill="False">
         <CheckBox Width="135" 
@@ -101,8 +107,28 @@
               </ItemsControl>-->
               <StackPanel.ContextMenu>
                 <ContextMenu>
-                  <MenuItem Header="打开文件"/>
-                  <MenuItem Header="打开文件所在目录"/>
+                  <ContextMenu.ItemContainerStyle>
+                    <Style TargetType="MenuItem" />
+                  </ContextMenu.ItemContainerStyle>
+                  <ContextMenu.Resources>
+                    <Style TargetType="StackPanel">
+                      <Setter Property="Height" Value="30"/>
+                      <Setter Property="Background" Value="Transparent"/>
+                      <Setter Property="Width" Value="180"/>
+                    </Style>
+                    <Style x:Key="IconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
+                      <Setter Property="Padding" Value="8,0,8,0"/>
+                      <Setter Property="FontSize" Value="18"/>
+                    </Style>
+                  </ContextMenu.Resources>
+                  <StackPanel Orientation="Horizontal" MouseUp="OpenFileMouseUp">
+                    <TextBlock Text="&#xe671;" Style="{StaticResource IconFontStyle}"/>
+                    <TextBlock Text="打开文件"/>
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal" MouseUp="OpenDirectoryMouseUp">
+                    <TextBlock Text="&#xe69d;" Style="{StaticResource IconFontStyle}"/>
+                    <TextBlock Text="打开文件所在目录"/>
+                  </StackPanel>
                 </ContextMenu>
               </StackPanel.ContextMenu>
             </StackPanel>
