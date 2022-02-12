@@ -4,6 +4,7 @@ using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,6 +30,7 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty KeywordResultsProperty = DependencyProperty.Register("KeywordResults", typeof(ObservableCollection<KeywordResult>), typeof(KeywordFinderView), new PropertyMetadata());
         public static readonly DependencyProperty IsExcludeDirectorySelectedProperty = DependencyProperty.Register("IsExcludeDirectorySelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(false));
         public static readonly DependencyProperty IsExcludeFileSelectedProperty = DependencyProperty.Register("IsExcludeFileSelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsSearchingFinishedProperty = DependencyProperty.Register("IsSearchingFinished", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
 
         /// <summary>
         /// 搜索目录
@@ -79,11 +81,13 @@ namespace CommonUtil.View {
             get { return (ObservableCollection<KeywordResult>)GetValue(KeywordResultsProperty); }
             set { SetValue(KeywordResultsProperty, value); }
         }
-
         /// <summary>
         /// 搜索是否结束
         /// </summary>
-        private bool IsSearchingFinished = true;
+        public bool IsSearchingFinished {
+            get { return (bool)GetValue(IsSearchingFinishedProperty); }
+            set { SetValue(IsSearchingFinishedProperty, value); }
+        }
         private KeywordFinder KeywordFinder;
         /// <summary>
         /// 上次查询目录
@@ -92,7 +96,21 @@ namespace CommonUtil.View {
 
         public KeywordFinderView() {
             KeywordResults = new();
+            KeywordResults.CollectionChanged += KeywordResultsCollectionChanged;
             InitializeComponent();
+        }
+
+        private void KeywordResultsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
+            if (e.Action == NotifyCollectionChangedAction.Add) {
+                // 获取相对路径
+                if (e.NewItems != null) {
+                    foreach (var item in e.NewItems) {
+                        if (item is KeywordResult result) {
+                            result.File = result.File.Replace('/', '\\')[(SearchDirectory.Replace('/', '\\').Length + 1)..];
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -118,10 +136,10 @@ namespace CommonUtil.View {
             var excludeDirs = new List<string>();
             var excludeFiles = new List<string>();
             if (IsExcludeDirectorySelected) {
-                excludeDirs.AddRange(ExcludeDirectory.Split('\n').Where(s => s.Trim() != ""));
+                excludeDirs.AddRange(ExcludeDirectory.Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
             }
             if (IsExcludeFileSelected) {
-                excludeFiles.AddRange(ExcludeFile.Split('\n').Where(s => s.Trim() != ""));
+                excludeFiles.AddRange(ExcludeFile.Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
             }
             // 检查搜索目录是否改变
             if (LastSearchDirectory != SearchDirectory) {
@@ -131,7 +149,7 @@ namespace CommonUtil.View {
                     try {
                         var keywordFinder = new KeywordFinder(searchDirectory, excludeDirs, excludeFiles);
                         Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
-                        FindKeyword();
+                        FindKeyword(excludeDirs, excludeFiles);
                     } catch (Exception error) {
                         Dispatcher.Invoke(() => Widget.MessageBox.Error(error.Message));
                         Logger.Error(error);
@@ -139,10 +157,10 @@ namespace CommonUtil.View {
                 });
                 return;
             }
-            FindKeyword();
+            FindKeyword(excludeDirs, excludeFiles);
         }
 
-        private void FindKeyword() {
+        private void FindKeyword(List<string> excludeDirs, List<string> excludeFiles) {
             var searchText = "";
             ObservableCollection<KeywordResult> keywordResults = null;
             Dispatcher.Invoke(() => {
@@ -151,11 +169,11 @@ namespace CommonUtil.View {
             });
             ThreadPool.QueueUserWorkItem(o => {
                 try {
-                    KeywordFinder.FindKeyword(searchText, keywordResults, Dispatcher);
+                    KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults, Dispatcher);
                 } catch (Exception error) {
                     Dispatcher.Invoke(() => Widget.MessageBox.Error(error.Message));
                     Logger.Error(error);
-                } finally { 
+                } finally {
                     Dispatcher.Invoke(() => IsSearchingFinished = true);
                 }
             });

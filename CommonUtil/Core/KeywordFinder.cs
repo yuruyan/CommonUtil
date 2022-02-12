@@ -22,13 +22,13 @@ public class KeywordResult {
 }
 
 public class KeywordFinder {
-    private static readonly int ThreadCount = 8;
+    private static readonly int ThreadCount = 16;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public string SearchDirectory { get; private set; }
     public List<string> ExcludeDirectoryRegexes { get; private set; }
     public List<string> ExcludeFileRegexes { get; private set; }
-    private readonly IDictionary<string, IList<string>> FileDataDict;
+    private readonly IDictionary<string, IList<string>> FileDataDict = new Dictionary<string, IList<string>>();
 
     /// <summary>
     /// 
@@ -92,13 +92,17 @@ public class KeywordFinder {
     /// <param name="results"></param>
     /// <param name="dispatcher"></param>
     /// <returns></returns>
-    public void FindKeyword(string keywordRegex, ObservableCollection<KeywordResult> results, Dispatcher? dispatcher = null) {
+    public void FindKeyword(string keywordRegex, List<string> excludeDirs, List<string> excludeFiles, ObservableCollection<KeywordResult> results, Dispatcher? dispatcher = null) {
+        // 加载必要文件
+        var dict = GetFileData(FilterFiles(SearchDirectory, excludeDirs, excludeFiles));
+        foreach (var item in dict) {
+            FileDataDict[item.Key] = item.Value;
+        }
         var re = new Regex(keywordRegex, RegexOptions.IgnoreCase);
-        //var results = new List<KeywordResult>();
-        int perThreadCount = (int)Math.Ceiling(FileDataDict.Count / (double)ThreadCount);
-        var tasks = new List<Task>(ThreadCount);
-        var keyList = new List<List<string>>(ThreadCount);
-        var dataKeys = FileDataDict.Keys.ToArray();
+        var tasks = new List<Task>(ThreadCount); // 线程集合
+        var keyList = new List<List<string>>(ThreadCount); // 线程进行处理的数据
+        var filterKeys = FilterDirectoryFiles(excludeDirs, excludeFiles).ToArray();
+        int perThreadCount = (int)Math.Ceiling(filterKeys.Length / (double)ThreadCount); // 每个线程进行处理的数据数目
         if (dispatcher != null) {
             dispatcher.Invoke(() => results.Clear());
         } else {
@@ -109,13 +113,13 @@ public class KeywordFinder {
             keyList.Add(new());
         }
         // 拆分集合
-        if (dataKeys.Length <= ThreadCount) {
-            for (int i = 0; i < dataKeys.Length; i++) {
-                keyList[i].Add(dataKeys[i]);
+        if (filterKeys.Length <= ThreadCount) {
+            for (int i = 0; i < filterKeys.Length; i++) {
+                keyList[i].Add(filterKeys[i]);
             }
         } else {
             for (int i = 0; i < ThreadCount; i++) {
-                keyList[i] = dataKeys[(i * perThreadCount)..Math.Min((i + 1) * perThreadCount, dataKeys.Length)].ToList();
+                keyList[i] = filterKeys[(i * perThreadCount)..Math.Min((i + 1) * perThreadCount, filterKeys.Length)].ToList();
             }
         }
         // 查找
@@ -131,6 +135,8 @@ public class KeywordFinder {
                             foreach (Match match in re.Matches(FileDataDict[file][line])) {
                                 matchList.Add(new(line, match.Index));
                             }
+                            // 只查找第一次匹配成功的行
+                            break;
                         }
                     }
                     if (found) {
@@ -150,6 +156,46 @@ public class KeywordFinder {
     }
 
     /// <summary>
+    /// 筛选目录和文件
+    /// </summary>
+    /// <param name="excludeDirs"></param>
+    /// <param name="excludeFiles"></param>
+    /// <returns></returns>
+    private List<string> FilterDirectoryFiles(List<string> excludeDirs, List<string> excludeFiles) {
+        List<Regex> excludeFileRegexes = CompileRegex(excludeFiles);
+        List<Regex> excludeDirRegexes = CompileRegex(excludeDirs);
+        var tempFiles = new List<string>();
+        var tempFiles2 = new List<string>();
+        // 筛选目录
+        foreach (var file in FileDataDict.Keys) {
+            bool found = false;
+            foreach (var regex in excludeDirRegexes) {
+                if (regex.IsMatch(GetRelativeDirectory(SearchDirectory, file))) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                tempFiles.Add(file);
+            }
+        }
+        // 筛选查找文件
+        foreach (var file in tempFiles) {
+            bool found = false;
+            foreach (var regex in excludeFileRegexes) {
+                if (regex.IsMatch(file)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                tempFiles2.Add(file);
+            }
+        }
+        return tempFiles2;
+    }
+
+    /// <summary>
     /// 筛选文件
     /// </summary>
     /// <param name="directory"></param>
@@ -163,7 +209,7 @@ public class KeywordFinder {
         var excludeDirs = CompileRegex(excludeDirectoryRegex);
         var excludeFiles = CompileRegex(excludeFileRegex);
         GetAllFiles(directory, files, excludeDirs); // 获取所有文件
-                                                    // 排除文件
+        // 排除文件
         foreach (var f in files) {
             bool found = false;
             foreach (var regex in excludeFiles) {
@@ -172,7 +218,8 @@ public class KeywordFinder {
                     break;
                 }
             }
-            if (!found) {
+            // 不匹配并且没有加载过
+            if (!found && !FileDataDict.ContainsKey(f)) {
                 results.Add(f);
             }
         }
@@ -199,9 +246,10 @@ public class KeywordFinder {
     /// <param name="files"></param>
     private void GetAllFiles(string directory, List<string> files, List<Regex>? excludeDir = null) {
         files.AddRange(Directory.GetFiles(directory));
+        excludeDir ??= new List<Regex>();
         foreach (var dir in Directory.GetDirectories(directory)) {
             bool found = false;
-            foreach (var regex in excludeDir ?? new List<Regex>()) {
+            foreach (var regex in excludeDir) {
                 if (regex.IsMatch(dir)) {
                     Console.WriteLine($"excluded: {dir}");
                     found = true;
@@ -212,5 +260,17 @@ public class KeywordFinder {
                 GetAllFiles(dir, files, excludeDir);
             }
         }
+    }
+
+    /// <summary>
+    /// 获取相对路径文件夹
+    /// </summary>
+    /// <param name="directory"></param>
+    /// <param name="file"></param>
+    /// <returns></returns>
+    private string GetRelativeDirectory(string directory, string file) {
+        directory = directory.Replace("\\", "/").TrimEnd('/');
+        file = file.Replace("\\", "/");
+        return file[directory.Length..file.LastIndexOf('/')];
     }
 }

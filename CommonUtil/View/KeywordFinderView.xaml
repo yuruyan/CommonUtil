@@ -58,7 +58,7 @@
         <RowDefinition Height="30"/>
         <RowDefinition/>
       </Grid.RowDefinitions>
-      <StackPanel Orientation="Horizontal">
+      <DockPanel LastChildFill="False">
         <!-- 共多少文件 -->
         <!--<TextBlock Text="{Binding}"-->
         <TextBlock x:Name="ResultNumber"
@@ -66,7 +66,13 @@
                    FontSize="20"
                    Visibility="Collapsed"
                    FontWeight="Bold"/>
-      </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Right"
+                    Visibility="{Binding IsSearchingFinished,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='True|Collapsed'}">
+          <TextBlock Text="加载数据中 "/>
+          <ui:ProgressRing IsActive="True"/>
+        </StackPanel>
+      </DockPanel>
       <ListBox x:Name="ResultListBox"
                Grid.Row="1"
                ItemsSource="{Binding KeywordResults}"
@@ -74,11 +80,11 @@
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Background="Transparent" Width="{Binding ElementName=ResultListBox,Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=10}">
-              <TextBlock Text="{Binding File,Converter={StaticResource FileNameConverter}}"
-                         Foreground="#A85817"
-                         Padding="0,8,0,0"
+              <TextBlock Text="{Binding File}"
+                         Foreground="#C14431"
+                         Padding="0,12,0,12"
                          FontWeight="Bold"/>
-              <ItemsControl ItemsSource="{Binding MatchList}">
+              <!--<ItemsControl ItemsSource="{Binding MatchList}">
                 <ItemsControl.ItemsPanel>
                   <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -92,7 +98,7 @@
                                FontSize="15"/>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
-              </ItemsControl>
+              </ItemsControl>-->
               <StackPanel.ContextMenu>
                 <ContextMenu>
                   <MenuItem Header="打开文件"/>
