@@ -42,6 +42,12 @@ namespace CommonUtil {
         }
 
         private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
+            if (e.Exception is System.Runtime.InteropServices.COMException comException) {
+                if (comException.ErrorCode == -2147221040) {
+                    e.Handled = true;
+                    return;
+                }
+            }
             Logger.Error(e.Exception);
             Application.Current.Shutdown();
         }

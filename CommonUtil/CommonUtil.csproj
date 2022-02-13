@@ -25,6 +25,7 @@
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\random.svg" />
+    <None Remove="Resource\image\TextTool.svg" />
     <None Remove="Resource\SplashWindow.png" />
   </ItemGroup>
 
@@ -79,6 +80,9 @@
     </Resource>
     <Resource Include="Resource\image\random.svg" />
     <Resource Include="Resource\image\DateTime.svg" />
+    <Resource Include="Resource\image\TextTool.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\SplashWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

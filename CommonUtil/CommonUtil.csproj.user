@@ -64,7 +64,19 @@
     <Compile Update="View\RandomGenerator\RandomNumberGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\TextTool\HalfFullCharTransformView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\TextTool\RemoveDuplicateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\TextToolView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TimeStampView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\TextTool\WhiteSpaceProcessView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -147,7 +159,19 @@
     <Page Update="View\RandomGenerator\RandomNumberGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\TextTool\HalfFullCharTransformView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\TextTool\RemoveDuplicateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\TextToolView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\TimeStampView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\TextTool\WhiteSpaceProcessView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Widget\MessageBox.xaml">
