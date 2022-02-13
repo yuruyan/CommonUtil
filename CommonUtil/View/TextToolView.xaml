@@ -18,6 +18,7 @@
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem x:Name="RemoveDuplicateView" Content="文本去重" IsSelected="True"/>
         <ui:NavigationViewItem x:Name="WhiteSpaceProcessView" Content="空白处理"/>
+        <ui:NavigationViewItem x:Name="HalfFullCharTransformView" Content="半角全角转换"/>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

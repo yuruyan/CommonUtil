@@ -10,6 +10,7 @@ namespace CommonUtil.View {
         private readonly Type[] Routers = {
                 typeof(RemoveDuplicateView),
                 typeof(WhiteSpaceProcessView),
+                typeof(HalfFullCharTransformView),
         };
         private RouterService RouterService;
 

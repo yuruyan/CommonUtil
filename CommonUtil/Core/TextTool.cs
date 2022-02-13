@@ -7,9 +7,31 @@ namespace CommonUtil.Core;
 
 public class TextTool {
     /// <summary>
+    /// 半角全角 Dict
+    /// </summary>
+    private static readonly Dictionary<char, char> HalfFullCharDict = new();
+    /// <summary>
+    /// 全角半角 Dict
+    /// </summary>
+    private static readonly Dictionary<char, char> FullHalfCharDict = new();
+
+    /// <summary>
     /// 多个空白字符正则
     /// </summary>
-    private static readonly Regex MultipleWhiteSpace = new (@"[\t\r\f ]{2,}");
+    private static readonly Regex MultipleWhiteSpace = new(@"[\t\r\f ]{2,}");
+
+    static TextTool() {
+        // 空格
+        HalfFullCharDict[(char)32] = (char)12288;
+        // 其余字符
+        for (char i = (char)33; i < 127; i++) {
+            HalfFullCharDict[i] = (char)(i + 65248);
+        }
+        // 填充 FullHalfCharDict
+        foreach (var item in HalfFullCharDict) {
+            FullHalfCharDict[item.Value] = item.Key;
+        }
+    }
 
     /// <summary>
     /// 文本去重
@@ -60,5 +82,35 @@ public class TextTool {
     /// <returns></returns>
     public static string ReplaceMultipleWhiteSpaceWithOne(string text) {
         return MultipleWhiteSpace.Replace(text, " ");
+    }
+
+    /// <summary>
+    /// 半角转全角
+    /// </summary>
+    /// <param name="halfCharText"></param>
+    /// <returns></returns>
+    public static string HalfCharToFullChar(string halfCharText) {
+        char[] array = halfCharText.ToCharArray();
+        for (int i = 0; i < array.Length; i++) {
+            if (HalfFullCharDict.ContainsKey(array[i])) {
+                array[i] = HalfFullCharDict[array[i]];
+            }
+        }
+        return new(array);
+    }
+
+    /// <summary>
+    /// 全角转半角
+    /// </summary>
+    /// <param name="fullCharText"></param>
+    /// <returns></returns>
+    public static string FullCharToHalfChar(string fullCharText) {
+        char[] array = fullCharText.ToCharArray();
+        for (int i = 0; i < array.Length; i++) {
+            if (FullHalfCharDict.ContainsKey(array[i])) {
+                array[i] = FullHalfCharDict[array[i]];
+            }
+        }
+        return new(array);
     }
 }
