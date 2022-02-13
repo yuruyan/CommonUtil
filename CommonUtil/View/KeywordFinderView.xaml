@@ -32,7 +32,9 @@
       <DockPanel LastChildFill="False">
         <CheckBox Width="135" 
                   IsChecked="{Binding IsExcludeDirectorySelected}"
-                  Content="排除目录" HorizontalAlignment="Left"/>
+                  Content="排除目录" 
+                  HorizontalContentAlignment="Center"
+                  HorizontalAlignment="Left"/>
         <TextBox Style="{StaticResource MultilineTextBoxStyle}"
                  ui:ControlHelper.PlaceholderText="排除目录正则，一行一个"
                  Text="{Binding ExcludeDirectory}"
@@ -41,6 +43,7 @@
       <DockPanel LastChildFill="False">
         <CheckBox Width="135" 
                   Content="排除文件" 
+                  HorizontalContentAlignment="Center"
                   IsChecked="{Binding IsExcludeFileSelected}"/>
         <TextBox Style="{StaticResource MultilineTextBoxStyle}"
                  ui:ControlHelper.PlaceholderText="排除文件正则，一行一个"
