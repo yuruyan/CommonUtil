@@ -4,11 +4,52 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
       mc:Ignorable="d" 
+      Background="White"
+      Margin="8"
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WhiteSpaceProcessView">
 
-    <Grid>
-        
-    </Grid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <TextBox Text="{Binding InputText}" Style="{StaticResource MultilineTextBoxStyle}"/>
+    <ui:SimpleStackPanel Grid.Row="1" 
+                         Spacing="8"
+                         Margin="0,8,0,8"
+                         HorizontalAlignment="Center">
+      <ui:SimpleStackPanel Orientation="Horizontal" Spacing="8">
+        <CheckBox x:Name="TrimTextCheckBox" Content="去除首尾空白" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="RemoveWhiteSpaceLineCheckBox" Content="去除空白行" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="TrimLineCheckBox" Content="去除每行首尾空白" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="ReplaceMultipleWhiteSpaceWithOneCheckBox" Content="将多个空白字符替换为一个空格" VerticalContentAlignment="Center"/>
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel Orientation="Horizontal"
+                           HorizontalAlignment="Center"
+                           Spacing="8">
+        <Button Content="文本处理" Click="TextProcessClick"/>
+        <Button Click="CopyResultClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
+            <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
+            <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+      </ui:SimpleStackPanel>
+    </ui:SimpleStackPanel>
+    <TextBox Grid.Row="2"
+             Text="{Binding OutputText}"
+             IsReadOnly="True"
+             Style="{StaticResource MultilineTextBoxStyle}"/>
+  </Grid>
 </Page>
