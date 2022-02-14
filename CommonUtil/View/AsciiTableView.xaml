@@ -14,7 +14,7 @@
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition/>
-          <ColumnDefinition Width="6*"/>
+          <ColumnDefinition Width="7*"/>
           <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1">
@@ -70,6 +70,16 @@
                   </Grid.Style>
                   <Grid.ContextMenu>
                     <ContextMenu>
+                      <ContextMenu.ItemContainerStyle>
+                        <Style TargetType="MenuItem"/>
+                      </ContextMenu.ItemContainerStyle>
+                      <ContextMenu.Resources>
+                        <Style TargetType="StackPanel">
+                          <Setter Property="Width" Value="100"/>
+                          <Setter Property="Height" Value="30"/>
+                          <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                      </ContextMenu.Resources>
                       <StackPanel Orientation="Horizontal" MouseUp="CopyDetailMouseUp">
                         <TextBlock Style="{StaticResource IconFontStyle}" 
                                    Text="&#xe6ef;" VerticalAlignment="Center"
