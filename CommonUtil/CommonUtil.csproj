@@ -24,6 +24,7 @@
     <None Remove="Resource\image\FileSearch.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
+    <None Remove="Resource\image\qrcode.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\image\TextTool.svg" />
     <None Remove="Resource\SplashWindow.png" />
@@ -52,6 +53,7 @@
     <PackageReference Include="NLog" Version="4.7.13" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RandomDataGenerator.Net" Version="1.0.13" />
     <PackageReference Include="SharpVectors" Version="1.7.7" />
   </ItemGroup>
@@ -76,6 +78,9 @@
     </Resource>
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\order.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\image\qrcode.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\random.svg" />
