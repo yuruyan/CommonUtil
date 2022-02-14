@@ -1,0 +1,42 @@
+﻿<Page x:Class="CommonUtil.View.QRCodeToolView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CommonUtil.View"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      mc:Ignorable="d" 
+      Margin="8"
+      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="QRCodeToolView">
+
+  <UniformGrid Columns="2">
+    <UniformGrid Margin="0,0,8,0" Rows="2">
+      <TextBox Text="{Binding InputText}" Style="{StaticResource MultilineTextBoxStyle}"/>
+      <ui:SimpleStackPanel Orientation="Horizontal"
+                           HorizontalAlignment="Center"
+                           Spacing="16">
+        <Button Click="GenerateImageClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe601;"/>
+            <TextBlock Text="生成" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <Button Click="SaveImageClick">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe616;"/>
+            <TextBlock Text="保存" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+        <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
+            <TextBlock Text="清空" Style="{StaticResource ButtonTextBlockStyle}"/>
+          </StackPanel>
+        </Button>
+      </ui:SimpleStackPanel>
+    </UniformGrid>
+    <Image Stretch="Uniform" Source="{Binding QRCodeImageSource}"/>
+  </UniformGrid>
+</Page>

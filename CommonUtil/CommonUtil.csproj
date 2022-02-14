@@ -24,6 +24,7 @@
     <None Remove="Resource\image\FileSearch.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
+    <None Remove="Resource\image\qrcode.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\image\TextTool.svg" />
     <None Remove="Resource\SplashWindow.png" />
@@ -77,6 +78,9 @@
     </Resource>
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\order.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\image\qrcode.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\random.svg" />
