@@ -134,6 +134,32 @@ namespace CommonUtil.Converter {
     }
 
     /// <summary>
+    /// 为 Null 则隐藏
+    /// </summary>
+    public class HideIfNullConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            return value != null ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 不为 Null 则隐藏
+    /// </summary>
+    public class HideIfNotNullConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            return value != null ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
     /// 相等则返回 True
     /// </summary>
     public class EqualConverter : IValueConverter {

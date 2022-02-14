@@ -44,6 +44,7 @@ namespace CommonUtil {
             _ = new MainWindowRouter(ContentFrame);
             ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
             Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
+            Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
             MainWindowRouter.Navigate(typeof(MainContentView));
             // 设置 AppTheme
             foreach (var res in Application.Current.Resources.MergedDictionaries) {

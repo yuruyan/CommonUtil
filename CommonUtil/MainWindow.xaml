@@ -67,5 +67,15 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top">
     </StackPanel>
+    <!-- NotificationPanel -->
+    <StackPanel x:Name="NotificationPanel"
+                Margin="0,30,10,0"
+                Grid.RowSpan="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Window},Path=ActualWidth,Converter={StaticResource DivideTwoConverter}}"
+                Panel.ZIndex="100000">
+    </StackPanel>
+
   </Grid>
 </Window>

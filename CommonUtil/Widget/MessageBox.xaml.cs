@@ -55,45 +55,6 @@ namespace CommonUtil.Widget {
             set { SetValue(MessageTypeProperty, value); }
         }
 
-        private Dictionary<MessageType, MessageTypeData> MessageMap = new() {
-            {
-                MessageType.INFO,
-                new MessageTypeData {
-                    Background = "#F4F4F5",
-                    Foreground = "#9D9399",
-                    BorderColor = "#e5e5e6",
-                    Icon = "\ue650"
-                }
-            },
-            {
-                MessageType.SUCCESS,
-                new MessageTypeData {
-                    Background = "#f0f9eb",
-                    Foreground = "#67C28A",
-                    BorderColor = "#dbe4d7",
-                    Icon = "\ue63c"
-                }
-            },
-            {
-                MessageType.WARNING,
-                new MessageTypeData {
-                    Background = "#fdf6ec",
-                    Foreground = "#E6A23C",
-                    BorderColor = "#e8e1d8",
-                    Icon = "\ue6d2"
-                }
-            },
-            {
-                MessageType.ERROR,
-                new MessageTypeData {
-                    Background = "#fef0f0",
-                    Foreground = "#F66C6C",
-                    BorderColor = "#eee1e1",
-                    Icon = "\ue6c6"
-                }
-            }
-        };
-
         /// <summary>
         /// 显示时间 (ms)
         /// </summary>
@@ -126,10 +87,10 @@ namespace CommonUtil.Widget {
         public MessageBox(string message, MessageType messageType = MessageType.INFO) {
             Text = message;
             MessageType = messageType;
-            BoxBackground = MessageMap[MessageType].Background;
-            BoxForeground = MessageMap[MessageType].Foreground;
-            BorderColor = MessageMap[MessageType].BorderColor;
-            Icon = MessageMap[MessageType].Icon;
+            BoxBackground = WidgetGlobal.MessageInfoDict[MessageType].Background;
+            BoxForeground = WidgetGlobal.MessageInfoDict[MessageType].Foreground;
+            BorderColor = WidgetGlobal.MessageInfoDict[MessageType].BorderColor;
+            Icon = WidgetGlobal.MessageInfoDict[MessageType].Icon;
             InitializeComponent();
             Timer timer = new Timer(ShowingDuration) { AutoReset = false };
             timer.Elapsed += RootUnLoad;
@@ -170,17 +131,5 @@ namespace CommonUtil.Widget {
                 }
             }
         }
-
-        private class MessageTypeData {
-            public string Background { get; set; } = "";
-            public string Foreground { get; set; } = "";
-            public string BorderColor { get; set; } = "";
-            public string Icon { get; set; } = "";
-        }
-
-    }
-
-    public enum MessageType {
-        INFO, SUCCESS, WARNING, ERROR
     }
 }
