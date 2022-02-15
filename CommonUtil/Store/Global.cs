@@ -22,6 +22,7 @@ namespace CommonUtil.Store {
             new() { Name = "文件内容搜索", ImagePath = ImagePath + "FileSearch.svg", ClassType = typeof(KeywordFinderView) },
             new() { Name = "文本工具", ImagePath = ImagePath + "TextTool.svg", ClassType = typeof(TextToolView) },
             new() { Name = "二维码工具", ImagePath = ImagePath + "qrcode.svg", ClassType = typeof(QRCodeToolView) },
+            new() { Name = "颜色转换", ImagePath = ImagePath + "ColorPicker.svg", ClassType = typeof(ColorTransformView) },
         };
     }
 
