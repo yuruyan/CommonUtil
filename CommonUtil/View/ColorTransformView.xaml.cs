@@ -13,7 +13,7 @@ namespace CommonUtil.View {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorTransformView), new PropertyMetadata());
-        public static readonly DependencyProperty HexColorProperty = DependencyProperty.Register("HexColor", typeof(string), typeof(ColorTransformView), new PropertyMetadata(""));
+        public static readonly DependencyProperty HEXColorProperty = DependencyProperty.Register("HEXColor", typeof(string), typeof(ColorTransformView), new PropertyMetadata(""));
         public static readonly DependencyProperty RGBColorProperty = DependencyProperty.Register("RGBColor", typeof(string), typeof(ColorTransformView), new PropertyMetadata(""));
         public static readonly DependencyProperty RGBA1ColorProperty = DependencyProperty.Register("RGBA1Color", typeof(string), typeof(ColorTransformView), new PropertyMetadata(""));
         public static readonly DependencyProperty RGBA2ColorProperty = DependencyProperty.Register("RGBA2Color", typeof(string), typeof(ColorTransformView), new PropertyMetadata(""));
@@ -32,9 +32,9 @@ namespace CommonUtil.View {
         /// <summary>
         /// 十六进制 Color
         /// </summary>
-        public string HexColor {
-            get { return (string)GetValue(HexColorProperty); }
-            set { SetValue(HexColorProperty, value); }
+        public string HEXColor {
+            get { return (string)GetValue(HEXColorProperty); }
+            set { SetValue(HEXColorProperty, value); }
         }
         /// <summary>
         /// RGB
@@ -112,7 +112,18 @@ namespace CommonUtil.View {
 
         public ColorTransformView() {
             DependencyPropertyDescriptor.FromProperty(SelectedColorProperty, typeof(ColorTransformView)).AddValueChanged(this, ColorChangedHandler);
-            //DependencyPropertyDescriptor.FromProperty(HexColorProperty, typeof(ColorTransformView)).AddValueChanged(this, HexColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(HEXColorProperty, typeof(ColorTransformView)).AddValueChanged(this, HEXColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(RGBColorProperty, typeof(ColorTransformView)).AddValueChanged(this, RGBColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(RGBA1ColorProperty, typeof(ColorTransformView)).AddValueChanged(this, RGBA1ColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(RGBA2ColorProperty, typeof(ColorTransformView)).AddValueChanged(this, RGBA2ColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(HSLColorProperty, typeof(ColorTransformView)).AddValueChanged(this, HSLColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(HSVColorProperty, typeof(ColorTransformView)).AddValueChanged(this, HSVColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(LABColorProperty, typeof(ColorTransformView)).AddValueChanged(this, LABColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(XYZColorProperty, typeof(ColorTransformView)).AddValueChanged(this, XYZColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(LCHColorProperty, typeof(ColorTransformView)).AddValueChanged(this, LCHColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(CMYKColorProperty, typeof(ColorTransformView)).AddValueChanged(this, CMYKColorChangedHandler);
+            DependencyPropertyDescriptor.FromProperty(LUVColorProperty, typeof(ColorTransformView)).AddValueChanged(this, LUVColorChangedHandler);
+
             InitializeComponent();
             SelectedColor = Colors.Bisque;
 
@@ -139,7 +150,7 @@ namespace CommonUtil.View {
             ThreadPool.QueueUserWorkItem(o => {
                 // 最好加锁
                 lock (this) {
-                    var hexColor = ColorTransform.ColorToHex(color);
+                    var hEXColor = ColorTransform.ColorToHEX(color);
                     var rGBColor = ColorTransform.ColorToRGB(color);
                     var rGBA1Color = ColorTransform.ColorToRGBA1(color);
                     var rGBA2Color = ColorTransform.ColorToRGBA2(color);
@@ -152,29 +163,21 @@ namespace CommonUtil.View {
                     var lUVColor = ColorTransform.ColorToLUV(color);
                     CompareColor = color;
                     Dispatcher.Invoke(() => {
-                        HexColor = hexColor;
-                        RGBColor = rGBColor;
-                        RGBA1Color = rGBA1Color;
-                        RGBA2Color = rGBA2Color;
-                        HSLColor = hSLColor;
-                        HSVColor = hSVColor;
-                        LABColor = lABColor;
-                        XYZColor = xYZColor;
-                        LCHColor = lCHColor;
-                        CMYKColor = cMYKColor;
-                        LUVColor = lUVColor;
+                        // 不改变正在修改的值
+                        if (!HEXColorBox.IsFocused) HEXColor = hEXColor;
+                        if (!RGBColorBox.IsFocused) RGBColor = rGBColor;
+                        if (!RGBA1ColorBox.IsFocused) RGBA1Color = rGBA1Color;
+                        if (!RGBA2ColorBox.IsFocused) RGBA2Color = rGBA2Color;
+                        if (!HSLColorBox.IsFocused) HSLColor = hSLColor;
+                        if (!HSVColorBox.IsFocused) HSVColor = hSVColor;
+                        if (!LABColorBox.IsFocused) LABColor = lABColor;
+                        if (!XYZColorBox.IsFocused) XYZColor = xYZColor;
+                        if (!LCHColorBox.IsFocused) LCHColor = lCHColor;
+                        if (!CMYKColorBox.IsFocused) CMYKColor = cMYKColor;
+                        if (!LUVColorBox.IsFocused) LUVColor = lUVColor;
                     });
                 }
             });
-        }
-
-        private void HexColorChangedHandler(object? sender, EventArgs e) {
-            if (ColorTransform.HexToColor(HexColor) is Color color) {
-                // 不能和 SelectedColor 比较
-                if (CompareColor != color) {
-                    SelectedColor = color;
-                }
-            }
         }
 
         /// <summary>
@@ -187,5 +190,137 @@ namespace CommonUtil.View {
             ColorPanel.Fill = new SolidColorBrush(SelectedColor);
             IsColorChanged = true;
         }
+
+        private void UpdateInputColor(Color? color) {
+            if (color is Color c) {
+                // 不能和 SelectedColor 比较
+                if (CompareColor != c) {
+                    SelectedColor = c;
+                }
+            }
+        }
+
+        private void HEXColorChangedHandler(object? sender, EventArgs e) {
+            if (HEXColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.HEXToColor(HEXColor));
+            }
+        }
+
+        private void RGBColorChangedHandler(object? sender, EventArgs e) {
+            if (RGBColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.RGBToColor(RGBColor));
+            }
+        }
+
+        private void RGBA1ColorChangedHandler(object? sender, EventArgs e) {
+            if (RGBA1ColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.RGBA1ToColor(RGBA1Color));
+            }
+        }
+
+        private void RGBA2ColorChangedHandler(object? sender, EventArgs e) {
+            if (RGBA2ColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.RGBA2ToColor(RGBA2Color));
+            }
+        }
+
+        private void HSLColorChangedHandler(object? sender, EventArgs e) {
+            if (HSLColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.HSLToColor(HSLColor));
+            }
+        }
+
+        private void HSVColorChangedHandler(object? sender, EventArgs e) {
+            if (HSVColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.HSVToColor(HSVColor));
+            }
+        }
+
+        private void LABColorChangedHandler(object? sender, EventArgs e) {
+            if (LABColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.LABToColor(LABColor));
+            }
+        }
+
+        private void XYZColorChangedHandler(object? sender, EventArgs e) {
+            if (XYZColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.XYZToColor(XYZColor));
+            }
+        }
+
+        private void LCHColorChangedHandler(object? sender, EventArgs e) {
+            if (LCHColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.LCHToColor(LCHColor));
+            }
+        }
+
+        private void CMYKColorChangedHandler(object? sender, EventArgs e) {
+            if (CMYKColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.CMYKToColor(CMYKColor));
+            }
+        }
+
+        private void LUVColorChangedHandler(object? sender, EventArgs e) {
+            if (LUVColorBox.IsFocused) {
+                UpdateInputColor(ColorTransform.LUVToColor(LUVColor));
+            }
+        }
+
+        private void CopyHexClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(HEXColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyRGBClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(RGBColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyRGBA1Click(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(RGBA1Color);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyRGBA2Click(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(RGBA2Color);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyHSLClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(HSLColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyHSVClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(HSVColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyLABClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(LABColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyXYZClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(XYZColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyLCHClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(LCHColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyCMYKClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(CMYKColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+        private void CopyLUVClick(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(LUVColor);
+            Widget.MessageBox.Success("已复制");
+        }
+
+
     }
 }
