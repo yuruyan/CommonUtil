@@ -77,13 +77,7 @@ namespace CommonUtil.View {
                 return;
             }
             var splitSymbol = GetComboBoxText(SplitSymbolBox);
-            if (splitSymbol == null) {
-                return;
-            }
             var mergeSymbol = GetComboBoxText(MergeSymbolBox);
-            if (mergeSymbol == null) {
-                return;
-            }
             OutputText = TextTool.RemoveDuplicate(InputText, splitSymbol, mergeSymbol, TrimWhiteSpaceCheckBox.IsChecked == true);
         }
 
@@ -92,20 +86,14 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="comboBox"></param>
         /// <returns></returns>
-        private string? GetComboBoxText(ComboBox comboBox) {
+        private string GetComboBoxText(ComboBox comboBox) {
             object selectedValue = comboBox.SelectedValue;
-            string text = string.Empty;
+            string text = comboBox.Text;
             // 非用户输入
             if (selectedValue != null) {
                 if (selectedValue is string t) {
                     text = SymbolDict[t];
                 }
-            } else {
-                if (string.IsNullOrEmpty(comboBox.Text)) {
-                    Widget.MessageBox.Error("去重分隔符不能为空");
-                    return null;
-                }
-                text = comboBox.Text;
             }
             return text;
         }

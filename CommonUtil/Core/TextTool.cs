@@ -42,6 +42,10 @@ public class TextTool {
     /// <param name="trim">移除元素首尾空白</param>
     /// <returns></returns>
     public static string RemoveDuplicate(string text, string splitSymbol, string mergeSymbol, bool trim = false) {
+        //分隔每个字符
+        if (splitSymbol == string.Empty) {
+            return string.Join(mergeSymbol, text.ToHashSet());
+        }
         if (!trim) {
             return string.Join(mergeSymbol, new HashSet<string>(text.Split(splitSymbol)));
         }
