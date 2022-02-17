@@ -1,13 +1,19 @@
-﻿using CommonUtil.Route;
-using CommonUtil.View;
+﻿using CommonUtil.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CommonUtil.Store {
     public class Global {
         public static readonly string AppTitle = "工具集";
         public static readonly string ImagePath = "/Resource/image/";
-
+        /// <summary>
+        /// 缓存文件目录
+        /// </summary>
+        public static readonly string CacheDirectory = Path.Combine(Directory.GetCurrentDirectory(), "cache");
+        /// <summary>
+        /// 菜单项目
+        /// </summary>
         public static readonly List<ToolMenuItem> MenuItems = new() {
             new() { Name = "Base64 编码/解码", ImagePath = ImagePath + "base64.svg", ClassType = typeof(Base64ToolView) },
             new() { Name = "随机数/字符串生成器", ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
@@ -23,6 +29,7 @@ namespace CommonUtil.Store {
             new() { Name = "文本工具", ImagePath = ImagePath + "TextTool.svg", ClassType = typeof(TextToolView) },
             new() { Name = "二维码工具", ImagePath = ImagePath + "qrcode.svg", ClassType = typeof(QRCodeToolView) },
             new() { Name = "颜色转换", ImagePath = ImagePath + "ColorPicker.svg", ClassType = typeof(ColorTransformView) },
+            new() { Name = "代码格式化", ImagePath = ImagePath + "format.svg", ClassType = typeof(CodeFormatingView) },
         };
     }
 
