@@ -11,16 +11,17 @@ namespace CommonUtil.Store {
         /// 当前可执行文件目录别名
         /// </summary>
         public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        private static readonly string _CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
         /// <summary>
         /// 缓存文件目录
         /// </summary>
         public static string CacheDirectory {
             get {
                 // 检查缓存文件目录是否存在，不存在则创建
-                if (!Directory.Exists(Global.CacheDirectory)) {
-                    Directory.CreateDirectory(Global.CacheDirectory);
+                if (!Directory.Exists(Global._CacheDirectory)) {
+                    Directory.CreateDirectory(Global._CacheDirectory);
                 }
-                return Path.Combine(Global.ApplicationPath, "cache");
+                return _CacheDirectory;
             }
         }
         /// <summary>
