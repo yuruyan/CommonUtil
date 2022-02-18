@@ -243,7 +243,6 @@ public class CodeFormating {
         string cacheFile = Path.Combine(Global.CacheDirectory, filename);
         string configFile = Path.Combine(libDir, "defaults.cfg");
         string cacheOutFile = Path.Combine(Global.CacheDirectory, "out-" + filename);
-        CommonUtils.CheckCacheDirectory();
         // 写入文件
         File.WriteAllText(cacheFile, code);
         var proc = new Process();

@@ -2,8 +2,8 @@ import express from 'express';
 import { Server } from 'http';
 import { formatCode } from './src/code-formating';
 import { getAvailablePort } from './util/CommonUtil';
-import config from './config';
 import fs from 'fs';
+import path from 'path';
 
 const App = express()
 let AppServer: Server
@@ -32,8 +32,15 @@ App.get('/heartbeat', (req, resp) => {
   // 将 port 写入文件
   for (const val of process.argv) {
     if (val.startsWith('path=')) {
-      let path = val.substring('path='.length)
-      fs.writeFileSync(path, port.toString())
+      let portPath = val.substring('path='.length)
+      let portDir = path.resolve(portPath, '..')
+      // 检查文件夹是否存在，不存在则创建
+      fs.access(portDir, fs.constants.F_OK, err => {
+        if (err) {
+          fs.mkdirSync(portDir, { recursive: true })
+        }
+        fs.writeFileSync(portPath, port.toString())
+      })
       break;
     }
   }

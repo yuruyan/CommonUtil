@@ -113,15 +113,6 @@ public class CommonUtils {
     }
 
     /// <summary>
-    /// 检查缓存文件目录是否存在，不存在则创建
-    /// </summary>
-    public static void CheckCacheDirectory() {
-        if (!Directory.Exists(Global.CacheDirectory)) {
-            Directory.CreateDirectory(Global.CacheDirectory);
-        }
-    }
-
-    /// <summary>
     /// 简化 try 代码块
     /// </summary>
     /// <param name="action"></param>

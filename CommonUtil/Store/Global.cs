@@ -14,7 +14,15 @@ namespace CommonUtil.Store {
         /// <summary>
         /// 缓存文件目录
         /// </summary>
-        public static readonly string CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
+        public static string CacheDirectory {
+            get {
+                // 检查缓存文件目录是否存在，不存在则创建
+                if (!Directory.Exists(Global.CacheDirectory)) {
+                    Directory.CreateDirectory(Global.CacheDirectory);
+                }
+                return Path.Combine(Global.ApplicationPath, "cache");
+            }
+        }
         /// <summary>
         /// 菜单项目
         /// </summary>
