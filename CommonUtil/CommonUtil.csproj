@@ -23,6 +23,7 @@
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\FileSearch.svg" />
+    <None Remove="Resource\image\format.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\qrcode.svg" />
@@ -49,6 +50,8 @@
 
   <ItemGroup>
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
+    <PackageReference Include="Flurl" Version="3.0.4" />
+    <PackageReference Include="Flurl.Http" Version="3.2.2" />
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="4.7.13" />
@@ -81,6 +84,9 @@
     <Resource Include="Resource\image\FileSearch.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\format.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\Merge.svg" />
     <Resource Include="Resource\image\order.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -99,10 +105,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\AppConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\ascii.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\lib\uncrustify\defaults.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\lib\uncrustify\uncrustify.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\ProgramingGetTimeStamp.json">
@@ -111,6 +126,10 @@
     <None Update="Resource\WordMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resource\lib\nodejs\" />
   </ItemGroup>
 
 </Project>

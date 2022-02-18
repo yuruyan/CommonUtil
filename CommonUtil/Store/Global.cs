@@ -1,13 +1,32 @@
-﻿using CommonUtil.Route;
-using CommonUtil.View;
+﻿using CommonUtil.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CommonUtil.Store {
     public class Global {
         public static readonly string AppTitle = "工具集";
         public static readonly string ImagePath = "/Resource/image/";
-
+        /// <summary>
+        /// 当前可执行文件目录别名
+        /// </summary>
+        public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        private static readonly string _CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
+        /// <summary>
+        /// 缓存文件目录
+        /// </summary>
+        public static string CacheDirectory {
+            get {
+                // 检查缓存文件目录是否存在，不存在则创建
+                if (!Directory.Exists(Global._CacheDirectory)) {
+                    Directory.CreateDirectory(Global._CacheDirectory);
+                }
+                return _CacheDirectory;
+            }
+        }
+        /// <summary>
+        /// 菜单项目
+        /// </summary>
         public static readonly List<ToolMenuItem> MenuItems = new() {
             new() { Name = "Base64 编码/解码", ImagePath = ImagePath + "base64.svg", ClassType = typeof(Base64ToolView) },
             new() { Name = "随机数/字符串生成器", ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
@@ -23,6 +42,7 @@ namespace CommonUtil.Store {
             new() { Name = "文本工具", ImagePath = ImagePath + "TextTool.svg", ClassType = typeof(TextToolView) },
             new() { Name = "二维码工具", ImagePath = ImagePath + "qrcode.svg", ClassType = typeof(QRCodeToolView) },
             new() { Name = "颜色转换", ImagePath = ImagePath + "ColorPicker.svg", ClassType = typeof(ColorTransformView) },
+            new() { Name = "代码格式化", ImagePath = ImagePath + "format.svg", ClassType = typeof(CodeFormatingView) },
         };
     }
 
