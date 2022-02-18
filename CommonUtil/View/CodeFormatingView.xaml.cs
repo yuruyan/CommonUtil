@@ -1,4 +1,6 @@
 ﻿using CommonUtil.Core;
+using CommonUtil.Store;
+using CommonUtil.Utils;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -47,6 +49,8 @@ namespace CommonUtil.View {
         public CodeFormatingView() {
             Languages = new(CodeFormating.LanguageDict.Keys);
             InitializeComponent();
+            // 启动 nodejs 服务
+            Task.Run(() => CommonUtils.Try(() => Server.CheckNodeJsServer()));
         }
 
         /// <summary>
@@ -76,9 +80,9 @@ namespace CommonUtil.View {
         private void FormatClick(object sender, RoutedEventArgs e) {
             string code = InputText;
             CodeFormating.Lang lang = CodeFormating.LanguageDict[Languages[SelectedLanguageIndex]];
-            Task.Run(() => {
+            Task.Run(async () => {
                 try {
-                    string formatedCode = CodeFormating.Format(code, lang);
+                    string formatedCode = await CodeFormating.FormatAsync(code, lang);
                     Dispatcher.Invoke(() => OutputText = formatedCode);
                 } catch (Exception error) {
                     Dispatcher.Invoke(() => Widget.MessageBox.Error("格式化失败 " + error.Message));

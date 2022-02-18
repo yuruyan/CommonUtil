@@ -16,6 +16,21 @@ public class CommonUtils {
     private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
     private static readonly Random Random = new();
 
+    /// <summary>
+    /// 当前时间戳(ms)
+    /// </summary>
+    public long CuruentMilliseconds {
+        get {
+            return DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        }
+    }
+
+    /// <summary>
+    /// 拷贝对象
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static T Copy<T>(T obj) {
         return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(obj));
     }
@@ -104,6 +119,16 @@ public class CommonUtils {
         if (!Directory.Exists(Global.CacheDirectory)) {
             Directory.CreateDirectory(Global.CacheDirectory);
         }
+    }
+
+    /// <summary>
+    /// 简化 try 代码块
+    /// </summary>
+    /// <param name="action"></param>
+    public static void Try(Action action) {
+        try {
+            action();
+        } catch { }
     }
 }
 

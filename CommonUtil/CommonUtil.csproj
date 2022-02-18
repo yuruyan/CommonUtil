@@ -50,6 +50,8 @@
 
   <ItemGroup>
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
+    <PackageReference Include="Flurl" Version="3.0.4" />
+    <PackageReference Include="Flurl.Http" Version="3.2.2" />
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="4.7.13" />
@@ -124,6 +126,10 @@
     <None Update="Resource\WordMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resource\lib\nodejs\" />
   </ItemGroup>
 
 </Project>

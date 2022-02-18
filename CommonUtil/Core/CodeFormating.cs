@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Flurl.Http;
+using System.Threading.Tasks;
+using CommonUtil.Model;
 
 namespace CommonUtil.Core;
 
@@ -30,7 +33,7 @@ public class CodeFormating {
         Groovy,
         Html,
         Java,
-        JavaScript,
+        Js,
         Json,
         Json5,
         Julia,
@@ -75,7 +78,7 @@ public class CodeFormating {
         { "Groovy", Lang.Groovy },
         { "Html", Lang.Html },
         { "Java", Lang.Java },
-        { "JavaScript", Lang.JavaScript },
+        { "JavaScript", Lang.Js },
         { "Json", Lang.Json },
         { "Json5", Lang.Json5 },
         { "Julia", Lang.Julia },
@@ -120,7 +123,7 @@ public class CodeFormating {
         { Lang.Groovy, ".groovy" },
         { Lang.Html, "" },
         { Lang.Java, ".java" },
-        { Lang.JavaScript, ".js" },
+        { Lang.Js, ".js" },
         { Lang.Json, ".json" },
         { Lang.Json5, "" },
         { Lang.Julia, "" },
@@ -155,7 +158,7 @@ public class CodeFormating {
     /// <param name="code"></param>
     /// <param name="lang"></param>
     /// <returns></returns>
-    public static string Format(string code, Lang lang) {
+    public static async Task<string> FormatAsync(string code, Lang lang) {
         switch (lang) {
             case Lang.C:
             case Lang.CPlusPlus:
@@ -168,7 +171,7 @@ public class CodeFormating {
             case Lang.Css:
             case Lang.Graphql:
             case Lang.Html:
-            case Lang.JavaScript:
+            case Lang.Js:
             case Lang.Json:
             case Lang.Json5:
             case Lang.Less:
@@ -178,7 +181,7 @@ public class CodeFormating {
             case Lang.Typescript:
             case Lang.Vue:
             case Lang.Yaml:
-                return Format2(code, lang);
+                return await Format2Async(code, lang);
             //case Lang.Assembly:
             //    break;
             //case Lang.Dart:
@@ -236,7 +239,7 @@ public class CodeFormating {
     /// <returns></returns>
     private static string Format1(string code, Lang lang) {
         string filename = $"{GenerateCacheFileName()}{LangExtensionDict[lang]}";
-        string libDir = Path.Combine(Directory.GetCurrentDirectory(), UncrustifyDirectory);
+        string libDir = Path.Combine(Global.ApplicationPath, UncrustifyDirectory);
         string cacheFile = Path.Combine(Global.CacheDirectory, filename);
         string configFile = Path.Combine(libDir, "defaults.cfg");
         string cacheOutFile = Path.Combine(Global.CacheDirectory, "out-" + filename);
@@ -270,7 +273,18 @@ public class CodeFormating {
     /// <param name="code"></param>
     /// <param name="lang"></param>
     /// <returns></returns>
-    private static string Format2(string code, Lang lang) {
-        return code;
+    private static async Task<string> Format2Async(string code, Lang lang) {
+        Server.CheckNodeJsServer();
+        var resp = await $"{Server.NodeJsServerBaseUrl}/codeformating"
+                     .PostJsonAsync(new {
+                         code,
+                         lang = lang.ToString(),
+                     });
+        var data = await resp.GetJsonAsync<GeneralResponse<string>>();
+        if (data.code != 200) {
+            Logger.Info("CodeFormat failed, message: " + data.message);
+            return code;
+        }
+        return data.data;
     }
 }

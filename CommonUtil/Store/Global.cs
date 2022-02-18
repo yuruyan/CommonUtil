@@ -8,9 +8,13 @@ namespace CommonUtil.Store {
         public static readonly string AppTitle = "工具集";
         public static readonly string ImagePath = "/Resource/image/";
         /// <summary>
+        /// 当前可执行文件目录别名
+        /// </summary>
+        public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        /// <summary>
         /// 缓存文件目录
         /// </summary>
-        public static readonly string CacheDirectory = Path.Combine(Directory.GetCurrentDirectory(), "cache");
+        public static readonly string CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
         /// <summary>
         /// 菜单项目
         /// </summary>

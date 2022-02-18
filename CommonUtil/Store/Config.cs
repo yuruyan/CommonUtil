@@ -9,11 +9,14 @@ public class Config {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private static readonly string ConfigPath = "config/AppConfig.json";
-
+    /// <summary>
+    /// 环境模式
+    /// </summary>
     public static readonly Model.Environment Environment = Model.Environment.Development;
 
     static Config() {
         try {
+            // 加载配置文件
             var jObject = JObject.Parse(File.ReadAllText(ConfigPath));
             JToken? environment = jObject.GetValue("environment");
             if (environment != null) {
