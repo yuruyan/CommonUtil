@@ -51,7 +51,7 @@ export function formatCode(req: express.Request, resp: express.Response) {
       data: format(code, lang)
     })
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
     resp.json({
       code: 401,
       message: '格式化错误'
