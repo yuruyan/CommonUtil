@@ -1,6 +1,9 @@
 import express from 'express';
 import { format, Lang } from './../service/code-formating';
 import { isUndefinedOrNull } from './../util/CommonUtil';
+import log4js from 'log4js';
+
+const logger = log4js.getLogger("cheese");
 
 /**
  * 解析字符串为 {Lang}
@@ -34,7 +37,7 @@ export function formatCode(req: express.Request, resp: express.Response) {
       throw new Error(`language ${langParam} is not supported`);
     }
   } catch (error) {
-    console.error(error);
+    logger.info(error)
     // 错误返回
     resp.json({
       code: 400,
@@ -51,7 +54,7 @@ export function formatCode(req: express.Request, resp: express.Response) {
       data: format(code, lang)
     })
   } catch (error) {
-    console.error(error);
+    logger.info(error)
     resp.json({
       code: 401,
       message: '格式化错误'

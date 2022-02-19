@@ -27,7 +27,6 @@ export enum Lang {
  * @returns 
  */
 export function format(code: string, lang: Lang): string {
-  console.log(lang)
   return prettier.format(code, {
     // js 替换为 babel
     parser: lang.toString() == Lang[Lang.js] ? 'babel' : lang

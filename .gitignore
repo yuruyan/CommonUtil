@@ -4,3 +4,4 @@ bin
 obj
 node_modules
 NodejsService/dist
+*.log

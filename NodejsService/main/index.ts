@@ -1,18 +1,31 @@
 import express from 'express';
 import { Server } from 'http';
-import { formatCode } from './src/code-formating';
 import { getAvailablePort } from './util/CommonUtil';
 import fs from 'fs';
 import path from 'path';
+import log4js from 'log4js';
+import config from './config';
+import router from './router';
 
+// 配置日志
+log4js.configure({
+  appenders: { cheese: { type: "file", filename: "cheese.log" } },
+  categories: {
+    default: {
+      appenders: ["cheese"], level: config.env == 'development' ? "info" : "warn"
+    }
+  }
+})
+
+const logger = log4js.getLogger("cheese");
 const App = express()
 let AppServer: Server
 let lastCheckTime: number = new Date().getTime() // 上次访问时间
 
-App.use(express.json());
+App.use(express.json({ limit: "8192kb" })); // 限制上传
 App.use(express.urlencoded({ extended: true }));
+App.use('', router.router)
 
-App.post('/codeformating', formatCode)
 // 心跳机制
 App.get('/heartbeat', (req, resp) => {
   lastCheckTime = new Date().getTime()
@@ -27,7 +40,7 @@ App.get('/heartbeat', (req, resp) => {
 (async function () {
   let port = await getAvailablePort()
   AppServer = App.listen(port, () => {
-    console.log('start listening ' + port)
+    logger.info('start listening ' + port)
   })
   // 将 port 写入文件
   for (const val of process.argv) {
@@ -44,7 +57,10 @@ App.get('/heartbeat', (req, resp) => {
       break;
     }
   }
-  checkConnection()
+  // 开发环境则不检查
+  if (config.env == 'production') {
+    checkConnection()
+  }
 })()
 
 // 检查客户端是否断开连接
