@@ -23,6 +23,8 @@
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="输入成语："/>
         <ui:AutoSuggestBox MinWidth="150"
+                           FontSize="{StaticResource SystemFontSize}"
+                           FontFamily="{StaticResource SystemFontFamily}"
                            VerticalAlignment="Center"
                            KeyUp="IdiomInputBoxKeyUp"
                            TextChanged="InputIdiomChanged"
@@ -53,16 +55,34 @@
       <ListBox.ItemTemplate>
         <DataTemplate>
           <StackPanel Background="Transparent">
-            <TextBlock Text="{Binding}" Margin="0,12,0,12"/>
+            <TextBlock Text="{Binding}"
+                       Margin="0,12,0,12"/>
             <StackPanel.ContextMenu>
-              <ContextMenu Width="120">
-                <ContextMenu.ItemContainerStyle>
-                  <Style TargetType="MenuItem">
-                    <Setter Property="Padding" Value="8"/>
+              <ContextMenu>
+                <ContextMenu.Resources>
+                  <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Width" Value="120"/>
                   </Style>
+                  <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
+                    <Setter Property="Padding" Value="0,8,0,8"/>
+                  </Style>
+                  <Style TargetType="TextBlock" x:Key="IconFontStyle" BasedOn="{StaticResource IconFontStyle}">
+                    <Setter Property="Margin" Value="8,0,8,0"/>
+                  </Style>
+                </ContextMenu.Resources>
+                <ContextMenu.ItemContainerStyle>
+                  <Style TargetType="MenuItem"/>
                 </ContextMenu.ItemContainerStyle>
-                <MenuItem Header="复制" Click="CopyCurrentResultClick"/>
-                <MenuItem Header="复制全部" Click="CopyAllResultsClick"/>
+                <StackPanel MouseUp="CopyCurrentResultMouseUp">
+                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;"/>
+                  <TextBlock Text="复制"/>
+                </StackPanel>
+                <StackPanel MouseUp="CopyAllResultsMouseUp">
+                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;"/>
+                  <TextBlock Text="复制全部"/>
+                </StackPanel>
               </ContextMenu>
             </StackPanel.ContextMenu>
           </StackPanel>

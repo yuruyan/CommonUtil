@@ -91,7 +91,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyCurrentResultClick(object sender, RoutedEventArgs e) {
+        private void CopyCurrentResultMouseUp(object sender, MouseButtonEventArgs e) {
             if(sender is FrameworkElement element) {
                 Clipboard.SetDataObject(element.DataContext);
                 Widget.MessageBox.Success("已复制");
@@ -103,7 +103,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyAllResultsClick(object sender, RoutedEventArgs e) {
+        private void CopyAllResultsMouseUp(object sender, MouseButtonEventArgs e) {
             if(ResultListBox.ItemsSource is IEnumerable<string> list) {
                 var sb = new StringBuilder();
                 foreach (var item in list) { 
@@ -113,5 +113,6 @@ namespace CommonUtil.View {
                 Widget.MessageBox.Success("已复制");
             }
         }
+
     }
 }
