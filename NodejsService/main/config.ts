@@ -1,3 +1,3 @@
 export default {
-  env: 'development' as 'development' | 'production'
+  env: 'production' as 'development' | 'production'
 }
