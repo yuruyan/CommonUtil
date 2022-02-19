@@ -54,7 +54,11 @@ public class Server {
                 Console.WriteLine($"Please go to NodejsService root folder, open the terminal, and type {cmd}");
             } else {
                 // 启动 nodejsserver
-                NodejsProcess = Process.Start(NodeJsServerFilePath, $"path=\"{NodeJsServerPortCacheFile}\"");
+                var process = new Process();
+                process.StartInfo.FileName = NodeJsServerFilePath;
+                process.StartInfo.Arguments = $"path=\"{NodeJsServerPortCacheFile}\"";
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
             }
             // 检查服务是否启动
             // 不断检查服务是否写入 port
