@@ -52,6 +52,9 @@
     <Compile Update="View\FileMergeSplitView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\IdiomMatchingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\KeywordFinderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +157,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FileMergeSplitView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\IdiomMatchingView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\KeywordFinderView.xaml">
