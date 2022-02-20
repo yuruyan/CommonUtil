@@ -9,6 +9,7 @@
   <system:TimeSpan x:Key="AnimationTimeSpan">0:0:0.3</system:TimeSpan>
   <Duration x:Key="AnimationDuration">0:0:0.3</Duration>
   <system:Int32 x:Key="ToolTipServiceInitialShowDelay">250</system:Int32>
+  <system:Double x:Key="HeaderFontSize">20</system:Double>
   <!-- ZoomIn 动画起始缩放大小级别 -->
   <system:Double x:Key="ZoomInStartScale">0.97</system:Double>
   <ExponentialEase x:Key="AnimationEaseFunction" EasingMode="EaseOut" Exponent="4" />

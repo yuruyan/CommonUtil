@@ -11,7 +11,7 @@
       Title="MainContent"
       Loaded="RootLoaded">
 
-  <Grid>
+  <ScrollViewer>
     <ItemsControl ItemsSource="{Binding ToolMenuItems}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -53,5 +53,5 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-  </Grid>
+  </ScrollViewer>
 </Page>

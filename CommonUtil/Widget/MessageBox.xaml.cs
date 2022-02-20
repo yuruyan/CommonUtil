@@ -6,6 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace CommonUtil.Widget {
+    /// <summary>
+    /// 无论是否在 ui 线程，都可以调用静态方法
+    /// </summary>
     public partial class MessageBox : UserControl {
 
         private static readonly DependencyProperty BoxBackgroundProperty = DependencyProperty.Register("BoxBackground", typeof(string), typeof(MessageBox), new PropertyMetadata(""));
@@ -64,8 +67,13 @@ namespace CommonUtil.Widget {
         /// </summary>
         public static UIElementCollection? PanelChildren;
 
-        private static void ShowMessage(string message, MessageType type) {
-            PanelChildren?.Add(new MessageBox(message, type));
+        private static void ShowMessage(string message, MessageType type = MessageType.INFO) {
+            // 检查权限
+            if (App.Current.Dispatcher.CheckAccess()) {
+                PanelChildren?.Add(new MessageBox(message, type));
+            } else {
+                App.Current.Dispatcher.Invoke(() => PanelChildren?.Add(new MessageBox(message, type)));
+            }
         }
 
         public static void Info(string message) {
@@ -92,7 +100,7 @@ namespace CommonUtil.Widget {
             BorderColor = WidgetGlobal.MessageInfoDict[MessageType].BorderColor;
             Icon = WidgetGlobal.MessageInfoDict[MessageType].Icon;
             InitializeComponent();
-            Timer timer = new Timer(ShowingDuration) { AutoReset = false };
+            var timer = new Timer(ShowingDuration) { AutoReset = false };
             timer.Elapsed += RootUnLoad;
             timer.Start();
         }

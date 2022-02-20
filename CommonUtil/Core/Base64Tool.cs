@@ -10,6 +10,8 @@ namespace CommonUtil.Core {
         /// <param name="encoded"></param>
         /// <param name="encodeType">字符串编码方式</param>
         /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="DecoderFallbackException"></exception>
         public static string Base64StringDecode(string encoded, Encoding encodeType) {
             return encodeType.GetString(Convert.FromBase64String(encoded));
         }
@@ -19,6 +21,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="encoded">以 UTF8 编码的字符串</param>
         /// <returns></returns>
+        /// <exception cref="FormatException"></exception>
+        /// <exception cref="DecoderFallbackException"></exception>
         public static string Base64StringDecode(string encoded) {
             return Base64StringDecode(encoded, Encoding.UTF8);
         }
@@ -29,6 +33,7 @@ namespace CommonUtil.Core {
         /// <param name="source"></param>
         /// <param name="encodeType">编码方式</param>
         /// <returns></returns>
+        /// <exception cref="DecoderFallbackException"></exception>
         public static string Base64StringEncode(string source, Encoding encodeType) {
             return Convert.ToBase64String(encodeType.GetBytes(source));
         }
@@ -38,6 +43,7 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
+        /// <exception cref="DecoderFallbackException"></exception>
         public static string Base64StringEncode(string source) {
             return Base64StringEncode(source, Encoding.UTF8);
         }
@@ -47,6 +53,7 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
+        /// <exception cref="IOException"></exception>
         public static string Base64Encode(string path) {
             return Convert.ToBase64String(File.ReadAllBytes(path));
         }
@@ -57,6 +64,8 @@ namespace CommonUtil.Core {
         /// <param name="encoded"></param>
         /// <param name="path"></param>
         /// <returns></returns>
+        /// <exception cref="IOException"></exception>
+        /// <exception cref="FormatException"></exception>
         public static void Base64Decode(string encoded, string path) {
             File.WriteAllBytes(path, Convert.FromBase64String(encoded));
         }

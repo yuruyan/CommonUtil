@@ -12,6 +12,8 @@
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:TitleBar.IsIconVisible="True"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
+        MinWidth="500"
+        MinHeight="400"
         Height="600" 
         Width="1000">
   <Window.Resources>
