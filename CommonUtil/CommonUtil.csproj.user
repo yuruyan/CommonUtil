@@ -46,6 +46,9 @@
     <Compile Update="View\CommonEncoding\UTF8EncodingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Dialog\CommonRegexListDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\DataDigestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -74,6 +77,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\RandomGenerator\RandomNumberGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\RegexExtractionView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\TextTool\HalfFullCharTransformView.xaml.cs">
@@ -153,6 +159,9 @@
     <Page Update="View\CommonEncoding\UTF8EncodingView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\Dialog\CommonRegexListDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\DataDigestView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -181,6 +190,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RandomGenerator\RandomNumberGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RegexExtractionView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TextTool\HalfFullCharTransformView.xaml">

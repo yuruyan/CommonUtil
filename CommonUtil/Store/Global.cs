@@ -44,6 +44,7 @@ namespace CommonUtil.Store {
             new() { Name = "颜色转换", ImagePath = ImagePath + "ColorPicker.svg", ClassType = typeof(ColorTransformView) },
             new() { Name = "代码格式化", ImagePath = ImagePath + "format.svg", ClassType = typeof(CodeFormatingView) },
             new() { Name = "成语接龙", ImagePath = ImagePath + "IdiomMatching.svg", ClassType = typeof(IdiomMatchingView) },
+            new() { Name = "正则匹配提取", ImagePath = ImagePath + "regex.svg", ClassType = typeof(RegexExtractionView) },
         };
     }
 
