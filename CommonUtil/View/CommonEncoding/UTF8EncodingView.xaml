@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:CommonUtil.View"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-      Margin="10"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UTF8EncodingView">
   <local:EncodingTemplate InputText="{Binding InputText,Mode=TwoWay}"

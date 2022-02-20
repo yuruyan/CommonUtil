@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CommonUtil.View"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:widget="clr-namespace:CommonUtil.Widget"
              mc:Ignorable="d" 
              x:Name="Root"
+             Margin="8"
              d:DesignHeight="450" d:DesignWidth="800">
   <Grid>
     <Grid.RowDefinitions>
@@ -15,43 +17,25 @@
       <RowDefinition/>
     </Grid.RowDefinitions>
     <TextBox Style="{StaticResource MultilineTextBoxStyle}"
-             Text="{Binding ElementName=Root,Path=InputText}"/>
+             Text="{Binding InputText,ElementName=Root}"/>
     <ui:SimpleStackPanel Grid.Row="1"
                          Orientation="Horizontal"
                          Spacing="8">
-      <ui:SimpleStackPanel.Resources>
-        <Style TargetType="StackPanel">
-          <Setter Property="Orientation" Value="Horizontal"/>
-        </Style>
-      </ui:SimpleStackPanel.Resources>
-      <Button Click="EncodingTextClick">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe63e;"/>
-          <TextBlock Text="{Binding ElementName=Root,Path=EncodingButtonText}" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="DecodingTextClick">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe640;"/>
-          <TextBlock Text="{Binding ElementName=Root,Path=DecodingButtonText}" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="CopyResultClick">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-          <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-          <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
+      <widget:IconButton Icon="&#xe63e;" 
+                         Text="{Binding EncodingButtonText,ElementName=Root}" 
+                         Click="EncodingTextClick"/>
+      <widget:IconButton Icon="&#xe640;"
+                         Text="{Binding DecodingButtonText,ElementName=Root}"
+                         Click="DecodingTextClick"/>
+      <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+      <widget:IconButton Icon="&#xe946;" 
+                         Text="清空输入"
+                         Style="{StaticResource GlobalErrorButtonStyle}"
+                         Click="ClearInputClick"/>
     </ui:SimpleStackPanel>
     <TextBox Grid.Row="2"
              Style="{StaticResource MultilineTextBoxStyle}"
              IsReadOnly="True"
-             Text="{Binding ElementName=Root,Path=OutputText}"/>
+             Text="{Binding OutputText,ElementName=Root}"/>
   </Grid>
 </UserControl>

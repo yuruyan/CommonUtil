@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -58,24 +59,12 @@
           <CheckBox Content="忽略大小写" IsChecked="{Binding IgnoreCase}"/>
         </ui:SimpleStackPanel>
         <ui:SimpleStackPanel>
-          <Button Click="SearchClick">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe612;"/>
-              <TextBlock Text="查找" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
-          <Button Click="CopyResultClick">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-              <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
-          <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-              <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
+          <widget:IconButton Icon="&#xe612;" Text="查找" Click="SearchClick"/>
+          <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+          <widget:IconButton Icon="&#xe946;" 
+                             Text="清空输入"
+                             Style="{StaticResource GlobalErrorButtonStyle}"
+                             Click="ClearInputClick"/>
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
       <StackPanel x:Name="ResultDetailPanel"
@@ -83,7 +72,9 @@
                   HorizontalAlignment="Right"
                   VerticalAlignment="Bottom">
         <TextBlock>
-          <TextBlock Text="{Binding MatchList.Count}" FontWeight="Bold"/>
+          <TextBlock Text="{Binding MatchList.Count}"
+                     Foreground="{DynamicResource ApplicationBackground}"
+                     FontWeight="Bold"/>
           <TextBlock Text=" 个匹配结果"/>
         </TextBlock>
       </StackPanel>

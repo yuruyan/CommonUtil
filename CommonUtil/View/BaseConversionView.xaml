@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
       mc:Ignorable="d" 
+      Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BaseConversionView">
@@ -16,16 +17,17 @@
   <Grid>
     <UniformGrid Columns="2">
       <!-- 输入 -->
-      <Grid Margin="8,0,8,8">
+      <Grid Margin="0,0,4,0">
         <Grid.RowDefinitions>
-          <RowDefinition Height="50"/>
+          <RowDefinition Height="auto"/>
           <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="1" 
+                 TextBlock.LineHeight="30"
                  Text="{Binding InputText,UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource MultilineTextBoxStyle}"
                  KeyUp="InputKeyUp"/>
-        <Grid>
+        <Grid Margin="0,0,0,4">
           <TextBlock Text="输入：" FontSize="20"/>
           <StackPanel HorizontalAlignment="Center"
                       Orientation="Horizontal">
@@ -40,16 +42,17 @@
         </Grid>
       </Grid>
       <!-- 输出 -->
-      <Grid Margin="8,0,8,8">
+      <Grid Margin="4,0,0,0">
         <Grid.RowDefinitions>
-          <RowDefinition Height="50"/>
+          <RowDefinition Height="auto"/>
           <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="1"
                  IsReadOnly="True"
                  Text="{Binding OutputText}"
+                 TextBlock.LineHeight="30"
                  Style="{StaticResource MultilineTextBoxStyle}"/>
-        <Grid>
+        <Grid Margin="0,0,0,4">
           <TextBlock Text="结果：" FontSize="20"/>
           <StackPanel HorizontalAlignment="Center"
                       Orientation="Horizontal">
