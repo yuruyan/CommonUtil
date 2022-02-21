@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace CommonUtil.Core;
 
@@ -15,10 +14,6 @@ public class KeywordResult {
     /// 文件路径
     /// </summary>
     public string File { get; set; } = string.Empty;
-    /// <summary>
-    /// 结果(line,column)
-    /// </summary>
-    public List<KeyValuePair<int, int>> MatchList { get; set; } = new();
 }
 
 public class KeywordFinder {
@@ -28,7 +23,7 @@ public class KeywordFinder {
     public string SearchDirectory { get; private set; }
     public List<string> ExcludeDirectoryRegexes { get; private set; }
     public List<string> ExcludeFileRegexes { get; private set; }
-    private readonly IDictionary<string, IList<string>> FileDataDict = new Dictionary<string, IList<string>>();
+    private readonly IDictionary<string, string> FileDataDict = new Dictionary<string, string>();
 
     /// <summary>
     /// 
@@ -48,8 +43,8 @@ public class KeywordFinder {
     /// </summary>
     /// <param name="files"></param>
     /// <returns></returns>
-    private Dictionary<string, IList<string>> GetFileData(List<string> files) {
-        var dataList = new Dictionary<string, IList<string>>();
+    private Dictionary<string, string> GetFileData(List<string> files) {
+        var dataList = new Dictionary<string, string>();
         int perThreadCount = (int)Math.Ceiling(files.Count / (double)ThreadCount);
         var tasks = new List<Task>(ThreadCount);
         // 文件总数小于等于线程数
@@ -58,7 +53,7 @@ public class KeywordFinder {
                 tasks.Add(Task.Factory.StartNew(() => {
                     try {
                         lock (this) {
-                            dataList[file] = File.ReadAllLines(file);
+                            dataList[file] = File.ReadAllText(file);
                         }
                     } catch (Exception e) {
                         Logger.Error(e);
@@ -72,7 +67,7 @@ public class KeywordFinder {
                     for (int j = tempI * perThreadCount; j < Math.Min(files.Count, (tempI + 1) * perThreadCount); j++) {
                         try {
                             lock (this) {
-                                dataList[files[j]] = File.ReadAllLines(files[j]);
+                                dataList[files[j]] = File.ReadAllText(files[j]);
                             }
                         } catch (Exception e) {
                             Logger.Error(e);
@@ -90,24 +85,19 @@ public class KeywordFinder {
     /// </summary>
     /// <param name="keywordRegex">查找的正则</param>
     /// <param name="results"></param>
-    /// <param name="dispatcher"></param>
     /// <returns></returns>
-    public void FindKeyword(string keywordRegex, List<string> excludeDirs, List<string> excludeFiles, ObservableCollection<KeywordResult> results, Dispatcher? dispatcher = null) {
+    public void FindKeyword(string keywordRegex, List<string> excludeDirs, List<string> excludeFiles, ObservableCollection<KeywordResult> results) {
         // 加载必要文件
         var dict = GetFileData(FilterFiles(SearchDirectory, excludeDirs, excludeFiles));
         foreach (var item in dict) {
             FileDataDict[item.Key] = item.Value;
         }
-        var re = new Regex(keywordRegex, RegexOptions.IgnoreCase);
+        var re = new Regex(keywordRegex, RegexOptions.IgnoreCase | RegexOptions.ECMAScript);
         var tasks = new List<Task>(ThreadCount); // 线程集合
         var keyList = new List<List<string>>(ThreadCount); // 线程进行处理的数据
         var filterKeys = FilterDirectoryFiles(excludeDirs, excludeFiles).ToArray();
         int perThreadCount = (int)Math.Ceiling(filterKeys.Length / (double)ThreadCount); // 每个线程进行处理的数据数目
-        if (dispatcher != null) {
-            dispatcher.Invoke(() => results.Clear());
-        } else {
-            results.Clear();
-        }
+        App.Current.Dispatcher.Invoke(() => results.Clear());
         // 初始化集合
         for (int i = 0; i < ThreadCount; i++) {
             keyList.Add(new());
@@ -126,26 +116,9 @@ public class KeywordFinder {
         foreach (var list in keyList) {
             Task task = Task.Factory.StartNew(() => {
                 foreach (var file in list) {
-                    var matchList = new List<KeyValuePair<int, int>>();
-                    bool found = false;
-                    // 每一行进行匹配
-                    for (int line = 0; line < FileDataDict[file].Count(); line++) {
-                        if (re.IsMatch(FileDataDict[file][line])) {
-                            found = true;
-                            foreach (Match match in re.Matches(FileDataDict[file][line])) {
-                                matchList.Add(new(line, match.Index));
-                            }
-                            // 只查找第一次匹配成功的行
-                            break;
-                        }
-                    }
-                    if (found) {
+                    if (re.IsMatch(FileDataDict[file])) {
                         lock (this) {
-                            if (dispatcher != null) {
-                                dispatcher.Invoke(() => results.Add(new() { File = file, MatchList = matchList }));
-                            } else {
-                                results.Add(new() { File = file, MatchList = matchList });
-                            }
+                            App.Current.Dispatcher.Invoke(() => results.Add(new() { File = file }));
                         }
                     }
                 }
@@ -234,7 +207,7 @@ public class KeywordFinder {
     private List<Regex> CompileRegex(List<string> regexes) {
         var results = new List<Regex>();
         foreach (var item in regexes) {
-            results.Add(new Regex(item, RegexOptions.IgnoreCase));
+            results.Add(new Regex(item, RegexOptions.IgnoreCase | RegexOptions.ECMAScript));
         }
         return results;
     }
@@ -244,14 +217,14 @@ public class KeywordFinder {
     /// </summary>
     /// <param name="directory"></param>
     /// <param name="files"></param>
-    private void GetAllFiles(string directory, List<string> files, List<Regex>? excludeDir = null) {
+    private void GetAllFiles(string directory, List<string> files, List<Regex> excludeDir = null) {
         files.AddRange(Directory.GetFiles(directory));
         excludeDir ??= new List<Regex>();
         foreach (var dir in Directory.GetDirectories(directory)) {
             bool found = false;
             foreach (var regex in excludeDir) {
                 if (regex.IsMatch(dir)) {
-                    Console.WriteLine($"excluded: {dir}");
+                    Logger.Debug($"excluded: {dir}");
                     found = true;
                     break;
                 }

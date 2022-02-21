@@ -168,7 +168,9 @@ namespace CommonUtil.View {
             });
             ThreadPool.QueueUserWorkItem(o => {
                 try {
-                    KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults, Dispatcher);
+#pragma warning disable CS8604 // Possible null reference argument.
+                    KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
+#pragma warning restore CS8604 // Possible null reference argument.
                 } catch (Exception error) {
                     Dispatcher.Invoke(() => Widget.MessageBox.Error(error.Message));
                     Logger.Error(error);
