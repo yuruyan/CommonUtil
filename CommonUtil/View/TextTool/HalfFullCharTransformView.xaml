@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View" 
-      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:ui="http://schemas.modernwpf.com/2019" 
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -25,18 +26,11 @@
                          HorizontalAlignment="Center">
       <Button Content="半角转全角" Click="HalfToFullCharClick"/>
       <Button Content="全角转半角" Click="FullToHalfCharClick"/>
-      <Button Click="CopyResultClick">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-          <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-          <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
+      <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+      <widget:IconButton Icon="&#xe946;" 
+                         Text="清空输入"
+                         Style="{StaticResource GlobalErrorButtonStyle}"
+                         Click="ClearInputClick"/>
     </ui:SimpleStackPanel>
     <TextBox Grid.Row="2"
              Text="{Binding OutputText}"

@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
-      xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:sys="clr-namespace:System;assembly=System.Runtime" xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -41,29 +42,22 @@
                  IsReadOnly="True"
                  Text="{Binding CurrentTimeStamp}"/>
         <Grid Grid.Column="2">
-          <Button HorizontalAlignment="Center"
-                  Visibility="{Binding IsRunning,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='True|Collapsed'}"
-                  Click="StartClick">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe607;"/>
-              <TextBlock Style="{StaticResource ButtonTextBlockStyle}" Text="开始"/>
-            </StackPanel>
-          </Button>
-          <Button HorizontalAlignment="Center"
-                  Visibility="{Binding IsRunning,Converter={StaticResource VisibilityNotEqualConverter},ConverterParameter='True|Collapsed'}"
-                  Click="PauseClick">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe662;"/>
-              <TextBlock Style="{StaticResource ButtonTextBlockStyle}" Text="暂停"/>
-            </StackPanel>
-          </Button>
+          <widget:IconButton HorizontalAlignment="Center"
+                             Visibility="{Binding IsRunning,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='True|Collapsed'}"
+                             Icon="&#xe607;"
+                             Text="开始"
+                             Click="StartClick"/>
+          <widget:IconButton HorizontalAlignment="Center"
+                             Visibility="{Binding IsRunning,Converter={StaticResource VisibilityNotEqualConverter},ConverterParameter='True|Collapsed'}"
+                             Icon="&#xe662;"
+                             Text="暂停"
+                             Click="PauseClick"/>
         </Grid>
-        <Button Grid.Column="3" HorizontalAlignment="Center" Click="CopyTimeStampClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="&#xe6ef;" Style="{StaticResource ButtonIconFontStyle}"/>
-            <TextBlock Text="复制" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
+        <widget:IconButton Grid.Column="3"
+                           HorizontalAlignment="Center"
+                           Icon="&#xe6ef;"
+                           Text="复制"
+                           Click="CopyTimeStampClick"/>
         <!--#endregion-->
 
         <!--#region 时间戳转字符串时间-->
@@ -79,15 +73,12 @@
           <sys:String>毫秒(ms)</sys:String>
           <sys:String>秒(s)</sys:String>
         </ComboBox>
-        <Button Grid.Row="1"
-                Grid.Column="3"
-                HorizontalAlignment="Center"
-                Click="TimeStampToStringClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="&#xe606;" Style="{StaticResource ButtonIconFontStyle}"/>
-            <TextBlock Text="转换" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
+        <widget:IconButton Grid.Row="1"
+                           Grid.Column="3"
+                           HorizontalAlignment="Center"
+                           Icon="&#xe606;"
+                           Text="转换"
+                           Click="TimeStampToStringClick"/>
         <TextBox Grid.Row="1"
                  Grid.Column="4"
                  IsReadOnly="True"
@@ -107,15 +98,12 @@
           <sys:String>毫秒(ms)</sys:String>
           <sys:String>秒(s)</sys:String>
         </ComboBox>
-        <Button Grid.Row="2"
-                Grid.Column="3"
-                HorizontalAlignment="Center"
-                Click="StringToTimeStampClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="&#xe606;" Style="{StaticResource ButtonIconFontStyle}"/>
-            <TextBlock Text="转换" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
+        <widget:IconButton Grid.Row="2"
+                           Grid.Column="3"
+                           HorizontalAlignment="Center"
+                           Icon="&#xe606;"
+                           Text="转换"
+                           Click="StringToTimeStampClick"/>
         <TextBox Grid.Row="2"
                  Grid.Column="4"
                  IsReadOnly="True"
