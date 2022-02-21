@@ -127,7 +127,7 @@ namespace CommonUtil.View {
                     sb.Append($"{item.Key}: {item.Value.Text}\n");
                 }
             }
-            Clipboard.SetText(sb.ToString());
+            Clipboard.SetDataObject(sb.ToString());
             Widget.MessageBox.Success("已复制");
         }
 

@@ -65,7 +65,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(OutputText);
+            Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
 

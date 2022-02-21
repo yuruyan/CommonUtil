@@ -163,7 +163,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyTimeStampClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(CurrentTimeStamp);
+            Clipboard.SetDataObject(CurrentTimeStamp);
             Widget.MessageBox.Success("已复制");
         }
 

@@ -267,57 +267,57 @@ namespace CommonUtil.View {
         }
 
         private void CopyHexClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(HEXColor);
+            Clipboard.SetDataObject(HEXColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(RGBColor);
+            Clipboard.SetDataObject(RGBColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBA1Click(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(RGBA1Color);
+            Clipboard.SetDataObject(RGBA1Color);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBA2Click(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(RGBA2Color);
+            Clipboard.SetDataObject(RGBA2Color);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyHSLClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(HSLColor);
+            Clipboard.SetDataObject(HSLColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyHSVClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(HSVColor);
+            Clipboard.SetDataObject(HSVColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLABClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(LABColor);
+            Clipboard.SetDataObject(LABColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyXYZClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(XYZColor);
+            Clipboard.SetDataObject(XYZColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLCHClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(LCHColor);
+            Clipboard.SetDataObject(LCHColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyCMYKClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(CMYKColor);
+            Clipboard.SetDataObject(CMYKColor);
             Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLUVClick(object sender, RoutedEventArgs e) {
-            Clipboard.SetText(LUVColor);
+            Clipboard.SetDataObject(LUVColor);
             Widget.MessageBox.Success("已复制");
         }
 

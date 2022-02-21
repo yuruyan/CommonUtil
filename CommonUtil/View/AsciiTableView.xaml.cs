@@ -58,7 +58,7 @@ namespace CommonUtil.View {
         private void CopyDetailMouseUp(object sender, MouseButtonEventArgs e) {
             if (sender is FrameworkElement element) {
                 if (element.DataContext is AsciiInfo info) {
-                    Clipboard.SetText($"{info.Binary}\t{info.Octal}\t{info.Decimal}\t{info.HexaDecimal}\t{info.Character}\t{info.HtmlEntity}\t{info.Description}");
+                    Clipboard.SetDataObject($"{info.Binary}\t{info.Octal}\t{info.Decimal}\t{info.HexaDecimal}\t{info.Character}\t{info.HtmlEntity}\t{info.Description}");
                     Widget.MessageBox.Success("已复制");
                 }
             }
