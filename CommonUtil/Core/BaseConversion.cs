@@ -12,18 +12,19 @@ namespace CommonUtil.Core {
         /// <param name="val">十进制值</param>
         /// <param name="targetRadix">目标进制</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">基数错误</exception>
         public static string ConvertFromDecimal(ulong val, int targetRadix = 10) {
             if (targetRadix <= 1 || targetRadix > 36) {
                 throw new ArgumentException("基数错误");
             }
-            var r = new List<string>();
+            var numList = new List<char>();
             do {
                 ulong y = val % (ulong)targetRadix;
-                r.Add(BaseChar[Convert.ToInt32(y)].ToString());
-                val = Convert.ToUInt64(Math.Floor(val / (decimal)targetRadix));
+                numList.Add(BaseChar[Convert.ToInt32(y)]);
+                val = Convert.ToUInt64(Math.Floor(val / (double)targetRadix));
             } while (val > 0);
-            r.Reverse();
-            return string.Join("", r.ToArray());
+            numList.Reverse();
+            return string.Join("", numList);
         }
 
         /// <summary>
@@ -33,6 +34,7 @@ namespace CommonUtil.Core {
         /// <param name="sourceRadix">源字符串的进制</param>
         /// <returns></returns>
         /// <exception cref="FormatException">格式有误</exception>
+        /// <exception cref="ArgumentException">基数错误</exception>
         public static ulong ConvertToDecimal(string value, int sourceRadix = 10) {
             ulong r = 0;
             if (sourceRadix <= 1 || sourceRadix > 36) {

@@ -55,13 +55,15 @@ namespace CommonUtil.View {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 计算 bmi
+        /// </summary>
         private void CalculateBMI() {
             double height = 0, weight = 0;
             try {
                 height = Convert.ToDouble(HeightText) / 100;
                 weight = Convert.ToDouble(WeightText);
             } catch (Exception error) {
-                Logger.Info(error);
                 Widget.MessageBox.Error("输入有误！");
                 return;
             }
@@ -72,7 +74,7 @@ namespace CommonUtil.View {
             }
 
             var bmi = BMICalculator.GetBMI(height, weight);
-            BMI = bmi.ToString(".##");
+            BMI = $"{bmi:f2}";
             Health = bmi switch {
                 < 18.5 => "偏瘦",
                 < 24 => "正常",
@@ -81,7 +83,7 @@ namespace CommonUtil.View {
                 _ => ""
             };
             HealthColor = bmi switch {
-                < 18.5 => "#DBDBDB",
+                < 18.5 => "#BBBBBB",
                 < 24 => "#54a800",
                 < 28 => "#e4a000",
                 >= 28 => "#FF6E4C",
@@ -104,7 +106,6 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TextInputKeyUp(object sender, KeyEventArgs e) {
-            Console.WriteLine(WeightText);
             if (e.Key == Key.Enter) {
                 CalculateBMI();
             }
