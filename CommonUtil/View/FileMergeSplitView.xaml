@@ -24,14 +24,14 @@
           <ColumnDefinition Width="auto"/>
           <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="分割文件" FontSize="20"/>
+        <TextBlock Text="分割文件" FontSize="{DynamicResource HeaderFontSize}"/>
         <TextBlock Grid.Column="1"
                    Visibility="{Binding ElementName=SplitFileProgressBar,Path=Value,Converter={StaticResource HideIfZeroConverter}}"
                    Text="{Binding ElementName=SplitFileProgressBar,Path=Value,StringFormat={}{0}%}"
                    Foreground="#17804A"
                    FontFamily="Arial"
                    Margin="16,0,16,0"
-                   FontSize="20"/>
+                   FontSize="{DynamicResource HeaderFontSize}"/>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,8,0">
           <ui:ProgressBar x:Name="SplitFileProgressBar"
                           Background="Transparent"
@@ -44,14 +44,14 @@
           <ColumnDefinition Width="auto"/>
           <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="合并文件" FontSize="20"/>
+        <TextBlock Text="合并文件" FontSize="{DynamicResource HeaderFontSize}"/>
         <TextBlock Grid.Column="1"
                    Visibility="{Binding ElementName=MergeFileProgressBar,Path=Value,Converter={StaticResource HideIfZeroConverter}}"
                    Text="{Binding ElementName=MergeFileProgressBar,Path=Value,StringFormat={}{0}%}"
                    Foreground="#17804A"
                    FontFamily="Arial"
                    Margin="16,0,16,0"
-                   FontSize="20"/>
+                   FontSize="{DynamicResource HeaderFontSize}"/>
         <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,8,0">
           <ui:ProgressBar x:Name="MergeFileProgressBar"
                           Background="Transparent"
@@ -69,7 +69,7 @@
           </StackPanel>
           <UniformGrid Rows="2">
             <TextBlock Text="{Binding SplitFilePath,Converter={StaticResource FileNameConverter}}" 
-                       FontSize="20"
+                       FontSize="{DynamicResource HeaderFontSize}"
                        FontWeight="Bold"
                        TextTrimming="CharacterEllipsis"
                        Foreground="#D15509"/>

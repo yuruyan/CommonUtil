@@ -11,8 +11,8 @@ namespace CommonUtil.View {
 
         public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomNumberGeneratorView), new PropertyMetadata());
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(string), typeof(RandomNumberGeneratorView), new PropertyMetadata("0"));
-        public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(string), typeof(RandomNumberGeneratorView), new PropertyMetadata(""));
-        public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomNumberGeneratorView), new PropertyMetadata(1));
+        public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(string), typeof(RandomNumberGeneratorView), new PropertyMetadata("100"));
+        public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomNumberGeneratorView), new PropertyMetadata(8));
 
         /// <summary>
         /// 数字列表

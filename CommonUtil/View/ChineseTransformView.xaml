@@ -5,51 +5,44 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
+      Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ChineseTransformView">
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="60"/>
-      <RowDefinition Height="30"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="auto"/>
       <RowDefinition/>
     </Grid.RowDefinitions>
     <!-- Control -->
     <ui:SimpleStackPanel Spacing="8"
                          VerticalAlignment="Center"
                          Orientation="Horizontal">
-      <Button Margin="8,0,0,0" Content="简体转繁体" Click="ToTraditionalClick"/>
+      <Button Content="简体转繁体" Click="ToTraditionalClick"/>
       <Button Content="繁体转简体" Click="ToSimplifiedClick"/>
-      <Button Click="CopyResultClick">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="&#xe6ef;" Style="{StaticResource ButtonIconFontStyle}"/>
-          <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="&#xe946;" Style="{StaticResource ButtonIconFontStyle}"/>
-          <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
+      <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+      <widget:IconButton Icon="&#xe946;" 
+                         Text="清空输入"
+                         Style="{StaticResource GlobalErrorButtonStyle}"
+                         Click="ClearInputClick"/>
     </ui:SimpleStackPanel>
     <!-- Description -->
-    <UniformGrid Grid.Row="1" Columns="2">
-      <TextBlock Padding="8,0,0,0" FontSize="20" Text="待转换文本："/>
-      <TextBlock Padding="8,0,0,0" FontSize="21" Text="转换结果："/>
+    <UniformGrid Grid.Row="1" Columns="2" Margin="0,8,0,8">
+      <TextBlock FontSize="{StaticResource HeaderFontSize}" Text="待转换文本："/>
+      <TextBlock Margin="8,0,0,0" 
+                 FontSize="{StaticResource HeaderFontSize}" 
+                 Text="转换结果："/>
     </UniformGrid>
     <!-- Input,Output -->
     <UniformGrid Grid.Row="2" Columns="2">
-      <UniformGrid.Resources>
-        <Style TargetType="TextBox" BasedOn="{StaticResource MultilineTextBoxStyle}">
-          <Setter Property="Padding" Value="8"/>
-          <Setter Property="Margin" Value="8"/>
-        </Style>
-      </UniformGrid.Resources>
       <TextBox Text="{Binding InputText}"/>
-      <TextBox IsReadOnly="True" Text="{Binding OutputText,Mode=OneWay}"/>
+      <TextBox IsReadOnly="True"
+               Margin="8,0,0,0"
+               Text="{Binding OutputText,Mode=OneWay}"/>
     </UniformGrid>
   </Grid>
 </Page>

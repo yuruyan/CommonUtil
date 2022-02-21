@@ -7,12 +7,12 @@ using System.Windows.Controls;
 namespace CommonUtil.View {
     public partial class RandomStringGeneratorView : Page {
         public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomStringGeneratorView), new PropertyMetadata());
-        public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
-        public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
+        public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
+        public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
         public static readonly DependencyProperty LowerCaseCheckedProperty = DependencyProperty.Register("LowerCaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
         public static readonly DependencyProperty SpecialCharacterCheckedProperty = DependencyProperty.Register("SpecialCharacterChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
-        public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(1));
-        public static readonly DependencyProperty StringLengthProperty = DependencyProperty.Register("StringLength", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(1));
+        public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(8));
+        public static readonly DependencyProperty StringLengthProperty = DependencyProperty.Register("StringLength", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(8));
 
         /// <summary>
         /// 数字选中

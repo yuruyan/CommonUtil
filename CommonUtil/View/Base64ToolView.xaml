@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -21,51 +22,20 @@
     <!-- Control -->
     <WrapPanel Orientation="Horizontal">
       <WrapPanel.Resources>
-        <Style TargetType="StackPanel">
-          <Setter Property="Orientation" Value="Horizontal"/>
-        </Style>
-        <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}">
+        <Style TargetType="widget:IconButton" BasedOn="{StaticResource GlobalIconButtonStyle}">
           <Setter Property="Margin" Value="0,0,8,8"/>
         </Style>
       </WrapPanel.Resources>
-      <Button Click="EncodeString">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe643;"/>
-          <TextBlock Text="字符串编码" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="DecodeString">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe644;"/>
-          <TextBlock Text="字符串解码" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="EncodeFile">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe643;"/>
-          <TextBlock Text="文件编码" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="DecodeFile">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe644;"/>
-          <TextBlock Text="文件解码" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="CopyResultClick">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-          <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
-      <Button Click="ClearInputClick"
-              Margin="0,0,8,8"
-              Style="{StaticResource GlobalErrorButtonStyle}">
-        <StackPanel>
-          <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-          <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
+      <widget:IconButton Icon="&#xe643;" Text="字符串编码" Click="EncodeString"/>
+      <widget:IconButton Icon="&#xe644;" Text="字符串解码" Click="DecodeString"/>
+      <widget:IconButton Icon="&#xe643;" Text="文件编码" Click="EncodeFile"/>
+      <widget:IconButton Icon="&#xe644;" Text="文件解码" Click="DecodeFile"/>
+      <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+      <widget:IconButton Icon="&#xe946;" 
+                         Text="清空输入"
+                         Margin="0,0,8,8"
+                         Style="{StaticResource GlobalErrorButtonStyle}"
+                         Click="ClearInputClick"/>
     </WrapPanel>
     <!-- Description -->
     <UniformGrid Grid.Row="1" Columns="2" Margin="0,8,0,8">

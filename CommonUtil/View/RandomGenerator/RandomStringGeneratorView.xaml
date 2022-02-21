@@ -11,25 +11,17 @@
       Title="RandomStringGeneratorView">
 
   <ui:SimpleStackPanel Spacing="8">
-    <CheckBox Content="数字 (0...9)" 
-              HorizontalContentAlignment="Center"
-              IsChecked="{Binding NumberChecked}"/>
-    <CheckBox Content="小写字母 (a...z)"
-              HorizontalContentAlignment="Center"
-              IsChecked="{Binding LowerCaseChecked}"/>
-    <CheckBox Content="大写字母 (A...Z)"
-              HorizontalContentAlignment="Center"
-              IsChecked="{Binding UppercaseChecked}"/>
-    <CheckBox Content="特殊字符"
-              HorizontalContentAlignment="Center"
-              IsChecked="{Binding SpecialCharacterChecked}"/>
+    <CheckBox Content="数字 (0...9)" IsChecked="{Binding NumberChecked}"/>
+    <CheckBox Content="小写字母 (a...z)" IsChecked="{Binding LowerCaseChecked}"/>
+    <CheckBox Content="大写字母 (A...Z)" IsChecked="{Binding UppercaseChecked}"/>
+    <CheckBox Content="特殊字符" IsChecked="{Binding SpecialCharacterChecked}"/>
     <StackPanel Orientation="Horizontal">
-      <TextBlock Text="字符串长度："/>
-      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="0" SelectedValue="{Binding StringLength}"/>
+      <TextBlock Text="字符串长度：" Width="110"/>
+      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="7" SelectedValue="{Binding StringLength}"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
-      <TextBlock Text="生成数量："/>
-      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="0" SelectedValue="{Binding GenerateCount}"/>
+      <TextBlock Text="生成数量：" Width="110"/>
+      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="8" SelectedValue="{Binding GenerateCount}"/>
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>

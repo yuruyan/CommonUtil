@@ -57,9 +57,6 @@
     <ScrollViewer Margin="8,0,0,0">
       <ui:SimpleStackPanel Spacing="10">
         <ui:SimpleStackPanel.Resources>
-          <!--<Style TargetType="StackPanel">
-            <Setter Property="Orientation" Value="Horizontal"/>
-          </Style>-->
           <Style x:Key="Header" TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
             <Setter Property="Width" Value="100"/>
             <Setter Property="FontSize" Value="20"/>

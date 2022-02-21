@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:CommonUtil.Widget"
         mc:Ignorable="d" 
         Name="Root"
-        Style="{StaticResource GlobalButtonStyle}"
         d:DesignHeight="450" d:DesignWidth="800">
   <StackPanel Orientation="Horizontal">
     <TextBlock Text="{Binding Icon,ElementName=Root}"

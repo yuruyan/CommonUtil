@@ -4,19 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:ui="http://schemas.modernwpf.com/2019" 
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
+      Margin="8,0,0,8"
       Background="White"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="KeywordFinderView">
 
-  <UniformGrid Columns="2" Margin="8">
+  <UniformGrid Columns="2">
     <ui:SimpleStackPanel Spacing="10">
       <StackPanel Orientation="Horizontal">
         <Button Content="选择搜索目录" Click="SelectSearchDirectoryClick"/>
         <TextBlock Text="{Binding SearchDirectory}"
-                   FontSize="20"
+                   FontSize="{DynamicResource HeaderFontSize}"
                    Padding="8,0,0,0"
                    MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=200}"
                    FontWeight="Bold"
@@ -54,12 +56,7 @@
         <TextBlock Text="查询正则表达式："/>
         <TextBox Width="200" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}"/>
       </DockPanel>
-      <Button Click="FindKeywordClick">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="&#xe612;" Style="{StaticResource ButtonIconFontStyle}"/>
-          <TextBlock Text="查找" Style="{StaticResource ButtonTextBlockStyle}"/>
-        </StackPanel>
-      </Button>
+      <widget:IconButton Icon="&#xe612;" Text="查找" Click="FindKeywordClick"/>
     </ui:SimpleStackPanel>
     <!-- 结果 -->
     <Grid>
@@ -69,7 +66,6 @@
       </Grid.RowDefinitions>
       <DockPanel LastChildFill="False">
         <!-- 共多少文件 -->
-        <!--<TextBlock Text="{Binding}"-->
         <TextBlock x:Name="ResultNumber"
                    Text="{Binding KeywordResults.Count,StringFormat={}{0} 条结果}"
                    FontSize="20"
@@ -93,21 +89,6 @@
                          Foreground="#C14431"
                          Padding="0,12,0,12"
                          FontWeight="Bold"/>
-              <!--<ItemsControl ItemsSource="{Binding MatchList}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock Text="{Binding}"
-                               Padding="0,0,0,8"
-                               Margin="0,4,8,0"
-                               FontSize="15"/>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>-->
               <StackPanel.ContextMenu>
                 <ContextMenu>
                   <ContextMenu.ItemContainerStyle>

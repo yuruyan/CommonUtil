@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -33,18 +34,8 @@
       <ui:SimpleStackPanel Spacing="20" 
                            Orientation="Horizontal"
                            HorizontalAlignment="Center">
-        <Button Click="GenerateClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe601;"/>
-            <TextBlock Text="生成" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
-        <Button Click="CopyResultClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-            <TextBlock Text="复制" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
+        <widget:IconButton Icon="&#xe601;" Text="生成" Click="GenerateClick"/>
+        <widget:IconButton Icon="&#xe6ef;" Text="复制" Click="CopyResultClick"/>
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
 

@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -55,24 +56,12 @@
           </ComboBox>
         </StackPanel>
         <ui:SimpleStackPanel Orientation="Horizontal" Spacing="8">
-          <Button Click="GenerateClick">
-            <StackPanel>
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe601;"/>
-              <TextBlock Text="生    成" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
-          <Button Click="CopyResultClick">
-            <StackPanel>
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe6ef;"/>
-              <TextBlock Text="复制结果" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
-          <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-            <StackPanel>
-              <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-              <TextBlock Text="清空输入" Style="{StaticResource ButtonTextBlockStyle}"/>
-            </StackPanel>
-          </Button>
+          <widget:IconButton Icon="&#xe601;" Text="生    成" Click="GenerateClick"/>
+          <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
+          <widget:IconButton Icon="&#xe946;" 
+                         Text="清空输入"
+                         Style="{StaticResource GlobalErrorButtonStyle}"
+                         Click="ClearInputClick"/>
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </UniformGrid>

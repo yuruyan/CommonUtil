@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CommonUtil.View"
       xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:widget="clr-namespace:CommonUtil.Widget"
       mc:Ignorable="d" 
       Margin="8"
       DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -17,24 +18,12 @@
       <ui:SimpleStackPanel Orientation="Horizontal"
                            HorizontalAlignment="Center"
                            Spacing="16">
-        <Button Click="GenerateImageClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe601;"/>
-            <TextBlock Text="生成" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
-        <Button Click="SaveImageClick">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe616;"/>
-            <TextBlock Text="保存" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
-        <Button Click="ClearInputClick" Style="{StaticResource GlobalErrorButtonStyle}">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource ButtonIconFontStyle}" Text="&#xe946;"/>
-            <TextBlock Text="清空" Style="{StaticResource ButtonTextBlockStyle}"/>
-          </StackPanel>
-        </Button>
+        <widget:IconButton Icon="&#xe601;" Text="生成" Click="GenerateImageClick"/>
+        <widget:IconButton Icon="&#xe616;" Text="保存" Click="SaveImageClick"/>
+        <widget:IconButton Icon="&#xe946;" 
+                           Text="清空"
+                           Style="{StaticResource GlobalErrorButtonStyle}"
+                           Click="ClearInputClick"/>
       </ui:SimpleStackPanel>
     </UniformGrid>
     <Image Stretch="Uniform" Source="{Binding QRCodeImageSource}"/>

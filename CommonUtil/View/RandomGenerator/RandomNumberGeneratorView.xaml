@@ -29,7 +29,7 @@
     </StackPanel>
     <StackPanel>
       <TextBlock Width="80" Text="生成数量："/>
-      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="0" SelectedValue="{Binding GenerateCount}"/>
+      <ComboBox ItemsSource="{Binding CountList}" SelectedIndex="7" SelectedValue="{Binding GenerateCount}"/>
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>
