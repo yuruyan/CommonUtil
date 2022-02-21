@@ -26,10 +26,10 @@
           <Setter Property="Margin" Value="0,0,8,8"/>
         </Style>
       </WrapPanel.Resources>
-      <widget:IconButton Icon="&#xe643;" Text="字符串编码" Click="EncodeString"/>
-      <widget:IconButton Icon="&#xe644;" Text="字符串解码" Click="DecodeString"/>
-      <widget:IconButton Icon="&#xe643;" Text="文件编码" Click="EncodeFile"/>
-      <widget:IconButton Icon="&#xe644;" Text="文件解码" Click="DecodeFile"/>
+      <widget:IconButton Icon="&#xe63e;" Text="字符串编码" Click="EncodeString"/>
+      <widget:IconButton Icon="&#xe640;" Text="字符串解码" Click="DecodeString"/>
+      <widget:IconButton Icon="&#xe63e;" Text="文件编码" Click="EncodeFile"/>
+      <widget:IconButton Icon="&#xe640;" Text="文件解码" Click="DecodeFile"/>
       <widget:IconButton Icon="&#xe6ef;" Text="复制结果" Click="CopyResultClick"/>
       <widget:IconButton Icon="&#xe946;" 
                          Text="清空输入"
