@@ -59,7 +59,7 @@
         <ui:SimpleStackPanel.Resources>
           <Style x:Key="Header" TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
             <Setter Property="Width" Value="100"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}"/>
           </Style>
           <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
             <Setter Property="BorderThickness" Value="0"/>
