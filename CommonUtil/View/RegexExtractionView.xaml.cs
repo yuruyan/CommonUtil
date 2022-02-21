@@ -65,6 +65,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -75,6 +76,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }
@@ -99,6 +101,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SearchClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             SearchResult();
         }
 
@@ -108,6 +111,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SearchRegexComboBoxKeyUp(object sender, KeyEventArgs e) {
+            e.Handled = true;
             if (e.Key == Key.Enter) {
                 SearchResult();
             }
@@ -119,6 +123,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MoreRegexMouseUp(object sender, MouseButtonEventArgs e) {
+            e.Handled = true;
             if (CommonRegexListDialog == null) {
                 CommonRegexListDialog = new();
             }

@@ -143,6 +143,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StartClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             IsRunning = true;
             Timer.Start();
         }
@@ -153,6 +154,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PauseClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             IsRunning = false;
             Timer.Stop();
         }
@@ -163,6 +165,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyTimeStampClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(CurrentTimeStamp);
             Widget.MessageBox.Success("已复制");
         }
@@ -173,6 +176,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TimeStampToStringClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             try {
                 long t = 0;
                 if (TimeStampToStringOption.Contains("ms")) {
@@ -193,6 +197,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StringToTimeStampClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             try {
                 long t = TimeStamp.StringToMilliSeconds(StringToTimeStampInput);
                 if (!StringToTimeStampChoice.Contains("ms")) {

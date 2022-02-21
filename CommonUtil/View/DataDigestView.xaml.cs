@@ -87,6 +87,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
         }
 
@@ -96,6 +97,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void StartClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (SelectedDigestIndex != 0) {
                 var target = DigestInfoDict[DigestOptions[SelectedDigestIndex]];
                 // 隐藏其他
@@ -121,6 +123,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var sb = new StringBuilder();
             foreach (var item in DigestInfoDict) {
                 if (item.Value.IsVivible) {

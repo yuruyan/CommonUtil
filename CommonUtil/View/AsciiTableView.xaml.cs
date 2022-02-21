@@ -56,6 +56,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyDetailMouseUp(object sender, MouseButtonEventArgs e) {
+            e.Handled = true;
             if (sender is FrameworkElement element) {
                 if (element.DataContext is AsciiInfo info) {
                     Clipboard.SetDataObject($"{info.Binary}\t{info.Octal}\t{info.Decimal}\t{info.HexaDecimal}\t{info.Character}\t{info.HtmlEntity}\t{info.Description}");

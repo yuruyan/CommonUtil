@@ -183,6 +183,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SelectFileClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var openFileDialog = new OpenFileDialog() {
                 Title = "选择文件",
                 Filter = "All Files|*.*"
@@ -206,6 +207,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SelectFileSplitSaveDirClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var dialog = new VistaFolderBrowserDialog();
             dialog.Description = "选择保存文件夹";
             dialog.UseDescriptionForTitle = true; // This applies to the Vista style dialog only, not the old dialog.
@@ -221,6 +223,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SplitFileClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (IsSplitingFile) {
                 Widget.MessageBox.Info("正在分割文件");
                 return;
@@ -350,6 +353,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SelectMergeFileSaveClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var dialog = new SaveFileDialog {
                 Filter = "All Files|*.*"
             };
@@ -365,6 +369,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SelectMergeFileDirClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var dialog = new VistaFolderBrowserDialog {
                 Description = "选择合并文件夹",
                 UseDescriptionForTitle = true // This applies to the Vista style dialog only, not the old dialog.
@@ -385,6 +390,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MergeFileClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (IsMergingFile) {
                 Widget.MessageBox.Info("正在合并文件");
                 return;

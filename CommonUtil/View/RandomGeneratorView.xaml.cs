@@ -35,6 +35,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -45,6 +46,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GenerateClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var methodInfos = ContentFrame.CurrentSourcePageType.GetMethods();
             var methodInfo = methodInfos.FirstOrDefault(m => m.Name == "Generate");
             if (methodInfo != null) {

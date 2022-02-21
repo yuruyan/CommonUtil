@@ -40,6 +40,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GenerateClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             GenerateMatchList();
         }
 
@@ -81,6 +82,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void IdiomInputBoxKeyUp(object sender, KeyEventArgs e) {
+            e.Handled = true;
             if (e.Key == Key.Enter) {
                 GenerateMatchList();
             }
@@ -92,7 +94,8 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyCurrentResultMouseUp(object sender, MouseButtonEventArgs e) {
-            if(sender is FrameworkElement element) {
+            e.Handled = true;
+            if (sender is FrameworkElement element) {
                 Clipboard.SetDataObject(element.DataContext);
                 Widget.MessageBox.Success("已复制");
             }
@@ -104,7 +107,8 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyAllResultsMouseUp(object sender, MouseButtonEventArgs e) {
-            if(ResultListBox.ItemsSource is IEnumerable<string> list) {
+            e.Handled = true;
+            if (ResultListBox.ItemsSource is IEnumerable<string> list) {
                 var sb = new StringBuilder();
                 foreach (var item in list) { 
                     sb.AppendLine(item);

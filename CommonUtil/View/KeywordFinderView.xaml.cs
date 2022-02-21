@@ -112,6 +112,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FindKeywordClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (string.IsNullOrEmpty(SearchDirectory.Trim())) {
                 Widget.MessageBox.Info("请选择查询目录！");
                 return;
@@ -183,6 +184,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SelectSearchDirectoryClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var dialog = new VistaFolderBrowserDialog();
             dialog.Description = "选择搜索目录";
             dialog.UseDescriptionForTitle = true;
@@ -197,6 +199,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenFileMouseUp(object sender, MouseButtonEventArgs e) {
+            e.Handled = true;
             if (sender is FrameworkElement element) {
                 if (element.DataContext is KeywordResult result) {
                     try {
@@ -219,6 +222,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
+            e.Handled = true;
             if (sender is FrameworkElement element) {
                 if (element.DataContext is KeywordResult result) {
                     try {
@@ -237,6 +241,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenSearchDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
+            e.Handled = true;
             if (sender is TextBlock element) {
                 try {
                     Process.Start("explorer.exe", element.Text);

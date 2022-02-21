@@ -115,7 +115,7 @@
                  Text="各编程语言获取时间戳代码"
                  FontWeight="Bold"
                  Foreground="#238080"
-                 FontSize="23"/>
+                 FontSize="{DynamicResource HeaderFontSize}"/>
       <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding ProgramingGetTimeStampCodeList}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
@@ -123,7 +123,7 @@
               <TextBlock Text="{Binding Key,Mode=OneWay}"
                          Foreground="#238080"
                          FontWeight="Bold"
-                         FontSize="19"
+                         FontSize="18"
                          Width="100"/>
               <TextBox Text="{Binding Value,Mode=OneWay}" 
                        Style="{StaticResource BorderlessTextBoxStyle}"

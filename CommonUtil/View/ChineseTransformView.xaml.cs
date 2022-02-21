@@ -35,6 +35,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ToSimplifiedClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             OutputText = ChineseTransform.ToSimplified(InputText);
         }
 
@@ -44,6 +45,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ToTraditionalClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             OutputText = ChineseTransform.ToTraditional(InputText);
         }
 
@@ -53,6 +55,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -63,6 +66,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }

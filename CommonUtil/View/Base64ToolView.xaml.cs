@@ -39,6 +39,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DecodeFile(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (!CheckInputValidation()) {
                 return;
             }
@@ -76,6 +77,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EncodeFile(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var openFileDialog = new OpenFileDialog() {
                 Title = "选择文件",
                 Filter = "All Files|*.*"
@@ -102,6 +104,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DecodeString(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (CheckInputValidation()) {
                 string inputText = InputText;
                 Task.Run(() => {
@@ -122,6 +125,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EncodeString(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             if (CheckInputValidation()) {
                 string inputText = InputText;
                 Task.Run(() => {
@@ -142,6 +146,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -164,6 +169,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }

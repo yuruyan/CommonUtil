@@ -67,6 +67,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void InputKeyUp(object sender, KeyEventArgs e) {
+            e.Handled = true;
             ConvertNumber();
         }
 

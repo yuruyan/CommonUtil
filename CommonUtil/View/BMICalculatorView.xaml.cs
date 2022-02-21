@@ -97,6 +97,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CalculateBMIClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             CalculateBMI();
         }
 
@@ -106,6 +107,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TextInputKeyUp(object sender, KeyEventArgs e) {
+            e.Handled = true;
             if (e.Key == Key.Enter) {
                 CalculateBMI();
             }

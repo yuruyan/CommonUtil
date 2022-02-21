@@ -1,4 +1,5 @@
 ﻿using CommonUtil.Core;
+using CommonUtil.Utils;
 using ModernWpf.Controls;
 using NLog;
 using System;
@@ -82,16 +83,15 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GenerateClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             GenerateText();
         }
 
         private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             // 浮点数转整数
             if (sender is NumberBox numberBox) {
-                try {
-                    numberBox.Value = (int)numberBox.Value;
-                } catch {
-                }
+                CommonUtils.Try(() => numberBox.Value = (int)numberBox.Value);
             }
         }
 
@@ -101,6 +101,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -111,6 +112,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }

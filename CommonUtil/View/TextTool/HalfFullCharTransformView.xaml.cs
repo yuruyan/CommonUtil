@@ -35,6 +35,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -45,6 +46,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }
@@ -55,6 +57,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void HalfToFullCharClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             OutputText = TextTool.HalfCharToFullChar(InputText);
         }
 
@@ -64,6 +67,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FullToHalfCharClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             OutputText = TextTool.FullCharToHalfChar(InputText);
         }
     }

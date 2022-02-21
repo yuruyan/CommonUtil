@@ -54,6 +54,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void EncodingTextClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             EncodingClick?.Invoke();
         }
 
@@ -63,6 +64,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DecodingTextClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             DecodingClick?.Invoke();
         }
 
@@ -72,6 +74,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -82,6 +85,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }

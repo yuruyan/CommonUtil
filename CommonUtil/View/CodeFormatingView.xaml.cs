@@ -59,6 +59,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CopyResultClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             Clipboard.SetDataObject(OutputText);
             Widget.MessageBox.Success("已复制");
         }
@@ -69,6 +70,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
             OutputText = string.Empty;
         }
@@ -79,6 +81,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FormatClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             string code = InputText;
             CodeFormating.Lang lang = CodeFormating.LanguageDict[Languages[SelectedLanguageIndex]];
             Task.Run(async () => {

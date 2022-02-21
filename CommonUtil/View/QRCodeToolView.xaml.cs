@@ -44,6 +44,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SaveImageClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             var dialog = new SaveFileDialog {
                 Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
             };
@@ -109,6 +110,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void GenerateImageClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             string text = InputText;
             ThreadPool.QueueUserWorkItem(o => {
                 try {
@@ -137,6 +139,7 @@ namespace CommonUtil.View {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
+            e.Handled = true;
             InputText = string.Empty;
         }
     }
