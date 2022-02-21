@@ -112,6 +112,7 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void ClearInputClick(object sender, RoutedEventArgs e) {
             InputText = string.Empty;
+            OutputText = string.Empty;
         }
     }
 }
