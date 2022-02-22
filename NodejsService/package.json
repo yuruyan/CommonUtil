@@ -18,6 +18,7 @@
   "dependencies": {
     "@types/prettier": "^2.4.4",
     "express": "^4.17.2",
+    "ftp-srv": "^4.5.0",
     "got": "11.8.2",
     "log4js": "^6.4.1",
     "pkg": "^5.5.2",
