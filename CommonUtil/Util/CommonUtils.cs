@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 
 namespace CommonUtil.Utils;
@@ -120,6 +122,23 @@ public class CommonUtils {
         try {
             action();
         } catch { }
+    }
+
+    /// <summary>
+    /// 获取本机 IP 地址
+    /// </summary>
+    /// <returns></returns>
+    public static string? GetLocalIpAddress() {
+        try {
+            using Socket socket = new(AddressFamily.InterNetwork, SocketType.Dgram, 0);
+            socket.Connect("8.8.8.8", 65530);
+            if (socket.LocalEndPoint is IPEndPoint endPoint) {
+                return endPoint.Address.ToString();
+            }
+        } catch (Exception e) {
+            Logger.Info(e);
+        }
+        return null;
     }
 }
 

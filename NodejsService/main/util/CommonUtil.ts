@@ -17,7 +17,6 @@ export function isStringEmpty(obj: string): boolean {
   return obj.trim() == ''
 }
 
-
 /**
  * 获取可用端口
  */
