@@ -61,13 +61,19 @@ export function startServer(config: FtpServerConfig) {
     // 登录失败
     reject(new Error('invalid username or password'))
   })
+
+  ftpServer.listen().then(() => { 
+    console.log('Ftp server is starting...')
+  });
 }
 
 /**
  * 关闭 ftp server
  */
 export function stopServer() {
-  ftpServer?.close()
+  ftpServer?.close().then(() => {
+    console.log("Ftp server is closed")
+  })
 }
 
 export default {

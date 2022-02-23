@@ -5,8 +5,8 @@ import { startServer, stopServer } from './src/ftp-server';
 const router = express.Router()
 
 router.post('/codeformating', formatCode)
-router.post('/startserver', startServer)
-router.get('/stopserver', stopServer)
+router.post('/startftpserver', startServer)
+router.get('/stopftpserver', stopServer)
 
 export default {
   router

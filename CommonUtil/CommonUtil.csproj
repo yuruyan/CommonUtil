@@ -24,6 +24,7 @@
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\FileSearch.svg" />
     <None Remove="Resource\image\format.svg" />
+    <None Remove="Resource\image\FTP.svg" />
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
@@ -89,6 +90,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\format.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\image\FTP.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\Merge.svg">

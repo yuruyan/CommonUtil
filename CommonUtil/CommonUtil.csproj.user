@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\FtpServer\AddFtpServerUserDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AsciiTableView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +56,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FileMergeSplitView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\FtpServerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\IdiomMatchingView.xaml.cs">
@@ -123,6 +129,9 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\FtpServer\AddFtpServerUserDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\AsciiTableView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -169,6 +178,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FileMergeSplitView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FtpServerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\IdiomMatchingView.xaml">

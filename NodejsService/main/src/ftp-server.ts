@@ -37,6 +37,10 @@ export function startServer(req: express.Request, resp: express.Response) {
       anonymous: anonymous,
       userlist: userInfos
     })
+    resp.json({
+      code: 200,
+      message: 'success'
+    })
   } catch (error) {
     logger.info(error)
     resp.json({
