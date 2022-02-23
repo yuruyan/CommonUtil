@@ -43,6 +43,11 @@ namespace CommonUtil.View {
                     Permission = Permission,
                 };
             }
+            set {
+                Username = value.Username;
+                Password = value.Password;
+                Permission = value.Permission;
+            }
         }
 
         public AddFtpServerUserDialog() {

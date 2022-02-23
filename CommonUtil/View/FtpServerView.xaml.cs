@@ -2,6 +2,7 @@
 using CommonUtil.Model;
 using CommonUtil.Store;
 using CommonUtil.Utils;
+using CommonUtil.View.Dialog;
 using ModernWpf.Controls;
 using NLog;
 using Ookii.Dialogs.Wpf;
@@ -55,10 +56,10 @@ namespace CommonUtil.View {
         /// <summary>
         /// 添加用户 Dialog
         /// </summary>
-        private AddFtpServerUserDialog AddFtpServerUserDialog;
+        private AddFtpServerUserDialog FtpServerUserDialog;
 
         public FtpServerView() {
-            UserInfoList.Add(new() { Username = "luxiu", Password = "123", Permission = FtpServerUserPermission.R });
+            UserInfoList.Add(new() { Username = "scott", Password = "123456", Permission = FtpServerUserPermission.R });
             InitializeComponent();
             // 启动 nodejs 服务
             Task.Run(() => CommonUtils.Try(() => Server.CheckNodeJsServer()));
@@ -86,12 +87,13 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private async void AddUserClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            if (AddFtpServerUserDialog == null) {
-                AddFtpServerUserDialog = new();
+            if (FtpServerUserDialog == null) {
+                FtpServerUserDialog = new();
             }
-            var result = await AddFtpServerUserDialog.ShowAsync();
+            FtpServerUserDialog.Title = "添加用户";
+            var result = await FtpServerUserDialog.ShowAsync();
             if (result == ContentDialogResult.Primary) {
-                UserInfoList.Add(AddFtpServerUserDialog.UserInfo);
+                UserInfoList.Add(FtpServerUserDialog.UserInfo);
             }
         }
 
@@ -116,8 +118,20 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ModifyUserInfoMouseUp(object sender, MouseButtonEventArgs e) {
-
+        private async void ModifyUserInfoMouseUp(object sender, MouseButtonEventArgs e) {
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is FtpServerUserInfo userInfo) {
+                    if (FtpServerUserDialog == null) {
+                        FtpServerUserDialog = new();
+                    }
+                    FtpServerUserDialog.Title = "修改用户";
+                    FtpServerUserDialog.UserInfo = userInfo;
+                    var result = await FtpServerUserDialog.ShowAsync();
+                    if (result == ContentDialogResult.Primary) {
+                        UserInfoList[UserInfoList.IndexOf(userInfo)] = FtpServerUserDialog.UserInfo;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -125,8 +139,15 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteUserInfoMouseUp(object sender, MouseButtonEventArgs e) {
-
+        private async void DeleteUserInfoMouseUp(object sender, MouseButtonEventArgs e) {
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is FtpServerUserInfo userInfo) {
+                    var result = await new WarningDialog(detailText: $"是否删除 {userInfo.Username}？").ShowAsync();
+                    if (result == ContentDialogResult.Primary) {
+                        UserInfoList.Remove(userInfo);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -181,6 +202,21 @@ namespace CommonUtil.View {
                     Widget.MessageBox.Error("停止失败");
                 }
             });
+        }
+
+        /// <summary>
+        /// 复制 ftp 地址
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyFtpAddressMouseUp(object sender, MouseButtonEventArgs e) {
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is FtpServerUserInfo userInfo) {
+                    string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{CommonUtils.GetLocalIpAddress()}";
+                    Clipboard.SetDataObject(address);
+                    Widget.MessageBox.Success("已复制");
+                }
+            }
         }
     }
 

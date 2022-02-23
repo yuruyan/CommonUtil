@@ -7,7 +7,16 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\FtpServer\AddFtpServerUserDialog.xaml.cs">
+    <Compile Update="View\Dialog\InfoDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Dialog\SimpleInputDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Dialog\WarningDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\FtpServer\FtpServerUserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AsciiTableView.xaml.cs">
@@ -129,7 +138,16 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\FtpServer\AddFtpServerUserDialog.xaml">
+    <Page Update="View\Dialog\InfoDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Dialog\SimpleInputDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Dialog\WarningDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FtpServer\FtpServerUserDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AsciiTableView.xaml">

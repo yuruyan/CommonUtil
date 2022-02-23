@@ -9,7 +9,7 @@
                    mc:Ignorable="d" 
                    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
                    d:DesignHeight="450" d:DesignWidth="800"
-                   Title="添加用户"
+                   Title="{Binding Title}"
                    PrimaryButtonText="确定"
                    SecondaryButtonText="取消"
                    DefaultButton="Primary"
