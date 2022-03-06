@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CommonUtil.Utils;
 
 namespace CommonUtil.View {
     public partial class BaseConversionView : Page {
@@ -85,7 +86,7 @@ namespace CommonUtil.View {
         /// </summary>
         private void ConvertNumber() {
             var sb = new StringBuilder();
-            string[] numbers = InputText.Split('\n');
+            string[] numbers = CommonUtils.NormalizeMultipleLineText(InputText).Split('\n');
             foreach (var number in numbers) {
                 if (string.IsNullOrEmpty(number.Trim())) {
                     sb.Append('\n');
