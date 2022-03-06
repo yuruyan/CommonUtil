@@ -37,7 +37,7 @@ namespace CommonUtil.View {
 
         public RemoveDuplicateView() {
             SymbolDict = new() {
-                { "换行符（⮠  ）", System.Environment.NewLine },
+                { "换行符（⮠  ）", "\n" },
                 { "制表符（→）", "\t" },
                 { "空格（ ）", " " },
                 { "中文逗号（，）", "，" },

@@ -1,4 +1,4 @@
 {
-  // ÅäÖÃ»·¾³, "production" or "development". Ä¬ÈÏ "development"
+  // é…ç½®ç¯å¢ƒ, "production" or "development". é»˜è®¤ "development"
   "environment": "development"
 }

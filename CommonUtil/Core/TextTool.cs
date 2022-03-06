@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CommonUtil.Utils;
 
 namespace CommonUtil.Core;
 
@@ -67,7 +68,7 @@ public class TextTool {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string RemoveWhiteSpaceLine(string text) {
-        return string.Join(Environment.NewLine, text.Split(Environment.NewLine).Where(s => s.Trim().Any()));
+        return string.Join('\n', CommonUtils.NormalizeMultipleLineText(text).Split('\n').Where(s => s.Trim().Any()));
     }
 
     /// <summary>
@@ -76,7 +77,7 @@ public class TextTool {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string TrimLine(string text) {
-        return string.Join(Environment.NewLine, text.Split(Environment.NewLine).Select(s => s.Trim()));
+        return string.Join('\n', CommonUtils.NormalizeMultipleLineText(text).Split('\n').Select(s => s.Trim()));
     }
 
     /// <summary>

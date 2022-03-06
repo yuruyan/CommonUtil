@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CommonUtil.Utils;
 
 namespace CommonUtil.View {
     public partial class KeywordFinderView : Page {
@@ -130,10 +131,10 @@ namespace CommonUtil.View {
             var excludeDirs = new List<string>();
             var excludeFiles = new List<string>();
             if (IsExcludeDirectorySelected) {
-                excludeDirs.AddRange(ExcludeDirectory.Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
+                excludeDirs.AddRange(CommonUtils.NormalizeMultipleLineText(ExcludeDirectory).Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
             }
             if (IsExcludeFileSelected) {
-                excludeFiles.AddRange(ExcludeFile.Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
+                excludeFiles.AddRange(CommonUtils.NormalizeMultipleLineText(ExcludeFile).Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
             }
             // 检查搜索目录是否改变
             if (LastSearchDirectory != SearchDirectory) {
