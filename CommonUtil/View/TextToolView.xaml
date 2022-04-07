@@ -1,24 +1,31 @@
-﻿<Page x:Class="CommonUtil.View.TextToolView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CommonUtil.View"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="TextToolView">
+﻿<Page
+  x:Class="CommonUtil.View.TextToolView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Title="TextToolView"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  mc:Ignorable="d">
 
   <Grid>
-    <ui:NavigationView PaneDisplayMode="Top" 
-                       IsTabStop="False"
-                       IsSettingsVisible="False"
-                       IsBackButtonVisible="Collapsed"
-                       SelectionChanged="NavigationSelectionChanged">
+    <ui:NavigationView
+      IsBackButtonVisible="Collapsed"
+      IsSettingsVisible="False"
+      IsTabStop="False"
+      PaneDisplayMode="Top"
+      SelectionChanged="NavigationSelectionChanged">
       <ui:NavigationView.MenuItems>
-        <ui:NavigationViewItem x:Name="RemoveDuplicateView" Content="文本去重" IsSelected="True"/>
-        <ui:NavigationViewItem x:Name="WhiteSpaceProcessView" Content="空白处理"/>
-        <ui:NavigationViewItem x:Name="HalfFullCharTransformView" Content="半角全角转换"/>
+        <ui:NavigationViewItem
+          x:Name="RemoveDuplicateView"
+          Content="文本去重"
+          IsSelected="True" />
+        <ui:NavigationViewItem x:Name="WhiteSpaceProcessView" Content="空白处理" />
+        <ui:NavigationViewItem x:Name="HalfFullCharTransformView" Content="半角全角转换" />
+        <ui:NavigationViewItem x:Name="PrependLineNumberView" Content="增加行号" />
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

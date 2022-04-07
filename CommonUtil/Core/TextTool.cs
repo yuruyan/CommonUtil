@@ -118,4 +118,18 @@ public class TextTool {
         }
         return new(array);
     }
+
+    /// <summary>
+    /// 添加行号
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="extraText">额外文本</param>
+    /// <returns></returns>
+    public static string PrependLineNumber(string text, string extraText) {
+        string[] lines = CommonUtils.NormalizeMultipleLineText(text).Split('\n');
+        for (int i = 0; i < lines.Length; i++) {
+            lines[i] = $"{i + 1}{extraText}" + lines[i];
+        }
+        return string.Join('\n', lines);
+    }
 }
