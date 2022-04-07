@@ -11,6 +11,7 @@ namespace CommonUtil.View {
                 typeof(RemoveDuplicateView),
                 typeof(WhiteSpaceProcessView),
                 typeof(HalfFullCharTransformView),
+                typeof(PrependLineNumberView),
         };
         private RouterService RouterService;
 
