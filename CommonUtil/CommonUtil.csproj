@@ -20,6 +20,7 @@
     <None Remove="Resource\image\ChineseTransform.svg" />
     <None Remove="Resource\image\ColorPicker.svg" />
     <None Remove="Resource\image\DateTime.svg" />
+    <None Remove="Resource\image\Edge.svg" />
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\FileSearch.svg" />
@@ -52,12 +53,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
     <PackageReference Include="Flurl" Version="3.0.4" />
     <PackageReference Include="Flurl.Http" Version="3.2.2" />
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="4.7.13" />
+    <PackageReference Include="NPOI" Version="2.5.6" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.2.0" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
@@ -82,6 +85,7 @@
     <Resource Include="Resource\image\ColorPicker.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\Edge.svg" />
     <Resource Include="Resource\image\encoding.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
