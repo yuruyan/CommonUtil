@@ -63,20 +63,31 @@ namespace CommonUtil.Widget {
             set { SetValue(ClickCallbackProperty, value); }
         }
 
+        public static void ShowNotification(string title, string message, MessageType messageType = MessageType.INFO, Action? callback = null) {
+            // 检查权限
+            if (App.Current.Dispatcher.CheckAccess()) {
+                PanelChildren?.Add(new NotificationBox(title, message, messageType, callback));
+            } else {
+                App.Current.Dispatcher.Invoke(() => {
+                    PanelChildren?.Add(new NotificationBox(title, message, messageType, callback));
+                });
+            }
+        }
+
         public static void Info(string title, string message, Action? callback = null) {
-            PanelChildren?.Add(new NotificationBox(title, message, MessageType.INFO, callback));
+            ShowNotification(title, message, MessageType.INFO, callback);
         }
 
         public static void Warning(string title, string message, Action? callback = null) {
-            PanelChildren?.Add(new NotificationBox(title, message, MessageType.WARNING, callback));
+            ShowNotification(title, message, MessageType.WARNING, callback);
         }
 
         public static void Success(string title, string message, Action? callback = null) {
-            PanelChildren?.Add(new NotificationBox(title, message, MessageType.SUCCESS, callback));
+            ShowNotification(title, message, MessageType.SUCCESS, callback);
         }
 
         public static void Error(string title, string message, Action? callback = null) {
-            PanelChildren?.Add(new NotificationBox(title, message, MessageType.ERROR, callback));
+            ShowNotification(title, message, MessageType.ERROR, callback);
         }
 
         public NotificationBox(string title, string message, MessageType messageType = MessageType.INFO, Action? callback = null) {

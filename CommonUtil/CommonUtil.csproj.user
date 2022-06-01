@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\CodeGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\CodeGenerator\CSharpDependencyView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Dialog\InfoDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -14,6 +20,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Dialog\WarningDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Browser\EdgeBookmarkView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FtpServer\FtpServerUserDialog.xaml.cs">
@@ -141,6 +150,12 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\CodeGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CodeGenerator\CSharpDependencyView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\Dialog\InfoDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -148,6 +163,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Dialog\WarningDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Browser\EdgeBookmarkView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FtpServer\FtpServerUserDialog.xaml">
