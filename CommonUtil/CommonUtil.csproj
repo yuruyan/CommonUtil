@@ -18,6 +18,7 @@
     <None Remove="Resource\image\BaseConversion.svg" />
     <None Remove="Resource\image\BMI.svg" />
     <None Remove="Resource\image\ChineseTransform.svg" />
+    <None Remove="Resource\image\CodeGenerator.svg" />
     <None Remove="Resource\image\ColorPicker.svg" />
     <None Remove="Resource\image\DateTime.svg" />
     <None Remove="Resource\image\Edge.svg" />
@@ -82,6 +83,7 @@
     <Resource Include="Resource\image\ChineseTransform.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\CodeGenerator.svg" />
     <Resource Include="Resource\image\ColorPicker.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

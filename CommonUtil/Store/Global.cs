@@ -48,6 +48,7 @@ namespace CommonUtil.Store {
             new() { Name = "正则匹配提取", ImagePath = ImagePath + "regex.svg", ClassType = typeof(RegexExtractionView) },
             new() { Name = "FTP 服务器", ImagePath = ImagePath + "ftp.svg", ClassType = typeof(FtpServerView) },
             new() { Name = "浏览器书签导出", ImagePath = ImagePath + "Edge.svg", ClassType = typeof(EdgeBookmarkView) },
+            new() { Name = "代码生成器", ImagePath = ImagePath + "CodeGenerator.svg", ClassType = typeof(CodeGeneratorView) },
         };
     }
 
