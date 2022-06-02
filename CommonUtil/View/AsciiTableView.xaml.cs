@@ -27,26 +27,11 @@ namespace CommonUtil.View {
             // 加载数据
             ThreadPool.QueueUserWorkItem(o => {
                 List<AsciiInfo> list = AsciiTable.GetAsciiInfoList();
-                const int firstLoad = 20;
-                // 先加载一部分
-                if (list.Count > firstLoad) {
-                    Dispatcher.Invoke(() => {
-                        for (int i = 0; i < firstLoad; i++) {
-                            AsciiTableList.Add(list[i]);
-                        }
-                    });
-                    ThreadPool.QueueUserWorkItem(o => {
-                        Thread.Sleep(1000);
-                        Dispatcher.Invoke(() => {
-                            for (int i = firstLoad; i < list.Count; i++) {
-                                AsciiTableList.Add(list[i]);
-                            }
-                        });
-                    });
-                } else {
-                    // 正常情况不会发生
-                    Dispatcher.Invoke(() => AsciiTableList = new(list));
-                }
+                Dispatcher.Invoke(() => {
+                    for (int i = 0; i < list.Count; i++) {
+                        AsciiTableList.Add(list[i]);
+                    }
+                });
             });
         }
 
@@ -55,7 +40,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyDetailMouseUp(object sender, MouseButtonEventArgs e) {
+        private void CopyDetailClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (sender is FrameworkElement element) {
                 if (element.DataContext is AsciiInfo info) {

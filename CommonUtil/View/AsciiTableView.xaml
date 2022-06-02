@@ -11,109 +11,53 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <Grid>
-    <ScrollViewer>
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition Width="7*" />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1">
-          <Grid Margin="0,4,0,4">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="100" />
-              <ColumnDefinition Width="60" />
-              <ColumnDefinition Width="60" />
-              <ColumnDefinition Width="70" />
-              <ColumnDefinition />
-              <ColumnDefinition Width="80" />
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+  <ListView Grid.Column="1" ItemsSource="{Binding AsciiTableList}">
+    <ListView.Resources>
+      <ContextMenu
+        x:Key="fileItemContextMenu"
+        Width="150"
+        Style="{StaticResource GlobalContextMenuStyle}">
+        <MenuItem Click="CopyDetailClickHandler" Header="复制">
+          <MenuItem.Icon>
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </ContextMenu>
+    </ListView.Resources>
+    <ListView.ItemContainerStyle>
+      <Style BasedOn="{StaticResource GridViewItemContainerStyleKey}" TargetType="ListViewItem">
+        <Setter Property="ContextMenu" Value="{StaticResource fileItemContextMenu}" />
+      </Style>
+    </ListView.ItemContainerStyle>
+    <ListView.View>
+      <GridView>
+        <GridViewColumn
+          Width="100"
+          DisplayMemberBinding="{Binding Binary}"
+          Header="二进制" />
+        <GridViewColumn
+          Width="80"
+          DisplayMemberBinding="{Binding Octal}"
+          Header="八进制" />
+        <GridViewColumn
+          Width="80"
+          DisplayMemberBinding="{Binding Decimal}"
+          Header="十进制" />
+        <GridViewColumn
+          Width="80"
+          DisplayMemberBinding="{Binding HexaDecimal}"
+          Header="十六进制" />
+        <GridViewColumn
+          Width="160"
+          DisplayMemberBinding="{Binding Character}"
+          Header="符号" />
+        <GridViewColumn
+          Width="120"
+          DisplayMemberBinding="{Binding HtmlEntity}"
+          Header="HTML实体" />
+        <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="说明" />
+      </GridView>
+    </ListView.View>
+  </ListView>
 
-            <Grid.Resources>
-              <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-                <Setter Property="FontWeight" Value="Bold" />
-              </Style>
-            </Grid.Resources>
-            <TextBlock
-              Grid.Column="0"
-              FontWeight="Bold"
-              Text="二进制" />
-            <TextBlock Grid.Column="1" Text="八进制" />
-            <TextBlock Grid.Column="2" Text="十进制" />
-            <TextBlock Grid.Column="3" Text="十六进制" />
-            <TextBlock Grid.Column="4" Text="符号" />
-            <TextBlock Grid.Column="5" Text="HTML实体" />
-            <TextBlock Grid.Column="6" Text="说明" />
-          </Grid>
-
-          <ItemsControl ItemsSource="{Binding AsciiTableList}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <Grid Height="40">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="70" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition />
-                  </Grid.ColumnDefinitions>
-                  <Grid.Style>
-                    <Style TargetType="Grid">
-                      <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                          <Setter Property="Background" Value="{StaticResource Gray4}" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                          <Setter Property="Background" Value="Transparent" />
-                        </Trigger>
-                      </Style.Triggers>
-                    </Style>
-                  </Grid.Style>
-                  <Grid.ContextMenu>
-                    <ContextMenu>
-                      <ContextMenu.ItemContainerStyle>
-                        <Style TargetType="MenuItem" />
-                      </ContextMenu.ItemContainerStyle>
-                      <ContextMenu.Resources>
-                        <Style TargetType="StackPanel">
-                          <Setter Property="Width" Value="100" />
-                          <Setter Property="Height" Value="30" />
-                          <Setter Property="Background" Value="Transparent" />
-                        </Style>
-                      </ContextMenu.Resources>
-                      <StackPanel MouseUp="CopyDetailMouseUp" Orientation="Horizontal">
-                        <TextBlock
-                          Margin="4,0,8,0"
-                          VerticalAlignment="Center"
-                          Style="{StaticResource IconFontStyle}"
-                          Text="&#xe6ef;" />
-                        <TextBlock VerticalAlignment="Center" Text="复制" />
-                      </StackPanel>
-                    </ContextMenu>
-                  </Grid.ContextMenu>
-                  <TextBlock Grid.Column="0" Text="{Binding Binary}" />
-                  <TextBlock Grid.Column="1" Text="{Binding Octal}" />
-                  <TextBlock Grid.Column="2" Text="{Binding Decimal}" />
-                  <TextBlock Grid.Column="3" Text="{Binding HexaDecimal}" />
-                  <TextBlock
-                    Grid.Column="4"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Foreground="#0F8C90"
-                    Text="{Binding Character}" />
-                  <TextBlock Grid.Column="5" Text="{Binding HtmlEntity}" />
-                  <TextBlock Grid.Column="6" Text="{Binding Description}" />
-                </Grid>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </StackPanel>
-
-      </Grid>
-    </ScrollViewer>
-  </Grid>
 </Page>
