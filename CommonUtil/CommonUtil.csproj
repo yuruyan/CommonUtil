@@ -174,4 +174,8 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
+  </ItemGroup>
+
 </Project>
