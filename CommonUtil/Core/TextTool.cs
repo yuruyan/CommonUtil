@@ -132,4 +132,26 @@ public class TextTool {
         }
         return string.Join('\n', lines);
     }
+
+    /// <summary>
+    /// 英文单词正则
+    /// </summary>
+    public static readonly Regex EnglishWordRegex = new(@"[a-z]+", RegexOptions.IgnoreCase);
+
+    /// <summary>
+    /// 英文单词、数字正则
+    /// </summary>
+    public static readonly Regex EnglishWordNumberRegex = new(@"[a-z0-9]+", RegexOptions.IgnoreCase);
+
+    /// <summary>
+    /// 英文两边加空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string AddEnglishWordBraces(string text, bool includeNumber = false) {
+        if (includeNumber) {
+            return EnglishWordNumberRegex.Replace(text, match => $" {match} ");
+        }
+        return EnglishWordRegex.Replace(text, match => $" {match} ");
+    }
 }

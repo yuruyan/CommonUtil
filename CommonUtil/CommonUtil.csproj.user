@@ -261,6 +261,9 @@
     <Page Update="View\TextToolView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\TextTool\AddEnglishWordBracesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\TimeStampView.xaml">
       <SubType>Designer</SubType>
     </Page>

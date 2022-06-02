@@ -12,6 +12,7 @@ namespace CommonUtil.View {
                 typeof(WhiteSpaceProcessView),
                 typeof(HalfFullCharTransformView),
                 typeof(PrependLineNumberView),
+                typeof(AddEnglishWordBraces),
         };
         private RouterService RouterService;
 
