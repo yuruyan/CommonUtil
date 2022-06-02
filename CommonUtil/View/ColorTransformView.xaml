@@ -1,114 +1,152 @@
-﻿<Page x:Class="CommonUtil.View.ColorTransformView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CommonUtil.View" 
-      xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
-      mc:Ignorable="d" 
-      Margin="8"
-      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ColorTransformView">
+﻿<Page
+  x:Class="CommonUtil.View.ColorTransformView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Title="ColorTransformView"
+  Margin="8"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
 
   <Page.ContextMenu>
     <ContextMenu>
       <ContextMenu.Resources>
-        <Style TargetType="MenuItem" BasedOn="{StaticResource DefaultMenuItemStyle}">
-          <Setter Property="Width" Value="150"/>
+        <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem">
+          <Setter Property="Width" Value="150" />
         </Style>
       </ContextMenu.Resources>
-      <MenuItem Click="CopyHexClick" Header="复制 Hex"/>
-      <MenuItem Click="CopyRGBClick" Header="复制 RGB"/>
-      <MenuItem Click="CopyRGBA1Click" Header="复制 RGBA1"/>
-      <MenuItem Click="CopyRGBA2Click" Header="复制 RGBA2"/>
-      <MenuItem Click="CopyHSLClick" Header="复制 HSL"/>
-      <MenuItem Click="CopyHSVClick" Header="复制 HSV"/>
-      <MenuItem Click="CopyLABClick" Header="复制 LAB"/>
-      <MenuItem Click="CopyXYZClick" Header="复制 XYZ"/>
-      <MenuItem Click="CopyLCHClick" Header="复制 LCH"/>
-      <MenuItem Click="CopyCMYKClick" Header="复制 CMYK"/>
-      <MenuItem Click="CopyLUVClick" Header="复制 LUV"/>
+      <MenuItem Click="CopyHexClick" Header="复制 Hex" />
+      <MenuItem Click="CopyRGBClick" Header="复制 RGB" />
+      <MenuItem Click="CopyRGBA1Click" Header="复制 RGBA1" />
+      <MenuItem Click="CopyRGBA2Click" Header="复制 RGBA2" />
+      <MenuItem Click="CopyHSLClick" Header="复制 HSL" />
+      <MenuItem Click="CopyHSVClick" Header="复制 HSV" />
+      <MenuItem Click="CopyLABClick" Header="复制 LAB" />
+      <MenuItem Click="CopyXYZClick" Header="复制 XYZ" />
+      <MenuItem Click="CopyLCHClick" Header="复制 LCH" />
+      <MenuItem Click="CopyCMYKClick" Header="复制 CMYK" />
+      <MenuItem Click="CopyLUVClick" Header="复制 LUV" />
     </ContextMenu>
   </Page.ContextMenu>
-  
+
   <UniformGrid Columns="2">
-    <!-- 调色板 -->
+    <!--  调色板  -->
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition/>
-        <RowDefinition/>
+        <RowDefinition />
+        <RowDefinition />
       </Grid.RowDefinitions>
-      <Rectangle x:Name="ColorPanel"/>
-      <Grid Grid.Row="1" x:Name="ColorPickerPanel">
+      <Rectangle x:Name="ColorPanel" />
+      <Grid x:Name="ColorPickerPanel" Grid.Row="1">
         <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition Height="auto"/>
+          <RowDefinition />
+          <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <colorpicker:SquarePicker Height="auto" 
-                                  Margin="0,8,0,8"
-                                  SelectedColor="{Binding SelectedColor,Mode=TwoWay}"/>
-        <colorpicker:AlphaSlider Grid.Row="1"
-                                 SelectedColor="{Binding SelectedColor,Mode=TwoWay}"/>
+        <colorpicker:SquarePicker
+          Height="auto"
+          Margin="0,8,0,8"
+          SelectedColor="{Binding SelectedColor, Mode=TwoWay}" />
+        <colorpicker:AlphaSlider Grid.Row="1" SelectedColor="{Binding SelectedColor, Mode=TwoWay}" />
       </Grid>
     </Grid>
 
     <ScrollViewer Margin="8,0,0,0">
       <ui:SimpleStackPanel Spacing="10">
         <ui:SimpleStackPanel.Resources>
-          <Style x:Key="Header" TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}"/>
+          <Style
+            x:Key="Header"
+            BasedOn="{StaticResource GlobalTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}" />
           </Style>
-          <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontFamily" Value="Consoles"/>
+          <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontFamily" Value="Consoles" />
           </Style>
         </ui:SimpleStackPanel.Resources>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HEX："/>
-          <TextBox x:Name="HEXColorBox" HorizontalAlignment="Stretch" Text="{Binding HEXColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="HEX：" />
+          <TextBox
+            x:Name="HEXColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding HEXColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGB："/>
-          <TextBox x:Name="RGBColorBox" HorizontalAlignment="Stretch" Text="{Binding RGBColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="RGB：" />
+          <TextBox
+            x:Name="RGBColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding RGBColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGBA1："/>
-          <TextBox x:Name="RGBA1ColorBox" HorizontalAlignment="Stretch" Text="{Binding RGBA1Color,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="RGBA1：" />
+          <TextBox
+            x:Name="RGBA1ColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding RGBA1Color, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGBA2："/>
-          <TextBox x:Name="RGBA2ColorBox" HorizontalAlignment="Stretch" Text="{Binding RGBA2Color,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="RGBA2：" />
+          <TextBox
+            x:Name="RGBA2ColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding RGBA2Color, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HSL："/>
-          <TextBox x:Name="HSLColorBox" HorizontalAlignment="Stretch" Text="{Binding HSLColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="HSL：" />
+          <TextBox
+            x:Name="HSLColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding HSLColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HSV / HSB："/>
-          <TextBox x:Name="HSVColorBox" HorizontalAlignment="Stretch" Text="{Binding HSVColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="HSV / HSB：" />
+          <TextBox
+            x:Name="HSVColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding HSVColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CIE-LAB："/>
-          <TextBox x:Name="LABColorBox" HorizontalAlignment="Stretch" Text="{Binding LABColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="CIE-LAB：" />
+          <TextBox
+            x:Name="LABColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding LABColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="XYZ："/>
-          <TextBox x:Name="XYZColorBox" HorizontalAlignment="Stretch" Text="{Binding XYZColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="XYZ：" />
+          <TextBox
+            x:Name="XYZColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding XYZColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CIE-LCH："/>
-          <TextBox x:Name="LCHColorBox" HorizontalAlignment="Stretch" Text="{Binding LCHColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="CIE-LCH：" />
+          <TextBox
+            x:Name="LCHColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding LCHColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CMYK："/>
-          <TextBox x:Name="CMYKColorBox" HorizontalAlignment="Stretch" Text="{Binding CMYKColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="CMYK：" />
+          <TextBox
+            x:Name="CMYKColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding CMYKColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="LUV："/>
-          <TextBox x:Name="LUVColorBox" HorizontalAlignment="Stretch" Text="{Binding LUVColor,UpdateSourceTrigger=PropertyChanged}"/>
+          <TextBlock Style="{StaticResource Header}" Text="LUV：" />
+          <TextBox
+            x:Name="LUVColorBox"
+            HorizontalAlignment="Stretch"
+            Text="{Binding LUVColor, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
       </ui:SimpleStackPanel>
     </ScrollViewer>

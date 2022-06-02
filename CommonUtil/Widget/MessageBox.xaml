@@ -1,77 +1,86 @@
-﻿<UserControl x:Class="CommonUtil.Widget.MessageBox"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:CommonUtil.Widget" 
-             xmlns:ui="http://schemas.modernwpf.com/2019"
-             mc:Ignorable="d"
-             d:DesignHeight="50"
-             d:DesignWidth="300"
-             Name="Root"
-             Margin="0,8,0,8"
-             Loaded="RootLoaded"
-             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+﻿<UserControl
+  x:Class="CommonUtil.Widget.MessageBox"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.Widget"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Name="Root"
+  Margin="0,8,0,8"
+  d:DesignHeight="50"
+  d:DesignWidth="300"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="RootLoaded"
+  mc:Ignorable="d">
   <UserControl.RenderTransform>
     <TranslateTransform x:Name="RootTranslateTransform" />
   </UserControl.RenderTransform>
   <UserControl.Resources>
     <Duration x:Key="Duration">0:0:0.4</Duration>
     <Storyboard x:Key="LoadStoryboard">
-      <DoubleAnimation Name="TranslateTransformAnimation"
-                       Duration="{StaticResource Duration}"
-                       From="-50"
-                       To="0"
-                       Storyboard.TargetProperty="(TranslateTransform.Y)"
-                       Storyboard.TargetName="RootTranslateTransform">
+      <DoubleAnimation
+        Name="TranslateTransformAnimation"
+        Storyboard.TargetName="RootTranslateTransform"
+        Storyboard.TargetProperty="(TranslateTransform.Y)"
+        From="-50"
+        To="0"
+        Duration="{StaticResource Duration}">
         <DoubleAnimation.EasingFunction>
-          <PowerEase Power="3" EasingMode="EaseOut" />
+          <PowerEase EasingMode="EaseOut" Power="3" />
         </DoubleAnimation.EasingFunction>
       </DoubleAnimation>
-      <DoubleAnimation Duration="{StaticResource Duration}"
-                       From="0"
-                       To="1"
-                       Storyboard.TargetProperty="Opacity"
-                       Storyboard.TargetName="Root" />
+      <DoubleAnimation
+        Storyboard.TargetName="Root"
+        Storyboard.TargetProperty="Opacity"
+        From="0"
+        To="1"
+        Duration="{StaticResource Duration}" />
     </Storyboard>
     <Storyboard x:Key="UnLoadStoryboard">
-      <DoubleAnimation Duration="{StaticResource Duration}"
-                       From="1"
-                       To="0"
-                       Storyboard.TargetProperty="Opacity"
-                       Storyboard.TargetName="Root" />
-      <!-- 由后台设置 -->
-      <DoubleAnimation x:Name="HeightAnimation"
-                       Duration="{StaticResource Duration}"
-                       To="0"
-                       Storyboard.TargetProperty="Height"
-                       Storyboard.TargetName="Root" />
+      <DoubleAnimation
+        Storyboard.TargetName="Root"
+        Storyboard.TargetProperty="Opacity"
+        From="1"
+        To="0"
+        Duration="{StaticResource Duration}" />
+      <!--  由后台设置  -->
+      <DoubleAnimation
+        x:Name="HeightAnimation"
+        Storyboard.TargetName="Root"
+        Storyboard.TargetProperty="Height"
+        To="0"
+        Duration="{StaticResource Duration}" />
     </Storyboard>
   </UserControl.Resources>
-  <ui:ThemeShadowChrome IsShadowEnabled="True"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Depth="20">
-    <Border MinWidth="250"
-            MaxWidth="450"
-            MinHeight="43"
-            CornerRadius="4"
-            BorderThickness="1"
-            BorderBrush="{Binding ElementName=Root,Path=BorderColor}"
-            Background="{Binding ElementName=Root,Path=BoxBackground}">
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        <TextBlock Text="{Binding ElementName=Root,Path=Icon}"
-                   Style="{StaticResource IconFontStyle}"
-                   Foreground="{Binding ElementName=Root,Path=BoxForeground}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" 
-                   Margin="12,0,8,0"/>
-        <TextBlock Text="{Binding ElementName=Root,Path=Text}"
-                   MaxWidth="400"
-                   Foreground="{Binding ElementName=Root,Path=BoxForeground}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" 
-                   TextWrapping="WrapWithOverflow"/>
+  <ui:ThemeShadowChrome
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    Depth="20"
+    IsShadowEnabled="True">
+    <Border
+      MinWidth="250"
+      MinHeight="43"
+      MaxWidth="450"
+      Background="{Binding ElementName=Root, Path=BoxBackground}"
+      BorderBrush="{Binding ElementName=Root, Path=BorderColor}"
+      BorderThickness="1"
+      CornerRadius="4">
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock
+          Margin="12,0,8,0"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Foreground="{Binding ElementName=Root, Path=BoxForeground}"
+          Style="{StaticResource IconFontStyle}"
+          Text="{Binding ElementName=Root, Path=Icon}" />
+        <TextBlock
+          MaxWidth="400"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Foreground="{Binding ElementName=Root, Path=BoxForeground}"
+          Text="{Binding ElementName=Root, Path=Text}"
+          TextWrapping="WrapWithOverflow" />
       </StackPanel>
     </Border>
   </ui:ThemeShadowChrome>

@@ -1,7 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-                    xmlns:converter="clr-namespace:CommonUtil.Converter">
-  <converter:SafeDoubleConverter x:Key="SafeDoubleConverter"/>
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:converter="clr-namespace:CommonUtil.Converter">
+  <converter:SafeDoubleConverter x:Key="SafeDoubleConverter" />
   <converter:DivideHalfThreeConverter x:Key="DivideHalfThreeConverter" />
   <converter:DivideTwoConverter x:Key="DivideTwoConverter" />
   <converter:DivideThreeConverter x:Key="DivideThreeConverter" />
@@ -17,14 +18,14 @@
   <converter:NotEqualConverter x:Key="NotEqualConverter" />
   <converter:VisibilityEqualConverter x:Key="VisibilityEqualConverter" />
   <converter:VisibilityNotEqualConverter x:Key="VisibilityNotEqualConverter" />
-  <converter:VisibilityIncludesConverter x:Key="VisibilityIncludesConverter"/>
-  <converter:VisibilityNotIncludesConverter x:Key="VisibilityNotIncludesConverter"/>
-  <converter:HideIfEmptyConverter x:Key="HideIfEmptyConverter"/>
-  <converter:HideIfNotEmptyConverter x:Key="HideIfNotEmptyConverter"/>
-  <converter:HideIfZeroConverter x:Key="HideIfZeroConverter"/>
-  <converter:HideIfNotZeroConverter x:Key="HideIfNotZeroConverter"/>
-  <converter:HideIfNullConverter x:Key="HideIfNullConverter"/>
-  <converter:HideIfNotNullConverter x:Key="HideIfNotNullConverter"/>
-  <converter:FileNameConverter x:Key="FileNameConverter"/>
-  <converter:FileSizeConverter x:Key="FileSizeConverter"/>
+  <converter:VisibilityIncludesConverter x:Key="VisibilityIncludesConverter" />
+  <converter:VisibilityNotIncludesConverter x:Key="VisibilityNotIncludesConverter" />
+  <converter:HideIfEmptyConverter x:Key="HideIfEmptyConverter" />
+  <converter:HideIfNotEmptyConverter x:Key="HideIfNotEmptyConverter" />
+  <converter:HideIfZeroConverter x:Key="HideIfZeroConverter" />
+  <converter:HideIfNotZeroConverter x:Key="HideIfNotZeroConverter" />
+  <converter:HideIfNullConverter x:Key="HideIfNullConverter" />
+  <converter:HideIfNotNullConverter x:Key="HideIfNotNullConverter" />
+  <converter:FileNameConverter x:Key="FileNameConverter" />
+  <converter:FileSizeConverter x:Key="FileSizeConverter" />
 </ResourceDictionary>

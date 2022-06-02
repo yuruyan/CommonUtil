@@ -1,63 +1,82 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:widget="clr-namespace:CommonUtil.Widget"
-                    xmlns:ui="http://schemas.modernwpf.com/2019">
-  <!-- CheckBoxStyle -->
-  <Style x:Key="GlobalCheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
-    <Setter Property="VerticalContentAlignment" Value="Center"/>
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:widget="clr-namespace:CommonUtil.Widget">
+  <!--  CheckBoxStyle  -->
+  <Style
+    x:Key="GlobalCheckBoxStyle"
+    BasedOn="{StaticResource DefaultCheckBoxStyle}"
+    TargetType="CheckBox">
+    <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
-  <Style TargetType="CheckBox" BasedOn="{StaticResource GlobalCheckBoxStyle}"/>
-  <!-- TextBlockStyle -->
+  <Style BasedOn="{StaticResource GlobalCheckBoxStyle}" TargetType="CheckBox" />
+  <!--  TextBlockStyle  -->
   <Style x:Key="GlobalTextBlockStyle" TargetType="TextBlock">
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="ToolTipService.InitialShowDelay" Value="100" />
   </Style>
-  <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}"/>
-  <!-- TextBoxStyle -->
-  <Style x:Key="GlobalTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource DefaultTextBoxStyle}">
+  <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock" />
+  <!--  TextBoxStyle  -->
+  <Style
+    x:Key="GlobalTextBoxStyle"
+    BasedOn="{StaticResource DefaultTextBoxStyle}"
+    TargetType="TextBox">
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
-  <Style TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}"/>
-  <!-- MenuButton 样式 -->
-  <Style x:Key="MenuButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+  <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox" />
+  <!--  MenuButton 样式  -->
+  <Style
+    x:Key="MenuButtonStyle"
+    BasedOn="{StaticResource DefaultButtonStyle}"
+    TargetType="Button">
     <Setter Property="Padding" Value="4" />
   </Style>
-  <!-- IconFont 样式 -->
+  <!--  IconFont 样式  -->
   <Style x:Key="IconFontStyle" TargetType="TextBlock">
     <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
   </Style>
-  <!-- 嵌入 Button Icon -->
-  <Style x:Key="ButtonIconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
-    <Setter Property="Margin" Value="0,0,12,0"/>
-    <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
+  <!--  嵌入 Button Icon  -->
+  <Style
+    x:Key="ButtonIconFontStyle"
+    BasedOn="{StaticResource IconFontStyle}"
+    TargetType="TextBlock">
+    <Setter Property="Margin" Value="0,0,12,0" />
+    <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}" />
   </Style>
-  <!-- 菜单 TextBlock -->
+  <!--  菜单 TextBlock  -->
   <Style x:Key="MenuTextBlockStyle" TargetType="TextBlock">
     <Setter Property="Foreground" Value="{StaticResource Black8}" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource SystemFontFamily}" />
   </Style>
-  <!-- 嵌入 Button TextBlock -->
-  <Style x:Key="ButtonTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
-    <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}"/>
+  <!--  嵌入 Button TextBlock  -->
+  <Style
+    x:Key="ButtonTextBlockStyle"
+    BasedOn="{StaticResource GlobalTextBlockStyle}"
+    TargetType="TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource ApplicationForeground}" />
   </Style>
-  <!-- 菜单 SimpleStackPanel -->
+  <!--  菜单 SimpleStackPanel  -->
   <Style x:Key="ContextMenuSimpleStackPanelStyle" TargetType="ui:SimpleStackPanel">
     <Setter Property="VerticalAlignment" Value="Center" />
-    <!-- 不可缺少 -->
+    <!--  不可缺少  -->
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Spacing" Value="{StaticResource ContextMenuSimpleStackPanelSpacing}" />
     <Setter Property="Orientation" Value="Horizontal" />
   </Style>
-  <!-- 超链接 HyperLinkStyle -->
-  <Style x:Key="HyperLinkStyle" TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
+  <!--  超链接 HyperLinkStyle  -->
+  <Style
+    x:Key="HyperLinkStyle"
+    BasedOn="{StaticResource GlobalTextBlockStyle}"
+    TargetType="TextBlock">
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
         <Setter Property="TextDecorations" Value="Underline" />
@@ -69,88 +88,100 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  <!-- ContentDialogTitleStyle -->
+  <!--  ContentDialogTitleStyle  -->
   <Style x:Key="ContentDialogTitleStyle" TargetType="TextBlock">
     <Setter Property="FontFamily" Value="黑体" />
-    <Setter Property="FontSize" Value="20"/>
+    <Setter Property="FontSize" Value="20" />
   </Style>
-  <!-- BaseDialogIconStyle -->
+  <!--  BaseDialogIconStyle  -->
   <Style x:Key="BaseDialogIconStyle" TargetType="TextBlock">
-    <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}"/>
-    <Setter Property="FontSize" Value="22"/>
+    <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
+    <Setter Property="FontSize" Value="22" />
   </Style>
-  <!-- InfoIconStyle -->
-  <Style x:Key="InfoIconStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseDialogIconStyle}">
-    <Setter Property="Foreground" Value="{StaticResource Black7}"/>
+  <!--  InfoIconStyle  -->
+  <Style
+    x:Key="InfoIconStyle"
+    BasedOn="{StaticResource BaseDialogIconStyle}"
+    TargetType="TextBlock">
+    <Setter Property="Foreground" Value="{StaticResource Black7}" />
     <Setter Property="Text" Value="&#xe650;" />
   </Style>
-  <!-- WaringIconStyle -->
-  <Style x:Key="WaringIconStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseDialogIconStyle}">
-    <Setter Property="Foreground" Value="{StaticResource WarningIconForeground}"/>
+  <!--  WaringIconStyle  -->
+  <Style
+    x:Key="WaringIconStyle"
+    BasedOn="{StaticResource BaseDialogIconStyle}"
+    TargetType="TextBlock">
+    <Setter Property="Foreground" Value="{StaticResource WarningIconForeground}" />
     <Setter Property="Text" Value="&#xe6d2;" />
   </Style>
-  <!-- TransparentMenuItemStyle -->
+  <!--  TransparentMenuItemStyle  -->
   <Style x:Key="TransparentMenuItemStyle" TargetType="MenuItem">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="MenuItem">
           <Border x:Name="bd">
-            <ContentPresenter Content="{TemplateBinding Header}"/>
+            <ContentPresenter Content="{TemplateBinding Header}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
-              <Setter Property="Background" TargetName="bd" Value="Transparent"/>
+              <Setter TargetName="bd" Property="Background" Value="Transparent" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  <!-- TitleBarButtonstyle -->
+  <!--  TitleBarButtonstyle  -->
   <Style x:Key="TitleBarButtonstyle" TargetType="Button">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
           <Border x:Name="ContentBackgrond">
-            <ContentPresenter x:Name="Content"/>
+            <ContentPresenter x:Name="Content" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" TargetName="ContentBackgrond" Value="{DynamicResource TitleBarHoverBackground}"/>
+              <Setter TargetName="ContentBackgrond" Property="Background" Value="{DynamicResource TitleBarHoverBackground}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="False">
-              <Setter Property="TextElement.Foreground" TargetName="Content" Value="{DynamicResource TitleBarTextForeground}"/>
-              <Setter Property="Background" TargetName="ContentBackgrond" Value="Transparent"/>
+              <Setter TargetName="Content" Property="TextElement.Foreground" Value="{DynamicResource TitleBarTextForeground}" />
+              <Setter TargetName="ContentBackgrond" Property="Background" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter Property="Background" TargetName="ContentBackgrond" Value="{DynamicResource TitleBarHoverBackgroundDraker}"/>
+              <Setter TargetName="ContentBackgrond" Property="Background" Value="{DynamicResource TitleBarHoverBackgroundDraker}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  <!-- ButtonStyle -->
-  <Style x:Key="GlobalButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-    <Setter Property="Padding" Value="16,8,16,8"/>
+  <!--  ButtonStyle  -->
+  <Style
+    x:Key="GlobalButtonStyle"
+    BasedOn="{StaticResource DefaultButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Padding" Value="16,8,16,8" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Border x:Name="Background"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                  SnapsToDevicePixels="True">
-            <Border x:Name="Border"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
-                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-              <ContentPresenter x:Name="ContentPresenter"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <Border
+            x:Name="Background"
+            Background="{TemplateBinding Background}"
+            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+            SnapsToDevicePixels="True">
+            <Border
+              x:Name="Border"
+              Padding="{TemplateBinding Padding}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter
+                x:Name="ContentPresenter"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Focusable="False"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
           </Border>
           <ControlTemplate.Triggers>
@@ -174,30 +205,39 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}"/>
-  <Style x:Key="GlobalIconButtonStyle" TargetType="widget:IconButton" BasedOn="{StaticResource GlobalButtonStyle}"/>
-  <Style TargetType="widget:IconButton" BasedOn="{StaticResource GlobalButtonStyle}"/>
-  <!-- ErrorButtonStyle -->
-  <Style x:Key="GlobalErrorButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-    <Setter Property="Padding" Value="16,8,16,8"/>
+  <Style BasedOn="{StaticResource GlobalButtonStyle}" TargetType="Button" />
+  <Style
+    x:Key="GlobalIconButtonStyle"
+    BasedOn="{StaticResource GlobalButtonStyle}"
+    TargetType="widget:IconButton" />
+  <Style BasedOn="{StaticResource GlobalButtonStyle}" TargetType="widget:IconButton" />
+  <!--  ErrorButtonStyle  -->
+  <Style
+    x:Key="GlobalErrorButtonStyle"
+    BasedOn="{StaticResource DefaultButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Padding" Value="16,8,16,8" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Border x:Name="Background"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                  SnapsToDevicePixels="True">
-            <Border x:Name="Border"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
-                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-              <ContentPresenter x:Name="ContentPresenter"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <Border
+            x:Name="Background"
+            Background="{TemplateBinding Background}"
+            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+            SnapsToDevicePixels="True">
+            <Border
+              x:Name="Border"
+              Padding="{TemplateBinding Padding}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter
+                x:Name="ContentPresenter"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Focusable="False"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
           </Border>
           <ControlTemplate.Triggers>
@@ -221,27 +261,33 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <!-- SuccessButtonStyle -->
-  <Style x:Key="GlobalSuccessButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-    <Setter Property="Padding" Value="16,8,16,8"/>
+  <!--  SuccessButtonStyle  -->
+  <Style
+    x:Key="GlobalSuccessButtonStyle"
+    BasedOn="{StaticResource DefaultButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Padding" Value="16,8,16,8" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Border x:Name="Background"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                  SnapsToDevicePixels="True">
-            <Border x:Name="Border"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
-                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-              <ContentPresenter x:Name="ContentPresenter"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <Border
+            x:Name="Background"
+            Background="{TemplateBinding Background}"
+            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+            SnapsToDevicePixels="True">
+            <Border
+              x:Name="Border"
+              Padding="{TemplateBinding Padding}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter
+                x:Name="ContentPresenter"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Focusable="False"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
           </Border>
           <ControlTemplate.Triggers>
@@ -265,27 +311,33 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <!-- WaringButtonStyle -->
-  <Style x:Key="GlobalWaringButtonStyle" TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-    <Setter Property="Padding" Value="16,8,16,8"/>
+  <!--  WaringButtonStyle  -->
+  <Style
+    x:Key="GlobalWaringButtonStyle"
+    BasedOn="{StaticResource DefaultButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Padding" Value="16,8,16,8" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Border x:Name="Background"
-                  Background="{TemplateBinding Background}"
-                  CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                  SnapsToDevicePixels="True">
-            <Border x:Name="Border"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Padding="{TemplateBinding Padding}"
-                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-              <ContentPresenter x:Name="ContentPresenter"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <Border
+            x:Name="Background"
+            Background="{TemplateBinding Background}"
+            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+            SnapsToDevicePixels="True">
+            <Border
+              x:Name="Border"
+              Padding="{TemplateBinding Padding}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+              <ContentPresenter
+                x:Name="ContentPresenter"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Focusable="False"
+                RecognizesAccessKey="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
           </Border>
           <ControlTemplate.Triggers>
@@ -309,33 +361,40 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <!-- 多行文本框 -->
-  <Style x:Key="MultilineTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
-    <Setter Property="AcceptsReturn" Value="True"/>
-    <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-    <Setter Property="VerticalContentAlignment" Value="Top"/>
-    <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+  <!--  多行文本框  -->
+  <Style
+    x:Key="MultilineTextBoxStyle"
+    BasedOn="{StaticResource GlobalTextBoxStyle}"
+    TargetType="TextBox">
+    <Setter Property="AcceptsReturn" Value="True" />
+    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
   </Style>
-  <!-- 无边框 TextBox -->
-  <Style x:Key="BorderlessTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource GlobalTextBoxStyle}">
+  <!--  无边框 TextBox  -->
+  <Style
+    x:Key="BorderlessTextBoxStyle"
+    BasedOn="{StaticResource GlobalTextBoxStyle}"
+    TargetType="TextBox">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="TextBox">
-          <ScrollViewer x:Name="PART_ContentHost"
-                        Background="{TemplateBinding Background}"
-                        FontSize="{TemplateBinding FontSize}"
-                        Style="{DynamicResource TextControlContentHostStyle}"
-                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        Margin="{TemplateBinding BorderThickness}"
-                        Padding="{TemplateBinding Padding}"
-                        IsTabStop="False"
-                        Focusable="False"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          <ScrollViewer
+            x:Name="PART_ContentHost"
+            Margin="{TemplateBinding BorderThickness}"
+            Padding="{TemplateBinding Padding}"
+            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+            Background="{TemplateBinding Background}"
+            Focusable="False"
+            FontSize="{TemplateBinding FontSize}"
+            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+            IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+            IsTabStop="False"
+            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+            Style="{DynamicResource TextControlContentHostStyle}"
+            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>

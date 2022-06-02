@@ -1,83 +1,93 @@
-﻿<Page x:Class="CommonUtil.View.IdiomMatchingView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CommonUtil.View" 
-      xmlns:ui="http://schemas.modernwpf.com/2019" 
-      xmlns:widget="clr-namespace:CommonUtil.Widget"
-      mc:Ignorable="d" 
-      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="IdiomMatchingView">
+﻿<Page
+  x:Class="CommonUtil.View.IdiomMatchingView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:widget="clr-namespace:CommonUtil.Widget"
+  Title="IdiomMatchingView"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
 
   <Grid Margin="8,8,0,8">
     <Grid.RowDefinitions>
-      <RowDefinition Height="auto"/>
-      <RowDefinition/>
+      <RowDefinition Height="auto" />
+      <RowDefinition />
     </Grid.RowDefinitions>
 
-    <ui:SimpleStackPanel Orientation="Horizontal"
-                         HorizontalAlignment="Center"
-                         Spacing="8"
-                         Margin="0,8,0,8">
+    <ui:SimpleStackPanel
+      Margin="0,8,0,8"
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Spacing="8">
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="输入成语："/>
-        <ui:AutoSuggestBox MinWidth="150"
-                           FontSize="{StaticResource SystemFontSize}"
-                           FontFamily="{StaticResource SystemFontFamily}"
-                           VerticalAlignment="Center"
-                           KeyUp="IdiomInputBoxKeyUp"
-                           TextChanged="InputIdiomChanged"
-                           Text="{Binding InputIdiom,Mode=TwoWay}" />
+        <TextBlock Text="输入成语：" />
+        <ui:AutoSuggestBox
+          MinWidth="150"
+          VerticalAlignment="Center"
+          FontFamily="{StaticResource SystemFontFamily}"
+          FontSize="{StaticResource SystemFontSize}"
+          KeyUp="IdiomInputBoxKeyUp"
+          Text="{Binding InputIdiom, Mode=TwoWay}"
+          TextChanged="InputIdiomChanged" />
       </StackPanel>
-      <widget:IconButton Icon="&#xe601;" Text="生    成" Click="GenerateClick"/>
+      <widget:IconButton
+        Click="GenerateClick"
+        Icon="&#xe601;"
+        Text="生    成" />
     </ui:SimpleStackPanel>
 
-    <ListBox x:Name="ResultListBox"
-             Grid.Row="1"
-             Background="Transparent"
-             ItemsSource="{Binding MatchList}">
+    <ListBox
+      x:Name="ResultListBox"
+      Grid.Row="1"
+      Background="Transparent"
+      ItemsSource="{Binding MatchList}">
       <ListBox.ItemContainerStyle>
-        <Style TargetType="ListBoxItem" BasedOn="{StaticResource DefaultListBoxItemStyle}">
-          <Setter Property="Padding" Value="4,0,4,0"/>
+        <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
+          <Setter Property="Padding" Value="4,0,4,0" />
         </Style>
       </ListBox.ItemContainerStyle>
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-          <StackPanel Margin="0"/>
+          <StackPanel Margin="0" />
         </ItemsPanelTemplate>
       </ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
           <StackPanel Background="Transparent">
-            <TextBlock Text="{Binding}"
-                       Margin="0,12,0,12"/>
+            <TextBlock Margin="0,12,0,12" Text="{Binding}" />
             <StackPanel.ContextMenu>
               <ContextMenu>
                 <ContextMenu.Resources>
                   <Style TargetType="StackPanel">
-                    <Setter Property="Orientation" Value="Horizontal"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Orientation" Value="Horizontal" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Width" Value="120" />
                   </Style>
-                  <Style TargetType="TextBlock" BasedOn="{StaticResource GlobalTextBlockStyle}">
-                    <Setter Property="Padding" Value="0,8,0,8"/>
+                  <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+                    <Setter Property="Padding" Value="0,8,0,8" />
                   </Style>
-                  <Style TargetType="TextBlock" x:Key="IconFontStyle" BasedOn="{StaticResource IconFontStyle}">
-                    <Setter Property="Margin" Value="8,0,8,0"/>
+                  <Style
+                    x:Key="IconFontStyle"
+                    BasedOn="{StaticResource IconFontStyle}"
+                    TargetType="TextBlock">
+                    <Setter Property="Margin" Value="8,0,8,0" />
                   </Style>
                 </ContextMenu.Resources>
                 <ContextMenu.ItemContainerStyle>
-                  <Style TargetType="MenuItem"/>
+                  <Style TargetType="MenuItem" />
                 </ContextMenu.ItemContainerStyle>
                 <StackPanel MouseUp="CopyCurrentResultMouseUp">
-                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;"/>
-                  <TextBlock Text="复制"/>
+                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+                  <TextBlock Text="复制" />
                 </StackPanel>
                 <StackPanel MouseUp="CopyAllResultsMouseUp">
-                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;"/>
-                  <TextBlock Text="复制全部"/>
+                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+                  <TextBlock Text="复制全部" />
                 </StackPanel>
               </ContextMenu>
             </StackPanel.ContextMenu>

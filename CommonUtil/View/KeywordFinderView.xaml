@@ -1,93 +1,107 @@
-﻿<Page x:Class="CommonUtil.View.KeywordFinderView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CommonUtil.View"
-      xmlns:ui="http://schemas.modernwpf.com/2019" 
-      xmlns:widget="clr-namespace:CommonUtil.Widget"
-      mc:Ignorable="d" 
-      Margin="8,0,0,8"
-      DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="KeywordFinderView">
+﻿<Page
+  x:Class="CommonUtil.View.KeywordFinderView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:widget="clr-namespace:CommonUtil.Widget"
+  Title="KeywordFinderView"
+  Margin="8,0,0,8"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
 
   <UniformGrid Columns="2">
     <ui:SimpleStackPanel Spacing="10">
       <StackPanel Orientation="Horizontal">
-        <Button Content="选择搜索目录" Click="SelectSearchDirectoryClick"/>
-        <TextBlock Text="{Binding SearchDirectory}"
-                   FontSize="{DynamicResource HeaderFontSize}"
-                   Padding="8,0,0,0"
-                   MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=StackPanel},Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=200}"
-                   FontWeight="Bold"
-                   TextWrapping="Wrap"
-                   Foreground="#0087B6"
-                   Style="{StaticResource HyperLinkStyle}"
-                   MouseLeftButtonUp="OpenSearchDirectoryMouseUp">
+        <Button Click="SelectSearchDirectoryClick" Content="选择搜索目录" />
+        <TextBlock
+          MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=200}"
+          Padding="8,0,0,0"
+          FontSize="{DynamicResource HeaderFontSize}"
+          FontWeight="Bold"
+          Foreground="#0087B6"
+          MouseLeftButtonUp="OpenSearchDirectoryMouseUp"
+          Style="{StaticResource HyperLinkStyle}"
+          Text="{Binding SearchDirectory}"
+          TextWrapping="Wrap">
           <TextBlock.ToolTip>
-            <ToolTip Content="打开文件夹"/>
+            <ToolTip Content="打开文件夹" />
           </TextBlock.ToolTip>
         </TextBlock>
       </StackPanel>
       <DockPanel LastChildFill="False">
-        <CheckBox Width="135" 
-                  IsChecked="{Binding IsExcludeDirectorySelected}"
-                  Content="排除目录" 
-                  HorizontalContentAlignment="Center"
-                  HorizontalAlignment="Left"/>
-        <TextBox Style="{StaticResource MultilineTextBoxStyle}"
-                 ui:ControlHelper.PlaceholderText="排除目录正则，一行一个"
-                 Text="{Binding ExcludeDirectory}"
-                 Width="200"/>
+        <CheckBox
+          Width="135"
+          HorizontalAlignment="Left"
+          HorizontalContentAlignment="Center"
+          Content="排除目录"
+          IsChecked="{Binding IsExcludeDirectorySelected}" />
+        <TextBox
+          Width="200"
+          ui:ControlHelper.PlaceholderText="排除目录正则，一行一个"
+          Style="{StaticResource MultilineTextBoxStyle}"
+          Text="{Binding ExcludeDirectory}" />
       </DockPanel>
       <DockPanel LastChildFill="False">
-        <CheckBox Width="135" 
-                  Content="排除文件" 
-                  HorizontalContentAlignment="Center"
-                  IsChecked="{Binding IsExcludeFileSelected}"/>
-        <TextBox Style="{StaticResource MultilineTextBoxStyle}"
-                 ui:ControlHelper.PlaceholderText="排除文件正则，一行一个"
-                 Text="{Binding ExcludeFile}"
-                 Width="200"/>
+        <CheckBox
+          Width="135"
+          HorizontalContentAlignment="Center"
+          Content="排除文件"
+          IsChecked="{Binding IsExcludeFileSelected}" />
+        <TextBox
+          Width="200"
+          ui:ControlHelper.PlaceholderText="排除文件正则，一行一个"
+          Style="{StaticResource MultilineTextBoxStyle}"
+          Text="{Binding ExcludeFile}" />
       </DockPanel>
       <DockPanel LastChildFill="False">
-        <TextBlock Text="查询正则表达式："/>
-        <TextBox Width="200" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="查询正则表达式：" />
+        <TextBox Width="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
       </DockPanel>
-      <widget:IconButton Icon="&#xe612;" Text="查找" Click="FindKeywordClick"/>
+      <widget:IconButton
+        Click="FindKeywordClick"
+        Icon="&#xe612;"
+        Text="查找" />
     </ui:SimpleStackPanel>
-    <!-- 结果 -->
+    <!--  结果  -->
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="30"/>
-        <RowDefinition/>
+        <RowDefinition Height="30" />
+        <RowDefinition />
       </Grid.RowDefinitions>
       <DockPanel LastChildFill="False">
-        <!-- 共多少文件 -->
-        <TextBlock x:Name="ResultNumber"
-                   Text="{Binding KeywordResults.Count,StringFormat={}{0} 条结果}"
-                   FontSize="20"
-                   Visibility="Collapsed"
-                   FontWeight="Bold"/>
-        <StackPanel Orientation="Horizontal"
-                    DockPanel.Dock="Right"
-                    Visibility="{Binding IsSearchingFinished,Converter={StaticResource VisibilityEqualConverter},ConverterParameter='True|Collapsed'}">
-          <TextBlock Text="加载数据中 "/>
-          <ui:ProgressRing IsActive="True"/>
+        <!--  共多少文件  -->
+        <TextBlock
+          x:Name="ResultNumber"
+          FontSize="20"
+          FontWeight="Bold"
+          Text="{Binding KeywordResults.Count, StringFormat={}{0} 条结果}"
+          Visibility="Collapsed" />
+        <StackPanel
+          DockPanel.Dock="Right"
+          Orientation="Horizontal"
+          Visibility="{Binding IsSearchingFinished, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='True|Collapsed'}">
+          <TextBlock Text="加载数据中 " />
+          <ui:ProgressRing IsActive="True" />
         </StackPanel>
       </DockPanel>
-      <ListBox x:Name="ResultListBox"
-               Grid.Row="1"
-               ItemsSource="{Binding KeywordResults}"
-               Background="Transparent">
+      <ListBox
+        x:Name="ResultListBox"
+        Grid.Row="1"
+        Background="Transparent"
+        ItemsSource="{Binding KeywordResults}">
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <StackPanel Background="Transparent" Width="{Binding ElementName=ResultListBox,Path=ActualWidth,Converter={StaticResource SubtractConverter},ConverterParameter=10}">
-              <TextBlock Text="{Binding File}"
-                         Foreground="#C14431"
-                         Padding="0,12,0,12"
-                         FontWeight="Bold"/>
+            <StackPanel Width="{Binding ElementName=ResultListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}" Background="Transparent">
+              <TextBlock
+                Padding="0,12,0,12"
+                FontWeight="Bold"
+                Foreground="#C14431"
+                Text="{Binding File}" />
               <StackPanel.ContextMenu>
                 <ContextMenu>
                   <ContextMenu.ItemContainerStyle>
@@ -95,22 +109,25 @@
                   </ContextMenu.ItemContainerStyle>
                   <ContextMenu.Resources>
                     <Style TargetType="StackPanel">
-                      <Setter Property="Height" Value="30"/>
-                      <Setter Property="Background" Value="Transparent"/>
-                      <Setter Property="Width" Value="180"/>
+                      <Setter Property="Height" Value="30" />
+                      <Setter Property="Background" Value="Transparent" />
+                      <Setter Property="Width" Value="180" />
                     </Style>
-                    <Style x:Key="IconFontStyle" TargetType="TextBlock" BasedOn="{StaticResource IconFontStyle}">
-                      <Setter Property="Padding" Value="8,0,8,0"/>
-                      <Setter Property="FontSize" Value="18"/>
+                    <Style
+                      x:Key="IconFontStyle"
+                      BasedOn="{StaticResource IconFontStyle}"
+                      TargetType="TextBlock">
+                      <Setter Property="Padding" Value="8,0,8,0" />
+                      <Setter Property="FontSize" Value="18" />
                     </Style>
                   </ContextMenu.Resources>
-                  <StackPanel Orientation="Horizontal" MouseUp="OpenFileMouseUp">
-                    <TextBlock Text="&#xe671;" Style="{StaticResource IconFontStyle}"/>
-                    <TextBlock Text="打开文件"/>
+                  <StackPanel MouseUp="OpenFileMouseUp" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
+                    <TextBlock Text="打开文件" />
                   </StackPanel>
-                  <StackPanel Orientation="Horizontal" MouseUp="OpenDirectoryMouseUp">
-                    <TextBlock Text="&#xe69d;" Style="{StaticResource IconFontStyle}"/>
-                    <TextBlock Text="打开文件所在目录"/>
+                  <StackPanel MouseUp="OpenDirectoryMouseUp" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe69d;" />
+                    <TextBlock Text="打开文件所在目录" />
                   </StackPanel>
                 </ContextMenu>
               </StackPanel.ContextMenu>
@@ -118,13 +135,13 @@
           </DataTemplate>
         </ListBox.ItemTemplate>
         <ListBox.ItemContainerStyle>
-          <Style TargetType="ListBoxItem" BasedOn="{StaticResource DefaultListBoxItemStyle}">
-            <Setter Property="Padding" Value="4,0,4,0"/>
+          <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="4,0,4,0" />
           </Style>
         </ListBox.ItemContainerStyle>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
-            <StackPanel Margin="0"/>
+            <StackPanel Margin="0" />
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
       </ListBox>

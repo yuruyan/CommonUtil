@@ -1,20 +1,21 @@
-﻿<Application x:Class="CommonUtil.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CommonUtil"
-             xmlns:ui="http://schemas.modernwpf.com/2019">
+﻿<Application
+  x:Class="CommonUtil.App"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:CommonUtil"
+  xmlns:ui="http://schemas.modernwpf.com/2019">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ui:ThemeResources />
         <ui:XamlControlsResources />
-        <!-- 以下资源位置不能颠倒 -->
-        <ResourceDictionary Source="/Resource/ResourceDictionary/ThemeResources.xaml"/>
+        <!--  以下资源位置不能颠倒  -->
+        <ResourceDictionary Source="/Resource/ResourceDictionary/ThemeResources.xaml" />
         <ResourceDictionary Source="/Resource/ResourceDictionary/ColorResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/CommonResources.xaml"/>
-        <ResourceDictionary Source="/Resource/ResourceDictionary/ConverterResources.xaml"/>
-        <ResourceDictionary Source="/Resource/ResourceDictionary/StyleResources.xaml"/>
-        <ResourceDictionary Source="/Resource/ResourceDictionary/DateTemplateResources.xaml"/>
+        <ResourceDictionary Source="/Resource/ResourceDictionary/CommonResources.xaml" />
+        <ResourceDictionary Source="/Resource/ResourceDictionary/ConverterResources.xaml" />
+        <ResourceDictionary Source="/Resource/ResourceDictionary/StyleResources.xaml" />
+        <ResourceDictionary Source="/Resource/ResourceDictionary/DateTemplateResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
