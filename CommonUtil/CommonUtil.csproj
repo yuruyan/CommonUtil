@@ -57,17 +57,17 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
-    <PackageReference Include="Flurl" Version="3.0.4" />
-    <PackageReference Include="Flurl.Http" Version="3.2.2" />
+    <PackageReference Include="Flurl" Version="3.0.6" />
+    <PackageReference Include="Flurl.Http" Version="3.2.4" />
     <PackageReference Include="ModernWpfUI" Version="0.9.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NLog" Version="4.7.13" />
+    <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="NPOI" Version="2.5.6" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-    <PackageReference Include="PixiEditor.ColorPicker" Version="3.2.0" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
-    <PackageReference Include="RandomDataGenerator.Net" Version="1.0.13" />
+    <PackageReference Include="RandomDataGenerator.Net" Version="1.0.15" />
     <PackageReference Include="SharpVectors" Version="1.7.7" />
   </ItemGroup>
 
@@ -162,6 +162,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="View\TextTool\AddEnglishWordBracesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,8 +178,5 @@
     </Page>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
-  </ItemGroup>
 
 </Project>

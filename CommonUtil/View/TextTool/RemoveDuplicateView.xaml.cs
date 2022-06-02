@@ -55,7 +55,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace CommonUtil.View {
         private void RemoveDuplicateClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (InputText == string.Empty) {
-                Widget.MessageBox.Info("请输入文本");
+                CommonUITools.Widget.MessageBox.Info("请输入文本");
                 return;
             }
             var splitSymbol = GetComboBoxText(SplitSymbolBox);

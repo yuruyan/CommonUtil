@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUtil.Widget"
+  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="RemoveDuplicateView"
   Margin="8"
   d:DesignHeight="450"

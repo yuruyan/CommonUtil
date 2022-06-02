@@ -57,16 +57,16 @@ namespace CommonUtil.View {
                             Task.Run(() => {
                                 try {
                                     File.WriteAllBytes(openFileDialog.FileName, result);
-                                    Widget.MessageBox.Success("保存成功！");
+                                    CommonUITools.Widget.MessageBox.Success("保存成功！");
                                 } catch (Exception error) {
-                                    Widget.MessageBox.Error("保存失败");
+                                    CommonUITools.Widget.MessageBox.Error("保存失败");
                                     Logger.Info(error);
                                 }
                             });
                         }
                         return;
                     }
-                    Widget.MessageBox.Error($"解码失败");
+                    CommonUITools.Widget.MessageBox.Error($"解码失败");
                 });
             });
         }
@@ -88,10 +88,10 @@ namespace CommonUtil.View {
                         string result = Base64Tool.Base64Encode(openFileDialog.FileName);
                         Dispatcher.Invoke(() => OutputText = result);
                     } catch (IOException error) {
-                        Widget.MessageBox.Error("文件读取失败");
+                        CommonUITools.Widget.MessageBox.Error("文件读取失败");
                         Logger.Info(error);
                     } catch (Exception error) {
-                        Widget.MessageBox.Error("编码失败");
+                        CommonUITools.Widget.MessageBox.Error("编码失败");
                         Logger.Info(error);
                     }
                 });
@@ -112,7 +112,7 @@ namespace CommonUtil.View {
                         string result = Base64Tool.Base64StringDecode(inputText);
                         Dispatcher.Invoke(() => OutputText = result);
                     } catch (Exception error) {
-                        Widget.MessageBox.Error("解码失败");
+                        CommonUITools.Widget.MessageBox.Error("解码失败");
                         Logger.Info(error);
                     }
                 });
@@ -133,7 +133,7 @@ namespace CommonUtil.View {
                         string result = Base64Tool.Base64StringEncode(inputText);
                         Dispatcher.Invoke(() => OutputText = result);
                     } catch (Exception error) {
-                        Widget.MessageBox.Error("编码失败");
+                        CommonUITools.Widget.MessageBox.Error("编码失败");
                         Logger.Info(error);
                     }
                 });
@@ -148,7 +148,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace CommonUtil.View {
         /// <returns></returns>
         private bool CheckInputValidation() {
             if (string.IsNullOrEmpty(InputText)) {
-                Widget.MessageBox.Info("请输入文本");
+                CommonUITools.Widget.MessageBox.Info("请输入文本");
                 return false;
             }
             return true;

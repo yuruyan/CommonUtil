@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Core;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 using Microsoft.Win32;
 using NLog;
 using Ookii.Dialogs.Wpf;
@@ -197,7 +197,7 @@ namespace CommonUtil.View {
                 SplitFileSize = fileInfo.Length;
             } catch (Exception error) {
                 Logger.Info(error);
-                Widget.MessageBox.Error("文件不存在！");
+                CommonUITools.Widget.MessageBox.Error("文件不存在！");
             }
         }
 
@@ -225,7 +225,7 @@ namespace CommonUtil.View {
         private void SplitFileClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (IsSplitingFile) {
-                Widget.MessageBox.Info("正在分割文件");
+                CommonUITools.Widget.MessageBox.Info("正在分割文件");
                 return;
             }
             if (!CheckSplitFileInputValidation()) {
@@ -241,13 +241,13 @@ namespace CommonUtil.View {
                     }
                 } catch (Exception error) {
                     Logger.Error(error);
-                    Widget.MessageBox.Error("输入无效！");
+                    CommonUITools.Widget.MessageBox.Error("输入无效！");
                     return;
                 }
                 string? value = FileSizeOptionComboBox.SelectedValue.ToString();
                 if (value == null) {
                     Logger.Error("选择错误");
-                    Widget.MessageBox.Error("选择错误！");
+                    CommonUITools.Widget.MessageBox.Error("选择错误！");
                     return;
                 }
                 if (value == "KB") {
@@ -264,12 +264,12 @@ namespace CommonUtil.View {
                     perSize = SplitFileSize / Convert.ToUInt16(SplitNumberOptionInputText);
                 } catch (Exception error) {
                     Logger.Error(error);
-                    Widget.MessageBox.Error("输入无效！");
+                    CommonUITools.Widget.MessageBox.Error("输入无效！");
                     return;
                 }
             }
             if (perSize <= 1) {
-                Widget.MessageBox.Error("输入无效！");
+                CommonUITools.Widget.MessageBox.Error("输入无效！");
                 return;
             }
 
@@ -287,12 +287,12 @@ namespace CommonUtil.View {
                     });
                 } catch (Exception error) {
                     Logger.Error(error);
-                    Widget.MessageBox.Error("分割失败！");
+                    CommonUITools.Widget.MessageBox.Error("分割失败！");
                 } finally {
                     IsSplitingFile = false;
                 }
                 Dispatcher.Invoke(() => {
-                    Widget.MessageBox.Success("分割完成！");
+                    CommonUITools.Widget.MessageBox.Success("分割完成！");
                 });
             });
         }
@@ -303,11 +303,11 @@ namespace CommonUtil.View {
         /// <returns></returns>
         private bool CheckSplitFileInputValidation() {
             if (string.IsNullOrEmpty(SplitFilePath)) {
-                Widget.MessageBox.Info("请选择要分割的文件！");
+                CommonUITools.Widget.MessageBox.Info("请选择要分割的文件！");
                 return false;
             }
             if (string.IsNullOrEmpty(SplitFileSaveDirectory)) {
-                Widget.MessageBox.Info("请选择保存目录！");
+                CommonUITools.Widget.MessageBox.Info("请选择保存目录！");
                 return false;
             }
             string inputNumber = string.Empty;
@@ -321,7 +321,7 @@ namespace CommonUtil.View {
                 Convert.ToDouble(inputNumber);
             } catch (Exception e) {
                 Logger.Info(e);
-                Widget.MessageBox.Error("不是合法数字！");
+                CommonUITools.Widget.MessageBox.Error("不是合法数字！");
                 return false;
             }
             return true;
@@ -333,15 +333,15 @@ namespace CommonUtil.View {
         /// <returns></returns>
         private bool CheckMergeFileInputValidation() {
             if (string.IsNullOrEmpty(MergeFileSavePath)) {
-                Widget.MessageBox.Info("请输入文件保存路径！");
+                CommonUITools.Widget.MessageBox.Info("请输入文件保存路径！");
                 return false;
             }
             if (string.IsNullOrEmpty(MergeFileDirectory)) {
-                Widget.MessageBox.Info("请输入合并文件目录！");
+                CommonUITools.Widget.MessageBox.Info("请输入合并文件目录！");
                 return false;
             }
             if (!Directory.Exists(MergeFileDirectory)) {
-                Widget.MessageBox.Error("合并文件目录不存在！");
+                CommonUITools.Widget.MessageBox.Error("合并文件目录不存在！");
                 return false;
             }
             return true;
@@ -392,7 +392,7 @@ namespace CommonUtil.View {
         private void MergeFileClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (IsMergingFile) {
-                Widget.MessageBox.Info("正在合并文件");
+                CommonUITools.Widget.MessageBox.Info("正在合并文件");
                 return;
             }
             if (!CheckMergeFileInputValidation()) {
@@ -402,7 +402,7 @@ namespace CommonUtil.View {
                                 new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)
                              ).ToArray();
             if (files.Length == 0) {
-                Widget.MessageBox.Error("合并文件为空！");
+                CommonUITools.Widget.MessageBox.Error("合并文件为空！");
                 return;
             }
             for (int i = 0; i < files.Length; i++) {
@@ -421,12 +421,12 @@ namespace CommonUtil.View {
                     });
                 } catch (Exception error) {
                     Logger.Error(error);
-                    Widget.MessageBox.Error("合并文件失败！");
+                    CommonUITools.Widget.MessageBox.Error("合并文件失败！");
                 } finally {
                     IsMergingFile = false;
                 }
                 Dispatcher.Invoke(() => {
-                    Widget.MessageBox.Success("合并成功！");
+                    CommonUITools.Widget.MessageBox.Success("合并成功！");
                 });
             });
         }

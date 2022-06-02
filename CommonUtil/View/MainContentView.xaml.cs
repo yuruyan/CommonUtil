@@ -1,4 +1,4 @@
-﻿using CommonUtil.Route;
+﻿using CommonUITools.Route;
 using CommonUtil.Store;
 using System.Collections.Generic;
 using System.Windows;
@@ -35,8 +35,8 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void MenuMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             e.Handled = true;
-            if(sender is FrameworkElement element) {
-                if(element.DataContext is ToolMenuItem menuItem) {
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is ToolMenuItem menuItem) {
                     //RouterView = menuItem.RouteView;
                     //RouterViewTitle = menuItem.Name;
                     MainWindowRouter.Navigate(menuItem.ClassType);

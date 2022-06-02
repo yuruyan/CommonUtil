@@ -67,7 +67,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace CommonUtil.View {
             ResultDetailPanel.Visibility = Visibility.Visible;
             var list = RegexExtraction.Extract(SearchRegex, InputText, IgnoreCase);
             if (list == null) {
-                Widget.MessageBox.Error("正则表达式有误");
+                CommonUITools.Widget.MessageBox.Error("正则表达式有误");
                 return;
             }
             MatchList = list;

@@ -164,17 +164,28 @@ namespace CommonUtil.View {
                     CompareColor = color;
                     Dispatcher.Invoke(() => {
                         // 不改变正在修改的值
-                        if (!HEXColorBox.IsFocused) HEXColor = hEXColor;
-                        if (!RGBColorBox.IsFocused) RGBColor = rGBColor;
-                        if (!RGBA1ColorBox.IsFocused) RGBA1Color = rGBA1Color;
-                        if (!RGBA2ColorBox.IsFocused) RGBA2Color = rGBA2Color;
-                        if (!HSLColorBox.IsFocused) HSLColor = hSLColor;
-                        if (!HSVColorBox.IsFocused) HSVColor = hSVColor;
-                        if (!LABColorBox.IsFocused) LABColor = lABColor;
-                        if (!XYZColorBox.IsFocused) XYZColor = xYZColor;
-                        if (!LCHColorBox.IsFocused) LCHColor = lCHColor;
-                        if (!CMYKColorBox.IsFocused) CMYKColor = cMYKColor;
-                        if (!LUVColorBox.IsFocused) LUVColor = lUVColor;
+                        if (!HEXColorBox.IsFocused)
+                            HEXColor = hEXColor;
+                        if (!RGBColorBox.IsFocused)
+                            RGBColor = rGBColor;
+                        if (!RGBA1ColorBox.IsFocused)
+                            RGBA1Color = rGBA1Color;
+                        if (!RGBA2ColorBox.IsFocused)
+                            RGBA2Color = rGBA2Color;
+                        if (!HSLColorBox.IsFocused)
+                            HSLColor = hSLColor;
+                        if (!HSVColorBox.IsFocused)
+                            HSVColor = hSVColor;
+                        if (!LABColorBox.IsFocused)
+                            LABColor = lABColor;
+                        if (!XYZColorBox.IsFocused)
+                            XYZColor = xYZColor;
+                        if (!LCHColorBox.IsFocused)
+                            LCHColor = lCHColor;
+                        if (!CMYKColorBox.IsFocused)
+                            CMYKColor = cMYKColor;
+                        if (!LUVColorBox.IsFocused)
+                            LUVColor = lUVColor;
                     });
                 }
             });
@@ -269,67 +280,67 @@ namespace CommonUtil.View {
         private void CopyHexClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToHEX(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToRGB(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBA1Click(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToRGB(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyRGBA2Click(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToRGB(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyHSLClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToHSL(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyHSVClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToHSV(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLABClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToLAB(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyXYZClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToXYZ(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLCHClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToLCH(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyCMYKClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToCMYK(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private void CopyLUVClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(ColorTransform.ColorToLUV(SelectedColor));
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
     }

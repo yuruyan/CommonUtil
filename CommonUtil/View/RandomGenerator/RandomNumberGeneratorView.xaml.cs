@@ -67,16 +67,16 @@ namespace CommonUtil.View {
                 minValue = Convert.ToInt32(_RandomNumberGeneratorView.MinValue);
                 maxValue = Convert.ToInt32(_RandomNumberGeneratorView.MaxValue);
             } catch (FormatException e) {
-                Widget.MessageBox.Error("不是合法数字！");
+                CommonUITools.Widget.MessageBox.Error("不是合法数字！");
                 Logger.Info(e);
                 return Array.Empty<int>();
             } catch (OverflowException e) {
-                Widget.MessageBox.Error("数字过大或过小！");
+                CommonUITools.Widget.MessageBox.Error("数字过大或过小！");
                 Logger.Info(e);
                 return Array.Empty<int>();
             }
             if (minValue > maxValue) {
-                Widget.MessageBox.Error("最小值不能大于最大值！");
+                CommonUITools.Widget.MessageBox.Error("最小值不能大于最大值！");
                 return Array.Empty<int>();
             }
             return RandomGenerator.GenerateRandomNumber(minValue, maxValue, _RandomNumberGeneratorView.GenerateCount);

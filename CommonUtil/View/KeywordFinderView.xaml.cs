@@ -11,7 +11,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 
 namespace CommonUtil.View {
     public partial class KeywordFinderView : Page {
@@ -115,15 +115,15 @@ namespace CommonUtil.View {
         private void FindKeywordClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (string.IsNullOrEmpty(SearchDirectory.Trim())) {
-                Widget.MessageBox.Info("请选择查询目录！");
+                CommonUITools.Widget.MessageBox.Info("请选择查询目录！");
                 return;
             }
             //if (string.IsNullOrEmpty(SearchText.Trim())) {
-            //    Widget.MessageBox.Info("搜索文本不能为空！");
+            //    CommonUITools.Widget.MessageBox.Info("搜索文本不能为空！");
             //    return;
             //}
             if (!IsSearchingFinished) {
-                Widget.MessageBox.Info("正在搜索...");
+                CommonUITools.Widget.MessageBox.Info("正在搜索...");
                 return;
             }
             ResultNumber.Visibility = Visibility.Visible;
@@ -146,7 +146,7 @@ namespace CommonUtil.View {
                         Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
                         FindKeyword(excludeDirs, excludeFiles);
                     } catch (Exception error) {
-                        Dispatcher.Invoke(() => Widget.MessageBox.Error(error.Message));
+                        Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error(error.Message));
                         Logger.Error(error);
                     }
                 });
@@ -173,7 +173,7 @@ namespace CommonUtil.View {
                     KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
 #pragma warning restore CS8604 // Possible null reference argument.
                 } catch (Exception error) {
-                    Dispatcher.Invoke(() => Widget.MessageBox.Error(error.Message));
+                    Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error(error.Message));
                     Logger.Error(error);
                 } finally {
                     Dispatcher.Invoke(() => IsSearchingFinished = true);
@@ -231,7 +231,7 @@ namespace CommonUtil.View {
                     try {
                         Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(SearchDirectory, result.File));
                     } catch (Exception error) {
-                        Widget.MessageBox.Error("打开失败," + error.Message);
+                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                         Logger.Error(error);
                     }
                 }
@@ -249,7 +249,7 @@ namespace CommonUtil.View {
                 try {
                     Process.Start("explorer.exe", element.Text);
                 } catch (Exception error) {
-                    Widget.MessageBox.Error("打开失败," + error.Message);
+                    CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                     Logger.Error(error);
                 }
             }

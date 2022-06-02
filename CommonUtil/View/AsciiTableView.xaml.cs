@@ -60,7 +60,7 @@ namespace CommonUtil.View {
             if (sender is FrameworkElement element) {
                 if (element.DataContext is AsciiInfo info) {
                     Clipboard.SetDataObject($"{info.Binary}\t{info.Octal}\t{info.Decimal}\t{info.HexaDecimal}\t{info.Character}\t{info.HtmlEntity}\t{info.Description}");
-                    Widget.MessageBox.Success("已复制");
+                    CommonUITools.Widget.MessageBox.Success("已复制");
                 }
             }
         }

@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Core;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 using ModernWpf.Controls;
 using NLog;
 using System;
@@ -103,7 +103,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>

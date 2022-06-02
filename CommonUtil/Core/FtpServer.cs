@@ -1,4 +1,5 @@
-﻿using CommonUtil.Model;
+﻿using CommonUITools.Model;
+using CommonUtil.Model;
 using CommonUtil.Store;
 using Flurl.Http;
 using Newtonsoft.Json;
@@ -30,7 +31,7 @@ public class FtpServer {
             return false;
         }
     }
-    
+
     /// <summary>
     /// 异步关闭 FTP Server
     /// </summary>

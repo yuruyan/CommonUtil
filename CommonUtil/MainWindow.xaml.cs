@@ -1,4 +1,4 @@
-﻿using CommonUtil.Route;
+﻿using CommonUITools.Route;
 using CommonUtil.Store;
 using CommonUtil.View;
 using ModernWpf;
@@ -43,8 +43,8 @@ namespace CommonUtil {
             }
             _ = new MainWindowRouter(ContentFrame);
             ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
-            Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
-            Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
+            CommonUITools.Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
+            CommonUITools.Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
             MainWindowRouter.Navigate(typeof(MainContentView));
             // 设置 AppTheme
             foreach (var res in Application.Current.Resources.MergedDictionaries) {
@@ -65,7 +65,7 @@ namespace CommonUtil {
             // 主窗口菜单列表
             if (contentType == typeof(MainContentView)) {
                 RouteViewTitle = Global.AppTitle;
-                if (TranslateTransformXAnimation != null) { 
+                if (TranslateTransformXAnimation != null) {
                     TranslateTransformXAnimation.From = -100;
                 }
             } else {

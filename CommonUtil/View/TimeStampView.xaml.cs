@@ -167,7 +167,7 @@ namespace CommonUtil.View {
         private void CopyTimeStampClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(CurrentTimeStamp);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace CommonUtil.View {
                 TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(t);
             } catch (Exception error) {
                 Logger.Info(error);
-                Widget.MessageBox.Error("转换失败！");
+                CommonUITools.Widget.MessageBox.Error("转换失败！");
             }
         }
 
@@ -206,7 +206,7 @@ namespace CommonUtil.View {
                 StringToTimeStampOutput = t.ToString();
             } catch (Exception error) {
                 Logger.Info(error);
-                Widget.MessageBox.Error("格式有误！");
+                CommonUITools.Widget.MessageBox.Error("格式有误！");
             }
         }
     }

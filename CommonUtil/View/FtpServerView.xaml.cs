@@ -1,7 +1,7 @@
 ﻿using CommonUtil.Core;
 using CommonUtil.Model;
 using CommonUtil.Store;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 using CommonUtil.View.Dialog;
 using ModernWpf.Controls;
 using NLog;
@@ -75,7 +75,7 @@ namespace CommonUtil.View {
             try {
                 Process.Start("explorer.exe", RootDirectory);
             } catch (Exception error) {
-                Widget.MessageBox.Error("打开失败," + error.Message);
+                CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                 Logger.Info(error);
             }
         }
@@ -168,9 +168,9 @@ namespace CommonUtil.View {
                 bool status = await FtpServer.StartFtpServerAsync(config);
                 if (status) {
                     Dispatcher.Invoke(() => IsStopServerButtonVisible = true);
-                    Widget.MessageBox.Success("启动成功");
+                    CommonUITools.Widget.MessageBox.Success("启动成功");
                 } else {
-                    Widget.MessageBox.Error("启动失败");
+                    CommonUITools.Widget.MessageBox.Error("启动失败");
                 }
             });
         }
@@ -181,7 +181,7 @@ namespace CommonUtil.View {
         /// <returns></returns>
         private bool CheckInput() {
             if (string.IsNullOrEmpty(RootDirectory)) {
-                Widget.MessageBox.Info("请选择共享目录");
+                CommonUITools.Widget.MessageBox.Info("请选择共享目录");
                 return false;
             }
             return true;
@@ -197,9 +197,9 @@ namespace CommonUtil.View {
                 bool status = await FtpServer.StopFtpServerAsync();
                 if (status) {
                     Dispatcher.Invoke(() => IsStopServerButtonVisible = false);
-                    Widget.MessageBox.Success("停止成功");
+                    CommonUITools.Widget.MessageBox.Success("停止成功");
                 } else {
-                    Widget.MessageBox.Error("停止失败");
+                    CommonUITools.Widget.MessageBox.Error("停止失败");
                 }
             });
         }
@@ -214,7 +214,7 @@ namespace CommonUtil.View {
                 if (element.DataContext is FtpServerUserInfo userInfo) {
                     string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{CommonUtils.GetLocalIpAddress()}";
                     Clipboard.SetDataObject(address);
-                    Widget.MessageBox.Success("已复制");
+                    CommonUITools.Widget.MessageBox.Success("已复制");
                 }
             }
         }

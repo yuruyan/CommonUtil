@@ -49,7 +49,7 @@ namespace CommonUtil.View {
         /// </summary>
         private void GenerateMatchList() {
             if (InputIdiom.Trim() == string.Empty) {
-                Widget.MessageBox.Info("请输入文本");
+                CommonUITools.Widget.MessageBox.Info("请输入文本");
                 return;
             }
             string idiom = InputIdiom.Trim();
@@ -97,7 +97,7 @@ namespace CommonUtil.View {
             e.Handled = true;
             if (sender is FrameworkElement element) {
                 Clipboard.SetDataObject(element.DataContext);
-                Widget.MessageBox.Success("已复制");
+                CommonUITools.Widget.MessageBox.Success("已复制");
             }
         }
 
@@ -110,11 +110,11 @@ namespace CommonUtil.View {
             e.Handled = true;
             if (ResultListBox.ItemsSource is IEnumerable<string> list) {
                 var sb = new StringBuilder();
-                foreach (var item in list) { 
+                foreach (var item in list) {
                     sb.AppendLine(item);
                 }
                 Clipboard.SetDataObject(sb.ToString());
-                Widget.MessageBox.Success("已复制");
+                CommonUITools.Widget.MessageBox.Success("已复制");
             }
         }
 

@@ -4,7 +4,7 @@ using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 
-namespace CommonUtil.Route;
+namespace CommonUITools.Route;
 
 public class MainWindowRouter {
     private static RouterService RouterService;

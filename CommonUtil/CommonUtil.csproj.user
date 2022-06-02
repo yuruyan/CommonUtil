@@ -124,27 +124,9 @@
     <Compile Update="View\TextTool\WhiteSpaceProcessView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Widget\IconButton.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resource\ResourceDictionary\ColorResources.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resource\ResourceDictionary\CommonResources.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resource\ResourceDictionary\ConverterResources.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resource\ResourceDictionary\DateTemplateResources.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Resource\ResourceDictionary\StyleResources.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
@@ -268,12 +250,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TextTool\WhiteSpaceProcessView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Widget\IconButton.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Widget\MessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

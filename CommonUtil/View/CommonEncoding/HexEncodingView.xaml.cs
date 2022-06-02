@@ -38,7 +38,7 @@ namespace CommonUtil.View {
                 OutputText = CommonEncoding.HexEncode(InputText);
             } catch (Exception error) {
                 Logger.Error(error);
-                Widget.MessageBox.Error("编码失败");
+                CommonUITools.Widget.MessageBox.Error("编码失败");
             }
         }
 
@@ -50,7 +50,7 @@ namespace CommonUtil.View {
                 OutputText = CommonEncoding.HexDecode(InputText);
             } catch (Exception error) {
                 Logger.Error(error);
-                Widget.MessageBox.Error("解码失败");
+                CommonUITools.Widget.MessageBox.Error("解码失败");
             }
         }
     }

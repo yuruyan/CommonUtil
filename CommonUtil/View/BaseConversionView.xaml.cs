@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 
 namespace CommonUtil.View {
     public partial class BaseConversionView : Page {
@@ -98,7 +98,7 @@ namespace CommonUtil.View {
                     //Logger.Info(error);
                     sb.Append('\n');
                     //OutputText = string.Empty; // 清空输入
-                    //Widget.MessageBox.Error("转换失败！");
+                    //CommonUITools.Widget.MessageBox.Error("转换失败！");
                     //return;
                 }
             }

@@ -82,24 +82,24 @@ namespace CommonUtil.View {
                 try {
                     File.WriteAllBytes(path, data);
                     Dispatcher.Invoke(() => {
-                        Widget.NotificationBox.Success("保存成功", "点击打开", () => {
+                        CommonUITools.Widget.NotificationBox.Success("保存成功", "点击打开", () => {
                             try {
                                 Process.Start("explorer.exe", "/select," + path);
                             } catch (Exception error) {
-                                Widget.MessageBox.Error("打开失败," + error.Message);
+                                CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                                 Logger.Error(error);
                             }
                         });
                     });
                 } catch (Exception e) {
-                    Dispatcher.Invoke(() => Widget.MessageBox.Error("保存失败！"));
+                    Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("保存失败！"));
                     Logger.Error(e);
                 }
             } catch (DataTooLongException e) {
-                Dispatcher.Invoke(() => Widget.MessageBox.Error("文本过长！"));
+                Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("文本过长！"));
                 Logger.Error(e);
             } catch (Exception e) {
-                Dispatcher.Invoke(() => Widget.MessageBox.Error("生成失败"));
+                Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("生成失败"));
                 Logger.Error(e);
             }
         }
@@ -124,10 +124,10 @@ namespace CommonUtil.View {
                         QRCodeImageSource = image;
                     });
                 } catch (DataTooLongException error) {
-                    Dispatcher.Invoke(() => Widget.MessageBox.Error("文本过长！"));
+                    Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("文本过长！"));
                     Logger.Error(error);
                 } catch (Exception error) {
-                    Dispatcher.Invoke(() => Widget.MessageBox.Error("生成失败"));
+                    Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("生成失败"));
                     Logger.Error(error);
                 }
             });

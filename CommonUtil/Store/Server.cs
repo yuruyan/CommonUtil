@@ -1,4 +1,4 @@
-﻿using CommonUtil.Utils;
+﻿using CommonUITools.Utils;
 using Flurl.Http;
 using NLog;
 using System;

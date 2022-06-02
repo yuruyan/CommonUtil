@@ -11,11 +11,12 @@
         <ui:XamlControlsResources />
         <!--  以下资源位置不能颠倒  -->
         <ResourceDictionary Source="/Resource/ResourceDictionary/ThemeResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/ColorResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/CommonResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/ConverterResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/StyleResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/DateTemplateResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ColorResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ConverterResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/CommonResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/StyleResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/HoverEffectResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/DateTemplateResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

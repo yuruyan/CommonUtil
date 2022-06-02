@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Store;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.IO;
 using Flurl.Http;
 using System.Threading.Tasks;
 using CommonUtil.Model;
+using CommonUITools.Model;
 
 namespace CommonUtil.Core;
 

@@ -76,7 +76,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>

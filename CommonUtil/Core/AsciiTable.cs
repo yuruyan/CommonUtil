@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Model;
-using CommonUtil.Utils;
+using CommonUITools.Utils;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -22,7 +22,7 @@ namespace CommonUtil.Core {
         /// </summary>
         static AsciiTable() {
             if (!File.Exists(ResourcePath)) {
-                Widget.MessageBox.Error("找不到文件 " + ResourcePath);
+                CommonUITools.Widget.MessageBox.Error("找不到文件 " + ResourcePath);
                 Logger.Error("cannot find the file " + ResourcePath);
                 return;
             }
@@ -57,7 +57,7 @@ namespace CommonUtil.Core {
         /// 返回全部 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoList() { 
+        public static List<AsciiInfo> GetAsciiInfoList() {
             return CommonUtils.Copy(AsciiInfoList);
         }
 
@@ -65,7 +65,7 @@ namespace CommonUtil.Core {
         /// 返回控制 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoControlList() { 
+        public static List<AsciiInfo> GetAsciiInfoControlList() {
             return CommonUtils.Copy(AsciiInfoControlList);
         }
 
@@ -73,7 +73,7 @@ namespace CommonUtil.Core {
         /// 返回非控制 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoNormalList() { 
+        public static List<AsciiInfo> GetAsciiInfoNormalList() {
             return CommonUtils.Copy(AsciiInfoNormalList);
         }
 
@@ -81,7 +81,7 @@ namespace CommonUtil.Core {
         /// 返回扩展 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoExtendedList() { 
+        public static List<AsciiInfo> GetAsciiInfoExtendedList() {
             return CommonUtils.Copy(AsciiInfoExtendedList);
         }
     }

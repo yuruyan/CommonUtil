@@ -7,7 +7,7 @@ using System.Windows.Controls;
 namespace CommonUtil.View {
     public partial class WhiteSpaceProcessView : Page {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-       
+
         public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(WhiteSpaceProcessView), new PropertyMetadata(""));
         public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(WhiteSpaceProcessView), new PropertyMetadata(""));
 
@@ -38,16 +38,16 @@ namespace CommonUtil.View {
         private void TextProcessClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             var s = InputText;
-            if (TrimTextCheckBox.IsChecked == true) { 
+            if (TrimTextCheckBox.IsChecked == true) {
                 s = TextTool.TrimText(s);
             }
-            if (RemoveWhiteSpaceLineCheckBox.IsChecked == true) { 
+            if (RemoveWhiteSpaceLineCheckBox.IsChecked == true) {
                 s = TextTool.RemoveWhiteSpaceLine(s);
             }
-            if (TrimLineCheckBox.IsChecked == true) { 
+            if (TrimLineCheckBox.IsChecked == true) {
                 s = TextTool.TrimLine(s);
             }
-            if (ReplaceMultipleWhiteSpaceWithOneCheckBox.IsChecked == true) { 
+            if (ReplaceMultipleWhiteSpaceWithOneCheckBox.IsChecked == true) {
                 s = TextTool.ReplaceMultipleWhiteSpaceWithOne(s);
             }
             OutputText = s;
@@ -60,7 +60,7 @@ namespace CommonUtil.View {
         private bool CheckInputValidation() {
             bool r = InputText.Trim().Any();
             if (!r) {
-                Widget.MessageBox.Info("请输入文本");
+                CommonUITools.Widget.MessageBox.Info("请输入文本");
             }
             return r;
         }
@@ -73,7 +73,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         /// <summary>

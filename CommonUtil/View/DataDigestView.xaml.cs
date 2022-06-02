@@ -131,7 +131,7 @@ namespace CommonUtil.View {
                 }
             }
             Clipboard.SetDataObject(sb.ToString());
-            Widget.MessageBox.Success("已复制");
+            CommonUITools.Widget.MessageBox.Success("已复制");
         }
 
         private class DigestInfo : DependencyObject {

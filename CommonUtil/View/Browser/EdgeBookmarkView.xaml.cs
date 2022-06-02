@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Core;
-using CommonUtil.Widget;
+using CommonUITools.Widget;
 using Microsoft.Win32;
 using NLog;
 using System;
@@ -48,12 +48,12 @@ public partial class EdgeBookmarkView : Page {
                     try {
                         Process.Start("explorer.exe", "/select," + dialog.FileName);
                     } catch (Exception error) {
-                        Widget.MessageBox.Error("打开失败," + error.Message);
+                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                         Logger.Error(error);
                     }
                 });
             } catch (Exception error) {
-                Widget.MessageBox.Error("导出失败！" + error.Message);
+                CommonUITools.Widget.MessageBox.Error("导出失败！" + error.Message);
                 Logger.Error(error);
             }
         });
