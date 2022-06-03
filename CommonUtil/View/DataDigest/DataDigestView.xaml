@@ -21,7 +21,28 @@
       <RowDefinition Height="2*" />
     </Grid.RowDefinitions>
     <!--  输入  -->
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <Grid
+      x:Name="InputPanel"
+      AllowDrop="True"
+      MouseLeave="InputMouseLeaveHandler"
+      PreviewDragEnter="DragFileEnterHandler"
+      PreviewDrop="DragFileDropHandler">
+      <TextBox
+        x:Name="InputTextBox"
+        AllowDrop="True"
+        MouseLeave="InputMouseLeaveHandler"
+        PreviewDragEnter="DragFileEnterHandler"
+        PreviewDragOver="FileDragOverHandler"
+        PreviewDrop="DragFileDropHandler"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding InputText}"
+        Visibility="{Binding FileName, Converter={StaticResource HideIfNotEmptyConverter}}" />
+      <TextBlock
+        Style="{StaticResource MultilineTextBlockStyle}"
+        Text="{Binding FileName}"
+        TextAlignment="Center"
+        Visibility="{Binding FileName, Converter={StaticResource HideIfEmptyConverter}}" />
+    </Grid>
 
     <!--  Control  -->
     <ui:SimpleStackPanel
@@ -34,6 +55,7 @@
       <StackPanel Orientation="Horizontal">
         <!--<TextBlock Text="算法选择："/>-->
         <ComboBox
+          Width="120"
           VerticalAlignment="Center"
           ItemsSource="{Binding DigestOptions, Mode=OneWay}"
           SelectedIndex="{Binding SelectedDigestIndex}" />

@@ -1,7 +1,9 @@
-﻿using CommonUtil.View;
+﻿using CommonUITools.Utils;
+using CommonUtil.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 
 namespace CommonUtil.Store {
     public class Global {
@@ -50,6 +52,11 @@ namespace CommonUtil.Store {
             new() { Name = "浏览器书签导出", ImagePath = ImagePath + "Edge.svg", ClassType = typeof(EdgeBookmarkView) },
             new() { Name = "代码生成器", ImagePath = ImagePath + "CodeGenerator.svg", ClassType = typeof(CodeGeneratorView) },
         };
+
+        public static readonly ResourceDictionary CommonResource = UIUtils.GetMergedResourceDictionary("CommonResources");
+        public static readonly ResourceDictionary ColorResource = UIUtils.GetMergedResourceDictionary("ColorResources");
+        public static readonly ResourceDictionary ThemeResource = UIUtils.GetMergedResourceDictionary("ThemeResources");
+
     }
 
     public class ToolMenuItem {

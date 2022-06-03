@@ -121,6 +121,15 @@ namespace CommonUtil.Core {
         }
 
         /// <summary>
+        /// SHA1 摘要
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public static string SHA1Digest(FileStream stream) {
+            return GeneralDigest(stream, new Sha1Digest());
+        }
+
+        /// <summary>
         /// sha3 摘要
         /// </summary>
         /// <param name="stream"></param>

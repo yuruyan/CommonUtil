@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\CodeGeneratorView.xaml.cs">
+    <Compile Update="View\CodeGenerator\CodeGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\CodeGenerator\CSharpDependencyView.xaml.cs">
@@ -49,7 +49,7 @@
     <Compile Update="View\ColorTransformView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\CommonEncodingView.xaml.cs">
+    <Compile Update="View\CommonEncoding\CommonEncodingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\CommonEncoding\EncodingTemplate.xaml.cs">
@@ -70,13 +70,13 @@
     <Compile Update="View\Dialog\CommonRegexListDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\DataDigestView.xaml.cs">
+    <Compile Update="View\DataDigest\DataDigestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FileMergeSplitView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\FtpServerView.xaml.cs">
+    <Compile Update="View\FtpServer\FtpServerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\IdiomMatchingView.xaml.cs">
@@ -94,7 +94,7 @@
     <Compile Update="View\QRCodeToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\RandomGeneratorView.xaml.cs">
+    <Compile Update="View\RandomGenerator\RandomGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\RandomGenerator\RandomStringGeneratorView.xaml.cs">
@@ -115,7 +115,7 @@
     <Compile Update="View\TextTool\RemoveDuplicateView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\TextToolView.xaml.cs">
+    <Compile Update="View\TextTool\TextToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\TimeStampView.xaml.cs">
@@ -132,7 +132,7 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\CodeGeneratorView.xaml">
+    <Page Update="View\CodeGenerator\CodeGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CodeGenerator\CSharpDependencyView.xaml">
@@ -174,7 +174,7 @@
     <Page Update="View\ColorTransformView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\CommonEncodingView.xaml">
+    <Page Update="View\CommonEncoding\CommonEncodingView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CommonEncoding\EncodingTemplate.xaml">
@@ -195,13 +195,13 @@
     <Page Update="View\Dialog\CommonRegexListDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\DataDigestView.xaml">
+    <Page Update="View\DataDigest\DataDigestView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FileMergeSplitView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\FtpServerView.xaml">
+    <Page Update="View\FtpServer\FtpServerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\IdiomMatchingView.xaml">
@@ -219,7 +219,7 @@
     <Page Update="View\QRCodeToolView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\RandomGeneratorView.xaml">
+    <Page Update="View\RandomGenerator\RandomGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RandomGenerator\RandomStringGeneratorView.xaml">
@@ -240,7 +240,7 @@
     <Page Update="View\TextTool\RemoveDuplicateView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\TextToolView.xaml">
+    <Page Update="View\TextTool\TextToolView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TextTool\AddEnglishWordBracesView.xaml">
