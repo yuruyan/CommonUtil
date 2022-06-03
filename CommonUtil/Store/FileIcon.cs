@@ -78,6 +78,7 @@ public class FileIcon {
     /// <param name="fileName">文件名/绝对路径</param>
     /// <returns></returns>
     public static string GetIcon(string fileName) {
+        fileName = fileName.ToLower();
         string v = Path.GetExtension(fileName);
         // 完全匹配
         if (IconDict.ContainsKey(v)) {
