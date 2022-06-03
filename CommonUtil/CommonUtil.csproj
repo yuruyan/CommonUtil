@@ -14,7 +14,6 @@
   <ItemGroup>
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
-    <None Remove="Resource\image\ascii.svg" />
     <None Remove="Resource\image\base64.svg" />
     <None Remove="Resource\image\BaseConversion.svg" />
     <None Remove="Resource\image\BMI.svg" />
@@ -46,9 +45,6 @@
     <Content Include="Resource\iconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resource\image\ascii.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resource\image\base64.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -141,6 +137,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\ascii.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\image\ascii.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\image\FileIcon\icon.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\lib\uncrustify\defaults.cfg">

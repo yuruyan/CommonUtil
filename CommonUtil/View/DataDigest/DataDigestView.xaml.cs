@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,6 +52,7 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty SelectedDigestIndexProperty = DependencyProperty.Register("SelectedDigestIndex", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
         private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
         public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
+        public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
 
         /// <summary>
         /// 输入文件名
@@ -86,6 +88,13 @@ namespace CommonUtil.View {
         private Dictionary<string, DigestInfo> DigestInfoDict {
             get { return (Dictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty); }
             set { SetValue(DigestInfoDictProperty, value); }
+        }
+        /// <summary>
+        /// 当前进行的任务
+        /// </summary>
+        public int RunningProcess {
+            get { return (int)GetValue(RunningProcessProperty); }
+            set { SetValue(RunningProcessProperty, value); }
         }
 
         public DataDigestView() {
@@ -161,7 +170,18 @@ namespace CommonUtil.View {
             await calculateDigest(DigestInfoDict.Values);
         }
 
+        /// <summary>
+        /// 计算 Hash
+        /// </summary>
+        /// <param name="digests"></param>
+        /// <returns></returns>
         private async Task calculateDigest(IEnumerable<DigestInfo> digests) {
+            // 先清空
+            foreach (var item in digests) {
+                item.Text = string.Empty;
+                RunningProcess++;
+            }
+            // 计算
             foreach (var item in digests) {
                 item.IsVivible = true;
                 var text = InputText;
@@ -179,6 +199,7 @@ namespace CommonUtil.View {
                         return string.Empty;
                     }
                 });
+                RunningProcess--;
             }
         }
 

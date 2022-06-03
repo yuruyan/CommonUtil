@@ -45,36 +45,39 @@
     </Grid>
 
     <!--  Control  -->
-    <ui:SimpleStackPanel
-      Grid.Row="1"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Center"
-      Orientation="Horizontal"
-      Spacing="8">
-
-      <StackPanel Orientation="Horizontal">
-        <!--<TextBlock Text="算法选择："/>-->
+    <Grid Grid.Row="1">
+      <ui:SimpleStackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Orientation="Horizontal"
+        Spacing="8">
         <ComboBox
           Width="120"
           VerticalAlignment="Center"
           ItemsSource="{Binding DigestOptions, Mode=OneWay}"
           SelectedIndex="{Binding SelectedDigestIndex}" />
-      </StackPanel>
-      <widget:IconButton
-        Click="StartClick"
-        Icon="&#xe601;"
-        Text="计算" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe946;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
-    </ui:SimpleStackPanel>
-
+        <widget:IconButton
+          Click="StartClick"
+          Icon="&#xe601;"
+          Text="计算" />
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe946;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel
+        HorizontalAlignment="Right"
+        Orientation="Horizontal"
+        Spacing="8">
+        <TextBlock Text="计算中" Visibility="{Binding RunningProcess, Converter={StaticResource HideIfZeroConverter}}" />
+        <ui:ProgressRing IsActive="{Binding RunningProcess}" />
+      </ui:SimpleStackPanel>
+    </Grid>
     <!--  输出  -->
     <ScrollViewer Grid.Row="2">
       <ItemsControl ItemsSource="{Binding DigestInfoDict}">

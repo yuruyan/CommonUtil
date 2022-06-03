@@ -15,6 +15,13 @@ namespace CommonUtil.Store {
         public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         private static readonly string _CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
         /// <summary>
+        /// 资源文件
+        /// </summary>
+        public static readonly ResourceDictionary CommonResource = UIUtils.GetMergedResourceDictionary("CommonResources");
+        public static readonly ResourceDictionary ColorResource = UIUtils.GetMergedResourceDictionary("ColorResources");
+        public static readonly ResourceDictionary ThemeResource = UIUtils.GetMergedResourceDictionary("ThemeResources");
+
+        /// <summary>
         /// 缓存文件目录
         /// </summary>
         public static string CacheDirectory {
@@ -53,15 +60,15 @@ namespace CommonUtil.Store {
             new() { Name = "代码生成器", ImagePath = ImagePath + "CodeGenerator.svg", ClassType = typeof(CodeGeneratorView) },
         };
 
-        public static readonly ResourceDictionary CommonResource = UIUtils.GetMergedResourceDictionary("CommonResources");
-        public static readonly ResourceDictionary ColorResource = UIUtils.GetMergedResourceDictionary("ColorResources");
-        public static readonly ResourceDictionary ThemeResource = UIUtils.GetMergedResourceDictionary("ThemeResources");
-
     }
 
     public class ToolMenuItem {
         public string Name { get; set; } = string.Empty;
         public string ImagePath { get; set; } = string.Empty;
         public Type ClassType { get; set; } = typeof(MainContentView);
+
+        public override string ToString() {
+            return $"{{{nameof(Name)}={Name}, {nameof(ImagePath)}={ImagePath}, {nameof(ClassType)}={ClassType}}}";
+        }
     }
 }
