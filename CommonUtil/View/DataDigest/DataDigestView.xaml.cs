@@ -4,6 +4,7 @@ using CommonUtil.Store;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,7 @@ namespace CommonUtil.View {
         private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
         public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
         public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
+        public static readonly DependencyProperty FileIconProperty = DependencyProperty.Register("FileIcon", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
 
         /// <summary>
         /// 输入文件名
@@ -96,6 +98,13 @@ namespace CommonUtil.View {
             get { return (int)GetValue(RunningProcessProperty); }
             set { SetValue(RunningProcessProperty, value); }
         }
+        /// <summary>
+        /// 文件图标
+        /// </summary>
+        public string FileIcon {
+            get { return (string)GetValue(FileIconProperty); }
+            set { SetValue(FileIconProperty, value); }
+        }
 
         public DataDigestView() {
             DigestOptions = new() {
@@ -122,6 +131,15 @@ namespace CommonUtil.View {
                 { "SHA512", new() { TextDigestHandler = DataDigest.SHA512Digest, StreamDigestHandler = DataDigest.SHA512Digest } },
             };
             InitializeComponent();
+            DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);
+        }
+
+        private void FileNameChangedHandler(object? sender, EventArgs e) {
+            if (string.IsNullOrEmpty(FileName)) {
+                ClearValue(FileIconProperty);
+                return;
+            }
+            FileIcon = Store.FileIcon.GetIcon(FileName);
         }
 
         /// <summary>
@@ -231,7 +249,10 @@ namespace CommonUtil.View {
                 if (!array.Any()) {
                     return;
                 }
-                FileName = array.First();
+                // 判断是否为文件
+                if (File.Exists(array.First())) {
+                    FileName = array.First();
+                }
             }
         }
 

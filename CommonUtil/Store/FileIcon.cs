@@ -21,19 +21,19 @@ public class FileIcon {
     /// <summary>
     /// 图标 JSON 配置文件路径
     /// </summary>
-    public static readonly string IconJsonConfigFile = "Resource/icon.json";
+    private static readonly string IconJsonConfigFile = "Resource/icon.json";
     /// <summary>
     /// 默认 Icon Key
     /// </summary>
-    public static readonly string DefaultIconKey = "*";
+    private static readonly string DefaultIconKey = "*";
     /// <summary>
     /// 图标压缩文件路径
     /// </summary>
-    public static readonly string CompressedIconFile = "Resource/image/FileIcon/icon.zip";
+    private static readonly string CompressedIconFile = "Resource/image/FileIcon/icon.zip";
     /// <summary>
     /// 图标解压缩目录
     /// </summary>
-    public static readonly string DeCompressedIconFolder = "Resource/image/FileIcon";
+    private static readonly string DeCompressedIconFolder = "Resource/image/FileIcon";
 
     static FileIcon() {
         var iconDict = JsonConvert.DeserializeObject<IDictionary<string, string>>(File.ReadAllText(IconJsonConfigFile));
