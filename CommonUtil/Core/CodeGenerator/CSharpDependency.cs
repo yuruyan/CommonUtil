@@ -6,6 +6,9 @@ namespace CommonUtil.Core;
 
 public class CSharpDependencyGenerator {
     public static string CreateTemplate(IEnumerable<TypeInfo> types) {
+        if (!types.Any()) {
+            return string.Empty;
+        }
         string className = types.First().ClassName;
         var poSb = new StringBuilder();
         foreach (TypeInfo type in types) {
