@@ -15,23 +15,24 @@
   mc:Ignorable="d">
 
   <Page.ContextMenu>
-    <ContextMenu>
+    <ContextMenu ItemsSource="{Binding ColorItems}" Style="{StaticResource GlobalContextMenuStyle}">
       <ContextMenu.Resources>
         <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem">
-          <Setter Property="Width" Value="150" />
+          <EventSetter Event="Click" Handler="CopyColorClick" />
+          <Setter Property="Height" Value="{StaticResource ContextMenuItemHeight}" />
         </Style>
       </ContextMenu.Resources>
-      <MenuItem Click="CopyHexClick" Header="复制 Hex" />
-      <MenuItem Click="CopyRGBClick" Header="复制 RGB" />
-      <MenuItem Click="CopyRGBA1Click" Header="复制 RGBA1" />
-      <MenuItem Click="CopyRGBA2Click" Header="复制 RGBA2" />
-      <MenuItem Click="CopyHSLClick" Header="复制 HSL" />
-      <MenuItem Click="CopyHSVClick" Header="复制 HSV" />
-      <MenuItem Click="CopyLABClick" Header="复制 LAB" />
-      <MenuItem Click="CopyXYZClick" Header="复制 XYZ" />
-      <MenuItem Click="CopyLCHClick" Header="复制 LCH" />
-      <MenuItem Click="CopyCMYKClick" Header="复制 CMYK" />
-      <MenuItem Click="CopyLUVClick" Header="复制 LUV" />
+      <ContextMenu.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal">
+            <TextBlock
+              Margin="0,0,12,0"
+              Style="{StaticResource IconFontStyle}"
+              Text="&#xe6ef;" />
+            <TextBlock Text="{Binding Tag, StringFormat=复制 {0}}" />
+          </StackPanel>
+        </DataTemplate>
+      </ContextMenu.ItemTemplate>
     </ContextMenu>
   </Page.ContextMenu>
 
@@ -57,98 +58,24 @@
     </Grid>
 
     <ScrollViewer Margin="8,0,0,0">
-      <ui:SimpleStackPanel Spacing="10">
-        <ui:SimpleStackPanel.Resources>
-          <Style
-            x:Key="Header"
-            BasedOn="{StaticResource GlobalTextBlockStyle}"
-            TargetType="TextBlock">
-            <Setter Property="Width" Value="100" />
-            <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}" />
-          </Style>
-          <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="FontFamily" Value="Consoles" />
-          </Style>
-        </ui:SimpleStackPanel.Resources>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HEX：" />
-          <TextBox
-            x:Name="HEXColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding HEXColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGB：" />
-          <TextBox
-            x:Name="RGBColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding RGBColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGBA1：" />
-          <TextBox
-            x:Name="RGBA1ColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding RGBA1Color, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="RGBA2：" />
-          <TextBox
-            x:Name="RGBA2ColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding RGBA2Color, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HSL：" />
-          <TextBox
-            x:Name="HSLColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding HSLColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="HSV / HSB：" />
-          <TextBox
-            x:Name="HSVColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding HSVColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CIE-LAB：" />
-          <TextBox
-            x:Name="LABColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding LABColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="XYZ：" />
-          <TextBox
-            x:Name="XYZColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding XYZColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CIE-LCH：" />
-          <TextBox
-            x:Name="LCHColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding LCHColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="CMYK：" />
-          <TextBox
-            x:Name="CMYKColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding CMYKColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-        <DockPanel>
-          <TextBlock Style="{StaticResource Header}" Text="LUV：" />
-          <TextBox
-            x:Name="LUVColorBox"
-            HorizontalAlignment="Stretch"
-            Text="{Binding LUVColor, UpdateSourceTrigger=PropertyChanged}" />
-        </DockPanel>
-      </ui:SimpleStackPanel>
+      <ItemsControl ItemsSource="{Binding ColorItems}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <DockPanel Margin="0,5">
+              <TextBlock
+                Width="100"
+                FontSize="{DynamicResource HeaderFontSize}"
+                Text="{Binding Tag, StringFormat={}{0}：}" />
+              <TextBox
+                HorizontalAlignment="Stretch"
+                BorderThickness="0"
+                FontFamily="Consoles"
+                KeyUp="TextBoxKeyUpHandler"
+                Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
     </ScrollViewer>
   </UniformGrid>
 </Page>
