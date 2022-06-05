@@ -1,6 +1,7 @@
 ﻿using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Utilities.Encoders;
+using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
@@ -32,7 +33,7 @@ namespace CommonUtil.Core {
         /// <summary>
         /// 默认读取缓冲区大小
         /// </summary>
-        private static readonly int FileReadBuffer = 8 * 1024 * 1024;
+        private static readonly int FileReadBuffer = 16 * 1024 * 1024;
 
         static DataDigest() {
             // 初始化队列
@@ -46,8 +47,9 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <param name="digest"></param>
+        /// <param name="callback">回调，参数为总读取的大小</param>
         /// <returns></returns>
-        private static string GeneralDigest(FileStream stream, IDigest digest) {
+        private static string GeneralDigest(FileStream stream, IDigest digest, Action<long>? callback = null) {
             // 从队列中获取缓存;
             ReadBufferQueue.TryDequeue(out var buffer);
             if (buffer is null) {
@@ -55,8 +57,11 @@ namespace CommonUtil.Core {
             }
             byte[] resultBuffer = new byte[digest.GetDigestSize()];
             int read;
+            long totalRead = 0;
             while ((read = stream.Read(buffer, 0, FileReadBuffer)) > 0) {
                 digest.BlockUpdate(buffer, 0, read);
+                totalRead += read;
+                callback?.Invoke(totalRead);
             }
             digest.DoFinal(resultBuffer, 0);
             // 添加到队列中
@@ -150,8 +155,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA1Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha1Digest());
+        public static string SHA1Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha1Digest(), callback);
         }
 
         /// <summary>
@@ -159,8 +164,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA3Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha3Digest());
+        public static string SHA3Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha3Digest(), callback);
         }
 
         /// <summary>
@@ -168,8 +173,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA224Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha224Digest());
+        public static string SHA224Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha224Digest(), callback);
         }
 
         /// <summary>
@@ -177,8 +182,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA256Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha256Digest());
+        public static string SHA256Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha256Digest(), callback);
         }
 
         /// <summary>
@@ -186,8 +191,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA384Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha384Digest());
+        public static string SHA384Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha384Digest(), callback);
         }
 
         /// <summary>
@@ -195,8 +200,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string SHA512Digest(FileStream stream) {
-            return GeneralDigest(stream, new Sha512Digest());
+        public static string SHA512Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new Sha512Digest(), callback);
         }
 
         /// <summary>
@@ -204,8 +209,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string MD5Digest(FileStream stream) {
-            return GeneralDigest(stream, new MD5Digest());
+        public static string MD5Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new MD5Digest(), callback);
         }
 
         /// <summary>
@@ -213,8 +218,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string MD4Digest(FileStream stream) {
-            return GeneralDigest(stream, new MD4Digest());
+        public static string MD4Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new MD4Digest(), callback);
         }
 
         /// <summary>
@@ -222,8 +227,8 @@ namespace CommonUtil.Core {
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string MD2Digest(FileStream stream) {
-            return GeneralDigest(stream, new MD2Digest());
+        public static string MD2Digest(FileStream stream, Action<long>? callback = null) {
+            return GeneralDigest(stream, new MD2Digest(), callback);
         }
     }
 }

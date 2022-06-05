@@ -5,6 +5,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,31 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace CommonUtil.View {
+    internal class ProcessVisibilityConverter : IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            short v = System.Convert.ToInt16(value);
+            if (v == 0 || v == 100) {
+                return Visibility.Collapsed;
+            }
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class DataDigestView : Page {
 
         private class DigestInfo : DependencyObject {
+            public static readonly DependencyProperty IsVivibleProperty = DependencyProperty.Register("IsVivible", typeof(bool), typeof(DigestInfo), new PropertyMetadata(false));
+            public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(DigestInfo), new PropertyMetadata(""));
+            public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(int), typeof(DigestInfo), new PropertyMetadata(0));
+
             /// <summary>
             /// 文本 Hash 处理器
             /// </summary>
@@ -33,7 +53,6 @@ namespace CommonUtil.View {
                 get { return (bool)GetValue(IsVivibleProperty); }
                 set { SetValue(IsVivibleProperty, value); }
             }
-            public static readonly DependencyProperty IsVivibleProperty = DependencyProperty.Register("IsVivible", typeof(bool), typeof(DigestInfo), new PropertyMetadata(false));
             /// <summary>
             /// 结果
             /// </summary>
@@ -41,12 +60,24 @@ namespace CommonUtil.View {
                 get { return (string)GetValue(TextProperty); }
                 set { SetValue(TextProperty, value); }
             }
-            public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(DigestInfo), new PropertyMetadata(""));
+            /// <summary>
+            /// 进度
+            /// </summary>
+            public int Process {
+                get { return (int)GetValue(ProcessProperty); }
+                set { SetValue(ProcessProperty, value); }
+            }
         }
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private delegate string TextDigestHandler(string digest);
-        private delegate string StreamDigestHandler(FileStream stream);
+        /// <summary>
+        /// StreamDigestHandler
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="callback">回调，参数为总读取的大小</param>
+        /// <returns></returns>
+        private delegate string StreamDigestHandler(FileStream stream, Action<long> callback);
 
         public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
         public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
@@ -207,6 +238,7 @@ namespace CommonUtil.View {
             RunningProcess = 0;
             foreach (var item in digests) {
                 item.Text = string.Empty;
+                item.Process = 0;
                 RunningProcess++;
             }
             var tasks = new List<Task>(RunningProcess);
@@ -225,12 +257,16 @@ namespace CommonUtil.View {
                             }
                             // 计算文件 Hash
                             try {
-                                return item.StreamDigestHandler.Invoke(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read));
+                                return item.StreamDigestHandler.Invoke(
+                                    new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read),
+                                    s => Dispatcher.Invoke(() => item.Process = (int)(100 * (double)s / FileSize))
+                                );
                             } catch (Exception e) {
                                 CommonUITools.Widget.MessageBox.Error(e.Message);
                                 return string.Empty;
                             }
                         });
+                        item.Process = 100;
                         RunningProcess--;
                     }).Wait();
                 }));
