@@ -1,6 +1,7 @@
 ﻿using CommonUtil.Store;
 using CommonUtil.View;
 using ModernWpf.Controls;
+using ModernWpf.Media.Animation;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ namespace CommonUITools.Route;
 
 public class MainWindowRouter {
     private static RouterService RouterService;
+    private readonly static NavigationTransitionInfo NavigationTransitionInfo = new DrillInNavigationTransitionInfo();
 
     public MainWindowRouter(Frame frame) {
         var routers = new List<Type>();
@@ -19,7 +21,7 @@ public class MainWindowRouter {
     }
 
     public static void Navigate(Type viewType) {
-        RouterService.Navigate(viewType);
+        RouterService.Navigate(viewType, NavigationTransitionInfo);
     }
 
     public static void Back() {
