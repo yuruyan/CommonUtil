@@ -20,7 +20,7 @@ namespace CommonUtil.Core {
             return Hex.ToHexString(resultBuffer);
         }
 
-        private static readonly int ReadBuffer = 32768;
+        private static readonly int ReadBuffer = 128 * 1024 * 1024;
 
         /// <summary>
         /// 摘要算法
