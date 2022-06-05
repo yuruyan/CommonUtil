@@ -1,6 +1,7 @@
 ﻿using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Utilities.Encoders;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 
@@ -20,7 +21,25 @@ namespace CommonUtil.Core {
             return Hex.ToHexString(resultBuffer);
         }
 
-        private static readonly int ReadBuffer = 128 * 1024 * 1024;
+        /// <summary>
+        /// 读取缓冲区队列
+        /// </summary>
+        private static readonly ConcurrentQueue<byte[]> ReadBufferQueue = new();
+        /// <summary>
+        /// 默认读取缓冲区个数
+        /// </summary>
+        private static readonly int DefaultReadBufferSize = 8;
+        /// <summary>
+        /// 默认读取缓冲区大小
+        /// </summary>
+        private static readonly int FileReadBuffer = 8 * 1024 * 1024;
+
+        static DataDigest() {
+            // 初始化队列
+            for (int i = 0; i < DefaultReadBufferSize; i++) {
+                ReadBufferQueue.Enqueue(new byte[FileReadBuffer]);
+            }
+        }
 
         /// <summary>
         /// 摘要算法
@@ -29,13 +48,19 @@ namespace CommonUtil.Core {
         /// <param name="digest"></param>
         /// <returns></returns>
         private static string GeneralDigest(FileStream stream, IDigest digest) {
-            byte[] buffer = new byte[ReadBuffer];
+            // 从队列中获取缓存;
+            ReadBufferQueue.TryDequeue(out var buffer);
+            if (buffer is null) {
+                ReadBufferQueue.Enqueue(buffer = new byte[FileReadBuffer]);
+            }
             byte[] resultBuffer = new byte[digest.GetDigestSize()];
             int read;
-            while ((read = stream.Read(buffer, 0, ReadBuffer)) > 0) {
+            while ((read = stream.Read(buffer, 0, FileReadBuffer)) > 0) {
                 digest.BlockUpdate(buffer, 0, read);
             }
             digest.DoFinal(resultBuffer, 0);
+            // 添加到队列中
+            ReadBufferQueue.Enqueue(buffer);
             return Hex.ToHexString(resultBuffer);
         }
 
