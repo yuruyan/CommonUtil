@@ -55,6 +55,7 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
         public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
         public static readonly DependencyProperty FileIconProperty = DependencyProperty.Register("FileIcon", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
+        public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
 
         /// <summary>
         /// 输入文件名
@@ -105,6 +106,13 @@ namespace CommonUtil.View {
             get { return (string)GetValue(FileIconProperty); }
             set { SetValue(FileIconProperty, value); }
         }
+        /// <summary>
+        /// 文件大小
+        /// </summary>
+        public long FileSize {
+            get { return (long)GetValue(FileSizeProperty); }
+            set { SetValue(FileSizeProperty, value); }
+        }
 
         public DataDigestView() {
             DigestOptions = new() {
@@ -139,6 +147,7 @@ namespace CommonUtil.View {
                 ClearValue(FileIconProperty);
                 return;
             }
+            FileSize = new FileInfo(FileName).Length;
             FileIcon = Store.FileIcon.GetIcon(FileName);
         }
 
