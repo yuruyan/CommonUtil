@@ -195,30 +195,39 @@ namespace CommonUtil.View {
         /// <returns></returns>
         private async Task calculateDigest(IEnumerable<DigestInfo> digests) {
             // 先清空
+            RunningProcess = 0;
             foreach (var item in digests) {
                 item.Text = string.Empty;
                 RunningProcess++;
             }
+            var tasks = new List<Task>(RunningProcess);
             // 计算
             foreach (var item in digests) {
                 item.IsVivible = true;
                 var text = InputText;
                 var filename = FileName;
-                item.Text = await Task.Run(() => {
-                    // 计算文本 Hash
-                    if (string.IsNullOrEmpty(filename)) {
-                        return item.TextDigestHandler.Invoke(text);
-                    }
-                    // 计算文件 Hash
-                    try {
-                        return item.StreamDigestHandler.Invoke(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read));
-                    } catch (Exception e) {
-                        CommonUITools.Widget.MessageBox.Error(e.Message);
-                        return string.Empty;
-                    }
-                });
-                RunningProcess--;
+                tasks.Add(Task.Run(() => {
+                    Dispatcher.Invoke(async () => {
+                        // 计算结果
+                        item.Text = await Task.Run(() => {
+                            // 计算文本 Hash
+                            if (string.IsNullOrEmpty(filename)) {
+                                return item.TextDigestHandler.Invoke(text);
+                            }
+                            // 计算文件 Hash
+                            try {
+                                return item.StreamDigestHandler.Invoke(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read));
+                            } catch (Exception e) {
+                                CommonUITools.Widget.MessageBox.Error(e.Message);
+                                return string.Empty;
+                            }
+                        });
+                        RunningProcess--;
+                    }).Wait();
+                }));
             }
+            // 等待全部完成
+            await Task.WhenAll(tasks);
         }
 
         /// <summary>
