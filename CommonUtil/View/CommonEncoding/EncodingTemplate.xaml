@@ -21,6 +21,7 @@
     <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText, ElementName=Root}" />
     <ui:SimpleStackPanel
       Grid.Row="1"
+      HorizontalAlignment="Center"
       Orientation="Horizontal"
       Spacing="8">
       <widget:IconButton
