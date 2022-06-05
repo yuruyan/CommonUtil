@@ -24,13 +24,13 @@
         EasingFunction="{StaticResource AnimationEaseFunction}"
         Storyboard.TargetName="TitleBarTranslateTransform"
         Storyboard.TargetProperty="(TranslateTransform.X)"
-        Duration="0:0:0.5" />
+        Duration="0:0:0.3" />
       <DoubleAnimation
         Storyboard.TargetName="TitleBar"
         Storyboard.TargetProperty="Opacity"
         From="0"
         To="1"
-        Duration="0:0:0.5" />
+        Duration="0:0:0.3" />
     </Storyboard>
   </Window.Resources>
 
@@ -57,6 +57,12 @@
           Style="{StaticResource IconFontStyle}"
           Text="&#xe60f;" />
       </ui:TitleBarButton>
+      <Image
+        Width="40"
+        Height="18"
+        Source="/favicon.ico"
+        Stretch="Uniform"
+        Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfTrueConverter}}" />
       <TextBlock Margin="4" Text="{Binding RouteViewTitle}" />
     </StackPanel>
 
