@@ -16,16 +16,21 @@
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="auto" />
+      <RowDefinition />
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
-
+    <!--  Input Box  -->
+    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
     <!--  Control  -->
-    <WrapPanel Orientation="Horizontal">
+    <WrapPanel
+      Grid.Row="1"
+      Margin="0,8"
+      HorizontalAlignment="Center"
+      Orientation="Horizontal">
       <WrapPanel.Resources>
         <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
-          <Setter Property="Margin" Value="0,0,8,8" />
+          <Setter Property="Margin" Value="0,0,8,0" />
         </Style>
       </WrapPanel.Resources>
       <widget:IconButton
@@ -49,36 +54,16 @@
         Icon="&#xe6ef;"
         Text="复制结果" />
       <widget:IconButton
-        Margin="0,0,8,8"
         Click="ClearInputClick"
         Icon="&#xe946;"
         Style="{StaticResource GlobalErrorButtonStyle}"
         Text="清空输入" />
     </WrapPanel>
-    <!--  Description  -->
-    <UniformGrid
-      Grid.Row="1"
-      Margin="0,8,0,8"
-      Columns="2">
-      <UniformGrid.Resources>
-        <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-          <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}" />
-        </Style>
-      </UniformGrid.Resources>
-      <TextBlock Text="输入：" />
-      <TextBlock Margin="4,0,0,0" Text="结果：" />
-    </UniformGrid>
-    <!--  Input,Output  -->
-    <UniformGrid Grid.Row="2" Columns="2">
-      <TextBox
-        Margin="0,0,4,0"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding InputText}" />
-      <TextBox
-        Margin="4,0,0,0"
-        IsReadOnly="True"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding OutputText, Mode=OneWay}" />
-    </UniformGrid>
+    <!--  Output Box  -->
+    <TextBox
+      Grid.Row="2"
+      IsReadOnly="True"
+      Style="{StaticResource MultilineTextBoxStyle}"
+      Text="{Binding OutputText, Mode=OneWay}" />
   </Grid>
 </Page>
