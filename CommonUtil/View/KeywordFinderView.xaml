@@ -103,32 +103,17 @@
                 Foreground="#C14431"
                 Text="{Binding File}" />
               <StackPanel.ContextMenu>
-                <ContextMenu>
-                  <ContextMenu.ItemContainerStyle>
-                    <Style TargetType="MenuItem" />
-                  </ContextMenu.ItemContainerStyle>
-                  <ContextMenu.Resources>
-                    <Style TargetType="StackPanel">
-                      <Setter Property="Height" Value="30" />
-                      <Setter Property="Background" Value="Transparent" />
-                      <Setter Property="Width" Value="180" />
-                    </Style>
-                    <Style
-                      x:Key="IconFontStyle"
-                      BasedOn="{StaticResource IconFontStyle}"
-                      TargetType="TextBlock">
-                      <Setter Property="Padding" Value="8,0,8,0" />
-                      <Setter Property="FontSize" Value="18" />
-                    </Style>
-                  </ContextMenu.Resources>
-                  <StackPanel MouseUp="OpenFileMouseUp" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
-                    <TextBlock Text="打开文件" />
-                  </StackPanel>
-                  <StackPanel MouseUp="OpenDirectoryMouseUp" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe69d;" />
-                    <TextBlock Text="打开文件所在目录" />
-                  </StackPanel>
+                <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
+                  <MenuItem Click="OpenFileClickHandler" Header="打开文件">
+                    <MenuItem.Icon>
+                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  <MenuItem Click="OpenDirectoryClickHandler" Header="打开所在目录">
+                    <MenuItem.Icon>
+                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe69d;" />
+                    </MenuItem.Icon>
+                  </MenuItem>
                 </ContextMenu>
               </StackPanel.ContextMenu>
             </StackPanel>

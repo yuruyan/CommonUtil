@@ -17,9 +17,8 @@
   <Page.ContextMenu>
     <ContextMenu ItemsSource="{Binding ColorItems}" Style="{StaticResource GlobalContextMenuStyle}">
       <ContextMenu.Resources>
-        <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem">
+        <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
           <EventSetter Event="Click" Handler="CopyColorClick" />
-          <Setter Property="Height" Value="{StaticResource ContextMenuItemHeight}" />
         </Style>
       </ContextMenu.Resources>
       <ContextMenu.ItemTemplate>

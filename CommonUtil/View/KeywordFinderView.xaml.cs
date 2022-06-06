@@ -197,48 +197,6 @@ namespace CommonUtil.View {
         }
 
         /// <summary>
-        /// 打开文件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenFileMouseUp(object sender, MouseButtonEventArgs e) {
-            e.Handled = true;
-            if (sender is FrameworkElement element) {
-                if (element.DataContext is KeywordResult result) {
-                    try {
-                        Process.Start("rundll32.exe", "shell32.dll, OpenAs_RunDLL " + System.IO.Path.Combine(SearchDirectory, result.File));
-                        //new Process() {
-                        //    StartInfo = new ProcessStartInfo(System.IO.Path.Combine(SearchDirectory, result.File)) {
-                        //        UseShellExecute = true
-                        //    }
-                        //}.Start();
-                    } catch (Exception error) {
-                        Logger.Error(error);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 打开文件夹
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
-            e.Handled = true;
-            if (sender is FrameworkElement element) {
-                if (element.DataContext is KeywordResult result) {
-                    try {
-                        Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(SearchDirectory, result.File));
-                    } catch (Exception error) {
-                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                        Logger.Error(error);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// 打开搜索文件夹
         /// </summary>
         /// <param name="sender"></param>
@@ -251,6 +209,43 @@ namespace CommonUtil.View {
                 } catch (Exception error) {
                     CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
                     Logger.Error(error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 打开文件点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
+            e.Handled = true;
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is KeywordResult result) {
+                    try {
+                        Process.Start("rundll32.exe", "shell32.dll, OpenAs_RunDLL " + System.IO.Path.Combine(SearchDirectory, result.File));
+                    } catch (Exception error) {
+                        Logger.Error(error);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 打开文件夹
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenDirectoryClickHandler(object sender, RoutedEventArgs e) {
+            e.Handled = true;
+            if (sender is FrameworkElement element) {
+                if (element.DataContext is KeywordResult result) {
+                    try {
+                        Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(SearchDirectory, result.File));
+                    } catch (Exception error) {
+                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
+                        Logger.Error(error);
+                    }
                 }
             }
         }
