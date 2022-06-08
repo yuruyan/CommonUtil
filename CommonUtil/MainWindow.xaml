@@ -60,10 +60,11 @@
       <Image
         Width="40"
         Height="18"
+        Margin="4,8,0,8"
         Source="/favicon.ico"
         Stretch="Uniform"
         Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfTrueConverter}}" />
-      <TextBlock Margin="4" Text="{Binding RouteViewTitle}" />
+      <TextBlock Text="{Binding RouteViewTitle}" />
     </StackPanel>
 
     <ui:Frame x:Name="ContentFrame" Grid.Row="1">
