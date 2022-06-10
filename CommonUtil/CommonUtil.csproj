@@ -25,6 +25,7 @@
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
     <None Remove="Resource\image\FileSearch.svg" />
+    <None Remove="Resource\image\FileVersion.svg" />
     <None Remove="Resource\image\format.svg" />
     <None Remove="Resource\image\FTP.svg" />
     <None Remove="Resource\image\IdiomMatching.svg" />
@@ -51,6 +52,8 @@
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
     <PackageReference Include="Flurl" Version="3.0.6" />
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0.0" />
     <PackageReference Include="ModernWpfUI" Version="0.9.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog" Version="5.0.0" />
@@ -88,6 +91,7 @@
     <Resource Include="Resource\image\FileSearch.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\FileVersion.svg" />
     <Resource Include="Resource\image\format.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

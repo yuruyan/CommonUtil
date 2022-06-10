@@ -49,7 +49,7 @@ namespace CommonUtil.View {
                 // 让文件保存对话框是一个 Modal
                 Dispatcher.Invoke(() => {
                     if (result != null) {
-                        var openFileDialog = new OpenFileDialog() {
+                        var openFileDialog = new SaveFileDialog() {
                             Title = "保存文件",
                             Filter = "All Files|*.*"
                         };
