@@ -13,6 +13,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace CommonUtil.View {
     public partial class FileMergeSplitView : Page {
@@ -275,7 +276,7 @@ namespace CommonUtil.View {
 
             string filepath = SplitFilePath;
             string saveDir = SplitFileSaveDirectory;
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 try {
                     IsSplitingFile = true;
                     SplitFileProcessTimer.Start();
@@ -409,7 +410,7 @@ namespace CommonUtil.View {
                 files[i] = Path.Combine(MergeFileDirectory, files[i]);
             }
             string savePath = MergeFileSavePath;
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 try {
                     IsMergingFile = true;
                     MergeFileProcessTimer.Start();

@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -57,7 +58,7 @@ namespace CommonUtil.View {
             foreach (var name in Enum.GetNames(typeof(QRCodeFormat))) {
                 if (name.ToLower() == ext) {
                     found = true;
-                    ThreadPool.QueueUserWorkItem(o => {
+                    Task.Run(() => {
                         SaveImage(input, dialog.FileName, (QRCodeFormat)Enum.Parse(typeof(QRCodeFormat), name));
                     });
                     break;
@@ -65,7 +66,7 @@ namespace CommonUtil.View {
             }
             // 未提供的格式，生成 png
             if (!found) {
-                ThreadPool.QueueUserWorkItem(o => SaveImage(input + ".png", dialog.FileName, QRCodeFormat.PNG));
+                Task.Run(() => SaveImage(input + ".png", dialog.FileName, QRCodeFormat.PNG));
             }
         }
 
@@ -112,7 +113,7 @@ namespace CommonUtil.View {
         private void GenerateImageClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             string text = InputText;
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 try {
                     byte[] vs = QRCodeTool.GenerateQRCode(text);
                     Dispatcher.Invoke(() => {

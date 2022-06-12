@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -108,7 +109,7 @@ namespace CommonUtil.View {
             Timer.Start();
             #endregion
             #region 加载编程语言代码
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 try {
                     var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(ProgramingGetTimeStampPath));
                     if (dict != null) {

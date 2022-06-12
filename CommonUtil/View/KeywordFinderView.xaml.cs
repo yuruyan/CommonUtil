@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CommonUITools.Utils;
+using System.Threading.Tasks;
 
 namespace CommonUtil.View {
     public partial class KeywordFinderView : Page {
@@ -140,7 +141,7 @@ namespace CommonUtil.View {
             if (LastSearchDirectory != SearchDirectory) {
                 LastSearchDirectory = SearchDirectory;
                 var searchDirectory = SearchDirectory;
-                ThreadPool.QueueUserWorkItem(o => {
+                Task.Run(() => {
                     try {
                         var keywordFinder = new KeywordFinder(searchDirectory, excludeDirs, excludeFiles);
                         Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
@@ -167,7 +168,7 @@ namespace CommonUtil.View {
                 searchText = SearchText;
                 keywordResults = KeywordResults;
             });
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 try {
 #pragma warning disable CS8604 // Possible null reference argument.
                     KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);

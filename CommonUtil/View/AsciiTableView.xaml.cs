@@ -4,6 +4,7 @@ using NLog;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +26,7 @@ namespace CommonUtil.View {
             AsciiTableList = new();
             InitializeComponent();
             // 加载数据
-            ThreadPool.QueueUserWorkItem(o => {
+            Task.Run(() => {
                 List<AsciiInfo> list = AsciiTable.GetAsciiInfoList();
                 Dispatcher.Invoke(() => {
                     for (int i = 0; i < list.Count; i++) {
