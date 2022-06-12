@@ -47,11 +47,7 @@ namespace CommonUtil {
             CommonUITools.Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
             MainWindowRouter.Navigate(typeof(MainContentView));
             // 设置 AppTheme
-            foreach (var res in Application.Current.Resources.MergedDictionaries) {
-                if (res.Source != null && res.Source.ToString().Contains("ThemeResources")) {
-                    ThemeManager.Current.AccentColor = (res["ApplicationBackground"] as SolidColorBrush).Color;
-                }
-            }
+            ThemeManager.Current.AccentColor = ((SolidColorBrush)Global.ThemeResource["ApplicationAccentColor"]).Color;
         }
 
         /// <summary>
@@ -85,5 +81,6 @@ namespace CommonUtil {
         private void ToBackClick(object sender, RoutedEventArgs e) {
             MainWindowRouter.Back();
         }
+
     }
 }
