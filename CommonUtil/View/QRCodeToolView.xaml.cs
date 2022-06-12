@@ -1,4 +1,5 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using QRCoder.Exceptions;
@@ -84,12 +85,7 @@ namespace CommonUtil.View {
                     File.WriteAllBytes(path, data);
                     Dispatcher.Invoke(() => {
                         CommonUITools.Widget.NotificationBox.Success("保存成功", "点击打开", () => {
-                            try {
-                                Process.Start("explorer.exe", "/select," + path);
-                            } catch (Exception error) {
-                                CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                                Logger.Error(error);
-                            }
+                            UIUtils.OpenFileInDirectoryAsync(path);
                         });
                     });
                 } catch (Exception e) {

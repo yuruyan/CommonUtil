@@ -205,12 +205,7 @@ namespace CommonUtil.View {
         private void OpenSearchDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
             e.Handled = true;
             if (sender is TextBlock element) {
-                try {
-                    Process.Start("explorer.exe", element.Text);
-                } catch (Exception error) {
-                    CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                    Logger.Error(error);
-                }
+                UIUtils.OpenFileInDirectoryAsync(element.Text);
             }
         }
 
@@ -221,14 +216,8 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            if (sender is FrameworkElement element) {
-                if (element.DataContext is KeywordResult result) {
-                    try {
-                        Process.Start("rundll32.exe", "shell32.dll, OpenAs_RunDLL " + System.IO.Path.Combine(SearchDirectory, result.File));
-                    } catch (Exception error) {
-                        Logger.Error(error);
-                    }
-                }
+            if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
+                UIUtils.OpenFileWithAsync(System.IO.Path.Combine(SearchDirectory, result.File));
             }
         }
 
@@ -239,15 +228,8 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void OpenDirectoryClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            if (sender is FrameworkElement element) {
-                if (element.DataContext is KeywordResult result) {
-                    try {
-                        Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(SearchDirectory, result.File));
-                    } catch (Exception error) {
-                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                        Logger.Error(error);
-                    }
-                }
+            if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
+                UIUtils.OpenFileInDirectoryAsync(System.IO.Path.Combine(SearchDirectory, result.File));
             }
         }
     }

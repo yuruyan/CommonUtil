@@ -72,12 +72,7 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void OpenRootDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
             e.Handled = true;
-            try {
-                Process.Start("explorer.exe", RootDirectory);
-            } catch (Exception error) {
-                CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                Logger.Info(error);
-            }
+            UIUtils.OpenFileInDirectoryAsync(RootDirectory);
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using CommonUITools.Utils;
 
 namespace CommonUtil.View;
 
@@ -45,12 +46,7 @@ public partial class EdgeBookmarkView : Page {
             try {
                 new EdgeBookmark().ExportBookmarks(Dispatcher.Invoke(() => EdgeBookmarkFilePath), dialog.FileName);
                 NotificationBox.Success("导出成功！", "点击打开", () => {
-                    try {
-                        Process.Start("explorer.exe", "/select," + dialog.FileName);
-                    } catch (Exception error) {
-                        CommonUITools.Widget.MessageBox.Error("打开失败," + error.Message);
-                        Logger.Error(error);
-                    }
+                    UIUtils.OpenFileInDirectoryAsync(dialog.FileName);
                 });
             } catch (Exception error) {
                 CommonUITools.Widget.MessageBox.Error("导出失败！" + error.Message);
