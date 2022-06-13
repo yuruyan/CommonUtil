@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="MainContent"
   d:DesignHeight="450"
   d:DesignWidth="800"
@@ -23,39 +24,83 @@
       <ItemsControl.ItemTemplate>
         <DataTemplate>
           <Border
+            x:Name="MenuItemBorder"
             Width="230"
-            Height="50"
-            Margin="8,4,8,4"
+            Height="70"
+            Margin="8,6"
+            Background="White"
             CornerRadius="4"
             MouseLeftButtonUp="MenuMouseLeftButtonUp">
-            <Border.Style>
-              <Style TargetType="Border">
-                <Style.Triggers>
-                  <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource Gray3}" />
-                  </Trigger>
-                  <Trigger Property="IsMouseOver" Value="False">
-                    <Setter Property="Background" Value="{StaticResource Gray2}" />
-                  </Trigger>
-                </Style.Triggers>
-              </Style>
-            </Border.Style>
+            <Border.RenderTransform>
+              <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" />
+            </Border.RenderTransform>
+            <Border.Effect>
+              <DropShadowEffect
+                x:Name="ShadowEffect"
+                BlurRadius="4"
+                Direction="0"
+                Opacity="0.2"
+                ShadowDepth="0"
+                Color="Gray" />
+            </Border.Effect>
+            <Border.Triggers>
+              <!--  BlurRadius、Translate Animation  -->
+              <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation
+                      Storyboard.TargetName="MenuItemBorderTranslateYTransform"
+                      Storyboard.TargetProperty="Y"
+                      From="0"
+                      To="-4"
+                      Duration="{StaticResource AnimationDuration}" />
+                    <DoubleAnimation
+                      Storyboard.TargetName="ShadowEffect"
+                      Storyboard.TargetProperty="BlurRadius"
+                      From="4"
+                      To="12"
+                      Duration="{StaticResource AnimationDuration}" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+              <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation
+                      Storyboard.TargetName="MenuItemBorderTranslateYTransform"
+                      Storyboard.TargetProperty="Y"
+                      From="-4"
+                      To="0"
+                      Duration="{StaticResource AnimationDuration}" />
+                    <DoubleAnimation
+                      Storyboard.TargetName="ShadowEffect"
+                      Storyboard.TargetProperty="BlurRadius"
+                      From="12"
+                      To="4"
+                      Duration="{StaticResource AnimationDuration}" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger>
+            </Border.Triggers>
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="54" />
+                <ColumnDefinition Width="60" />
                 <ColumnDefinition />
               </Grid.ColumnDefinitions>
-              <Grid Margin="10,4,4,4">
-                <svgc:SvgViewbox Source="{Binding ImagePath}" Stretch="Uniform" />
-              </Grid>
-              <Grid Grid.Column="1">
-                <TextBlock
-                  Padding="4,0,0,0"
-                  VerticalAlignment="Center"
-                  Text="{Binding Name}" />
-              </Grid>
+              <!--  图标  -->
+              <svgc:SvgViewbox
+                Margin="8,4,4,4"
+                Source="{Binding ImagePath}"
+                Stretch="Uniform" />
+              <!--  说明  -->
+              <TextBlock
+                Grid.Column="1"
+                Padding="4,0,0,0"
+                VerticalAlignment="Center"
+                Text="{Binding Name}" />
             </Grid>
           </Border>
+
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>

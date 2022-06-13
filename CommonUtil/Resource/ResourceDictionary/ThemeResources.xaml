@@ -9,7 +9,7 @@
 
   <SolidColorBrush x:Key="ApplicationForeground">#000000</SolidColorBrush>
   <SolidColorBrush x:Key="ApplicationBorderForeground">#CECECE</SolidColorBrush>
-  <SolidColorBrush x:Key="ApplicationAccentColor">#48000000</SolidColorBrush>
+  <SolidColorBrush x:Key="ApplicationAccentColor">#80000000</SolidColorBrush>
 
   <SolidColorBrush x:Key="ErrorBackground">#c6585a</SolidColorBrush>
   <SolidColorBrush x:Key="ErrorForeground">#ffffff</SolidColorBrush>
@@ -37,7 +37,7 @@
   <SolidColorBrush x:Key="SuccessBackgroundDark3">#1F8135</SolidColorBrush>
 
   <!--#region Other Colors-->
-  <SolidColorBrush x:Key="MainContentViewBackground">#F9F9F9</SolidColorBrush>
+  <SolidColorBrush x:Key="MainContentViewBackground">#F6F6F6</SolidColorBrush>
   <!--#endregion-->
 
 </ResourceDictionary>
