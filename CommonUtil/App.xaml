@@ -3,7 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:CommonUtil"
-  xmlns:ui="http://schemas.modernwpf.com/2019">
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -18,6 +19,7 @@
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/HoverEffectResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/DateTemplateResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
+
     </ResourceDictionary>
   </Application.Resources>
 </Application>

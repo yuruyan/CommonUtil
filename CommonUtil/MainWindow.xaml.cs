@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Route;
+using CommonUITools.Utils;
 using CommonUtil.Store;
 using CommonUtil.View;
 using ModernWpf;
@@ -28,19 +29,26 @@ namespace CommonUtil {
             get { return (string)GetValue(RouteViewTitleProperty); }
             set { SetValue(RouteViewTitleProperty, value); }
         }
-        // 标题动画
-        private Storyboard? TitleBarStoryboard;
-        private DoubleAnimation? TranslateTransformXAnimation;
+        /// <summary>
+        /// 标题动画
+        /// </summary>
+        private readonly Storyboard TitleBarStoryboard;
+        /// <summary>
+        /// 背景颜色动画
+        /// </summary>
+        private readonly Storyboard MainContentViewLoadStoryboard;
+        private readonly DoubleAnimation TranslateTransformXAnimation;
+        private readonly ColorAnimation MainContentViewBackgroundAnimation;
 
         public MainWindow() {
             InitializeComponent();
-            if (Resources["TitleBarStoryboard"] is Storyboard storyboard) {
-                TitleBarStoryboard = storyboard;
-                Timeline? timeline = storyboard.Children.FirstOrDefault(t => t.Name == "TranslateTransformX");
-                if (timeline is DoubleAnimation animation) {
-                    TranslateTransformXAnimation = animation;
-                }
-            }
+            #region 设置 Storyboard
+            TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
+            MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
+            TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
+            MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
+            #endregion
+
             _ = new MainWindowRouter(ContentFrame);
             ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
             CommonUITools.Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
@@ -61,21 +69,20 @@ namespace CommonUtil {
             // 主窗口菜单列表
             if (contentType == typeof(MainContentView)) {
                 RouteViewTitle = Global.AppTitle;
-                if (TranslateTransformXAnimation != null) {
-                    TranslateTransformXAnimation.From = -100;
-                }
+                MainContentViewBackgroundAnimation.To = ((SolidColorBrush)Global.ThemeResource["MainContentViewBackground"]).Color;
+                TranslateTransformXAnimation.From = -100;
             } else {
+                MainContentViewBackgroundAnimation.To = Colors.White;
                 foreach (var item in Global.MenuItems) {
                     if (item.ClassType == contentType) {
                         RouteViewTitle = item.Name;
                         break;
                     }
                 }
-                if (TranslateTransformXAnimation != null) {
-                    TranslateTransformXAnimation.From = 100;
-                }
+                TranslateTransformXAnimation.From = 100;
             }
-            TitleBarStoryboard?.Begin();
+            TitleBarStoryboard.Begin();
+            MainContentViewLoadStoryboard.Begin();
         }
 
         private void ToBackClick(object sender, RoutedEventArgs e) {

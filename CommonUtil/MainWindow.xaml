@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  Name="Root"
   Title="MainWindow"
   Width="1000"
   Height="600"
@@ -17,6 +18,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   WindowStartupLocation="CenterScreen"
   mc:Ignorable="d">
+
   <Window.Resources>
     <Storyboard x:Key="TitleBarStoryboard">
       <DoubleAnimation
@@ -32,6 +34,15 @@
         To="1"
         Duration="0:0:0.3" />
     </Storyboard>
+
+    <Storyboard x:Key="MainContentViewLoadStoryboard">
+      <ColorAnimation
+        Name="BackgroundAnimation"
+        Storyboard.TargetName="Root"
+        Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
+
   </Window.Resources>
 
   <Grid>

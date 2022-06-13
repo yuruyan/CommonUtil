@@ -36,4 +36,8 @@
   <SolidColorBrush x:Key="SuccessBackgroundDark2">#228D3A</SolidColorBrush>
   <SolidColorBrush x:Key="SuccessBackgroundDark3">#1F8135</SolidColorBrush>
 
+  <!--#region Other Colors-->
+  <SolidColorBrush x:Key="MainContentViewBackground">#F9F9F9</SolidColorBrush>
+  <!--#endregion-->
+
 </ResourceDictionary>
