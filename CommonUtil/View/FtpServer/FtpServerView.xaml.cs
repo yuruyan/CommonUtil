@@ -207,7 +207,7 @@ namespace CommonUtil.View {
         private void CopyFtpAddressMouseUp(object sender, MouseButtonEventArgs e) {
             if (sender is FrameworkElement element) {
                 if (element.DataContext is FtpServerUserInfo userInfo) {
-                    string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{CommonUtils.GetLocalIpAddress()}";
+                    string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{NetworkUtils.GetLocalIpAddress()}";
                     Clipboard.SetDataObject(address);
                     CommonUITools.Widget.MessageBox.Success("已复制");
                 }

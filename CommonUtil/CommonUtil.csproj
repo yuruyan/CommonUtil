@@ -24,6 +24,7 @@
     <None Remove="Resource\image\Edge.svg" />
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
+    <None Remove="Resource\image\file-server.svg" />
     <None Remove="Resource\image\FileSearch.svg" />
     <None Remove="Resource\image\FileVersion.svg" />
     <None Remove="Resource\image\format.svg" />
@@ -88,6 +89,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\Encryption.svg" />
+    <Resource Include="Resource\image\file-server.svg" />
     <Resource Include="Resource\image\FileSearch.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -168,6 +170,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
+    <ProjectReference Include="..\SimpleFileSystemServer\SimpleFileSystemServer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

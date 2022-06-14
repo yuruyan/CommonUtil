@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Files</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-size: 20px;
+			padding: 20px;
+		}
+
+		ul {
+			padding: 0;
+		}
+
+			ul li {
+				list-style: none;
+				padding: 4px 0;
+			}
+
+		a {
+			text-decoration: none;
+		}
+
+		#path-list {
+			margin-bottom: 30px;
+		}
+
+			#path-list a {
+				padding: 0 4px;
+			}
+	</style>
+</head>
+<body>
+	<div id="path-list"></div>
+	<div id="content">
+		<!-- <ul>
+		  <li>1</li>
+		  <li>2</li>
+		  <li>3</li>
+		</ul> -->
+	</div>
+	<div id="data" style="display:none">@ViewData["data"]</div>
+</body>
+<script>
+	/*
+	{
+	  currentPath: '',
+	  files: [
+		{
+		  name: '',
+		  parentPath: '',
+		  isDir: '',
+		}
+	  ]
+	}
+		*/
+	let data = JSON.parse(document.getElementById("data").innerText);
+	const contentElem = document.getElementById("content");
+	// 插入到 ul 中字符元素
+	const fileArr = [];
+	const currentPath = data["currentPath"];
+	// 构造文件列表元素
+	data["files"].forEach((v) => {
+		// 跳转链接
+		let url = "";
+		if (Boolean(v["isDir"])) {
+			url = `/path?path=${encodeURIComponent(currentPath + "/" + v["name"])}`;
+		} else {
+			url = `/download?path=${encodeURIComponent(
+				currentPath + "/" + v["name"]
+			)}`;
+		}
+		fileArr.push(`
+														<li>
+														  <a href='${url}'>
+															${v["name"]}
+														  </a>
+														</li>`);
+	});
+	contentElem.innerHTML = `<ul>${fileArr.join("\n")}</ul>`;
+	// 路径列表
+	const pathListElem = document.getElementById("path-list");
+	// let paths = ;
+	const pathArr = [`<a href='/path'> /home </a> `];
+	let tempPath = "/";
+	currentPath
+		.split(/[\\/]/g)
+		.filter((v) => v.trim() != "")
+		.forEach((v) => {
+			tempPath += v + "/";
+			let url = `/path?path=${encodeURIComponent(tempPath)}`;
+			pathArr.push(`<a href='${url}'>/${v} </a>`);
+		});
+	pathListElem.innerHTML = pathArr.join("\n");
+</script>
+</html>
