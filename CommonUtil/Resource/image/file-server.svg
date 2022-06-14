@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- 由 Microsoft Visio, SVG Export 生成 file-server.svg 页-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="4.87231in" height="4.29001in"
+		viewBox="0 0 350.806 308.881" xml:space="preserve" color-interpolation-filters="sRGB" class="st8">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#00bd9d;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st2 {fill:#06ccab;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st3 {fill:#82d9b6;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st4 {fill:#95e8c8;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st5 {fill:#11a892;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st6 {fill:#7be1ea;stroke:none;stroke-linecap:butt;stroke-width:0.146484}
+		.st7 {fill:#54c2de;stroke:none;stroke-linecap:butt;stroke-width:0.146484}
+		.st8 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="shape178-1" v:mID="178" v:groupContext="shape" transform="translate(113.506,-147.186)">
+			<title>工作表.178</title>
+			<path d="M0 228.09 L0 308.88 A113.386 40.3937 -180 0 0 113.39 268.49 L113.39 187.7 A113.386 40.3937 0 0 1 0 228.09 Z"
+					class="st1"/>
+		</g>
+		<g id="shape181-3" v:mID="181" v:groupContext="shape" transform="translate(0.12,-147.186)">
+			<title>工作表.181</title>
+			<path d="M113.39 228.09 A113.386 40.3937 0 0 1 0 187.7 L0 268.49 A113.386 40.3937 -180 0 0 113.39 308.88 L113.39 228.09
+						 Z" class="st2"/>
+		</g>
+		<g id="shape182-5" v:mID="182" v:groupContext="shape" transform="translate(113.506,-227.973)">
+			<title>工作表.182</title>
+			<path d="M0 308.88 A113.386 40.3937 -180 0 0 113.39 268.49 A113.386 40.3937 -180 0 0 0 228.09 L0 268.49 L0 308.88 Z"
+					class="st3"/>
+		</g>
+		<g id="shape183-7" v:mID="183" v:groupContext="shape" transform="translate(0.12,-227.973)">
+			<title>工作表.183</title>
+			<path d="M113.39 308.88 L113.39 268.49 L113.39 228.09 A113.386 40.3937 -180 0 0 -0 268.49 A113.386 40.3937 -180 0 0 113.39
+						 308.88 Z" class="st4"/>
+		</g>
+		<g id="shape184-9" v:mID="184" v:groupContext="shape" transform="translate(113.506,-68.1701)">
+			<title>工作表.184</title>
+			<path d="M0 228.09 L0 308.88 A113.386 40.3937 -180 0 0 113.39 268.49 L113.39 187.7 A113.386 40.3937 0 0 1 0 228.09 Z"
+					class="st5"/>
+		</g>
+		<g id="shape185-11" v:mID="185" v:groupContext="shape" transform="translate(0.12,-68.1701)">
+			<title>工作表.185</title>
+			<path d="M113.39 228.09 A113.386 40.3937 0 0 1 0 187.7 L0 268.49 A113.386 40.3937 -180 0 0 113.39 308.88 L113.39 228.09
+						 Z" class="st1"/>
+		</g>
+		<g id="group76-13" transform="translate(141.852,-0.146484)" v:mID="76" v:groupContext="group">
+			<title>工作表.76</title>
+			<g id="shape77-14" v:mID="77" v:groupContext="shape">
+				<title>工作表.77</title>
+				<path d="M166.77 171.54 L88.29 171.54 L68.67 151.92 L19.62 151.92 C8.83 151.92 0 160.75 0 171.54 L0 289.26 C0 300.05
+							 8.83 308.88 19.62 308.88 L171.68 308.88 C180.01 308.88 186.39 302.5 186.39 294.17 L186.39 191.16 C186.39
+							 180.37 177.56 171.54 166.77 171.54 Z" class="st6"/>
+			</g>
+			<g id="shape78-16" v:mID="78" v:groupContext="shape" transform="translate(19.6201,7.95808E-13)">
+				<title>工作表.78</title>
+				<path d="M167.75 200.97 L35.81 200.97 C26.49 200.97 18.15 207.84 16.68 217.16 L0 308.88 L155.49 308.88 C164.81 308.88
+							 173.15 302.01 174.62 292.69 L186.88 224.02 C189.33 212.25 180.01 200.97 167.75 200.97 Z" class="st7"/>
+			</g>
+		</g>
+	</g>
+</svg>
