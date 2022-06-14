@@ -44,54 +44,37 @@
     <ListBox
       x:Name="ResultListBox"
       Grid.Row="1"
-      Background="Transparent"
       ItemsSource="{Binding MatchList}">
       <ListBox.ItemContainerStyle>
         <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
           <Setter Property="Padding" Value="4,0,4,0" />
         </Style>
       </ListBox.ItemContainerStyle>
+
       <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel Margin="0" />
         </ItemsPanelTemplate>
       </ListBox.ItemsPanel>
+
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <StackPanel Background="Transparent">
-            <TextBlock Margin="0,12,0,12" Text="{Binding}" />
-            <StackPanel.ContextMenu>
-              <ContextMenu>
-                <ContextMenu.Resources>
-                  <Style TargetType="StackPanel">
-                    <Setter Property="Orientation" Value="Horizontal" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Width" Value="120" />
-                  </Style>
-                  <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-                    <Setter Property="Padding" Value="0,8,0,8" />
-                  </Style>
-                  <Style
-                    x:Key="IconFontStyle"
-                    BasedOn="{StaticResource IconFontStyle}"
-                    TargetType="TextBlock">
-                    <Setter Property="Margin" Value="8,0,8,0" />
-                  </Style>
-                </ContextMenu.Resources>
-                <ContextMenu.ItemContainerStyle>
-                  <Style TargetType="MenuItem" />
-                </ContextMenu.ItemContainerStyle>
-                <StackPanel MouseUp="CopyCurrentResultMouseUp">
-                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
-                  <TextBlock Text="复制" />
-                </StackPanel>
-                <StackPanel MouseUp="CopyAllResultsMouseUp">
-                  <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
-                  <TextBlock Text="复制全部" />
-                </StackPanel>
+          <TextBlock Padding="0,12" Text="{Binding}">
+            <TextBlock.ContextMenu>
+              <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
+                <MenuItem Click="CopyCurrentResultClickHandler" Header="复制">
+                  <MenuItem.Icon>
+                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+                  </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Click="CopyAllResultsClickHandler" Header="复制全部">
+                  <MenuItem.Icon>
+                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+                  </MenuItem.Icon>
+                </MenuItem>
               </ContextMenu>
-            </StackPanel.ContextMenu>
-          </StackPanel>
+            </TextBlock.ContextMenu>
+          </TextBlock>
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>

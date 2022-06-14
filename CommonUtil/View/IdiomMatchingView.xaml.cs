@@ -93,7 +93,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyCurrentResultMouseUp(object sender, MouseButtonEventArgs e) {
+        private void CopyCurrentResultClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (sender is FrameworkElement element) {
                 Clipboard.SetDataObject(element.DataContext);
@@ -106,7 +106,7 @@ namespace CommonUtil.View {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyAllResultsMouseUp(object sender, MouseButtonEventArgs e) {
+        private void CopyAllResultsClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (ResultListBox.ItemsSource is IEnumerable<string> list) {
                 var sb = new StringBuilder();
