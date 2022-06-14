@@ -42,7 +42,10 @@
       Click="ToggleServerStateClickHandler"
       Content="{Binding IsServerStarted, Converter={StaticResource BoolToStringConverter}, ConverterParameter='停止服务|开启服务'}" />
     <!--  分享链接  -->
-    <StackPanel Orientation="Horizontal" Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}">
+    <StackPanel
+      HorizontalAlignment="Center"
+      Orientation="Horizontal"
+      Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}">
       <TextBlock Text="URL：" />
       <TextBox
         BorderThickness="0"

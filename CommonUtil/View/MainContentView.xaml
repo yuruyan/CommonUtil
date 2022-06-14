@@ -13,7 +13,9 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   Loaded="RootLoaded"
   mc:Ignorable="d">
-
+  <Page.Resources>
+    <Duration x:Key="AnimationDuration">0:0:0.2</Duration>
+  </Page.Resources>
   <ScrollViewer>
     <ItemsControl ItemsSource="{Binding ToolMenuItems}">
       <ItemsControl.ItemsPanel>
@@ -58,7 +60,7 @@
                       Storyboard.TargetName="ShadowEffect"
                       Storyboard.TargetProperty="BlurRadius"
                       From="4"
-                      To="12"
+                      To="16"
                       Duration="{StaticResource AnimationDuration}" />
                   </Storyboard>
                 </BeginStoryboard>
@@ -75,7 +77,7 @@
                     <DoubleAnimation
                       Storyboard.TargetName="ShadowEffect"
                       Storyboard.TargetProperty="BlurRadius"
-                      From="12"
+                      From="16"
                       To="4"
                       Duration="{StaticResource AnimationDuration}" />
                   </Storyboard>
