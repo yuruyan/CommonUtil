@@ -115,7 +115,9 @@ public class SimpleFileSystemServer {
         if (ServerProcess is not null) {
             return true;
         }
-        ServerProcess = Process.Start(AppPath, $" --urls=http://*:{Port} --dir=\"{WordkingDirectory}\"");
+        ServerProcess = Process.Start(new ProcessStartInfo(AppPath, $" --urls=http://*:{Port} --dir=\"{WordkingDirectory}\"") {
+            CreateNoWindow = true
+        });
         if (ServerProcess is null) {
             return false;
         }
