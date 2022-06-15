@@ -17,6 +17,7 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty SharingDirectoryProperty = DependencyProperty.Register("SharingDirectory", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
         public static readonly DependencyProperty IsServerStartedProperty = DependencyProperty.Register("IsServerStarted", typeof(bool), typeof(SimpleFileSystemServerView), new PropertyMetadata(false));
         public static readonly DependencyProperty ServerPortProperty = DependencyProperty.Register("ServerPort", typeof(int), typeof(SimpleFileSystemServerView), new PropertyMetadata(3000));
+        public static readonly DependencyProperty ServerURLProperty = DependencyProperty.Register("ServerURL", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
 
         /// <summary>
         /// 分享文件目录
@@ -40,6 +41,13 @@ namespace CommonUtil.View {
             get { return (int)GetValue(ServerPortProperty); }
             set { SetValue(ServerPortProperty, value); }
         }
+        /// <summary>
+        /// 服务器 URL
+        /// </summary>
+        public string ServerURL {
+            get { return (string)GetValue(ServerURLProperty); }
+            set { SetValue(ServerURLProperty, value); }
+        }
 
         public SimpleFileSystemServerView() {
             InitializeComponent();
@@ -54,6 +62,9 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void ServerStateChangedHandler(object? sender, EventArgs e) {
             if (IsServerStarted) {
+                ServerURL = $"http://{NetworkUtils.GetLocalIpAddress()}:{ServerPort}";
+                // 复制到剪贴板
+                Clipboard.SetDataObject(ServerURL);
                 // 监听停止状态
                 SimpleFileSystemServer.Stopped += (s, e) => {
                     Dispatcher.Invoke(() => IsServerStarted = false);
