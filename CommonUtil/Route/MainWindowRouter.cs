@@ -21,7 +21,7 @@ public class MainWindowRouter {
     }
 
     public static void Navigate(Type viewType) {
-        RouterService.Navigate(viewType, NavigationTransitionInfo);
+        RouterService.Navigate(viewType, NavigationTransitionEffect.DrillIn);
     }
 
     public static void Back() {

@@ -21,7 +21,7 @@ public class FtpServer {
         try {
             Server.CheckNodeJsServer();
             string respData = await (Server.NodeJsServerBaseUrl + "/startftpserver").PostJsonAsync(config).Result.GetStringAsync();
-            GeneralResponse? resp = JsonConvert.DeserializeObject<GeneralResponse>(respData);
+            JsonResponse? resp = JsonConvert.DeserializeObject<JsonResponse>(respData);
             if (resp == null) {
                 throw new Exception("deserialize object failed");
             }
@@ -40,7 +40,7 @@ public class FtpServer {
         try {
             Server.CheckNodeJsServer();
             string respData = await (Server.NodeJsServerBaseUrl + "/stopftpserver").GetStringAsync();
-            GeneralResponse? resp = JsonConvert.DeserializeObject<GeneralResponse>(respData);
+            JsonResponse? resp = JsonConvert.DeserializeObject<JsonResponse>(respData);
             if (resp == null) {
                 throw new Exception("deserialize object failed");
             }

@@ -280,7 +280,7 @@ public class CodeFormating {
                          code,
                          lang = lang.ToString(),
                      });
-        var data = await resp.GetJsonAsync<GeneralResponse<string>>();
+        var data = await resp.GetJsonAsync<JsonResponse<string>>();
         if (data.code != 200) {
             Logger.Info("CodeFormat failed, message: " + data.message);
             return code;

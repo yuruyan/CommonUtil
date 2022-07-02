@@ -66,8 +66,8 @@ public class SimpleFileSystemServer {
         #region 初始化 CheckStartedTimer、HeartBeatTimer
         CheckStartedTimer = new(HeartBeatInterval);
         CheckStartedTimer.Elapsed += async (s, e) => {
-            GeneralResponse? resp = null;
-            resp = await CommonUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<GeneralResponse>());
+            JsonResponse? resp = null;
+            resp = await CommonUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 启动成功
             if (resp != null && resp.code == 200) {
                 IsStarted = true;
@@ -76,8 +76,8 @@ public class SimpleFileSystemServer {
         };
         HeartBeatTimer = new(HeartBeatInterval);
         HeartBeatTimer.Elapsed += async (s, e) => {
-            GeneralResponse? resp = null;
-            resp = await CommonUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<GeneralResponse>());
+            JsonResponse? resp = null;
+            resp = await CommonUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 成功
             if (resp != null && resp.code == 200) {
                 // 清零
