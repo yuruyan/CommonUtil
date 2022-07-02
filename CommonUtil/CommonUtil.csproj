@@ -167,6 +167,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
     <ProjectReference Include="..\SimpleFileSystemServer\SimpleFileSystemServer.csproj" />
   </ItemGroup>
