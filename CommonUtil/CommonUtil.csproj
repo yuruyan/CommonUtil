@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resource\lib\nodejs\**" />
+    <EmbeddedResource Remove="Resource\lib\nodejs\**" />
+    <None Remove="Resource\lib\nodejs\**" />
+    <Page Remove="Resource\lib\nodejs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
     <None Remove="Resource\image\base64.svg" />
@@ -32,6 +39,7 @@
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
+    <None Remove="Resource\image\paint.svg" />
     <None Remove="Resource\image\qrcode.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\image\regex.svg" />
@@ -49,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
     <PackageReference Include="Flurl" Version="3.0.6" />
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
@@ -101,6 +110,7 @@
     <Resource Include="Resource\image\order.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\paint.svg" />
     <Resource Include="Resource\image\qrcode.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -125,6 +135,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\CodeStyle\CodeColorScheme.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\CodeStyle\CodeColorScheme.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\CommonRegex.json">
@@ -157,10 +173,6 @@
     <None Update="Resource\WordMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resource\lib\nodejs\" />
   </ItemGroup>
 
   <ItemGroup>
