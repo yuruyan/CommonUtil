@@ -129,6 +129,9 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\CodeColorizationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\CodeGenerator\CodeGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>

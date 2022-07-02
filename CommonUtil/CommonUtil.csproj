@@ -185,12 +185,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\CodeColorizationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TextTool\AddEnglishWordBracesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="View\CodeColorizationView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\TextTool\AddEnglishWordBracesView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

@@ -28,6 +28,10 @@ public class CodeColorization {
     /// 代码着色配置列表
     /// </summary>
     private static readonly IEnumerable<SchemeInfo> Schemes;
+    /// <summary>
+    /// 语言名称
+    /// </summary>
+    public static readonly IEnumerable<string> Languages;
 
     static CodeColorization() {
         var themes = JsonConvert.DeserializeObject<IEnumerable<SchemeInfo>>(File.ReadAllText(CodeColorSchemeConfig));
@@ -36,6 +40,7 @@ public class CodeColorization {
             throw new JsonSerializationException($"解析代码颜色配置文件失败");
         }
         Schemes = themes;
+        Languages = themes.Select(s => s.Name);
         Logger.Debug("解析代码颜色配置文件成功");
         CheckAndDecompressResourceFile();
         RegisterThemes(themes);

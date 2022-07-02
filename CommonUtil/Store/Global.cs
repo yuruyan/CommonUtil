@@ -60,6 +60,7 @@ namespace CommonUtil.Store {
             new() { Name = "代码生成器", ImagePath = ImagePath + "CodeGenerator.svg", ClassType = typeof(CodeGeneratorView) },
             new() { Name = "临时文件版本控制", ImagePath = ImagePath + "FileVersion.svg", ClassType = typeof(TempFileVersionControlView) },
             new() { Name = "简单文件服务器", ImagePath = ImagePath + "file-server.svg", ClassType = typeof(SimpleFileSystemServerView) },
+            new() { Name = "代码着色", ImagePath = ImagePath + "paint.svg", ClassType = typeof(CodeColorizationView) },
         };
 
     }

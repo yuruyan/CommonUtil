@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,20 +37,24 @@ namespace CommonUtil {
 
         private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
             if (e.ExceptionObject is Exception exception) {
-                Logger.Error(exception);
-                Application.Current.Shutdown();
+                Logger.Fatal(exception);
+                Shutdown();
             }
         }
 
         private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
+            Logger.Fatal(e.Exception);
             if (e.Exception is System.Runtime.InteropServices.COMException comException) {
                 if (comException.ErrorCode == -2147221040) {
                     e.Handled = true;
                     return;
                 }
             }
-            Logger.Error(e.Exception);
-            Application.Current.Shutdown();
+            if (e.Exception is WebException) {
+                e.Handled = true;
+                return;
+            }
+            Shutdown();
         }
     }
 }
