@@ -57,32 +57,32 @@ namespace CommonUtil.Core {
         /// 返回全部 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoList() {
-            return CommonUtils.Copy(AsciiInfoList);
+        public static IReadOnlyList<AsciiInfo> GetAsciiInfoList() {
+            return AsciiInfoList;
         }
 
         /// <summary>
         /// 返回控制 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoControlList() {
-            return CommonUtils.Copy(AsciiInfoControlList);
+        public static IReadOnlyList<AsciiInfo> GetAsciiInfoControlList() {
+            return AsciiInfoControlList;
         }
 
         /// <summary>
         /// 返回非控制 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoNormalList() {
-            return CommonUtils.Copy(AsciiInfoNormalList);
+        public static IReadOnlyList<AsciiInfo> GetAsciiInfoNormalList() {
+            return AsciiInfoNormalList;
         }
 
         /// <summary>
         /// 返回扩展 ASCII 列表
         /// </summary>
         /// <returns></returns>
-        public static List<AsciiInfo> GetAsciiInfoExtendedList() {
-            return CommonUtils.Copy(AsciiInfoExtendedList);
+        public static IReadOnlyList<AsciiInfo> GetAsciiInfoExtendedList() {
+            return AsciiInfoExtendedList;
         }
     }
 }

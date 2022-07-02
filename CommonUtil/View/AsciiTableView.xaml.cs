@@ -27,7 +27,7 @@ namespace CommonUtil.View {
             InitializeComponent();
             // 加载数据
             Task.Run(() => {
-                List<AsciiInfo> list = AsciiTable.GetAsciiInfoList();
+                var list = AsciiTable.GetAsciiInfoList();
                 Dispatcher.Invoke(() => {
                     for (int i = 0; i < list.Count; i++) {
                         AsciiTableList.Add(list[i]);

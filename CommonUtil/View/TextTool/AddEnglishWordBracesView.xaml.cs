@@ -36,7 +36,7 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void TextProcessClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            OutputText = TextTool.AddEnglishWordBraces(InputText, (bool)IncludeNumberCheckBox.IsChecked);
+            OutputText = TextTool.AddEnglishWordBraces(InputText, IncludeNumberCheckBox.IsChecked ?? false);
         }
 
         /// <summary>

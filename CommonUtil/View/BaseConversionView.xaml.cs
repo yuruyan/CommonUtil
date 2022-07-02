@@ -94,7 +94,7 @@ namespace CommonUtil.View {
                 }
                 try {
                     sb.Append($"{BaseConversion.ConvertFromDecimal(BaseConversion.ConvertToDecimal(number, SourceBaseIndex + BaseOptions[0]), TargetBaseIndex + BaseOptions[0])}\n");
-                } catch (Exception error) {
+                } catch {
                     //Logger.Info(error);
                     sb.Append('\n');
                     //OutputText = string.Empty; // 清空输入

@@ -13,15 +13,6 @@
     <Compile Update="View\CodeGenerator\CSharpDependencyView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Dialog\InfoDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\Dialog\SimpleInputDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\Dialog\WarningDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\Browser\EdgeBookmarkView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -142,15 +133,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CodeGenerator\CSharpDependencyView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Dialog\InfoDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Dialog\SimpleInputDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\Dialog\WarningDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Browser\EdgeBookmarkView.xaml">
