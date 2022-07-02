@@ -45,5 +45,5 @@ public class FtpServerConfig {
     /// 用户列表
     /// </summary>
     [JsonProperty("userlist")]
-    public List<FtpServerUserInfo> UserList { get; set; }
+    public List<FtpServerUserInfo> UserList { get; set; } = new();
 }

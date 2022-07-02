@@ -17,8 +17,6 @@ namespace CommonUtil.Core {
         private static readonly string UpperCaseCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static readonly string LowerCaseCharacter = "abcdefghijklmnopqrstuvwxyz";
         private static readonly string SpacialCharacter = @"$%&'()*+,-./\:;<=>?@[]^_`{|}~";
-        //private static readonly string SpacialCharacterCompiled = "\\$|%|&|'|\\(|\\)|\\*|\\+|\\,|\\-|\\.|/|\\|:|;|<|=|>|\\?|@|\\[|\\]|\\^|_|`|\\{|\\||\\}|~";
-        private static Random Random = new();
 
         /// <summary>
         /// 生成随机数
@@ -30,7 +28,7 @@ namespace CommonUtil.Core {
         public static int[] GenerateRandomNumber(int minValue, int maxValue, int count) {
             int[] results = new int[count];
             for (int i = 0; i < count; i++) {
-                results[i] = Random.Next(minValue, maxValue);
+                results[i] = Random.Shared.Next(minValue, maxValue);
             }
             return results;
         }
@@ -43,7 +41,7 @@ namespace CommonUtil.Core {
         /// <param name="count">随机字符串个数</param>
         /// <returns></returns>
         public static string[] GenerateRandomString(RandomStringChoice choice, int length, int count) {
-            if (choice == RandomStringChoice.None) { 
+            if (choice == RandomStringChoice.None) {
                 return Array.Empty<string>();
             }
             string dataSource = "";
@@ -68,7 +66,7 @@ namespace CommonUtil.Core {
             for (int i = 0; i < count; i++) {
                 sb.Clear();
                 for (int j = 0; j < length; j++) {
-                    sb.Append(dataSource[Random.Next(dataSource.Length)]);
+                    sb.Append(dataSource[Random.Shared.Next(dataSource.Length)]);
                 }
                 results[i] = sb.ToString();
             }

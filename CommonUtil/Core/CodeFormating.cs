@@ -285,6 +285,6 @@ public class CodeFormating {
             Logger.Info("CodeFormat failed, message: " + data.message);
             return code;
         }
-        return data.data;
+        return CommonUtils.NullCheck(data.data);
     }
 }

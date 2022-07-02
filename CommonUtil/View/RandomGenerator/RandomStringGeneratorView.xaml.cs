@@ -64,7 +64,7 @@ namespace CommonUtil.View {
             set { SetValue(CountListProperty, value); }
         }
 
-        private static RandomStringGeneratorView _RandomStringGeneratorView;
+        private static RandomStringGeneratorView? _RandomStringGeneratorView;
 
         public RandomStringGeneratorView() {
             CountList = new();

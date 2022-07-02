@@ -43,7 +43,7 @@ namespace CommonUtil.View {
             set { SetValue(GenerateCountProperty, value); }
         }
 
-        private static RandomNumberGeneratorView _RandomNumberGeneratorView;
+        private static RandomNumberGeneratorView? _RandomNumberGeneratorView;
 
         public RandomNumberGeneratorView() {
             CountList = new();

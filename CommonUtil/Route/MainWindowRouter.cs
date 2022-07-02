@@ -8,8 +8,7 @@ using System.Collections.Generic;
 namespace CommonUITools.Route;
 
 public class MainWindowRouter {
-    private static RouterService RouterService;
-    private readonly static NavigationTransitionInfo NavigationTransitionInfo = new DrillInNavigationTransitionInfo();
+    private static RouterService? RouterService;
 
     public MainWindowRouter(Frame frame) {
         var routers = new List<Type>();
@@ -21,11 +20,11 @@ public class MainWindowRouter {
     }
 
     public static void Navigate(Type viewType) {
-        RouterService.Navigate(viewType, NavigationTransitionEffect.DrillIn);
+        RouterService?.Navigate(viewType, NavigationTransitionEffect.DrillIn);
     }
 
     public static void Back() {
-        RouterService.Back();
+        RouterService?.Back();
     }
 
 }

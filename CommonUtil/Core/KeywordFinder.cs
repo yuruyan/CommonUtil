@@ -217,8 +217,9 @@ public class KeywordFinder {
     /// </summary>
     /// <param name="directory"></param>
     /// <param name="files"></param>
-    private void GetAllFiles(string directory, List<string> files, List<Regex> excludeDir = null) {
-        files.AddRange(Directory.GetFiles(directory));
+    private void GetAllFiles(string directory, IEnumerable<string> files, IEnumerable<Regex>? excludeDir = null) {
+        var tempFiles = new List<string>(files);
+        tempFiles.AddRange(Directory.GetFiles(directory));
         excludeDir ??= new List<Regex>();
         foreach (var dir in Directory.GetDirectories(directory)) {
             bool found = false;
@@ -230,7 +231,7 @@ public class KeywordFinder {
                 }
             }
             if (!found) {
-                GetAllFiles(dir, files, excludeDir);
+                GetAllFiles(dir, tempFiles, excludeDir);
             }
         }
     }

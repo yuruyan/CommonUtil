@@ -34,7 +34,7 @@ namespace CommonUtil.View {
             get { return (ImageSource)GetValue(QRCodeImageSourceProperty); }
             set { SetValue(QRCodeImageSourceProperty, value); }
         }
-        private byte[] QRCodeImage;
+        private byte[] QRCodeImage = Array.Empty<byte>();
 
         public QRCodeToolView() {
             InitializeComponent();
@@ -78,7 +78,7 @@ namespace CommonUtil.View {
         /// <param name="path"></param>
         /// <param name="format"></param>
         private void SaveImage(string input, string path, QRCodeFormat format) {
-            byte[] data = null;
+            byte[] data = Array.Empty<byte>();
             try {
                 data = QRCodeTool.GenerateQRCode(input, format);
                 try {

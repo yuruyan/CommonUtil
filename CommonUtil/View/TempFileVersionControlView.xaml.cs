@@ -126,7 +126,7 @@ namespace CommonUtil.View {
             var watchFileInfo = new FileInfo(watchFile);
             // 默认保存目录，即文件名作为目录
             var saveFolderInfo = Directory.CreateDirectory(Path.Combine(
-                watchFileInfo.DirectoryName,
+                CommonUtils.NullCheck(watchFileInfo.DirectoryName),
                 // 去掉后缀名
                 watchFileInfo.Name[0..(watchFileInfo.Name.LastIndexOf(watchFileInfo.Extension))]
             ));

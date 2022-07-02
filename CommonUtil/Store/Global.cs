@@ -12,14 +12,14 @@ namespace CommonUtil.Store {
         /// <summary>
         /// 当前可执行文件目录别名
         /// </summary>
-        public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase ?? string.Empty;
         private static readonly string _CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
         /// <summary>
         /// 资源文件
         /// </summary>
-        public static readonly ResourceDictionary CommonResource = UIUtils.GetMergedResourceDictionary("CommonResources");
-        public static readonly ResourceDictionary ColorResource = UIUtils.GetMergedResourceDictionary("ColorResources");
-        public static readonly ResourceDictionary ThemeResource = UIUtils.GetMergedResourceDictionary("ThemeResources");
+        public static readonly ResourceDictionary CommonResource = CommonUtils.NullCheck(UIUtils.GetMergedResourceDictionary("CommonResources"));
+        public static readonly ResourceDictionary ColorResource = CommonUtils.NullCheck(UIUtils.GetMergedResourceDictionary("ColorResources"));
+        public static readonly ResourceDictionary ThemeResource = CommonUtils.NullCheck(UIUtils.GetMergedResourceDictionary("ThemeResources"));
 
         /// <summary>
         /// 缓存文件目录

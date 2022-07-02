@@ -29,7 +29,9 @@ public class TempFileVersionControl : IDisposable {
     private TempFileVersionControl(string watchFile, Action<FileInfo> callback) {
         Callback = callback;
         WatchFile = watchFile;
-        Init();
+        var value = Init();
+        _watchFileInfo = value._watchFileInfo;
+        _watchDispose = value._watchDispose;
     }
 
     public static TempFileVersionControl Watch(string watchFile, Action<FileInfo> callback) => new(watchFile, callback);
@@ -38,7 +40,7 @@ public class TempFileVersionControl : IDisposable {
     /// 初始化
     /// </summary>
     /// <exception cref="FileNotFoundException">文件未找到</exception>
-    private void Init() {
+    private dynamic Init() {
         if (!File.Exists(WatchFile)) {
             throw new FileNotFoundException($"File '{WatchFile}' not found");
         }
@@ -48,6 +50,10 @@ public class TempFileVersionControl : IDisposable {
              () => pfp.Watch(_watchFileInfo.Name),
              () => Callback(_watchFileInfo)
          );
+        return new {
+            _watchFileInfo,
+            _watchDispose
+        };
     }
 
     public void Dispose() => _watchDispose.Dispose();

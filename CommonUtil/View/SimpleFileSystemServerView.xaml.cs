@@ -66,7 +66,8 @@ namespace CommonUtil.View {
                 // 复制到剪贴板
                 Clipboard.SetDataObject(ServerURL);
                 // 监听停止状态
-                SimpleFileSystemServer.Stopped += (s, e) => {
+                CommonUtils.NullCheck(SimpleFileSystemServer)
+                .Stopped += (s, e) => {
                     Dispatcher.Invoke(() => IsServerStarted = false);
                 };
             }

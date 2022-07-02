@@ -56,7 +56,7 @@ namespace CommonUtil.View {
         /// <summary>
         /// 添加用户 Dialog
         /// </summary>
-        private AddFtpServerUserDialog FtpServerUserDialog;
+        private AddFtpServerUserDialog FtpServerUserDialog = new();
 
         public FtpServerView() {
             UserInfoList.Add(new() { Username = "scott", Password = "123456", Permission = FtpServerUserPermission.R });
@@ -82,9 +82,6 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private async void AddUserClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            if (FtpServerUserDialog == null) {
-                FtpServerUserDialog = new();
-            }
             FtpServerUserDialog.Title = "添加用户";
             var result = await FtpServerUserDialog.ShowAsync();
             if (result == ContentDialogResult.Primary) {
@@ -116,9 +113,6 @@ namespace CommonUtil.View {
         private async void ModifyUserInfoMouseUp(object sender, MouseButtonEventArgs e) {
             if (sender is FrameworkElement element) {
                 if (element.DataContext is FtpServerUserInfo userInfo) {
-                    if (FtpServerUserDialog == null) {
-                        FtpServerUserDialog = new();
-                    }
                     FtpServerUserDialog.Title = "修改用户";
                     FtpServerUserDialog.UserInfo = userInfo;
                     var result = await FtpServerUserDialog.ShowAsync();

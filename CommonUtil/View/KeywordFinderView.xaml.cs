@@ -83,7 +83,7 @@ namespace CommonUtil.View {
             get { return (bool)GetValue(IsSearchingFinishedProperty); }
             set { SetValue(IsSearchingFinishedProperty, value); }
         }
-        private KeywordFinder KeywordFinder;
+        private KeywordFinder? KeywordFinder;
         /// <summary>
         /// 上次查询目录
         /// </summary>
@@ -162,17 +162,16 @@ namespace CommonUtil.View {
         /// <param name="excludeDirs"></param>
         /// <param name="excludeFiles"></param>
         private void FindKeyword(List<string> excludeDirs, List<string> excludeFiles) {
-            var searchText = "";
-            ObservableCollection<KeywordResult> keywordResults = null;
-            Dispatcher.Invoke(() => {
-                searchText = SearchText;
-                keywordResults = KeywordResults;
+            var value = Dispatcher.Invoke(() => new {
+                SearchText,
+                KeywordResults,
             });
+            var searchText = value.SearchText;
+            ObservableCollection<KeywordResult> keywordResults = value.KeywordResults;
             Task.Run(() => {
                 try {
-#pragma warning disable CS8604 // Possible null reference argument.
-                    KeywordFinder.FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
-#pragma warning restore CS8604 // Possible null reference argument.
+                    CommonUtils.NullCheck(KeywordFinder)
+                    .FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
                 } catch (Exception error) {
                     Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error(error.Message));
                     Logger.Error(error);

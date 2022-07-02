@@ -63,7 +63,7 @@ namespace CommonUtil.View {
             try {
                 height = Convert.ToDouble(HeightText) / 100;
                 weight = Convert.ToDouble(WeightText);
-            } catch (Exception error) {
+            } catch {
                 CommonUITools.Widget.MessageBox.Error("输入有误！");
                 return;
             }

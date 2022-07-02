@@ -38,6 +38,11 @@ namespace CommonUtil.View {
             public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(DigestInfo), new PropertyMetadata(""));
             public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(int), typeof(DigestInfo), new PropertyMetadata(0));
 
+            public DigestInfo(TextDigestHandler textDigestHandler, StreamDigestHandler streamDigestHandler) {
+                TextDigestHandler = textDigestHandler;
+                StreamDigestHandler = streamDigestHandler;
+            }
+
             /// <summary>
             /// 文本 Hash 处理器
             /// </summary>
@@ -159,15 +164,15 @@ namespace CommonUtil.View {
                 "SHA512",
             };
             DigestInfoDict = new() {
-                { "MD2", new() { TextDigestHandler = DataDigest.MD2Digest, StreamDigestHandler = DataDigest.MD2Digest } },
-                { "MD4", new() { TextDigestHandler = DataDigest.MD4Digest, StreamDigestHandler = DataDigest.MD4Digest } },
-                { "MD5", new() { TextDigestHandler = DataDigest.MD5Digest, StreamDigestHandler = DataDigest.MD5Digest } },
-                { "SHA1", new() { TextDigestHandler = DataDigest.SHA1Digest, StreamDigestHandler = DataDigest.SHA1Digest } },
-                { "SHA3", new() { TextDigestHandler = DataDigest.SHA3Digest, StreamDigestHandler = DataDigest.SHA3Digest } },
-                { "SHA224", new() { TextDigestHandler = DataDigest.SHA224Digest, StreamDigestHandler = DataDigest.SHA224Digest } },
-                { "SHA256", new() { TextDigestHandler = DataDigest.SHA256Digest, StreamDigestHandler = DataDigest.SHA256Digest } },
-                { "SHA384", new() { TextDigestHandler = DataDigest.SHA384Digest, StreamDigestHandler = DataDigest.SHA384Digest } },
-                { "SHA512", new() { TextDigestHandler = DataDigest.SHA512Digest, StreamDigestHandler = DataDigest.SHA512Digest } },
+                { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
+                { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
+                { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
+                { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
+                { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
+                { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
+                { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
+                { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
+                { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
             };
             InitializeComponent();
             DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);

@@ -38,7 +38,7 @@ public class CSharpDependencyGenerator {
     }
 }
 
-public class TypeInfo {
+public record TypeInfo {
     public TypeInfo() {
 
     }
@@ -50,12 +50,8 @@ public class TypeInfo {
         Value = value;
     }
 
-    public string Name { get; set; }
-    public string Type { get; set; }
-    public string ClassName { get; set; }
-    public string Value { get; set; }
-
-    public override string ToString() {
-        return $"{{{nameof(Name)}={Name}, {nameof(Type)}={Type}, {nameof(ClassName)}={ClassName}, {nameof(Value)}={Value}}}";
-    }
+    public string Name { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
+    public string ClassName { get; set; } = string.Empty;
+    public string Value { get; set; } = string.Empty;
 }
