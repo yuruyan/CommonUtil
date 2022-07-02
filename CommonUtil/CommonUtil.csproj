@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resource\lib\nodejs\**" />
+    <EmbeddedResource Remove="Resource\lib\nodejs\**" />
+    <None Remove="Resource\lib\nodejs\**" />
+    <Page Remove="Resource\lib\nodejs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
     <None Remove="Resource\image\base64.svg" />
@@ -32,6 +39,7 @@
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
+    <None Remove="Resource\image\paint.svg" />
     <None Remove="Resource\image\qrcode.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\image\regex.svg" />
@@ -49,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
     <PackageReference Include="Flurl" Version="3.0.6" />
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
@@ -59,10 +67,8 @@
     <PackageReference Include="NPOI" Version="2.5.6" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
-    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RandomDataGenerator.Net" Version="1.0.15" />
-    <PackageReference Include="SharpVectors" Version="1.7.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,6 +110,7 @@
     <Resource Include="Resource\image\order.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\paint.svg" />
     <Resource Include="Resource\image\qrcode.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -128,6 +135,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\CodeStyle\CodeColorScheme.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\CodeStyle\CodeColorScheme.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\CommonRegex.json">
@@ -163,10 +176,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resource\lib\nodejs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -176,12 +185,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\CodeColorizationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TextTool\AddEnglishWordBracesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="View\CodeColorizationView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\TextTool\AddEnglishWordBracesView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
