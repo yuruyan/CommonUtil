@@ -1,6 +1,8 @@
 ﻿using CommonUtil.Core;
 using NLog;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +13,9 @@ public partial class CodeColorizationView : Page {
     public IEnumerable<string> Languages { get; }
 
     public CodeColorizationView() {
-        Languages = CodeColorization.Languages;
+        var languages = CodeColorization.Languages.ToArray();
+        Array.Sort(languages);
+        Languages = languages;
         InitializeComponent();
         TextEditor.Options.ConvertTabsToSpaces = true;
     }
