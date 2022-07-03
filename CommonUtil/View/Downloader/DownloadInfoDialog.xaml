@@ -7,9 +7,9 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
-  Name="Root"
   Title="下载"
   Closing="DialogClosingHandler"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
   <ui:SimpleStackPanel
@@ -42,7 +42,10 @@
     <!--  下载链接  -->
     <StackPanel>
       <TextBlock Tag="header" Text="下载链接" />
-      <TextBox Tag="value" Text="{Binding URL, ElementName=Root}" />
+      <TextBox
+        x:Name="URLTextBox"
+        Tag="value"
+        Text="{Binding URL}" />
     </StackPanel>
     <!--  选择保存位置  -->
     <StackPanel MouseUp="ChooseSaveDirMouseUpHandler" ToolTip="更改保存位置">
@@ -51,15 +54,15 @@
         Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter=80}"
         Style="{StaticResource HyperLinkStyle}"
         Tag="value"
-        Text="{Binding SaveDir, ElementName=Root}"
+        Text="{Binding SaveDir}"
         TextWrapping="Wrap" />
     </StackPanel>
     <!--  错误信息提示  -->
     <StackPanel>
       <TextBlock
         Foreground="{StaticResource ErrorBackgroundDark3}"
-        Text="{Binding ErrorMessage, ElementName=Root}"
-        Visibility="{Binding ErrorMessage, ElementName=Root, Converter={StaticResource HideIfEmptyConverter}}" />
+        Text="{Binding ErrorMessage}"
+        Visibility="{Binding ErrorMessage, Converter={StaticResource HideIfEmptyConverter}}" />
     </StackPanel>
   </ui:SimpleStackPanel>
 </view:BaseDialog>

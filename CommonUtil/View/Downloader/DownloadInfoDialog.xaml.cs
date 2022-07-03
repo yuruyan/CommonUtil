@@ -66,6 +66,8 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         if (args.Result != ContentDialogResult.Primary) {
             return;
         }
+        // 防止未及时更新
+        URL = URLTextBox.Text;
         // 合法性判断
         if (string.IsNullOrEmpty(SaveDir)) {
             ErrorMessage = "保存文件夹不能为空";
