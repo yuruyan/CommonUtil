@@ -17,14 +17,14 @@ public class Downloader {
     /// <summary>
     /// 下载任务列表 dict，用于更新，与 DownloadTaskInfoList 同步更新
     /// </summary>
-    public static readonly IDictionary<DownloadService, DownloadTask> DownloadTaskInfoDict = new Dictionary<DownloadService, DownloadTask>();
+    public readonly IDictionary<DownloadService, DownloadTask> DownloadTaskInfoDict = new Dictionary<DownloadService, DownloadTask>();
     /// <summary>
     /// 更新进度视图间隔时间
     /// </summary>
     public const short UpdateProcessInterval = 500;
 
-    public static event EventHandler<DownloadTask>? DownloadCompleted;
-    public static event EventHandler<DownloadTask>? DownloadFailed;
+    public event EventHandler<DownloadTask>? DownloadCompleted;
+    public event EventHandler<DownloadTask>? DownloadFailed;
 
     /// <summary>
     /// 下载文件
@@ -32,7 +32,7 @@ public class Downloader {
     /// <param name="url"></param>
     /// <param name="directory"></param>
     /// <returns></returns>
-    public static DownloadTask Download(string url, DirectoryInfo directory) {
+    public DownloadTask Download(string url, DirectoryInfo directory) {
         var downloader = new DownloadService(DownloadConfiguration);
         downloader.DownloadStarted += DownloadStartedHandler;
         downloader.DownloadProgressChanged += DownloadProgressChangedHandler;
@@ -48,7 +48,7 @@ public class Downloader {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private static void DownloadStartedHandler(object? sender, DownloadStartedEventArgs e) {
+    private void DownloadStartedHandler(object? sender, DownloadStartedEventArgs e) {
         if (sender is DownloadService service) {
             var taskInfo = DownloadTaskInfoDict[service];
             UIUtils.RunOnUIThread(() => {
@@ -63,7 +63,7 @@ public class Downloader {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private static void DownloadFileCompletedHandler(object? sender, AsyncCompletedEventArgs e) {
+    private void DownloadFileCompletedHandler(object? sender, AsyncCompletedEventArgs e) {
         if (sender is DownloadService service) {
             var taskInfo = DownloadTaskInfoDict[service];
             // 更新视图
@@ -90,7 +90,7 @@ public class Downloader {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private static void DownloadProgressChangedHandler(object? sender, DownloadProgressChangedEventArgs e) {
+    private void DownloadProgressChangedHandler(object? sender, DownloadProgressChangedEventArgs e) {
         if (sender is DownloadService service) {
             var taskInfo = DownloadTaskInfoDict[service];
             // 未到更新时间
