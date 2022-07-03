@@ -15,15 +15,17 @@ using System.Windows.Input;
 namespace CommonUtil.View;
 
 public partial class DownloaderView : System.Windows.Controls.Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger(); private readonly RouterService RouterService;
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly RouterService RouterService;
 
     private readonly IDictionary<string, Type> NavigationDict = new Dictionary<string, Type>() {
-        //{"1", typeof(DownloadView) },
-        //{"2", typeof(UploadView) },
+        {"1", typeof(DownloadingView) },
+        {"2", typeof(DownloadedView) },
     };
 
     public DownloaderView() {
         InitializeComponent();
+        RouterService = new RouterService(ContentFrame, NavigationDict.Values);
     }
 
     /// <summary>
@@ -33,9 +35,9 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is NavigationViewItem viewItem) {
-            //RouterService.Navigate(
-            //    NavigationDict[CommonUtils.NullCheck(viewItem.Tag.ToString())]
-            //);
+            RouterService.Navigate(
+                NavigationDict[CommonUtils.NullCheck(viewItem.Tag.ToString())]
+            );
         }
     }
 
