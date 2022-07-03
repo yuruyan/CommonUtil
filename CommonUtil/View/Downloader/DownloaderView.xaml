@@ -34,7 +34,7 @@
           <ui:NavigationViewItem.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="正在下载" />
-              <!--<TextBlock Text="{Binding DownloadTaskInfoList.Count, StringFormat='{} ({0})'}" Visibility="{Binding DownloadTaskInfoList.Count, Converter={StaticResource HideIfZeroConverter}}" />-->
+              <TextBlock Text="{Binding DownloadingTaskList.Count, StringFormat='{} ({0})'}" Visibility="{Binding DownloadingTaskList.Count, Converter={StaticResource HideIfZeroConverter}}" />
             </StackPanel>
           </ui:NavigationViewItem.Content>
           <ui:NavigationViewItem.Icon>
@@ -45,7 +45,7 @@
           <ui:NavigationViewItem.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="下载记录" />
-              <!--<TextBlock Text="{Binding DownloadHistoryList.Count, StringFormat='{} ({0})'}" Visibility="{Binding DownloadHistoryList.Count, Converter={StaticResource HideIfZeroConverter}}" />-->
+              <TextBlock Text="{Binding DownloadedTaskList.Count, StringFormat='{} ({0})'}" Visibility="{Binding DownloadedTaskList.Count, Converter={StaticResource HideIfZeroConverter}}" />
             </StackPanel>
           </ui:NavigationViewItem.Content>
           <ui:NavigationViewItem.Icon>
