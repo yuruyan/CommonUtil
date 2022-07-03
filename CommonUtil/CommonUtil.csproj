@@ -188,7 +188,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\DownloaderView.xaml.cs">
+    <Compile Update="View\Downloader\DownloaderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\CodeColorizationView.xaml.cs">
@@ -200,7 +200,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="View\DownloaderView.xaml">
+    <Page Update="View\Downloader\DownloaderView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

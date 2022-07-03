@@ -129,7 +129,7 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\DownloaderView.xaml">
+    <Page Update="View\Downloader\DownloaderView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CodeColorizationView.xaml">
