@@ -33,14 +33,16 @@ public class Downloader {
     /// <param name="directory"></param>
     /// <returns></returns>
     public DownloadTask Download(string url, DirectoryInfo directory) {
-        var downloader = new DownloadService(DownloadConfiguration);
-        downloader.DownloadStarted += DownloadStartedHandler;
-        downloader.DownloadProgressChanged += DownloadProgressChangedHandler;
-        downloader.DownloadFileCompleted += DownloadFileCompletedHandler;
-        downloader.DownloadFileTaskAsync(url, directory);
-        return new DownloadTask(url, directory) {
+        var service = new DownloadService(DownloadConfiguration);
+        service.DownloadStarted += DownloadStartedHandler;
+        service.DownloadProgressChanged += DownloadProgressChangedHandler;
+        service.DownloadFileCompleted += DownloadFileCompletedHandler;
+        service.DownloadFileTaskAsync(url, directory);
+        var downloadTask = new DownloadTask(url, directory) {
             Name = new Uri(url).Segments.LastOrDefault() ?? "未知文件名"
         };
+        DownloadTaskInfoDict[service] = downloadTask;
+        return downloadTask;
     }
 
     /// <summary>
