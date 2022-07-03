@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CommonUtil.Model;
+using NLog;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +16,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CommonUtil.View {
+namespace CommonUtil.View;
+
+public partial class DownloadedView : Page {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    public static readonly DependencyProperty DownloadTaskListProperty = DependencyProperty.Register("DownloadTaskList", typeof(ObservableCollection<DownloadTask>), typeof(DownloadedView), new PropertyMetadata());
+
     /// <summary>
-    /// Interaction logic for DownloadedView.xaml
+    /// 下载任务列表（View）
     /// </summary>
-    public partial class DownloadedView : Page {
-        public DownloadedView() {
-            InitializeComponent();
-        }
+    public ObservableCollection<DownloadTask> DownloadTaskList {
+        get { return (ObservableCollection<DownloadTask>)GetValue(DownloadTaskListProperty); }
+        private set { SetValue(DownloadTaskListProperty, value); }
+    }
+
+    public DownloadedView() {
+        DownloadTaskList = new();
+        InitializeComponent();
     }
 }

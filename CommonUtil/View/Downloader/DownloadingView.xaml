@@ -11,5 +11,40 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <TextBlock Text="DownloadingView" />
+  <ListBox x:Name="DownloadListBox" ItemsSource="{Binding DownloadTaskList}">
+    <ListBox.ItemContainerStyle>
+      <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0" />
+      </Style>
+    </ListBox.ItemContainerStyle>
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <Grid Width="{Binding ActualWidth, ElementName=DownloadListBox}" Background="Transparent">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="200" />
+          </Grid.ColumnDefinitions>
+          <!--  文件信息  -->
+          <local:DownloadTaskInfoWidget
+            FilePath="{Binding Name}"
+            TotalSize="{Binding TotalSize}"
+            TransferSize="{Binding DownloadedSize}" />
+          <!--  进度条  -->
+          <StackPanel
+            Grid.Column="1"
+            Margin="8"
+            Orientation="Vertical">
+            <ProgressBar
+              Height="8"
+              Margin="0,8"
+              VerticalAlignment="Stretch"
+              Background="{StaticResource Gray3}"
+              Foreground="#FF4FAAC2"
+              Value="{Binding Process}" />
+            <TextBlock Text="{Binding DownloadSpeed, Converter={StaticResource FileSizeConverter}, StringFormat='{}{0} / s'}" />
+          </StackPanel>
+        </Grid>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+  </ListBox>
 </Page>

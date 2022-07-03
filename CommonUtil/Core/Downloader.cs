@@ -55,7 +55,7 @@ public class Downloader {
             var taskInfo = DownloadTaskInfoDict[service];
             UIUtils.RunOnUIThread(() => {
                 taskInfo.TotalSize = e.TotalBytesToReceive;
-                taskInfo.Name = e.FileName;
+                taskInfo.Name = Path.GetFileName(e.FileName);
             });
         }
     }
@@ -78,11 +78,11 @@ public class Downloader {
                 // 从下载列表中移除
                 DownloadTaskInfoDict.Remove(service);
             });
-            // 下载失败
+            // 下载成功
             if (e.Error is null) {
-                DownloadFailed?.Invoke(null, taskInfo);
-            } else {
                 DownloadCompleted?.Invoke(null, taskInfo);
+            } else {
+                DownloadFailed?.Invoke(null, taskInfo);
             }
         }
     }

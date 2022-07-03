@@ -1,10 +1,13 @@
 ﻿using CommonUITools.Route;
 using CommonUITools.Utils;
+using CommonUtil.Model;
 using ModernWpf.Controls;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
+using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
@@ -19,13 +22,43 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// 下载选择框
     /// </summary>
     private readonly DownloadInfoDialog DownloadInfoDialog = new();
+    private readonly DownloadingView DownloadingView;
+    private readonly DownloadedView DownloadedView;
+    private readonly Core.Downloader Downloader = new();
 
     public DownloaderView() {
         InitializeComponent();
         RouterService = new RouterService(ContentFrame, NavigationDict.Values);
         // 显式初始化
-        _ = RouterService.GetInstance(typeof(DownloadingView));
-        _ = RouterService.GetInstance(typeof(DownloadedView));
+        DownloadingView = (DownloadingView)RouterService.GetInstance(typeof(DownloadingView));
+        DownloadedView = (DownloadedView)RouterService.GetInstance(typeof(DownloadedView));
+        Downloader.DownloadCompleted += DownloadCompletedHandler;
+        Downloader.DownloadFailed += DownloadFailedHandler;
+    }
+
+    /// <summary>
+    /// 下载失败 Handler
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DownloadFailedHandler(object? sender, DownloadTask e) {
+        Dispatcher.Invoke(() => {
+            DownloadingView.DownloadTaskList.Remove(e);
+            MessageBox.Error($"下载 {e.Name} 失败");
+        });
+    }
+
+    /// <summary>
+    /// 下载成功 Handler
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DownloadCompletedHandler(object? sender, DownloadTask e) {
+        Dispatcher.Invoke(() => {
+            DownloadingView.DownloadTaskList.Remove(e);
+            MessageBox.Success($"下载 {e.Name} 成功");
+            DownloadedView.DownloadTaskList.Add(e);
+        });
     }
 
     /// <summary>
@@ -50,6 +83,9 @@ public partial class DownloaderView : System.Windows.Controls.Page {
         if (await DownloadInfoDialog.ShowAsync() != ContentDialogResult.Primary) {
             return;
         }
-        Console.WriteLine(DownloadInfoDialog.URL + "\n" + DownloadInfoDialog.SaveDir);
+        DownloadingView.DownloadTaskList.Add(
+            Downloader.Download(DownloadInfoDialog.URL, new(DownloadInfoDialog.SaveDir))
+        );
+        MessageBox.Info($"开始下载 {new Uri(DownloadInfoDialog.URL).Segments.LastOrDefault() ?? ""}");
     }
 }
