@@ -1,20 +1,10 @@
-﻿using CommonUtil.Model;
+﻿using CommonUITools.Utils;
+using CommonUtil.Model;
 using NLog;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CommonUtil.View;
 
@@ -33,5 +23,33 @@ public partial class DownloadedView : Page {
     public DownloadedView() {
         DownloadTaskList = new();
         InitializeComponent();
+    }
+
+    /// <summary>
+    /// 打开所在文件夹
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OpenFolderClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (sender is FrameworkElement element && element.DataContext is DownloadTask task) {
+            string filepath = Path.Combine(task.SaveDirectory.FullName, task.Name);
+            // 文件存在
+            if (File.Exists(filepath)) {
+                UIUtils.OpenFileInDirectoryAsync(filepath);
+            } else {
+                // 不存在则打开所在文件夹
+                UIUtils.OpenFileInDirectoryAsync(task.SaveDirectory.FullName);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 删除下载文件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DeleteHistoryClickHandler(object sender, RoutedEventArgs e) {
+
     }
 }

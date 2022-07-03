@@ -9,7 +9,7 @@
 
   <SolidColorBrush x:Key="ApplicationForeground">#000000</SolidColorBrush>
   <SolidColorBrush x:Key="ApplicationBorderForeground">#CECECE</SolidColorBrush>
-  <SolidColorBrush x:Key="ApplicationAccentColor">#80000000</SolidColorBrush>
+  <SolidColorBrush x:Key="ApplicationAccentColor">#808A8A8A</SolidColorBrush>
 
   <SolidColorBrush x:Key="ErrorBackground">#c6585a</SolidColorBrush>
   <SolidColorBrush x:Key="ErrorForeground">#ffffff</SolidColorBrush>

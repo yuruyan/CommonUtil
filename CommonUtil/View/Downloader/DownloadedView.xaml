@@ -11,6 +11,49 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <TextBlock Text="DownloadedView" />
+  <Page.Resources>
+    <ContextMenu x:Key="ItemContextMenu" Style="{StaticResource GlobalContextMenuStyle}">
+      <MenuItem Click="OpenFolderClickHandler" Header="打开所在文件夹">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe69d;" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <!--<MenuItem Click="DeleteHistoryClickHandler" Header="删除">
+        <MenuItem.Icon>
+          <TextBlock
+            Foreground="{StaticResource DeleteButtonForeground}"
+            Opacity="0.98"
+            Style="{StaticResource IconFontStyle}"
+            Text="&#xe6b4;" />
+        </MenuItem.Icon>
+      </MenuItem>-->
+    </ContextMenu>
+  </Page.Resources>
 
+  <ListBox x:Name="DownloadTaskListBox" ItemsSource="{Binding DownloadTaskList}">
+    <ListBox.ItemContainerStyle>
+      <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="0" />
+      </Style>
+    </ListBox.ItemContainerStyle>
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <Grid
+          Width="{Binding ActualWidth, ElementName=DownloadTaskListBox}"
+          Background="Transparent"
+          ContextMenu="{StaticResource ItemContextMenu}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="auto" />
+          </Grid.ColumnDefinitions>
+          <!--  文件信息  -->
+          <local:DownloadTaskInfoWidget FilePath="{Binding Name}" TotalSize="{Binding TotalSize}" />
+          <TextBlock
+            Grid.Column="1"
+            Padding="16,0"
+            Text="{Binding FinishTime, ElementName=Root, StringFormat={}{0:yyyy-MM-dd HH:mm}}" />
+        </Grid>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+  </ListBox>
 </Page>
