@@ -184,7 +184,7 @@ namespace CommonUtil.View {
                 return;
             }
             FileSize = new FileInfo(FileName).Length;
-            FileIcon = Store.FileIcon.GetIcon(FileName);
+            FileIcon = FileIconUtils.GetIcon(FileName);
         }
 
         /// <summary>
