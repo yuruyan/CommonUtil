@@ -28,6 +28,7 @@
     <None Remove="Resource\image\CodeGenerator.svg" />
     <None Remove="Resource\image\ColorPicker.svg" />
     <None Remove="Resource\image\DateTime.svg" />
+    <None Remove="Resource\image\download.svg" />
     <None Remove="Resource\image\Edge.svg" />
     <None Remove="Resource\image\encoding.svg" />
     <None Remove="Resource\image\Encryption.svg" />
@@ -88,6 +89,7 @@
     <Resource Include="Resource\image\ColorPicker.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\download.svg" />
     <Resource Include="Resource\image\Edge.svg" />
     <Resource Include="Resource\image\encoding.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -185,6 +187,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\DownloaderView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\CodeColorizationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -194,6 +199,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="View\DownloaderView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\CodeColorizationView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
