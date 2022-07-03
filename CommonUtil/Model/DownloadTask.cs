@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace CommonUtil.Model;
@@ -7,9 +8,10 @@ namespace CommonUtil.Model;
 /// 下载信息
 /// </summary>
 public class DownloadTask : DependencyObject {
-    public DownloadTask(string url, string filename = "") {
-        FileName = filename;
+    public DownloadTask(string url, DirectoryInfo saveDirectory, string name = "") {
         Url = url;
+        SaveDirectory = saveDirectory;
+        Name = name;
     }
 
     /// <summary>
@@ -19,9 +21,16 @@ public class DownloadTask : DependencyObject {
     /// <summary>
     /// 文件名
     /// </summary>
-    public string FileName {
-        get { return (string)GetValue(FileNameProperty); }
-        set { SetValue(FileNameProperty, value); }
+    public string Name {
+        get { return (string)GetValue(NameProperty); }
+        set { SetValue(NameProperty, value); }
+    }
+    /// <summary>
+    /// 保存目录
+    /// </summary>
+    public DirectoryInfo SaveDirectory {
+        get { return (DirectoryInfo)GetValue(SaveDirectoryProperty); }
+        set { SetValue(SaveDirectoryProperty, value); }
     }
     /// <summary>
     /// 上次更新时间
@@ -75,7 +84,8 @@ public class DownloadTask : DependencyObject {
         set { SetValue(ProcessProperty, value); }
     }
 
-    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DownloadTask), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty NameProperty = DependencyProperty.Register("Name", typeof(string), typeof(DownloadTask), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty SaveDirectoryProperty = DependencyProperty.Register("SaveDirectory", typeof(DirectoryInfo), typeof(DownloadTask), new PropertyMetadata());
     public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(byte), typeof(DownloadTask), new PropertyMetadata((byte)0));
     public static readonly DependencyProperty DownloadSpeedProperty = DependencyProperty.Register("DownloadSpeed", typeof(double), typeof(DownloadTask), new PropertyMetadata(0.0));
     public static readonly DependencyProperty TotalSizeProperty = DependencyProperty.Register("TotalSize", typeof(long), typeof(DownloadTask), new PropertyMetadata(0L));

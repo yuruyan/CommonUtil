@@ -38,8 +38,8 @@ public class Downloader {
         downloader.DownloadProgressChanged += DownloadProgressChangedHandler;
         downloader.DownloadFileCompleted += DownloadFileCompletedHandler;
         downloader.DownloadFileTaskAsync(url, directory);
-        return new DownloadTask(url) {
-            FileName = new Uri(url).Segments.LastOrDefault() ?? "未知文件名"
+        return new DownloadTask(url, directory) {
+            Name = new Uri(url).Segments.LastOrDefault() ?? "未知文件名"
         };
     }
 
@@ -53,7 +53,7 @@ public class Downloader {
             var taskInfo = DownloadTaskInfoDict[service];
             UIUtils.RunOnUIThread(() => {
                 taskInfo.TotalSize = e.TotalBytesToReceive;
-                taskInfo.FileName = e.FileName;
+                taskInfo.Name = e.FileName;
             });
         }
     }
