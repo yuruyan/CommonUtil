@@ -156,6 +156,9 @@
     <Page Update="View\Downloader\DownloadingView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\Downloader\DownloadInfoDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\FtpServer\FtpServerUserDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

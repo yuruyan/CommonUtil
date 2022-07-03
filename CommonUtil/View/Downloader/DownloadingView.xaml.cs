@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CommonUtil.View {
-    /// <summary>
-    /// Interaction logic for DownloadingView.xaml
-    /// </summary>
-    public partial class DownloadingView : Page {
-        public DownloadingView() {
-            InitializeComponent();
-        }
+namespace CommonUtil.View;
+
+public partial class DownloadingView : Page {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+    public DownloadingView() {
+        InitializeComponent();
     }
 }

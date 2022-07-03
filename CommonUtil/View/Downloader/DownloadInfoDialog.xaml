@@ -1,0 +1,65 @@
+﻿<view:BaseDialog
+  x:Class="CommonUtil.View.DownloadInfoDialog"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="using:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
+  Name="Root"
+  Title="下载"
+  Closing="DialogClosingHandler"
+  mc:Ignorable="d">
+
+  <ui:SimpleStackPanel
+    Name="RootPanel"
+    Width="360"
+    Orientation="Vertical"
+    Spacing="8">
+    <ui:SimpleStackPanel.Resources>
+      <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+        <Style.Triggers>
+          <Trigger Property="Tag" Value="header">
+            <Setter Property="Width" Value="80" />
+            <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
+          </Trigger>
+          <Trigger Property="Tag" Value="value">
+            <Setter Property="Foreground" Value="{StaticResource Black9}" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <Style TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="Margin" Value="0,10,0,0" />
+      </Style>
+      <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+        <Setter Property="Width" Value="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter=80}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+      </Style>
+    </ui:SimpleStackPanel.Resources>
+
+    <!--  下载链接  -->
+    <StackPanel>
+      <TextBlock Tag="header" Text="下载链接" />
+      <TextBox Tag="value" Text="{Binding URL, ElementName=Root}" />
+    </StackPanel>
+    <!--  选择保存位置  -->
+    <StackPanel MouseUp="ChooseSaveDirMouseUpHandler" ToolTip="更改保存位置">
+      <TextBlock Tag="header" Text="保存位置" />
+      <TextBlock
+        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter=80}"
+        Style="{StaticResource HyperLinkStyle}"
+        Tag="value"
+        Text="{Binding SaveDir, ElementName=Root}"
+        TextWrapping="Wrap" />
+    </StackPanel>
+    <!--  错误信息提示  -->
+    <StackPanel>
+      <TextBlock
+        Foreground="{StaticResource ErrorBackgroundDark3}"
+        Text="{Binding ErrorMessage, ElementName=Root}"
+        Visibility="{Binding ErrorMessage, ElementName=Root, Converter={StaticResource HideIfEmptyConverter}}" />
+    </StackPanel>
+  </ui:SimpleStackPanel>
+</view:BaseDialog>
