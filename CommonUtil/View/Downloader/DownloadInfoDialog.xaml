@@ -44,6 +44,9 @@
       <TextBlock Tag="header" Text="下载链接" />
       <TextBox
         x:Name="URLTextBox"
+        ui:ControlHelper.PlaceholderText="一行一个链接"
+        AcceptsReturn="True"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
         Tag="value"
         Text="{Binding URL}" />
     </StackPanel>

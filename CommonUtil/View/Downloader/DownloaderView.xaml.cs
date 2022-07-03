@@ -104,9 +104,12 @@ public partial class DownloaderView : System.Windows.Controls.Page {
         if (await DownloadInfoDialog.ShowAsync() != ContentDialogResult.Primary) {
             return;
         }
-        DownloadingView.DownloadTaskList.Add(
-            Downloader.Download(DownloadInfoDialog.URL, new(DownloadInfoDialog.SaveDir))
-        );
-        MessageBox.Info($"开始下载 {new Uri(DownloadInfoDialog.URL).Segments.LastOrDefault() ?? ""}");
+        var urls = DownloadInfoDialog.URL.Split('\n').Where(s => s.Trim().Any());
+        foreach (var url in urls) {
+            DownloadingView.DownloadTaskList.Add(
+                Downloader.Download(url, new(DownloadInfoDialog.SaveDir))
+            );
+        }
+        MessageBox.Info($"开始下载");
     }
 }
