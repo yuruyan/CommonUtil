@@ -190,6 +190,8 @@ public partial class KeywordFinderView : Page {
             try {
                 CommonUtils.NullCheck(KeywordFinder)
                 .FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
+            } catch (OperationCanceledException) {
+                // 忽略
             } catch (Exception error) {
                 MessageBox.Error(error.Message);
                 Logger.Error(error);
@@ -261,5 +263,16 @@ public partial class KeywordFinderView : Page {
         if (e.Key == Key.Enter) {
             HandleKeywordFinding();
         }
+    }
+
+    /// <summary>
+    /// 取消搜索
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelFindKeywordClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        KeywordFinder?.CancelFinding();
+        IsSearchingFinished = true;
     }
 }

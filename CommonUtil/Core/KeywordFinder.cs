@@ -48,7 +48,13 @@ public class KeywordFinder {
     /// <summary>
     /// 查找任务线程集合
     /// </summary>
-    private readonly List<KeyValuePair<Task, CancellationTokenSource>> KeywordFinderTaskList = new();
+    private readonly List<KeyValuePair<Task, CancellationTokenSource>> KeywordFindingTaskList = new();
+    /// <summary>
+    /// 文件加载任务线程集合
+    /// </summary>
+    private readonly List<KeyValuePair<Task, CancellationTokenSource>> FileDataLoaderTaskList = new();
+    private CancellationTokenSource KeywordFindingTaskWaiterCancellationTokenSource = new();
+    private CancellationTokenSource FileDataLoaderTaskWaiterCancellationTokenSource = new();
 
     /// <summary>
     /// 构造函数
@@ -61,7 +67,6 @@ public class KeywordFinder {
         SearchDirectory = searchDirectory;
         ExcludeDirectoryRegexes = excludeDirectoryRegexes ?? new List<string>();
         ExcludeFileRegexes = excludeFileRegexes ?? new List<string>();
-        FileDataDict = GetFileData(FilterFiles(SearchDirectory, ExcludeDirectoryRegexes, ExcludeFileRegexes));
     }
 
     private void Init() {
@@ -87,13 +92,16 @@ public class KeywordFinder {
     private Dictionary<string, string> GetFileData(IEnumerable<string> filenames) {
         var fileDataDict = new Dictionary<string, string>();
         int perThreadFilesCount = (int)Math.Ceiling(filenames.Count() / (double)ThreadCount);
-        var taskList = new List<Task>(ThreadCount);
         var taskFilenameList = filenames.Split(ThreadCount);
         // 加载文件
         foreach (var filenameList in taskFilenameList) {
-            taskList.Add(Task.Run(() => {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => {
                 var tempDict = new Dictionary<string, string>();
                 foreach (var filename in filenameList) {
+                    if (cancellationTokenSource.IsCancellationRequested) {
+                        break;
+                    }
                     // 已经加载过
                     if (FileDataDict.ContainsKey(filename)) {
                         tempDict[filename] = FileDataDict[filename];
@@ -117,10 +125,15 @@ public class KeywordFinder {
                         }
                     }
                 }
-            }));
+            }, cancellationTokenSource.Token);
+            FileDataLoaderTaskList.Add(new(task, cancellationTokenSource));
         }
+        FileDataLoaderTaskWaiterCancellationTokenSource = new();
         // 等待加载完毕
-        Task.WaitAll(taskList.ToArray());
+        Task.WaitAll(
+           FileDataLoaderTaskList.Select(t => t.Key).ToArray(),
+           FileDataLoaderTaskWaiterCancellationTokenSource.Token
+       );
         return fileDataDict;
     }
 
@@ -129,11 +142,18 @@ public class KeywordFinder {
     /// </summary>
     public void CancelFinding() {
         UpdateResultTimer.Stop();
-        // 终止线程
-        foreach (var item in KeywordFinderTaskList) {
+        KeywordFindingTaskWaiterCancellationTokenSource.Cancel();
+        FileDataLoaderTaskWaiterCancellationTokenSource.Cancel();
+        // 终止查询线程
+        foreach (var item in KeywordFindingTaskList) {
             item.Value.Cancel();
         }
-        KeywordFinderTaskList.Clear();
+        // 终止文件加载线程
+        foreach (var item in FileDataLoaderTaskList) {
+            item.Value.Cancel();
+        }
+        KeywordFindingTaskList.Clear();
+        FileDataLoaderTaskList.Clear();
         FindResultQueue.Clear();
     }
 
@@ -167,15 +187,22 @@ public class KeywordFinder {
             // 启动查找任务线程
             var task = Task.Run(() => {
                 foreach (var filename in list) {
+                    if (cancellationTokenSource.IsCancellationRequested) {
+                        break;
+                    }
                     if (!keywordCompiledRegex.IsMatch(FileDataDict[filename])) {
                         continue;
                     }
                     FindResultQueue.Enqueue(new(filename));
                 }
             }, cancellationTokenSource.Token);
-            KeywordFinderTaskList.Add(new(task, cancellationTokenSource));
+            KeywordFindingTaskList.Add(new(task, cancellationTokenSource));
         }
-        Task.WaitAll(KeywordFinderTaskList.Select(t => t.Key).ToArray());
+        KeywordFindingTaskWaiterCancellationTokenSource = new();
+        Task.WaitAll(
+            KeywordFindingTaskList.Select(t => t.Key).ToArray(),
+            KeywordFindingTaskWaiterCancellationTokenSource.Token
+        );
     }
 
     /// <summary>

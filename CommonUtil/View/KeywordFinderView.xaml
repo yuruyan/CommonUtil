@@ -65,10 +65,17 @@
           KeyUp="SearchTextBoxKeyUpHandler"
           Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
       </DockPanel>
-      <widget:IconButton
-        Click="FindKeywordClick"
-        Icon="&#xe612;"
-        Text="查找" />
+      <StackPanel Orientation="Horizontal">
+        <widget:IconButton
+          Click="FindKeywordClick"
+          Icon="&#xe612;"
+          Text="查找" />
+        <widget:IconButton
+          Margin="16,0,0,0"
+          Click="CancelFindKeywordClick"
+          Icon="&#xe614;"
+          Text="取消搜索" />
+      </StackPanel>
     </ui:SimpleStackPanel>
     <!--  结果  -->
     <Grid>
