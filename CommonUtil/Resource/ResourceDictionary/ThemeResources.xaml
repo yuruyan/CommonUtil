@@ -38,6 +38,7 @@
 
   <!--#region Other Colors-->
   <SolidColorBrush x:Key="MainContentViewBackground">#F6F6F6</SolidColorBrush>
+  <SolidColorBrush x:Key="HighLightKeywordForeground">#FF4987B9</SolidColorBrush>
   <!--#endregion-->
 
 </ResourceDictionary>

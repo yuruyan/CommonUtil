@@ -23,7 +23,7 @@
           Padding="8,0,0,0"
           FontSize="{DynamicResource HeaderFontSize}"
           FontWeight="Bold"
-          Foreground="#0087B6"
+          Foreground="{DynamicResource HighLightKeywordForeground}"
           MouseLeftButtonUp="OpenSearchDirectoryMouseUp"
           Style="{StaticResource HyperLinkStyle}"
           Text="{Binding SearchDirectory}"
@@ -101,8 +101,9 @@
           <DataTemplate>
             <StackPanel Width="{Binding ElementName=ResultListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}" Background="Transparent">
               <TextBlock
-                Padding="0,12"
+                Padding="0,8"
                 FontWeight="Bold"
+                Foreground="{DynamicResource HighLightKeywordForeground}"
                 Text="{Binding Filename}" />
               <StackPanel.ContextMenu>
                 <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
