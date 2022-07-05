@@ -14,6 +14,8 @@ using System.Windows.Input;
 using CommonUITools.Utils;
 using System.Threading.Tasks;
 
+using MessageBox = CommonUITools.Widget.MessageBox;
+
 namespace CommonUtil.View {
     public partial class KeywordFinderView : Page {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -98,14 +100,66 @@ namespace CommonUtil.View {
         private void KeywordResultsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
             if (e.Action == NotifyCollectionChangedAction.Add) {
                 // 获取相对路径
-                if (e.NewItems != null) {
-                    foreach (var item in e.NewItems) {
-                        if (item is KeywordResult result) {
-                            result.File = result.File.Replace('/', '\\')[(SearchDirectory.Replace('/', '\\').Length + 1)..];
-                        }
+                if (e.NewItems is null) {
+                    return;
+                }
+                foreach (var item in e.NewItems) {
+                    if (item is KeywordResult result) {
+                        result.Filename = result.Filename.Replace('/', '\\')[(SearchDirectory.Replace('/', '\\').Length + 1)..];
                     }
                 }
             }
+        }
+
+        private void HandleKeywordFinding() {
+            if (string.IsNullOrEmpty(SearchDirectory.Trim())) {
+                MessageBox.Info("请选择查询目录！");
+                return;
+            }
+            if (string.IsNullOrEmpty(SearchText)) {
+                MessageBox.Info("搜索文本不能为空！");
+                return;
+            }
+            if (!IsSearchingFinished) {
+                MessageBox.Info("正在搜索...");
+                return;
+            }
+            ResultNumber.Visibility = Visibility.Visible;
+            IsSearchingFinished = false;
+            var excludeDirs = new List<string>();
+            var excludeFiles = new List<string>();
+            if (IsExcludeDirectorySelected) {
+                excludeDirs.AddRange(
+                    CommonUtils.NormalizeMultipleLineText(ExcludeDirectory)
+                    .Split('\n')
+                    .Select(s => s.Trim())
+                    .Where(s => s.Any())
+                );
+            }
+            if (IsExcludeFileSelected) {
+                excludeFiles.AddRange(
+                    CommonUtils.NormalizeMultipleLineText(ExcludeFile)
+                    .Split('\n')
+                    .Select(s => s.Trim())
+                    .Where(s => s.Any())
+                );
+            }
+            // 检查搜索目录是否改变
+            if (LastSearchDirectory != SearchDirectory) {
+                LastSearchDirectory = SearchDirectory;
+                Task.Run(() => {
+                    try {
+                        var keywordFinder = new KeywordFinder(LastSearchDirectory, excludeDirs, excludeFiles);
+                        Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
+                        FindKeyword(excludeDirs, excludeFiles);
+                    } catch (Exception error) {
+                        MessageBox.Error(error.Message);
+                        Logger.Error(error);
+                    }
+                });
+                return;
+            }
+            FindKeyword(excludeDirs, excludeFiles);
         }
 
         /// <summary>
@@ -115,45 +169,7 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void FindKeywordClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            if (string.IsNullOrEmpty(SearchDirectory.Trim())) {
-                CommonUITools.Widget.MessageBox.Info("请选择查询目录！");
-                return;
-            }
-            //if (string.IsNullOrEmpty(SearchText.Trim())) {
-            //    CommonUITools.Widget.MessageBox.Info("搜索文本不能为空！");
-            //    return;
-            //}
-            if (!IsSearchingFinished) {
-                CommonUITools.Widget.MessageBox.Info("正在搜索...");
-                return;
-            }
-            ResultNumber.Visibility = Visibility.Visible;
-            IsSearchingFinished = false;
-            var excludeDirs = new List<string>();
-            var excludeFiles = new List<string>();
-            if (IsExcludeDirectorySelected) {
-                excludeDirs.AddRange(CommonUtils.NormalizeMultipleLineText(ExcludeDirectory).Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
-            }
-            if (IsExcludeFileSelected) {
-                excludeFiles.AddRange(CommonUtils.NormalizeMultipleLineText(ExcludeFile).Split('\n').Where(s => s.Trim() != "").Select(s => s.Trim()));
-            }
-            // 检查搜索目录是否改变
-            if (LastSearchDirectory != SearchDirectory) {
-                LastSearchDirectory = SearchDirectory;
-                var searchDirectory = SearchDirectory;
-                Task.Run(() => {
-                    try {
-                        var keywordFinder = new KeywordFinder(searchDirectory, excludeDirs, excludeFiles);
-                        Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
-                        FindKeyword(excludeDirs, excludeFiles);
-                    } catch (Exception error) {
-                        Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error(error.Message));
-                        Logger.Error(error);
-                    }
-                });
-                return;
-            }
-            FindKeyword(excludeDirs, excludeFiles);
+            HandleKeywordFinding();
         }
 
         /// <summary>
@@ -167,13 +183,13 @@ namespace CommonUtil.View {
                 KeywordResults,
             });
             var searchText = value.SearchText;
-            ObservableCollection<KeywordResult> keywordResults = value.KeywordResults;
+            var keywordResults = value.KeywordResults;
             Task.Run(() => {
                 try {
                     CommonUtils.NullCheck(KeywordFinder)
                     .FindKeyword(searchText, excludeDirs, excludeFiles, keywordResults);
                 } catch (Exception error) {
-                    Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error(error.Message));
+                    MessageBox.Error(error.Message);
                     Logger.Error(error);
                 } finally {
                     Dispatcher.Invoke(() => IsSearchingFinished = true);
@@ -188,9 +204,10 @@ namespace CommonUtil.View {
         /// <param name="e"></param>
         private void SelectSearchDirectoryClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
-            var dialog = new VistaFolderBrowserDialog();
-            dialog.Description = "选择搜索目录";
-            dialog.UseDescriptionForTitle = true;
+            var dialog = new VistaFolderBrowserDialog {
+                Description = "选择搜索目录",
+                UseDescriptionForTitle = true
+            };
             if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
                 SearchDirectory = dialog.SelectedPath;
             }
@@ -216,7 +233,7 @@ namespace CommonUtil.View {
         private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
-                UIUtils.OpenFileWithAsync(System.IO.Path.Combine(SearchDirectory, result.File));
+                UIUtils.OpenFileWithAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
             }
         }
 
@@ -228,7 +245,19 @@ namespace CommonUtil.View {
         private void OpenDirectoryClickHandler(object sender, RoutedEventArgs e) {
             e.Handled = true;
             if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
-                UIUtils.OpenFileInDirectoryAsync(System.IO.Path.Combine(SearchDirectory, result.File));
+                UIUtils.OpenFileInDirectoryAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
+            }
+        }
+
+        /// <summary>
+        /// 搜索正则框 KeyUp
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTextBoxKeyUpHandler(object sender, KeyEventArgs e) {
+            e.Handled = true;
+            if (e.Key == Key.Enter) {
+                HandleKeywordFinding();
             }
         }
     }

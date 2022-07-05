@@ -60,7 +60,10 @@
       </DockPanel>
       <DockPanel LastChildFill="False">
         <TextBlock Text="查询正则表达式：" />
-        <TextBox Width="200" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox
+          Width="200"
+          KeyUp="SearchTextBoxKeyUpHandler"
+          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
       </DockPanel>
       <widget:IconButton
         Click="FindKeywordClick"
@@ -92,16 +95,15 @@
       <ListBox
         x:Name="ResultListBox"
         Grid.Row="1"
-        Background="Transparent"
-        ItemsSource="{Binding KeywordResults}">
+        ItemsSource="{Binding KeywordResults}"
+        Style="{StaticResource GlobalListBoxStyle}">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Width="{Binding ElementName=ResultListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}" Background="Transparent">
               <TextBlock
-                Padding="0,12,0,12"
+                Padding="0,12"
                 FontWeight="Bold"
-                Foreground="#C14431"
-                Text="{Binding File}" />
+                Text="{Binding Filename}" />
               <StackPanel.ContextMenu>
                 <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
                   <MenuItem Click="OpenFileClickHandler" Header="打开文件">
@@ -121,14 +123,9 @@
         </ListBox.ItemTemplate>
         <ListBox.ItemContainerStyle>
           <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
-            <Setter Property="Padding" Value="4,0,4,0" />
+            <Setter Property="Padding" Value="4,0" />
           </Style>
         </ListBox.ItemContainerStyle>
-        <ListBox.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Margin="0" />
-          </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
       </ListBox>
     </Grid>
   </UniformGrid>
