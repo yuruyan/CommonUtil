@@ -1,131 +1,208 @@
-﻿using NLog;
+﻿using CommonUITools.Utils;
+using NLog;
+using NPOI.HPSF;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace CommonUtil.Core;
 
 public class KeywordResult {
     /// <summary>
-    /// 文件路径
+    /// 文件全路径
     /// </summary>
-    public string File { get; set; } = string.Empty;
+    public string Filename { get; set; } = string.Empty;
+
+    public KeywordResult(string filename) {
+        Filename = filename;
+    }
 }
 
 public class KeywordFinder {
-    private static readonly int ThreadCount = 16;
+    private const int ThreadCount = 8;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public string SearchDirectory { get; private set; }
-    public List<string> ExcludeDirectoryRegexes { get; private set; }
-    public List<string> ExcludeFileRegexes { get; private set; }
+    public IEnumerable<string> ExcludeDirectoryRegexes { get; private set; }
+    public IEnumerable<string> ExcludeFileRegexes { get; private set; }
+    /// <summary>
+    /// 文件内容字典
+    /// </summary>
     private readonly IDictionary<string, string> FileDataDict = new Dictionary<string, string>();
+    private readonly ConcurrentQueue<KeywordResult> FindResultQueue = new();
+    /// <summary>
+    /// 更新结果定时器
+    /// </summary>
+    private readonly System.Timers.Timer UpdateResultTimer = new(250);
+    /// <summary>
+    /// 结果集合
+    /// </summary>
+    private ICollection<KeywordResult> ResultCollection = new List<KeywordResult>();
+    /// <summary>
+    /// 查找任务线程集合
+    /// </summary>
+    private readonly List<KeyValuePair<Task, CancellationTokenSource>> KeywordFindingTaskList = new();
+    /// <summary>
+    /// 文件加载任务线程集合
+    /// </summary>
+    private readonly List<KeyValuePair<Task, CancellationTokenSource>> FileDataLoaderTaskList = new();
+    private CancellationTokenSource KeywordFindingTaskWaiterCancellationTokenSource = new();
+    private CancellationTokenSource FileDataLoaderTaskWaiterCancellationTokenSource = new();
 
     /// <summary>
-    /// 
+    /// 构造函数
     /// </summary>
     /// <param name="searchDirectory">搜索目录</param>
     /// <param name="excludeDirectoryRegexes">排除目录正则</param>
     /// <param name="excludeFileRegexes">排除文件正则</param>
-    public KeywordFinder(string searchDirectory, List<string>? excludeDirectoryRegexes = null, List<string>? excludeFileRegexes = null) {
+    public KeywordFinder(string searchDirectory, IEnumerable<string>? excludeDirectoryRegexes = null, IEnumerable<string>? excludeFileRegexes = null) {
+        Init();
         SearchDirectory = searchDirectory;
         ExcludeDirectoryRegexes = excludeDirectoryRegexes ?? new List<string>();
         ExcludeFileRegexes = excludeFileRegexes ?? new List<string>();
-        FileDataDict = GetFileData(FilterFiles(SearchDirectory, ExcludeDirectoryRegexes, ExcludeFileRegexes));
+    }
+
+    private void Init() {
+        UpdateResultTimer.Elapsed += (o, e) => {
+            if (FindResultQueue.IsEmpty) {
+                return;
+            }
+            UIUtils.RunOnUIThread(() => {
+                // 全部出队
+                while (FindResultQueue.TryDequeue(out var result)) {
+                    ResultCollection.Add(result);
+                }
+            });
+        };
+        UpdateResultTimer.Start();
     }
 
     /// <summary>
-    /// 获取文件所有内容
+    /// 获取指定文件列表所有内容，文件内容会自动缓存
     /// </summary>
-    /// <param name="files"></param>
-    /// <returns></returns>
-    private Dictionary<string, string> GetFileData(List<string> files) {
-        var dataList = new Dictionary<string, string>();
-        int perThreadCount = (int)Math.Ceiling(files.Count / (double)ThreadCount);
-        var tasks = new List<Task>(ThreadCount);
-        // 文件总数小于等于线程数
-        if (files.Count <= ThreadCount) {
-            foreach (var file in files) {
-                tasks.Add(Task.Factory.StartNew(() => {
+    /// <param name="filenames">文件路径</param>
+    /// <returns>[filename,content]</returns>
+    private Dictionary<string, string> GetFileData(IEnumerable<string> filenames) {
+        var fileDataDict = new Dictionary<string, string>();
+        int perThreadFilesCount = (int)Math.Ceiling(filenames.Count() / (double)ThreadCount);
+        var taskFilenameList = filenames.Split(ThreadCount);
+        // 加载文件
+        foreach (var filenameList in taskFilenameList) {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => {
+                var tempDict = new Dictionary<string, string>();
+                foreach (var filename in filenameList) {
+                    if (cancellationTokenSource.IsCancellationRequested) {
+                        break;
+                    }
+                    // 已经加载过
+                    if (FileDataDict.ContainsKey(filename)) {
+                        tempDict[filename] = FileDataDict[filename];
+                        continue;
+                    }
+                    // 加载文件数据
                     try {
-                        lock (this) {
-                            dataList[file] = File.ReadAllText(file);
-                        }
-                    } catch (Exception e) {
-                        Logger.Error(e);
+                        tempDict[filename] = File.ReadAllText(filename);
+                    } catch {
+                        Logger.Info($"读取文件 {filename} 失败");
                     }
-                }));
-            }
-        } else {
-            for (int i = 0; i < ThreadCount; i++) {
-                int tempI = i;
-                tasks.Add(Task.Factory.StartNew(() => {
-                    for (int j = tempI * perThreadCount; j < Math.Min(files.Count, (tempI + 1) * perThreadCount); j++) {
-                        try {
-                            lock (this) {
-                                dataList[files[j]] = File.ReadAllText(files[j]);
-                            }
-                        } catch (Exception e) {
-                            Logger.Error(e);
+                }
+                // 一并填充数据
+                lock (this) {
+                    foreach (var item in tempDict) {
+                        var name = item.Key;
+                        fileDataDict[name] = item.Value;
+                        // 缓存
+                        if (!FileDataDict.ContainsKey(name)) {
+                            FileDataDict[name] = tempDict[name];
                         }
                     }
-                }));
-            }
+                }
+            }, cancellationTokenSource.Token);
+            FileDataLoaderTaskList.Add(new(task, cancellationTokenSource));
         }
-        Task.WaitAll(tasks.ToArray());
-        return dataList;
+        FileDataLoaderTaskWaiterCancellationTokenSource = new();
+        // 等待加载完毕
+        Task.WaitAll(
+           FileDataLoaderTaskList.Select(t => t.Key).ToArray(),
+           FileDataLoaderTaskWaiterCancellationTokenSource.Token
+       );
+        return fileDataDict;
+    }
+
+    /// <summary>
+    /// 终止当前查询
+    /// </summary>
+    public void CancelFinding() {
+        UpdateResultTimer.Stop();
+        KeywordFindingTaskWaiterCancellationTokenSource.Cancel();
+        FileDataLoaderTaskWaiterCancellationTokenSource.Cancel();
+        // 终止查询线程
+        foreach (var item in KeywordFindingTaskList) {
+            item.Value.Cancel();
+        }
+        // 终止文件加载线程
+        foreach (var item in FileDataLoaderTaskList) {
+            item.Value.Cancel();
+        }
+        KeywordFindingTaskList.Clear();
+        FileDataLoaderTaskList.Clear();
+        FindResultQueue.Clear();
     }
 
     /// <summary>
     /// 查找关键字
     /// </summary>
     /// <param name="keywordRegex">查找的正则</param>
+    /// <param name="excludeDirRegexes"></param>
+    /// <param name="excludeFileRegexes"></param>
     /// <param name="results"></param>
     /// <returns></returns>
-    public void FindKeyword(string keywordRegex, List<string> excludeDirs, List<string> excludeFiles, ObservableCollection<KeywordResult> results) {
-        // 加载必要文件
-        var dict = GetFileData(FilterFiles(SearchDirectory, excludeDirs, excludeFiles));
-        foreach (var item in dict) {
-            FileDataDict[item.Key] = item.Value;
-        }
-        var re = new Regex(keywordRegex, RegexOptions.IgnoreCase | RegexOptions.ECMAScript);
-        var tasks = new List<Task>(ThreadCount); // 线程集合
-        var keyList = new List<List<string>>(ThreadCount); // 线程进行处理的数据
-        var filterKeys = FilterDirectoryFiles(excludeDirs, excludeFiles).ToArray();
-        int perThreadCount = (int)Math.Ceiling(filterKeys.Length / (double)ThreadCount); // 每个线程进行处理的数据数目
-        App.Current.Dispatcher.Invoke(() => results.Clear());
-        // 初始化集合
-        for (int i = 0; i < ThreadCount; i++) {
-            keyList.Add(new());
-        }
-        // 拆分集合
-        if (filterKeys.Length <= ThreadCount) {
-            for (int i = 0; i < filterKeys.Length; i++) {
-                keyList[i].Add(filterKeys[i]);
-            }
-        } else {
-            for (int i = 0; i < ThreadCount; i++) {
-                keyList[i] = filterKeys[Math.Min(i * perThreadCount, filterKeys.Length)..Math.Min((i + 1) * perThreadCount, filterKeys.Length)].ToList();
-            }
-        }
+    public void FindKeyword(
+        string keywordRegex,
+        IEnumerable<string> excludeDirRegexes,
+        IEnumerable<string> excludeFileRegexes,
+        ICollection<KeywordResult> results
+    ) {
+        CancelFinding();
+        UpdateResultTimer.Start();
+        ResultCollection = results;
+        // 清空
+        UIUtils.RunOnUIThread(() => ResultCollection.Clear());
+        // 加载文件内容
+        var fileDataDict = GetFileData(FilterFiles(SearchDirectory, excludeDirRegexes, excludeFileRegexes));
+        var keywordCompiledRegex = CompileRegex(new string[] { keywordRegex }).First();
+        // 文件名列表
+        var filenameList = fileDataDict.Keys.Split(ThreadCount);
         // 查找
-        foreach (var list in keyList) {
-            Task task = Task.Factory.StartNew(() => {
-                foreach (var file in list) {
-                    if (re.IsMatch(FileDataDict[file])) {
-                        lock (this) {
-                            App.Current.Dispatcher.Invoke(() => results.Add(new() { File = file }));
-                        }
+        foreach (var list in filenameList) {
+            var cancellationTokenSource = new CancellationTokenSource();
+            // 启动查找任务线程
+            var task = Task.Run(() => {
+                foreach (var filename in list) {
+                    if (cancellationTokenSource.IsCancellationRequested) {
+                        break;
                     }
+                    if (!keywordCompiledRegex.IsMatch(FileDataDict[filename])) {
+                        continue;
+                    }
+                    FindResultQueue.Enqueue(new(filename));
                 }
-            });
-            tasks.Add(task);
+            }, cancellationTokenSource.Token);
+            KeywordFindingTaskList.Add(new(task, cancellationTokenSource));
         }
-        Task.WaitAll(tasks.ToArray());
+        KeywordFindingTaskWaiterCancellationTokenSource = new();
+        Task.WaitAll(
+            KeywordFindingTaskList.Select(t => t.Key).ToArray(),
+            KeywordFindingTaskWaiterCancellationTokenSource.Token
+        );
     }
 
     /// <summary>
@@ -134,9 +211,9 @@ public class KeywordFinder {
     /// <param name="excludeDirs"></param>
     /// <param name="excludeFiles"></param>
     /// <returns></returns>
-    private List<string> FilterDirectoryFiles(List<string> excludeDirs, List<string> excludeFiles) {
-        List<Regex> excludeFileRegexes = CompileRegex(excludeFiles);
-        List<Regex> excludeDirRegexes = CompileRegex(excludeDirs);
+    private IEnumerable<string> FilterDirectoryFiles(IEnumerable<string> excludeDirs, IEnumerable<string> excludeFiles) {
+        var excludeFileRegexes = CompileRegex(excludeFiles);
+        var excludeDirRegexes = CompileRegex(excludeDirs);
         var tempFiles = new List<string>();
         var tempFiles2 = new List<string>();
         // 筛选目录
@@ -172,31 +249,21 @@ public class KeywordFinder {
     /// 筛选文件
     /// </summary>
     /// <param name="directory"></param>
-    /// <param name="excludeDirectoryRegex"></param>
-    /// <param name="excludeFileRegex"></param>
-    /// <returns></returns>
-    private List<string> FilterFiles(string directory, List<string> excludeDirectoryRegex, List<string> excludeFileRegex) {
-        var files = new List<string>();
+    /// <param name="excludeDirRegexes"></param>
+    /// <param name="excludeFileRegexes"></param>
+    /// <returns>筛选后的文件路径</returns>
+    private IEnumerable<string> FilterFiles(string directory, IEnumerable<string> excludeDirRegexes, IEnumerable<string> excludeFileRegexes) {
+        var filenames = new List<string>();
         var results = new List<string>();
         // 编译正则
-        var excludeDirs = CompileRegex(excludeDirectoryRegex);
-        var excludeFiles = CompileRegex(excludeFileRegex);
-        GetAllFiles(directory, files, excludeDirs); // 获取所有文件
-        // 排除文件
-        foreach (var f in files) {
-            bool found = false;
-            foreach (var regex in excludeFiles) {
-                if (regex.IsMatch(f)) {
-                    found = true;
-                    break;
-                }
-            }
-            // 不匹配并且没有加载过
-            if (!found && !FileDataDict.ContainsKey(f)) {
-                results.Add(f);
-            }
-        }
-        return results;
+        var excludeCompiledDirs = CompileRegex(excludeDirRegexes);
+        var excludeCompiledFiles = CompileRegex(excludeFileRegexes);
+        // 获取筛选目录后的文件
+        GetAllFilenames(directory, filenames, excludeCompiledDirs);
+        // 获取筛选后的文件
+        return filenames.Where(
+            f => !excludeCompiledFiles.Any(re => re.IsMatch(f))
+        );
     }
 
     /// <summary>
@@ -204,35 +271,29 @@ public class KeywordFinder {
     /// </summary>
     /// <param name="regexes"></param>
     /// <returns></returns>
-    private List<Regex> CompileRegex(List<string> regexes) {
-        var results = new List<Regex>();
-        foreach (var item in regexes) {
-            results.Add(new Regex(item, RegexOptions.IgnoreCase | RegexOptions.ECMAScript));
-        }
-        return results;
+    private IEnumerable<Regex> CompileRegex(IEnumerable<string> regexes) {
+        return regexes.Select(
+            r => new Regex(r, RegexOptions.IgnoreCase | RegexOptions.ECMAScript)
+        );
     }
 
     /// <summary>
-    /// 获取文件夹下所有的文件
+    /// 获取文件夹下所有的文件路径
     /// </summary>
-    /// <param name="directory"></param>
-    /// <param name="files"></param>
-    private void GetAllFiles(string directory, IEnumerable<string> files, IEnumerable<Regex>? excludeDir = null) {
-        var tempFiles = new List<string>(files);
-        tempFiles.AddRange(Directory.GetFiles(directory));
-        excludeDir ??= new List<Regex>();
+    /// <param name="directory">要搜索的文件夹</param>
+    /// <param name="filenames">获取的文件路径添加到此</param>
+    /// <param name="excludeDirRegex">排除的文件夹正则</param>
+    private void GetAllFilenames(string directory, IList<string> filenames, IEnumerable<Regex> excludeDirRegex) {
+        foreach (var item in Directory.GetFiles(directory)) {
+            filenames.Add(item);
+        }
         foreach (var dir in Directory.GetDirectories(directory)) {
-            bool found = false;
-            foreach (var regex in excludeDir) {
-                if (regex.IsMatch(dir)) {
-                    Logger.Debug($"excluded: {dir}");
-                    found = true;
-                    break;
-                }
+            // 排除
+            if (excludeDirRegex.Any(re => re.IsMatch(dir))) {
+                continue;
             }
-            if (!found) {
-                GetAllFiles(dir, tempFiles, excludeDir);
-            }
+            // 递归遍历文件
+            GetAllFilenames(dir, filenames, excludeDirRegex);
         }
     }
 
