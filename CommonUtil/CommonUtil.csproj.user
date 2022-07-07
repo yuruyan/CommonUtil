@@ -16,6 +16,12 @@
     <Compile Update="View\Browser\EdgeBookmarkView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Downloader\DownloadedView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Downloader\DownloadingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\FtpServer\FtpServerUserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -129,6 +135,12 @@
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\Downloader\DownloadedView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Downloader\DownloaderView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\CodeColorizationView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -139,6 +151,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Browser\EdgeBookmarkView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Downloader\DownloadingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Downloader\DownloadInfoDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Downloader\DownloadTaskInfoWidget.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FtpServer\FtpServerUserDialog.xaml">

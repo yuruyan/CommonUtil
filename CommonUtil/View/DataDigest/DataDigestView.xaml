@@ -41,25 +41,18 @@
         Text="{Binding InputText}"
         Visibility="{Binding FileName, Converter={StaticResource HideIfNotEmptyConverter}}" />
       <StackPanel
+        HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Orientation="Vertical"
         Visibility="{Binding FileName, Converter={StaticResource HideIfEmptyConverter}}">
-        <ui:SimpleStackPanel
-          HorizontalAlignment="Center"
-          Orientation="Horizontal"
-          Spacing="8">
-          <svgc:SvgViewbox
-            Width="30"
-            Source="{Binding FileIcon}"
-            Stretch="Uniform" />
-          <TextBlock
-            Style="{StaticResource NavigationContentHeaderStyle}"
-            Text="{Binding FileName, Converter={StaticResource FileNameConverter}}"
-            TextAlignment="Center" />
-        </ui:SimpleStackPanel>
+        <StackPanel.Resources>
+          <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="22" />
+          </Style>
+        </StackPanel.Resources>
+        <widget:FileNameIconWidget FileName="{Binding FileName}" IconSize="40" />
         <TextBlock
           Margin="0,8,0,0"
-          Style="{StaticResource NavigationContentHeaderStyle}"
           Text="{Binding FileSize, Converter={StaticResource FileSizeConverter}, StringFormat=大小：{0}}"
           TextAlignment="Center" />
       </StackPanel>
