@@ -39,20 +39,18 @@
               Padding="4"
               MouseUp="MoreRegexMouseUp"
               Text="&#xe650;"
+              ToolTip="更多"
               ToolTipService.InitialShowDelay="{StaticResource ToolTipServiceInitialShowDelay}">
               <TextBlock.Resources>
                 <Style BasedOn="{StaticResource IconFontStyle}" TargetType="TextBlock">
                   <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                       <Setter Property="Cursor" Value="Hand" />
-                      <Setter Property="Foreground" Value="{StaticResource ApplicationBackgroundDark2}" />
+                      <Setter Property="Foreground" Value="{StaticResource ApplicationBackgroundDark3}" />
                     </Trigger>
                   </Style.Triggers>
                 </Style>
               </TextBlock.Resources>
-              <TextBlock.ToolTip>
-                <ToolTip Content="更多" />
-              </TextBlock.ToolTip>
             </TextBlock>
           </StackPanel>
           <TextBox
@@ -77,18 +75,16 @@
             Text="清空输入" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
+      <!--  匹配结果个数显示  -->
       <StackPanel
         x:Name="ResultDetailPanel"
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
         Visibility="Collapsed">
-        <TextBlock>
-          <TextBlock
-            FontWeight="Bold"
-            Foreground="{DynamicResource ApplicationBackground}"
-            Text="{Binding MatchList.Count}" />
-          <TextBlock Text=" 个匹配结果" />
-        </TextBlock>
+        <TextBlock
+          FontWeight="Bold"
+          Foreground="{DynamicResource ApplicationForeground}"
+          Text="{Binding MatchList.Count, StringFormat={}{0} 个匹配结果}" />
       </StackPanel>
     </Grid>
     <!--  输出  -->

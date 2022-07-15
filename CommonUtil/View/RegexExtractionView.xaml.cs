@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View {
     public partial class RegexExtractionView : Page {
@@ -67,7 +68,7 @@ namespace CommonUtil.View {
         private void CopyResultClick(object sender, RoutedEventArgs e) {
             e.Handled = true;
             Clipboard.SetDataObject(OutputText);
-            CommonUITools.Widget.MessageBox.Success("已复制");
+            MessageBox.Success("已复制");
         }
 
         /// <summary>
@@ -86,9 +87,14 @@ namespace CommonUtil.View {
         /// </summary>
         private void SearchResult() {
             ResultDetailPanel.Visibility = Visibility.Visible;
+            // 为空则不查找
+            if (string.IsNullOrEmpty(SearchRegex)) {
+                MessageBox.Info("输入不能为空");
+                return;
+            }
             var list = RegexExtraction.Extract(SearchRegex, InputText, IgnoreCase);
             if (list == null) {
-                CommonUITools.Widget.MessageBox.Error("正则表达式有误");
+                MessageBox.Error("正则表达式有误");
                 return;
             }
             MatchList = list;
