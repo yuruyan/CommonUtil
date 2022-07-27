@@ -14,10 +14,7 @@
 
   <ListView Grid.Column="1" ItemsSource="{Binding AsciiTableList}">
     <ListView.Resources>
-      <ContextMenu
-        x:Key="fileItemContextMenu"
-        Width="150"
-        Style="{StaticResource GlobalContextMenuStyle}">
+      <ContextMenu x:Key="fileItemContextMenu" Style="{StaticResource GlobalContextMenuStyle}">
         <MenuItem Click="CopyDetailClickHandler" Header="复制">
           <MenuItem.Icon>
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
