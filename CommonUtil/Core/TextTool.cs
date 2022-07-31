@@ -48,9 +48,9 @@ public class TextTool {
             return string.Join(mergeSymbol, text.ToHashSet());
         }
         if (!trim) {
-            return string.Join(mergeSymbol, new HashSet<string>(text.Split(splitSymbol)));
+            return string.Join(mergeSymbol, new HashSet<string>(CommonUtils.NormalizeMultipleLineText(text).Split(splitSymbol)));
         }
-        return string.Join(mergeSymbol, new HashSet<string>(text.Split(splitSymbol, StringSplitOptions.TrimEntries)));
+        return string.Join(mergeSymbol, new HashSet<string>(CommonUtils.NormalizeMultipleLineText(text).Split(splitSymbol, StringSplitOptions.TrimEntries)));
     }
 
     /// <summary>
