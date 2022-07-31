@@ -62,6 +62,7 @@ namespace CommonUtil.Store {
             new() { Name = "简单文件服务器", ImagePath = ImagePath + "file-server.svg", ClassType = typeof(SimpleFileSystemServerView) },
             new() { Name = "代码着色", ImagePath = ImagePath + "paint.svg", ClassType = typeof(CodeColorizationView) },
             new() { Name = "文件下载器", ImagePath = ImagePath + "download.svg", ClassType = typeof(DownloaderView) },
+            new() { Name = "集合工具", ImagePath = ImagePath + "Intersection.svg", ClassType = typeof(CollectionToolView) },
         };
 
     }
