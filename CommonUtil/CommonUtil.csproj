@@ -38,6 +38,7 @@
     <None Remove="Resource\image\format.svg" />
     <None Remove="Resource\image\FTP.svg" />
     <None Remove="Resource\image\IdiomMatching.svg" />
+    <None Remove="Resource\image\Intersection.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\paint.svg" />
@@ -107,6 +108,7 @@
     <Resource Include="Resource\image\FTP.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\Intersection.svg" />
     <Resource Include="Resource\image\Merge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
