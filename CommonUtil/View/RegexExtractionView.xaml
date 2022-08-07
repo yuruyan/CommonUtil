@@ -58,6 +58,10 @@
             KeyUp="SearchRegexComboBoxKeyUp"
             Text="{Binding SearchRegex, UpdateSourceTrigger=PropertyChanged}" />
           <CheckBox Content="忽略大小写" IsChecked="{Binding IgnoreCase}" />
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Padding="0,0,8,0" Text="提取模式" />
+            <TextBox MinWidth="150" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
         </ui:SimpleStackPanel>
         <ui:SimpleStackPanel>
           <widget:IconButton

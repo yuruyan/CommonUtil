@@ -13,6 +13,7 @@ namespace CommonUtil.View {
         public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(RegexExtractionView), new PropertyMetadata(""));
         public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RegexExtractionView), new PropertyMetadata(""));
         public static readonly DependencyProperty SearchRegexProperty = DependencyProperty.Register("SearchRegex", typeof(string), typeof(RegexExtractionView), new PropertyMetadata(""));
+        public static readonly DependencyProperty ExtractionPatternProperty = DependencyProperty.Register("ExtractionPattern", typeof(string), typeof(RegexExtractionView), new PropertyMetadata("\\0"));
         public static readonly DependencyProperty IgnoreCaseProperty = DependencyProperty.Register("IgnoreCase", typeof(bool), typeof(RegexExtractionView), new PropertyMetadata(true));
         public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register("MatchList", typeof(List<string>), typeof(RegexExtractionView), new PropertyMetadata());
 
@@ -36,6 +37,13 @@ namespace CommonUtil.View {
         public string SearchRegex {
             get { return (string)GetValue(SearchRegexProperty); }
             set { SetValue(SearchRegexProperty, value); }
+        }
+        /// <summary>
+        /// 提取模式
+        /// </summary>
+        public string ExtractionPattern {
+            get { return (string)GetValue(ExtractionPatternProperty); }
+            set { SetValue(ExtractionPatternProperty, value); }
         }
         /// <summary>
         /// 忽略大小写
@@ -92,7 +100,12 @@ namespace CommonUtil.View {
                 MessageBox.Info("输入不能为空");
                 return;
             }
-            var list = RegexExtraction.Extract(SearchRegex, InputText, IgnoreCase);
+            var list = RegexExtraction.Extract(
+                SearchRegex,
+                InputText,
+                ExtractionPattern,
+                ignoreCase: IgnoreCase
+            );
             if (list == null) {
                 MessageBox.Error("正则表达式有误");
                 return;
