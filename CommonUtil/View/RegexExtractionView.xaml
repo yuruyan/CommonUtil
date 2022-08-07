@@ -60,7 +60,10 @@
           <CheckBox Content="忽略大小写" IsChecked="{Binding IgnoreCase}" />
           <StackPanel Orientation="Horizontal">
             <TextBlock Padding="0,0,8,0" Text="提取模式" />
-            <TextBox MinWidth="150" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+              MinWidth="150"
+              KeyUp="SearchRegexComboBoxKeyUp"
+              Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
           </StackPanel>
         </ui:SimpleStackPanel>
         <ui:SimpleStackPanel>
@@ -85,10 +88,7 @@
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
         Visibility="Collapsed">
-        <TextBlock
-          FontWeight="Bold"
-          Foreground="{DynamicResource ApplicationForeground}"
-          Text="{Binding MatchList.Count, StringFormat={}{0} 个匹配结果}" />
+        <TextBlock FontWeight="Bold" Text="{Binding MatchList.Count, StringFormat={}{0} 个匹配结果}" />
       </StackPanel>
     </Grid>
     <!--  输出  -->
