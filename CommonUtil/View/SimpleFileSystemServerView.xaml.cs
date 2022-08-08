@@ -6,6 +6,8 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,11 @@ using System.Windows.Input;
 namespace CommonUtil.View {
     public partial class SimpleFileSystemServerView : Page {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        /// <summary>
+        /// 端口被占用时下一个端口即为当前端口值+该值
+        /// </summary>
+        private const int PortInterval = 256;
+
         public static readonly DependencyProperty SharingDirectoryProperty = DependencyProperty.Register("SharingDirectory", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
         public static readonly DependencyProperty IsServerStartedProperty = DependencyProperty.Register("IsServerStarted", typeof(bool), typeof(SimpleFileSystemServerView), new PropertyMetadata(false));
         public static readonly DependencyProperty ServerPortProperty = DependencyProperty.Register("ServerPort", typeof(int), typeof(SimpleFileSystemServerView), new PropertyMetadata(3000));
@@ -165,13 +172,29 @@ namespace CommonUtil.View {
         private int GetFreePort() {
             int port = ServerPort;
             // 获取占用端口
-            var inUserPorts = NetworkUtils.GetInUsePorts().ToHashSet();
-            for (; port < ServerPort + 7000 && port < 65536; port++) {
-                if (!inUserPorts.Contains(port)) {
+            var inUsePorts = NetworkUtils.GetInUsePorts().ToHashSet();
+            for (; port < ServerPort + 7000 && port < 65536; port += PortInterval) {
+                if (!inUsePorts.Contains(port) && !CheckPortInUse(port)) {
                     return port;
                 }
             }
             throw new Exception("端口不足");
+        }
+
+        /// <summary>
+        /// 检查指定端口是否被占用
+        /// </summary>
+        /// <param name="port"></param>
+        /// <returns></returns>
+        private bool CheckPortInUse(int port) {
+            try {
+                var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+                tcpListener.Start();
+                tcpListener.Stop();
+                return false;
+            } catch {
+                return true;
+            }
         }
     }
 }
