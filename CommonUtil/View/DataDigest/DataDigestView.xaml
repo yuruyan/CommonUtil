@@ -14,9 +14,11 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+
   <Page.Resources>
     <local:ProcessVisibilityConverter x:Key="ProcessVisibilityConverter" />
   </Page.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="1*" />
@@ -47,7 +49,7 @@
         Visibility="{Binding FileName, Converter={StaticResource HideIfEmptyConverter}}">
         <StackPanel.Resources>
           <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontSize" Value="20" />
           </Style>
         </StackPanel.Resources>
         <widget:FileNameIconWidget FileName="{Binding FileName}" IconSize="40" />
@@ -57,7 +59,6 @@
           TextAlignment="Center" />
       </StackPanel>
     </Grid>
-
     <!--  Control  -->
     <Grid Grid.Row="1">
       <ui:SimpleStackPanel
@@ -70,10 +71,18 @@
           VerticalAlignment="Center"
           ItemsSource="{Binding DigestOptions, Mode=OneWay}"
           SelectedIndex="{Binding SelectedDigestIndex}" />
-        <widget:IconButton
-          Click="StartClick"
-          Icon="&#xe601;"
-          Text="计算" />
+        <Grid>
+          <widget:IconButton
+            Click="StartClick"
+            Icon="&#xe601;"
+            Text="计算"
+            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource HideIfTrueConverter}}" />
+          <widget:IconButton
+            Click="StopDigestClick"
+            Icon="&#xe614;"
+            Text="取消"
+            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"

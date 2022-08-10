@@ -100,6 +100,7 @@ public partial class DataDigestView : Page {
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
     public static readonly DependencyProperty FileIconProperty = DependencyProperty.Register("FileIcon", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
+    public static readonly DependencyProperty IsStopButtonVisibleProperty = DependencyProperty.Register("IsStopButtonVisible", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
 
     /// <summary>
     /// 输入文件名
@@ -156,6 +157,13 @@ public partial class DataDigestView : Page {
     public long FileSize {
         get { return (long)GetValue(FileSizeProperty); }
         set { SetValue(FileSizeProperty, value); }
+    }
+    /// <summary>
+    /// 停止按钮是否可见
+    /// </summary>
+    public bool IsStopButtonVisible {
+        get { return (bool)GetValue(IsStopButtonVisibleProperty); }
+        set { SetValue(IsStopButtonVisibleProperty, value); }
     }
 
     public DataDigestView() {
@@ -216,6 +224,7 @@ public partial class DataDigestView : Page {
     /// <param name="e"></param>
     private void StartClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        IsStopButtonVisible = true;
         ThrottleUtils.ThrottleAsync(StartClick, async () => {
             await CalculateDigest();
         });
@@ -269,29 +278,7 @@ public partial class DataDigestView : Page {
                             return item.TextDigestHandler.Invoke(text);
                         }
                         // 计算文件 Hash
-                        try {
-                            return item.StreamDigestHandler.Invoke(
-                                new FileStream(
-                                    filename,
-                                    FileMode.Open,
-                                    FileAccess.Read,
-                                    FileShare.Read
-                                ),
-                                s => {
-                                    // 控制更新频率
-                                    if ((DateTime.Now - item.LastUpdateProcessTime).TotalMilliseconds < UpdateProcessFrequency) {
-                                        return;
-                                    }
-                                    item.LastUpdateProcessTime = DateTime.Now;
-                                    Dispatcher.Invoke(() => {
-                                        item.Process = (int)(100 * (double)s / FileSize);
-                                    });
-                                }
-                            );
-                        } catch (Exception e) {
-                            CommonUITools.Widget.MessageBox.Error(e.Message);
-                            return string.Empty;
-                        }
+                        return CalculateFileDigest(item, filename);
                     });
                     item.Process = 100;
                     RunningProcess--;
@@ -300,6 +287,48 @@ public partial class DataDigestView : Page {
         }
         // 等待全部完成
         await Task.WhenAll(tasks);
+        IsStopButtonVisible = false;
+    }
+
+    /// <summary>
+    /// 计算文件摘要
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="filename"></param>
+    /// <returns></returns>
+    private string CalculateFileDigest(DigestInfo info, string filename) {
+        try {
+            return info.StreamDigestHandler.Invoke(
+                new FileStream(
+                    filename,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read
+                ),
+                s => {
+                    // 控制更新频率
+                    if ((DateTime.Now - info.LastUpdateProcessTime).TotalMilliseconds < UpdateProcessFrequency) {
+                        return;
+                    }
+                    info.LastUpdateProcessTime = DateTime.Now;
+                    Dispatcher.Invoke(() => {
+                        info.Process = (int)(100 * (double)s / FileSize);
+                    });
+                }
+            );
+        } catch (Exception e) {
+            CommonUITools.Widget.MessageBox.Error(e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// 取消计算
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void StopDigestClick(object sender, RoutedEventArgs e) {
+
     }
 
     /// <summary>
@@ -368,4 +397,5 @@ public partial class DataDigestView : Page {
         InputPanel.Background = new SolidColorBrush(Colors.Transparent);
         InputTextBox.Background = new SolidColorBrush(Colors.Transparent);
     }
+
 }
