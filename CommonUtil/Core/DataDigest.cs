@@ -54,9 +54,8 @@ public class DataDigest {
     /// <returns></returns>
     private static string GeneralDigest(FileStream stream, IDigest digest, Action<long>? callback = null) {
         // 从队列中获取缓存
-        ReadBufferQueue.TryDequeue(out var buffer);
-        if (buffer is null) {
-            ReadBufferQueue.Enqueue(buffer = new byte[FileReadBuffer]);
+        if (!ReadBufferQueue.TryDequeue(out var buffer)) {
+            buffer = new byte[FileReadBuffer];
         }
         byte[] resultBuffer = new byte[digest.GetDigestSize()];
         int read;
@@ -65,6 +64,8 @@ public class DataDigest {
             // 终止计算
             if (StoppingDigestSet.Count > 0 && StoppingDigestSet.Contains(stream)) {
                 StoppingDigestSet.Remove(stream);
+                // 添加到队列中
+                ReadBufferQueue.Enqueue(buffer);
                 return string.Empty;
             }
             digest.BlockUpdate(buffer, 0, read);
