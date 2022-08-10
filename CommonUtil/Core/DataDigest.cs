@@ -3,6 +3,7 @@ using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Utilities.Encoders;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -30,11 +31,12 @@ public class DataDigest {
     /// <summary>
     /// 默认读取缓冲区个数
     /// </summary>
-    private static readonly int DefaultReadBufferSize = 8;
+    private const int DefaultReadBufferSize = 8;
     /// <summary>
     /// 默认读取缓冲区大小
     /// </summary>
-    private static readonly int FileReadBuffer = 16 * 1024 * 1024;
+    private const int FileReadBuffer = 4096 << 2;
+    private static readonly HashSet<FileStream> StoppingDigestSet = new(DefaultReadBufferSize);
 
     static DataDigest() {
         // 初始化队列
@@ -60,6 +62,11 @@ public class DataDigest {
         int read;
         long totalRead = 0;
         while ((read = stream.Read(buffer, 0, FileReadBuffer)) > 0) {
+            // 终止计算
+            if (StoppingDigestSet.Count > 0 && StoppingDigestSet.Contains(stream)) {
+                StoppingDigestSet.Remove(stream);
+                return string.Empty;
+            }
             digest.BlockUpdate(buffer, 0, read);
             totalRead += read;
             callback?.Invoke(totalRead);
@@ -69,6 +76,12 @@ public class DataDigest {
         ReadBufferQueue.Enqueue(buffer);
         return Hex.ToHexString(resultBuffer);
     }
+
+    /// <summary>
+    /// 停止计算
+    /// </summary>
+    /// <param name="stream"></param>
+    public static void StopDigest(FileStream stream) => StoppingDigestSet.Add(stream);
 
     /// <summary>
     /// sha1 摘要
