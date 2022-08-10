@@ -83,7 +83,7 @@ public partial class DataDigestView : Page {
     /// <param name="stream"></param>
     /// <param name="callback">回调，参数为总读取的大小</param>
     /// <returns></returns>
-    private delegate string StreamDigestHandler(FileStream stream, Action<long> callback);
+    private delegate string StreamDigestHandler(FileStream stream, Action<long>? callback = null);
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
@@ -165,16 +165,16 @@ public partial class DataDigestView : Page {
                 "SHA512",
             };
         DigestInfoDict = new() {
-                { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
-                { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
-                { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
-                { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
-                { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
-                { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
-                { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
-                { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
-                { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
-            };
+            { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
+            { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
+            { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
+            { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
+            { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
+            { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
+            { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
+            { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
+            { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
+        };
         InitializeComponent();
         DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);
     }
