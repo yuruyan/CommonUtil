@@ -210,7 +210,7 @@ public partial class DataDigestView : Page {
     private void StartClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         ThrottleUtils.ThrottleAsync(StartClick, async () => {
-            await calculateDigest();
+            await CalculateDigest();
         });
     }
 
@@ -218,7 +218,7 @@ public partial class DataDigestView : Page {
     /// 计算 Hash
     /// </summary>
     /// <returns></returns>
-    private async Task calculateDigest() {
+    private async Task CalculateDigest() {
         if (SelectedDigestIndex != 0) {
             var target = DigestInfoDict[DigestOptions[SelectedDigestIndex]];
             // 隐藏其他
@@ -227,11 +227,11 @@ public partial class DataDigestView : Page {
                     item.IsVivible = false;
                 }
             }
-            await calculateDigest(new DigestInfo[] { target });
+            await CalculateDigest(new DigestInfo[] { target });
             return;
         }
         // 全部计算
-        await calculateDigest(DigestInfoDict.Values);
+        await CalculateDigest(DigestInfoDict.Values);
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ public partial class DataDigestView : Page {
     /// </summary>
     /// <param name="digests"></param>
     /// <returns></returns>
-    private async Task calculateDigest(IEnumerable<DigestInfo> digests) {
+    private async Task CalculateDigest(IEnumerable<DigestInfo> digests) {
         // 先清空
         RunningProcess = 0;
         foreach (var item in digests) {
