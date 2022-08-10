@@ -73,8 +73,15 @@ public partial class DataDigestView : Page {
             get { return (int)GetValue(ProcessProperty); }
             set { SetValue(ProcessProperty, value); }
         }
+        /// <summary>
+        /// 上次更新 Process 时间
+        /// </summary>
+        public DateTime LastUpdateProcessTime { get; set; } = DateTime.Now;
     }
-
+    /// <summary>
+    /// 更新 Process 频率，ms
+    /// </summary>
+    private const int UpdateProcessFrequency = 500;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private delegate string TextDigestHandler(string digest);
     /// <summary>
@@ -264,8 +271,22 @@ public partial class DataDigestView : Page {
                         // 计算文件 Hash
                         try {
                             return item.StreamDigestHandler.Invoke(
-                                new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read),
-                                s => Dispatcher.Invoke(() => item.Process = (int)(100 * (double)s / FileSize))
+                                new FileStream(
+                                    filename,
+                                    FileMode.Open,
+                                    FileAccess.Read,
+                                    FileShare.Read
+                                ),
+                                s => {
+                                    // 控制更新频率
+                                    if ((DateTime.Now - item.LastUpdateProcessTime).TotalMilliseconds < UpdateProcessFrequency) {
+                                        return;
+                                    }
+                                    item.LastUpdateProcessTime = DateTime.Now;
+                                    Dispatcher.Invoke(() => {
+                                        item.Process = (int)(100 * (double)s / FileSize);
+                                    });
+                                }
                             );
                         } catch (Exception e) {
                             CommonUITools.Widget.MessageBox.Error(e.Message);
