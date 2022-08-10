@@ -165,7 +165,10 @@ public partial class DataDigestView : Page {
         get { return (bool)GetValue(IsStopButtonVisibleProperty); }
         set { SetValue(IsStopButtonVisibleProperty, value); }
     }
-
+    /// <summary>
+    /// 正在工作的 stream
+    /// </summary>
+    private readonly ICollection<FileStream> WorkingDigestStream = new List<FileStream>();
     public DataDigestView() {
         DigestOptions = new() {
                 "全部",
@@ -224,8 +227,8 @@ public partial class DataDigestView : Page {
     /// <param name="e"></param>
     private void StartClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        IsStopButtonVisible = true;
         ThrottleUtils.ThrottleAsync(StartClick, async () => {
+            IsStopButtonVisible = true;
             await CalculateDigest();
         });
     }
@@ -269,20 +272,30 @@ public partial class DataDigestView : Page {
             item.IsVivible = true;
             var text = InputText;
             var filename = FileName;
+            FileStream? fileStream = null;
+            if (!string.IsNullOrEmpty(filename)) {
+                fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                WorkingDigestStream.Add(fileStream);
+            }
             tasks.Add(Task.Run(() => {
-                Dispatcher.Invoke(async () => {
-                    // 计算结果
-                    item.Text = await Task.Run(() => {
-                        // 计算文本 Hash
-                        if (string.IsNullOrEmpty(filename)) {
-                            return item.TextDigestHandler.Invoke(text);
-                        }
-                        // 计算文件 Hash
-                        return CalculateFileDigest(item, filename);
-                    });
+                string resultHash = string.Empty;
+                // 计算文本 Hash
+                if (fileStream is null) {
+                    resultHash = item.TextDigestHandler.Invoke(text);
+                } else {
+                    // 计算文件 Hash
+                    resultHash = CalculateFileDigest(item, fileStream);
+                }
+                // 更新
+                Dispatcher.Invoke(() => {
+                    item.Text = resultHash;
                     item.Process = 100;
                     RunningProcess--;
-                }).Wait();
+                });
+                if (fileStream is not null) {
+                    WorkingDigestStream.Remove(fileStream);
+                    fileStream.Close();
+                }
             }));
         }
         // 等待全部完成
@@ -296,23 +309,18 @@ public partial class DataDigestView : Page {
     /// <param name="info"></param>
     /// <param name="filename"></param>
     /// <returns></returns>
-    private string CalculateFileDigest(DigestInfo info, string filename) {
+    private string CalculateFileDigest(DigestInfo info, FileStream fileStream) {
         try {
             return info.StreamDigestHandler.Invoke(
-                new FileStream(
-                    filename,
-                    FileMode.Open,
-                    FileAccess.Read,
-                    FileShare.Read
-                ),
-                s => {
+                fileStream,
+                read => {
                     // 控制更新频率
                     if ((DateTime.Now - info.LastUpdateProcessTime).TotalMilliseconds < UpdateProcessFrequency) {
                         return;
                     }
                     info.LastUpdateProcessTime = DateTime.Now;
                     Dispatcher.Invoke(() => {
-                        info.Process = (int)(100 * (double)s / FileSize);
+                        info.Process = (int)(100 * (double)read / FileSize);
                     });
                 }
             );
@@ -328,7 +336,10 @@ public partial class DataDigestView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void StopDigestClick(object sender, RoutedEventArgs e) {
-
+        foreach (var stream in WorkingDigestStream) {
+            DataDigest.StopDigest(stream);
+        }
+        IsStopButtonVisible = false;
     }
 
     /// <summary>
