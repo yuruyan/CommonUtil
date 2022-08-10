@@ -74,6 +74,10 @@ public partial class DataDigestView : Page {
             set { SetValue(ProcessProperty, value); }
         }
         /// <summary>
+        /// 文件总大小
+        /// </summary>
+        public long FileTotalSize { get; set; } = 0;
+        /// <summary>
         /// 上次更新 Process 时间
         /// </summary>
         public DateTime LastUpdateProcessTime { get; set; } = DateTime.Now;
@@ -274,6 +278,7 @@ public partial class DataDigestView : Page {
             var filename = FileName;
             FileStream? fileStream = null;
             if (!string.IsNullOrEmpty(filename)) {
+                item.FileTotalSize = FileSize;
                 fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
                 WorkingDigestStream.Add(fileStream);
             }
@@ -320,7 +325,7 @@ public partial class DataDigestView : Page {
                     }
                     info.LastUpdateProcessTime = DateTime.Now;
                     Dispatcher.Invoke(() => {
-                        info.Process = (int)(100 * (double)read / FileSize);
+                        info.Process = (int)(100 * (double)read / info.FileTotalSize);
                     });
                 }
             );
