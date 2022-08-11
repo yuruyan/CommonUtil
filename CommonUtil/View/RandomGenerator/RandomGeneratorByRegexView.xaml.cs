@@ -1,16 +1,29 @@
-﻿using CommonUtil.Model;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
+using CommonUtil.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View {
     public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomGeneratorByRegexView), new PropertyMetadata());
         public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomGeneratorByRegexView), new PropertyMetadata(8));
+        public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorByRegexView), new PropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// 数字列表
+        /// </summary>
+        public List<int> CountList {
+            get { return (List<int>)GetValue(CountListProperty); }
+            set { SetValue(CountListProperty, value); }
+        }
         /// <summary>
         /// 生成个数
         /// </summary>
@@ -18,49 +31,42 @@ namespace CommonUtil.View {
             get { return (int)GetValue(GenerateCountProperty); }
             set { SetValue(GenerateCountProperty, value); }
         }
-
-        private static RandomGeneratorByRegexView? _RandomNumberGeneratorView;
+        /// <summary>
+        /// 正则输入
+        /// </summary>
+        public string RegexInputText {
+            get { return (string)GetValue(RegexInputTextProperty); }
+            set { SetValue(RegexInputTextProperty, value); }
+        }
 
         public RandomGeneratorByRegexView() {
-            //CountList = new();
-            //for (int i = 1; i <= 100; i++) {
-            //    CountList.Add(i);
-            //}
+            CountList = new();
+            for (int i = 1; i <= 100; i++) {
+                CountList.Add(i);
+            }
             InitializeComponent();
-            _RandomNumberGeneratorView = this;
         }
 
+        /// <summary>
+        /// 生成
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> Generate() {
-            return Array.Empty<string>();
+            if (string.IsNullOrEmpty(RegexInputText)) {
+                MessageBox.Info("正则表达式不能为空！");
+                return Array.Empty<string>();
+            }
+            // 判断正则是否合法
+            if(CommonUtils.Try(() => new Regex(RegexInputText)) is null) {
+                MessageBox.Error("正则表达式无效！");
+                return Array.Empty<string>();
+            }
+            try {
+                return RandomGenerator.GenerateRandomString(RegexInputText, GenerateCount);
+            } catch (Exception e) {
+                MessageBox.Error($"生成失败：{e.Message}");
+                return Array.Empty<string>();
+            }
         }
-
-        ///// <summary>
-        ///// 生成
-        ///// </summary>
-        ///// <returns></returns>
-        //public static int[] Generate() {
-        //    return new int[] { };
-        //    //if (_RandomNumberGeneratorView == null) {
-        //    //    return Array.Empty<int>();
-        //    //}
-        //    //int minValue = 0, maxValue = int.MaxValue;
-        //    //try {
-        //    //    minValue = Convert.ToInt32(_RandomNumberGeneratorView.MinValue);
-        //    //    maxValue = Convert.ToInt32(_RandomNumberGeneratorView.MaxValue);
-        //    //} catch (FormatException e) {
-        //    //    CommonUITools.Widget.MessageBox.Error("不是合法数字！");
-        //    //    Logger.Info(e);
-        //    //    return Array.Empty<int>();
-        //    //} catch (OverflowException e) {
-        //    //    CommonUITools.Widget.MessageBox.Error("数字过大或过小！");
-        //    //    Logger.Info(e);
-        //    //    return Array.Empty<int>();
-        //    //}
-        //    //if (minValue > maxValue) {
-        //    //    CommonUITools.Widget.MessageBox.Error("最小值不能大于最大值！");
-        //    //    return Array.Empty<int>();
-        //    //}
-        //    //return RandomGenerator.GenerateRandomNumber(minValue, maxValue, _RandomNumberGeneratorView.GenerateCount);
-        //}
     }
 }

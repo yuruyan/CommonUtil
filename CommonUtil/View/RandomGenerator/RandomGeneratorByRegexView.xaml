@@ -12,29 +12,26 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <!--<ui:SimpleStackPanel Spacing="8">
+  <ui:SimpleStackPanel Spacing="8">
     <ui:SimpleStackPanel.Resources>
       <Style TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal" />
       </Style>
       <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-        <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=90}" />
+        <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=110}" />
       </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
-      <TextBlock Width="80" Text="最小值：" />
-      <TextBox Text="{Binding MinValue}" />
+      <TextBlock Width="100" Text="正则表达式：" />
+      <TextBox MinWidth="120" Text="{Binding RegexInputText}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="80" Text="最大值：" />
-      <TextBox Text="{Binding MaxValue}" />
-    </StackPanel>
-    <StackPanel>
-      <TextBlock Width="80" Text="生成数量：" />
+      <TextBlock Width="100" Text="生成数量：" />
       <ComboBox
+        Width="120"
         ItemsSource="{Binding CountList}"
         SelectedIndex="7"
         SelectedValue="{Binding GenerateCount}" />
     </StackPanel>
-  </ui:SimpleStackPanel>-->
+  </ui:SimpleStackPanel>
 </Page>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RandomDataGenerator.FieldOptions;
+using RandomDataGenerator.Randomizers;
+using System;
 using System.Text;
 
 namespace CommonUtil.Core {
@@ -69,6 +71,23 @@ namespace CommonUtil.Core {
                     sb.Append(dataSource[Random.Shared.Next(dataSource.Length)]);
                 }
                 results[i] = sb.ToString();
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// 根据正则生成随机字符串
+        /// </summary>
+        /// <param name="regex"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static string[] GenerateRandomString(string regex, int count) {
+            var randomizerTextRegex = RandomizerFactory.GetRandomizer(
+                new FieldOptionsTextRegex { Pattern = regex }
+            );
+            string[] results = new string[count];
+            for (int i = 0; i < count; i++) {
+                results[i] = randomizerTextRegex.Generate();
             }
             return results;
         }
