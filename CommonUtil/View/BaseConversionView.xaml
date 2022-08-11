@@ -28,8 +28,7 @@
           Grid.Row="1"
           KeyUp="InputKeyUp"
           Style="{StaticResource MultilineTextBoxStyle}"
-          Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
-          TextBlock.LineHeight="30" />
+          Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
         <Grid Margin="0,0,0,4">
           <TextBlock FontSize="20" Text="输入：" />
           <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -54,8 +53,7 @@
           Grid.Row="1"
           IsReadOnly="True"
           Style="{StaticResource MultilineTextBoxStyle}"
-          Text="{Binding OutputText}"
-          TextBlock.LineHeight="30" />
+          Text="{Binding OutputText}" />
         <Grid Margin="0,0,0,4">
           <TextBlock FontSize="20" Text="结果：" />
           <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
