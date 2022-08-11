@@ -174,28 +174,28 @@ public partial class DataDigestView : Page {
     private readonly ICollection<FileStream> WorkingDigestStream = new List<FileStream>();
     public DataDigestView() {
         DigestOptions = new() {
-                "全部",
-                "MD2",
-                "MD4",
-                "MD5",
-                "SHA1",
-                "SHA3",
-                "SHA224",
-                "SHA256",
-                "SHA384",
-                "SHA512",
-            };
-        DigestInfoDict = new() {
-            { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
-            { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
-            { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
-            { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
-            { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
-            { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
-            { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
-            { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
-            { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
+            "全部",
+            "MD2",
+            "MD4",
+            "MD5",
+            "SHA1",
+            "SHA3",
+            "SHA224",
+            "SHA256",
+            "SHA384",
+            "SHA512",
         };
+        DigestInfoDict = new() {
+        { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
+        { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
+        { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
+        { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
+        { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
+        { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
+        { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
+        { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
+        { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
+    };
         InitializeComponent();
         DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);
     }

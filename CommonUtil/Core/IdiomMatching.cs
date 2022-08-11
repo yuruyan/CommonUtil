@@ -55,7 +55,7 @@ public class IdiomMatching {
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         IEnumerable<string> wordList = null;
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-                              // 加载失败则退出程序
+        // 加载失败则退出程序
         try {
             wordList = File.ReadAllLines(WordSourcePath);
         } catch (Exception e) {
@@ -138,7 +138,8 @@ public class IdiomMatching {
             while (foundNum.Count < matches.Count) {
                 int index;
                 // 选择未查找的索引
-                while (foundNum.Contains(index = Random.Next(matches.Count))) ;
+                while (foundNum.Contains(index = Random.Next(matches.Count)))
+                    ;
                 foundNum.Add(index);
                 var tMatch = matches[index]; // 一级匹配
                 if (WordDict.ContainsKey(tMatch.Last())) { // 二级匹配

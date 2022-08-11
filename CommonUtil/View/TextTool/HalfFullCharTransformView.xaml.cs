@@ -3,72 +3,73 @@ using NLog;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CommonUtil.View {
-    public partial class HalfFullCharTransformView : Page {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+namespace CommonUtil.View;
 
-        public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
-        public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
+public partial class HalfFullCharTransformView : Page {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        /// <summary>
-        /// 输入文本
-        /// </summary>
-        public string InputText {
-            get { return (string)GetValue(InputTextProperty); }
-            set { SetValue(InputTextProperty, value); }
-        }
-        /// <summary>
-        /// 输出文本
-        /// </summary>
-        public string OutputText {
-            get { return (string)GetValue(OutputTextProperty); }
-            set { SetValue(OutputTextProperty, value); }
-        }
+    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
 
-        public HalfFullCharTransformView() {
-            InitializeComponent();
-        }
+    /// <summary>
+    /// 输入文本
+    /// </summary>
+    public string InputText {
+        get { return (string)GetValue(InputTextProperty); }
+        set { SetValue(InputTextProperty, value); }
+    }
+    /// <summary>
+    /// 输出文本
+    /// </summary>
+    public string OutputText {
+        get { return (string)GetValue(OutputTextProperty); }
+        set { SetValue(OutputTextProperty, value); }
+    }
 
-        /// <summary>
-        /// 复制结果
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyResultClick(object sender, RoutedEventArgs e) {
-            e.Handled = true;
-            Clipboard.SetDataObject(OutputText);
-            CommonUITools.Widget.MessageBox.Success("已复制");
-        }
+    public HalfFullCharTransformView() {
+        InitializeComponent();
+    }
 
-        /// <summary>
-        /// 清空输入
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClearInputClick(object sender, RoutedEventArgs e) {
-            e.Handled = true;
-            InputText = string.Empty;
-            OutputText = string.Empty;
-        }
+    /// <summary>
+    /// 复制结果
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CopyResultClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        Clipboard.SetDataObject(OutputText);
+        CommonUITools.Widget.MessageBox.Success("已复制");
+    }
 
-        /// <summary>
-        /// 半角转全角
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HalfToFullCharClick(object sender, RoutedEventArgs e) {
-            e.Handled = true;
-            OutputText = TextTool.HalfCharToFullChar(InputText);
-        }
+    /// <summary>
+    /// 清空输入
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ClearInputClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        InputText = string.Empty;
+        OutputText = string.Empty;
+    }
 
-        /// <summary>
-        /// 全角转半角
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FullToHalfCharClick(object sender, RoutedEventArgs e) {
-            e.Handled = true;
-            OutputText = TextTool.FullCharToHalfChar(InputText);
-        }
+    /// <summary>
+    /// 半角转全角
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HalfToFullCharClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        OutputText = TextTool.HalfCharToFullChar(InputText);
+    }
+
+    /// <summary>
+    /// 全角转半角
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void FullToHalfCharClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        OutputText = TextTool.FullCharToHalfChar(InputText);
     }
 }
+

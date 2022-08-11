@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using CommonUITools.Model;
+﻿using CommonUITools.Model;
 using CommonUITools.Utils;
 using Flurl.Http;
-using System.Diagnostics;
-using System.Windows;
-using System.Threading;
 using NLog;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace CommonUtil.Core;
 
