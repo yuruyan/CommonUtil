@@ -1,12 +1,14 @@
 ﻿using CommonUtil.Core;
+using CommonUtil.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CommonUtil.View {
-    public partial class RandomNumberGeneratorView : Page {
+    public partial class RandomNumberGeneratorView : Page, IGenerable<string> {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomNumberGeneratorView), new PropertyMetadata());
@@ -43,43 +45,39 @@ namespace CommonUtil.View {
             set { SetValue(GenerateCountProperty, value); }
         }
 
-        private static RandomNumberGeneratorView? _RandomNumberGeneratorView;
-
         public RandomNumberGeneratorView() {
             CountList = new();
             for (int i = 1; i <= 100; i++) {
                 CountList.Add(i);
             }
             InitializeComponent();
-            _RandomNumberGeneratorView = this;
         }
 
         /// <summary>
         /// 生成
         /// </summary>
-        /// <returns></returns>
-        public static int[] Generate() {
-            if (_RandomNumberGeneratorView == null) {
-                return Array.Empty<int>();
-            }
-            int minValue = 0, maxValue = int.MaxValue;
+        public IEnumerable<string> Generate() {
+            int minValue, maxValue;
             try {
-                minValue = Convert.ToInt32(_RandomNumberGeneratorView.MinValue);
-                maxValue = Convert.ToInt32(_RandomNumberGeneratorView.MaxValue);
+                minValue = Convert.ToInt32(MinValue);
+                maxValue = Convert.ToInt32(MaxValue);
             } catch (FormatException e) {
                 CommonUITools.Widget.MessageBox.Error("不是合法数字！");
                 Logger.Info(e);
-                return Array.Empty<int>();
+                return Array.Empty<string>();
             } catch (OverflowException e) {
                 CommonUITools.Widget.MessageBox.Error("数字过大或过小！");
                 Logger.Info(e);
-                return Array.Empty<int>();
+                return Array.Empty<string>();
             }
             if (minValue > maxValue) {
                 CommonUITools.Widget.MessageBox.Error("最小值不能大于最大值！");
-                return Array.Empty<int>();
+                return Array.Empty<string>();
             }
-            return RandomGenerator.GenerateRandomNumber(minValue, maxValue, _RandomNumberGeneratorView.GenerateCount);
+            return RandomGenerator
+                .GenerateRandomNumber(minValue, maxValue, GenerateCount)
+                .Select(n => n.ToString());
         }
+
     }
 }

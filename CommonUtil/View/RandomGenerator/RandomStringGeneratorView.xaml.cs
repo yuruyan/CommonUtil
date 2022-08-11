@@ -1,11 +1,11 @@
 ﻿using CommonUtil.Core;
-using System;
+using CommonUtil.Model;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CommonUtil.View {
-    public partial class RandomStringGeneratorView : Page {
+    public partial class RandomStringGeneratorView : Page, IGenerable<string> {
         public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomStringGeneratorView), new PropertyMetadata());
         public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
         public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
@@ -64,39 +64,33 @@ namespace CommonUtil.View {
             set { SetValue(CountListProperty, value); }
         }
 
-        private static RandomStringGeneratorView? _RandomStringGeneratorView;
-
         public RandomStringGeneratorView() {
             CountList = new();
             for (int i = 1; i <= 100; i++) {
                 CountList.Add(i);
             }
             InitializeComponent();
-            _RandomStringGeneratorView = this;
         }
 
         /// <summary>
-        /// 对外提供，生成
+        /// 生成
         /// </summary>
         /// <returns></returns>
-        public static string[] Generate() {
-            if (_RandomStringGeneratorView == null) {
-                return Array.Empty<string>();
-            }
+        public IEnumerable<string> Generate() {
             var choice = RandomStringChoice.None;
-            if (_RandomStringGeneratorView.NumberChecked) {
+            if (NumberChecked) {
                 choice |= RandomStringChoice.Number;
             }
-            if (_RandomStringGeneratorView.LowerCaseChecked) {
+            if (LowerCaseChecked) {
                 choice |= RandomStringChoice.LowerCase;
             }
-            if (_RandomStringGeneratorView.UppercaseChecked) {
+            if (UppercaseChecked) {
                 choice |= RandomStringChoice.UpperCase;
             }
-            if (_RandomStringGeneratorView.SpecialCharacterChecked) {
+            if (SpecialCharacterChecked) {
                 choice |= RandomStringChoice.SpacialCharacter;
             }
-            return RandomGenerator.GenerateRandomString(choice, _RandomStringGeneratorView.StringLength, _RandomStringGeneratorView.GenerateCount);
+            return RandomGenerator.GenerateRandomString(choice, StringLength, GenerateCount);
         }
     }
 }

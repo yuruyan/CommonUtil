@@ -196,6 +196,9 @@
     <Compile Update="View\CodeColorizationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\RandomGenerator\RandomGeneratorByRegexView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TextTool\AddEnglishWordBracesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -207,6 +210,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CodeColorizationView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomGeneratorByRegexView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
