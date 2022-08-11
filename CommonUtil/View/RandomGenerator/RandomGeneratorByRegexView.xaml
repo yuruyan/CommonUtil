@@ -5,12 +5,18 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomGeneratorByRegexView"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+
+  <Page.Resources>
+    <system:Double x:Key="TextBoxWidth">120</system:Double>
+    <system:Double x:Key="DescriptionWidth">100</system:Double>
+  </Page.Resources>
 
   <ui:SimpleStackPanel Spacing="8">
     <ui:SimpleStackPanel.Resources>
@@ -22,13 +28,13 @@
       </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
-      <TextBlock Width="100" Text="正则表达式：" />
-      <TextBox MinWidth="120" Text="{Binding RegexInputText}" />
+      <TextBlock Width="{StaticResource DescriptionWidth}" Text="正则表达式：" />
+      <TextBox MinWidth="{StaticResource TextBoxWidth}" Text="{Binding RegexInputText}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="100" Text="生成数量：" />
+      <TextBlock Width="{StaticResource DescriptionWidth}" Text="生成数量：" />
       <ComboBox
-        Width="120"
+        Width="{StaticResource TextBoxWidth}"
         ItemsSource="{Binding CountList}"
         SelectedIndex="7"
         SelectedValue="{Binding GenerateCount}" />

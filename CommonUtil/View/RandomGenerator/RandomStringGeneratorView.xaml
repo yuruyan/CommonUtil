@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomStringGeneratorView"
   d:DesignHeight="450"
@@ -12,21 +13,29 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
+  <Page.Resources>
+    <system:Double x:Key="TextBoxWidth">120</system:Double>
+    <system:Double x:Key="DescriptionWidth">100</system:Double>
+
+  </Page.Resources>
+
   <ui:SimpleStackPanel Spacing="8">
     <CheckBox Content="数字 (0...9)" IsChecked="{Binding NumberChecked}" />
     <CheckBox Content="小写字母 (a...z)" IsChecked="{Binding LowerCaseChecked}" />
     <CheckBox Content="大写字母 (A...Z)" IsChecked="{Binding UppercaseChecked}" />
     <CheckBox Content="特殊字符" IsChecked="{Binding SpecialCharacterChecked}" />
     <StackPanel Orientation="Horizontal">
-      <TextBlock Width="110" Text="字符串长度：" />
+      <TextBlock Width="{StaticResource DescriptionWidth}" Text="字符串长度：" />
       <ComboBox
+        Width="{StaticResource TextBoxWidth}"
         ItemsSource="{Binding CountList}"
         SelectedIndex="7"
         SelectedValue="{Binding StringLength}" />
     </StackPanel>
     <StackPanel Orientation="Horizontal">
-      <TextBlock Width="110" Text="生成数量：" />
+      <TextBlock Width="{StaticResource DescriptionWidth}" Text="生成数量：" />
       <ComboBox
+        Width="{StaticResource TextBoxWidth}"
         ItemsSource="{Binding CountList}"
         SelectedIndex="8"
         SelectedValue="{Binding GenerateCount}" />

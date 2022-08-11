@@ -5,12 +5,18 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomNumberGeneratorView"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+
+  <Page.Resources>
+    <system:Double x:Key="TextBoxWidth">120</system:Double>
+    <system:Double x:Key="DescriptionWidth">100</system:Double>
+  </Page.Resources>
 
   <ui:SimpleStackPanel Spacing="8">
     <ui:SimpleStackPanel.Resources>
@@ -19,19 +25,24 @@
       </Style>
       <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
         <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=90}" />
+        <Setter Property="MinWidth" Value="{StaticResource TextBoxWidth}" />
+      </Style>
+      <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="Width" Value="{StaticResource DescriptionWidth}" />
       </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
-      <TextBlock Width="80" Text="最小值：" />
+      <TextBlock Text="最小值：" />
       <TextBox Text="{Binding MinValue}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="80" Text="最大值：" />
+      <TextBlock Text="最大值：" />
       <TextBox Text="{Binding MaxValue}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="80" Text="生成数量：" />
+      <TextBlock Text="生成数量：" />
       <ComboBox
+        Width="{StaticResource TextBoxWidth}"
         ItemsSource="{Binding CountList}"
         SelectedIndex="7"
         SelectedValue="{Binding GenerateCount}" />
