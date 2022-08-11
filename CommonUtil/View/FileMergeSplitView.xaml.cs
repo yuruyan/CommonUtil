@@ -1,5 +1,5 @@
-﻿using CommonUtil.Core;
-using CommonUITools.Utils;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using Ookii.Dialogs.Wpf;
@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Threading.Tasks;
 
 namespace CommonUtil.View {
     public partial class FileMergeSplitView : Page {

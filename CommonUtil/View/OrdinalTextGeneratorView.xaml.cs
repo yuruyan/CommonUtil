@@ -1,8 +1,7 @@
-﻿using CommonUtil.Core;
-using CommonUITools.Utils;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using ModernWpf.Controls;
 using NLog;
-using System;
 using System.Text;
 using System.Windows;
 

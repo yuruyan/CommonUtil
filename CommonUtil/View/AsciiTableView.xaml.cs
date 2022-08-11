@@ -1,13 +1,10 @@
 ﻿using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace CommonUtil.View {
     public partial class AsciiTableView : Page {
