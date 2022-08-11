@@ -31,17 +31,21 @@ public class Downloader {
     /// </summary>
     /// <param name="url"></param>
     /// <param name="directory"></param>
-    /// <returns></returns>
-    public DownloadTask Download(string url, DirectoryInfo directory) {
+    /// <returns>url无效返回 null</returns>
+    public DownloadTask? Download(string url, DirectoryInfo directory) {
         var service = new DownloadService(DownloadConfiguration);
         service.DownloadStarted += DownloadStartedHandler;
         service.DownloadProgressChanged += DownloadProgressChangedHandler;
         service.DownloadFileCompleted += DownloadFileCompletedHandler;
-        service.DownloadFileTaskAsync(url, directory);
+        // 无效 url
+        if (CommonUtils.Try(() => new Uri(url)) is null) {
+            return null;
+        }
         var downloadTask = new DownloadTask(url, directory) {
             Name = new Uri(url).Segments.LastOrDefault() ?? "未知文件名"
         };
         DownloadTaskInfoDict[service] = downloadTask;
+        service.DownloadFileTaskAsync(url, directory);
         return downloadTask;
     }
 

@@ -104,12 +104,23 @@ public partial class DownloaderView : System.Windows.Controls.Page {
         if (await DownloadInfoDialog.ShowAsync() != ContentDialogResult.Primary) {
             return;
         }
-        var urls = DownloadInfoDialog.URL.Split('\n').Where(s => s.Trim().Any());
+        var urls = CommonUtils
+            .NormalizeMultipleLineText(DownloadInfoDialog.URL)
+            .Split('\n')
+            .Where(s => s.Trim().Any());
+        bool anySuccess = false;
         foreach (var url in urls) {
-            DownloadingView.DownloadTaskList.Add(
-                Downloader.Download(url, new(DownloadInfoDialog.SaveDir))
-            );
+            var task = Downloader.Download(url, new(DownloadInfoDialog.SaveDir));
+            if (task is null) {
+                MessageBox.Info($"url '{url}' 无效");
+                continue;
+            }
+            anySuccess = true;
+            DownloadingView.DownloadTaskList.Add(task);
         }
-        MessageBox.Info($"开始下载");
+        // 如果任意一个任务开始
+        if (anySuccess) {
+            MessageBox.Info($"开始下载");
+        }
     }
 }
