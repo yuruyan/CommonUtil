@@ -106,7 +106,7 @@ public partial class RandomStringGeneratorView : System.Windows.Controls.Page, I
         }
         return RandomGenerator.GenerateRandomString(
             choice,
-            (Range)range,
+            new Range(range.Value.Start, new(range.Value.End.Value + 1)),
             (int)GenerateCount
         );
     }
