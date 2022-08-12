@@ -16,6 +16,13 @@
   <Page.Resources>
     <system:Double x:Key="TextBoxWidth">120</system:Double>
     <system:Double x:Key="DescriptionWidth">100</system:Double>
+    <Style TargetType="ui:NumberBox">
+      <Setter Property="Width" Value="{StaticResource TextBoxWidth}" />
+      <Setter Property="AcceptsExpression" Value="False" />
+      <EventSetter Event="LostFocus" Handler="NumberBoxLostFocus" />
+      <Setter Property="SmallChange" Value="1" />
+      <Setter Property="SpinButtonPlacementMode" Value="Compact" />
+    </Style>
   </Page.Resources>
 
   <ui:SimpleStackPanel Spacing="8">
@@ -23,29 +30,30 @@
       <Style TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal" />
       </Style>
-      <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-        <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=90}" />
-        <Setter Property="MinWidth" Value="{StaticResource TextBoxWidth}" />
-      </Style>
       <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
         <Setter Property="Width" Value="{StaticResource DescriptionWidth}" />
       </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
       <TextBlock Text="最小值：" />
-      <TextBox Text="{Binding MinValue}" />
+      <ui:NumberBox
+        Maximum="2147483647"
+        Minimum="0"
+        Value="{Binding MinValue}" />
     </StackPanel>
     <StackPanel>
       <TextBlock Text="最大值：" />
-      <TextBox Text="{Binding MaxValue}" />
+      <ui:NumberBox
+        Maximum="2147483647"
+        Minimum="0"
+        Value="{Binding MaxValue}" />
     </StackPanel>
     <StackPanel>
       <TextBlock Text="生成数量：" />
-      <ComboBox
-        Width="{StaticResource TextBoxWidth}"
-        ItemsSource="{Binding CountList}"
-        SelectedIndex="7"
-        SelectedValue="{Binding GenerateCount}" />
+      <ui:NumberBox
+        Maximum="1024"
+        Minimum="1"
+        Value="{Binding GenerateCount}" />
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>

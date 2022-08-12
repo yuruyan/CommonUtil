@@ -12,45 +12,33 @@ namespace CommonUtil.View;
 public partial class RandomNumberGeneratorView : Page, IGenerable<string> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomNumberGeneratorView), new PropertyMetadata());
-    public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(string), typeof(RandomNumberGeneratorView), new PropertyMetadata("0"));
-    public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(string), typeof(RandomNumberGeneratorView), new PropertyMetadata("100"));
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomNumberGeneratorView), new PropertyMetadata(8));
+    public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(1.0));
+    public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(100.0));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(16.0));
 
-    /// <summary>
-    /// 数字列表
-    /// </summary>
-    public List<int> CountList {
-        get { return (List<int>)GetValue(CountListProperty); }
-        set { SetValue(CountListProperty, value); }
-    }
     /// <summary>
     /// 最小值
     /// </summary>
-    public string MinValue {
-        get { return (string)GetValue(MinValueProperty); }
+    public double MinValue {
+        get { return (double)GetValue(MinValueProperty); }
         set { SetValue(MinValueProperty, value); }
     }
     /// <summary>
     /// 最大值
     /// </summary>
-    public string MaxValue {
-        get { return (string)GetValue(MaxValueProperty); }
+    public double MaxValue {
+        get { return (double)GetValue(MaxValueProperty); }
         set { SetValue(MaxValueProperty, value); }
     }
     /// <summary>
     /// 生成个数
     /// </summary>
-    public int GenerateCount {
-        get { return (int)GetValue(GenerateCountProperty); }
+    public double GenerateCount {
+        get { return (double)GetValue(GenerateCountProperty); }
         set { SetValue(GenerateCountProperty, value); }
     }
 
     public RandomNumberGeneratorView() {
-        CountList = new();
-        for (int i = 1; i <= 100; i++) {
-            CountList.Add(i);
-        }
         InitializeComponent();
     }
 
@@ -58,27 +46,27 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<string> {
     /// 生成
     /// </summary>
     public IEnumerable<string> Generate() {
-        int minValue, maxValue;
-        try {
-            minValue = Convert.ToInt32(MinValue);
-            maxValue = Convert.ToInt32(MaxValue);
-        } catch (FormatException e) {
-            CommonUITools.Widget.MessageBox.Error("不是合法数字！");
-            Logger.Info(e);
-            return Array.Empty<string>();
-        } catch (OverflowException e) {
-            CommonUITools.Widget.MessageBox.Error("数字过大或过小！");
-            Logger.Info(e);
+        int minValue = (int)MinValue;
+        int maxValue = (int)MaxValue;
+        if (minValue > maxValue) {
+            CommonUITools.Widget.MessageBox.Error("数字范围无效");
             return Array.Empty<string>();
         }
-        if (minValue > maxValue) {
-            CommonUITools.Widget.MessageBox.Error("最小值不能大于最大值！");
-            return Array.Empty<string>();
+        if (maxValue != int.MaxValue) {
+            maxValue += 1;
         }
         return RandomGenerator
-            .GenerateRandomNumber(minValue, maxValue, GenerateCount)
+            .GenerateRandomNumber(minValue, maxValue, (int)GenerateCount)
             .Select(n => n.ToString());
     }
 
-}
+    /// <summary>
+    /// 转换浮点数为整数
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
+        RandomGeneratorUtil.NumberBoxDoubleToInt(sender, e);
+    }
 
+}
