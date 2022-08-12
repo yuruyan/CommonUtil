@@ -22,7 +22,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     private readonly Type[] Routers = {
         typeof(RandomStringGeneratorView),
         typeof(RandomNumberGeneratorView),
-        typeof(RandomGeneratorByRegexView),
+        typeof(RandomGeneratorWithRegexView),
     };
     private readonly RouterService RouterService;
 

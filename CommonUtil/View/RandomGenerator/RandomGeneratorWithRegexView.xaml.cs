@@ -11,11 +11,11 @@ using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
+public partial class RandomGeneratorWithRegexView : Page, IGenerable<string> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorByRegexView), new PropertyMetadata(8.0));
-    public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorByRegexView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(8.0));
+    public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(string.Empty));
 
     /// <summary>
     /// 生成个数
@@ -32,7 +32,7 @@ public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
         set { SetValue(RegexInputTextProperty, value); }
     }
 
-    public RandomGeneratorByRegexView() {
+    public RandomGeneratorWithRegexView() {
         InitializeComponent();
     }
 

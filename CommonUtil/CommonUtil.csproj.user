@@ -237,7 +237,7 @@
     <Page Update="View\RandomGenerator\RandomGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\RandomGenerator\RandomGeneratorByRegexView.xaml">
+    <Page Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RandomGenerator\RandomStringGeneratorView.xaml">
