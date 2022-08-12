@@ -2,6 +2,7 @@
   x:Class="CommonUtil.View.QRCodeToolView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -66,6 +67,33 @@
       </ui:NavigationView.MenuItems>
       <ui:SimpleStackPanel Spacing="16">
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
+        <!--  前景色选择  -->
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Width="100" Text="二维码颜色：" />
+          <Rectangle
+            Width="100"
+            Height="50"
+            ContextMenuService.IsEnabled="True"
+            Fill="{Binding QRCodeForeground, Converter={StaticResource ColorToBrushConverter}}"
+            MouseUp="QRCodeForegroundRectangleMouseUp">
+            <Rectangle.ContextMenu>
+              <ContextMenu Width="240">
+                <ContextMenu.Resources>
+                  <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPointerOver" Color="Transparent" />
+                  <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPressed" Color="Transparent" />
+                </ContextMenu.Resources>
+                <StackPanel Background="Transparent" MouseUp="QRCodeForegroundColorPickerPanelMouseUp">
+                  <colorpicker:SquarePicker
+                    x:Name="QRCodeForegroundColorPicker"
+                    Width="200"
+                    Height="200"
+                    Loaded="QRCodeForegroundColorPickerLoadedHandler"
+                    SelectedColor="{Binding QRCodeForeground, Mode=TwoWay}" />
+                </StackPanel>
+              </ContextMenu>
+            </Rectangle.ContextMenu>
+          </Rectangle>
+        </ui:SimpleStackPanel>
         <ui:SimpleStackPanel
           HorizontalAlignment="Center"
           Orientation="Horizontal"

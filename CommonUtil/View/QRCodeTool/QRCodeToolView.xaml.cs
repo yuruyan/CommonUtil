@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MessageBox = CommonUITools.Widget.MessageBox;
@@ -24,6 +25,14 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty QRCodeImageSourceProperty = DependencyProperty.Register("QRCodeImageSource", typeof(ImageSource), typeof(QRCodeToolView), new PropertyMetadata());
+    public static readonly DependencyProperty QRCodeForegroundProperty = DependencyProperty.Register("QRCodeForeground", typeof(Color), typeof(QRCodeToolView), new PropertyMetadata(Colors.Black));
+
+    private readonly Type[] Routers = {
+        typeof(URLQRCodeView),
+        typeof(SMSQRCodeView),
+        typeof(WIFIQRCodeView),
+    };
+    private readonly RouterService RouterService;
 
     /// <summary>
     /// 二维码 ImageSource
@@ -32,12 +41,14 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         get { return (ImageSource)GetValue(QRCodeImageSourceProperty); }
         set { SetValue(QRCodeImageSourceProperty, value); }
     }
-    private readonly Type[] Routers = {
-        typeof(URLQRCodeView),
-        typeof(SMSQRCodeView),
-        typeof(WIFIQRCodeView),
-    };
-    private readonly RouterService RouterService;
+    /// <summary>
+    /// 二维码前景色
+    /// </summary>
+    public Color QRCodeForeground {
+        get { return (Color)GetValue(QRCodeForegroundProperty); }
+        set { SetValue(QRCodeForegroundProperty, value); }
+    }
+
     private byte[] QRCodeImage = Array.Empty<byte>();
 
     public QRCodeToolView() {
@@ -118,7 +129,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                 byte[] data = Array.Empty<byte>();
                 // 生成二维码
                 try {
-                    data = await generator.Generate(new(QRCodeFormat.PNG, new()));
+                    data = await generator.Generate(new(QRCodeFormat.PNG, new() {
+                        Foreground = System.Drawing.Color.FromArgb(QRCodeForeground.R, QRCodeForeground.G, QRCodeForeground.B)
+                    }));
                 } catch (DataTooLongException) {
                     MessageBox.Error("文本过长！");
                     return;
@@ -159,5 +172,28 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
-}
 
+    /// <summary>
+    /// 打开 ColorPicker
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QRCodeForegroundRectangleMouseUp(object sender, MouseButtonEventArgs e) {
+        if (sender is FrameworkElement element) {
+            element.ContextMenu.IsOpen = true;
+        }
+    }
+
+    /// <summary>
+    /// 防止关闭
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QRCodeForegroundColorPickerPanelMouseUp(object sender, MouseButtonEventArgs e) => e.Handled = true;
+
+    private void QRCodeForegroundColorPickerLoadedHandler(object sender, RoutedEventArgs e) {
+        if (sender is FrameworkElement element) {
+            element.DataContext = this;
+        }
+    }
+}
