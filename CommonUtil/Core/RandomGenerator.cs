@@ -1,6 +1,8 @@
 ﻿using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CommonUtil.Core;
@@ -78,8 +80,8 @@ public class RandomGenerator {
     /// <summary>
     /// 根据正则生成随机字符串
     /// </summary>
-    /// <param name="regex"></param>
-    /// <param name="count"></param>
+    /// <param name="regex">生成正则表达式</param>
+    /// <param name="count">生成个数</param>
     /// <returns></returns>
     public static string[] GenerateRandomStringWithRegex(string regex, int count) {
         var randomizerTextRegex = RandomizerFactory.GetRandomizer(
@@ -88,6 +90,31 @@ public class RandomGenerator {
         string[] results = new string[count];
         for (int i = 0; i < count; i++) {
             results[i] = randomizerTextRegex.Generate();
+        }
+        return results;
+    }
+
+    /// <summary>
+    /// 根据数据源生成随机字符串
+    /// </summary>
+    /// <param name="dataSource"></param>
+    /// <param name="range">生成字符串长度</param>
+    /// <param name="count">生成个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomStringWithDataSource(IList<char> dataSource, Range range, int count) {
+        string[] results = new string[count];
+        if (!dataSource.Any()) {
+            return results;
+        }
+        // 随机选择字符
+        var sb = new StringBuilder(range.End.Value);
+        for (int i = 0; i < count; i++) {
+            sb.Clear();
+            int length = Random.Shared.Next(range.Start.Value, range.End.Value);
+            for (int j = 0; j < length; j++) {
+                sb.Append(dataSource[Random.Shared.Next(dataSource.Count)]);
+            }
+            results[i] = sb.ToString();
         }
         return results;
     }
