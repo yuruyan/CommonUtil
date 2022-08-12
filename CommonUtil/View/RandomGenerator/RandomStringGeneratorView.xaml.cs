@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace CommonUtil.View;
 
-public partial class RandomStringGeneratorView : System.Windows.Controls.Page, IGenerable<string> {
+public partial class RandomStringGeneratorView : System.Windows.Controls.Page, IGenerable<IEnumerable<string>> {
     public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty LowerCaseCheckedProperty = DependencyProperty.Register("LowerCaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));

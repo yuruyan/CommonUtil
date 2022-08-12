@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
+﻿namespace CommonUtil.Model;
 
-namespace CommonUtil.Model;
-
-internal interface IGenerable<out T> {
-    public IEnumerable<T> Generate();
+public interface IGenerable<out T> {
+    public T Generate();
 }
 
-internal interface IGenerable<In, out Out> {
-    public IEnumerable<Out> Generate(In arg);
+public interface IGenerable<In, out Out> {
+    public Out Generate(In arg);
 }

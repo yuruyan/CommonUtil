@@ -11,7 +11,7 @@ using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithRegexView : Page, IGenerable<string> {
+public partial class RandomGeneratorWithRegexView : Page, IGenerable<IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(8.0));

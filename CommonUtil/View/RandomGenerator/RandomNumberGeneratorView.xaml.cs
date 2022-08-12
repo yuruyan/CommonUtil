@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace CommonUtil.View;
 
-public partial class RandomNumberGeneratorView : Page, IGenerable<string> {
+public partial class RandomNumberGeneratorView : Page, IGenerable<IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(1.0));

@@ -3,6 +3,7 @@ using CommonUtil.Model;
 using ModernWpf.Controls;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace CommonUtil.View;
@@ -50,7 +51,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void GenerateClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<string> generator) {
+        if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<IEnumerable<string>> generator) {
             OutputText = string.Join('\n', generator.Generate());
         }
     }

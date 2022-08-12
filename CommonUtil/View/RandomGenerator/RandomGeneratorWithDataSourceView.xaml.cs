@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls.Page, IGenerable<string> {
+public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls.Page, IGenerable<IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private const string DefaultDataSource = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
