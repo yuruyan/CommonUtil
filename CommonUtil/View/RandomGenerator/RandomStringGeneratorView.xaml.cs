@@ -71,15 +71,6 @@ public partial class RandomStringGeneratorView : System.Windows.Controls.Page, I
     }
 
     /// <summary>
-    /// 转换浮点数为整数
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
-        RandomGeneratorUtil.NumberBoxDoubleToInt(sender, e);
-    }
-
-    /// <summary>
     /// 生成
     /// </summary>
     /// <returns></returns>

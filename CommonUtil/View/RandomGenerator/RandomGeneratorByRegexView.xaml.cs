@@ -57,14 +57,5 @@ public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
             return Array.Empty<string>();
         }
     }
-
-    /// <summary>
-    /// 转换浮点数为整数
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
-        RandomGeneratorUtil.NumberBoxDoubleToInt(sender, e);
-    }
 }
 

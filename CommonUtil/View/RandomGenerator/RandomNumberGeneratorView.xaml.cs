@@ -59,14 +59,4 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<string> {
             .GenerateRandomNumber(minValue, maxValue, (int)GenerateCount)
             .Select(n => n.ToString());
     }
-
-    /// <summary>
-    /// 转换浮点数为整数
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
-        RandomGeneratorUtil.NumberBoxDoubleToInt(sender, e);
-    }
-
 }

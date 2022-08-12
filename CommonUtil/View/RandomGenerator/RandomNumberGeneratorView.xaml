@@ -12,27 +12,15 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
-  <Page.Resources>
-    <system:Double x:Key="TextBoxWidth">120</system:Double>
-    <system:Double x:Key="DescriptionWidth">100</system:Double>
-    <Style TargetType="ui:NumberBox">
-      <Setter Property="Width" Value="{StaticResource TextBoxWidth}" />
-      <Setter Property="AcceptsExpression" Value="False" />
-      <EventSetter Event="LostFocus" Handler="NumberBoxLostFocus" />
-      <Setter Property="SmallChange" Value="1" />
-      <Setter Property="SpinButtonPlacementMode" Value="Compact" />
-    </Style>
-  </Page.Resources>
-
   <ui:SimpleStackPanel Spacing="8">
     <ui:SimpleStackPanel.Resources>
       <Style TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal" />
       </Style>
       <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-        <Setter Property="Width" Value="{StaticResource DescriptionWidth}" />
+        <Setter Property="Width" Value="{StaticResource RandomGenerator_DescriptionWidth}" />
       </Style>
+      <Style BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}" TargetType="ui:NumberBox" />
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
       <TextBlock Text="最小值：" />

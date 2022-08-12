@@ -2,15 +2,15 @@
 using ModernWpf.Controls;
 using System.Windows;
 
-namespace CommonUtil.View;
+namespace CommonUtil.Resource.ResourceDictionary;
 
-internal class RandomGeneratorUtil {
+public partial class OtherResources {
     /// <summary>
     /// 转换浮点数为整数
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    public static void NumberBoxDoubleToInt(object sender, RoutedEventArgs e) {
+    private void RandomGenerator_NumberBoxLostFocus(object sender, RoutedEventArgs e) {
         e.Handled = true;
         // 浮点数转整数
         if (sender is NumberBox numberBox) {

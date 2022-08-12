@@ -132,6 +132,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resource\ResourceDictionary\OtherResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
