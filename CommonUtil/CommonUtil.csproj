@@ -39,13 +39,16 @@
     <None Remove="Resource\image\FTP.svg" />
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Intersection.svg" />
+    <None Remove="Resource\image\link.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
     <None Remove="Resource\image\paint.svg" />
     <None Remove="Resource\image\qrcode.svg" />
     <None Remove="Resource\image\random.svg" />
     <None Remove="Resource\image\regex.svg" />
+    <None Remove="Resource\image\sms.svg" />
     <None Remove="Resource\image\TextTool.svg" />
+    <None Remove="Resource\image\wifi.svg" />
     <None Remove="Resource\SplashWindow.png" />
   </ItemGroup>
 
@@ -109,6 +112,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\Intersection.svg" />
+    <Resource Include="Resource\image\link.svg" />
     <Resource Include="Resource\image\Merge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -124,12 +128,14 @@
     <Resource Include="Resource\image\regex.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\sms.svg" />
     <Resource Include="Resource\image\TextTool.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\IdiomMatching.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\wifi.svg" />
     <Resource Include="Resource\SplashWindow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
