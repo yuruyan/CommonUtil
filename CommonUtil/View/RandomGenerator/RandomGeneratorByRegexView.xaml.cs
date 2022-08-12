@@ -63,7 +63,7 @@ public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
             return Array.Empty<string>();
         }
         try {
-            return RandomGenerator.GenerateRandomString(RegexInputText, GenerateCount);
+            return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, GenerateCount);
         } catch (Exception e) {
             MessageBox.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();

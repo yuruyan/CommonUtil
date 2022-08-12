@@ -5,7 +5,6 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
-
 [Flags]
 public enum RandomStringChoice {
     None = 0,
@@ -82,7 +81,7 @@ public class RandomGenerator {
     /// <param name="regex"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    public static string[] GenerateRandomString(string regex, int count) {
+    public static string[] GenerateRandomStringWithRegex(string regex, int count) {
         var randomizerTextRegex = RandomizerFactory.GetRandomizer(
             new FieldOptionsTextRegex { Pattern = regex }
         );
@@ -93,4 +92,3 @@ public class RandomGenerator {
         return results;
     }
 }
-
