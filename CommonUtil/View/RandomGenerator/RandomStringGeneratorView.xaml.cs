@@ -1,19 +1,22 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
+using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace CommonUtil.View;
 
-public partial class RandomStringGeneratorView : Page, IGenerable<string> {
-    public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomStringGeneratorView), new PropertyMetadata());
+public partial class RandomStringGeneratorView : System.Windows.Controls.Page, IGenerable<string> {
     public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty LowerCaseCheckedProperty = DependencyProperty.Register("LowerCaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
     public static readonly DependencyProperty SpecialCharacterCheckedProperty = DependencyProperty.Register("SpecialCharacterChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(8));
-    public static readonly DependencyProperty StringLengthProperty = DependencyProperty.Register("StringLength", typeof(int), typeof(RandomStringGeneratorView), new PropertyMetadata(8));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomStringGeneratorView), new PropertyMetadata(16.0));
+    public static readonly DependencyProperty MinStringLengthProperty = DependencyProperty.Register("MinStringLength", typeof(double), typeof(RandomStringGeneratorView), new PropertyMetadata(8.0));
+    public static readonly DependencyProperty MaxStringLengthProperty = DependencyProperty.Register("MaxStringLength", typeof(double), typeof(RandomStringGeneratorView), new PropertyMetadata(16.0));
 
     /// <summary>
     /// 数字选中
@@ -46,31 +49,40 @@ public partial class RandomStringGeneratorView : Page, IGenerable<string> {
     /// <summary>
     /// 生成数量
     /// </summary>
-    public int GenerateCount {
-        get { return (int)GetValue(GenerateCountProperty); }
+    public double GenerateCount {
+        get { return (double)GetValue(GenerateCountProperty); }
         set { SetValue(GenerateCountProperty, value); }
     }
     /// <summary>
-    /// 字符长度
+    /// 字符串最小长度
     /// </summary>
-    public int StringLength {
-        get { return (int)GetValue(StringLengthProperty); }
-        set { SetValue(StringLengthProperty, value); }
+    public double MinStringLength {
+        get { return (double)GetValue(MinStringLengthProperty); }
+        set { SetValue(MinStringLengthProperty, value); }
     }
     /// <summary>
-    /// 数字列表
+    /// 字符串最大长度
     /// </summary>
-    public List<int> CountList {
-        get { return (List<int>)GetValue(CountListProperty); }
-        set { SetValue(CountListProperty, value); }
+    public double MaxStringLength {
+        get { return (double)GetValue(MaxStringLengthProperty); }
+        set { SetValue(MaxStringLengthProperty, value); }
     }
 
     public RandomStringGeneratorView() {
-        CountList = new();
-        for (int i = 1; i <= 100; i++) {
-            CountList.Add(i);
-        }
         InitializeComponent();
+    }
+
+    /// <summary>
+    /// 转换浮点数为整数
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        // 浮点数转整数
+        if (sender is NumberBox numberBox) {
+            CommonUtils.Try(() => numberBox.Value = (int)numberBox.Value);
+        }
     }
 
     /// <summary>
@@ -78,6 +90,11 @@ public partial class RandomStringGeneratorView : Page, IGenerable<string> {
     /// </summary>
     /// <returns></returns>
     public IEnumerable<string> Generate() {
+        Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
+        if (range is null) {
+            CommonUITools.Widget.MessageBox.Error("字符串范围无效");
+            return Array.Empty<string>();
+        }
         var choice = RandomStringChoice.None;
         if (NumberChecked) {
             choice |= RandomStringChoice.Number;
@@ -91,7 +108,11 @@ public partial class RandomStringGeneratorView : Page, IGenerable<string> {
         if (SpecialCharacterChecked) {
             choice |= RandomStringChoice.SpacialCharacter;
         }
-        return RandomGenerator.GenerateRandomString(choice, StringLength, GenerateCount);
+        return RandomGenerator.GenerateRandomString(
+            choice,
+            (Range)range,
+            (int)GenerateCount
+        );
     }
-}
 
+}

@@ -45,30 +45,42 @@ public class RandomGenerator {
     /// <param name="count">随机字符串个数</param>
     /// <returns></returns>
     public static string[] GenerateRandomString(RandomStringChoice choice, int length, int count) {
+        return GenerateRandomString(choice, new Range(new(length), new(length)), count);
+    }
+
+    /// <summary>
+    /// 生成随机字符串
+    /// </summary>
+    /// <param name="choice"></param>
+    /// <param name="range">字符串长度范围</param>
+    /// <param name="count">随机字符串个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomString(RandomStringChoice choice, Range range, int count) {
         if (choice == RandomStringChoice.None) {
             return Array.Empty<string>();
         }
-        string dataSource = "";
+        var sb = new StringBuilder();
         if (choice.HasFlag(RandomStringChoice.Number)) {
-            dataSource += NumberCharacter;
+            sb.Append(NumberCharacter);
         }
         if (choice.HasFlag(RandomStringChoice.UpperCase)) {
-            dataSource += UpperCaseCharacter;
+            sb.Append(UpperCaseCharacter);
         }
         if (choice.HasFlag(RandomStringChoice.LowerCase)) {
-            dataSource += LowerCaseCharacter;
+            sb.Append(LowerCaseCharacter);
         }
         if (choice.HasFlag(RandomStringChoice.SpacialCharacter)) {
-            dataSource += SpacialCharacter;
+            sb.Append(SpacialCharacter);
         }
+        string dataSource = sb.ToString();
         string[] results = new string[count];
         if (string.IsNullOrEmpty(dataSource)) {
             return results;
         }
         // 随机选择字符
-        var sb = new StringBuilder(length);
         for (int i = 0; i < count; i++) {
             sb.Clear();
+            int length = Random.Shared.Next(range.Start.Value, range.End.Value);
             for (int j = 0; j < length; j++) {
                 sb.Append(dataSource[Random.Shared.Next(dataSource.Length)]);
             }

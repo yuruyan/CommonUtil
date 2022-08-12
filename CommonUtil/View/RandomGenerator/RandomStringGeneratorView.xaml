@@ -16,7 +16,13 @@
   <Page.Resources>
     <system:Double x:Key="TextBoxWidth">120</system:Double>
     <system:Double x:Key="DescriptionWidth">100</system:Double>
-
+    <Style TargetType="ui:NumberBox">
+      <Setter Property="Width" Value="{StaticResource TextBoxWidth}" />
+      <Setter Property="AcceptsExpression" Value="False" />
+      <EventSetter Event="LostFocus" Handler="NumberBoxLostFocus" />
+      <Setter Property="SmallChange" Value="1" />
+      <Setter Property="SpinButtonPlacementMode" Value="Compact" />
+    </Style>
   </Page.Resources>
 
   <ui:SimpleStackPanel Spacing="8">
@@ -26,19 +32,25 @@
     <CheckBox Content="特殊字符" IsChecked="{Binding SpecialCharacterChecked}" />
     <StackPanel Orientation="Horizontal">
       <TextBlock Width="{StaticResource DescriptionWidth}" Text="字符串长度：" />
-      <ComboBox
-        Width="{StaticResource TextBoxWidth}"
-        ItemsSource="{Binding CountList}"
-        SelectedIndex="7"
-        SelectedValue="{Binding StringLength}" />
+      <!--  最小值  -->
+      <ui:NumberBox
+        Maximum="1024"
+        Minimum="1"
+        Value="{Binding MinStringLength}" />
+      <TextBlock Padding="4,0" Text="~" />
+      <!--  最大值  -->
+      <ui:NumberBox
+        Maximum="1024"
+        Minimum="1"
+        Value="{Binding MaxStringLength}" />
     </StackPanel>
+    <!--  生成个数  -->
     <StackPanel Orientation="Horizontal">
       <TextBlock Width="{StaticResource DescriptionWidth}" Text="生成数量：" />
-      <ComboBox
-        Width="{StaticResource TextBoxWidth}"
-        ItemsSource="{Binding CountList}"
-        SelectedIndex="8"
-        SelectedValue="{Binding GenerateCount}" />
+      <ui:NumberBox
+        Maximum="10000"
+        Minimum="1"
+        Value="{Binding GenerateCount}" />
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>
