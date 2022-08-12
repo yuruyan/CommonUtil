@@ -12,10 +12,6 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <Page.Resources>
-    <Style BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}" TargetType="ui:NumberBox" />
-  </Page.Resources>
-
   <ui:SimpleStackPanel Spacing="8">
     <CheckBox Content="数字 (0...9)" IsChecked="{Binding NumberChecked}" />
     <CheckBox Content="小写字母 (a...z)" IsChecked="{Binding LowerCaseChecked}" />
@@ -24,24 +20,15 @@
     <StackPanel Orientation="Horizontal">
       <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="字符串长度：" />
       <!--  最小值  -->
-      <ui:NumberBox
-        Maximum="1024"
-        Minimum="1"
-        Value="{Binding MinStringLength}" />
+      <ui:NumberBox Style="{StaticResource RandomGenerator_StringLengthNumberBoxStyle}" Value="{Binding MinStringLength}" />
       <TextBlock Padding="4,0" Text="~" />
       <!--  最大值  -->
-      <ui:NumberBox
-        Maximum="1024"
-        Minimum="1"
-        Value="{Binding MaxStringLength}" />
+      <ui:NumberBox Style="{StaticResource RandomGenerator_StringLengthNumberBoxStyle}" Value="{Binding MaxStringLength}" />
     </StackPanel>
     <!--  生成个数  -->
     <StackPanel Orientation="Horizontal">
       <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
-      <ui:NumberBox
-        Maximum="10000"
-        Minimum="1"
-        Value="{Binding GenerateCount}" />
+      <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>

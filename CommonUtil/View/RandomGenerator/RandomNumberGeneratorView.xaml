@@ -38,10 +38,7 @@
     </StackPanel>
     <StackPanel>
       <TextBlock Text="生成数量：" />
-      <ui:NumberBox
-        Maximum="1024"
-        Minimum="1"
-        Value="{Binding GenerateCount}" />
+      <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
     </StackPanel>
   </ui:SimpleStackPanel>
 </Page>
