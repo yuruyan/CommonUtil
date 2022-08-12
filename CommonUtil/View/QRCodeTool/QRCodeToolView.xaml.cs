@@ -35,6 +35,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private readonly Type[] Routers = {
         typeof(URLQRCodeView),
         typeof(SMSQRCodeView),
+        typeof(WIFIQRCodeView),
     };
     private readonly RouterService RouterService;
     private byte[] QRCodeImage = Array.Empty<byte>();
@@ -123,6 +124,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                     return;
                 } catch (Exception e) {
                     MessageBox.Error($"生成失败：{e.Message}");
+                    return;
+                }
+                if (!data.Any()) {
                     return;
                 }
                 QRCodeImage = data;

@@ -64,8 +64,44 @@ public class QRCodeTool {
     /// <param name="qRCodeInfo"></param>
     /// <param name="format"></param>
     /// <returns></returns>
-    public static byte[] GenerateQRCodeForSMS(string receiver, string message, QRCodeInfo qRCodeInfo, QRCodeFormat format = QRCodeFormat.PNG) {
+    public static byte[] GenerateQRCodeForSMS(
+        string receiver,
+        string message,
+        QRCodeInfo qRCodeInfo,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
         var generator = new SMS(receiver, message);
+        string payload = generator.ToString();
+        var qrGenerator = new QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
+        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+    }
+
+    /// <summary>
+    /// 生成 wifi QRCode
+    /// </summary>
+    /// <param name="name">wifi 名称</param>
+    /// <param name="password">wifi 密码</param>
+    /// <param name="qRCodeInfo"></param>
+    /// <param name="authentication">加密方式</param>
+    /// <param name="isWifiHidden">是否是隐藏 wifi</param>
+    /// <param name="format"></param>
+    /// <returns></returns>
+    public static byte[] GenerateQRCodeForWiFi(
+        string name,
+        string password,
+        QRCodeInfo qRCodeInfo,
+        WiFi.Authentication authentication = WiFi.Authentication.WPA,
+        bool isWifiHidden = false,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
+        var generator = new WiFi(
+            name,
+            password,
+            authentication,
+            isWifiHidden,
+            escapeHexStrings: false
+        );
         string payload = generator.ToString();
         var qrGenerator = new QRCodeGenerator();
         var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);

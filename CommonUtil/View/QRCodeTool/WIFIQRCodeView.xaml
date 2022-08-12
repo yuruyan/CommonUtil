@@ -1,0 +1,42 @@
+﻿<Page
+  x:Class="CommonUtil.View.WIFIQRCodeView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Title="WifiQRCodeView"
+  Margin="8"
+  d:DesignHeight="450"
+  d:DesignWidth="1200"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
+  <Page.Resources>
+    <Style TargetType="StackPanel">
+      <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+  </Page.Resources>
+
+  <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+    <StackPanel>
+      <TextBlock Width="120" Text="WiFi 名称：" />
+      <TextBox MinWidth="120" Text="{Binding WiFiName}" />
+    </StackPanel>
+    <StackPanel>
+      <TextBlock Width="120" Text="WiFi 密码：" />
+      <TextBox MinWidth="120" Text="{Binding Password}" />
+    </StackPanel>
+    <StackPanel>
+      <TextBlock Width="120" Text="加密方式：" />
+      <ComboBox Name="AuthenticationComboBox" MinWidth="120">
+        <ComboBoxItem Content="WPA / WPA2" IsSelected="True" />
+        <ComboBoxItem Content="WEP" />
+      </ComboBox>
+    </StackPanel>
+    <StackPanel>
+      <TextBlock Width="120" Text="网络是否隐藏：" />
+      <ui:ToggleSwitch IsOn="{Binding IsHiddenWifi}" />
+    </StackPanel>
+  </ui:SimpleStackPanel>
+</Page>
