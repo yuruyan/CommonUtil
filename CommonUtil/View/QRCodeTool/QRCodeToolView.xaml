@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="QRCodeToolView"
@@ -13,29 +14,60 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
+  <Page.Resources>
+    <system:Double x:Key="TopNavigationViewOverflowButtonWidth">100</system:Double>
+    <Style TargetType="ui:FontIcon">
+      <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
+    </Style>
+    <!--  Resources for NavigationView  -->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
+  </Page.Resources>
   <UniformGrid Columns="2">
-    <UniformGrid Margin="0,0,8,0" Rows="2">
-      <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      <ui:SimpleStackPanel
-        HorizontalAlignment="Center"
-        Orientation="Horizontal"
-        Spacing="16">
-        <widget:IconButton
-          Click="GenerateImageClick"
-          Icon="&#xe601;"
-          Text="生成" />
-        <widget:IconButton
-          Click="SaveImageClick"
-          Icon="&#xe616;"
-          Text="保存" />
-        <widget:IconButton
-          Click="ClearInputClick"
-          Icon="&#xe946;"
-          Style="{StaticResource GlobalErrorButtonStyle}"
-          Text="清空" />
+    <ui:NavigationView
+      x:Name="NavigationView"
+      IsBackButtonVisible="Collapsed"
+      IsPaneToggleButtonVisible="False"
+      IsSettingsVisible="False"
+      IsTabStop="False"
+      OpenPaneLength="40"
+      PaneDisplayMode="Left"
+      SelectionChanged="NavigationViewSelectionChanged">
+      <ui:NavigationView.MenuItems>
+        <ui:NavigationViewItem
+          Name="URLQRCodeView"
+          Content="生成链接"
+          IsSelected="True"
+          ToolTip="生成链接"
+          ToolTipService.InitialShowDelay="{StaticResource ToolTipServiceInitialShowDelay}">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe6ca;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+      </ui:NavigationView.MenuItems>
+      <ui:SimpleStackPanel Spacing="16">
+        <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
+        <ui:SimpleStackPanel
+          HorizontalAlignment="Center"
+          Orientation="Horizontal"
+          Spacing="16">
+          <widget:IconButton
+            Click="GenerateImageClick"
+            Icon="&#xe601;"
+            Text="生成" />
+          <widget:IconButton
+            Click="SaveImageClick"
+            Icon="&#xe616;"
+            Text="保存" />
+          <widget:IconButton
+            Click="ClearInputClick"
+            Icon="&#xe946;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="清空" />
+        </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
-    </UniformGrid>
+    </ui:NavigationView>
     <Image Source="{Binding QRCodeImageSource}" Stretch="Uniform" />
   </UniformGrid>
 </Page>

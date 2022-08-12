@@ -91,6 +91,9 @@
     <Compile Update="View\QRCodeTool\QRCodeToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\QRCodeTool\URLQRCodeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\RandomGenerator\RandomGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -232,6 +235,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\QRCodeTool\QRCodeToolView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\QRCodeTool\URLQRCodeView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RandomGenerator\RandomGeneratorView.xaml">
