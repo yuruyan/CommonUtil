@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using static QRCoder.PayloadGenerator;
 using static QRCoder.QRCodeGenerator;
 
 namespace CommonUtil.Core;
@@ -44,14 +45,30 @@ public class QRCodeTool {
     }
 
     /// <summary>
-    /// 生成QRCode
+    /// 生成文本 QRCode
     /// </summary>
     /// <param name="input"></param>
     /// <param name="format"></param>
     /// <returns></returns>
     public static byte[] GenerateQRCodeForText(string input, QRCodeInfo qRCodeInfo, QRCodeFormat format = QRCodeFormat.PNG) {
         var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(input, QRCodeGenerator.ECCLevel.Q);
+        var qrCodeData = qrGenerator.CreateQrCode(input, qRCodeInfo.ECCLevel);
+        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+    }
+
+    /// <summary>
+    /// 生成 sms QRCode
+    /// </summary>
+    /// <param name="receiver">收件人</param>
+    /// <param name="message">信息</param>
+    /// <param name="qRCodeInfo"></param>
+    /// <param name="format"></param>
+    /// <returns></returns>
+    public static byte[] GenerateQRCodeForSMS(string receiver, string message, QRCodeInfo qRCodeInfo, QRCodeFormat format = QRCodeFormat.PNG) {
+        var generator = new SMS(receiver, message);
+        string payload = generator.ToString();
+        var qrGenerator = new QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
     }
 

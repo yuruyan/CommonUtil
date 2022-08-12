@@ -19,6 +19,9 @@
     <Style TargetType="ui:FontIcon">
       <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
     </Style>
+    <Style TargetType="ui:NavigationViewItem">
+      <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource ToolTipServiceInitialShowDelay}" />
+    </Style>
     <!--  Resources for NavigationView  -->
     <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
@@ -37,12 +40,19 @@
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
           Name="URLQRCodeView"
-          Content="生成链接"
+          Content="链接二维码"
           IsSelected="True"
-          ToolTip="生成链接"
-          ToolTipService.InitialShowDelay="{StaticResource ToolTipServiceInitialShowDelay}">
+          ToolTip="链接二维码">
           <ui:NavigationViewItem.Icon>
             <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe6ca;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="SMSQRCodeView"
+          Content="短信二维码"
+          ToolTip="短信二维码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#20AC95" Glyph="&#xe61a;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>

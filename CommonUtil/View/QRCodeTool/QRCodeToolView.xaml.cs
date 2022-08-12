@@ -34,6 +34,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     }
     private readonly Type[] Routers = {
         typeof(URLQRCodeView),
+        typeof(SMSQRCodeView),
     };
     private readonly RouterService RouterService;
     private byte[] QRCodeImage = Array.Empty<byte>();

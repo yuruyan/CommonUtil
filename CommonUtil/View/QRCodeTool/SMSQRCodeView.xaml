@@ -1,0 +1,36 @@
+﻿<Page
+  x:Class="CommonUtil.View.SMSQRCodeView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Title="WifiQRCodeView"
+  Margin="8"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
+  <Page.Resources>
+    <Style TargetType="StackPanel">
+      <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+  </Page.Resources>
+
+  <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+    <StackPanel>
+      <TextBlock Width="80" Text="收件人：" />
+      <TextBox MinWidth="120" Text="{Binding Receiver}" />
+    </StackPanel>
+    <StackPanel>
+      <TextBlock Width="80" Text="短信内容：" />
+      <TextBox
+        MinWidth="120"
+        MaxLines="8"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding Message}"
+        TextWrapping="Wrap" />
+    </StackPanel>
+  </ui:SimpleStackPanel>
+</Page>
