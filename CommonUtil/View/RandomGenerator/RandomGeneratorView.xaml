@@ -29,11 +29,9 @@
             IsSelected="True" />
           <ui:NavigationViewItem x:Name="RandomNumberGeneratorView" Content="生成随机数" />
           <ui:NavigationViewItem x:Name="RandomGeneratorWithRegexView" Content="根据正则生成" />
+          <ui:NavigationViewItem x:Name="RandomGeneratorWithDataSourceView" Content="根据数据源生成" />
         </ui:NavigationView.MenuItems>
-        <ui:Frame
-          x:Name="ContentFrame"
-          Margin="0,8,0,0"
-          Padding="0,0,40,0" />
+        <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
       </ui:NavigationView>
       <ui:SimpleStackPanel Orientation="Horizontal" Spacing="20">
         <widget:IconButton

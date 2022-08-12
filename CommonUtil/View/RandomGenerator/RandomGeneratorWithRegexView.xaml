@@ -17,13 +17,13 @@
       <Style TargetType="StackPanel">
         <Setter Property="Orientation" Value="Horizontal" />
       </Style>
-      <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-        <Setter Property="MaxWidth" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=110}" />
-      </Style>
     </ui:SimpleStackPanel.Resources>
     <StackPanel>
       <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="正则表达式：" />
-      <TextBox MinWidth="{StaticResource RandomGenerator_TextBoxWidth}" Text="{Binding RegexInputText}" />
+      <TextBox
+        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWidth}}"
+        MinWidth="{StaticResource RandomGenerator_TextBoxWidth}"
+        Text="{Binding RegexInputText}" />
     </StackPanel>
     <!--  生成数量  -->
     <StackPanel>
