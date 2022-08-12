@@ -2,6 +2,7 @@
 using ModernWpf.Controls;
 using NLog;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace CommonUtil.View;
@@ -11,11 +12,11 @@ public partial class CodeGeneratorView : System.Windows.Controls.Page {
     private readonly Type[] Routers = {
         typeof(CSharpDependencyView),
     };
-    private readonly RouterService _RouterService;
+    private readonly RouterService RouterService;
 
     public CodeGeneratorView() {
         InitializeComponent();
-        _RouterService = new(ContentFrame, Routers);
+        RouterService = new(ContentFrame, Routers);
     }
 
     /// <summary>
@@ -25,12 +26,7 @@ public partial class CodeGeneratorView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
-            foreach (var item in Routers) {
-                if (item.Name.Contains(element.Name)) {
-                    _RouterService.Navigate(item);
-                    break;
-                }
-            }
+            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 }

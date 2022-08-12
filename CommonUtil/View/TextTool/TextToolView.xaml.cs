@@ -2,6 +2,7 @@
 using ModernWpf.Controls;
 using NLog;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace CommonUtil.View;
@@ -9,13 +10,13 @@ namespace CommonUtil.View;
 public partial class TextToolView : System.Windows.Controls.Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Type[] Routers = {
-            typeof(RemoveDuplicateView),
-            typeof(WhiteSpaceProcessView),
-            typeof(HalfFullCharTransformView),
-            typeof(PrependLineNumberView),
-            typeof(AddEnglishWordBraces),
+        typeof(RemoveDuplicateView),
+        typeof(WhiteSpaceProcessView),
+        typeof(HalfFullCharTransformView),
+        typeof(PrependLineNumberView),
+        typeof(AddEnglishWordBraces),
     };
-    private RouterService RouterService;
+    private readonly RouterService RouterService;
 
     public TextToolView() {
         InitializeComponent();
@@ -30,10 +31,7 @@ public partial class TextToolView : System.Windows.Controls.Page {
     private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
             foreach (var item in Routers) {
-                if (item.Name.Contains(element.Name)) {
-                    RouterService.Navigate(item);
-                    break;
-                }
+                RouterService.Navigate(Routers.First(r => r.Name == element.Name));
             }
         }
     }

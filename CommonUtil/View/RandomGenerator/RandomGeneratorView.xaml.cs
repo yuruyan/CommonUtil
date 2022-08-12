@@ -4,6 +4,7 @@ using ModernWpf.Controls;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace CommonUtil.View;
@@ -63,13 +64,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
-            foreach (var item in Routers) {
-                if (item.Name == element.Name) {
-                    RouterService.Navigate(item);
-                    break;
-                }
-            }
+            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 }
-
