@@ -14,22 +14,14 @@ namespace CommonUtil.View;
 public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty CountListProperty = DependencyProperty.Register("CountList", typeof(List<int>), typeof(RandomGeneratorByRegexView), new PropertyMetadata());
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(int), typeof(RandomGeneratorByRegexView), new PropertyMetadata(8));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorByRegexView), new PropertyMetadata(8.0));
     public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorByRegexView), new PropertyMetadata(string.Empty));
 
     /// <summary>
-    /// 数字列表
-    /// </summary>
-    public List<int> CountList {
-        get { return (List<int>)GetValue(CountListProperty); }
-        set { SetValue(CountListProperty, value); }
-    }
-    /// <summary>
     /// 生成个数
     /// </summary>
-    public int GenerateCount {
-        get { return (int)GetValue(GenerateCountProperty); }
+    public double GenerateCount {
+        get { return (double)GetValue(GenerateCountProperty); }
         set { SetValue(GenerateCountProperty, value); }
     }
     /// <summary>
@@ -41,10 +33,6 @@ public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
     }
 
     public RandomGeneratorByRegexView() {
-        CountList = new();
-        for (int i = 1; i <= 100; i++) {
-            CountList.Add(i);
-        }
         InitializeComponent();
     }
 
@@ -63,11 +51,20 @@ public partial class RandomGeneratorByRegexView : Page, IGenerable<string> {
             return Array.Empty<string>();
         }
         try {
-            return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, GenerateCount);
+            return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, (int)GenerateCount);
         } catch (Exception e) {
             MessageBox.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
+    }
+
+    /// <summary>
+    /// 转换浮点数为整数
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
+        RandomGeneratorUtil.NumberBoxDoubleToInt(sender, e);
     }
 }
 
