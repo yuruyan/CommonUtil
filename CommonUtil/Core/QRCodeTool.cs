@@ -78,6 +78,69 @@ public class QRCodeTool {
     }
 
     /// <summary>
+    /// 生成 Mail QRCode
+    /// </summary>
+    /// <param name="receiver">收件人</param>
+    /// <param name="subject">主题</param>
+    /// <param name="message">信息</param>
+    /// <param name="qRCodeInfo"></param>
+    /// <param name="format"></param>
+    /// <returns></returns>
+    public static byte[] GenerateQRCodeForMail(
+        string receiver,
+        string subject,
+        string message,
+        QRCodeInfo qRCodeInfo,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
+        var generator = new Mail(receiver, subject, message);
+        string payload = generator.ToString();
+        var qrGenerator = new QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
+        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+    }
+
+    /// <summary>
+    /// 生成 Phonenumber QRCode
+    /// </summary>
+    /// <param name="receiver">收件人</param>
+    /// <param name="qRCodeInfo"></param>
+    /// <param name="format"></param>
+    /// <returns></returns>
+    public static byte[] GenerateQRCodeForPhonenumber(
+        string receiver,
+        QRCodeInfo qRCodeInfo,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
+        var generator = new PhoneNumber(receiver);
+        string payload = generator.ToString();
+        var qrGenerator = new QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
+        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+    }
+
+    /// <summary>
+    /// 生成 Geolocation QRCode
+    /// </summary>
+    /// <param name="longitude">经度</param>
+    /// <param name="latitude">纬度</param>
+    /// <param name="qRCodeInfo"></param>
+    /// <param name="format"></param>
+    /// <returns></returns>
+    public static byte[] GenerateQRCodeForGeolocation(
+        double longitude,
+        double latitude,
+        QRCodeInfo qRCodeInfo,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
+        var generator = new Geolocation(latitude.ToString(), longitude.ToString());
+        string payload = generator.ToString();
+        var qrGenerator = new QRCodeGenerator();
+        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
+        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+    }
+
+    /// <summary>
     /// 生成 wifi QRCode
     /// </summary>
     /// <param name="name">wifi 名称</param>
