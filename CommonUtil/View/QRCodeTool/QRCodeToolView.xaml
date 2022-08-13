@@ -16,18 +16,12 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="TopNavigationViewOverflowButtonWidth">100</system:Double>
-    <Style TargetType="ui:FontIcon">
-      <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
-    </Style>
-    <Style TargetType="ui:NavigationViewItem">
-      <Setter Property="ToolTipService.InitialShowDelay" Value="{StaticResource ToolTipServiceInitialShowDelay}" />
-    </Style>
     <!--  Resources for NavigationView  -->
     <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
   </Page.Resources>
+
   <UniformGrid Columns="2">
     <ui:NavigationView
       x:Name="NavigationView"
