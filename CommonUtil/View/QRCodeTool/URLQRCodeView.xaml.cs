@@ -34,7 +34,7 @@ public partial class URLQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat,
     Task<byte[]> IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>.Generate(KeyValuePair<QRCodeFormat, QRCodeInfo> arg) {
         var url = URLText;
         // 检验输入
-        if (!UIUtils.CheckInputNullOrEmpty(url)) {
+        if (!UIUtils.CheckInputNullOrEmpty(url, message: "链接不能为空")) {
             return Task.FromResult(Array.Empty<byte>());
         }
         return Task.Run(() => QRCodeTool.GenerateQRCodeForText(

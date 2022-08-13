@@ -1,6 +1,8 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -47,9 +49,15 @@ public partial class MailQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat
     /// <param name="arg"></param>
     /// <returns></returns>
     Task<byte[]> IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>.Generate(KeyValuePair<QRCodeFormat, QRCodeInfo> arg) {
-        var receiver = Receiver;
-        var subject = Subject;
-        var message = Message;
+        var receiver = Receiver ?? string.Empty;
+        var subject = Subject ?? string.Empty;
+        var message = Message ?? string.Empty;
+        // 检验输入
+        if (!(UIUtils.CheckInputNullOrEmpty(receiver, message: "收件人不能为空")
+            && UIUtils.CheckInputNullOrEmpty(message, message: "内容不能为空")
+        )) {
+            return Task.FromResult(Array.Empty<byte>());
+        }
         return Task.Run(() => QRCodeTool.GenerateQRCodeForMail(
             receiver,
             subject,

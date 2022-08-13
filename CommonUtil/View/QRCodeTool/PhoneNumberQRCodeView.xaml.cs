@@ -1,6 +1,8 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +33,11 @@ public partial class PhoneNumberQRCodeView : Page, IGenerable<KeyValuePair<QRCod
     /// <param name="arg"></param>
     /// <returns></returns>
     Task<byte[]> IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>.Generate(KeyValuePair<QRCodeFormat, QRCodeInfo> arg) {
-        var phoneNumber = PhoneNumber;
+        var phoneNumber = PhoneNumber ?? string.Empty;
+        // 检验输入
+        if (!UIUtils.CheckInputNullOrEmpty(phoneNumber, message: "电话号码不能为空")) {
+            return Task.FromResult(Array.Empty<byte>());
+        }
         return Task.Run(() => QRCodeTool.GenerateQRCodeForPhonenumber(
             phoneNumber,
             arg.Value,

@@ -50,8 +50,8 @@ public partial class WIFIQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat
     /// <param name="arg"></param>
     /// <returns></returns>
     Task<byte[]> IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>.Generate(KeyValuePair<QRCodeFormat, QRCodeInfo> arg) {
-        var wifiName = WiFiName;
-        var password = Password;
+        var wifiName = WiFiName ?? string.Empty;
+        var password = Password ?? string.Empty;
         var isHiddenWifi = IsHiddenWifi;
         // 输入无效
         if (!(UIUtils.CheckInputNullOrEmpty(wifiName, message: "wifi 名称不能为空")

@@ -43,7 +43,9 @@ public partial class SMSQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat,
         var receiver = Receiver ?? string.Empty;
         var message = Message ?? string.Empty;
         // 检验输入
-        if (!UIUtils.CheckInputNullOrEmpty(receiver)) {
+        if (!(UIUtils.CheckInputNullOrEmpty(receiver, message: "收件人不能为空")
+            && UIUtils.CheckInputNullOrEmpty(message, message: "短信不能为空")
+        )) {
             return Task.FromResult(Array.Empty<byte>());
         }
         return Task.Run(() => QRCodeTool.GenerateQRCodeForSMS(
