@@ -80,6 +80,14 @@
             <ui:FontIcon Foreground="#2FAFCE" Glyph="&#xe67d;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="GeolocationQRCodeView"
+          Content="地理位置二维码"
+          ToolTip="地理位置二维码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#C25E2D" Glyph="&#xe76f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:SimpleStackPanel Margin="8,0,0,0" Spacing="16">
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
