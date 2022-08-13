@@ -69,7 +69,7 @@ public partial class MainWindow : Window {
         // 主窗口菜单列表
         if (contentType == typeof(MainContentView)) {
             RouteViewTitle = Global.AppTitle;
-            MainContentViewBackgroundAnimation.To = ((SolidColorBrush)Global.ThemeResource["MainContentViewBackground"]).Color;
+            MainContentViewBackgroundAnimation.To = ((SolidColorBrush)FindResource("MainContentViewBackground")).Color;
             TranslateTransformXAnimation.From = -100;
         } else {
             MainContentViewBackgroundAnimation.To = Colors.White;
