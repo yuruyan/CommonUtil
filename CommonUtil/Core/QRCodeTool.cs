@@ -1,4 +1,5 @@
-﻿using QRCoder;
+﻿using CommonUITools.Utils;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -208,8 +209,8 @@ public class QRCodeTool {
         var data = generator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         return new PdfByteQRCode(data).GetGraphic(
             qRCodeInfo.PixelPerModule,
-            qRCodeInfo.Foreground.ToString(),
-            Color.Transparent.ToString()
+            $"#{UIUtils.DrawingColorToColor(qRCodeInfo.Foreground).ToString()[3..]}",
+            "#FFFFFF"
         );
     }
 }
