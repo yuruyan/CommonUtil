@@ -11,19 +11,11 @@ using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithRegexView : Page, IGenerable<IEnumerable<string>> {
+public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(8.0));
     public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(string.Empty));
 
-    /// <summary>
-    /// 生成个数
-    /// </summary>
-    public double GenerateCount {
-        get { return (double)GetValue(GenerateCountProperty); }
-        set { SetValue(GenerateCountProperty, value); }
-    }
     /// <summary>
     /// 正则输入
     /// </summary>
@@ -40,7 +32,7 @@ public partial class RandomGeneratorWithRegexView : Page, IGenerable<IEnumerable
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate() {
+    public IEnumerable<string> Generate(uint generateCount) {
         if (string.IsNullOrEmpty(RegexInputText)) {
             MessageBox.Info("正则表达式不能为空！");
             return Array.Empty<string>();
@@ -51,7 +43,7 @@ public partial class RandomGeneratorWithRegexView : Page, IGenerable<IEnumerable
             return Array.Empty<string>();
         }
         try {
-            return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, (int)GenerateCount);
+            return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, generateCount);
         } catch (Exception e) {
             MessageBox.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();

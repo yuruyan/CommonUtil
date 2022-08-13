@@ -9,12 +9,11 @@ using System.Windows.Controls;
 
 namespace CommonUtil.View;
 
-public partial class RandomNumberGeneratorView : Page, IGenerable<IEnumerable<string>> {
+public partial class RandomNumberGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(100.0));
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(16.0));
 
     /// <summary>
     /// 最小值
@@ -30,13 +29,6 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<IEnumerable<st
         get { return (double)GetValue(MaxValueProperty); }
         set { SetValue(MaxValueProperty, value); }
     }
-    /// <summary>
-    /// 生成个数
-    /// </summary>
-    public double GenerateCount {
-        get { return (double)GetValue(GenerateCountProperty); }
-        set { SetValue(GenerateCountProperty, value); }
-    }
 
     public RandomNumberGeneratorView() {
         InitializeComponent();
@@ -45,7 +37,7 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<IEnumerable<st
     /// <summary>
     /// 生成
     /// </summary>
-    public IEnumerable<string> Generate() {
+    public IEnumerable<string> Generate(uint generateCount) {
         int minValue = (int)MinValue;
         int maxValue = (int)MaxValue;
         if (minValue > maxValue) {
@@ -56,7 +48,7 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<IEnumerable<st
             maxValue += 1;
         }
         return RandomGenerator
-            .GenerateRandomNumber(minValue, maxValue, (int)GenerateCount)
+            .GenerateRandomNumber(minValue, maxValue, generateCount)
             .Select(n => n.ToString());
     }
 }

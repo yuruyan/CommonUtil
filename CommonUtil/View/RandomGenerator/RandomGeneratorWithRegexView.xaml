@@ -25,10 +25,5 @@
         MinWidth="{StaticResource RandomGenerator_TextBoxWidth}"
         Text="{Binding RegexInputText}" />
     </StackPanel>
-    <!--  生成数量  -->
-    <StackPanel>
-      <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
-      <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
-    </StackPanel>
   </ui:SimpleStackPanel>
 </Page>

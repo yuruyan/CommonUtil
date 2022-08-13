@@ -38,10 +38,5 @@
       <!--  最大值  -->
       <ui:NumberBox Style="{StaticResource RandomGenerator_StringLengthNumberBoxStyle}" Value="{Binding MaxStringLength}" />
     </StackPanel>
-    <!--  生成个数  -->
-    <StackPanel>
-      <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
-      <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
-    </StackPanel>
   </ui:SimpleStackPanel>
 </Page>

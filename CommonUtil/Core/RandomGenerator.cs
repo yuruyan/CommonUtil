@@ -29,7 +29,7 @@ public class RandomGenerator {
     /// <param name="maxValue">最大值，不包括</param>
     /// <param name="count"></param>
     /// <returns></returns>
-    public static int[] GenerateRandomNumber(int minValue, int maxValue, int count) {
+    public static int[] GenerateRandomNumber(int minValue, int maxValue, uint count) {
         int[] results = new int[count];
         for (int i = 0; i < count; i++) {
             results[i] = Random.Shared.Next(minValue, maxValue);
@@ -44,7 +44,7 @@ public class RandomGenerator {
     /// <param name="length">字符串长度</param>
     /// <param name="count">随机字符串个数</param>
     /// <returns></returns>
-    public static string[] GenerateRandomString(RandomStringChoice choice, int length, int count) {
+    public static string[] GenerateRandomString(RandomStringChoice choice, int length, uint count) {
         return GenerateRandomString(choice, new Range(new(length), new(length)), count);
     }
 
@@ -55,7 +55,7 @@ public class RandomGenerator {
     /// <param name="range">字符串长度范围</param>
     /// <param name="count">随机字符串个数</param>
     /// <returns></returns>
-    public static string[] GenerateRandomString(RandomStringChoice choice, Range range, int count) {
+    public static string[] GenerateRandomString(RandomStringChoice choice, Range range, uint count) {
         if (choice == RandomStringChoice.None) {
             return Array.Empty<string>();
         }
@@ -95,7 +95,7 @@ public class RandomGenerator {
     /// <param name="regex">生成正则表达式</param>
     /// <param name="count">生成个数</param>
     /// <returns></returns>
-    public static string[] GenerateRandomStringWithRegex(string regex, int count) {
+    public static string[] GenerateRandomStringWithRegex(string regex, uint count) {
         var randomizerTextRegex = RandomizerFactory.GetRandomizer(
             new FieldOptionsTextRegex { Pattern = regex }
         );
@@ -113,7 +113,7 @@ public class RandomGenerator {
     /// <param name="range">生成字符串长度</param>
     /// <param name="count">生成个数</param>
     /// <returns></returns>
-    public static string[] GenerateRandomStringWithDataSource(IList<char> dataSource, Range range, int count) {
+    public static string[] GenerateRandomStringWithDataSource(IList<char> dataSource, Range range, uint count) {
         string[] results = new string[count];
         if (!dataSource.Any()) {
             return results;

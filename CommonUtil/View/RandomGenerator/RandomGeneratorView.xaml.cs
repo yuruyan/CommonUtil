@@ -13,12 +13,21 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RandomGeneratorView), new PropertyMetadata(""));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorView), new PropertyMetadata(8.0));
+
     /// <summary>
     /// 输出
     /// </summary>
     public string OutputText {
         get { return (string)GetValue(OutputTextProperty); }
         set { SetValue(OutputTextProperty, value); }
+    }
+    /// <summary>
+    /// 生成个数
+    /// </summary>
+    public double GenerateCount {
+        get { return (double)GetValue(GenerateCountProperty); }
+        set { SetValue(GenerateCountProperty, value); }
     }
 
     private readonly Type[] Routers = {
@@ -52,8 +61,8 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void GenerateClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<IEnumerable<string>> generator) {
-            OutputText = string.Join('\n', generator.Generate());
+        if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<uint, IEnumerable<string>> generator) {
+            OutputText = string.Join('\n', generator.Generate((uint)GenerateCount));
         }
     }
 

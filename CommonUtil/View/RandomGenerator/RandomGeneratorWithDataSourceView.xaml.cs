@@ -8,22 +8,14 @@ using System.Windows;
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls.Page, IGenerable<IEnumerable<string>> {
+public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls.Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private const string DefaultDataSource = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorWithDataSourceView), new PropertyMetadata(16.0));
     public static readonly DependencyProperty MinStringLengthProperty = DependencyProperty.Register("MinStringLength", typeof(double), typeof(RandomGeneratorWithDataSourceView), new PropertyMetadata(8.0));
     public static readonly DependencyProperty MaxStringLengthProperty = DependencyProperty.Register("MaxStringLength", typeof(double), typeof(RandomGeneratorWithDataSourceView), new PropertyMetadata(16.0));
     public static readonly DependencyProperty DataSourceTextProperty = DependencyProperty.Register("DataSourceText", typeof(string), typeof(RandomGeneratorWithDataSourceView), new PropertyMetadata(DefaultDataSource));
 
-    /// <summary>
-    /// 生成数量
-    /// </summary>
-    public double GenerateCount {
-        get { return (double)GetValue(GenerateCountProperty); }
-        set { SetValue(GenerateCountProperty, value); }
-    }
     /// <summary>
     /// 字符串最小长度
     /// </summary>
@@ -54,7 +46,7 @@ public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate() {
+    public IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
             CommonUITools.Widget.MessageBox.Error("字符串范围无效");
@@ -68,7 +60,7 @@ public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls
         return RandomGenerator.GenerateRandomStringWithDataSource(
             DataSourceText.ToCharArray(),
             new Range(range.Value.Start, new(range.Value.End.Value + 1)),
-            (int)GenerateCount
+            generateCount
         );
     }
 
