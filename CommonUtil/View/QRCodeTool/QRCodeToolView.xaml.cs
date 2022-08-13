@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static QRCoder.QRCodeGenerator;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
@@ -28,7 +29,18 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     public static readonly DependencyProperty QRCodeImageSourceProperty = DependencyProperty.Register("QRCodeImageSource", typeof(ImageSource), typeof(QRCodeToolView), new PropertyMetadata());
     public static readonly DependencyProperty QRCodeForegroundProperty = DependencyProperty.Register("QRCodeForeground", typeof(Color), typeof(QRCodeToolView), new PropertyMetadata(Colors.Black));
     public static readonly DependencyProperty QRCodeForegroundTextProperty = DependencyProperty.Register("QRCodeForegroundText", typeof(string), typeof(QRCodeToolView), new PropertyMetadata("#000000"));
+    public static readonly DependencyProperty ECCLevelsProperty = DependencyProperty.Register("ECCLevels", typeof(IList<byte>), typeof(QRCodeToolView), new PropertyMetadata());
+    public static readonly DependencyProperty ECCLevelComboxSelectedIndexProperty = DependencyProperty.Register("ECCLevelComboxSelectedIndex", typeof(int), typeof(QRCodeToolView), new PropertyMetadata(0));
 
+    /// <summary>
+    /// 二维码容错率
+    /// </summary>
+    private static readonly IDictionary<byte, ECCLevel> ECCLevelDict = new Dictionary<byte, ECCLevel>() {
+        {7, ECCLevel.L },
+        {15, ECCLevel.M },
+        {25, ECCLevel.Q },
+        {35, ECCLevel.H },
+    };
     private readonly Type[] Routers = {
         typeof(URLQRCodeView),
         typeof(SMSQRCodeView),
@@ -61,11 +73,26 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         set { SetValue(QRCodeForegroundTextProperty, value); }
     }
     /// <summary>
+    /// 容错率列表
+    /// </summary>
+    public IList<byte> ECCLevels {
+        get { return (IList<byte>)GetValue(ECCLevelsProperty); }
+        set { SetValue(ECCLevelsProperty, value); }
+    }
+    /// <summary>
     /// 当前图片缓存
     /// </summary>
     private byte[] QRCodeImage = Array.Empty<byte>();
+    /// <summary>
+    /// 选中 ECCLevel Index
+    /// </summary>
+    public int ECCLevelComboxSelectedIndex {
+        get { return (int)GetValue(ECCLevelComboxSelectedIndexProperty); }
+        set { SetValue(ECCLevelComboxSelectedIndexProperty, value); }
+    }
 
     public QRCodeToolView() {
+        ECCLevels = ECCLevelDict.Keys.ToList();
         InitializeComponent();
         // 更新 QRCodeForegroundText
         DependencyPropertyDescriptor.FromProperty(QRCodeForegroundProperty, typeof(QRCodeToolView))
@@ -166,7 +193,8 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                     QRCodeForeground.R,
                     QRCodeForeground.G,
                     QRCodeForeground.B
-                )
+                ),
+                ECCLevel = ECCLevelDict[ECCLevels[ECCLevelComboxSelectedIndex]]
             }));
         } catch (DataTooLongException) {
             MessageBox.Error("文本过长！");

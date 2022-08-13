@@ -83,10 +83,18 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
-      <ui:SimpleStackPanel Margin="8,0,0,0" Spacing="{StaticResource MediumItemSpacing}">
+      <ui:SimpleStackPanel
+        Margin="8,0,0,0"
+        Orientation="Vertical"
+        Spacing="{StaticResource MediumItemSpacing}">
+        <ui:SimpleStackPanel.Resources>
+          <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+          </Style>
+        </ui:SimpleStackPanel.Resources>
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
         <!--  前景色选择  -->
-        <ui:SimpleStackPanel Orientation="Horizontal">
+        <ui:SimpleStackPanel>
           <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="二维码颜色：" />
           <Rectangle
             Width="100"
@@ -116,8 +124,24 @@
             KeyUp="QRCodeForegroundKeyUpHandler"
             Text="{Binding QRCodeForegroundText, UpdateSourceTrigger=PropertyChanged}" />
         </ui:SimpleStackPanel>
+
+        <!--  二维码容错率  -->
+        <ui:SimpleStackPanel>
+          <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="容错率：" />
+          <ComboBox
+            Width="{StaticResource QRCodeToolView_TextBoxWidth}"
+            ItemsSource="{Binding ECCLevels}"
+            SelectedIndex="{Binding ECCLevelComboxSelectedIndex}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock FontFamily="{StaticResource ASCIIFontFamily}" Text="{Binding ., StringFormat='{}{0} %'}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </ui:SimpleStackPanel>
+
         <!--  Control  -->
-        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource MediumItemSpacing}">
+        <ui:SimpleStackPanel Spacing="{StaticResource MediumItemSpacing}">
           <widget:IconButton
             Click="GenerateImageClick"
             Icon="&#xe601;"
@@ -130,6 +154,8 @@
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ui:NavigationView>
+
+    <!--  二维码  -->
     <Image Source="{Binding QRCodeImageSource}" Stretch="Uniform" />
   </UniformGrid>
 </Page>
