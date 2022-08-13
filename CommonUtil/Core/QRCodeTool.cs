@@ -99,16 +99,16 @@ public class QRCodeTool {
     /// <summary>
     /// 生成 Phonenumber QRCode
     /// </summary>
-    /// <param name="receiver">收件人</param>
+    /// <param name="phoneNumber">收件人</param>
     /// <param name="qRCodeInfo"></param>
     /// <param name="format"></param>
     /// <returns></returns>
     public static byte[] GenerateQRCodeForPhonenumber(
-        string receiver,
+        string phoneNumber,
         QRCodeInfo qRCodeInfo,
         QRCodeFormat format = QRCodeFormat.PNG
     ) {
-        var generator = new PhoneNumber(receiver);
+        var generator = new PhoneNumber(phoneNumber);
         return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
