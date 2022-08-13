@@ -16,26 +16,33 @@
     <Style TargetType="StackPanel">
       <Setter Property="Orientation" Value="Horizontal" />
     </Style>
+    <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+      <Setter Property="Width" Value="{StaticResource QRCodeToolView_DescriptionWidth}" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+      <Setter Property="MinWidth" Value="{StaticResource QRCodeToolView_TextBoxWidth}" />
+      <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource QRCodeToolView_DescriptionWithEdgeWidth}}" />
+    </Style>
   </Page.Resources>
 
   <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
     <StackPanel>
-      <TextBlock Width="120" Text="WiFi 名称：" />
-      <TextBox MinWidth="120" Text="{Binding WiFiName}" />
+      <TextBlock Text="WiFi 名称：" />
+      <TextBox Text="{Binding WiFiName}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="120" Text="WiFi 密码：" />
-      <TextBox MinWidth="120" Text="{Binding Password}" />
+      <TextBlock Text="WiFi 密码：" />
+      <TextBox Text="{Binding Password}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="120" Text="加密方式：" />
-      <ComboBox Name="AuthenticationComboBox" MinWidth="120">
+      <TextBlock Text="加密方式：" />
+      <ComboBox Name="AuthenticationComboBox">
         <ComboBoxItem Content="WPA / WPA2" IsSelected="True" />
         <ComboBoxItem Content="WEP" />
       </ComboBox>
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="120" Text="网络是否隐藏：" />
+      <TextBlock Text="网络是否隐藏：" />
       <ui:ToggleSwitch IsOn="{Binding IsHiddenWifi}" />
     </StackPanel>
   </ui:SimpleStackPanel>

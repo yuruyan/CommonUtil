@@ -16,17 +16,25 @@
     <Style TargetType="StackPanel">
       <Setter Property="Orientation" Value="Horizontal" />
     </Style>
+    <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+      <Setter Property="Width" Value="{StaticResource QRCodeToolView_DescriptionWidth}" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+      <Setter Property="MinWidth" Value="{StaticResource QRCodeToolView_TextBoxWidth}" />
+      <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource QRCodeToolView_DescriptionWithEdgeWidth}}" />
+    </Style>
   </Page.Resources>
 
   <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
     <StackPanel>
-      <TextBlock Width="80" Text="收件人：" />
-      <TextBox MinWidth="120" Text="{Binding Receiver}" />
+      <TextBlock Text="收件人：" />
+      <TextBox Text="{Binding Receiver}" />
     </StackPanel>
     <StackPanel>
-      <TextBlock Width="80" Text="短信内容：" />
+      <TextBlock Text="短信内容：" />
       <TextBox
-        MinWidth="120"
+        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource QRCodeToolView_DescriptionWithEdgeWidth}}"
+        MinWidth="{StaticResource QRCodeToolView_TextBoxWidth}"
         MaxLines="8"
         Style="{StaticResource MultilineTextBoxStyle}"
         Text="{Binding Message}"

@@ -37,4 +37,9 @@
   </Style>
   <!--#endregion-->
 
+  <!--#region QRCodeToolView-->
+  <system:Double x:Key="QRCodeToolView_DescriptionWidth">120</system:Double>
+  <system:Double x:Key="QRCodeToolView_DescriptionWithEdgeWidth">130</system:Double>
+  <system:Double x:Key="QRCodeToolView_TextBoxWidth">120</system:Double>
+  <!--#endregion-->
 </ResourceDictionary>

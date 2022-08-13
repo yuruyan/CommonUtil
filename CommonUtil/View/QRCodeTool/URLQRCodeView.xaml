@@ -12,7 +12,10 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <StackPanel Orientation="Horizontal">
-    <TextBlock Width="80" Text="网址：" />
-    <TextBox MinWidth="120" Text="{Binding URLText}" />
+    <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="网址：" />
+    <TextBox
+      Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource QRCodeToolView_DescriptionWithEdgeWidth}}"
+      MinWidth="{StaticResource QRCodeToolView_TextBoxWidth}"
+      Text="{Binding URLText}" />
   </StackPanel>
 </Page>
