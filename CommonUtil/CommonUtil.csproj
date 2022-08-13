@@ -202,6 +202,9 @@
     <Compile Update="View\CodeColorizationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\QRCodeTool\MailQRCodeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -228,6 +231,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CodeColorizationView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

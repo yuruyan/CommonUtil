@@ -18,6 +18,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static QRCoder.PayloadGenerator;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
@@ -34,6 +35,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         typeof(SMSQRCodeView),
         typeof(WIFIQRCodeView),
         typeof(MailQRCodeView),
+        typeof(PhoneNumberQRCodeView),
     };
     private readonly RouterService RouterService;
 

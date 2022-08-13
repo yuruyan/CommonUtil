@@ -1,0 +1,34 @@
+﻿<Page
+  x:Class="CommonUtil.View.PhoneNumberQRCodeView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:CommonUtil.View"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  Title="WifiQRCodeView"
+  Margin="8"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  mc:Ignorable="d">
+  <Page.Resources>
+    <Style TargetType="StackPanel">
+      <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+      <Setter Property="Width" Value="{StaticResource QRCodeToolView_DescriptionWidth}" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+      <Setter Property="MinWidth" Value="{StaticResource QRCodeToolView_TextBoxWidth}" />
+      <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource QRCodeToolView_DescriptionWithEdgeWidth}}" />
+    </Style>
+  </Page.Resources>
+
+  <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+    <StackPanel>
+      <TextBlock Text="电话号码：" />
+      <TextBox Text="{Binding PhoneNumber}" />
+    </StackPanel>
+  </ui:SimpleStackPanel>
+</Page>

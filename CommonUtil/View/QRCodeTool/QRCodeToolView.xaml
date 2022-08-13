@@ -66,10 +66,18 @@
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
           Name="MailQRCodeView"
-          Content="邮件 二维码"
-          ToolTip="邮件 二维码">
+          Content="邮件二维码"
+          ToolTip="邮件二维码">
           <ui:NavigationViewItem.Icon>
             <ui:FontIcon Foreground="#29AF86" Glyph="&#xe620;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="PhoneNumberQRCodeView"
+          Content="拨打电话二维码"
+          ToolTip="拨打电话二维码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#2FAFCE" Glyph="&#xe67d;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
