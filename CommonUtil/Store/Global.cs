@@ -39,7 +39,7 @@ public class Global {
     /// </summary>
     public static readonly List<ToolMenuItem> MenuItems = new() {
         new() { Name = "Base64 编码/解码", ImagePath = ImagePath + "base64.svg", ClassType = typeof(Base64ToolView) },
-        new() { Name = "随机数/字符串生成器", ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
+        new() { Name = "随机数/文本生成器", ImagePath = ImagePath + "random.svg", ClassType = typeof(RandomGeneratorView) },
         new() { Name = "简体繁体转换", ImagePath = ImagePath + "ChineseTransform.svg", ClassType = typeof(ChineseTransformView) },
         new() { Name = "编码/解码工具", ImagePath = ImagePath + "encoding.svg", ClassType = typeof(CommonEncodingView) },
         new() { Name = "时间戳转换", ImagePath = ImagePath + "DateTime.svg", ClassType = typeof(TimeStampView) },
