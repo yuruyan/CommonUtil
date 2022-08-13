@@ -140,6 +140,15 @@
           </ComboBox>
         </ui:SimpleStackPanel>
 
+        <!--  二维码图片质量  -->
+        <ui:SimpleStackPanel>
+          <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="图片质量：" />
+          <ComboBox
+            Width="{StaticResource QRCodeToolView_TextBoxWidth}"
+            ItemsSource="{Binding ImageQualityList}"
+            SelectedIndex="{Binding ImageQualityComboSelectedIndex}" />
+        </ui:SimpleStackPanel>
+
         <!--  Control  -->
         <ui:SimpleStackPanel Spacing="{StaticResource MediumItemSpacing}">
           <widget:IconButton
