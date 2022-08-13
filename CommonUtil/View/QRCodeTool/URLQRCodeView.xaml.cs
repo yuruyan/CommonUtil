@@ -1,6 +1,8 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,6 +33,10 @@ public partial class URLQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat,
     /// <returns></returns>
     Task<byte[]> IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>.Generate(KeyValuePair<QRCodeFormat, QRCodeInfo> arg) {
         var url = URLText;
+        // 检验输入
+        if (!UIUtils.CheckInputNullOrEmpty(url)) {
+            return Task.FromResult(Array.Empty<byte>());
+        }
         return Task.Run(() => QRCodeTool.GenerateQRCodeForText(
             url,
             arg.Value,
