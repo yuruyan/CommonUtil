@@ -14,7 +14,7 @@ namespace CommonUtil.View;
 public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorWithRegexView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorWithRegexView), new PropertyMetadata("\\d{8,}"));
 
     /// <summary>
     /// 正则输入

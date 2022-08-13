@@ -9,57 +9,95 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="RandomGenerator"
-  Margin="8"
+  Margin="8,0,8,8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <UniformGrid Columns="2">
-    <ui:SimpleStackPanel Margin="0,0,8,0" Spacing="{StaticResource MediumItemSpacing}">
-      <ui:NavigationView
-        x:Name="NavigationView"
-        IsBackButtonVisible="Collapsed"
-        IsSettingsVisible="False"
-        PaneDisplayMode="Top"
-        SelectionChanged="NavigationViewSelectionChanged">
-        <ui:NavigationView.MenuItems>
-          <ui:NavigationViewItem
-            x:Name="RandomStringGeneratorView"
-            Content="生成字符串"
-            IsSelected="True" />
-          <ui:NavigationViewItem x:Name="RandomNumberGeneratorView" Content="生成随机数" />
-          <ui:NavigationViewItem x:Name="RandomGeneratorWithRegexView" Content="根据正则生成" />
-          <ui:NavigationViewItem x:Name="RandomGeneratorWithDataSourceView" Content="根据数据源生成" />
-        </ui:NavigationView.MenuItems>
-        <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
-      </ui:NavigationView>
-      <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
-        <!--  生成个数  -->
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
-          <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
-        </StackPanel>
+  <Page.Resources>
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
+  </Page.Resources>
 
-        <!--  Control  -->
-        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource MediumItemSpacing}">
-          <widget:IconButton
-            Width="120"
-            Click="GenerateClick"
-            Icon="&#xe601;"
-            Text="生成" />
-          <widget:IconButton
-            Width="120"
-            Click="CopyResultClick"
-            Icon="&#xe6ef;"
-            Text="复制" />
+  <UniformGrid Columns="2">
+    <ui:NavigationView
+      x:Name="NavigationView"
+      IsBackButtonVisible="Collapsed"
+      IsPaneToggleButtonVisible="False"
+      IsSettingsVisible="False"
+      IsTabStop="False"
+      OpenPaneLength="40"
+      PaneDisplayMode="Left"
+      SelectionChanged="NavigationViewSelectionChanged">
+      <ui:NavigationView.MenuItems>
+        <ui:NavigationViewItem
+          Name="RandomStringGeneratorView"
+          Content="生成字符串"
+          IsSelected="True"
+          ToolTip="生成字符串">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#C8834E" Glyph="&#xe687;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomNumberGeneratorView"
+          Content="生成随机数"
+          ToolTip="生成随机数">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#1296DB" Glyph="&#xe610;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomGeneratorWithRegexView"
+          Content="根据正则生成"
+          ToolTip="根据正则生成">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#C84E64" Glyph="&#xe647;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomGeneratorWithDataSourceView"
+          Content="根据数据源生成"
+          ToolTip="根据数据源生成">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#22ADAC" Glyph="&#xe6ed;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+      </ui:NavigationView.MenuItems>
+      <ui:SimpleStackPanel
+        Margin="8,0,0,0"
+        Orientation="Vertical"
+        Spacing="{StaticResource MediumItemSpacing}">
+        <ui:Frame x:Name="ContentFrame" Margin="0,16,0,0" />
+        <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
+          <!--  生成个数  -->
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
+            <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
+          </StackPanel>
+
+          <!--  Control  -->
+          <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource MediumItemSpacing}">
+            <widget:IconButton
+              Width="120"
+              Click="GenerateClick"
+              Icon="&#xe601;"
+              Text="生成" />
+            <widget:IconButton
+              Width="120"
+              Click="CopyResultClick"
+              Icon="&#xe6ef;"
+              Text="复制" />
+          </ui:SimpleStackPanel>
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
-    </ui:SimpleStackPanel>
+    </ui:NavigationView>
 
     <!--  输出  -->
     <TextBox
       x:Name="OutputTextBox"
-      Padding="8"
+      Margin="0,16,0,0"
       IsReadOnly="True"
       Style="{StaticResource MultilineTextBoxStyle}"
       Text="{Binding OutputText}" />
