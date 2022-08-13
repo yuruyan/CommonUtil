@@ -34,7 +34,7 @@ public struct QRCodeInfo {
 }
 
 public class QRCodeTool {
-    private static readonly Dictionary<QRCodeFormat, Func<QRCodeData, QRCodeInfo, byte[]>> QRCodeGeneratorDict = new();
+    private static readonly Dictionary<QRCodeFormat, Func<string, QRCodeInfo, byte[]>> QRCodeGeneratorDict = new();
 
     static QRCodeTool() {
         QRCodeGeneratorDict[QRCodeFormat.BMP] = PNGQRCode;
@@ -51,9 +51,7 @@ public class QRCodeTool {
     /// <param name="format"></param>
     /// <returns></returns>
     public static byte[] GenerateQRCodeForText(string input, QRCodeInfo qRCodeInfo, QRCodeFormat format = QRCodeFormat.PNG) {
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(input, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](input, qRCodeInfo);
     }
 
     /// <summary>
@@ -71,10 +69,7 @@ public class QRCodeTool {
         QRCodeFormat format = QRCodeFormat.PNG
     ) {
         var generator = new SMS(receiver, message);
-        string payload = generator.ToString();
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
     /// <summary>
@@ -94,10 +89,7 @@ public class QRCodeTool {
         QRCodeFormat format = QRCodeFormat.PNG
     ) {
         var generator = new Mail(receiver, subject, message);
-        string payload = generator.ToString();
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
     /// <summary>
@@ -113,10 +105,7 @@ public class QRCodeTool {
         QRCodeFormat format = QRCodeFormat.PNG
     ) {
         var generator = new PhoneNumber(receiver);
-        string payload = generator.ToString();
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
     /// <summary>
@@ -134,10 +123,7 @@ public class QRCodeTool {
         QRCodeFormat format = QRCodeFormat.PNG
     ) {
         var generator = new Geolocation(latitude.ToString(), longitude.ToString());
-        string payload = generator.ToString();
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
     /// <summary>
@@ -165,18 +151,17 @@ public class QRCodeTool {
             isWifiHidden,
             escapeHexStrings: false
         );
-        string payload = generator.ToString();
-        var qrGenerator = new QRCodeGenerator();
-        var qrCodeData = qrGenerator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
-        return QRCodeGeneratorDict[format](qrCodeData, qRCodeInfo);
+        return QRCodeGeneratorDict[format](generator.ToString(), qRCodeInfo);
     }
 
     /// <summary>
     /// 生成 PNG 格式
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="payload"></param>
     /// <returns></returns>
-    private static byte[] PNGQRCode(QRCodeData data, QRCodeInfo qRCodeInfo) {
+    private static byte[] PNGQRCode(string payload, QRCodeInfo qRCodeInfo) {
+        var generator = new QRCodeGenerator();
+        var data = generator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         var bitmap = new QRCode(data).GetGraphic(
             qRCodeInfo.PixelPerModule,
             qRCodeInfo.Foreground,
@@ -196,9 +181,11 @@ public class QRCodeTool {
     /// <summary>
     /// 生成 SVG 格式
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="payload"></param>
     /// <returns></returns>
-    private static byte[] SVGQRCode(QRCodeData data, QRCodeInfo qRCodeInfo) {
+    private static byte[] SVGQRCode(string payload, QRCodeInfo qRCodeInfo) {
+        var generator = new QRCodeGenerator();
+        var data = generator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         return Encoding.UTF8.GetBytes(new SvgQRCode(data).GetGraphic(
             qRCodeInfo.PixelPerModule,
             qRCodeInfo.Foreground,
@@ -210,9 +197,11 @@ public class QRCodeTool {
     /// <summary>
     /// 生成 PDF 格式
     /// </summary>
-    /// <param name="data"></param>
+    /// <param name="payload"></param>
     /// <returns></returns>
-    private static byte[] PDFQRCode(QRCodeData data, QRCodeInfo qRCodeInfo) {
+    private static byte[] PDFQRCode(string payload, QRCodeInfo qRCodeInfo) {
+        var generator = new QRCodeGenerator();
+        var data = generator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         return new PdfByteQRCode(data).GetGraphic(
             qRCodeInfo.PixelPerModule,
             qRCodeInfo.Foreground.ToString(),
