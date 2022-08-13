@@ -93,15 +93,16 @@ public partial class RegexExtractionView : Page {
     }
 
     /// <summary>
-    /// 查找结果+
+    /// 查找结果
     /// </summary>
     private void SearchResult() {
         ResultDetailPanel.Visibility = Visibility.Visible;
         // 检验输入
-        if (!(UIUtils.CheckInputNullOrEmpty(InputText, message: "输入不能为空")
-            && UIUtils.CheckInputNullOrEmpty(SearchRegex, message: "查找正则不能为空")
-            && UIUtils.CheckInputNullOrEmpty(ExtractionPattern, message: "提取模式不能为空")
-        )) {
+        if (!UIUtils.CheckInputNullOrEmpty(new KeyValuePair<string?, string>[] {
+            new (InputText,  "输入不能为空"),
+            new (SearchRegex,  "查找正则不能为空"),
+            new (ExtractionPattern,  "提取模式不能为空"),
+        })) {
             return;
         }
         var list = RegexExtraction.Extract(
@@ -110,7 +111,7 @@ public partial class RegexExtractionView : Page {
             ExtractionPattern,
             ignoreCase: IgnoreCase
         );
-        if (list == null) {
+        if (list is null) {
             MessageBox.Error("正则表达式有误");
             return;
         }
