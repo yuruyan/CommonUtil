@@ -12,10 +12,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <ui:SimpleStackPanel
-    VerticalAlignment="Center"
-    Orientation="Vertical"
-    Spacing="8">
+  <ui:SimpleStackPanel VerticalAlignment="Center" Orientation="Vertical">
     <TextBlock
       HorizontalAlignment="Center"
       Foreground="{StaticResource Black7}"

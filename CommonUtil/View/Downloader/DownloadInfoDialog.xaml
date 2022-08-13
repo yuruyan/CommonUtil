@@ -15,8 +15,7 @@
   <ui:SimpleStackPanel
     Name="RootPanel"
     Width="360"
-    Orientation="Vertical"
-    Spacing="8">
+    Orientation="Vertical">
     <ui:SimpleStackPanel.Resources>
       <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
         <Style.Triggers>

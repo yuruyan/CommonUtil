@@ -92,7 +92,7 @@
       <ui:SimpleStackPanel Margin="8,0,0,0" Spacing="{StaticResource MediumItemSpacing}">
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
         <!--  前景色选择  -->
-        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="8">
+        <ui:SimpleStackPanel Orientation="Horizontal">
           <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="二维码颜色：" />
           <Rectangle
             Width="100"

@@ -22,7 +22,7 @@
     </DataTemplate>
   </ui:ContentDialog.TitleTemplate>
 
-  <ui:SimpleStackPanel Spacing="8">
+  <ui:SimpleStackPanel>
     <ui:SimpleStackPanel.Resources>
       <system:Double x:Key="HeaderWidth">70</system:Double>
     </ui:SimpleStackPanel.Resources>

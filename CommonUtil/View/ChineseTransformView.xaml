@@ -27,8 +27,7 @@
       Grid.Row="1"
       Margin="0,8"
       HorizontalAlignment="Center"
-      Orientation="Horizontal"
-      Spacing="8">
+      Orientation="Horizontal">
       <Button Click="ToTraditionalClick" Content="简体转繁体" />
       <Button Click="ToSimplifiedClick" Content="繁体转简体" />
       <widget:IconButton

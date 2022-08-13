@@ -22,8 +22,7 @@
     <ui:SimpleStackPanel
       Margin="0,8,0,8"
       HorizontalAlignment="Center"
-      Orientation="Horizontal"
-      Spacing="8">
+      Orientation="Horizontal">
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="输入成语：" />
         <ui:AutoSuggestBox

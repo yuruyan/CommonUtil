@@ -18,7 +18,7 @@
   </Page.Resources>
 
   <UniformGrid Columns="2">
-    <ui:SimpleStackPanel Spacing="8">
+    <ui:SimpleStackPanel>
       <StackPanel>
         <Button
           HorizontalAlignment="Center"

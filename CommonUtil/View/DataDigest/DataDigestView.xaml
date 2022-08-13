@@ -64,8 +64,7 @@
       <ui:SimpleStackPanel
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
-        Orientation="Horizontal"
-        Spacing="8">
+        Orientation="Horizontal">
         <ComboBox
           Width="120"
           VerticalAlignment="Center"
@@ -93,10 +92,7 @@
           Style="{StaticResource GlobalErrorButtonStyle}"
           Text="清空输入" />
       </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel
-        HorizontalAlignment="Right"
-        Orientation="Horizontal"
-        Spacing="8">
+      <ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
         <TextBlock Text="计算中" Visibility="{Binding RunningProcess, Converter={StaticResource HideIfZeroConverter}}" />
         <ui:ProgressRing IsActive="{Binding RunningProcess}" />
       </ui:SimpleStackPanel>

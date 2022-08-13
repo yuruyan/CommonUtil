@@ -26,8 +26,7 @@
       Grid.Row="1"
       Margin="0,8,0,8"
       HorizontalAlignment="Center"
-      Orientation="Horizontal"
-      Spacing="8">
+      Orientation="Horizontal">
       <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
         <TextBlock Text="选择语言：" />
         <ComboBox
