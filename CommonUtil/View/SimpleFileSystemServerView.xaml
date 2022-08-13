@@ -16,7 +16,7 @@
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
     Orientation="Vertical"
-    Spacing="16">
+    Spacing="{StaticResource MediumItemSpacing}">
     <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
       <Button
         HorizontalAlignment="Center"

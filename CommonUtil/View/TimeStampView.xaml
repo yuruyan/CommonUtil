@@ -15,7 +15,7 @@
   mc:Ignorable="d">
 
   <ScrollViewer>
-    <ui:SimpleStackPanel Margin="8,0,8,0" Spacing="16">
+    <ui:SimpleStackPanel Margin="8,0,8,0" Spacing="{StaticResource MediumItemSpacing}">
       <Grid Margin="8" HorizontalAlignment="Center">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />

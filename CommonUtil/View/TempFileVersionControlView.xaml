@@ -24,14 +24,14 @@
       </ListBox.ItemTemplate>
     </ListBox>
     <!--  详情  -->
-    <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+    <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
       <Button
         HorizontalAlignment="Right"
         Click="AddWatchFileClickHandler"
         Content="添加文件" />
       <ui:SimpleStackPanel
         Orientation="Vertical"
-        Spacing="16"
+        Spacing="{StaticResource MediumItemSpacing}"
         Visibility="{Binding SelectedWatchFile, Converter={StaticResource HideIfNullConverter}}">
         <DockPanel>
           <TextBlock Text="保存目录：" />

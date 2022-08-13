@@ -25,7 +25,7 @@
     </Style>
   </Page.Resources>
 
-  <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+  <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
     <StackPanel>
       <TextBlock Text="WiFi 名称：" />
       <TextBox Text="{Binding WiFiName}" />

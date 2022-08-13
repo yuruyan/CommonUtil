@@ -28,7 +28,7 @@
       <ui:SimpleStackPanel
         VerticalAlignment="Center"
         Orientation="Horizontal"
-        Spacing="16">
+        Spacing="{StaticResource MediumItemSpacing}">
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
           <TextBlock Text="去重前分隔符：" />
           <ComboBox

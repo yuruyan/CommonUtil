@@ -25,7 +25,7 @@
     </Style>
   </Page.Resources>
 
-  <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+  <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
     <StackPanel>
       <TextBlock Text="电话号码：" />
       <TextBox Text="{Binding PhoneNumber}" />

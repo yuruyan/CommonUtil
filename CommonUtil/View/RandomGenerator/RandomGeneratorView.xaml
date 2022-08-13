@@ -15,7 +15,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <UniformGrid Columns="2">
-    <ui:SimpleStackPanel Margin="0,0,8,0" Spacing="16">
+    <ui:SimpleStackPanel Margin="0,0,8,0" Spacing="{StaticResource MediumItemSpacing}">
       <ui:NavigationView
         x:Name="NavigationView"
         IsBackButtonVisible="Collapsed"
@@ -33,7 +33,7 @@
         </ui:NavigationView.MenuItems>
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
       </ui:NavigationView>
-      <ui:SimpleStackPanel Orientation="Vertical" Spacing="16">
+      <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
         <!--  生成个数  -->
         <StackPanel Orientation="Horizontal">
           <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
@@ -41,7 +41,7 @@
         </StackPanel>
 
         <!--  Control  -->
-        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="16">
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource MediumItemSpacing}">
           <widget:IconButton
             Width="120"
             Click="GenerateClick"
