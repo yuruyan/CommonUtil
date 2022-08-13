@@ -70,8 +70,12 @@
     </ui:SimpleStackPanel>
 
     <!--  参考  -->
-    <ui:SimpleStackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-      <ui:SimpleStackPanel.Resources>
+    <StackPanel
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Orientation="Vertical"
+      Style="{x:Null}">
+      <StackPanel.Resources>
         <Style TargetType="StackPanel">
           <Setter Property="Height" Value="35" />
           <Setter Property="Orientation" Value="Horizontal" />
@@ -80,7 +84,7 @@
           <Setter Property="TextAlignment" Value="Center" />
           <Setter Property="Width" Value="150" />
         </Style>
-      </ui:SimpleStackPanel.Resources>
+      </StackPanel.Resources>
 
       <TextBlock
         Width="auto"
@@ -110,11 +114,6 @@
         <TextBlock Text="肥胖" />
         <TextBlock Text=" ≥ 28.0" />
       </StackPanel>
-      <!--<TextBlock Margin="0,8,0,0"
-                 Style="{StaticResource GlobalTextBlockStyle}"
-                 TextWrapping="Wrap"
-                 FontSize="14"
-                 Text="注：此项指标不完全适用于运动员、孕妇、正在做重量训练人员、未满18岁、身体虚弱或久坐不动的老人。"/>-->
-    </ui:SimpleStackPanel>
+    </StackPanel>
   </UniformGrid>
 </Page>
