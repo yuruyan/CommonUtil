@@ -50,7 +50,11 @@ public class QRCodeTool {
     /// <param name="input"></param>
     /// <param name="format"></param>
     /// <returns></returns>
-    public static byte[] GenerateQRCodeForText(string input, QRCodeInfo qRCodeInfo, QRCodeFormat format = QRCodeFormat.PNG) {
+    public static byte[] GenerateQRCodeForText(
+        string input,
+        QRCodeInfo qRCodeInfo,
+        QRCodeFormat format = QRCodeFormat.PNG
+    ) {
         return QRCodeGeneratorDict[format](input, qRCodeInfo);
     }
 
