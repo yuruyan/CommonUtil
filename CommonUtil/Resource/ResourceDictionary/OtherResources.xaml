@@ -8,7 +8,7 @@
   <!--#region RandomGenerator-->
   <system:Double x:Key="RandomGenerator_TextBoxWidth">120</system:Double>
   <system:Double x:Key="RandomGenerator_DescriptionWidth">100</system:Double>
-  <system:Double x:Key="RandomGenerator_DescriptionWithEdgeWidth">104</system:Double>
+  <system:Double x:Key="RandomGenerator_DescriptionWithEdgeWidth">110</system:Double>
   <system:Double x:Key="RandomGenerator_MinGenerateCount">1</system:Double>
   <system:Double x:Key="RandomGenerator_MaxGenerateCount">10000</system:Double>
   <system:Double x:Key="RandomGenerator_MinStringLength">1</system:Double>
