@@ -1,4 +1,5 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using NLog;
 using System.Collections.Generic;
 using System.Windows;
@@ -96,9 +97,11 @@ public partial class RegexExtractionView : Page {
     /// </summary>
     private void SearchResult() {
         ResultDetailPanel.Visibility = Visibility.Visible;
-        // 为空则不查找
-        if (string.IsNullOrEmpty(SearchRegex)) {
-            MessageBox.Info("输入不能为空");
+        // 检验输入
+        if (!(UIUtils.CheckInputNullOrEmpty(InputText, message: "输入不能为空")
+            && UIUtils.CheckInputNullOrEmpty(SearchRegex, message: "查找正则不能为空")
+            && UIUtils.CheckInputNullOrEmpty(ExtractionPattern, message: "提取模式不能为空")
+        )) {
             return;
         }
         var list = RegexExtraction.Extract(
@@ -144,10 +147,7 @@ public partial class RegexExtractionView : Page {
     /// <param name="e"></param>
     private void MoreRegexMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        if (CommonRegexListDialog == null) {
-            CommonRegexListDialog = new();
-        }
+        CommonRegexListDialog ??= new();
         CommonRegexListDialog.ShowAsync();
     }
 }
-
