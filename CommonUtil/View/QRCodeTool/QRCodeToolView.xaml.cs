@@ -57,7 +57,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         get { return (string)GetValue(QRCodeForegroundTextProperty); }
         set { SetValue(QRCodeForegroundTextProperty, value); }
     }
-
+    /// <summary>
+    /// 当前图片缓存
+    /// </summary>
     private byte[] QRCodeImage = Array.Empty<byte>();
 
     public QRCodeToolView() {
@@ -75,6 +77,10 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void SaveImageClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 没有则先生成
+        if (QRCodeImage == null || !QRCodeImage.Any()) {
+            return;
+        }
         var dialog = new SaveFileDialog {
             Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
         };
@@ -82,50 +88,38 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             return;
         }
         string ext = new FileInfo(dialog.FileName).Extension.TrimStart('.').ToLower();
-        var input = "InputText";
         bool found = false;
         foreach (var name in Enum.GetNames(typeof(QRCodeFormat))) {
             if (name.ToLower() == ext) {
                 found = true;
-                Task.Run(() => {
-                    SaveImage(input, dialog.FileName, (QRCodeFormat)Enum.Parse(typeof(QRCodeFormat), name));
-                });
+                SaveImageAsync(dialog.FileName, (QRCodeFormat)Enum.Parse(typeof(QRCodeFormat), name));
                 break;
             }
         }
         // 未提供的格式，生成 png
         if (!found) {
-            Task.Run(() => SaveImage(input + ".png", dialog.FileName, QRCodeFormat.PNG));
+            SaveImageAsync(dialog.FileName, QRCodeFormat.PNG);
         }
     }
 
     /// <summary>
     /// 保存图片
     /// </summary>
-    /// <param name="input"></param>
     /// <param name="path"></param>
     /// <param name="format"></param>
-    private void SaveImage(string input, string path, QRCodeFormat format) {
-        byte[] data = Array.Empty<byte>();
+    private async void SaveImageAsync(string path, QRCodeFormat format) {
+        var data = await GenerateImage(format);
+        // 生成失败
+        if (data is null) {
+            return;
+        }
         try {
-            data = QRCodeTool.GenerateQRCodeForText(input, new(), format);
-            try {
-                File.WriteAllBytes(path, data);
-                Dispatcher.Invoke(() => {
-                    NotificationBox.Success("保存成功", "点击打开", () => {
-                        UIUtils.OpenFileInDirectoryAsync(path);
-                    });
-                });
-            } catch (Exception e) {
-                Dispatcher.Invoke(() => MessageBox.Error("保存失败！"));
-                Logger.Error(e);
-            }
-        } catch (DataTooLongException e) {
-            Dispatcher.Invoke(() => MessageBox.Error("文本过长！"));
-            Logger.Error(e);
+            await File.WriteAllBytesAsync(path, data);
+            NotificationBox.Success("保存成功", "点击打开", () => {
+                UIUtils.OpenFileInDirectoryAsync(path);
+            });
         } catch (Exception e) {
-            Dispatcher.Invoke(() => MessageBox.Error("生成失败"));
-            Logger.Error(e);
+            MessageBox.Error("保存失败！");
         }
     }
 
@@ -136,42 +130,53 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void GenerateImageClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>> generator) {
-            ThrottleUtils.ThrottleAsync(GenerateImageClick, async () => {
-                byte[] data = Array.Empty<byte>();
-                // 生成二维码
-                try {
-                    data = await generator.Generate(new(QRCodeFormat.PNG, new() {
-                        Foreground = System.Drawing.Color.FromArgb(QRCodeForeground.R, QRCodeForeground.G, QRCodeForeground.B)
-                    }));
-                } catch (DataTooLongException) {
-                    MessageBox.Error("文本过长！");
-                    return;
-                } catch (Exception e) {
-                    MessageBox.Error($"生成失败：{e.Message}");
-                    return;
-                }
-                if (!data.Any()) {
-                    return;
-                }
-                QRCodeImage = data;
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = new MemoryStream(QRCodeImage);
-                image.EndInit();
-                QRCodeImageSource = image;
-            });
-        }
+        ThrottleUtils.ThrottleAsync(GenerateImageClick, async () => {
+            byte[]? data = await GenerateImage();
+            // 生成失败
+            if (data is null) {
+                return;
+            }
+            QRCodeImage = data;
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.StreamSource = new MemoryStream(QRCodeImage);
+            image.EndInit();
+            QRCodeImageSource = image;
+        });
     }
 
     /// <summary>
-    /// 清空输入
+    /// 生成图片，并自动显示失败消息
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ClearInputClick(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        //InputText = string.Empty;
+    /// <param name="format">生成格式</param>
+    /// <returns>生成失败返回 null</returns>
+    private async Task<byte[]?> GenerateImage(QRCodeFormat format = QRCodeFormat.PNG) {
+        var generator = CommonUtils.NullCheck(
+            RouterService.GetInstance(ContentFrame.CurrentSourcePageType)
+            as IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>>
+        );
+        byte[] data;
+        // 生成二维码
+        try {
+            data = await generator.Generate(new(format, new() {
+                Foreground = System.Drawing.Color.FromArgb(
+                    QRCodeForeground.R,
+                    QRCodeForeground.G,
+                    QRCodeForeground.B
+                )
+            }));
+        } catch (DataTooLongException) {
+            MessageBox.Error("文本过长！");
+            return null;
+        } catch (Exception e) {
+            MessageBox.Error($"生成失败：{e.Message}");
+            return null;
+        }
+        // 验证不通过
+        if (!data.Any()) {
+            return null;
+        }
+        return data;
     }
 
     /// <summary>
@@ -197,7 +202,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     }
 
     /// <summary>
-    /// 防止关闭
+    /// 防止 ContextMenu 关闭
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

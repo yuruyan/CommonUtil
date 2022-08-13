@@ -107,7 +107,8 @@
           <widget:IconButton
             Click="SaveImageClick"
             Icon="&#xe616;"
-            Text="保存" />
+            Text="保存"
+            Visibility="{Binding QRCodeImageSource, Converter={StaticResource HideIfNullConverter}}" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ui:NavigationView>
