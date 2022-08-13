@@ -64,6 +64,14 @@
             <ui:FontIcon Foreground="#19A3E0" Glyph="&#xe65f;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="MailQRCodeView"
+          Content="邮件 二维码"
+          ToolTip="邮件 二维码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#29AF86" Glyph="&#xe620;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:SimpleStackPanel Margin="8,0,0,0" Spacing="16">
         <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />

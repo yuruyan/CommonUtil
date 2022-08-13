@@ -33,6 +33,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         typeof(URLQRCodeView),
         typeof(SMSQRCodeView),
         typeof(WIFIQRCodeView),
+        typeof(MailQRCodeView),
     };
     private readonly RouterService RouterService;
 
