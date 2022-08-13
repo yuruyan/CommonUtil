@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,11 +52,22 @@ public partial class App : Application {
                 return;
             }
         }
-        if (e.Exception is WebException) {
-            e.Handled = true;
-            return;
+        e.Handled = e.Exception switch {
+            WebException or InvalidOperationException or FileNotFoundException => true,
+            _ => false
+        };
+        // 其他处理
+        if (e.Exception is InvalidOperationException
+            || e.Exception is IOException
+        ) {
+            MessageBox.Show(
+                Current.MainWindow,
+                e.Exception.Message,
+                "错误",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
         }
         Shutdown();
     }
 }
-

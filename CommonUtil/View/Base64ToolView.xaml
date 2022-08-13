@@ -13,7 +13,6 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
@@ -22,6 +21,7 @@
     </Grid.RowDefinitions>
     <!--  Input Box  -->
     <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+
     <!--  Control  -->
     <WrapPanel
       Grid.Row="1"
@@ -59,11 +59,12 @@
         Style="{StaticResource GlobalErrorButtonStyle}"
         Text="清空输入" />
     </WrapPanel>
+
     <!--  Output Box  -->
     <TextBox
       Grid.Row="2"
       IsReadOnly="True"
       Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText, Mode=OneWay}" />
+      Text="{Binding OutputText}" />
   </Grid>
 </Page>
