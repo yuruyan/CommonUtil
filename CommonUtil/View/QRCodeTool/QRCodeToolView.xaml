@@ -93,11 +93,10 @@
               </ContextMenu>
             </Rectangle.ContextMenu>
           </Rectangle>
+          <TextBox KeyUp="QRCodeForegroundKeyUpHandler" Text="{Binding QRCodeForegroundText, UpdateSourceTrigger=PropertyChanged}" />
         </ui:SimpleStackPanel>
-        <ui:SimpleStackPanel
-          HorizontalAlignment="Center"
-          Orientation="Horizontal"
-          Spacing="16">
+        <!--  Control  -->
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="16">
           <widget:IconButton
             Click="GenerateImageClick"
             Icon="&#xe601;"
@@ -106,11 +105,6 @@
             Click="SaveImageClick"
             Icon="&#xe616;"
             Text="保存" />
-          <widget:IconButton
-            Click="ClearInputClick"
-            Icon="&#xe946;"
-            Style="{StaticResource GlobalErrorButtonStyle}"
-            Text="清空" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ui:NavigationView>

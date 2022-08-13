@@ -9,6 +9,7 @@ using NLog;
 using QRCoder.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
 
     public static readonly DependencyProperty QRCodeImageSourceProperty = DependencyProperty.Register("QRCodeImageSource", typeof(ImageSource), typeof(QRCodeToolView), new PropertyMetadata());
     public static readonly DependencyProperty QRCodeForegroundProperty = DependencyProperty.Register("QRCodeForeground", typeof(Color), typeof(QRCodeToolView), new PropertyMetadata(Colors.Black));
+    public static readonly DependencyProperty QRCodeForegroundTextProperty = DependencyProperty.Register("QRCodeForegroundText", typeof(string), typeof(QRCodeToolView), new PropertyMetadata("#000000"));
 
     private readonly Type[] Routers = {
         typeof(URLQRCodeView),
@@ -48,11 +50,21 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         get { return (Color)GetValue(QRCodeForegroundProperty); }
         set { SetValue(QRCodeForegroundProperty, value); }
     }
+    /// <summary>
+    /// 二维码前景色文本
+    /// </summary>
+    public string QRCodeForegroundText {
+        get { return (string)GetValue(QRCodeForegroundTextProperty); }
+        set { SetValue(QRCodeForegroundTextProperty, value); }
+    }
 
     private byte[] QRCodeImage = Array.Empty<byte>();
 
     public QRCodeToolView() {
         InitializeComponent();
+        // 更新 QRCodeForegroundText
+        DependencyPropertyDescriptor.FromProperty(QRCodeForegroundProperty, typeof(QRCodeToolView))
+            .AddValueChanged(this, (o, e) => QRCodeForegroundText = QRCodeForeground.ToString());
         RouterService = new(ContentFrame, Routers);
     }
 
@@ -191,9 +203,30 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void QRCodeForegroundColorPickerPanelMouseUp(object sender, MouseButtonEventArgs e) => e.Handled = true;
 
+    /// <summary>
+    /// 设置 QRCodeForegroundColorPicker DataContext
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void QRCodeForegroundColorPickerLoadedHandler(object sender, RoutedEventArgs e) {
         if (sender is FrameworkElement element) {
             element.DataContext = this;
+        }
+    }
+
+    /// <summary>
+    /// 用户输入颜色值
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QRCodeForegroundKeyUpHandler(object sender, KeyEventArgs e) {
+        if (sender is TextBox textBox) {
+            Color? color = CommonUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
+            // 转换失败
+            if (color is null) {
+                return;
+            }
+            QRCodeForeground = color.Value;
         }
     }
 }
