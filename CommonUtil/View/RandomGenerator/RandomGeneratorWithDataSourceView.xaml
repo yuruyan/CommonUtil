@@ -23,7 +23,7 @@
     <StackPanel>
       <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="数据源：" />
       <TextBox
-        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWidth}}"
+        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWithEdgeWidth}}"
         AcceptsReturn="False"
         MaxLines="8"
         Style="{StaticResource MultilineTextBoxStyle}"

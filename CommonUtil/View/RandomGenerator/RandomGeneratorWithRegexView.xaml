@@ -21,7 +21,7 @@
     <StackPanel>
       <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="正则表达式：" />
       <TextBox
-        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWidth}}"
+        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWithEdgeWidth}}"
         MinWidth="{StaticResource RandomGenerator_TextBoxWidth}"
         Text="{Binding RegexInputText}" />
     </StackPanel>
