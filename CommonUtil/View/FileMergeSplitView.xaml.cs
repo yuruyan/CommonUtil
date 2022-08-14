@@ -14,11 +14,17 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
 public partial class FileMergeSplitView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+    /// <summary>
+    /// 更新进度间隔时间
+    /// </summary>
+    private const int UpdateProcessInterval = 250;
 
     public static readonly DependencyProperty IsSizeOptionSelectedProperty = DependencyProperty.Register("IsSizeOptionSelected", typeof(bool), typeof(FileMergeSplitView), new PropertyMetadata(true));
     public static readonly DependencyProperty SplitSizeOptionInputTextProperty = DependencyProperty.Register("SplitSizeOptionInputText", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata("100"));
@@ -30,6 +36,10 @@ public partial class FileMergeSplitView : Page {
     public static readonly DependencyProperty MergeFileDirectoryProperty = DependencyProperty.Register("MergeFileDirectory", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
     public static readonly DependencyProperty MergeFileSavePathProperty = DependencyProperty.Register("MergeFileSavePath", typeof(string), typeof(FileMergeSplitView), new PropertyMetadata(""));
     public static readonly DependencyProperty MergeFilesProperty = DependencyProperty.Register("MergeFiles", typeof(ObservableCollection<string>), typeof(FileMergeSplitView), new PropertyMetadata());
+    public static readonly DependencyProperty SplitProcessProperty = DependencyProperty.Register("SplitProcess", typeof(double), typeof(FileMergeSplitView), new PropertyMetadata(0.0));
+    public static readonly DependencyProperty MergeProcessProperty = DependencyProperty.Register("MergeProcess", typeof(double), typeof(FileMergeSplitView), new PropertyMetadata(0.0));
+    public static readonly DependencyProperty IsSplitingFileProperty = DependencyProperty.Register("IsSplitingFile", typeof(bool), typeof(FileMergeSplitView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsMergingFileProperty = DependencyProperty.Register("IsMergingFile", typeof(bool), typeof(FileMergeSplitView), new PropertyMetadata(false));
 
     /// <summary>
     /// 是否选中按文件大小分割
@@ -101,72 +111,54 @@ public partial class FileMergeSplitView : Page {
         get { return (ObservableCollection<string>)GetValue(MergeFilesProperty); }
         set { SetValue(MergeFilesProperty, value); }
     }
-
     /// <summary>
-    /// 分割文件进度监控
+    /// 分割文件进度
     /// </summary>
-    private FileMergeSplit.ProcessMonitor SplitFileProcessMonitor = new();
+    public double SplitProcess {
+        get { return (double)GetValue(SplitProcessProperty); }
+        set { SetValue(SplitProcessProperty, value); }
+    }
     /// <summary>
-    /// 合并文件进度监控
+    /// 合并文件进度
     /// </summary>
-    private FileMergeSplit.ProcessMonitor MergeFileProcessMonitor = new();
-    /// <summary>
-    /// 分割文件进度监控 Timer
-    /// </summary>
-    private System.Timers.Timer SplitFileProcessTimer;
-    /// <summary>
-    /// 合并文件进度监控 Timer
-    /// </summary>
-    private System.Timers.Timer MergeFileProcessTimer;
+    public double MergeProcess {
+        get { return (double)GetValue(MergeProcessProperty); }
+        set { SetValue(MergeProcessProperty, value); }
+    }
     /// <summary>
     /// 是否正在分割文件
     /// </summary>
-    private bool IsSplitingFile = false;
+    public bool IsSplitingFile {
+        get { return (bool)GetValue(IsSplitingFileProperty); }
+        set { SetValue(IsSplitingFileProperty, value); }
+    }
     /// <summary>
     /// 是否正在合并文件
     /// </summary>
-    private bool IsMergingFile = false;
+    public bool IsMergingFile {
+        get { return (bool)GetValue(IsMergingFileProperty); }
+        set { SetValue(IsMergingFileProperty, value); }
+    }
+    /// <summary>
+    /// 上次分割文件更新时间
+    /// </summary>
+    private DateTime LastSplitFileUpdateTime = DateTime.Now;
+    /// <summary>
+    /// 上次合并文件更新时间
+    /// </summary>
+    private DateTime LastMergeFileUpdateTime = DateTime.Now;
 
     public FileMergeSplitView() {
         FileSizeOptions = new() {
             "KB",
             "MB",
             "GB",
-            "%百分比",
+            "% 百分比",
         };
         MergeFiles = new();
-        SplitFileProcessTimer = new System.Timers.Timer(250);
-        SplitFileProcessTimer.Elapsed += UpdateSplitFileProcess;
-        MergeFileProcessTimer = new System.Timers.Timer(250);
-        MergeFileProcessTimer.Elapsed += UpdateMergeFileProcess;
         InitializeComponent();
     }
 
-    /// <summary>
-    /// 更新 MergeFileProcess
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    private void UpdateMergeFileProcess(object? sender, ElapsedEventArgs e) {
-        Dispatcher.Invoke(() => {
-            MergeFileProgressBar.Value = (int)(MergeFileProcessMonitor.Process * 100);
-        });
-    }
-
-    /// <summary>
-    /// 更新 SplitFileProcess
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    private void UpdateSplitFileProcess(object? sender, ElapsedEventArgs e) {
-        Dispatcher.Invoke(() => {
-            SplitFileProgressBar.Value = (int)(SplitFileProcessMonitor.Process * 100);
-        });
-    }
-
-    /// <summary>
     /// 分割选项改变
     /// </summary>
     /// <param name="sender"></param>
@@ -199,7 +191,7 @@ public partial class FileMergeSplitView : Page {
             SplitFileSize = fileInfo.Length;
         } catch (Exception error) {
             Logger.Info(error);
-            CommonUITools.Widget.MessageBox.Error("文件不存在！");
+            MessageBox.Error("文件不存在！");
         }
     }
 
@@ -224,16 +216,16 @@ public partial class FileMergeSplitView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void SplitFileClick(object sender, RoutedEventArgs e) {
+    private async void SplitFileClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (IsSplitingFile) {
-            CommonUITools.Widget.MessageBox.Info("正在分割文件");
+            MessageBox.Info("正在分割文件");
             return;
         }
         if (!CheckSplitFileInputValidation()) {
             return;
         }
-        long perSize = 0;
+        ulong perSize = 0;
         if (IsSizeOptionSelected) {
             double size = 0;
             try {
@@ -243,60 +235,60 @@ public partial class FileMergeSplitView : Page {
                 }
             } catch (Exception error) {
                 Logger.Error(error);
-                CommonUITools.Widget.MessageBox.Error("输入无效！");
+                MessageBox.Error("输入无效！");
                 return;
             }
             string? value = FileSizeOptionComboBox.SelectedValue.ToString();
             if (value == null) {
                 Logger.Error("选择错误");
-                CommonUITools.Widget.MessageBox.Error("选择错误！");
+                MessageBox.Error("选择错误！");
                 return;
             }
             if (value == "KB") {
-                perSize = (long)(size * 0x400);
+                perSize = (ulong)(size * 0x400);
             } else if (value == "MB") {
-                perSize = (long)(size * 0x100000);
+                perSize = (ulong)(size * 0x100000);
             } else if (value == "GB") {
-                perSize = (long)(size * 0x40000000);
+                perSize = (ulong)(size * 0x40000000);
             } else if (value.Contains('%')) {
-                perSize = (long)(SplitFileSize * (size / 100));
+                perSize = (ulong)(SplitFileSize * (size / 100));
             }
         } else {
             try {
-                perSize = SplitFileSize / Convert.ToUInt16(SplitNumberOptionInputText);
+                perSize = (ulong)(SplitFileSize / Convert.ToUInt16(SplitNumberOptionInputText));
             } catch (Exception error) {
                 Logger.Error(error);
-                CommonUITools.Widget.MessageBox.Error("输入无效！");
+                MessageBox.Error("输入无效！");
                 return;
             }
         }
         if (perSize <= 1) {
-            CommonUITools.Widget.MessageBox.Error("输入无效！");
+            MessageBox.Error("输入无效！");
             return;
         }
 
+        IsSplitingFile = true;
+        SplitProcess = 0;
         string filepath = SplitFilePath;
         string saveDir = SplitFileSaveDirectory;
-        Task.Run(() => {
-            try {
-                IsSplitingFile = true;
-                SplitFileProcessTimer.Start();
-                FileMergeSplit.SplitFile(filepath, saveDir, perSize, SplitFileProcessMonitor);
-                // 等待一段时间后再停止更新
-                ThreadPool.QueueUserWorkItem(p => {
-                    Thread.Sleep((int)(SplitFileProcessTimer.Interval * 2));
-                    SplitFileProcessTimer.Stop();
-                });
-            } catch (Exception error) {
-                Logger.Error(error);
-                CommonUITools.Widget.MessageBox.Error("分割失败！");
-            } finally {
-                IsSplitingFile = false;
-            }
-            Dispatcher.Invoke(() => {
-                CommonUITools.Widget.MessageBox.Success("分割完成！");
-            });
-        });
+        // 开始分割
+        try {
+            await Task.Run(() => FileMergeSplit.SplitFile(
+                filepath,
+                saveDir,
+                perSize,
+                process => {
+                    if ((DateTime.Now - LastSplitFileUpdateTime).TotalMilliseconds > UpdateProcessInterval) {
+                        LastSplitFileUpdateTime = DateTime.Now;
+                        Dispatcher.Invoke(() => SplitProcess = process);
+                    }
+                })
+            );
+            MessageBox.Success("分割完成！");
+        } catch (Exception error) {
+            MessageBox.Error($"分割失败：{error.Message}");
+        }
+        IsSplitingFile = false;
     }
 
     /// <summary>
@@ -305,11 +297,11 @@ public partial class FileMergeSplitView : Page {
     /// <returns></returns>
     private bool CheckSplitFileInputValidation() {
         if (string.IsNullOrEmpty(SplitFilePath)) {
-            CommonUITools.Widget.MessageBox.Info("请选择要分割的文件！");
+            MessageBox.Info("请选择要分割的文件！");
             return false;
         }
         if (string.IsNullOrEmpty(SplitFileSaveDirectory)) {
-            CommonUITools.Widget.MessageBox.Info("请选择保存目录！");
+            MessageBox.Info("请选择保存目录！");
             return false;
         }
         string inputNumber = string.Empty;
@@ -323,7 +315,7 @@ public partial class FileMergeSplitView : Page {
             Convert.ToDouble(inputNumber);
         } catch (Exception e) {
             Logger.Info(e);
-            CommonUITools.Widget.MessageBox.Error("不是合法数字！");
+            MessageBox.Error("不是合法数字！");
             return false;
         }
         return true;
@@ -335,15 +327,15 @@ public partial class FileMergeSplitView : Page {
     /// <returns></returns>
     private bool CheckMergeFileInputValidation() {
         if (string.IsNullOrEmpty(MergeFileSavePath)) {
-            CommonUITools.Widget.MessageBox.Info("请输入文件保存路径！");
+            MessageBox.Info("请输入文件保存路径！");
             return false;
         }
         if (string.IsNullOrEmpty(MergeFileDirectory)) {
-            CommonUITools.Widget.MessageBox.Info("请输入合并文件目录！");
+            MessageBox.Info("请输入合并文件目录！");
             return false;
         }
         if (!Directory.Exists(MergeFileDirectory)) {
-            CommonUITools.Widget.MessageBox.Error("合并文件目录不存在！");
+            MessageBox.Error("合并文件目录不存在！");
             return false;
         }
         return true;
@@ -391,10 +383,10 @@ public partial class FileMergeSplitView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void MergeFileClick(object sender, RoutedEventArgs e) {
+    private async void MergeFileClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (IsMergingFile) {
-            CommonUITools.Widget.MessageBox.Info("正在合并文件");
+            MessageBox.Info("正在合并文件");
             return;
         }
         if (!CheckMergeFileInputValidation()) {
@@ -404,33 +396,31 @@ public partial class FileMergeSplitView : Page {
                             new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)
                          ).ToArray();
         if (files.Length == 0) {
-            CommonUITools.Widget.MessageBox.Error("合并文件为空！");
+            MessageBox.Error("合并文件为空！");
             return;
         }
         for (int i = 0; i < files.Length; i++) {
             files[i] = Path.Combine(MergeFileDirectory, files[i]);
         }
         string savePath = MergeFileSavePath;
-        Task.Run(() => {
-            try {
-                IsMergingFile = true;
-                MergeFileProcessTimer.Start();
-                FileMergeSplit.MergeFile(files, savePath, MergeFileProcessMonitor);
-                // 等待一段时间后再停止更新
-                ThreadPool.QueueUserWorkItem(p => {
-                    Thread.Sleep((int)(MergeFileProcessTimer.Interval * 2));
-                    MergeFileProcessTimer.Stop();
-                });
-            } catch (Exception error) {
-                Logger.Error(error);
-                CommonUITools.Widget.MessageBox.Error("合并文件失败！");
-            } finally {
-                IsMergingFile = false;
-            }
-            Dispatcher.Invoke(() => {
-                CommonUITools.Widget.MessageBox.Success("合并成功！");
-            });
-        });
+        IsMergingFile = true;
+        MergeProcess = 0;
+        try {
+            await Task.Run(() => FileMergeSplit.MergeFile(
+                files,
+                savePath,
+                process => {
+                    if ((DateTime.Now - LastMergeFileUpdateTime).TotalMilliseconds > UpdateProcessInterval) {
+                        LastMergeFileUpdateTime = DateTime.Now;
+                        Dispatcher.Invoke(() => MergeProcess = process);
+                    }
+                }
+            ));
+            MessageBox.Success("合并完成");
+        } catch (Exception error) {
+            MessageBox.Error($"合并文件失败：{error.Message}");
+        }
+        IsMergingFile = false;
     }
 
     /// <summary>

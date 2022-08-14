@@ -27,24 +27,31 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock FontSize="{DynamicResource HeaderFontSize}" Text="分割文件" />
+        <!--  进度条  -->
         <TextBlock
           Grid.Column="1"
           Margin="16,0,16,0"
           FontFamily="Arial"
           FontSize="{DynamicResource HeaderFontSize}"
-          Foreground="#17804A"
-          Text="{Binding ElementName=SplitFileProgressBar, Path=Value, StringFormat={}{0}%}"
-          Visibility="{Binding ElementName=SplitFileProgressBar, Path=Value, Converter={StaticResource HideIfZeroConverter}}" />
+          Foreground="{StaticResource HighLightKeywordForeground}"
+          Text="{Binding SplitProcess, StringFormat='{}{0:F2} %'}"
+          Visibility="{Binding IsSplitingFile, Converter={StaticResource HideIfFalseConverter}}" />
+        <!--  进度条  -->
         <StackPanel
           Grid.Column="2"
           Margin="0,0,8,0"
-          VerticalAlignment="Center">
+          VerticalAlignment="Center"
+          Visibility="{Binding IsSplitingFile, Converter={StaticResource HideIfFalseConverter}}">
           <ui:ProgressBar
-            x:Name="SplitFileProgressBar"
             Height="10"
-            Background="Transparent" />
+            Background="Transparent"
+            Foreground="{StaticResource SuccessBackground}"
+            Maximum="100"
+            Minimum="0"
+            Value="{Binding SplitProcess}" />
         </StackPanel>
       </Grid>
+
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="auto" />
@@ -52,22 +59,28 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TextBlock FontSize="{DynamicResource HeaderFontSize}" Text="合并文件" />
+        <!--  进度条  -->
         <TextBlock
           Grid.Column="1"
           Margin="16,0,16,0"
           FontFamily="Arial"
           FontSize="{DynamicResource HeaderFontSize}"
-          Foreground="#17804A"
-          Text="{Binding ElementName=MergeFileProgressBar, Path=Value, StringFormat={}{0}%}"
-          Visibility="{Binding ElementName=MergeFileProgressBar, Path=Value, Converter={StaticResource HideIfZeroConverter}}" />
+          Foreground="{StaticResource HighLightKeywordForeground}"
+          Text="{Binding MergeProcess, StringFormat='{}{0:F2} %'}"
+          Visibility="{Binding IsMergingFile, Converter={StaticResource HideIfFalseConverter}}" />
+        <!--  进度条  -->
         <StackPanel
           Grid.Column="2"
           Margin="0,0,8,0"
-          VerticalAlignment="Center">
+          VerticalAlignment="Center"
+          Visibility="{Binding IsMergingFile, Converter={StaticResource HideIfFalseConverter}}">
           <ui:ProgressBar
-            x:Name="MergeFileProgressBar"
             Height="10"
-            Background="Transparent" />
+            Background="Transparent"
+            Foreground="{StaticResource SuccessBackground}"
+            Maximum="100"
+            Minimum="0"
+            Value="{Binding MergeProcess}" />
         </StackPanel>
       </Grid>
     </UniformGrid>

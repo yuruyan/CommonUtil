@@ -1,102 +1,107 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace CommonUtil.Core;
 
 public class FileMergeSplit {
-    public class ProcessMonitor {
-        public double Process { get; set; } = 0;
-        public string ProcessingName { get; set; } = string.Empty;
-    }
+    private const uint BufferSize = 4096 << 2;
 
     /// <summary>
     /// 分割文件
     /// </summary>
-    /// <param name="filePath">文件路径</param>
-    /// <param name="saveDir">保存目录</param>
-    /// <param name="perSize">每个文件的大小</param>
-    /// <param name="processMonitor">进度监控</param>
-    public static void SplitFile(string filePath, string saveDir, long perSize, ProcessMonitor? processMonitor) {
-        var monitor = processMonitor ?? new ProcessMonitor();
-        int fileCount = 1; // 文件数目
-        int fileSizeCount = 0; // 文件大小计数
-        int bufferSize = SelectOptimalBufferSize(perSize); // 缓冲区大小
+    /// <param name="filePath">文件绝对路径</param>
+    /// <param name="saveDir">保存文件夹绝对路径</param>
+    /// <param name="perFileSize">每一个分割后的文件大小</param>
+    /// <param name="processCallback">进度回调，参数为进度[0, 100]</param>
+    public static void SplitFile(
+        string filePath,
+        string saveDir,
+        ulong perFileSize,
+        Action<double>? processCallback = null
+    ) {
+        uint currentFileCount = 1; // 文件数目
+        ulong fileSizeCount = 0; // 文件大小计数
         var fileInfo = new FileInfo(filePath);
-        var filename = fileInfo.Name[..^fileInfo.Extension.Length]; // 文件名
+        var filename = fileInfo.Name[..^fileInfo.Extension.Length]; // 文件名，不包括后缀
         var extension = fileInfo.Extension; // 扩展名
-        var totalFileCount = (int)Math.Ceiling((double)fileInfo.Length / perSize); // 分割文件总数
-        saveDir = new DirectoryInfo(saveDir).FullName; // 保存文件夹
-
-        var reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read));
-        var writer = new BinaryWriter(new FileStream(Path.Combine(saveDir, $"{filename}-{fileCount}{extension}"), FileMode.OpenOrCreate, FileAccess.Write));
-        var buffer = new byte[bufferSize];
+        uint totalFileCount = (uint)Math.Ceiling((double)fileInfo.Length / perFileSize); // 分割文件总数
+        using var reader = new BinaryReader(File.OpenRead(filePath));
+        var writer = new BinaryWriter(File.OpenWrite(GetSplitFilePath(
+            saveDir, filename, extension, currentFileCount, totalFileCount
+        )));
+        var buffer = new byte[Math.Min(BufferSize, perFileSize)];
         int readCount = 0;
         long totalReadCount = 0; // 总已读字节数
-        monitor.Process = 0;
-        while ((readCount = reader.Read(buffer, 0, bufferSize)) != 0) {
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) != 0) {
             writer.Write(buffer, 0, readCount);
-            fileSizeCount += readCount;
+            fileSizeCount += (uint)readCount;
             totalReadCount += readCount;
-            monitor.Process = (double)totalReadCount / fileInfo.Length;
+            processCallback?.Invoke((double)totalReadCount * 100 / fileInfo.Length);
             // 写完一个文件
-            if (fileSizeCount >= perSize) {
+            if (fileSizeCount >= perFileSize) {
                 writer.Close();
                 fileSizeCount = 0;
-                fileCount++;
+                currentFileCount++;
                 // 打开新文件
-                writer = new BinaryWriter(new FileStream(Path.Combine(saveDir, $"{filename}-{fileCount}{extension}"), FileMode.OpenOrCreate, FileAccess.Write));
+                writer = new BinaryWriter(File.OpenWrite(GetSplitFilePath(
+                    saveDir, filename, extension, currentFileCount, totalFileCount
+                )));
             }
         }
-        monitor.Process = 1;
         writer.Close();
-        reader.Close();
     }
 
     /// <summary>
-    /// 选择最佳缓冲区大小
+    /// 获取分割文件绝对路径
     /// </summary>
-    /// <param name="size"></param>
+    /// <param name="saveDir">保存文件夹</param>
+    /// <param name="filename">文件名，不包括后缀</param>
+    /// <param name="extension">文件后缀，包括.</param>
+    /// <param name="currentCount">当前文件索引位置</param>
+    /// <param name="totalCount">总分割文件</param>
     /// <returns></returns>
-    private static int SelectOptimalBufferSize(long size) {
-        return size switch {
-            <= 0x400 => 0x400,
-            <= 0x100000 => 0x100000,
-            <= 0x4000000 => 0x4000000,
-            _ => 0x8000000
-        };
-    }
+    private static string GetSplitFilePath(
+        string saveDir,
+        string filename,
+        string extension,
+        uint currentCount,
+        uint totalCount
+    )
+        => Path.Combine(
+            saveDir,
+            $"{filename}-{currentCount.ToString().PadLeft(totalCount.ToString().Length, '0')}{extension}"
+        );
 
     /// <summary>
     /// 合并文件
     /// </summary>
-    /// <param name="sourceFiles">待合并的文件所在目录</param>
-    /// <param name="savePath">保存文件路径</param>
-    /// <param name="processMonitor">进度监控</param>
-    public static void MergeFile(string[] sourceFiles, string savePath, ProcessMonitor? processMonitor) {
-        var monitor = processMonitor ?? new ProcessMonitor();
-        const int bufferSize = 0x4000000; // 缓冲区大小
+    /// <param name="sourceFiles">分割文件绝对路径列表</param>
+    /// <param name="savePath">保存文件</param>
+    /// <param name="processCallback">进度回调，参数为进度[0, 100]</param>
+    public static void MergeFile(
+        string[] sourceFiles,
+        string savePath,
+        Action<double>? processCallback = null
+    ) {
         int finishedCount = 0; // 完成文件数目
-        var buffer = new byte[bufferSize];
+        var buffer = new byte[BufferSize];
         int readCount = 0;
-        long totalReadCount = 0; // 总已读字节数
-        monitor.Process = 0;
-        long totalFileSize = 0; // 文件总大小
+        long totalReadSize = 0; // 总已读字节数
+        // 文件总大小
+        long totalFileSize = sourceFiles
+            .Select(f => new FileInfo(f).Length)
+            .Sum();
+        var writer = new BinaryWriter(File.OpenWrite(savePath));
         foreach (var file in sourceFiles) {
-            totalFileSize += new FileInfo(file).Length;
-        }
-        var writer = new BinaryWriter(new FileStream(savePath, FileMode.OpenOrCreate, FileAccess.Write));
-        foreach (var file in sourceFiles) {
-            var reader = new BinaryReader(new FileStream(file, FileMode.Open, FileAccess.Read));
-            while ((readCount = reader.Read(buffer, 0, bufferSize)) != 0) {
+            using var reader = new BinaryReader(File.OpenRead(file));
+            while ((readCount = reader.Read(buffer, 0, buffer.Length)) != 0) {
                 writer.Write(buffer, 0, readCount);
-                totalReadCount += readCount;
-                monitor.Process = (double)totalReadCount / totalFileSize;
+                totalReadSize += readCount;
+                processCallback?.Invoke((double)totalReadSize * 100 / totalFileSize);
             }
-            reader.Close();
             finishedCount++;
         }
-        monitor.Process = 1;
         writer.Close();
     }
-
 }
