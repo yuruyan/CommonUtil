@@ -16,6 +16,6 @@
     DecodingClick="DecodingClick"
     EncodingButtonText="Unicode 编码"
     EncodingClick="EncodingClick"
-    InputText="{Binding InputText, Mode=TwoWay}"
+    InputText="{Binding InputText}"
     OutputText="{Binding OutputText}" />
 </Page>

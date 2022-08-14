@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Org.BouncyCastle.Utilities;
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -125,10 +126,10 @@ public class CommonEncoding {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string HexEncode(string s) {
-        var sb = new StringBuilder();
         byte[] bytes = Encoding.UTF8.GetBytes(s);
+        var sb = new StringBuilder(bytes.Length << 1);
         foreach (var b in bytes) {
-            sb.Append($"%{Convert.ToString(b, 16)}");
+            sb.Append(Convert.ToString(b, 16));
         }
         return sb.ToString();
     }
@@ -139,12 +140,12 @@ public class CommonEncoding {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string HexDecode(string s) {
-        return Encoding.UTF8.GetString(s.Trim()
-                                        .Trim('%')
-                                        .Split('%')
-                                        .Select(n => Convert.ToByte(n, 16))
-                                        .ToArray()
-                                        );
+        s = s.Trim();
+        byte[] data = new byte[s.Length >> 1];
+        for (int i = 0; i < s.Length; i += 2) {
+            data[i >> 1] = Convert.FromHexString($"{s[i]}{s[i + 1]}")[0];
+        }
+        return Encoding.UTF8.GetString(data);
     }
 
 }

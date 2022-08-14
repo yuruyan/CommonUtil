@@ -11,8 +11,8 @@ public partial class EncodingTemplate : UserControl {
     public event Action? EncodingClick;
     public event Action? DecodingClick;
 
-    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
-    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EncodingTemplate), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EncodingTemplate), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     public static readonly DependencyProperty EncodingButtonTextProperty = DependencyProperty.Register("EncodingButtonText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
     public static readonly DependencyProperty DecodingButtonTextProperty = DependencyProperty.Register("DecodingButtonText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
 
