@@ -136,11 +136,11 @@ public class FileMergeSplit {
             // 一个文件写入完毕
             if (tempReadCount >= perFileSize) {
                 // 读取前半部分
-                ulong lastChunckSize = tempReadCount == perFileSize
-                    ? longReadCount : (ulong)buffer.Length - (tempReadCount - perFileSize);
-                writer.Write(buffer, 0, (int)lastChunckSize);
+                int lastChunckSize = tempReadCount == perFileSize
+                    ? (int)longReadCount : readCount - (int)(tempReadCount - perFileSize);
+                writer.Write(buffer, 0, lastChunckSize);
                 writer.Close();
-                Interlocked.Add(ref totalReadBytesCount, lastChunckSize);
+                Interlocked.Add(ref totalReadBytesCount, (ulong)lastChunckSize);
                 processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
                 fileReadCount = 0;
                 finishedFileCount++;
@@ -154,11 +154,11 @@ public class FileMergeSplit {
                     saveDir, filename, extension, currentFileIndex, totalFileCount
                 )));
                 // 写入后半部分
-                ulong remainBytes = tempReadCount - perFileSize;
-                fileReadCount += remainBytes;
-                if (remainBytes > 0) {
-                    writer.Write(buffer, (int)lastChunckSize, (int)remainBytes);
-                    Interlocked.Add(ref totalReadBytesCount, remainBytes);
+                ulong remainsBytes = tempReadCount - perFileSize;
+                if (remainsBytes > 0) {
+                    fileReadCount = remainsBytes;
+                    writer.Write(buffer, lastChunckSize, (int)remainsBytes);
+                    Interlocked.Add(ref totalReadBytesCount, remainsBytes);
                 }
                 continue;
             }
@@ -168,8 +168,6 @@ public class FileMergeSplit {
             processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
         }
         writer.Close();
-        Interlocked.Add(ref totalReadBytesCount, (ulong)readCount);
-        processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
     }
 
     /// <summary>
