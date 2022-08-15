@@ -12,67 +12,94 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+      <Setter Property="Spacing" Value="{StaticResource MediumItemSpacing}" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalButtonStyle}" TargetType="Button">
+      <Setter Property="Width" Value="{StaticResource FileMergeSplitView_TextBoxWidth}" />
+    </Style>
+  </Page.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition Height="auto" />
     </Grid.RowDefinitions>
-    <ui:SimpleStackPanel
-      Margin="0,8,0,0"
-      Orientation="Vertical"
-      Spacing="{StaticResource MediumItemSpacing}">
+
+    <ui:SimpleStackPanel Margin="0,8,0,0" Orientation="Vertical">
       <!--  选择分割文件  -->
-      <StackPanel Orientation="Horizontal">
+      <ui:SimpleStackPanel Orientation="Horizontal">
         <Button Click="SelectFileClick" Content="选择分割文件" />
-        <UniformGrid Rows="2">
+        <!--  文件信息  -->
+        <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource NarrowItemSpacing}">
           <TextBlock
-            FontSize="{DynamicResource HeaderFontSize}"
             FontWeight="Bold"
-            Foreground="#D15509"
+            Foreground="{StaticResource HighLightKeywordForeground}"
             Text="{Binding SplitFilePath, Converter={StaticResource FileNameConverter}}"
             TextTrimming="CharacterEllipsis" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource ApplicationBackground}"
+            Foreground="{StaticResource HighLightKeywordForeground}"
             Text="{Binding SplitFileSize, Converter={StaticResource FileSizeConverter}}"
             Visibility="{Binding SplitFileSize, Converter={StaticResource HideIfZeroConverter}}" />
-        </UniformGrid>
-      </StackPanel>
+        </ui:SimpleStackPanel>
+      </ui:SimpleStackPanel>
       <!--  选择保存目录  -->
-      <StackPanel Orientation="Horizontal">
-        <Button Click="SelectFileSplitSaveDirClick" Content="选择保存目录" />
+      <ui:SimpleStackPanel Orientation="Horizontal">
+        <Button Click="SelectSaveFolderClickHandler" Content="选择保存目录" />
         <TextBlock
           FontWeight="Bold"
-          Foreground="{StaticResource ApplicationBackground}"
+          Foreground="{StaticResource HighLightKeywordForeground}"
           Text="{Binding SplitFileSaveDirectory}" />
-      </StackPanel>
-      <ui:RadioButtons
-        Header="分割方式"
-        SelectedIndex="0"
-        SelectionChanged="SplitOptionChanged">
-        <RadioButton x:Name="SplitSizeOption" Content="按大小分割" />
-        <RadioButton x:Name="SplitNumberOption" Content="按数量分割" />
-      </ui:RadioButtons>
-      <!--  输入  -->
-      <Grid HorizontalAlignment="Left">
-        <StackPanel Orientation="Horizontal" Visibility="{Binding IsSizeOptionSelected, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}">
-          <TextBox MinWidth="120" Text="{Binding SplitSizeOptionInputText}" />
+      </ui:SimpleStackPanel>
+      <!--  分割方式  -->
+      <ui:SimpleStackPanel Orientation="Horizontal">
+        <TextBlock Width="{StaticResource FileMergeSplitView_DescriptionWidth}" Text="分割方式" />
+        <!--  分割方式选项  -->
+        <ComboBox Name="SplitChoiceComboBox" Style="{StaticResource FileMergeSplitView_ComboBoxStyle}">
+          <ComboBoxItem Content="按大小分割" IsSelected="True" />
+          <ComboBoxItem Content="按数量分割" />
+        </ComboBox>
+      </ui:SimpleStackPanel>
+      <!--  分割方式输入  -->
+      <Grid>
+        <!--  按大小分割  -->
+        <ui:SimpleStackPanel Orientation="Horizontal" Visibility="{Binding SelectedIndex, ElementName=SplitChoiceComboBox, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='0|Collapsed'}">
+          <ui:NumberBox
+            Maximum="1024"
+            Style="{StaticResource FileMergeSplitView_NumberBoxStyle}"
+            Value="{Binding SplitBySize}" />
           <ComboBox
-            x:Name="FileSizeOptionComboBox"
-            Margin="4,0,0,0"
-            ItemsSource="{Binding FileSizeOptions}"
-            SelectedIndex="1" />
-        </StackPanel>
-        <StackPanel Visibility="{Binding IsSizeOptionSelected, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='False|Collapsed'}">
-          <TextBox Text="{Binding SplitNumberOptionInputText}" />
-        </StackPanel>
+            FontFamily="{StaticResource ASCIIFontFamily}"
+            ItemsSource="{Binding FileSizeTypeOptions}"
+            SelectedIndex="{Binding SplitBySizeComboBoxSelectedIndex}"
+            Style="{StaticResource FileMergeSplitView_ComboBoxStyle}" />
+        </ui:SimpleStackPanel>
+        <!--  按数量分割  -->
+        <ui:NumberBox
+          HorizontalAlignment="Left"
+          Maximum="65536"
+          Style="{StaticResource FileMergeSplitView_NumberBoxStyle}"
+          Visibility="{Binding SelectedIndex, ElementName=SplitChoiceComboBox, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='1|Collapsed'}"
+          Value="{Binding SplitByCount}" />
       </Grid>
-      <Button Click="SplitFileClick" Content="开始" />
+      <!--  Control  -->
+      <Grid>
+        <Button
+          Click="StartClickHandler"
+          Content="开始"
+          Visibility="{Binding IsWorking, Converter={StaticResource HideIfTrueConverter}}" />
+        <Button
+          Click="CancelClickHandler"
+          Content="取消"
+          Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
+      </Grid>
     </ui:SimpleStackPanel>
 
     <!--  进度条  -->
     <widget:ProgressBar
-      Height="20"
+      Grid.Row="1"
       Process="{Binding WorkingProcess}"
       Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
   </Grid>

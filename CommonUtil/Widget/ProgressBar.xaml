@@ -10,16 +10,18 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
-  <ui:SimpleStackPanel Orientation="Horizontal">
+  <ui:SimpleStackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
     <!--  进度条  -->
     <TextBlock
-      Margin="16,0,16,0"
+      Margin="8,0"
       FontFamily="Arial"
       Text="{Binding Process, ElementName=Root, StringFormat='{}{0:F2} %'}" />
     <!--  进度条  -->
-    <StackPanel Margin="0,0,8,0" VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center">
       <ui:ProgressBar
+        Width="500"
         Height="10"
+        HorizontalAlignment="Stretch"
         Background="Transparent"
         Foreground="{Binding ProgressBarForeground, ElementName=Root}"
         Maximum="100"

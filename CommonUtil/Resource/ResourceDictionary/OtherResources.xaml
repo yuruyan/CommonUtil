@@ -43,4 +43,23 @@
   <system:Double x:Key="QRCodeToolView_DescriptionWithEdgeWidth">130</system:Double>
   <system:Double x:Key="QRCodeToolView_TextBoxWidth">120</system:Double>
   <!--#endregion-->
+
+  <!--#region FileMergeSplitView-->
+  <system:Double x:Key="FileMergeSplitView_DescriptionWidth">140</system:Double>
+  <system:Double x:Key="FileMergeSplitView_DescriptionWithEdgeWidth">150</system:Double>
+  <system:Double x:Key="FileMergeSplitView_TextBoxWidth">140</system:Double>
+  <Style
+    x:Key="FileMergeSplitView_NumberBoxStyle"
+    BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}"
+    TargetType="ui:NumberBox">
+    <Setter Property="Minimum" Value="1" />
+    <Setter Property="Width" Value="{StaticResource FileMergeSplitView_TextBoxWidth}" />
+  </Style>
+  <Style
+    x:Key="FileMergeSplitView_ComboBoxStyle"
+    BasedOn="{StaticResource DefaultComboBoxStyle}"
+    TargetType="ComboBox">
+    <Setter Property="Width" Value="{StaticResource FileMergeSplitView_TextBoxWidth}" />
+  </Style>
+  <!--#endregion-->
 </ResourceDictionary>

@@ -1,75 +1,81 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
 public partial class FileSplitView : Page {
+    /// <summary>
+    /// 文件大小类型
+    /// </summary>
+    public enum FileSizeType {
+        Kb,
+        Mb,
+        Gb
+    }
+
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>
     /// 更新进度间隔时间
     /// </summary>
     private const int UpdateWorkingProcessInterval = 250;
-    public static readonly DependencyProperty IsSizeOptionSelectedProperty = DependencyProperty.Register("IsSizeOptionSelected", typeof(bool), typeof(FileSplitView), new PropertyMetadata(true));
-    public static readonly DependencyProperty SplitSizeOptionInputTextProperty = DependencyProperty.Register("SplitSizeOptionInputText", typeof(string), typeof(FileSplitView), new PropertyMetadata("100"));
-    public static readonly DependencyProperty SplitNumberOptionInputTextProperty = DependencyProperty.Register("SplitNumberOptionInputText", typeof(string), typeof(FileSplitView), new PropertyMetadata("10"));
+    /// <summary>
+    /// 文件大小类型选项
+    /// </summary>
+    private static readonly IDictionary<FileSizeType, uint> FileSizeTypeOptionMap = new Dictionary<FileSizeType, uint>() {
+        {FileSizeType.Kb, 1024 },
+        {FileSizeType.Mb, 1024 * 1024 },
+        {FileSizeType.Gb, 1024 * 1024 * 1024 },
+    };
+
     public static readonly DependencyProperty SplitFilePathProperty = DependencyProperty.Register("SplitFilePath", typeof(string), typeof(FileSplitView), new PropertyMetadata(""));
-    public static readonly DependencyProperty SplitFileSizeProperty = DependencyProperty.Register("SplitFileSize", typeof(long), typeof(FileSplitView), new PropertyMetadata(0L));
+    public static readonly DependencyProperty SplitBySizeProperty = DependencyProperty.Register("SplitBySize", typeof(double), typeof(FileSplitView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty SplitFileSaveDirectoryProperty = DependencyProperty.Register("SplitFileSaveDirectory", typeof(string), typeof(FileSplitView), new PropertyMetadata(""));
-    public static readonly DependencyProperty FileSizeOptionsProperty = DependencyProperty.Register("FileSizeOptions", typeof(List<string>), typeof(FileSplitView), new PropertyMetadata());
+    public static readonly DependencyProperty FileSizeTypeOptionsProperty = DependencyProperty.Register("FileSizeTypeOptions", typeof(IList<FileSizeType>), typeof(FileSplitView), new PropertyMetadata());
     public static readonly DependencyProperty WorkingProcessProperty = DependencyProperty.Register("WorkingProcess", typeof(double), typeof(FileSplitView), new PropertyMetadata(0.0));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(FileSplitView), new PropertyMetadata(false));
+    public static readonly DependencyProperty SplitByCountProperty = DependencyProperty.Register("SplitByCount", typeof(double), typeof(FileSplitView), new PropertyMetadata(1.0));
+    public static readonly DependencyProperty SplitBySizeComboBoxSelectedIndexProperty = DependencyProperty.Register("SplitBySizeComboBoxSelectedIndex", typeof(int), typeof(FileSplitView), new PropertyMetadata(1));
+    public static readonly DependencyProperty SplitFileSizeProperty = DependencyProperty.Register("SplitFileSize", typeof(ulong), typeof(FileSplitView), new PropertyMetadata(0UL));
 
     /// <summary>
-    /// 是否选中按文件大小分割
+    /// 按文件数量分割个数
     /// </summary>
-    public bool IsSizeOptionSelected {
-        get { return (bool)GetValue(IsSizeOptionSelectedProperty); }
-        set { SetValue(IsSizeOptionSelectedProperty, value); }
+    public double SplitByCount {
+        get { return (double)GetValue(SplitByCountProperty); }
+        set { SetValue(SplitByCountProperty, value); }
     }
     /// <summary>
-    /// 按文件大小分割输入
+    /// 按文件大小分割的大小
     /// </summary>
-    public string SplitSizeOptionInputText {
-        get { return (string)GetValue(SplitSizeOptionInputTextProperty); }
-        set { SetValue(SplitSizeOptionInputTextProperty, value); }
+    public double SplitBySize {
+        get { return (double)GetValue(SplitBySizeProperty); }
+        set { SetValue(SplitBySizeProperty, value); }
     }
     /// <summary>
-    /// 按文件数目分割输入
-    /// </summary>
-    public string SplitNumberOptionInputText {
-        get { return (string)GetValue(SplitNumberOptionInputTextProperty); }
-        set { SetValue(SplitNumberOptionInputTextProperty, value); }
-    }
-    /// <summary>
-    /// 分割文件路径
+    /// 要分割的文件路径
     /// </summary>
     public string SplitFilePath {
         get { return (string)GetValue(SplitFilePathProperty); }
         set { SetValue(SplitFilePathProperty, value); }
     }
     /// <summary>
-    /// 分割文件大小
+    /// 要分割的文件大小
     /// </summary>
-    public long SplitFileSize {
-        get { return (long)GetValue(SplitFileSizeProperty); }
+    public ulong SplitFileSize {
+        get { return (ulong)GetValue(SplitFileSizeProperty); }
         set { SetValue(SplitFileSizeProperty, value); }
     }
     /// <summary>
@@ -82,9 +88,16 @@ public partial class FileSplitView : Page {
     /// <summary>
     /// 文件大小类型
     /// </summary>
-    public List<string> FileSizeOptions {
-        get { return (List<string>)GetValue(FileSizeOptionsProperty); }
-        set { SetValue(FileSizeOptionsProperty, value); }
+    public IList<FileSizeType> FileSizeTypeOptions {
+        get { return (IList<FileSizeType>)GetValue(FileSizeTypeOptionsProperty); }
+        set { SetValue(FileSizeTypeOptionsProperty, value); }
+    }
+    /// <summary>
+    /// 按大小分割文件大小类型选项下标
+    /// </summary>
+    public int SplitBySizeComboBoxSelectedIndex {
+        get { return (int)GetValue(SplitBySizeComboBoxSelectedIndexProperty); }
+        set { SetValue(SplitBySizeComboBoxSelectedIndexProperty, value); }
     }
     /// <summary>
     /// 分割文件进度
@@ -103,28 +116,13 @@ public partial class FileSplitView : Page {
     /// <summary>
     /// 上次分割文件更新时间
     /// </summary>
-    private DateTime LastSplitFileUpdateTime = DateTime.Now;
+    private DateTime LastUpdateProcessTime = DateTime.Now;
 
     public FileSplitView() {
-        FileSizeOptions = new() {
-            "KB",
-            "MB",
-            "GB",
-            "% 百分比",
-        };
+        DependencyPropertyDescriptor.FromProperty(SplitFilePathProperty, typeof(FileSplitView))
+            .AddValueChanged(this, (o, e) => SplitFileSize = (ulong)new FileInfo(SplitFilePath).Length);
+        FileSizeTypeOptions = FileSizeTypeOptionMap.Keys.ToArray();
         InitializeComponent();
-    }
-
-    /// 分割选项改变
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void SplitOptionChanged(object sender, SelectionChangedEventArgs e) {
-        if (SplitSizeOption.IsChecked == true) {
-            IsSizeOptionSelected = true;
-        } else if (SplitNumberOption.IsChecked == true) {
-            IsSizeOptionSelected = false;
-        }
     }
 
     /// <summary>
@@ -141,25 +139,20 @@ public partial class FileSplitView : Page {
         if (openFileDialog.ShowDialog() != true) {
             return;
         }
-        try {
-            var fileInfo = new FileInfo(openFileDialog.FileName);
-            SplitFilePath = fileInfo.FullName;
-            SplitFileSize = fileInfo.Length;
-        } catch (Exception error) {
-            Logger.Info(error);
-            MessageBox.Error("文件不存在！");
-        }
+        SplitFilePath = openFileDialog.FileName;
     }
+
     /// <summary>
     /// 选择分割文件保存目录
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void SelectFileSplitSaveDirClick(object sender, RoutedEventArgs e) {
+    private void SelectSaveFolderClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        var dialog = new VistaFolderBrowserDialog();
-        dialog.Description = "选择保存文件夹";
-        dialog.UseDescriptionForTitle = true; // This applies to the Vista style dialog only, not the old dialog.
+        var dialog = new VistaFolderBrowserDialog {
+            Description = "选择保存目录",
+            UseDescriptionForTitle = true
+        };
 
         if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
             SplitFileSaveDirectory = dialog.SelectedPath;
@@ -167,63 +160,40 @@ public partial class FileSplitView : Page {
     }
 
     /// <summary>
+    /// 获取按文件数量方式分割文件的大小
+    /// </summary>
+    /// <returns></returns>
+    private ulong GetPerFileSizeByFileCount() {
+        return (ulong)(SplitFileSize / SplitByCount);
+    }
+
+    /// <summary>
+    /// 获取按文件大小方式分割文件的大小
+    /// </summary>
+    /// <returns></returns>
+    private ulong GetPerFileSizeByFileSize() {
+        return (ulong)(FileSizeTypeOptionMap[FileSizeTypeOptions[SplitBySizeComboBoxSelectedIndex]] * SplitBySize);
+    }
+
+    /// <summary>
     /// 分割文件
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void SplitFileClick(object sender, RoutedEventArgs e) {
+    private async void StartClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (IsWorking) {
-            MessageBox.Info("正在分割文件");
             return;
         }
+        // 检查输入合法性
         if (!CheckSplitFileInputValidation()) {
-            return;
-        }
-        ulong perSize = 0;
-        if (IsSizeOptionSelected) {
-            double size = 0;
-            try {
-                size = Convert.ToDouble(SplitSizeOptionInputText);
-                if (size <= 0) {
-                    throw new OverflowException("输入无效！");
-                }
-            } catch (Exception error) {
-                Logger.Error(error);
-                MessageBox.Error("输入无效！");
-                return;
-            }
-            string? value = FileSizeOptionComboBox.SelectedValue.ToString();
-            if (value == null) {
-                Logger.Error("选择错误");
-                MessageBox.Error("选择错误！");
-                return;
-            }
-            if (value == "KB") {
-                perSize = (ulong)(size * 0x400);
-            } else if (value == "MB") {
-                perSize = (ulong)(size * 0x100000);
-            } else if (value == "GB") {
-                perSize = (ulong)(size * 0x40000000);
-            } else if (value.Contains('%')) {
-                perSize = (ulong)(SplitFileSize * (size / 100));
-            }
-        } else {
-            try {
-                perSize = (ulong)(SplitFileSize / Convert.ToUInt16(SplitNumberOptionInputText));
-            } catch (Exception error) {
-                Logger.Error(error);
-                MessageBox.Error("输入无效！");
-                return;
-            }
-        }
-        if (perSize <= 1) {
-            MessageBox.Error("输入无效！");
             return;
         }
 
         IsWorking = true;
         WorkingProcess = 0;
+        ulong perSize = SplitChoiceComboBox.SelectedIndex == 0
+            ? GetPerFileSizeByFileSize() : GetPerFileSizeByFileCount();
         string filepath = SplitFilePath;
         string saveDir = SplitFileSaveDirectory;
         // 开始分割
@@ -233,13 +203,13 @@ public partial class FileSplitView : Page {
                 saveDir,
                 perSize,
                 process => {
-                    if ((DateTime.Now - LastSplitFileUpdateTime).TotalMilliseconds > UpdateWorkingProcessInterval) {
-                        LastSplitFileUpdateTime = DateTime.Now;
+                    if ((DateTime.Now - LastUpdateProcessTime).TotalMilliseconds > UpdateWorkingProcessInterval) {
+                        LastUpdateProcessTime = DateTime.Now;
                         Dispatcher.Invoke(() => WorkingProcess = process);
                     }
                 })
             );
-            MessageBox.Success("分割完成！");
+            MessageBox.Success("分割完成");
         } catch (Exception error) {
             MessageBox.Error($"分割失败：{error.Message}");
         }
@@ -251,30 +221,21 @@ public partial class FileSplitView : Page {
     /// </summary>
     /// <returns></returns>
     private bool CheckSplitFileInputValidation() {
-        if (string.IsNullOrEmpty(SplitFilePath)) {
-            MessageBox.Info("请选择要分割的文件！");
-            return false;
-        }
-        if (string.IsNullOrEmpty(SplitFileSaveDirectory)) {
-            MessageBox.Info("请选择保存目录！");
-            return false;
-        }
-        string inputNumber = string.Empty;
-        if (IsSizeOptionSelected) {
-            inputNumber = SplitSizeOptionInputText;
-        } else {
-            inputNumber = SplitNumberOptionInputText;
-        }
-        // 检查输入
-        try {
-            Convert.ToDouble(inputNumber);
-        } catch (Exception e) {
-            Logger.Info(e);
-            MessageBox.Error("不是合法数字！");
+        if (!UIUtils.CheckInputNullOrEmpty(new KeyValuePair<string?, string>[] {
+            new (SplitFilePath, "要分割的文件不能为空"),
+            new (SplitFileSaveDirectory, "保存目录不能为空"),
+        })) {
             return false;
         }
         return true;
     }
 
+    /// <summary>
+    /// 取消任务
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelClickHandler(object sender, RoutedEventArgs e) {
 
+    }
 }
