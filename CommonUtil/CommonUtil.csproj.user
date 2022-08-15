@@ -22,6 +22,9 @@
     <Compile Update="View\Downloader\DownloadingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\FileMergeSplit\FileSplitView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\FtpServer\FtpServerUserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,6 +133,9 @@
     <Compile Update="View\TextTool\WhiteSpaceProcessView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Widget\ProgressBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
@@ -166,6 +172,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Downloader\DownloadTaskInfoWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FileMergeSplit\FileMergeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\FileMergeSplit\FileSplitView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FtpServer\FtpServerUserDialog.xaml">
@@ -298,6 +310,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TextTool\WhiteSpaceProcessView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Widget\ProgressBar.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
