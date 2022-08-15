@@ -110,10 +110,11 @@ public class FileMergeSplit {
         int readCount = 0;
         while ((readCount = reader.Read(buffer, 0, buffer.Length)) != 0) {
             ulong longReadCount = (ulong)readCount;
+            ulong currentTotalReadCount = totalReadCount + longReadCount;
             // 本次任务读取完毕
-            if (totalReadCount + longReadCount >= toBeReadSize) {
+            if (currentTotalReadCount >= toBeReadSize) {
                 // 读取前半部分
-                ulong lastChunckSize = (ulong)buffer.Length - (totalReadCount + longReadCount - toBeReadSize);
+                ulong lastChunckSize = currentTotalReadCount == toBeReadSize ? longReadCount : (ulong)buffer.Length - (currentTotalReadCount - toBeReadSize);
                 writer.Write(buffer, 0, (int)lastChunckSize);
                 Interlocked.Add(ref totalReadBytesCount, lastChunckSize);
                 processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
