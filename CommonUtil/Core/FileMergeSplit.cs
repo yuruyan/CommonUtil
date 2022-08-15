@@ -52,7 +52,7 @@ public class FileMergeSplit {
         ulong perTaskFileSize = (ulong)Math.Ceiling((double)fileInfo.Length / tasks.Length);
         // 每个线程需要写入的文件总数
         uint perTaskFileCount = (uint)Math.Ceiling((double)perTaskFileSize / perFileSize);
-        Console.WriteLine($"{nameof(perTaskFileCount)}: {perTaskFileCount}");
+        totalFileCount = (uint)(perTaskFileCount * tasks.Length);
         for (int i = 0; i < tasks.Length; i++) {
             uint tempIndex = (uint)i;
             Task task = Task.Run(() => {
@@ -180,6 +180,7 @@ public class FileMergeSplit {
         long totalFileSize = sourceFiles
             .Select(f => new FileInfo(f).Length)
             .Sum();
+        File.Delete(savePath);
         var writer = new BinaryWriter(File.OpenWrite(savePath));
         foreach (var file in sourceFiles) {
             using var reader = new BinaryReader(File.OpenRead(file));
