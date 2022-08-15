@@ -58,7 +58,7 @@
                 <TextBox Text="{Binding Type}" />
                 <TextBox Text="{Binding Value}" />
                 <UniformGrid.ContextMenu>
-                  <ContextMenu Width="150" Background="White">
+                  <ContextMenu>
                     <MenuItem Click="removePropertyClick" Header="删除">
                       <MenuItem.Icon>
                         <TextBlock

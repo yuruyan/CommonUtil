@@ -1,6 +1,7 @@
 ﻿using CommonUtil.Core;
 using NLog;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -55,7 +56,7 @@ public partial class CSharpDependencyView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AddPropertyClick(object sender, RoutedEventArgs e) {
-        TypeInfos.Add(new());
+        TypeInfos.Add(TypeInfos.Any() ? TypeInfos[^1] : new());
     }
 
     /// <summary>
