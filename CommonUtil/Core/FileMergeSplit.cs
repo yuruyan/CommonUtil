@@ -7,9 +7,22 @@ using System.Threading.Tasks;
 namespace CommonUtil.Core;
 
 public class FileMergeSplit {
+    /// <summary>
+    /// 默认缓冲区大小
+    /// </summary>
     private const uint BufferSize = 4096 << 2;
+    /// <summary>
+    /// 最大并发写入线程
+    /// </summary>
     private const byte MaxWorkingThreadCount = 4;
+    /// <summary>
+    /// 多线程文件大小阈值
+    /// </summary>
     private const ulong MultiThreadFileSizeThreshold = 512 * 1024 * 1024;
+    /// <summary>
+    /// 每个分割后的文件大小最小值
+    /// </summary>
+    private const uint MinimumPerFileSize = 1024;
 
     /// <summary>
     /// 分割文件
@@ -25,7 +38,7 @@ public class FileMergeSplit {
         Action<double>? processCallback = null
     ) {
         // 每个文件大小不能小于 1kb
-        perFileSize = Math.Max(perFileSize, 1024);
+        perFileSize = Math.Max(perFileSize, MinimumPerFileSize);
         ulong totalReadBytesCount = 0; // 已读取文件大小计数
         var fileInfo = new FileInfo(filePath);
         uint totalFileCount = (uint)Math.Ceiling((double)fileInfo.Length / perFileSize); // 分割文件总数
@@ -37,7 +50,7 @@ public class FileMergeSplit {
                 fileInfo,
                 saveDir,
                 0,
-                (ulong)fileInfo.Length,
+                1,
                 perFileSize,
                 1,
                 totalFileCount,
@@ -50,17 +63,18 @@ public class FileMergeSplit {
         Task[] tasks = new Task[Math.Min(MaxWorkingThreadCount, totalFileCount)];
         // 每个线程需要读取的文件字节数
         ulong perTaskFileSize = (ulong)Math.Ceiling((double)fileInfo.Length / tasks.Length);
-        // 每个线程需要写入的文件总数
-        uint perTaskFileCount = (uint)Math.Ceiling((double)perTaskFileSize / perFileSize);
-        totalFileCount = (uint)(perTaskFileCount * tasks.Length);
+        // 每个线程需要写入的文件数
+        uint perTaskFileCount = (uint)Math.Ceiling((double)totalFileCount / tasks.Length);
         for (int i = 0; i < tasks.Length; i++) {
             uint tempIndex = (uint)i;
             Task task = Task.Run(() => {
+                uint writeFileCount = Math.Min(perTaskFileCount, totalFileCount - perTaskFileCount * tempIndex);
+                Thread.CurrentThread.Name = (tempIndex + 1).ToString();
                 StartSplitFile(
                     fileInfo,
                     saveDir,
-                    perTaskFileSize * tempIndex,
-                    perTaskFileSize,
+                    perTaskFileCount * perFileSize * tempIndex,
+                    writeFileCount,
                     perFileSize,
                     perTaskFileCount * tempIndex + 1,
                     totalFileCount,
@@ -79,65 +93,83 @@ public class FileMergeSplit {
     /// <param name="splitFileInfo">要分割的文件信息</param>
     /// <param name="saveDir">保存目录</param>
     /// <param name="startReadPosition">起始文件读取位置</param>
-    /// <param name="toBeReadSize">需要读取的文件大小</param>
-    /// <param name="perFileSize">每个分割文件的大小</param>
-    /// <param name="startFileCount">分割文件开始下标</param>
+    /// <param name="writeFileCount">需要写入的文件个数</param>
+    /// <param name="perFileSize">每个分割文件的大小，最小为 MinimumPerFileSize</param>
+    /// <param name="startFileIndex">分割文件开始下标</param>
     /// <param name="totalFileCount">总分割文件个数</param>
     /// <param name="totalReadBytesCount">已读取的文件累计大小</param>
     /// <param name="processCallback">进度回调</param>
     /// <returns></returns>
+    /// <see cref="MinimumPerFileSize"/>
     private static void StartSplitFile(
         FileInfo splitFileInfo,
         string saveDir,
         ulong startReadPosition,
-        ulong toBeReadSize,
+        uint writeFileCount,
         ulong perFileSize,
-        uint startFileCount,
+        uint startFileIndex,
         uint totalFileCount,
         ref ulong totalReadBytesCount,
         Action<double>? processCallback = null
     ) {
+        if (writeFileCount < 1) {
+            return;
+        }
+        if (perFileSize < MinimumPerFileSize) {
+            perFileSize = MinimumPerFileSize;
+        }
+        uint currentFileIndex = startFileIndex; // 当前文件下标
         var extension = splitFileInfo.Extension; // 扩展名
         var filename = splitFileInfo.Name[..^extension.Length]; // 文件名，不包括后缀
         using var reader = new BinaryReader(File.OpenRead(splitFileInfo.FullName));
         reader.BaseStream.Seek((long)startReadPosition, SeekOrigin.Begin);
         var writer = new BinaryWriter(File.OpenWrite(GetSplitFilePath(
-            saveDir, filename, extension, startFileCount, totalFileCount
+            saveDir, filename, extension, currentFileIndex, totalFileCount
         )));
         var buffer = new byte[Math.Min(BufferSize, perFileSize)];
-        ulong fileSizeCount = 0; // 文件大小计数
-        ulong totalReadCount = 0; // 本次读取的文件总大小
+        ulong fileReadCount = 0; // 每个文件读取大小计数
+        uint finishedFileCount = 0; // 已完成写入文件个数
         int readCount = 0;
-        while ((readCount = reader.Read(buffer, 0, buffer.Length)) != 0) {
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
             ulong longReadCount = (ulong)readCount;
-            ulong currentTotalReadCount = totalReadCount + longReadCount;
-            // 本次任务读取完毕
-            if (currentTotalReadCount >= toBeReadSize) {
+            ulong tempReadCount = fileReadCount + longReadCount;
+            // 一个文件写入完毕
+            if (tempReadCount >= perFileSize) {
                 // 读取前半部分
-                ulong lastChunckSize = currentTotalReadCount == toBeReadSize ? longReadCount : (ulong)buffer.Length - (currentTotalReadCount - toBeReadSize);
+                ulong lastChunckSize = tempReadCount == perFileSize
+                    ? longReadCount : (ulong)buffer.Length - (tempReadCount - perFileSize);
                 writer.Write(buffer, 0, (int)lastChunckSize);
+                writer.Close();
                 Interlocked.Add(ref totalReadBytesCount, lastChunckSize);
                 processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
-                writer.Close();
-                return;
-            }
-            writer.Write(buffer, 0, readCount);
-            fileSizeCount += longReadCount;
-            totalReadCount += longReadCount;
-            Interlocked.Add(ref totalReadBytesCount, longReadCount);
-            processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
-            // 写完一个文件
-            if (fileSizeCount >= perFileSize) {
-                writer.Close();
-                fileSizeCount = 0;
-                startFileCount++;
+                fileReadCount = 0;
+                finishedFileCount++;
+                currentFileIndex++;
+                // 文件全部写入完毕
+                if (finishedFileCount >= writeFileCount) {
+                    return;
+                }
                 // 打开新文件
                 writer = new BinaryWriter(File.OpenWrite(GetSplitFilePath(
-                    saveDir, filename, extension, startFileCount, totalFileCount
+                    saveDir, filename, extension, currentFileIndex, totalFileCount
                 )));
+                // 写入后半部分
+                ulong remainBytes = tempReadCount - perFileSize;
+                fileReadCount += remainBytes;
+                if (remainBytes > 0) {
+                    writer.Write(buffer, (int)lastChunckSize, (int)remainBytes);
+                    Interlocked.Add(ref totalReadBytesCount, remainBytes);
+                }
+                continue;
             }
+            writer.Write(buffer, 0, readCount);
+            fileReadCount += longReadCount;
+            Interlocked.Add(ref totalReadBytesCount, longReadCount);
+            processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
         }
         writer.Close();
+        Interlocked.Add(ref totalReadBytesCount, (ulong)readCount);
+        processCallback?.Invoke((double)totalReadBytesCount * 100 / splitFileInfo.Length);
     }
 
     /// <summary>
