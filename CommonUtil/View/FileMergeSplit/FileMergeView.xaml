@@ -36,6 +36,7 @@
           <TextBlock
             FontWeight="Bold"
             Foreground="{StaticResource HighLightKeywordForeground}"
+            Style="{StaticResource OpenFileTextBlockStyle}"
             Text="{Binding MergeFileDirectory}" />
         </ui:SimpleStackPanel>
 
@@ -45,6 +46,7 @@
           <TextBlock
             FontWeight="Bold"
             Foreground="{StaticResource HighLightKeywordForeground}"
+            Style="{StaticResource OpenFileTextBlockStyle}"
             Text="{Binding MergeFileSavePath}" />
         </ui:SimpleStackPanel>
 

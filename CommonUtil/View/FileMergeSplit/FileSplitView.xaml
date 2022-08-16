@@ -37,6 +37,8 @@
           <TextBlock
             FontWeight="Bold"
             Foreground="{StaticResource HighLightKeywordForeground}"
+            Style="{StaticResource OpenFileTextBlockStyle}"
+            Tag="{Binding SplitFilePath}"
             Text="{Binding SplitFilePath, Converter={StaticResource FileNameConverter}}"
             TextTrimming="CharacterEllipsis" />
           <TextBlock
@@ -52,6 +54,7 @@
         <TextBlock
           FontWeight="Bold"
           Foreground="{StaticResource HighLightKeywordForeground}"
+          Style="{StaticResource OpenFileTextBlockStyle}"
           Text="{Binding SplitFileSaveDirectory}" />
       </ui:SimpleStackPanel>
       <!--  分割方式  -->
