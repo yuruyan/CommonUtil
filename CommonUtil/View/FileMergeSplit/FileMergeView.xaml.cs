@@ -76,6 +76,14 @@ public partial class FileMergeView : Page {
     /// 上次合并文件更新时间
     /// </summary>
     private DateTime LastMergeFileUpdateTime = DateTime.Now;
+    /// <summary>
+    /// 正在合并的文件路径
+    /// </summary>
+    private string WorkingMergeFilePath = string.Empty;
+    /// <summary>
+    /// 是否请求取消
+    /// </summary>
+    private bool IsCancelRequested = false;
 
     public FileMergeView() {
         DependencyPropertyDescriptor.FromProperty(MergeFilesProperty, typeof(FileMergeView))
@@ -161,6 +169,7 @@ public partial class FileMergeView : Page {
 
         var files = MergeFiles;
         var savePath = MergeFileSavePath;
+        WorkingMergeFilePath = MergeFileSavePath;
         IsWorking = true;
         WorkingProcess = 0;
         // 开始合并
@@ -175,11 +184,14 @@ public partial class FileMergeView : Page {
                     }
                 }
             ));
-            MessageBox.Success("合并完成");
+            // 没有取消则提示
+            if (!IsCancelRequested) {
+                MessageBox.Success("合并完成");
+            }
         } catch (Exception error) {
             MessageBox.Error($"合并文件失败：{error.Message}");
         }
-        IsWorking = false;
+        IsCancelRequested = IsWorking = false;
     }
 
     /// <summary>
@@ -188,6 +200,7 @@ public partial class FileMergeView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void CancelClickHandler(object sender, RoutedEventArgs e) {
-
+        IsCancelRequested = true;
+        FileMergeSplit.CancelMergeFile(WorkingMergeFilePath);
     }
 }

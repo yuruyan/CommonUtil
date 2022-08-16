@@ -24,6 +24,14 @@ public class FileMergeSplit {
     /// 每个分割后的文件大小最小值
     /// </summary>
     private const uint MinimumPerFileSize = 1024;
+    /// <summary>
+    /// 分割文件 CancellationTokenSource
+    /// </summary>
+    private static readonly IDictionary<string, CancellationTokenSource> SplitFileCancellationTokenMap = new Dictionary<string, CancellationTokenSource>();
+    /// <summary>
+    /// 合并文件 CancellationTokenSource
+    /// </summary>
+    private static readonly IDictionary<string, CancellationTokenSource> MergeFileCancellationTokenMap = new Dictionary<string, CancellationTokenSource>();
 
     /// <summary>
     /// 分割文件
@@ -43,6 +51,8 @@ public class FileMergeSplit {
         ulong totalReadBytesCount = 0; // 已读取文件大小计数
         var fileInfo = new FileInfo(filePath);
         uint totalFileCount = (uint)Math.Ceiling((double)fileInfo.Length / perFileSize); // 分割文件总数
+        var cts = new CancellationTokenSource();
+        SplitFileCancellationTokenMap[filePath] = cts;
         // 单线程
         if (totalFileCount == 1
             || (ulong)fileInfo.Length <= MultiThreadFileSizeThreshold && totalFileCount <= MaxWorkingThreadCount
@@ -56,6 +66,7 @@ public class FileMergeSplit {
                 1,
                 totalFileCount,
                 ref totalReadBytesCount,
+                cts,
                 processCallback
             );
             return;
@@ -80,12 +91,14 @@ public class FileMergeSplit {
                     perTaskFileCount * tempIndex + 1,
                     totalFileCount,
                     ref totalReadBytesCount,
+                    cts,
                     processCallback
                 );
             });
             tasks[i] = task;
         }
         Task.WaitAll(tasks);
+        SplitFileCancellationTokenMap.Remove(filePath);
     }
 
     /// <summary>
@@ -99,6 +112,7 @@ public class FileMergeSplit {
     /// <param name="startFileIndex">分割文件开始下标</param>
     /// <param name="totalFileCount">总分割文件个数</param>
     /// <param name="totalReadBytesCount">已读取的文件累计大小</param>
+    /// <param name="cts"></param>
     /// <param name="processCallback">进度回调</param>
     /// <returns></returns>
     /// <see cref="MinimumPerFileSize"/>
@@ -111,6 +125,7 @@ public class FileMergeSplit {
         uint startFileIndex,
         uint totalFileCount,
         ref ulong totalReadBytesCount,
+        CancellationTokenSource cts,
         Action<double>? processCallback = null
     ) {
         if (writeFileCount < 1) {
@@ -134,6 +149,11 @@ public class FileMergeSplit {
         while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
             ulong longReadCount = (ulong)readCount;
             ulong tempReadCount = fileReadCount + longReadCount;
+            // 取消分割文件
+            if (cts.IsCancellationRequested) {
+                writer.Close();
+                return;
+            }
             // 一个文件写入完毕
             if (tempReadCount >= perFileSize) {
                 // 读取前半部分
@@ -207,21 +227,52 @@ public class FileMergeSplit {
         var buffer = new byte[BufferSize];
         int readCount = 0;
         long totalReadSize = 0; // 总已读字节数
+        var cts = new CancellationTokenSource();
+        MergeFileCancellationTokenMap[savePath] = cts;
         // 文件总大小
         long totalFileSize = sourceFiles
             .Select(f => new FileInfo(f).Length)
             .Sum();
         File.Delete(savePath);
-        var writer = new BinaryWriter(File.OpenWrite(savePath));
+        using var writer = new BinaryWriter(File.OpenWrite(savePath));
+        // 文件读写
         foreach (var file in sourceFiles) {
             using var reader = new BinaryReader(File.OpenRead(file));
             while ((readCount = reader.Read(buffer, 0, buffer.Length)) != 0) {
+                // 取消合并
+                if (cts.IsCancellationRequested) {
+                    return;
+                }
                 writer.Write(buffer, 0, readCount);
                 totalReadSize += readCount;
                 processCallback?.Invoke((double)totalReadSize * 100 / totalFileSize);
             }
             finishedCount++;
         }
-        writer.Close();
+        MergeFileCancellationTokenMap.Remove(savePath);
+    }
+
+    /// <summary>
+    /// 取消分割文件
+    /// </summary>
+    /// <param name="filepath"></param>
+    public static void CancelSplitFile(string filepath) {
+        if (!SplitFileCancellationTokenMap.ContainsKey(filepath)) {
+            return;
+        }
+        SplitFileCancellationTokenMap[filepath].Cancel();
+        SplitFileCancellationTokenMap.Remove(filepath);
+    }
+
+    /// <summary>
+    /// 取消合并文件
+    /// </summary>
+    /// <param name="savepath"></param>
+    public static void CancelMergeFile(string savepath) {
+        if (!MergeFileCancellationTokenMap.ContainsKey(savepath)) {
+            return;
+        }
+        MergeFileCancellationTokenMap[savepath].Cancel();
+        MergeFileCancellationTokenMap.Remove(savepath);
     }
 }

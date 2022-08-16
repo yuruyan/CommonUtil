@@ -117,6 +117,14 @@ public partial class FileSplitView : Page {
     /// 上次分割文件更新时间
     /// </summary>
     private DateTime LastUpdateProcessTime = DateTime.Now;
+    /// <summary>
+    /// 正在分割的文件路径
+    /// </summary>
+    private string WorkingSplitFilePath = string.Empty;
+    /// <summary>
+    /// 是否请求取消
+    /// </summary>
+    private bool IsCancelRequested = false;
 
     public FileSplitView() {
         DependencyPropertyDescriptor.FromProperty(SplitFilePathProperty, typeof(FileSplitView))
@@ -192,6 +200,7 @@ public partial class FileSplitView : Page {
 
         IsWorking = true;
         WorkingProcess = 0;
+        WorkingSplitFilePath = SplitFilePath;
         ulong perSize = SplitChoiceComboBox.SelectedIndex == 0
             ? GetPerFileSizeByFileSize() : GetPerFileSizeByFileCount();
         string filepath = SplitFilePath;
@@ -209,11 +218,14 @@ public partial class FileSplitView : Page {
                     }
                 })
             );
-            MessageBox.Success("分割完成");
+            // 没有取消则提示
+            if (!IsCancelRequested) {
+                MessageBox.Success("分割完成");
+            }
         } catch (Exception error) {
             MessageBox.Error($"分割失败：{error.Message}");
         }
-        IsWorking = false;
+        IsCancelRequested = IsWorking = false;
     }
 
     /// <summary>
@@ -236,6 +248,7 @@ public partial class FileSplitView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void CancelClickHandler(object sender, RoutedEventArgs e) {
-
+        IsCancelRequested = true;
+        FileMergeSplit.CancelSplitFile(WorkingSplitFilePath);
     }
 }
