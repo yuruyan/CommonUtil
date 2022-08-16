@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -198,7 +199,7 @@ public class FileMergeSplit {
     /// <param name="savePath">保存文件</param>
     /// <param name="processCallback">进度回调，参数为进度[0, 100]</param>
     public static void MergeFile(
-        string[] sourceFiles,
+        IEnumerable<string> sourceFiles,
         string savePath,
         Action<double>? processCallback = null
     ) {
