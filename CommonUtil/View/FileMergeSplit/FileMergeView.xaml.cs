@@ -6,9 +6,9 @@ using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +26,7 @@ public partial class FileMergeView : Page {
     public static readonly DependencyProperty MergeFileDirectoryProperty = DependencyProperty.Register("MergeFileDirectory", typeof(string), typeof(FileMergeView), new PropertyMetadata(""));
     public static readonly DependencyProperty MergeFileSavePathProperty = DependencyProperty.Register("MergeFileSavePath", typeof(string), typeof(FileMergeView), new PropertyMetadata(""));
     public static readonly DependencyProperty MergeFilesProperty = DependencyProperty.Register("MergeFiles", typeof(ObservableCollection<string>), typeof(FileMergeView), new PropertyMetadata());
+    public static readonly DependencyProperty TotalFileSizeProperty = DependencyProperty.Register("TotalFileSize", typeof(ulong), typeof(FileMergeView), new PropertyMetadata(0UL));
     public static readonly DependencyProperty WorkingProcessProperty = DependencyProperty.Register("WorkingProcess", typeof(double), typeof(FileMergeView), new PropertyMetadata(0.0));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(FileMergeView), new PropertyMetadata(false));
 
@@ -44,11 +45,18 @@ public partial class FileMergeView : Page {
         set { SetValue(MergeFileSavePathProperty, value); }
     }
     /// <summary>
-    /// 合并文件路径列表
+    /// 合并文件路径列表，更新只进行替换
     /// </summary>
     public ObservableCollection<string> MergeFiles {
         get { return (ObservableCollection<string>)GetValue(MergeFilesProperty); }
         set { SetValue(MergeFilesProperty, value); }
+    }
+    /// <summary>
+    /// 文件合并总大小
+    /// </summary>
+    public ulong TotalFileSize {
+        get { return (ulong)GetValue(TotalFileSizeProperty); }
+        set { SetValue(TotalFileSizeProperty, value); }
     }
     /// <summary>
     /// 合并文件进度
@@ -70,26 +78,31 @@ public partial class FileMergeView : Page {
     private DateTime LastMergeFileUpdateTime = DateTime.Now;
 
     public FileMergeView() {
+        DependencyPropertyDescriptor.FromProperty(MergeFilesProperty, typeof(FileMergeView))
+            .AddValueChanged(this, CalculateTotalFileSizeHandler);
         MergeFiles = new();
         InitializeComponent();
     }
 
+    /// <summary>
+    /// 计算文件总大小
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CalculateTotalFileSizeHandler(object? sender, EventArgs e) {
+        TotalFileSize = (ulong)MergeFiles.Select(f => new FileInfo(f).Length).Sum();
+    }
 
     /// <summary>
     /// 检查合并文件输入有效性
     /// </summary>
     /// <returns></returns>
-    private bool CheckMergeFileInputValidation() {
-        if (string.IsNullOrEmpty(MergeFileSavePath)) {
-            MessageBox.Info("请输入文件保存路径！");
-            return false;
-        }
-        if (string.IsNullOrEmpty(MergeFileDirectory)) {
-            MessageBox.Info("请输入合并文件目录！");
-            return false;
-        }
-        if (!Directory.Exists(MergeFileDirectory)) {
-            MessageBox.Error("合并文件目录不存在！");
+    private bool CheckInputValidation() {
+        if (!UIUtils.CheckInputNullOrEmpty(new KeyValuePair<string?, string>[] {
+            new (MergeFileSavePath, "文件保存路径不能为空"),
+            new (MergeFileDirectory, "合并文件目录不能为空"),
+            new (MergeFiles.Any() ? "." : null, "合并文件列表不能为空"),
+        })) {
             return false;
         }
         return true;
@@ -120,16 +133,16 @@ public partial class FileMergeView : Page {
         e.Handled = true;
         var dialog = new VistaFolderBrowserDialog {
             Description = "选择合并文件夹",
-            UseDescriptionForTitle = true // This applies to the Vista style dialog only, not the old dialog.
+            UseDescriptionForTitle = true
         };
-        if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
-            MergeFileDirectory = dialog.SelectedPath;
-            try {
-                MergeFiles = new(GetSortedFileList(new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)));
-            } catch (Exception error) {
-                Logger.Error(error);
-            }
+        if (dialog.ShowDialog(Application.Current.MainWindow) != true) {
+            return;
         }
+        MergeFileDirectory = dialog.SelectedPath;
+        // 读取文件列表
+        string[] files = Directory.GetFiles(MergeFileDirectory);
+        Array.Sort(files);
+        MergeFiles = new(files);
     }
 
     /// <summary>
@@ -140,25 +153,17 @@ public partial class FileMergeView : Page {
     private async void MergeFileClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (IsWorking) {
-            MessageBox.Info("正在合并文件");
             return;
         }
-        if (!CheckMergeFileInputValidation()) {
+        if (!CheckInputValidation()) {
             return;
         }
-        string[] files = GetSortedFileList(
-                            new DirectoryInfo(MergeFileDirectory).GetFiles().Select(f => f.Name)
-                         ).ToArray();
-        if (files.Length == 0) {
-            MessageBox.Error("合并文件为空！");
-            return;
-        }
-        for (int i = 0; i < files.Length; i++) {
-            files[i] = Path.Combine(MergeFileDirectory, files[i]);
-        }
-        string savePath = MergeFileSavePath;
+
+        var files = MergeFiles;
+        var savePath = MergeFileSavePath;
         IsWorking = true;
         WorkingProcess = 0;
+        // 开始合并
         try {
             await Task.Run(() => FileMergeSplit.MergeFile(
                 files,
@@ -178,34 +183,11 @@ public partial class FileMergeView : Page {
     }
 
     /// <summary>
-    /// 对文件进行排序
+    /// 取消任务
     /// </summary>
-    /// <param name="filenameList"></param>
-    /// <returns></returns>
-    private IEnumerable<string> GetSortedFileList(IEnumerable<string> filenameList) {
-        string prefix = CommonUtils.GetSamePrefix(filenameList);
-        if (string.IsNullOrEmpty(prefix)) {
-            return filenameList;
-        }
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelClickHandler(object sender, RoutedEventArgs e) {
 
-        var fileDict = new Dictionary<int, string>();
-        var regex = new Regex($@"{prefix}(\d+)(?:\..+)*");
-        // 填充 fileDict
-        foreach (var file in filenameList) {
-            var match = regex.Match(file);
-            if (match.Success) {
-                try {
-                    fileDict[Convert.ToInt32(match.Groups[1].Value)] = file;
-                } catch {
-                }
-            }
-        }
-        var keys = fileDict.Keys.ToList();
-        keys.Sort();
-        var resultList = new List<string>();
-        foreach (var n in keys) {
-            resultList.Add(fileDict[n]);
-        }
-        return resultList;
     }
 }

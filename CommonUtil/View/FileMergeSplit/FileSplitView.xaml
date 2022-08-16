@@ -8,6 +8,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUtil.Widget"
   Title="FileSplitView"
+  Margin="8,0,0,0"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -24,10 +25,10 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
-      <RowDefinition Height="auto" />
+      <RowDefinition Height="20" />
     </Grid.RowDefinitions>
 
-    <ui:SimpleStackPanel Margin="0,8,0,0" Orientation="Vertical">
+    <ui:SimpleStackPanel Orientation="Vertical">
       <!--  选择分割文件  -->
       <ui:SimpleStackPanel Orientation="Horizontal">
         <Button Click="SelectFileClick" Content="选择分割文件" />

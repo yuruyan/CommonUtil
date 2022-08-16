@@ -10,23 +10,24 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
-  <ui:SimpleStackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
     <!--  进度条  -->
     <TextBlock
       Margin="8,0"
       FontFamily="Arial"
       Text="{Binding Process, ElementName=Root, StringFormat='{}{0:F2} %'}" />
     <!--  进度条  -->
-    <StackPanel VerticalAlignment="Center">
-      <ui:ProgressBar
-        Width="500"
-        Height="10"
-        HorizontalAlignment="Stretch"
-        Background="Transparent"
-        Foreground="{Binding ProgressBarForeground, ElementName=Root}"
-        Maximum="100"
-        Minimum="0"
-        Value="{Binding Process, ElementName=Root}" />
-    </StackPanel>
-  </ui:SimpleStackPanel>
+    <ui:ProgressBar
+      Grid.Column="1"
+      Height="10"
+      Background="Transparent"
+      Foreground="{Binding ProgressBarForeground, ElementName=Root}"
+      Maximum="100"
+      Minimum="0"
+      Value="{Binding Process, ElementName=Root}" />
+  </Grid>
 </UserControl>

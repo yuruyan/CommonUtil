@@ -24,6 +24,6 @@
         IsSelected="True" />
       <ui:NavigationViewItem x:Name="FileMergeView" Content="文件合并" />
     </ui:NavigationView.MenuItems>
-    <ui:Frame x:Name="ContentFrame" Margin="8,0" />
+    <ui:Frame x:Name="ContentFrame" Margin="0,8" />
   </ui:NavigationView>
 </Page>

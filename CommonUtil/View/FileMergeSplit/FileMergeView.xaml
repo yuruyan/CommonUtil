@@ -8,57 +8,101 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUtil.Widget"
   Title="FileSplitView"
+  Margin="8,0,0,0"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <Style BasedOn="{StaticResource GlobalButtonStyle}" TargetType="Button">
+      <Setter Property="Width" Value="{StaticResource FileMergeSplitView_TextBoxWidth}" />
+    </Style>
+    <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+      <Setter Property="Spacing" Value="{StaticResource MediumItemSpacing}" />
+    </Style>
+  </Page.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
-      <RowDefinition Height="auto" />
+      <RowDefinition Height="20" />
     </Grid.RowDefinitions>
+
     <UniformGrid Columns="2">
-      <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
+      <ui:SimpleStackPanel Orientation="Vertical">
         <!--  选择合并目录  -->
-        <StackPanel Height="50" Orientation="Horizontal">
-          <StackPanel Width="150" VerticalAlignment="Center">
-            <Button Click="SelectMergeFileDirClick" Content="选择合并目录" />
-          </StackPanel>
+        <ui:SimpleStackPanel Orientation="Horizontal">
+          <Button Click="SelectMergeFileDirClick" Content="选择合并目录" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource ApplicationBackground}"
+            Foreground="{StaticResource HighLightKeywordForeground}"
             Text="{Binding MergeFileDirectory}" />
-        </StackPanel>
+        </ui:SimpleStackPanel>
+
         <!--  选择保存路径  -->
-        <StackPanel Orientation="Horizontal">
-          <StackPanel Width="150">
-            <Button Click="SelectMergeFileSaveClick" Content="选择保存路径" />
-          </StackPanel>
+        <ui:SimpleStackPanel Orientation="Horizontal">
+          <Button Click="SelectMergeFileSaveClick" Content="选择保存路径" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource ApplicationBackground}"
+            Foreground="{StaticResource HighLightKeywordForeground}"
             Text="{Binding MergeFileSavePath}" />
-        </StackPanel>
-        <Button Click="MergeFileClick" Content="开始" />
+        </ui:SimpleStackPanel>
+
+        <!--  Control  -->
+        <Grid>
+          <Button
+            HorizontalAlignment="Left"
+            Click="MergeFileClick"
+            Content="开始" />
+          <Button
+            Click="CancelClickHandler"
+            Content="取消"
+            Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
       </ui:SimpleStackPanel>
-      <ListBox
-        Grid.Row="2"
-        Padding="0,4,0,4"
-        Background="White"
-        ItemsSource="{Binding MergeFiles}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <StackPanel>
-              <TextBlock Text="{Binding}" />
-            </StackPanel>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+
+      <!--  文件列表  -->
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--  文件数量和总大小  -->
+        <ui:SimpleStackPanel
+          Margin="8"
+          HorizontalAlignment="Right"
+          Orientation="Horizontal"
+          Spacing="4"
+          Visibility="{Binding MergeFiles.Count, Converter={StaticResource HideIfZeroConverter}}">
+          <TextBlock>
+            <Run Text="共 " />
+            <Run
+              FontWeight="Bold"
+              Foreground="{StaticResource HighLightKeywordForeground}"
+              Text="{Binding MergeFiles.Count, Mode=OneWay}" />
+            <Run Text=" 个文件，" />
+          </TextBlock>
+          <TextBlock>
+            <Run Text="总大小 " />
+            <Run
+              FontWeight="Bold"
+              Foreground="{StaticResource HighLightKeywordForeground}"
+              Text="{Binding TotalFileSize, Mode=OneWay, Converter={StaticResource FileSizeConverter}}" />
+          </TextBlock>
+        </ui:SimpleStackPanel>
+        <ListBox Grid.Row="1" ItemsSource="{Binding MergeFiles}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding ., Converter={StaticResource FileNameConverter}}" />
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
     </UniformGrid>
 
     <!--  进度条  -->
     <widget:ProgressBar
-      Height="20"
+      Grid.Row="1"
       Process="{Binding WorkingProcess}"
       Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
   </Grid>
