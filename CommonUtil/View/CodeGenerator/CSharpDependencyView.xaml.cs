@@ -56,7 +56,7 @@ public partial class CSharpDependencyView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AddPropertyClick(object sender, RoutedEventArgs e) {
-        TypeInfos.Add(TypeInfos.Any() ? TypeInfos[^1] : new());
+        TypeInfos.Add(TypeInfos.Any() ? TypeInfos[^1] with { } : new());
     }
 
     /// <summary>
