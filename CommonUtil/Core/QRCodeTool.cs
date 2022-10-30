@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using ZXing;
+using ZXing.Common;
 using static QRCoder.PayloadGenerator;
 using static QRCoder.QRCodeGenerator;
 
@@ -43,6 +45,22 @@ public class QRCodeTool {
         QRCodeGeneratorDict[QRCodeFormat.PNG] = PNGQRCode;
         QRCodeGeneratorDict[QRCodeFormat.SVG] = SVGQRCode;
         QRCodeGeneratorDict[QRCodeFormat.PDF] = PDFQRCode;
+    }
+
+    /// <summary>
+    /// 解析二维码
+    /// </summary>
+    /// <param name="filepath"></param>
+    /// <returns>失败返回 null</returns>
+    public static string? DecodeQRCode(string filepath) {
+        var reader = new ZXing.ZKWeb.BarcodeReader {
+            Options = new DecodingOptions {
+                CharacterSet = "UTF-8"
+            }
+        };
+        //加载图像
+        using var bitmap = new System.DrawingCore.Bitmap(filepath);
+        return reader.Decode(bitmap)?.Text;
     }
 
     /// <summary>

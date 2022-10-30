@@ -33,6 +33,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     public static readonly DependencyProperty ECCLevelComboxSelectedIndexProperty = DependencyProperty.Register("ECCLevelComboxSelectedIndex", typeof(int), typeof(QRCodeToolView), new PropertyMetadata(2));
     public static readonly DependencyProperty ImageQualityComboSelectedIndexProperty = DependencyProperty.Register("ImageQualityComboSelectedIndex", typeof(int), typeof(QRCodeToolView), new PropertyMetadata(2));
     public static readonly DependencyProperty ImageQualityListProperty = DependencyProperty.Register("ImageQualityList", typeof(IList<string>), typeof(QRCodeToolView), new PropertyMetadata());
+    public static readonly DependencyProperty IsQRCodeDecodeViewSelectedProperty = DependencyProperty.Register("IsQRCodeDecodeViewSelected", typeof(bool), typeof(QRCodeToolView), new PropertyMetadata(true));
 
     /// <summary>
     /// 二维码容错率
@@ -52,6 +53,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         {"高", 32 }
     };
     private readonly Type[] Routers = {
+        typeof(QRCodeDecodeView),
         typeof(URLQRCodeView),
         typeof(SMSQRCodeView),
         typeof(WIFIQRCodeView),
@@ -111,6 +113,14 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         set { SetValue(ImageQualityListProperty, value); }
     }
     /// <summary>
+    /// 当前页面是否是二维码解析页面
+    /// </summary>
+    public bool IsQRCodeDecodeViewSelected {
+        get { return (bool)GetValue(IsQRCodeDecodeViewSelectedProperty); }
+        set { SetValue(IsQRCodeDecodeViewSelectedProperty, value); }
+    }
+
+    /// <summary>
     /// 当前图片缓存
     /// </summary>
     private byte[] QRCodeImage = Array.Empty<byte>();
@@ -120,7 +130,8 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         ImageQualityList = ImageQualityDict.Keys.ToList();
         InitializeComponent();
         // 更新 QRCodeForegroundText
-        DependencyPropertyDescriptor.FromProperty(QRCodeForegroundProperty, typeof(QRCodeToolView))
+        DependencyPropertyDescriptor
+            .FromProperty(QRCodeForegroundProperty, typeof(QRCodeToolView))
             .AddValueChanged(this, (o, e) => QRCodeForegroundText = QRCodeForeground.ToString());
         RouterService = new(ContentFrame, Routers);
     }
@@ -243,6 +254,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
+            IsQRCodeDecodeViewSelected = element.Name == typeof(QRCodeDecodeView).Name;
             RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }

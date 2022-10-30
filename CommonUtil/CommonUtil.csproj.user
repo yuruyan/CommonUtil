@@ -91,6 +91,9 @@
     <Compile Update="View\OrdinalTextGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\QRCodeTool\QRCodeDecodeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\QRCodeTool\QRCodeToolView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -250,6 +253,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\QRCodeTool\QRCodeDecodeView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\QRCodeTool\QRCodeToolView.xaml">
