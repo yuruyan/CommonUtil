@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleFileSystemServer", "SimpleFileSystemServer", "{1AB7B224-928C-4A45-9F1B-67693ED318A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AA5E726A-1F66-4A02-AA92-83166189A991} = {1AB7B224-928C-4A45-9F1B-67693ED318A2}
+		{DF9CB678-CC2F-415E-92BD-27D2080AB1D4} = {1AB7B224-928C-4A45-9F1B-67693ED318A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FD7BB1E-753C-4E8C-82F1-9E593F0A6100}
