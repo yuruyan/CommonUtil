@@ -75,6 +75,7 @@
     <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RandomDataGenerator.Net" Version="1.0.15" />
+    <PackageReference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing" Version="0.16.6" />
   </ItemGroup>
 
   <ItemGroup>
