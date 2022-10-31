@@ -2,6 +2,8 @@
 using RandomDataGenerator.Randomizers;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,10 +19,31 @@ public enum RandomStringChoice {
 }
 
 public class RandomGenerator {
-    private static readonly string NumberCharacter = "0123456789";
-    private static readonly string UpperCaseCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static readonly string LowerCaseCharacter = "abcdefghijklmnopqrstuvwxyz";
-    private static readonly string SpacialCharacter = @"$%&'()*+,-./\:;<=>?@[]^_`{|}~";
+    private const string NumberCharacter = "0123456789";
+    private const string UpperCaseCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string LowerCaseCharacter = "abcdefghijklmnopqrstuvwxyz";
+    private const string SpacialCharacter = @"$%&'()*+,-./\:;<=>?@[]^_`{|}~";
+
+    private const string RandomDataSourcePath = "Resource/RandomDataSource.zip";
+    private const string ChineseNameEntryName = "ChineseNames.txt";
+    private const string ChineseFamilyNameEntryName = "ChineseFamilyNames.txt";
+    private const string JapaneseNameEntryName = "JapaneseNames.txt";
+    private const string JapaneseFamilyNameEntryName = "JapaneseFamilyNames.txt";
+    private const string ChineseAncientNameEntryName = "ChineseAncientNames.txt";
+    private const string EnglishNameEntryName = "EnglishNames.txt";
+    private const string EnglishChineseNameEntryName = "EnglishChineseNames.txt";
+    /// <summary>
+    /// 数据源
+    /// </summary>
+    private static readonly IReadOnlyDictionary<string, List<string>> DataSourceDict = new Dictionary<string, List<string>>() {
+        {ChineseNameEntryName, new () },
+        {ChineseFamilyNameEntryName, new () },
+        {JapaneseNameEntryName, new () },
+        {JapaneseFamilyNameEntryName, new () },
+        {ChineseAncientNameEntryName, new () },
+        {EnglishNameEntryName, new () },
+        {EnglishChineseNameEntryName, new () },
+    };
 
     /// <summary>
     /// 生成随机数
@@ -130,4 +153,98 @@ public class RandomGenerator {
         }
         return results;
     }
+
+    /// <summary>
+    /// 获取压缩文件内容
+    /// </summary>
+    /// <param name="entryName">压缩文件名</param>
+    /// <returns></returns>
+    /// <exception cref="FileNotFoundException">压缩文件找不到</exception>
+    private static string GetArchiveResource(string entryName) {
+        using var archiveStream = File.OpenRead(RandomDataSourcePath);
+        ZipArchiveEntry? zipArchiveEntry = new ZipArchive(archiveStream).GetEntry(entryName);
+        // entry 找不到
+        if (zipArchiveEntry == null) {
+            throw new FileNotFoundException($"压缩文件 {entryName} 找不到");
+        }
+
+        using var readStream = zipArchiveEntry.Open();
+        using var readerStream = new StreamReader(readStream);
+        return readerStream.ReadToEnd();
+    }
+
+    /// <summary>
+    /// 生成随机数据
+    /// </summary>
+    /// <param name="entryName">压缩文件名称</param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    private static string[] GenerateRandomData(string entryName, uint count) {
+        var dataSource = DataSourceDict[entryName];
+        // 没有加载
+        if (!dataSource.Any()) {
+            lock (entryName) {
+                if (!dataSource.Any()) {
+                    dataSource.AddRange(
+                        GetArchiveResource(entryName).Split('\n')
+                    );
+                }
+            }
+        }
+        var names = new string[count];
+        for (int i = 0; i < count; i++) {
+            names[i] = dataSource[Random.Shared.Next(dataSource.Count)];
+        }
+        return names;
+    }
+
+    /// <summary>
+    /// 生成随机中国人名
+    /// </summary>
+    /// <param name="count">个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomChineseNames(uint count) => GenerateRandomData(ChineseNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机中国姓氏
+    /// </summary>
+    /// <param name="count">生成个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomChineseFamilyNames(uint count) => GenerateRandomData(ChineseFamilyNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机日本人名
+    /// </summary>
+    /// <param name="count">个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomJapaneseNames(uint count) => GenerateRandomData(JapaneseNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机日本姓氏
+    /// </summary>
+    /// <param name="count">生成个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomJapaneseFamilyNames(uint count) => GenerateRandomData(JapaneseFamilyNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机古代中国人名
+    /// </summary>
+    /// <param name="count">个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomChineseAncientNames(uint count) => GenerateRandomData(ChineseAncientNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机英文名
+    /// </summary>
+    /// <param name="count">个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomEnglishNames(uint count) => GenerateRandomData(EnglishNameEntryName, count);
+
+    /// <summary>
+    /// 生成随机英文音译名
+    /// </summary>
+    /// <param name="count">个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomEnglishChineseNames(uint count) => GenerateRandomData(EnglishChineseNameEntryName, count);
+
 }

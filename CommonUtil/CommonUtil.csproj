@@ -182,6 +182,9 @@
     <None Update="Resource\ProgramingGetTimeStamp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resource\RandomDataSource.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resource\WordMap.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
