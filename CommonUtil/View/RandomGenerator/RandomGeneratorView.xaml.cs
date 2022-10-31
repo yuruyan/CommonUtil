@@ -35,6 +35,13 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
         typeof(RandomNumberGeneratorView),
         typeof(RandomGeneratorWithRegexView),
         typeof(RandomGeneratorWithDataSourceView),
+        typeof(RandomChineseNameGeneratorView),
+        typeof(RandomChineseFamilyNameGeneratorView),
+        typeof(RandomChineseAncientNameGeneratorView),
+        typeof(RandomJapaneseNameGeneratorView),
+        typeof(RandomJapaneseFamilyNameGeneratorView),
+        typeof(RandomEnglishNameGeneratorView),
+        typeof(RandomEnglishChineseNameGeneratorView),
     };
     private readonly RouterService RouterService;
 

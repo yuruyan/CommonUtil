@@ -39,6 +39,7 @@
     <None Remove="Resource\image\FTP.svg" />
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Intersection.svg" />
+    <None Remove="Resource\image\JapaneseSymbol.png" />
     <None Remove="Resource\image\link.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
@@ -113,6 +114,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resource\image\Intersection.svg" />
+    <Resource Include="Resource\image\JapaneseSymbol.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resource\image\link.svg" />
     <Resource Include="Resource\image\Merge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -224,6 +228,9 @@
     <Compile Update="View\QRCodeTool\SMSQRCodeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -265,6 +272,24 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\QRCodeTool\SMSQRCodeView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomEnglishChineseNameGeneratorView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomEnglishNameGeneratorView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChineseAncientNameGeneratorView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomJapaneseFamilyNameGeneratorView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

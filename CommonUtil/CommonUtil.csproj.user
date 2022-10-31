@@ -273,7 +273,22 @@
     <Page Update="View\QRCodeTool\URLQRCodeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\RandomGenerator\RandomEnglishChineseNameGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomEnglishNameGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChineseAncientNameGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomJapaneseFamilyNameGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\RandomGenerator\RandomGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml">
