@@ -2,6 +2,9 @@
 using Microsoft.Win32;
 using NLog;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -39,11 +42,18 @@ public partial class QRCodeDecodeView : Page {
         if (openFileDialog.ShowDialog() != true) {
             return;
         }
-        var imageFile = openFileDialog.FileName;
+        ParseQRCodeImage(openFileDialog.FileName);
+    }
+
+    /// <summary>
+    /// 解析 QRCode
+    /// </summary>
+    /// <param name="filepath">图片路径</param>
+    private void ParseQRCodeImage(string filepath) {
         try {
-            QRCodeImage.Source = new BitmapImage(new Uri(imageFile));
+            QRCodeImage.Source = new BitmapImage(new Uri(filepath));
             try {
-                string? data = QRCodeTool.DecodeQRCode(imageFile);
+                string? data = QRCodeTool.DecodeQRCode(filepath);
                 // 解析成功
                 if (data != null) {
                     DecodeText = data;
@@ -58,6 +68,21 @@ public partial class QRCodeDecodeView : Page {
         } catch (Exception error) {
             Logger.Error(error);
             CommonUITools.Widget.MessageBox.Error("加载图片失败");
+        }
+    }
+
+    /// <summary>
+    /// 拖拽图片
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QRCodeImageDropHandler(object sender, DragEventArgs e) {
+        e.Handled = true;
+        if (e.Data.GetData(DataFormats.FileDrop) is IEnumerable<string> array) {
+            // 判断是否为文件
+            if (array.FirstOrDefault() is var file && file != null && File.Exists(file)) {
+                ParseQRCodeImage(file);
+            }
         }
     }
 }

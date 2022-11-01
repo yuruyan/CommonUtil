@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:util="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
   Title="QRCodeDecodeView"
   d:DesignHeight="450"
   d:DesignWidth="800"
@@ -24,10 +25,16 @@
 
     <!--  MainContent  -->
     <UniformGrid Grid.Row="1" Columns="2">
-      <Image
-        Name="QRCodeImage"
-        Margin="0,0,4,0"
-        Stretch="Uniform" />
+      <Grid
+        util:DragDropHelper.IsEnabled="True"
+        AllowDrop="True"
+        Background="Transparent"
+        Drop="QRCodeImageDropHandler">
+        <Image
+          Name="QRCodeImage"
+          Margin="0,0,4,0"
+          Stretch="Uniform" />
+      </Grid>
       <TextBox
         Margin="4,0,0,0"
         AcceptsReturn="True"
