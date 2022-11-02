@@ -36,7 +36,7 @@ public class RandomGenerator {
     private const string EnglishWordsEntryName = "EnglishWords.txt";
     private const string ChineseWordsEntryName = "ChineseWords.txt";
     /// <summary>
-    /// 数据源
+    /// 数据源，首次加载会有延迟
     /// </summary>
     private static readonly IReadOnlyDictionary<string, List<string>> DataSourceDict = new Dictionary<string, List<string>>() {
         {ChineseNameEntryName, new () },

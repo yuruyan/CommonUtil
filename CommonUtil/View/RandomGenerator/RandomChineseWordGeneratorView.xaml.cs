@@ -1,8 +1,10 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
@@ -13,6 +15,10 @@ public partial class RandomChineseWordGeneratorView : Page, IGenerable<uint, IEn
 
     public RandomChineseWordGeneratorView() {
         InitializeComponent();
+        // 提前加载，减少卡顿
+        Task.Run(() => {
+            CommonUtils.Try(() => RandomGenerator.GenerateRandomChineseWords(1));
+        });
     }
 
     /// <summary>

@@ -1,8 +1,10 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using CommonUtil.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
@@ -13,6 +15,10 @@ public partial class RandomEnglishChineseNameGeneratorView : Page, IGenerable<ui
 
     public RandomEnglishChineseNameGeneratorView() {
         InitializeComponent();
+        // 提前加载，减少卡顿
+        Task.Run(() => {
+            CommonUtils.Try(() => RandomGenerator.GenerateRandomEnglishChineseNames(1));
+        });
     }
 
     /// <summary>
