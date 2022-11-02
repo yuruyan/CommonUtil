@@ -27,7 +27,7 @@
       IsPaneToggleButtonVisible="False"
       IsSettingsVisible="False"
       IsTabStop="False"
-      OpenPaneLength="40"
+      OpenPaneLength="45"
       PaneDisplayMode="Left"
       SelectionChanged="NavigationViewSelectionChanged">
       <ui:NavigationView.MenuItems>
@@ -65,6 +65,46 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
+          Name="RandomEmailAddressGeneratorView"
+          Content="生成随机邮箱地址"
+          ToolTip="生成随机邮箱地址">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#30ca9b" Glyph="&#xe620;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomGuidGeneratorView"
+          Content="生成随机 GUID"
+          ToolTip="生成随机 GUID">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe74c;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomIPV4AddressGeneratorView"
+          Content="生成随机 IPV4"
+          ToolTip="生成随机 IPV4">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe67f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomIPV6AddressGeneratorView"
+          Content="生成随机 IPV6"
+          ToolTip="生成随机 IPV6">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe67f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomMACAddressGeneratorView"
+          Content="生成随机 MAC 地址"
+          ToolTip="生成随机 MAC 地址">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xec89;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
           Name="RandomChineseNameGeneratorView"
           Content="生成随机中文名"
           ToolTip="生成随机中文名">
@@ -82,8 +122,16 @@
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
           Name="RandomChineseAncientNameGeneratorView"
-          Content="生成随机古代中文姓氏"
-          ToolTip="生成随机古代中文姓氏">
+          Content="生成随机古代中文名"
+          ToolTip="生成随机古代中文名">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#c84e64" Glyph="&#xe712;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomChineseWordGeneratorView"
+          Content="生成随机词语"
+          ToolTip="生成随机词语">
           <ui:NavigationViewItem.Icon>
             <ui:FontIcon Foreground="#c84e64" Glyph="&#xe712;" />
           </ui:NavigationViewItem.Icon>
@@ -116,6 +164,14 @@
           Name="RandomEnglishChineseNameGeneratorView"
           Content="生成随机英文音译名"
           ToolTip="生成随机英文音译名">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#1296db" Glyph="&#xe713;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          Name="RandomEnglishWordGeneratorView"
+          Content="生成随机英文单词"
+          ToolTip="生成随机英文单词">
           <ui:NavigationViewItem.Icon>
             <ui:FontIcon Foreground="#1296db" Glyph="&#xe713;" />
           </ui:NavigationViewItem.Icon>

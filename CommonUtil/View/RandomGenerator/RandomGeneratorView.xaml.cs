@@ -2,6 +2,7 @@
 using CommonUtil.Model;
 using ModernWpf.Controls;
 using NLog;
+using RandomDataGenerator.Randomizers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,13 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
         typeof(RandomJapaneseFamilyNameGeneratorView),
         typeof(RandomEnglishNameGeneratorView),
         typeof(RandomEnglishChineseNameGeneratorView),
+        typeof(RandomChineseWordGeneratorView),
+        typeof(RandomEnglishWordGeneratorView),
+        typeof(RandomEmailAddressGeneratorView),
+        typeof(RandomGuidGeneratorView),
+        typeof(RandomIPV4AddressGeneratorView),
+        typeof(RandomIPV6AddressGeneratorView),
+        typeof(RandomMACAddressGeneratorView),
     };
     private readonly RouterService RouterService;
 

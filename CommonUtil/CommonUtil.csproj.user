@@ -273,6 +273,27 @@
     <Page Update="View\QRCodeTool\URLQRCodeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\RandomGenerator\RandomMACAddressGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomIPV6AddressGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomIPV4AddressGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomGuidGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomEmailAddressGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomEnglishWordGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChineseWordGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\RandomGenerator\RandomEnglishChineseNameGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>
