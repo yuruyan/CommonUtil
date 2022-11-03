@@ -20,7 +20,20 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input Box  -->
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <widget:DragDropTextBox
+      Name="DragDropTextBox"
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasFile, Mode=TwoWay}">
+      <widget:DragDropTextBox.TextBox>
+        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+      </widget:DragDropTextBox.TextBox>
+      <widget:DragDropTextBox.FileView>
+        <widget:FileNameIconWidget
+          HorizontalAlignment="Center"
+          FileName="{Binding FileName}"
+          IconSize="40" />
+      </widget:DragDropTextBox.FileView>
+    </widget:DragDropTextBox>
 
     <!--  Control  -->
     <WrapPanel
@@ -34,21 +47,13 @@
         </Style>
       </WrapPanel.Resources>
       <widget:IconButton
-        Click="EncodeString"
+        Click="EncodeClickHandler"
         Icon="&#xe63e;"
-        Text="字符串编码" />
+        Text="编码" />
       <widget:IconButton
-        Click="DecodeString"
+        Click="DecodeClickHandler"
         Icon="&#xe640;"
-        Text="字符串解码" />
-      <widget:IconButton
-        Click="EncodeFile"
-        Icon="&#xe63e;"
-        Text="文件编码" />
-      <widget:IconButton
-        Click="DecodeFile"
-        Icon="&#xe640;"
-        Text="文件解码" />
+        Text="解码" />
       <widget:IconButton
         Click="CopyResultClick"
         Icon="&#xe6ef;"
