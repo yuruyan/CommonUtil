@@ -273,6 +273,9 @@
     <Page Update="View\QRCodeTool\URLQRCodeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\RandomGenerator\RandomDateTimeGeneratorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\RandomGenerator\RandomMACAddressGeneratorView.xaml">
       <SubType>Designer</SubType>
     </Page>

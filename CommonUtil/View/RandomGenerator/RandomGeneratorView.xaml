@@ -65,6 +65,14 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
+          Name="RandomDateTimeGeneratorView"
+          Content="生成随机日期时间"
+          ToolTip="生成随机日期时间">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#22ADAC" Glyph="&#xe613;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
           Name="RandomEmailAddressGeneratorView"
           Content="生成随机邮箱地址"
           ToolTip="生成随机邮箱地址">
