@@ -13,7 +13,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RandomGeneratorView), new PropertyMetadata(""));
-    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorView), new PropertyMetadata(8.0));
+    public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorView), new PropertyMetadata(16.0));
 
     /// <summary>
     /// 输出

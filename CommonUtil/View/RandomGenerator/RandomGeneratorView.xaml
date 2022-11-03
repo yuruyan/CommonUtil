@@ -77,7 +77,7 @@
           Content="生成随机邮箱地址"
           ToolTip="生成随机邮箱地址">
           <ui:NavigationViewItem.Icon>
-            <ui:FontIcon Foreground="#30ca9b" Glyph="&#xe620;" />
+            <ui:FontIcon Foreground="#22ADAC" Glyph="&#xe620;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
