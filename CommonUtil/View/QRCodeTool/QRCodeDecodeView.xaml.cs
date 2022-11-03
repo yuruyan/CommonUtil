@@ -1,4 +1,5 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using System;
@@ -7,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace CommonUtil.View;
 
@@ -51,7 +51,7 @@ public partial class QRCodeDecodeView : Page {
     /// <param name="filepath">图片路径</param>
     private void ParseQRCodeImage(string filepath) {
         try {
-            QRCodeImage.Source = new BitmapImage(new Uri(filepath));
+            QRCodeImage.Source = UIUtils.CopyImageSource(filepath);
             try {
                 string? data = QRCodeTool.DecodeQRCode(filepath);
                 // 解析成功
