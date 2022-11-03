@@ -218,6 +218,7 @@ public partial class DataDigestView : Page {
         e.Handled = true;
         InputText = string.Empty;
         FileName = string.Empty;
+        DragDropTextBox.Clear();
         foreach (var item in DigestInfoDict) {
             item.Value.IsVivible = false;
         }
@@ -364,13 +365,12 @@ public partial class DataDigestView : Page {
     }
 
     /// <summary>
-    /// 拖放文件
+    /// DragDropEvent
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void DragFileDropHandler(object sender, DragEventArgs e) {
-        e.Handled = true;
-        if (e.Data.GetData(DataFormats.FileDrop) is IEnumerable<string> array) {
+    private void DragDropEventHandler(object sender, object e) {
+        if (e is IEnumerable<string> array) {
             if (!array.Any()) {
                 return;
             }
@@ -380,37 +380,4 @@ public partial class DataDigestView : Page {
             }
         }
     }
-
-    /// <summary>
-    /// 文件拖放进入
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void DragFileEnterHandler(object sender, DragEventArgs e) {
-        e.Handled = true;
-        InputPanel.Background = (SolidColorBrush)Global.ColorResource["Gray3"];
-        InputTextBox.Background = (SolidColorBrush)Global.ColorResource["Gray3"];
-    }
-
-    /// <summary>
-    /// 更改 TextBox 默认拖拽行为
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void FileDragOverHandler(object sender, DragEventArgs e) {
-        e.Handled = true;
-        e.Effects = DragDropEffects.Copy;
-    }
-
-    /// <summary>
-    /// 设置鼠标移除时清除背景
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void InputMouseLeaveHandler(object sender, System.Windows.Input.MouseEventArgs e) {
-        e.Handled = true;
-        InputPanel.Background = new SolidColorBrush(Colors.Transparent);
-        InputTextBox.Background = new SolidColorBrush(Colors.Transparent);
-    }
-
 }

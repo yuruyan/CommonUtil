@@ -26,39 +26,28 @@
       <RowDefinition Height="2*" />
     </Grid.RowDefinitions>
     <!--  输入  -->
-    <Grid
-      x:Name="InputPanel"
-      AllowDrop="True"
-      MouseLeave="InputMouseLeaveHandler"
-      PreviewDragEnter="DragFileEnterHandler"
-      PreviewDrop="DragFileDropHandler">
-      <TextBox
-        x:Name="InputTextBox"
-        AllowDrop="True"
-        MouseLeave="InputMouseLeaveHandler"
-        PreviewDragEnter="DragFileEnterHandler"
-        PreviewDragOver="FileDragOverHandler"
-        PreviewDrop="DragFileDropHandler"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding InputText}"
-        Visibility="{Binding FileName, Converter={StaticResource HideIfNotEmptyConverter}}" />
-      <StackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Orientation="Vertical"
-        Visibility="{Binding FileName, Converter={StaticResource HideIfEmptyConverter}}">
-        <StackPanel.Resources>
-          <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20" />
-          </Style>
-        </StackPanel.Resources>
-        <widget:FileNameIconWidget FileName="{Binding FileName}" IconSize="40" />
-        <TextBlock
-          Margin="0,8,0,0"
-          Text="{Binding FileSize, Converter={StaticResource FileSizeConverter}, StringFormat=大小：{0}}"
-          TextAlignment="Center" />
-      </StackPanel>
-    </Grid>
+    <widget:DragDropTextBox Name="DragDropTextBox" DragDropEvent="DragDropEventHandler">
+      <widget:DragDropTextBox.TextBox>
+        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+      </widget:DragDropTextBox.TextBox>
+      <widget:DragDropTextBox.FileView>
+        <StackPanel
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Orientation="Vertical">
+          <StackPanel.Resources>
+            <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+              <Setter Property="FontSize" Value="20" />
+            </Style>
+          </StackPanel.Resources>
+          <widget:FileNameIconWidget FileName="{Binding FileName}" IconSize="40" />
+          <TextBlock
+            Margin="0,8,0,0"
+            Text="{Binding FileSize, Converter={StaticResource FileSizeConverter}, StringFormat=大小：{0}}"
+            TextAlignment="Center" />
+        </StackPanel>
+      </widget:DragDropTextBox.FileView>
+    </widget:DragDropTextBox>
     <!--  Control  -->
     <Grid Grid.Row="1">
       <ui:SimpleStackPanel
