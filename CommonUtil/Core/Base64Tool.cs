@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
-class Base64Tool {
+public class Base64Tool {
     /// <summary>
     /// base64 字符串解码
     /// </summary>
@@ -51,7 +51,6 @@ class Base64Tool {
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    /// <exception cref="IOException"></exception>
     public static string Base64EncodeFile(string path)
         => Convert.ToBase64String(File.ReadAllBytes(path));
 
@@ -60,10 +59,9 @@ class Base64Tool {
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    /// <exception cref="IOException"></exception>
-    /// <exception cref="FormatException"></exception>
-    public static string Base64DecodeFile(string path)
-        => Base64DecodeString(File.ReadAllText(path));
+    public static byte[] Base64DecodeFile(string path) {
+        return Convert.FromBase64String(File.ReadAllText(path));
+    }
 
     /// <summary>
     /// 尝试解码
