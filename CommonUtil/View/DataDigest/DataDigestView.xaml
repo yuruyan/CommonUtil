@@ -31,21 +31,7 @@
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
       </widget:DragDropTextBox.TextBox>
       <widget:DragDropTextBox.FileView>
-        <StackPanel
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"
-          Orientation="Vertical">
-          <StackPanel.Resources>
-            <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-              <Setter Property="FontSize" Value="20" />
-            </Style>
-          </StackPanel.Resources>
-          <widget:FileNameIconWidget FileName="{Binding FileName}" IconSize="40" />
-          <TextBlock
-            Margin="0,8,0,0"
-            Text="{Binding FileSize, Converter={StaticResource FileSizeConverter}, StringFormat=大小：{0}}"
-            TextAlignment="Center" />
-        </StackPanel>
+        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
     <!--  Control  -->
