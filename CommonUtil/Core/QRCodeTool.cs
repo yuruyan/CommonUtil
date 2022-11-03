@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
-using ZXing;
 using ZXing.Common;
 using static QRCoder.PayloadGenerator;
 using static QRCoder.QRCodeGenerator;

@@ -1,12 +1,12 @@
-﻿using RandomDataGenerator.FieldOptions;
+﻿using CommonUITools.Utils;
+using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using CommonUITools.Utils;
 
 namespace CommonUtil.Core;
 
