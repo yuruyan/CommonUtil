@@ -103,7 +103,7 @@ public partial class DataDigestView : Page {
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
     public static readonly DependencyProperty FileIconProperty = DependencyProperty.Register("FileIcon", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
-    public static readonly DependencyProperty IsStopButtonVisibleProperty = DependencyProperty.Register("IsStopButtonVisible", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
 
     /// <summary>
     /// 输入文件名
@@ -164,9 +164,9 @@ public partial class DataDigestView : Page {
     /// <summary>
     /// 停止按钮是否可见
     /// </summary>
-    public bool IsStopButtonVisible {
-        get { return (bool)GetValue(IsStopButtonVisibleProperty); }
-        set { SetValue(IsStopButtonVisibleProperty, value); }
+    public bool IsWorking {
+        get { return (bool)GetValue(IsWorkingProperty); }
+        set { SetValue(IsWorkingProperty, value); }
     }
     /// <summary>
     /// 正在工作的 stream
@@ -186,16 +186,16 @@ public partial class DataDigestView : Page {
             "SHA512",
         };
         DigestInfoDict = new() {
-        { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
-        { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
-        { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
-        { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
-        { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
-        { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
-        { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
-        { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
-        { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
-    };
+            { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
+            { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
+            { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
+            { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
+            { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
+            { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
+            { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
+            { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
+            { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
+        };
         InitializeComponent();
         DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);
     }
@@ -231,7 +231,7 @@ public partial class DataDigestView : Page {
     private void StartClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         ThrottleUtils.ThrottleAsync(StartClick, async () => {
-            IsStopButtonVisible = true;
+            IsWorking = true;
             await CalculateDigest();
         });
     }
@@ -304,7 +304,7 @@ public partial class DataDigestView : Page {
         }
         // 等待全部完成
         await Task.WhenAll(tasks);
-        IsStopButtonVisible = false;
+        IsWorking = false;
     }
 
     /// <summary>
@@ -343,7 +343,7 @@ public partial class DataDigestView : Page {
         foreach (var stream in WorkingDigestStream) {
             DataDigest.StopDigest(stream);
         }
-        IsStopButtonVisible = false;
+        IsWorking = false;
     }
 
     /// <summary>

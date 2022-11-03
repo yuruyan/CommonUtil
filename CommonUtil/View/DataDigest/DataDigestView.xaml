@@ -70,18 +70,18 @@
           VerticalAlignment="Center"
           ItemsSource="{Binding DigestOptions, Mode=OneWay}"
           SelectedIndex="{Binding SelectedDigestIndex}" />
-        <Grid>
-          <widget:IconButton
-            Click="StartClick"
-            Icon="&#xe601;"
-            Text="计算"
-            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource HideIfTrueConverter}}" />
-          <widget:IconButton
-            Click="StopDigestClick"
-            Icon="&#xe614;"
-            Text="取消"
-            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource HideIfFalseConverter}}" />
-        </Grid>
+        <!--  Start Button  -->
+        <widget:WorkingButton
+          IsWorking="{Binding IsWorking}"
+          NormalClick="StartClick"
+          WorkingClick="StopDigestClick">
+          <widget:WorkingButton.NormalContent>
+            <widget:IconButtonContent Icon="&#xe601;" Text="计算" />
+          </widget:WorkingButton.NormalContent>
+          <widget:WorkingButton.WorkingContent>
+            <widget:IconButtonContent Icon="&#xe614;" Text="取消" />
+          </widget:WorkingButton.WorkingContent>
+        </widget:WorkingButton>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
