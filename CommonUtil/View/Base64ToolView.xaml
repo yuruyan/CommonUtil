@@ -28,10 +28,7 @@
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
       </widget:DragDropTextBox.TextBox>
       <widget:DragDropTextBox.FileView>
-        <widget:FileNameIconWidget
-          HorizontalAlignment="Center"
-          FileName="{Binding FileName}"
-          IconSize="40" />
+        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
 
