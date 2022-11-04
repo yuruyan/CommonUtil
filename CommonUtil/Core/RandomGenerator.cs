@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Utils;
+using NPOI.SS.Formula.Functions;
 using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using System;
@@ -197,14 +198,31 @@ public class RandomGenerator {
     }
 
     /// <summary>
+    /// 转为大写
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private static string[] ToUpperCase(string[] data) {
+        for (int i = 0; i < data.Length; i++) {
+            data[i] = data[i].ToUpperInvariant();
+        }
+        return data;
+    }
+
+    /// <summary>
     /// 生成随机 guid
     /// </summary>
     /// <param name="count"></param>
+    /// <param name="upperCase">是否大写</param>
     /// <returns></returns>
-    public static string[] GenerateRandomGuids(uint count) {
+    public static string[] GenerateRandomGuids(uint count, bool upperCase = false) {
         var data = new string[count];
         for (int i = 0; i < count; i++) {
             data[i] = RandomizerGuid.Generate()?.ToString() ?? string.Empty;
+        }
+        // 大写
+        if (upperCase) {
+            return ToUpperCase(data);
         }
         return data;
     }
@@ -226,8 +244,9 @@ public class RandomGenerator {
     /// 生成随机 ipv6 地址
     /// </summary>
     /// <param name="count"></param>
+    /// <param name="upperCase">是否大写</param>
     /// <returns></returns>
-    public static string[] GenerateRandomIPV6Addresses(uint count) {
+    public static string[] GenerateRandomIPV6Addresses(uint count, bool upperCase = false) {
         var data = new string[count];
         var sb = new StringBuilder(39);
         for (int i = 0; i < count; i++) {
@@ -236,7 +255,11 @@ public class RandomGenerator {
                 sb.Append($"{Convert.ToString(Random.Shared.Next(IPV6AddressFragment), 16).PadLeft(4, '0')}:");
             }
             sb.Remove(sb.Length - 1, 1);
-            data[i] = sb.ToString().ToUpperInvariant();
+            data[i] = sb.ToString();
+        }
+        // 大写
+        if (upperCase) {
+            return ToUpperCase(data);
         }
         return data;
     }
@@ -245,8 +268,9 @@ public class RandomGenerator {
     /// 生成随机 MAC 地址
     /// </summary>
     /// <param name="count"></param>
+    /// <param name="upperCase">是否大写</param>
     /// <returns></returns>
-    public static string[] GenerateRandomMACAddresses(uint count) {
+    public static string[] GenerateRandomMACAddresses(uint count, bool upperCase = false) {
         var data = new string[count];
         var sb = new StringBuilder(17);
         for (int i = 0; i < count; i++) {
@@ -255,7 +279,11 @@ public class RandomGenerator {
                 sb.Append($"{Convert.ToString(Random.Shared.Next(MACAddressFragment), 16).PadLeft(2, '0')}:");
             }
             sb.Remove(sb.Length - 1, 1);
-            data[i] = sb.ToString().ToUpperInvariant();
+            data[i] = sb.ToString();
+        }
+        // 大写
+        if (upperCase) {
+            return ToUpperCase(data);
         }
         return data;
     }
