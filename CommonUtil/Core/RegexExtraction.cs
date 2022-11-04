@@ -38,7 +38,7 @@ public class RegexExtraction {
         }
         var resultList = new List<string>();
         var sb = new StringBuilder();
-        foreach (Match match in re.Matches(input)) {
+        foreach (var match in re.Matches(input).Cast<Match>()) {
             resultList.Add(JoinGroupMatch(
                 match,
                 groupIndexes,
@@ -90,7 +90,7 @@ public class RegexExtraction {
     /// <returns></returns>
     private static IList<int> GetExtractPatternGroupIndexes(string extractPattern) {
         var indexes = new List<int>();
-        foreach (Match match in GroupRegex.Matches(extractPattern)) {
+        foreach (var match in GroupRegex.Matches(extractPattern).Cast<Match>()) {
             indexes.Add(int.Parse(match.Groups[1].Value));
         }
         return indexes;
