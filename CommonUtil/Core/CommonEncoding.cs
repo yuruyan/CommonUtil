@@ -15,7 +15,6 @@ public class CommonEncoding {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string UTF8Encode(string s) {
-        //&#x4F60;
         byte[] vs = Encoding.Unicode.GetBytes(s);
         var sb = new StringBuilder();
         for (int i = 0; i < vs.Length >> 1; i++) {
@@ -26,15 +25,9 @@ public class CommonEncoding {
                 sb.Append(s[i]);
                 continue;
             }
-            string s1 = Convert.ToString(n1, 16);
-            string s2 = Convert.ToString(n2, 16);
             // 补全 4 字符
-            if (n1 < 10) {
-                s1 = "0" + s1;
-            }
-            if (n2 < 10) {
-                s2 = "0" + s2;
-            }
+            string s1 = Convert.ToString(n1, 16).PadLeft(2, '0');
+            string s2 = Convert.ToString(n2, 16).PadLeft(2, '0');
             sb.Append($"&#x{s1}{s2};");
         }
         return sb.ToString();
@@ -66,20 +59,9 @@ public class CommonEncoding {
         for (int i = 0; i < vs.Length >> 1; i++) {
             byte n1 = vs[(i << 1) + 1];
             byte n2 = vs[i << 1];
-            //// ASCII 字符
-            //if (n1 == 0) {
-            //    sb.Append(s[i]);
-            //    continue;
-            //}
-            string s1 = Convert.ToString(n1, 16);
-            string s2 = Convert.ToString(n2, 16);
             // 补全 4 字符
-            if (n1 < 10) {
-                s1 = "0" + s1;
-            }
-            if (n2 < 10) {
-                s2 = "0" + s2;
-            }
+            string s1 = Convert.ToString(n1, 16).PadLeft(2, '0');
+            string s2 = Convert.ToString(n2, 16).PadLeft(2, '0');
             sb.Append($"\\u{s1}{s2}");
         }
         return sb.ToString();
