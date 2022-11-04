@@ -12,9 +12,9 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <ListView Grid.Column="1" ItemsSource="{Binding AsciiTableList}">
+  <ListView x:Name="AsciiListView" ItemsSource="{Binding AsciiTableList}">
     <ListView.Resources>
-      <ContextMenu x:Key="fileItemContextMenu" Style="{StaticResource GlobalContextMenuStyle}">
+      <ContextMenu x:Key="FileItemContextMenu">
         <MenuItem Click="CopyDetailClickHandler" Header="复制">
           <MenuItem.Icon>
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
@@ -24,7 +24,7 @@
     </ListView.Resources>
     <ListView.ItemContainerStyle>
       <Style BasedOn="{StaticResource GridViewItemContainerStyleKey}" TargetType="ListViewItem">
-        <Setter Property="ContextMenu" Value="{StaticResource fileItemContextMenu}" />
+        <Setter Property="ContextMenu" Value="{StaticResource FileItemContextMenu}" />
       </Style>
     </ListView.ItemContainerStyle>
     <ListView.View>
