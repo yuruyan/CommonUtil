@@ -69,5 +69,15 @@ namespace CommonUtil.Resource {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CommonRegex {
+            get {
+                object obj = ResourceManager.GetObject("CommonRegex", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
