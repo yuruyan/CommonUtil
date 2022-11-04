@@ -58,6 +58,34 @@ public class ChineseTransform {
     }
 
     /// <summary>
+    /// 文件转繁体
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToTraditional(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        string? data = null;
+        while ((data = reader.ReadLine()) != null) {
+            writer.WriteLine(ToTraditional(data));
+        }
+    }
+
+    /// <summary>
+    /// 文件转简体
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToSimplified(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        string? data = null;
+        while ((data = reader.ReadLine()) != null) {
+            writer.WriteLine(ToSimplified(data));
+        }
+    }
+
+    /// <summary>
     /// 加载数据
     /// </summary>
     private static void LoadData() {
@@ -83,4 +111,3 @@ public class ChineseTransform {
         }
     }
 }
-
