@@ -166,8 +166,8 @@
     <None Update="Resource\idioms.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resource\ascii.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Resource\Ascii.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Resource\image\ascii.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -199,6 +199,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resource\Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Update="View\Downloader\DownloaderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -335,6 +340,13 @@
 
   <ItemGroup>
     <Folder Include="Resource\image\FileIcon\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 
