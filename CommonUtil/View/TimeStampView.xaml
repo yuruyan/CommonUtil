@@ -14,146 +14,103 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <ScrollViewer>
-    <ui:SimpleStackPanel Margin="8,0,8,0" Spacing="{StaticResource MediumItemSpacing}">
-      <Grid Margin="8" HorizontalAlignment="Center">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="50" />
-          <RowDefinition Height="50" />
-          <RowDefinition Height="50" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="70" />
-          <ColumnDefinition Width="180" />
-          <ColumnDefinition Width="120" />
-          <ColumnDefinition Width="110" />
-          <ColumnDefinition Width="180" />
-        </Grid.ColumnDefinitions>
+  <Grid
+    Margin="8"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50" />
+      <RowDefinition Height="50" />
+      <RowDefinition Height="50" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="70" />
+      <ColumnDefinition Width="220" />
+      <ColumnDefinition Width="120" />
+      <ColumnDefinition Width="110" />
+      <ColumnDefinition Width="180" />
+    </Grid.ColumnDefinitions>
 
-        <Grid.Resources>
-          <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="4,0,4,0" />
-          </Style>
-        </Grid.Resources>
+    <Grid.Resources>
+      <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="4,0,4,0" />
+      </Style>
+    </Grid.Resources>
 
-        <!--#region 现在-->
-        <TextBlock Text="现在：" />
-        <TextBox
-          Grid.Column="1"
-          BorderThickness="0"
-          IsReadOnly="True"
-          Style="{StaticResource BorderlessTextBoxStyle}"
-          Text="{Binding CurrentTimeStamp}" />
-        <Grid Grid.Column="2">
-          <widget:IconButton
-            HorizontalAlignment="Center"
-            Click="StartClick"
-            Icon="&#xe607;"
-            Text="开始"
-            Visibility="{Binding IsRunning, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='True|Collapsed'}" />
-          <widget:IconButton
-            HorizontalAlignment="Center"
-            Click="PauseClick"
-            Icon="&#xe662;"
-            Text="暂停"
-            Visibility="{Binding IsRunning, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='True|Collapsed'}" />
-        </Grid>
-        <widget:IconButton
-          Grid.Column="3"
-          HorizontalAlignment="Center"
-          Click="CopyTimeStampClick"
-          Icon="&#xe6ef;"
-          Text="复制" />
-        <!--#endregion-->
+    <!--#region 现在-->
+    <TextBlock Text="现在：" />
+    <TextBox
+      Grid.Column="1"
+      BorderThickness="0"
+      IsReadOnly="True"
+      Style="{StaticResource BorderlessTextBoxStyle}"
+      Text="{Binding CurrentTimeStamp}" />
+    <widget:IconButton
+      Grid.Column="2"
+      HorizontalAlignment="Center"
+      Click="CopyTimeStampClick"
+      Icon="&#xe6ef;"
+      Text="复制" />
+    <!--#endregion-->
 
-        <!--#region 时间戳转字符串时间-->
-        <TextBlock Grid.Row="1" Text="时间戳：" />
-        <TextBox
-          Grid.Row="1"
-          Grid.Column="1"
-          Text="{Binding TimeStampToStringInput}" />
-        <ComboBox
-          Grid.Row="1"
-          Grid.Column="2"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"
-          SelectedValue="{Binding TimeStampToStringOption}">
-          <sys:String>毫秒(ms)</sys:String>
-          <sys:String>秒(s)</sys:String>
-        </ComboBox>
-        <widget:IconButton
-          Grid.Row="1"
-          Grid.Column="3"
-          HorizontalAlignment="Center"
-          Click="TimeStampToStringClick"
-          Icon="&#xe606;"
-          Text="转换" />
-        <TextBox
-          Grid.Row="1"
-          Grid.Column="4"
-          IsReadOnly="True"
-          Text="{Binding TimeStampToStringOutput}" />
-        <!--#endregion-->
+    <!--#region 时间戳转字符串时间-->
+    <TextBlock Grid.Row="1" Text="时间戳：" />
+    <TextBox
+      Grid.Row="1"
+      Grid.Column="1"
+      Text="{Binding TimeStampToStringInput}" />
+    <ComboBox
+      Grid.Row="1"
+      Grid.Column="2"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      SelectedValue="{Binding TimeStampToStringOption}">
+      <sys:String>毫秒(ms)</sys:String>
+      <sys:String>秒(s)</sys:String>
+    </ComboBox>
+    <widget:IconButton
+      Grid.Row="1"
+      Grid.Column="3"
+      HorizontalAlignment="Center"
+      Click="TimeStampToStringClick"
+      Icon="&#xe606;"
+      Text="转换" />
+    <TextBox
+      Grid.Row="1"
+      Grid.Column="4"
+      IsReadOnly="True"
+      Text="{Binding TimeStampToStringOutput}" />
+    <!--#endregion-->
 
-        <!--#region 日期转时间戳-->
-        <TextBlock Grid.Row="2" Text="时间：" />
-        <TextBox
-          Grid.Row="2"
-          Grid.Column="1"
-          Text="{Binding StringToTimeStampInput}" />
-        <ComboBox
-          Grid.Row="2"
-          Grid.Column="2"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"
-          SelectedValue="{Binding StringToTimeStampChoice}">
-          <sys:String>毫秒(ms)</sys:String>
-          <sys:String>秒(s)</sys:String>
-        </ComboBox>
-        <widget:IconButton
-          Grid.Row="2"
-          Grid.Column="3"
-          HorizontalAlignment="Center"
-          Click="StringToTimeStampClick"
-          Icon="&#xe606;"
-          Text="转换" />
-        <TextBox
-          Grid.Row="2"
-          Grid.Column="4"
-          IsReadOnly="True"
-          Text="{Binding StringToTimeStampOutput}" />
-        <!--#endregion-->
-      </Grid>
-      <Rectangle Height="1" Fill="#BDBDBD" />
-      <TextBlock
-        HorizontalAlignment="Center"
-        FontSize="{DynamicResource HeaderFontSize}"
-        FontWeight="Bold"
-        Foreground="#238080"
-        Text="各编程语言获取时间戳代码" />
-      <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding ProgramingGetTimeStampCodeList}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <StackPanel Margin="0,4,0,4" Orientation="Horizontal">
-              <TextBlock
-                Width="100"
-                FontSize="18"
-                FontWeight="Bold"
-                Foreground="#238080"
-                Text="{Binding Key, Mode=OneWay}" />
-              <TextBox
-                Width="500"
-                BorderThickness="0"
-                IsReadOnly="True"
-                Style="{StaticResource BorderlessTextBoxStyle}"
-                Text="{Binding Value, Mode=OneWay}"
-                TextWrapping="WrapWithOverflow" />
-            </StackPanel>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ui:SimpleStackPanel>
-  </ScrollViewer>
+    <!--#region 日期转时间戳-->
+    <TextBlock Grid.Row="2" Text="时间：" />
+    <TextBox
+      Grid.Row="2"
+      Grid.Column="1"
+      Text="{Binding StringToTimeStampInput}" />
+    <ComboBox
+      Grid.Row="2"
+      Grid.Column="2"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      SelectedValue="{Binding StringToTimeStampChoice}">
+      <sys:String>毫秒(ms)</sys:String>
+      <sys:String>秒(s)</sys:String>
+    </ComboBox>
+    <widget:IconButton
+      Grid.Row="2"
+      Grid.Column="3"
+      HorizontalAlignment="Center"
+      Click="StringToTimeStampClick"
+      Icon="&#xe606;"
+      Text="转换" />
+    <TextBox
+      Grid.Row="2"
+      Grid.Column="4"
+      IsReadOnly="True"
+      Text="{Binding StringToTimeStampOutput}" />
+    <!--#endregion-->
+  </Grid>
 
 </Page>

@@ -15,9 +15,7 @@ namespace CommonUtil.View;
 
 public partial class TimeStampView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private readonly string ProgramingGetTimeStampPath = "./resource/ProgramingGetTimeStamp.json";
 
-    public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(TimeStampView), new PropertyMetadata(true));
     public static readonly DependencyProperty CurrentTimeStampProperty = DependencyProperty.Register("CurrentTimeStamp", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty TimeStampToStringInputProperty = DependencyProperty.Register("TimeStampToStringInput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty TimeStampToStringOptionProperty = DependencyProperty.Register("TimeStampToStringOption", typeof(string), typeof(TimeStampView), new PropertyMetadata("毫秒(ms)"));
@@ -25,15 +23,7 @@ public partial class TimeStampView : Page {
     public static readonly DependencyProperty StringToTimeStampInputProperty = DependencyProperty.Register("StringToTimeStampInput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampOutputProperty = DependencyProperty.Register("StringToTimeStampOutput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampChoiceProperty = DependencyProperty.Register("StringToTimeStampChoice", typeof(string), typeof(TimeStampView), new PropertyMetadata("毫秒(ms)"));
-    public static readonly DependencyProperty ProgramingGetTimeStampCodeListProperty = DependencyProperty.Register("ProgramingGetTimeStampCodeList", typeof(ObservableCollection<KeyValuePair<string, string>>), typeof(TimeStampView), new PropertyMetadata());
 
-    /// <summary>
-    /// 时间是否在更新
-    /// </summary>
-    public bool IsRunning {
-        get { return (bool)GetValue(IsRunningProperty); }
-        set { SetValue(IsRunningProperty, value); }
-    }
     /// <summary>
     /// 当前时间戳
     /// </summary>
@@ -84,17 +74,9 @@ public partial class TimeStampView : Page {
         set { SetValue(StringToTimeStampChoiceProperty, value); }
     }
     /// <summary>
-    /// 编程语言获取时间戳代码
-    /// </summary>
-    public ObservableCollection<KeyValuePair<string, string>> ProgramingGetTimeStampCodeList {
-        get { return (ObservableCollection<KeyValuePair<string, string>>)GetValue(ProgramingGetTimeStampCodeListProperty); }
-        set { SetValue(ProgramingGetTimeStampCodeListProperty, value); }
-    }
-
-    /// <summary>
     /// 更新时间 Timer
     /// </summary>
-    private System.Timers.Timer Timer;
+    private readonly System.Timers.Timer Timer;
 
     public TimeStampView() {
         InitializeComponent();
@@ -103,27 +85,10 @@ public partial class TimeStampView : Page {
         TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(TimeStamp.GetCurrentMilliSeconds());
         StringToTimeStampInput = TimeStampToStringOutput;
         StringToTimeStampOutput = TimeStampToStringInput;
-        ProgramingGetTimeStampCodeList = new();
         #region 更新时间戳
-        Timer = new System.Timers.Timer(900);
+        Timer = new System.Timers.Timer(1000);
         Timer.Elapsed += UpdateTimeStamp;
         Timer.Start();
-        #endregion
-        #region 加载编程语言代码
-        Task.Run(() => {
-            try {
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(ProgramingGetTimeStampPath));
-                if (dict != null) {
-                    Dispatcher.Invoke(() => {
-                        foreach (var item in dict) {
-                            ProgramingGetTimeStampCodeList.Add(item);
-                        }
-                    });
-                }
-            } catch (Exception e) {
-                Logger.Error(e);
-            }
-        });
         #endregion
     }
 
@@ -137,28 +102,6 @@ public partial class TimeStampView : Page {
         Dispatcher.Invoke(() => {
             CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
         });
-    }
-
-    /// <summary>
-    /// 继续更新时间
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void StartClick(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        IsRunning = true;
-        Timer.Start();
-    }
-
-    /// <summary>
-    /// 停止更新时间
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void PauseClick(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        IsRunning = false;
-        Timer.Stop();
     }
 
     /// <summary>
@@ -212,4 +155,3 @@ public partial class TimeStampView : Page {
         }
     }
 }
-
