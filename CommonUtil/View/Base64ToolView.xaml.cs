@@ -62,32 +62,34 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// </summary>
     private async Task DecodeFile() {
         var filename = FileName;
-        // 解码
-        try {
-            if (SaveFileDialog.ShowDialog() != true) {
-                return;
-            }
-            var savePath = SaveFileDialog.FileName;
-            var result = await Task.Run(() => Base64Tool.Base64DecodeFile(filename));
-            // 保存文件
-            try {
-                await File.WriteAllBytesAsync(savePath, result);
-                // 通知
-                CommonUITools.Widget.NotificationBox.Success(
-                    "解码文件成功",
-                    "点击打开",
-                    () => {
-                        UIUtils.OpenFileInDirectoryAsync(savePath);
-                    }
-                );
-            } catch {
-                MessageBox.Error("文件保存失败");
-            }
-        } catch (IOException) {
-            MessageBox.Error("文件读取失败");
-        } catch (Exception) {
-            MessageBox.Error("解码失败");
+        if (SaveFileDialog.ShowDialog() != true) {
+            return;
         }
+        var savePath = SaveFileDialog.FileName;
+        // 解码
+        await Task.Run(async () => {
+            try {
+                var result = Base64Tool.Base64DecodeFile(filename);
+                // 保存文件
+                try {
+                    await File.WriteAllBytesAsync(savePath, result);
+                    // 通知
+                    CommonUITools.Widget.NotificationBox.Success(
+                        "解码文件成功",
+                        "点击打开",
+                        () => {
+                            UIUtils.OpenFileInDirectoryAsync(savePath);
+                        }
+                    );
+                } catch {
+                    MessageBox.Error("文件保存失败");
+                }
+            } catch (IOException) {
+                MessageBox.Error("文件读取失败");
+            } catch (Exception) {
+                MessageBox.Error("解码失败");
+            }
+        });
     }
 
     /// <summary>
@@ -95,32 +97,34 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// </summary>
     private async Task EncodeFile() {
         var filename = FileName;
-        // 编码
-        try {
-            if (SaveFileDialog.ShowDialog() != true) {
-                return;
-            }
-            var savePath = SaveFileDialog.FileName;
-            string result = await Task.Run(() => Base64Tool.Base64EncodeFile(filename));
-            // 保存文件
-            try {
-                await File.WriteAllTextAsync(savePath, result);
-                // 通知
-                CommonUITools.Widget.NotificationBox.Success(
-                    "编码文件成功",
-                    "点击打开",
-                    () => {
-                        UIUtils.OpenFileInDirectoryAsync(savePath);
-                    }
-                );
-            } catch {
-                MessageBox.Error("文件保存失败");
-            }
-        } catch (IOException) {
-            MessageBox.Error("文件读取失败");
-        } catch (Exception) {
-            MessageBox.Error("编码失败");
+        if (SaveFileDialog.ShowDialog() != true) {
+            return;
         }
+        var savePath = SaveFileDialog.FileName;
+        // 编码
+        await Task.Run(async () => {
+            try {
+                string result = Base64Tool.Base64EncodeFile(filename);
+                // 保存文件
+                try {
+                    await File.WriteAllTextAsync(savePath, result);
+                    // 通知
+                    CommonUITools.Widget.NotificationBox.Success(
+                        "编码文件成功",
+                        "点击打开",
+                        () => {
+                            UIUtils.OpenFileInDirectoryAsync(savePath);
+                        }
+                    );
+                } catch {
+                    MessageBox.Error("文件保存失败");
+                }
+            } catch (IOException) {
+                MessageBox.Error("文件读取失败");
+            } catch (Exception) {
+                MessageBox.Error("编码失败");
+            }
+        });
     }
 
     /// <summary>
@@ -171,8 +175,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        OutputText = InputText = string.Empty;
-        FileName = string.Empty;
+        FileName = OutputText = InputText = string.Empty;
         DragDropTextBox.Clear();
     }
 
