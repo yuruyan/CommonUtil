@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Utils;
+using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
@@ -197,7 +198,16 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void DecodeClickHandler(object sender, RoutedEventArgs e) {
+    private async void DecodeClickHandler(object sender, RoutedEventArgs e) {
+        // 二进制文件警告
+        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
+            WarningDialog dialog = WarningDialog.Shared;
+            dialog.DetailText = "文件可能不是 Base64 文件，是否继续？";
+            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
+                return;
+            }
+        }
+
         if (!HasFile) {
             DecodeString();
             return;
