@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Utils;
+using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
@@ -130,8 +131,13 @@ public partial class ChineseTransformView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ToSimplifiedClick(object sender, RoutedEventArgs e) {
+    private async void ToSimplifiedClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 二进制检测
+        if (!await CheckBinaryFile()) {
+            return;
+        }
+
         if (!HasFile) {
             StringToSimplified();
             return;
@@ -144,13 +150,33 @@ public partial class ChineseTransformView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ToTraditionalClick(object sender, RoutedEventArgs e) {
+    private async void ToTraditionalClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 二进制检测
+        if (!await CheckBinaryFile()) {
+            return;
+        }
+
         if (!HasFile) {
             StringToTraditional();
             return;
         }
         ThrottleUtils.ThrottleAsync(ToTraditionalClick, FileToTraditional);
+    }
+
+    /// <summary>
+    /// 检查二进制文件
+    /// </summary>
+    /// <returns>继续返回 true</returns>
+    private async Task<bool> CheckBinaryFile() {
+        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
+            WarningDialog dialog = WarningDialog.Shared;
+            dialog.DetailText = "文件可能是二进制文件，是否继续？";
+            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
