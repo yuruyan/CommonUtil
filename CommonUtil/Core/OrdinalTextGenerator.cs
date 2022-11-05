@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace CommonUtil.Core;
@@ -6,14 +7,86 @@ namespace CommonUtil.Core;
 public class OrdinalTextGenerator {
     public enum OrdinalType {
         Number,
-        Alphabet
+        Alphabet,
+        ChineseNumber,
     }
 
     private const string LeftBracketReplacement = "\0\u0001\u0020\u0300\u1234\uffff\u1234\u0300\u0020\u0001\0";
     private const string RightBracketReplacement = "\uffff\u0001\u0020\u0300\u1234\0\u1234\u0300\u0020\u0001\uffff";
-    private static readonly char[] Data = {
+    private static readonly char[] Alphabet = {
         'Z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y'
     };
+    /// <summary>
+    /// 中文数字字符
+    /// </summary>
+    private static readonly string[] CNNumberString = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+    /// <summary>
+    /// 大单位
+    /// </summary>
+    private static readonly string[] CNBigUnit = { "", "万", "亿", "万亿" };
+    /// <summary>
+    /// 小单位
+    /// </summary>
+    private static readonly string[] CNSmallUnit = { "", "十", "百", "千" };
+
+    /// <summary>
+    /// 小单位计算
+    /// </summary>
+    /// <param name="section">小单位数字</param>
+    /// <param name="cnString">拼接的目标字符串</param>
+    private static void SectionToChines(int section, ref string cnString) {
+        string strIns = string.Empty;
+        int unitPos = 0;
+        bool zero = true;
+        while (section > 0) {
+            int v = section % 10;
+            if (v == 0) {
+                if (!zero) {
+                    zero = true;
+                    cnString = cnString.Insert(0, CNNumberString[v]);
+                }
+            } else {
+                zero = false;
+                strIns = $"{CNNumberString[v]}{CNSmallUnit[unitPos]}";
+                cnString = cnString.Insert(0, strIns);
+            }
+            unitPos++;
+            section /= 10;
+        }
+    }
+
+    /// <summary>
+    /// 数字转中文
+    /// </summary>
+    /// <param name="number">数字</param>
+    /// <returns>返回转传成功的字符串</returns>
+    private static string ConvertToChinese(int number) {
+        int tempNumber = Math.Abs(number);
+        if (tempNumber == 0) {
+            return "零";
+        }
+
+        string result = string.Empty;
+        int unitPos = 0;
+        bool needZero = false;
+        while (tempNumber > 0) {
+            string strIns = string.Empty;
+            int section = tempNumber % 10000;
+            if (needZero) {
+                result = result.Insert(0, CNNumberString[0]);
+            }
+            SectionToChines(section, ref strIns);
+            strIns += (section != 0) ? CNBigUnit[unitPos] : CNBigUnit[0];
+            result = result.Insert(0, strIns);
+            needZero = (section < 1000) && (section > 0);
+            tempNumber /= 10000;
+            unitPos++;
+        }
+        if (number < 0) {
+            result = $"负{result}";
+        }
+        return result;
+    }
 
     /// <summary>
     /// 转换为字母
@@ -24,7 +97,7 @@ public class OrdinalTextGenerator {
         var sb = new StringBuilder();
         while (num > 0) {
             int mod = num % 26;
-            sb.Append(Data[mod]);
+            sb.Append(Alphabet[mod]);
             num /= 26;
             if (mod == 0) {
                 num--;
@@ -55,6 +128,10 @@ public class OrdinalTextGenerator {
         } else if (type == OrdinalType.Alphabet) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, ConvertToAlphabet(i + startIndex));
+            }
+        } else if (type == OrdinalType.ChineseNumber) {
+            for (int i = 0; i < data.Length; i++) {
+                data[i] = string.Format(format, ConvertToChinese(i + startIndex));
             }
         }
         return data;
