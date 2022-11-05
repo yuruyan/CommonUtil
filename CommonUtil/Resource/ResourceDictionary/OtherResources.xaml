@@ -62,4 +62,16 @@
     <Setter Property="Width" Value="{StaticResource FileMergeSplitView_TextBoxWidth}" />
   </Style>
   <!--#endregion-->
+
+  <!--#region OrdinalTextGeneratorView-->
+  <system:Double x:Key="OrdinalTextGeneratorView_TextBoxWidth">120</system:Double>
+  <Style
+    x:Key="OrdinalTextGeneratorView_NumberBoxStyle"
+    BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}"
+    TargetType="ui:NumberBox">
+    <Setter Property="Minimum" Value="1" />
+    <Setter Property="Maximum" Value="10000" />
+    <Setter Property="Width" Value="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}" />
+  </Style>
+  <!--#endregion-->
 </ResourceDictionary>

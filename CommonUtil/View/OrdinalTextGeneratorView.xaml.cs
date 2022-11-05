@@ -15,7 +15,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(OrdinalTextGeneratorView), new PropertyMetadata(""));
     public static readonly DependencyProperty StartIndexProperty = DependencyProperty.Register("StartIndex", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
-    public static readonly DependencyProperty GenerationOrderProperty = DependencyProperty.Register("GenerationOrder", typeof(int), typeof(OrdinalTextGeneratorView), new PropertyMetadata(0));
+    public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输入文本
@@ -46,11 +46,11 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
         set { SetValue(GenerationCountProperty, value); }
     }
     /// <summary>
-    /// 生成顺序
+    /// 是否正序
     /// </summary>
-    public int GenerationOrder {
-        get { return (int)GetValue(GenerationOrderProperty); }
-        set { SetValue(GenerationOrderProperty, value); }
+    public bool IsAscendant {
+        get { return (bool)GetValue(IsAscendantProperty); }
+        set { SetValue(IsAscendantProperty, value); }
     }
 
     public OrdinalTextGeneratorView() {
@@ -65,7 +65,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     private void GenerateText() {
         try {
             var data = OrdinalTextGenerator.Generate(InputText, (int)StartIndex, (uint)GenerationCount);
-            OutputText = string.Join('\n', GenerationOrder == 0 ? data : data.Reverse());
+            OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
         } catch (FormatException) {
             CommonUITools.Widget.MessageBox.Error("格式错误");
         } catch {
@@ -81,14 +81,6 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     private void GenerateClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         GenerateText();
-    }
-
-    private void NumberBoxLostFocus(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        // 浮点数转整数
-        if (sender is NumberBox numberBox) {
-            CommonUtils.Try(() => numberBox.Value = (int)numberBox.Value);
-        }
     }
 
     /// <summary>

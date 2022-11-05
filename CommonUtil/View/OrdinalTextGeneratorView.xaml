@@ -29,34 +29,19 @@
         </ui:SimpleStackPanel.Resources>
         <StackPanel>
           <TextBlock Text="起始位置：" />
-          <ui:NumberBox
-            Width="120"
-            AcceptsExpression="False"
-            LostFocus="NumberBoxLostFocus"
-            Maximum="10000"
-            Minimum="1"
-            SmallChange="1"
-            SpinButtonPlacementMode="Compact"
-            Value="{Binding StartIndex}" />
+          <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding StartIndex}" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="生成数量：" />
-          <ui:NumberBox
-            Width="120"
-            AcceptsExpression="False"
-            LostFocus="NumberBoxLostFocus"
-            Maximum="10000"
-            Minimum="1"
-            SmallChange="1"
-            SpinButtonPlacementMode="Compact"
-            Value="{Binding GenerationCount}" />
+          <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding GenerationCount}" />
         </StackPanel>
         <StackPanel>
           <TextBlock Text="文本顺序：" />
-          <ComboBox Width="120" SelectedIndex="{Binding GenerationOrder}">
-            <ComboBoxItem Content="正序" />
-            <ComboBoxItem Content="逆序" />
-          </ComboBox>
+          <ui:ToggleSwitch
+            Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+            IsOn="{Binding IsAscendant}"
+            OffContent="逆序"
+            OnContent="正序" />
         </StackPanel>
         <ui:SimpleStackPanel Orientation="Horizontal">
           <widget:IconButton
