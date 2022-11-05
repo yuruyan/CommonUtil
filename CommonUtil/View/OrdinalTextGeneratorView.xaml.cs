@@ -3,6 +3,8 @@ using CommonUtil.Core;
 using ModernWpf.Controls;
 using NLog;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -16,6 +18,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     public static readonly DependencyProperty StartIndexProperty = DependencyProperty.Register("StartIndex", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
     public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
+    public static readonly DependencyProperty OrdinalTypeDictProperty = DependencyProperty.Register("OrdinalTypeDict", typeof(IDictionary<string, OrdinalTextGenerator.OrdinalType>), typeof(OrdinalTextGeneratorView), new PropertyMetadata());
 
     /// <summary>
     /// 输入文本
@@ -52,9 +55,20 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
         get { return (bool)GetValue(IsAscendantProperty); }
         set { SetValue(IsAscendantProperty, value); }
     }
+    /// <summary>
+    /// 数字类型
+    /// </summary>
+    public IDictionary<string, OrdinalTextGenerator.OrdinalType> OrdinalTypeDict {
+        get { return (IDictionary<string, OrdinalTextGenerator.OrdinalType>)GetValue(OrdinalTypeDictProperty); }
+        private set { SetValue(OrdinalTypeDictProperty, value); }
+    }
 
     public OrdinalTextGeneratorView() {
         InitializeComponent();
+        OrdinalTypeDict = new Dictionary<string, OrdinalTextGenerator.OrdinalType>() {
+            {"数字", OrdinalTextGenerator.OrdinalType.Number },
+            {"字母", OrdinalTextGenerator.OrdinalType.Alphabet },
+        };
         InputText = "abc{} {{ }}";
         GenerateText();
     }
@@ -64,7 +78,12 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     /// </summary>
     private void GenerateText() {
         try {
-            var data = OrdinalTextGenerator.Generate(InputText, (int)StartIndex, (uint)GenerationCount);
+            var data = OrdinalTextGenerator.Generate(
+                InputText,
+                (int)StartIndex,
+                OrdinalTypeDict[CommonUtils.NullCheck(OrdinalTypeComboBox.SelectedValue.ToString())],
+                (uint)GenerationCount
+            );
             OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
         } catch (FormatException) {
             CommonUITools.Widget.MessageBox.Error("格式错误");

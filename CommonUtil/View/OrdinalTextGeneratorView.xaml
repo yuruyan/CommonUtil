@@ -36,6 +36,14 @@
           <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding GenerationCount}" />
         </StackPanel>
         <StackPanel>
+          <TextBlock Text="数字类型：" />
+          <ComboBox
+            Name="OrdinalTypeComboBox"
+            Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+            ItemsSource="{Binding OrdinalTypeDict.Keys}"
+            SelectedIndex="0" />
+        </StackPanel>
+        <StackPanel>
           <TextBlock Text="文本顺序：" />
           <ui:ToggleSwitch
             Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
