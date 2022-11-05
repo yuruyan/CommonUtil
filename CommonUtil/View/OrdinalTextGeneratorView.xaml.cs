@@ -2,7 +2,8 @@
 using CommonUtil.Core;
 using ModernWpf.Controls;
 using NLog;
-using System.Text;
+using System;
+using System.Linq;
 using System.Windows;
 
 namespace CommonUtil.View;
@@ -54,7 +55,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
 
     public OrdinalTextGeneratorView() {
         InitializeComponent();
-        InputText = "abc{}";
+        InputText = "abc{} {{ }}";
         GenerateText();
     }
 
@@ -62,19 +63,14 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     /// 生成文本
     /// </summary>
     private void GenerateText() {
-        var list = OrdinalTextGenerator.Generate(InputText, (int)StartIndex, (int)GenerationCount);
-        var sb = new StringBuilder();
-        // 逆序
-        if (GenerationOrder != 0) {
-            for (int i = list.Count - 1; i >= 0; i--) {
-                sb.AppendLine(list[i]);
-            }
-        } else {
-            foreach (var item in list) {
-                sb.AppendLine(item);
-            }
+        try {
+            var data = OrdinalTextGenerator.Generate(InputText, (int)StartIndex, (uint)GenerationCount);
+            OutputText = string.Join('\n', GenerationOrder == 0 ? data : data.Reverse());
+        } catch (FormatException) {
+            CommonUITools.Widget.MessageBox.Error("格式错误");
+        } catch {
+            CommonUITools.Widget.MessageBox.Error("生成失败");
         }
-        OutputText = sb.ToString();
     }
 
     /// <summary>
@@ -113,8 +109,6 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        InputText = string.Empty;
-        OutputText = string.Empty;
+        InputText = OutputText = string.Empty;
     }
 }
-
