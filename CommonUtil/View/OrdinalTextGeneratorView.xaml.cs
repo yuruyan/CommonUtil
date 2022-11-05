@@ -69,6 +69,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
             {"数字", OrdinalTextGenerator.OrdinalType.Number },
             {"字母", OrdinalTextGenerator.OrdinalType.Alphabet },
             {"中文数字", OrdinalTextGenerator.OrdinalType.ChineseNumber },
+            {"中文大写数字", OrdinalTextGenerator.OrdinalType.ChineseUpperNumber},
         };
         InputText = "abc{} {{ }}";
         GenerateText();

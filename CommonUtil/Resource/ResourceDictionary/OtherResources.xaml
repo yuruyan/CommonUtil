@@ -64,7 +64,7 @@
   <!--#endregion-->
 
   <!--#region OrdinalTextGeneratorView-->
-  <system:Double x:Key="OrdinalTextGeneratorView_TextBoxWidth">120</system:Double>
+  <system:Double x:Key="OrdinalTextGeneratorView_TextBoxWidth">140</system:Double>
   <Style
     x:Key="OrdinalTextGeneratorView_NumberBoxStyle"
     BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}"

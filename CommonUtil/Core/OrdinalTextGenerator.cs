@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -9,6 +10,7 @@ public class OrdinalTextGenerator {
         Number,
         Alphabet,
         ChineseNumber,
+        ChineseUpperNumber,
     }
 
     private const string LeftBracketReplacement = "\0\u0001\u0020\u0300\u1234\uffff\u1234\u0300\u0020\u0001\0";
@@ -28,6 +30,26 @@ public class OrdinalTextGenerator {
     /// 小单位
     /// </summary>
     private static readonly string[] CNSmallUnit = { "", "十", "百", "千" };
+    /// <summary>
+    /// 汉字大小写
+    /// </summary>
+    private static readonly IDictionary<char, char> ChineseUpperCharacterDict = new Dictionary<char, char>() {
+        {'零', '零'},
+        {'一', '壹'},
+        {'二', '贰'},
+        {'三', '叁'},
+        {'四', '肆'},
+        {'五', '伍'},
+        {'六', '陆'},
+        {'七', '柒'},
+        {'八', '捌'},
+        {'九', '玖'},
+        {'十', '拾'},
+        {'百', '佰'},
+        {'千', '仟'},
+        {'万', '万'},
+        {'亿', '亿'},
+    };
 
     /// <summary>
     /// 小单位计算
@@ -89,6 +111,19 @@ public class OrdinalTextGenerator {
     }
 
     /// <summary>
+    /// 数字转中文大写
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    private static string ConvertToChineseUpperCase(int number) {
+        char[] chars = ConvertToChinese(number).ToCharArray();
+        for (int i = 0; i < chars.Length; i++) {
+            chars[i] = ChineseUpperCharacterDict[chars[i]];
+        }
+        return string.Join("", chars);
+    }
+
+    /// <summary>
     /// 转换为字母
     /// </summary>
     /// <param name="num"></param>
@@ -121,6 +156,7 @@ public class OrdinalTextGenerator {
             .Replace(LeftBracketReplacement, "{{")
             .Replace(RightBracketReplacement, "}}");
         string[] data = new string[count];
+
         if (type == OrdinalType.Number) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, i + startIndex);
@@ -132,6 +168,10 @@ public class OrdinalTextGenerator {
         } else if (type == OrdinalType.ChineseNumber) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, ConvertToChinese(i + startIndex));
+            }
+        } else if (type == OrdinalType.ChineseUpperNumber) {
+            for (int i = 0; i < data.Length; i++) {
+                data[i] = string.Format(format, ConvertToChineseUpperCase(i + startIndex));
             }
         }
         return data;
