@@ -5,36 +5,42 @@ using System.Text;
 namespace CommonUtil.Core;
 
 public class CSharpDependencyGenerator {
+    private const string Indent = "    ";
+    private const string DoubleIndent = "        ";
+
     public static string CreateTemplate(IEnumerable<TypeInfo> types) {
         if (!types.Any()) {
             return string.Empty;
         }
         string className = types.First().ClassName;
+        #region 普通对象
         var poSb = new StringBuilder();
+        poSb.AppendLine($"public class {className}PO {{");
         foreach (TypeInfo type in types) {
-            poSb.Append($@"    public {type.Type} {type.Name} {{get; set;}} = {type.Value};").Append('\n');
+            poSb.AppendLine($@"    public {type.Type} {type.Name} {{get; set;}} = {type.Value};");
         }
-        string poClass = $@"public class {className}PO {{
+        poSb.AppendLine("}");
+        string poClass = poSb.ToString();
+        #endregion
 
-{poSb}
-}}";
-        var doSb1 = new StringBuilder();
-        var doSb2 = new StringBuilder();
+        #region DO对象
+        var propertySb = new StringBuilder();
+        var staticSb = new StringBuilder();
         foreach (var type in types) {
-            doSb1.Append($@"
-    public {type.Type} {type.Name} {{
-        get {{ return ({type.Type})GetValue({type.Name}Property); }}
-        set {{ SetValue({type.Name}Property, value); }}
-    }}");
-            doSb2.Append($@"    public static readonly DependencyProperty {type.Name}Property = DependencyProperty.Register(""{type.Name}"", typeof({type.Type}), typeof({className}DO), new PropertyMetadata({type.Value}));").Append('\n');
+            propertySb.AppendLine($"{Indent}public {type.Type} {type.Name} {{")
+                .AppendLine($"{DoubleIndent}get {{ return ({type.Type})GetValue({type.Name}Property); }}")
+                .AppendLine($"{DoubleIndent}set {{ SetValue({type.Name}Property, value); }}")
+                .AppendLine($"{Indent}}}");
+            staticSb.AppendLine($"{Indent}public static readonly DependencyProperty {type.Name}Property = DependencyProperty.Register(\"{type.Name}\", typeof({type.Type}), typeof({className}), new PropertyMetadata({type.Value}));");
         }
-
-        string doClass = $@"public class {className}DO:DependencyObject {{
-    {doSb1}
-
-{doSb2}
-}}";
-        return poClass + "\n\n" + doClass;
+        string doClass = new StringBuilder($"public class {className} {{\n")
+            .AppendLine(staticSb.ToString())
+            .AppendLine()
+            .AppendLine(propertySb.ToString())
+            .AppendLine("}")
+            .ToString();
+        #endregion
+        return poClass + "\n" + doClass;
     }
 }
 
