@@ -75,13 +75,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 try {
                     await File.WriteAllBytesAsync(savePath, result);
                     // 通知
-                    CommonUITools.Widget.NotificationBox.Success(
-                        "解码文件成功",
-                        "点击打开",
-                        () => {
-                            UIUtils.OpenFileInDirectoryAsync(savePath);
-                        }
-                    );
+                    UIUtils.NotificationOpenFileInDirectoryAsync(savePath, title: "解码文件成功");
                 } catch {
                     MessageBox.Error("文件保存失败");
                 }
@@ -110,13 +104,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 try {
                     await File.WriteAllTextAsync(savePath, result);
                     // 通知
-                    CommonUITools.Widget.NotificationBox.Success(
-                        "编码文件成功",
-                        "点击打开",
-                        () => {
-                            UIUtils.OpenFileInDirectoryAsync(savePath);
-                        }
-                    );
+                    UIUtils.NotificationOpenFileInDirectoryAsync(savePath, title: "编码文件成功");
                 } catch {
                     MessageBox.Error("文件保存失败");
                 }
@@ -186,6 +174,13 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void EncodeClickHandler(object sender, RoutedEventArgs e) {
+        // 输入检查
+        if (!HasFile && InputText.Length == 0) {
+            MessageBox.Info("请输入文本");
+            return;
+        }
+
+        // 处理
         if (!HasFile) {
             EncodeString();
             return;
@@ -207,7 +202,13 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 return;
             }
         }
+        // 输入检查
+        if (!HasFile && InputText.Length == 0) {
+            MessageBox.Info("请输入文本");
+            return;
+        }
 
+        // 处理
         if (!HasFile) {
             DecodeString();
             return;
