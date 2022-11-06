@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,7 @@ public class RegexExtraction {
     /// <param name="regex"></param>
     /// <param name="extractPattern">提取模式</param>
     /// <param name="ignoreCase">是否区分大小写</param>
+    /// <exception cref="ArgumentException">正则编译失败</exception>
     public static void FileExtract(
         string inputPath,
         string outputPath,
@@ -72,7 +74,7 @@ public class RegexExtraction {
                 File.ReadAllText(inputPath),
                 extractPattern,
                 ignoreCase
-            ) ?? Enumerable.Empty<string>())
+            ) ?? throw new ArgumentException("正则编译失败"))
         );
     }
 
