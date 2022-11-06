@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,7 +18,7 @@ public class RegexExtraction {
     /// <param name="extractPattern">提取模式</param>
     /// <param name="ignoreCase">是否区分大小写</param>
     /// <returns>编译正则失败返回 null，无匹配或 extractPattern 无效返回空列表</returns>
-    public static List<string>? Extract(string regex, string input, string extractPattern = "\\0", bool ignoreCase = true) {
+    public static IList<string>? Extract(string regex, string input, string extractPattern = "\\0", bool ignoreCase = true) {
         Regex re;
         // 编译正则
         try {
@@ -47,6 +48,32 @@ public class RegexExtraction {
             ));
         }
         return resultList;
+    }
+
+    /// <summary>
+    /// 文件正则提取
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <param name="regex"></param>
+    /// <param name="extractPattern">提取模式</param>
+    /// <param name="ignoreCase">是否区分大小写</param>
+    public static void FileExtract(
+        string inputPath,
+        string outputPath,
+        string regex,
+        string extractPattern = "\\0",
+        bool ignoreCase = true
+    ) {
+        File.WriteAllText(
+            outputPath,
+            string.Join('\n', Extract(
+                regex,
+                File.ReadAllText(inputPath),
+                extractPattern,
+                ignoreCase
+            ) ?? Enumerable.Empty<string>())
+        );
     }
 
     private static string JoinGroupMatch(

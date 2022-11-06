@@ -17,7 +17,7 @@ public partial class RegexExtractionView : Page {
     public static readonly DependencyProperty SearchRegexProperty = DependencyProperty.Register("SearchRegex", typeof(string), typeof(RegexExtractionView), new PropertyMetadata(""));
     public static readonly DependencyProperty ExtractionPatternProperty = DependencyProperty.Register("ExtractionPattern", typeof(string), typeof(RegexExtractionView), new PropertyMetadata("\\0"));
     public static readonly DependencyProperty IgnoreCaseProperty = DependencyProperty.Register("IgnoreCase", typeof(bool), typeof(RegexExtractionView), new PropertyMetadata(true));
-    public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register("MatchList", typeof(List<string>), typeof(RegexExtractionView), new PropertyMetadata());
+    public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register("MatchList", typeof(IList<string>), typeof(RegexExtractionView), new PropertyMetadata());
 
     /// <summary>
     /// 输入文本
@@ -57,8 +57,8 @@ public partial class RegexExtractionView : Page {
     /// <summary>
     /// 匹配列表
     /// </summary>
-    public List<string> MatchList {
-        get { return (List<string>)GetValue(MatchListProperty); }
+    public IList<string> MatchList {
+        get { return (IList<string>)GetValue(MatchListProperty); }
         set { SetValue(MatchListProperty, value); }
     }
     /// <summary>
