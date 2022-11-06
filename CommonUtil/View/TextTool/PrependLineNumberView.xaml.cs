@@ -94,8 +94,7 @@ public partial class PrependLineNumberView : Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        InputText = string.Empty;
-        OutputText = string.Empty;
+        InputText = OutputText = string.Empty;
         DragDropTextBox.Clear();
     }
 
