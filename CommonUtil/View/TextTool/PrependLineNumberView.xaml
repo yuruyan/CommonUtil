@@ -19,7 +19,17 @@
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <widget:DragDropTextBox
+      Name="DragDropTextBox"
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasFile, Mode=TwoWay}">
+      <widget:DragDropTextBox.TextBox>
+        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+      </widget:DragDropTextBox.TextBox>
+      <widget:DragDropTextBox.FileView>
+        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
+      </widget:DragDropTextBox.FileView>
+    </widget:DragDropTextBox>
 
     <ui:SimpleStackPanel
       Grid.Row="1"
@@ -33,13 +43,7 @@
           x:Name="SplitTextComboBox"
           IsEditable="True"
           ItemsSource="{Binding SplitTextOptions}"
-          SelectedIndex="0">
-          <!--<ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding }"/>
-            </DataTemplate>
-          </ComboBox.ItemTemplate>-->
-        </ComboBox>
+          SelectedIndex="0" />
       </StackPanel>
       <Button Click="PrependLineNumberClick" Content="增加行号" />
       <widget:IconButton
