@@ -52,11 +52,29 @@
       Margin="0,8,0,0"
       Columns="3">
       <!--  Input Box  -->
-      <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText1}" />
-      <TextBox
+      <widget:DragDropTextBox
+        Name="DragDropTextBox1"
+        DragDropEvent="DragDropEventHandler1"
+        HasFile="{Binding HasFile1, Mode=TwoWay}">
+        <widget:DragDropTextBox.TextBox>
+          <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText1}" />
+        </widget:DragDropTextBox.TextBox>
+        <widget:DragDropTextBox.FileView>
+          <widget:FileNameSizeWidget FileName="{Binding FileName1}" />
+        </widget:DragDropTextBox.FileView>
+      </widget:DragDropTextBox>
+      <widget:DragDropTextBox
+        Name="DragDropTextBox2"
         Margin="8,0"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding InputText2}" />
+        DragDropEvent="DragDropEventHandler2"
+        HasFile="{Binding HasFile2, Mode=TwoWay}">
+        <widget:DragDropTextBox.TextBox>
+          <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText2}" />
+        </widget:DragDropTextBox.TextBox>
+        <widget:DragDropTextBox.FileView>
+          <widget:FileNameSizeWidget FileName="{Binding FileName2}" />
+        </widget:DragDropTextBox.FileView>
+      </widget:DragDropTextBox>
       <!--  Output Box  -->
       <TextBox
         Grid.Row="2"
