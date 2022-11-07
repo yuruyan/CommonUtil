@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -84,5 +85,22 @@ public partial class QRCodeDecodeView : Page {
                 ParseQRCodeImage(file);
             }
         }
+    }
+
+    /// <summary>
+    /// 在浏览器中打开
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OpenInBrowserHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (string.IsNullOrEmpty(DecodeText)) {
+            return;
+        }
+
+        CommonUtils.Try(() => Process.Start(new ProcessStartInfo() {
+            UseShellExecute = true,
+            FileName = DecodeText,
+        }));
     }
 }
