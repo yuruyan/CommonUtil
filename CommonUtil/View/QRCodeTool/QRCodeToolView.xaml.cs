@@ -62,6 +62,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         typeof(GeolocationQRCodeView),
     };
     private readonly RouterService RouterService;
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
+    };
 
     /// <summary>
     /// 二维码 ImageSource
@@ -147,25 +150,20 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         if (QRCodeImage == null || !QRCodeImage.Any()) {
             return;
         }
-        var dialog = new SaveFileDialog {
-            Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
-        };
-        if (dialog.ShowDialog() != true) {
+        if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
-        string ext = new FileInfo(dialog.FileName).Extension.TrimStart('.').ToLower();
-        bool found = false;
-        foreach (var name in Enum.GetNames(typeof(QRCodeFormat))) {
-            if (name.ToLower() == ext) {
-                found = true;
-                SaveImageAsync(dialog.FileName, (QRCodeFormat)Enum.Parse(typeof(QRCodeFormat), name));
-                break;
-            }
-        }
-        // 未提供的格式，生成 png
-        if (!found) {
-            SaveImageAsync(dialog.FileName, QRCodeFormat.PNG);
-        }
+
+        string extension = Path.GetExtension(SaveFileDialog.FileName).ToLowerInvariant();
+        var format = extension switch {
+            ".bmp" => QRCodeFormat.BMP,
+            ".jpg" => QRCodeFormat.JPG,
+            ".png" => QRCodeFormat.PNG,
+            ".svg" => QRCodeFormat.SVG,
+            ".pdf" => QRCodeFormat.PDF,
+            _ => QRCodeFormat.PNG
+        };
+        SaveImageAsync(SaveFileDialog.FileName, format);
     }
 
     /// <summary>
