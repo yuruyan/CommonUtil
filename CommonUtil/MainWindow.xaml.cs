@@ -55,7 +55,7 @@ public partial class MainWindow : Window {
         CommonUITools.Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
         MainWindowRouter.Navigate(typeof(MainContentView));
         // 设置 AppTheme
-        ThemeManager.Current.AccentColor = ((SolidColorBrush)Global.ThemeResource["ApplicationAccentColor"]).Color;
+        //ThemeManager.Current.AccentColor = ((SolidColorBrush)Global.ThemeResource["ApplicationAccentColor"]).Color;
     }
 
     /// <summary>
