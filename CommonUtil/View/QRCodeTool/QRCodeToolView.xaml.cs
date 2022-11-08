@@ -20,7 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static QRCoder.QRCodeGenerator;
 using MessageBox = CommonUITools.Widget.MessageBox;
-
+using Bitmap = System.Drawing.Bitmap;
 namespace CommonUtil.View;
 
 public partial class QRCodeToolView : System.Windows.Controls.Page {
@@ -34,6 +34,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     public static readonly DependencyProperty ImageQualityComboSelectedIndexProperty = DependencyProperty.Register("ImageQualityComboSelectedIndex", typeof(int), typeof(QRCodeToolView), new PropertyMetadata(2));
     public static readonly DependencyProperty ImageQualityListProperty = DependencyProperty.Register("ImageQualityList", typeof(IList<string>), typeof(QRCodeToolView), new PropertyMetadata());
     public static readonly DependencyProperty IsQRCodeDecodeViewSelectedProperty = DependencyProperty.Register("IsQRCodeDecodeViewSelected", typeof(bool), typeof(QRCodeToolView), new PropertyMetadata(true));
+    public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register("IconPath", typeof(string), typeof(QRCodeToolView), new PropertyMetadata(string.Empty));
 
     /// <summary>
     /// 二维码容错率
@@ -64,6 +65,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private readonly RouterService RouterService;
     private readonly SaveFileDialog SaveFileDialog = new() {
         Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
+    };
+    private readonly OpenFileDialog OpenFileDialog = new() {
+        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|All Files|*.*",
     };
 
     /// <summary>
@@ -122,11 +126,19 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         get { return (bool)GetValue(IsQRCodeDecodeViewSelectedProperty); }
         set { SetValue(IsQRCodeDecodeViewSelectedProperty, value); }
     }
+    /// <summary>
+    /// 图标路径
+    /// </summary>
+    public string IconPath {
+        get { return (string)GetValue(IconPathProperty); }
+        set { SetValue(IconPathProperty, value); }
+    }
 
     /// <summary>
     /// 当前图片缓存
     /// </summary>
     private byte[] QRCodeImage = Array.Empty<byte>();
+    private BitmapImage? IconBitmapImage;
 
     public QRCodeToolView() {
         ECCLevels = ECCLevelDict.Keys.ToList();
@@ -221,6 +233,21 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         );
         byte[] data;
         // 生成二维码
+        Bitmap? icon = null;
+        // 加载 icon
+        if (IconBitmapImage != null) {
+            //// 文件不存在
+            //if (!File.Exists(IconPath)) {
+            //    MessageBox.Error("图标不存在");
+            //    return null;
+            //}
+            icon = CommonUtils.Try(() => new Bitmap(IconBitmapImage.StreamSource));
+            // 加载失败
+            if (icon == null) {
+                MessageBox.Error("图片加载失败");
+                return null;
+            }
+        }
         try {
             data = await generator.Generate(new(format, new() {
                 Foreground = System.Drawing.Color.FromArgb(
@@ -228,6 +255,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                     QRCodeForeground.G,
                     QRCodeForeground.B
                 ),
+                Image = icon,
                 PixelPerModule = ImageQualityDict[ImageQualityList[ImageQualityComboSelectedIndex]],
                 ECCLevel = ECCLevelDict[ECCLevels[ECCLevelComboxSelectedIndex]]
             }));
@@ -238,6 +266,9 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             MessageBox.Error($"生成失败：{e.Message}");
             return null;
         }
+        //finally {
+        //    icon?.Dispose();
+        //}
         // 验证不通过
         if (!data.Any()) {
             return null;
@@ -293,12 +324,47 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void QRCodeForegroundKeyUpHandler(object sender, KeyEventArgs e) {
         if (sender is TextBox textBox) {
-            Color? color = CommonUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
+            var color = CommonUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
             // 转换失败
             if (color is null) {
                 return;
             }
             QRCodeForeground = color.Value;
         }
+    }
+
+    /// <summary>
+    /// 选择图标
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ChooseIconMouseUpHandler(object sender, MouseButtonEventArgs e) {
+        e.Handled = true;
+        if (OpenFileDialog.ShowDialog() != true) {
+            return;
+        }
+        IconPath = OpenFileDialog.FileName;
+        // 尝试加载图标
+        try {
+            var iconBi = UIUtils.CopyImageSource(IconPath);
+            IconImage.Source = iconBi;
+            // 释放资源
+            IconBitmapImage?.StreamSource?.Close();
+            IconBitmapImage = iconBi;
+        } catch {
+            MessageBox.Error("加载图标失败");
+        }
+    }
+
+    /// <summary>
+    /// 清除 Icon
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ClearIconImageClickHandler(object sender, RoutedEventArgs e) {
+        IconPath = string.Empty;
+        IconImage.Source = null;
+        IconBitmapImage?.StreamSource?.Close();
+        IconBitmapImage = null;
     }
 }

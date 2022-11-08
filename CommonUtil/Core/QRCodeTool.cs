@@ -20,10 +20,11 @@ public enum QRCodeFormat {
     PDF,
 }
 
-public struct QRCodeInfo {
+public class QRCodeInfo {
     public ECCLevel ECCLevel { get; set; } = ECCLevel.Q;
     public byte PixelPerModule { get; set; } = 20;
     public Color Foreground { get; set; } = Color.Black;
+    public Bitmap? Image { get; set; }
 
     public QRCodeInfo() {
     }
@@ -188,7 +189,10 @@ public class QRCodeTool {
             qRCodeInfo.PixelPerModule,
             qRCodeInfo.Foreground,
             Color.Transparent,
-            true
+            icon: qRCodeInfo.Image,
+            iconBackgroundColor: Color.White,
+            iconBorderWidth: 1,
+            drawQuietZones: true
         );
         var stream = new MemoryStream();
         bitmap.Save(stream, ImageFormat.Png);
@@ -212,7 +216,8 @@ public class QRCodeTool {
             qRCodeInfo.PixelPerModule,
             qRCodeInfo.Foreground,
             Color.Transparent,
-            true
+            logo: new(qRCodeInfo.Image),
+            drawQuietZones: true
         ));
     }
 

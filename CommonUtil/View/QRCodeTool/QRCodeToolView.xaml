@@ -135,7 +135,7 @@
           <ui:SimpleStackPanel>
             <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="二维码颜色：" />
             <Rectangle
-              Width="100"
+              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
               Height="40"
               ContextMenuService.IsEnabled="True"
               Fill="{Binding QRCodeForeground, Converter={StaticResource ColorToBrushConverter}}"
@@ -187,6 +187,25 @@
               SelectedIndex="{Binding ImageQualityComboSelectedIndex}" />
           </ui:SimpleStackPanel>
 
+          <!--  图标  -->
+          <ui:SimpleStackPanel>
+            <TextBlock
+              Width="{StaticResource QRCodeToolView_DescriptionWidth}"
+              MouseUp="ChooseIconMouseUpHandler"
+              Style="{StaticResource HyperLinkStyle}"
+              Text="图标："
+              ToolTip="点击选择图标" />
+            <Image
+              x:Name="IconImage"
+              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
+              Height="50"
+              HorizontalAlignment="Left"
+              Stretch="Uniform" />
+            <Button
+              Click="ClearIconImageClickHandler"
+              Content="清除"
+              Visibility="{Binding Source, ElementName=IconImage, Converter={StaticResource HideIfNullConverter}}" />
+          </ui:SimpleStackPanel>
           <!--  Control  -->
           <ui:SimpleStackPanel Spacing="{StaticResource MediumItemSpacing}">
             <widget:IconButton
