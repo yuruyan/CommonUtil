@@ -3,6 +3,7 @@ using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ public partial class EnglishTextProcessView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(false));
+    public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>), typeof(EnglishTextProcessView), new PropertyMetadata());
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "All Files|*.*"
@@ -53,8 +55,24 @@ public partial class EnglishTextProcessView : Page {
         get { return (string)GetValue(FileNameProperty); }
         set { SetValue(FileNameProperty, value); }
     }
+    /// <summary>
+    /// 处理模式
+    /// </summary>
+    public IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>> ProcessPatternDict {
+        get { return (IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>)GetValue(ProcessPatternDictProperty); }
+        private set { SetValue(ProcessPatternDictProperty, value); }
+    }
 
     public EnglishTextProcessView() {
+        ProcessPatternDict = new Dictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>() {
+            {"大写",new (TextTool.ToUpperCase, TextTool.FileToUpperCase) },
+            {"小写",new (TextTool.ToLowerCase, TextTool.FileToLowerCase) },
+            {"切换大小写",new (TextTool.ToggleCase, TextTool.FileToggleCase) },
+            {"转全角",new (TextTool.HalfCharToFullChar, TextTool.FileHalfCharToFullChar) },
+            {"转半角",new (TextTool.FullCharToHalfChar, TextTool.FileFullCharToHalfChar) },
+            {"单词首字母大写",new (TextTool.CapitalizeWords, TextTool.FileCapitalizeWords) },
+            {"句子首字母大写",new (TextTool.ToSentenceCase, TextTool.FileToSentenceCase) },
+        };
         InitializeComponent();
     }
 
@@ -221,4 +239,12 @@ public partial class EnglishTextProcessView : Page {
         }
     }
 
+    /// <summary>
+    /// 文本处理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void TextProcessClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+    }
 }

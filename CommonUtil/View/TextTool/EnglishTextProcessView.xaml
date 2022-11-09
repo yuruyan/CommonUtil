@@ -20,6 +20,7 @@
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
+    <!--  Input  -->
     <widget:DragDropTextBox
       Name="DragDropTextBox"
       DragDropEvent="DragDropEventHandler"
@@ -31,14 +32,22 @@
         <widget:FileNameSizeWidget FileName="{Binding FileName}" />
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
+    <!--  Control  -->
     <ui:SimpleStackPanel
       Grid.Row="1"
       Margin="0,8,0,8"
       HorizontalAlignment="Center"
       Orientation="Horizontal"
       Spacing="8">
-      <Button Click="HalfToFullCharClick" Content="半角转全角" />
-      <Button Click="FullToHalfCharClick" Content="全角转半角" />
+      <ui:SimpleStackPanel Orientation="Horizontal">
+        <TextBlock Text="模式：" />
+        <ComboBox
+          Name="ProcessPatternComboBox"
+          VerticalAlignment="Center"
+          ItemsSource="{Binding ProcessPatternDict.Keys}"
+          SelectedIndex="0" />
+      </ui:SimpleStackPanel>
+      <Button Click="TextProcessClick" Content="文本处理" />
       <widget:IconButton
         Click="CopyResultClick"
         Icon="&#xe6ef;"
@@ -49,6 +58,7 @@
         Style="{StaticResource GlobalErrorButtonStyle}"
         Text="清空输入" />
     </ui:SimpleStackPanel>
+    <!--  Output  -->
     <TextBox
       Grid.Row="2"
       IsReadOnly="True"
