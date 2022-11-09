@@ -287,11 +287,29 @@ public class TextTool {
     public static string ToLowerCase(string text) => text.ToLowerInvariant();
 
     /// <summary>
+    /// 文件文本小写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToLowerCase(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, ToLowerCase(File.ReadAllText(inputPath)));
+    }
+
+    /// <summary>
     /// 大写
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
     public static string ToUpperCase(string text) => text.ToUpperInvariant();
+
+    /// <summary>
+    /// 文件文本大写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToUpperCase(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, ToUpperCase(File.ReadAllText(inputPath)));
+    }
 
     /// <summary>
     /// 切换大小写
@@ -312,6 +330,15 @@ public class TextTool {
     }
 
     /// <summary>
+    /// 文件文本切换大小写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToggleCase(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, ToggleCase(File.ReadAllText(inputPath)));
+    }
+
+    /// <summary>
     /// 将文本第一个字母大写
     /// </summary>
     /// <param name="text"></param>
@@ -329,6 +356,15 @@ public class TextTool {
     }
 
     /// <summary>
+    /// 文件文本将第一个字母大写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileCapitalizeFirstWordCharacter(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, CapitalizeFirstWordCharacter(File.ReadAllText(inputPath)));
+    }
+
+    /// <summary>
     /// 将每个单词首字母大写
     /// </summary>
     /// <param name="text"></param>
@@ -338,6 +374,15 @@ public class TextTool {
             ToLowerCase(text),
             match => CapitalizeFirstWordCharacter(match.Value)
         );
+
+    /// <summary>
+    /// 文件文本将每个单词首字母大写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileCapitalizeWords(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, CapitalizeWords(File.ReadAllText(inputPath)));
+    }
 
     /// <summary>
     /// 将每一句话首字母大写
@@ -350,5 +395,14 @@ public class TextTool {
             sentences[i] = CapitalizeFirstWordCharacter(sentences[i]);
         }
         return string.Join(EnglishSentenceSeparator, sentences);
+    }
+
+    /// <summary>
+    /// 文件文本将每一句话首字母大写
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileToSentenceCase(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, ToSentenceCase(File.ReadAllText(inputPath)));
     }
 }
