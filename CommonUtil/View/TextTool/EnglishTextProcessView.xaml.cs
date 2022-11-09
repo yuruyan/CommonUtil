@@ -99,81 +99,19 @@ public partial class EnglishTextProcessView : Page {
     }
 
     /// <summary>
-    /// 半角转全角
+    /// 文本处理
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private async void HalfToFullCharClick(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能是二进制文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
-        }
-        // 输入检查
-        if (!HasFile && InputText.Length == 0) {
-            MessageBox.Info("请输入文本");
-            return;
-        }
-
-        // 文本处理
-        if (!HasFile) {
-            StringHalfToFullChar();
-            return;
-        }
-        ThrottleUtils.ThrottleAsync(HalfToFullCharClick, FileHalfToFullChar);
+    /// <param name="func"></param>
+    private void StringTextProcess(Func<string, string> func) {
+        OutputText = func(InputText);
     }
 
     /// <summary>
-    /// 全角转半角
+    /// 文件处理
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private async void FullToHalfCharClick(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能是二进制文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
-        }
-        // 输入检查
-        if (!HasFile && InputText.Length == 0) {
-            MessageBox.Info("请输入文本");
-            return;
-        }
-
-        // 文本处理
-        if (!HasFile) {
-            StringFullToHalfChar();
-            return;
-        }
-        ThrottleUtils.ThrottleAsync(FullToHalfCharClick, FileFullToHalfChar);
-    }
-
-    /// <summary>
-    /// 文本半角转全角
-    /// </summary>
-    private void StringHalfToFullChar() {
-        OutputText = TextTool.HalfCharToFullChar(InputText);
-    }
-
-    /// <summary>
-    /// 文本全角转半角
-    /// </summary>
-    private void StringFullToHalfChar() {
-        OutputText = TextTool.FullCharToHalfChar(InputText);
-    }
-
-    /// <summary>
-    /// 文件文本半角转全角
-    /// </summary>
-    private async Task FileHalfToFullChar() {
+    /// <param name="func"></param>
+    /// <returns></returns>
+    private async Task FileTextProcess(Action<string, string> func) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -184,32 +122,7 @@ public partial class EnglishTextProcessView : Page {
         // 处理
         await Task.Run(() => {
             try {
-                TextTool.FileHalfCharToFullChar(inputPath, outputPath);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("失败");
-            }
-        });
-    }
-
-    /// <summary>
-    /// 文件文本半角转全角
-    /// </summary>
-    private async Task FileFullToHalfChar() {
-        var text = InputText;
-        var inputPath = FileName;
-        if (SaveFileDialog.ShowDialog() != true) {
-            return;
-        }
-        var outputPath = SaveFileDialog.FileName;
-
-        // 处理
-        await Task.Run(() => {
-            try {
-                TextTool.FileFullCharToHalfChar(inputPath, outputPath);
+                func(inputPath, outputPath);
                 // 通知
                 UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
             } catch (IOException) {
@@ -244,7 +157,33 @@ public partial class EnglishTextProcessView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void TextProcessClick(object sender, RoutedEventArgs e) {
+    private async void TextProcessClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 二进制文件警告
+        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
+            WarningDialog dialog = WarningDialog.Shared;
+            dialog.DetailText = "文件可能是二进制文件，是否继续？";
+            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
+                return;
+            }
+        }
+        // 输入检查
+        if (!HasFile && InputText.Length == 0) {
+            MessageBox.Info("请输入文本");
+            return;
+        }
+        var pattern = ProcessPatternDict[
+            CommonUtils.NullCheck(ProcessPatternComboBox.SelectedValue.ToString())
+        ];
+
+        // 文本处理
+        if (!HasFile) {
+            StringTextProcess(pattern.Key);
+            return;
+        }
+        ThrottleUtils.ThrottleAsync(
+            TextProcessClick,
+            () => FileTextProcess(pattern.Value)
+        );
     }
 }
