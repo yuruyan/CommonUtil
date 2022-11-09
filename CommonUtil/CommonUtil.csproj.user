@@ -118,7 +118,7 @@
     <Compile Update="View\TempFileVersionControlView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\TextTool\HalfFullCharTransformView.xaml.cs">
+    <Compile Update="View\TextTool\EnglishTextProcessView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\TextTool\PrependLineNumberView.xaml.cs">
@@ -336,7 +336,7 @@
     <Page Update="View\TempFileVersionControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\TextTool\HalfFullCharTransformView.xaml">
+    <Page Update="View\TextTool\EnglishTextProcessView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\TextTool\PrependLineNumberView.xaml">

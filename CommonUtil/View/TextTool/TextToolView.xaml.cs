@@ -12,7 +12,7 @@ public partial class TextToolView : System.Windows.Controls.Page {
     private readonly Type[] Routers = {
         typeof(RemoveDuplicateView),
         typeof(WhiteSpaceProcessView),
-        typeof(HalfFullCharTransformView),
+        typeof(EnglishTextProcessView),
         typeof(PrependLineNumberView),
         typeof(AddEnglishWordBraces),
     };

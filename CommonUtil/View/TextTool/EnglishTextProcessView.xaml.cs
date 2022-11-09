@@ -9,18 +9,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 
-public partial class HalfFullCharTransformView : Page {
+public partial class EnglishTextProcessView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
-    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(""));
-    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(HalfFullCharTransformView), new PropertyMetadata(string.Empty));
-    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(HalfFullCharTransformView), new PropertyMetadata(false));
+    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(""));
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(""));
+    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(false));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "All Files|*.*"
@@ -55,7 +54,7 @@ public partial class HalfFullCharTransformView : Page {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public HalfFullCharTransformView() {
+    public EnglishTextProcessView() {
         InitializeComponent();
     }
 

@@ -24,7 +24,7 @@
           Content="文本去重"
           IsSelected="True" />
         <ui:NavigationViewItem x:Name="WhiteSpaceProcessView" Content="空白处理" />
-        <ui:NavigationViewItem x:Name="HalfFullCharTransformView" Content="半角全角转换" />
+        <ui:NavigationViewItem x:Name="EnglishTextProcessView" Content="英文文本处理" />
         <ui:NavigationViewItem x:Name="PrependLineNumberView" Content="增加行号" />
         <ui:NavigationViewItem x:Name="AddEnglishWordBraces" Content="中英文之间加空格" />
       </ui:NavigationView.MenuItems>
