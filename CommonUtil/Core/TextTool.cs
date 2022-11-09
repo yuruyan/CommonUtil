@@ -15,7 +15,7 @@ public class TextTool {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    public static readonly Regex EnglishWordRegex = new(@"[a-z]+'[a-z]+", RegexOptions.IgnoreCase);
+    public static readonly Regex EnglishWordRegex = new(@"[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase);
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
