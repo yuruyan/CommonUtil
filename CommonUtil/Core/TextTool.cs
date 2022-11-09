@@ -9,6 +9,22 @@ namespace CommonUtil.Core;
 
 public class TextTool {
     /// <summary>
+    /// 英文句子分隔符
+    /// </summary>
+    private const char EnglishSentenceSeparator = '.';
+    /// <summary>
+    /// 英文单词正则
+    /// </summary>
+    public static readonly Regex EnglishWordRegex = new(@"[a-z]+'[a-z]+", RegexOptions.IgnoreCase);
+    /// <summary>
+    /// 英文单词、数字正则
+    /// </summary>
+    public static readonly Regex EnglishWordNumberRegex = new(@"[a-z0-9]+", RegexOptions.IgnoreCase);
+    /// <summary>
+    /// 多个空白字符正则
+    /// </summary>
+    private static readonly Regex MultipleWhiteSpace = new(@"[\t\r\f ]{2,}");
+    /// <summary>
     /// 半角全角 Dict
     /// </summary>
     private static readonly Dictionary<char, char> HalfFullCharDict = new();
@@ -16,11 +32,6 @@ public class TextTool {
     /// 全角半角 Dict
     /// </summary>
     private static readonly Dictionary<char, char> FullHalfCharDict = new();
-
-    /// <summary>
-    /// 多个空白字符正则
-    /// </summary>
-    private static readonly Regex MultipleWhiteSpace = new(@"[\t\r\f ]{2,}");
 
     static TextTool() {
         // 空格
@@ -245,16 +256,6 @@ public class TextTool {
     }
 
     /// <summary>
-    /// 英文单词正则
-    /// </summary>
-    public static readonly Regex EnglishWordRegex = new(@"[a-z]+", RegexOptions.IgnoreCase);
-
-    /// <summary>
-    /// 英文单词、数字正则
-    /// </summary>
-    public static readonly Regex EnglishWordNumberRegex = new(@"[a-z0-9]+", RegexOptions.IgnoreCase);
-
-    /// <summary>
     /// 英文两边加空格
     /// </summary>
     /// <param name="text"></param>
@@ -276,5 +277,78 @@ public class TextTool {
     /// <returns></returns>
     public static void FileAddEnglishWordBraces(string inputPath, string outputPath, bool includeNumber = false) {
         File.WriteAllText(outputPath, AddEnglishWordBraces(File.ReadAllText(inputPath), includeNumber));
+    }
+
+    /// <summary>
+    /// 小写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToLowerCase(string text) => text.ToLowerInvariant();
+
+    /// <summary>
+    /// 大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToUpperCase(string text) => text.ToUpperInvariant();
+
+    /// <summary>
+    /// 切换大小写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToggleCase(string text) {
+        char[] chars = text.ToCharArray();
+        for (int i = 0; i < chars.Length; i++) {
+            char ch = chars[i];
+            chars[i] = ch switch {
+                >= 'a' and <= 'z' => char.ToUpper(ch),
+                >= 'A' and <= 'Z' => char.ToLower(ch),
+                _ => ch
+            };
+        }
+        return new(chars);
+    }
+
+    /// <summary>
+    /// 将文本第一个字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static string CapitalizeFirstWordCharacter(string text) {
+        var chars = text.ToCharArray();
+        for (int i = 0; i < chars.Length; i++) {
+            char ch = chars[i];
+            if (char.IsLetter(ch)) {
+                chars[i] = char.ToUpper(ch);
+                break;
+            }
+        }
+        return new(chars);
+    }
+
+    /// <summary>
+    /// 将每个单词首字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string CapitalizeWords(string text)
+        => EnglishWordRegex.Replace(
+            ToLowerCase(text),
+            match => CapitalizeFirstWordCharacter(match.Value)
+        );
+
+    /// <summary>
+    /// 将每一句话首字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToSentenceCase(string text) {
+        var sentences = ToLowerCase(text).Split(EnglishSentenceSeparator);
+        for (int i = 0; i < sentences.Length; i++) {
+            sentences[i] = CapitalizeFirstWordCharacter(sentences[i]);
+        }
+        return string.Join(EnglishSentenceSeparator, sentences);
     }
 }
