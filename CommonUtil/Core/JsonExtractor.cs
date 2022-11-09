@@ -29,7 +29,7 @@ public static class JsonExtractor {
     /// <param name="pattern"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException">解析失败</exception>
-    private static IEnumerable<PatternInfo> ParsePattern(string pattern) {
+    private static IList<PatternInfo> ParsePattern(string pattern) {
         var patterns = new List<PatternInfo>();
         var paths = pattern.Split('/', StringSplitOptions.RemoveEmptyEntries);
         // 解析
@@ -68,27 +68,58 @@ public static class JsonExtractor {
         using var streamReader = new StreamReader(stream);
         // 解析
         var jToken = JToken.Load(new JsonTextReader(streamReader));
-        // 没有内容
-        if (jToken is null) {
-            return resultList;
+        Extract(patterns, 0, jToken, resultList);
+        return resultList;
+    }
+
+    /// <summary>
+    /// 数据提取
+    /// </summary>
+    /// <param name="patternInfos"></param>
+    /// <param name="index"></param>
+    /// <param name="rootToken"></param>
+    /// <param name="resultList"></param>
+    private static void Extract(
+        IList<PatternInfo> patternInfos,
+        int index,
+        JToken? rootToken,
+        ICollection<string> resultList
+    ) {
+        if (rootToken is null) {
+            return;
         }
-        var enumerator = patterns.GetEnumerator();
-        while (enumerator.MoveNext()) {
-            var patternInfo = enumerator.Current;
+        for (int i = index; i < patternInfos.Count; i++) {
+            var patternInfo = patternInfos[i];
             // 下移一层
-            jToken = jToken[patternInfo.Name];
-            // 没有内容
-            if (jToken is null) {
-                return resultList;
+            rootToken = rootToken[patternInfo.Name];
+            // 终止
+            if (rootToken is null) {
+                return;
             }
             if (patternInfo.IsArray) {
-                if (enumerator.MoveNext()) {
-                    resultList.AddRange(ExtractArray(jToken, patternInfo, enumerator.Current.Name));
+                // 选择一个，继续向下
+                if (!patternInfo.IsSelectAll) {
+                    rootToken = rootToken.Children().Skip(patternInfo.Index).FirstOrDefault();
+                    if (rootToken is null) {
+                        return;
+                    }
+                    continue;
                 }
-                return resultList;
+                // 最后一层
+                if (i + 2 == patternInfos.Count) {
+                    var nextPatternInfo = patternInfos[i + 1];
+                    foreach (var token in rootToken.Children()) {
+                        resultList.Add(token[nextPatternInfo.Name]?.ToString() ?? string.Empty);
+                    }
+                } else {
+                    foreach (var token in rootToken.Children()) {
+                        Extract(patternInfos, i + 1, token, resultList);
+                    }
+                }
+                return;
             }
         }
-        return resultList;
+        resultList.Add(rootToken.ToString());
     }
 
     /// <summary>
@@ -111,22 +142,5 @@ public static class JsonExtractor {
     public static void FileExtract(string inputPath, string outputPath, string pattern) {
         using var stream = File.OpenRead(inputPath);
         File.WriteAllLines(outputPath, Extract(stream, pattern));
-    }
-
-    /// <summary>
-    /// 提取集合
-    /// </summary>
-    /// <param name="jToken"></param>
-    /// <param name="arrayPatternInfo"></param>
-    /// <param name="memberName"></param>
-    /// <returns></returns>
-    private static IEnumerable<string> ExtractArray(JToken jToken, PatternInfo arrayPatternInfo, string memberName) {
-        string ExtractSelector(JToken t) => t[memberName]?.ToString() ?? string.Empty;
-        var children = jToken.Children();
-        // 提取全部
-        if (arrayPatternInfo.IsSelectAll) {
-            return children.Select(ExtractSelector);
-        }
-        return children.Skip(arrayPatternInfo.Index).Take(1).Select(ExtractSelector);
     }
 }
