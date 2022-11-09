@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace CommonUtil.Core;
 
@@ -58,13 +59,13 @@ public static class JsonExtractor {
     /// <summary>
     /// 数据提取
     /// </summary>
-    /// <param name="filepath"></param>
+    /// <param name="stream"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    public static IEnumerable<string> Extract(string filepath, string pattern) {
+    public static IEnumerable<string> Extract(Stream stream, string pattern) {
         var resultList = new List<string>();
         var patterns = ParsePattern(pattern);
-        using var streamReader = new StreamReader(filepath);
+        using var streamReader = new StreamReader(stream);
         // 解析
         var jToken = JToken.Load(new JsonTextReader(streamReader));
         // 没有内容
@@ -88,6 +89,28 @@ public static class JsonExtractor {
             }
         }
         return resultList;
+    }
+
+    /// <summary>
+    /// 数据提取
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="pattern"></param>
+    /// <returns></returns>
+    public static IEnumerable<string> Extract(string text, string pattern) {
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
+        return Extract(stream, pattern);
+    }
+
+    /// <summary>
+    /// 文件数据提取
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <param name="pattern"></param>
+    public static void FileExtract(string inputPath, string outputPath, string pattern) {
+        using var stream = File.OpenRead(inputPath);
+        File.WriteAllLines(outputPath, Extract(stream, pattern));
     }
 
     /// <summary>
