@@ -381,11 +381,16 @@ public class TextTool {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string ToSentenceCase(string text) {
-        var sentences = ToLowerCase(text).Split(EnglishSentenceSeparator);
-        for (int i = 0; i < sentences.Length; i++) {
-            sentences[i] = CapitalizeFirstWordCharacter(sentences[i]);
+        var lines = ToLowerCase(text).Split('\n');
+        // 对每一行根据 EnglishSentenceSeparator 分割
+        for (int i = 0; i < lines.Length; i++) {
+            var sentences = lines[i].Split(EnglishSentenceSeparator);
+            for (int j = 0; j < sentences.Length; j++) {
+                sentences[j] = CapitalizeFirstWordCharacter(sentences[j]);
+            }
+            lines[i] = string.Join(EnglishSentenceSeparator, sentences);
         }
-        return string.Join(EnglishSentenceSeparator, sentences);
+        return string.Join('\n', lines);
     }
 
     /// <summary>
