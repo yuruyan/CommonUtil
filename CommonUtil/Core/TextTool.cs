@@ -356,15 +356,6 @@ public class TextTool {
     }
 
     /// <summary>
-    /// 文件文本将第一个字母大写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileCapitalizeFirstWordCharacter(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, CapitalizeFirstWordCharacter(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
     /// 将每个单词首字母大写
     /// </summary>
     /// <param name="text"></param>
