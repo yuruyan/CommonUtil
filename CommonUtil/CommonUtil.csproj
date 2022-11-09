@@ -40,6 +40,7 @@
     <None Remove="Resource\image\IdiomMatching.svg" />
     <None Remove="Resource\image\Intersection.svg" />
     <None Remove="Resource\image\JapaneseSymbol.png" />
+    <None Remove="Resource\image\JSON.svg" />
     <None Remove="Resource\image\link.svg" />
     <None Remove="Resource\image\Merge.svg" />
     <None Remove="Resource\image\order.svg" />
@@ -118,6 +119,7 @@
     <Resource Include="Resource\image\JapaneseSymbol.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resource\image\JSON.svg" />
     <Resource Include="Resource\image\link.svg" />
     <Resource Include="Resource\image\Merge.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
