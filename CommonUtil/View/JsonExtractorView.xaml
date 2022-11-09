@@ -5,10 +5,60 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="JsonExtractorView"
+  Margin="{StaticResource PageMargin}"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
-  <Grid />
+  <UniformGrid Columns="2">
+    <UniformGrid Margin="0,0,4,0" Rows="2">
+      <!--  Input  -->
+      <widget:DragDropTextBox
+        Name="DragDropTextBox"
+        DragDropEvent="DragDropEventHandler"
+        HasFile="{Binding HasFile, Mode=TwoWay}">
+        <widget:DragDropTextBox.TextBox>
+          <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+        </widget:DragDropTextBox.TextBox>
+        <widget:DragDropTextBox.FileView>
+          <widget:FileNameSizeWidget FileName="{Binding FileName}" />
+        </widget:DragDropTextBox.FileView>
+      </widget:DragDropTextBox>
+      <ui:SimpleStackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Orientation="Vertical">
+        <DockPanel>
+          <TextBlock Text="模式：" />
+          <TextBox MinWidth="300" Text="{Binding PatternText}" />
+        </DockPanel>
+        <!--  Control  -->
+        <ui:SimpleStackPanel
+          Grid.Row="1"
+          Margin="0,8"
+          HorizontalAlignment="Center"
+          Orientation="Horizontal">
+          <Button Click="JsonExtractClickHandler" Content="数据提取" />
+          <widget:IconButton
+            Click="CopyResultClick"
+            Icon="&#xe6ef;"
+            Text="复制结果" />
+          <widget:IconButton
+            Click="ClearInputClick"
+            Icon="&#xe946;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="清空输入" />
+        </ui:SimpleStackPanel>
+      </ui:SimpleStackPanel>
+    </UniformGrid>
+    <!--  Output  -->
+    <TextBox
+      Margin="4,0,0,0"
+      IsReadOnly="True"
+      Style="{StaticResource MultilineTextBoxStyle}"
+      Text="{Binding OutputText, Mode=OneWay}" />
+  </UniformGrid>
 </Page>
