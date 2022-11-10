@@ -65,6 +65,8 @@ public partial class JsonExtractorView : Page {
     }
 
     public JsonExtractorView() {
+        InputText = Resource.Resource.JsonExtractorViewDemoJson;
+        PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
     }
 
@@ -103,7 +105,7 @@ public partial class JsonExtractorView : Page {
     /// </summary>
     private void StringExtract() {
         try {
-            OutputText = string.Concat(JsonExtractor.Extract(InputText, PatternText));
+            OutputText = string.Join('\n', JsonExtractor.Extract(InputText, PatternText));
         } catch {
             MessageBox.Error("失败");
         }
@@ -152,7 +154,7 @@ public partial class JsonExtractorView : Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        FileName = InputText = OutputText = PatternText = string.Empty;
+        FileName = InputText = OutputText = string.Empty;
         DragDropTextBox.Clear();
     }
 

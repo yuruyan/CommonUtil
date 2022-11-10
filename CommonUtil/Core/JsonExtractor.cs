@@ -67,7 +67,9 @@ public static class JsonExtractor {
         var patterns = ParsePattern(pattern);
         using var streamReader = new StreamReader(stream);
         // 解析
-        var jToken = JToken.Load(new JsonTextReader(streamReader));
+        var jToken = JToken.Load(new JsonTextReader(streamReader), new JsonLoadSettings() {
+            CommentHandling = CommentHandling.Ignore
+        });
         Extract(patterns, 0, jToken, resultList);
         return resultList;
     }

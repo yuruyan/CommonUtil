@@ -79,5 +79,42 @@ namespace CommonUtil.Resource {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /*
+        ///   每个 key 由 &apos;/&apos; 分隔
+        ///   key 尾部加上 &apos;[*]&apos; 或 &apos;[数字]&apos; 表示数组元素
+        ///   [*] 表示提取所有子元素
+        ///   [数字] 表示提取第几个子元素，下标从 0 开始
+        ///*/
+        ///{
+        ///  &quot;checksum&quot;: &quot;b2b64d8731508dfdb1947374f8d84c84&quot;,
+        ///  &quot;roots&quot;: {
+        ///    &quot;bookmark_bar&quot;: {
+        ///      &quot;children&quot;: [{
+        ///        &quot;date_added&quot;: &quot;13231990026000000&quot;,
+        ///        &quot;date_last_used&quot;: &quot;0&quot;,
+        ///        &quot;guid&quot;: &quot;23032ff0-d950-4f2b-9506-120ee2ea9553&quot;,
+        ///        &quot;id&quot;: &quot;2958&quot;,
+        ///        &quot;name&quot;: &quot;163网易免费邮--中文邮箱第一品牌&quot;,
+        ///        &quot;show_icon&quot;: false,
+        ///        &quot;source&quot;: &quot;sync&quot;,
+        ///        &quot;type&quot;: &quot;url&quot;,
+        ///        &quot;url&quot;: [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string JsonExtractorViewDemoJson {
+            get {
+                return ResourceManager.GetString("JsonExtractorViewDemoJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to roots/bookmark_bar/children[*]/url.
+        /// </summary>
+        internal static string JsonExtractorViewDemoPattern {
+            get {
+                return ResourceManager.GetString("JsonExtractorViewDemoPattern", resourceCulture);
+            }
+        }
     }
 }

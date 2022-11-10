@@ -124,4 +124,43 @@
   <data name="CommonRegex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CommonRegex.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="JsonExtractorViewDemoJson" xml:space="preserve">
+    <value>/*
+   每个 key 由 '/' 分隔
+   key 尾部加上 '[*]' 或 '[数字]' 表示数组元素
+   [*] 表示提取所有子元素
+   [数字] 表示提取第几个子元素，下标从 0 开始
+*/
+{
+  "checksum": "b2b64d8731508dfdb1947374f8d84c84",
+  "roots": {
+    "bookmark_bar": {
+      "children": [{
+        "date_added": "13231990026000000",
+        "date_last_used": "0",
+        "guid": "23032ff0-d950-4f2b-9506-120ee2ea9553",
+        "id": "2958",
+        "name": "163网易免费邮--中文邮箱第一品牌",
+        "show_icon": false,
+        "source": "sync",
+        "type": "url",
+        "url": "https://mail.163.com/"
+      }, {
+        "date_added": "13231989625000000",
+        "date_last_used": "0",
+        "guid": "5b4c6e84-b25c-479f-9118-30bea9d860dd",
+        "id": "2959",
+        "name": "菜鸟教程 - 学的不仅是技术，更是梦想！",
+        "show_icon": false,
+        "source": "sync",
+        "type": "url",
+        "url": "https://www.runoob.com/"
+      }]
+    }
+  }
+}</value>
+  </data>
+  <data name="JsonExtractorViewDemoPattern" xml:space="preserve">
+    <value>roots/bookmark_bar/children[*]/url</value>
+  </data>
 </root>
