@@ -13,8 +13,10 @@ internal class PatternParseException : ArgumentException {
     public PatternParseException(string message) : base(message) { }
 }
 
-public static class JsonExtractor {
-    private static readonly Regex PatternRegex = new(@"^(?<name>[^/\[\]]+)(?<arrayIdentifier>\[(?<index>\d+|\*)\])?$");
+public static partial class JsonExtractor {
+    [GeneratedRegex("^(?<name>[^/\\[\\]]+)(?<arrayIdentifier>\\[(?<index>\\d+|\\*)\\])?$")]
+    private static partial Regex GetPatternRegex();
+    private static readonly Regex PatternRegex = GetPatternRegex();
 
     private struct PatternInfo {
         public string Name { get; set; }
@@ -71,7 +73,7 @@ public static class JsonExtractor {
     /// <param name="pattern"></param>
     /// <returns></returns>
     /// <exception cref="PatternParseException">解析失败</exception>
-    private static IEnumerable<string> Extract(Stream stream, string pattern) {
+    private static IList<string> Extract(Stream stream, string pattern) {
         var resultList = new List<string>();
         var patterns = ParsePattern(pattern);
         using var streamReader = new StreamReader(stream);
@@ -138,7 +140,7 @@ public static class JsonExtractor {
     /// <param name="pattern"></param>
     /// <returns></returns>
     /// <exception cref="PatternParseException">解析失败</exception>
-    public static IEnumerable<string> Extract(string text, string pattern) {
+    public static IList<string> Extract(string text, string pattern) {
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
         return Extract(stream, pattern);
     }
