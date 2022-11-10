@@ -71,14 +71,12 @@ public static class JsonExtractor {
     /// <param name="pattern"></param>
     /// <returns></returns>
     /// <exception cref="PatternParseException">解析失败</exception>
-    public static IEnumerable<string> Extract(Stream stream, string pattern) {
+    private static IEnumerable<string> Extract(Stream stream, string pattern) {
         var resultList = new List<string>();
         var patterns = ParsePattern(pattern);
         using var streamReader = new StreamReader(stream);
         // 解析
-        var jToken = JToken.Load(new JsonTextReader(streamReader), new JsonLoadSettings() {
-            CommentHandling = CommentHandling.Ignore
-        });
+        var jToken = JToken.Load(new JsonTextReader(streamReader), new());
         Extract(patterns, 0, jToken, resultList);
         return resultList;
     }

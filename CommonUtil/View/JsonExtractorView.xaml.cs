@@ -2,6 +2,8 @@
 using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -92,23 +94,32 @@ public partial class JsonExtractorView : Page {
             }
         }
 
-        // 数据提取
-        if (!HasFile) {
-            StringExtract();
+        if (!ThrottleUtils.CheckStateAndSet(HandleExtract)) {
             return;
         }
-        ThrottleUtils.ThrottleAsync(HandleExtract, FileExtract);
+        try {
+            // 数据提取
+            if (!HasFile) {
+                StringExtract();
+                return;
+            }
+            await FileExtract();
+        } catch (JsonException) {
+            MessageBox.Error("Json 解析失败");
+        } catch (PatternParseException) {
+            MessageBox.Error("提取模式解析失败");
+        } catch {
+            MessageBox.Error("失败");
+        } finally {
+            ThrottleUtils.SetFinished(HandleExtract);
+        }
     }
 
     /// <summary>
     /// 文本提取
     /// </summary>
     private void StringExtract() {
-        try {
-            OutputText = string.Join('\n', JsonExtractor.Extract(InputText, PatternText));
-        } catch {
-            MessageBox.Error("失败");
-        }
+        OutputText = string.Join('\n', JsonExtractor.Extract(InputText, PatternText));
     }
 
     /// <summary>
@@ -129,9 +140,8 @@ public partial class JsonExtractorView : Page {
                 UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
             } catch (IOException) {
                 MessageBox.Error("文件读取或写入失败");
-            } catch (Exception e) {
-                Console.WriteLine(e);
-                MessageBox.Error("失败");
+            } catch {
+                throw;
             }
         });
     }
