@@ -91,7 +91,7 @@ public partial class CollectionToolView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>
@@ -146,20 +146,15 @@ public partial class CollectionToolView : Page {
             return;
         }
 
-        // 处理文件
-        await Task.Run(() => {
-            try {
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            () => {
                 var result = func(list1, list2);
                 // 保存文件
                 File.WriteAllLines(savePath, result);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(savePath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch (Exception) {
-                MessageBox.Error("失败");
-            }
-        });
+            },
+            savePath
+        );
     }
 
     /// <summary>

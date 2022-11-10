@@ -144,17 +144,14 @@ public partial class JsonExtractorView : Page {
         }
         var outputPath = SaveFileDialog.FileName;
 
-        await Task.Run(() => {
-            try {
-                JsonExtractor.FileExtract(inputPath, outputPath, pattern);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                throw;
-            }
-        });
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            JsonExtractor.FileExtract,
+            outputPath,
+            showErrorInfo: false,
+            reThrowError: true,
+            args: new object[] { inputPath, outputPath, pattern }
+        );
     }
 
     /// <summary>

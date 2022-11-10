@@ -151,17 +151,11 @@ public partial class PrependLineNumberView : Page {
         var outputPath = SaveFileDialog.FileName;
 
         // 处理
-        await Task.Run(() => {
-            try {
-                TextTool.FilePrependLineNumber(inputPath, outputPath, separator);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("失败");
-            }
-        });
+        await UIUtils.CreateFileProcessTask(
+            TextTool.FilePrependLineNumber,
+            outputPath,
+            args: new object[] { inputPath, outputPath, separator }
+        );
     }
 
     /// <summary>

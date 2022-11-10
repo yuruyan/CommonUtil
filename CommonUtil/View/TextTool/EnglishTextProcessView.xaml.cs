@@ -120,17 +120,11 @@ public partial class EnglishTextProcessView : Page {
         var outputPath = SaveFileDialog.FileName;
 
         // 处理
-        await Task.Run(() => {
-            try {
-                func(inputPath, outputPath);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("失败");
-            }
-        });
+        await UIUtils.CreateFileProcessTask(
+            func,
+            outputPath,
+            args: new object[] { inputPath, outputPath }
+        );
     }
 
     /// <summary>

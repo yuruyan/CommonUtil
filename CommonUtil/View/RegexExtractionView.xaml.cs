@@ -177,7 +177,6 @@ public partial class RegexExtractionView : Page {
     /// </summary>
     /// <returns></returns>
     private async Task FileExtract() {
-        var text = InputText;
         var inputPath = FileName;
         var searchRegex = SearchRegex;
         var extractionPattern = ExtractionPattern;
@@ -187,25 +186,17 @@ public partial class RegexExtractionView : Page {
         }
         var outputPath = SaveFileDialog.FileName;
 
-        await Task.Run(() => {
-            try {
-                RegexExtraction.FileExtract(
-                    inputPath,
-                    outputPath,
-                    searchRegex,
-                    extractionPattern,
-                    ignoreCase
-                );
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (ArgumentException) {
-                MessageBox.Error("正则表达式有误");
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("失败");
-            }
-        });
+        // 处理
+        try {
+            await UIUtils.CreateFileProcessTask(
+                RegexExtraction.FileExtract,
+                outputPath,
+                reThrowError: true,
+                args: new object[] { inputPath, outputPath, searchRegex, extractionPattern, ignoreCase }
+            );
+        } catch (ArgumentException) {
+            MessageBox.Error("正则表达式有误");
+        } catch { }
     }
 
     /// <summary>

@@ -3,6 +3,7 @@ using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -82,21 +83,12 @@ public partial class ChineseTransformView : Page {
         }
         var outputPath = SaveFileDialog.FileName;
 
-        await Task.Run(() => {
-            try {
-                ChineseTransform.FileToSimplified(inputPath, outputPath);
-                // 通知
-                CommonUITools.Widget.NotificationBox.Success(
-                    "转换成功",
-                    "点击打开",
-                    () => UIUtils.OpenFileInDirectoryAsync(outputPath)
-                );
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("转换失败");
-            }
-        });
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            ChineseTransform.FileToSimplified,
+            outputPath,
+            args: new object[] { inputPath, outputPath }
+        );
     }
 
     /// <summary>

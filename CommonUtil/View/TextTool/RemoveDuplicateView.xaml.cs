@@ -122,17 +122,12 @@ public partial class RemoveDuplicateView : Page {
         }
         var outputPath = SaveFileDialog.FileName;
 
-        await Task.Run(() => {
-            try {
-                TextTool.FileRemoveDuplicate(inputPath, outputPath, splitSymbol, mergeSymbol, trim);
-                // 通知
-                UIUtils.NotificationOpenFileInDirectoryAsync(outputPath);
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("失败");
-            }
-        });
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            TextTool.FileRemoveDuplicate,
+            outputPath,
+            args: new object[] { inputPath, outputPath, splitSymbol, mergeSymbol, trim }
+        );
     }
 
     /// <summary>
