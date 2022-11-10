@@ -20,9 +20,9 @@ public partial class DownloaderView : System.Windows.Controls.Page {
 
     private readonly RouterService RouterService;
     private readonly IDictionary<string, Type> NavigationDict = new Dictionary<string, Type>() {
-    {"1", typeof(DownloadingView) },
-    {"2", typeof(DownloadedView) },
-};
+        {"1", typeof(DownloadingView) },
+        {"2", typeof(DownloadedView) },
+    };
     /// <summary>
     /// 下载选择框
     /// </summary>

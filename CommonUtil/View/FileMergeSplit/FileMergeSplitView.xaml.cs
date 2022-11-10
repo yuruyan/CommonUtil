@@ -28,9 +28,7 @@ public partial class FileMergeSplitView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
-            foreach (var item in Routers) {
-                RouterService.Navigate(Routers.First(r => r.Name == element.Name));
-            }
+            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 }
