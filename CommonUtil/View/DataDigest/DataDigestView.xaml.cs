@@ -1,6 +1,5 @@
 ﻿using CommonUITools.Utils;
 using CommonUtil.Core;
-using CommonUtil.Store;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace CommonUtil.View;
 
@@ -101,7 +99,6 @@ public partial class DataDigestView : Page {
     private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
-    public static readonly DependencyProperty FileIconProperty = DependencyProperty.Register("FileIcon", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
 
@@ -146,13 +143,6 @@ public partial class DataDigestView : Page {
     public int RunningProcess {
         get { return (int)GetValue(RunningProcessProperty); }
         set { SetValue(RunningProcessProperty, value); }
-    }
-    /// <summary>
-    /// 文件图标
-    /// </summary>
-    public string FileIcon {
-        get { return (string)GetValue(FileIconProperty); }
-        set { SetValue(FileIconProperty, value); }
     }
     /// <summary>
     /// 文件大小
@@ -202,11 +192,9 @@ public partial class DataDigestView : Page {
 
     private void FileNameChangedHandler(object? sender, EventArgs e) {
         if (string.IsNullOrEmpty(FileName)) {
-            ClearValue(FileIconProperty);
             return;
         }
         FileSize = new FileInfo(FileName).Length;
-        FileIcon = FileIconUtils.GetIcon(FileName);
     }
 
     /// <summary>
