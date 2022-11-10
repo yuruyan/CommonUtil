@@ -58,10 +58,25 @@
       </ui:SimpleStackPanel>
     </UniformGrid>
     <!--  Output  -->
-    <TextBox
-      Margin="4,0,0,0"
-      IsReadOnly="True"
-      Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText, Mode=OneWay}" />
+    <Grid Margin="4,0,0,0">
+      <!--  结果个数显示  -->
+      <TextBlock
+        Name="ResultDetailTextBlock"
+        Padding="0,0,4,4"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Visibility="Collapsed">
+        <Run
+          FontWeight="Bold"
+          Foreground="{StaticResource HighLightKeywordForeground}"
+          Text="{Binding ResultList.Count, Mode=OneWay}" />
+        <Run Text="个结果" />
+      </TextBlock>
+      <TextBox
+        Background="Transparent"
+        IsReadOnly="True"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding OutputText, Mode=OneWay}" />
+    </Grid>
   </UniformGrid>
 </Page>

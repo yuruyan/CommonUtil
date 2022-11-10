@@ -25,6 +25,7 @@ public partial class JsonExtractorView : Page {
     public static readonly DependencyProperty PatternTextProperty = DependencyProperty.Register("PatternText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(false));
+    public static readonly DependencyProperty ResultListProperty = DependencyProperty.Register("ResultList", typeof(ICollection<string>), typeof(JsonExtractorView), new PropertyMetadata());
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "Text|*.txt|All Files|*.*"
@@ -65,6 +66,13 @@ public partial class JsonExtractorView : Page {
         get { return (string)GetValue(PatternTextProperty); }
         set { SetValue(PatternTextProperty, value); }
     }
+    /// <summary>
+    /// 结果集
+    /// </summary>
+    public ICollection<string> ResultList {
+        get { return (ICollection<string>)GetValue(ResultListProperty); }
+        set { SetValue(ResultListProperty, value); }
+    }
 
     public JsonExtractorView() {
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
@@ -94,6 +102,7 @@ public partial class JsonExtractorView : Page {
             }
         }
 
+        ResultDetailTextBlock.Visibility = Visibility.Visible;
         if (!ThrottleUtils.CheckStateAndSet(HandleExtract)) {
             return;
         }
@@ -119,7 +128,8 @@ public partial class JsonExtractorView : Page {
     /// 文本提取
     /// </summary>
     private void StringExtract() {
-        OutputText = string.Join('\n', JsonExtractor.Extract(InputText, PatternText));
+        ResultList = JsonExtractor.Extract(InputText, PatternText);
+        OutputText = string.Join('\n', ResultList);
     }
 
     /// <summary>
@@ -165,6 +175,8 @@ public partial class JsonExtractorView : Page {
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         FileName = InputText = OutputText = string.Empty;
+        ResultList = Array.Empty<string>();
+        ResultDetailTextBlock.Visibility = Visibility.Collapsed;
         DragDropTextBox.Clear();
     }
 
