@@ -26,7 +26,7 @@ public partial class CollectionToolView : Page {
     public static readonly DependencyProperty HasFile2Property = DependencyProperty.Register("HasFile2", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(false));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
-        Filter = "All Files|*.*"
+        Filter = "文本文件|*.txt|All Files|*.*"
     };
 
     /// <summary>

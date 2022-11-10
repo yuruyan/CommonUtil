@@ -24,7 +24,7 @@ public partial class EnglishTextProcessView : Page {
     public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>), typeof(EnglishTextProcessView), new PropertyMetadata());
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
-        Filter = "All Files|*.*"
+        Filter = "文本文件|*.txt|All Files|*.*"
     };
 
     /// <summary>

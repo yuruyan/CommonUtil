@@ -22,7 +22,7 @@ public partial class WhiteSpaceProcessView : Page {
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(WhiteSpaceProcessView), new PropertyMetadata(false));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
-        Filter = "All Files|*.*"
+        Filter = "文本文件|*.txt|All Files|*.*"
     };
 
     /// <summary>
