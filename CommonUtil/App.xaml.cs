@@ -1,7 +1,5 @@
 ﻿using NLog;
 using System;
-using System.IO;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,40 +32,46 @@ public partial class App : Application {
 
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
         Logger.Error(e);
-        MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        // 提示信息
+        MessageBox.Show(
+            Current.MainWindow,
+            e.Exception.Message,
+            "错误",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error
+        );
     }
 
     private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
         if (e.ExceptionObject is Exception exception) {
             Logger.Fatal(exception);
+            // 提示信息
+            MessageBox.Show(
+                Current.MainWindow,
+                exception.Message,
+                "错误",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
             Shutdown();
         }
     }
 
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
+        e.Handled = true;
         Logger.Fatal(e.Exception);
         if (e.Exception is System.Runtime.InteropServices.COMException comException) {
             if (comException.ErrorCode == -2147221040) {
-                e.Handled = true;
                 return;
             }
         }
-        e.Handled = e.Exception switch {
-            WebException or InvalidOperationException or FileNotFoundException => true,
-            _ => false
-        };
-        // 其他处理
-        if (e.Exception is InvalidOperationException
-            || e.Exception is IOException
-        ) {
-            MessageBox.Show(
-                Current.MainWindow,
-                e.Exception.Message,
-                "错误",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
-        }
-        Shutdown();
+        // 提示信息
+        MessageBox.Show(
+            Current.MainWindow,
+            e.Exception.Message,
+            "错误",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error
+        );
     }
 }
