@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=System.Runtime"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="RegexExtractionView"
@@ -13,71 +14,65 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="HeaderWidth">100</system:Double>
+  </Page.Resources>
 
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition Height="auto" />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-    <!--  输入  -->
-    <widget:DragDropTextBox
-      Name="DragDropTextBox"
-      DragDropEvent="DragDropEventHandler"
-      HasFile="{Binding HasFile, Mode=TwoWay}">
-      <widget:DragDropTextBox.TextBox>
-        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      </widget:DragDropTextBox.TextBox>
-      <widget:DragDropTextBox.FileView>
-        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-      </widget:DragDropTextBox.FileView>
-    </widget:DragDropTextBox>
-
-    <!--  control  -->
-    <Grid Grid.Row="1" Margin="0,8,0,8">
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Vertical">
-        <ui:SimpleStackPanel.Resources>
-          <Style TargetType="ui:SimpleStackPanel">
-            <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="Spacing" Value="8" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-          </Style>
-        </ui:SimpleStackPanel.Resources>
-        <ui:SimpleStackPanel>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="查找正则表达式" />
-            <TextBlock
-              Padding="4"
-              MouseUp="MoreRegexMouseUp"
-              Text="&#xe650;"
-              ToolTip="更多"
-              ToolTipService.InitialShowDelay="{StaticResource ToolTipServiceInitialShowDelay}">
-              <TextBlock.Resources>
-                <Style BasedOn="{StaticResource IconFontStyle}" TargetType="TextBlock">
-                  <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                      <Setter Property="Cursor" Value="Hand" />
-                      <Setter Property="Foreground" Value="{StaticResource ApplicationBackgroundDark3}" />
-                    </Trigger>
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Resources>
-            </TextBlock>
-          </StackPanel>
-          <TextBox
-            MinWidth="150"
-            KeyUp="SearchRegexComboBoxKeyUp"
-            Text="{Binding SearchRegex, UpdateSourceTrigger=PropertyChanged}" />
-          <CheckBox Content="忽略大小写" IsChecked="{Binding IgnoreCase}" />
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Padding="0,0,8,0" Text="提取模式" />
-            <TextBox
-              MinWidth="150"
-              KeyUp="SearchRegexComboBoxKeyUp"
-              Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
-          </StackPanel>
+  <UniformGrid Columns="2">
+    <UniformGrid
+      x:Name="ControlPanel"
+      Margin="0,0,4,0"
+      Rows="2">
+      <!--  输入  -->
+      <widget:DragDropTextBox
+        Name="DragDropTextBox"
+        DragDropEvent="DragDropEventHandler"
+        HasFile="{Binding HasFile, Mode=TwoWay}">
+        <widget:DragDropTextBox.TextBox>
+          <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+        </widget:DragDropTextBox.TextBox>
+        <widget:DragDropTextBox.FileView>
+          <widget:FileNameSizeWidget FileName="{Binding FileName}" />
+        </widget:DragDropTextBox.FileView>
+      </widget:DragDropTextBox>
+      <!--  control  -->
+      <ui:SimpleStackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Orientation="Vertical">
+        <ui:SimpleStackPanel Orientation="Vertical">
+          <ui:SimpleStackPanel.Resources>
+            <Style TargetType="DockPanel">
+              <Setter Property="HorizontalAlignment" Value="Center" />
+              <Setter Property="LastChildFill" Value="False" />
+            </Style>
+            <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+              <Setter Property="MinWidth" Value="150" />
+            </Style>
+          </ui:SimpleStackPanel.Resources>
+          <DockPanel>
+            <StackPanel Width="{StaticResource HeaderWidth}" Orientation="Horizontal">
+              <TextBlock Text="查找正则" />
+              <TextBlock
+                Padding="4"
+                FontFamily="{StaticResource IconFontUrI}"
+                MouseUp="MoreRegexMouseUp"
+                Style="{StaticResource HyperLinkStyle}"
+                Text="&#xe650;"
+                ToolTip="更多" />
+            </StackPanel>
+            <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding SearchRegex, UpdateSourceTrigger=PropertyChanged}" />
+          </DockPanel>
+          <DockPanel>
+            <TextBlock Width="{StaticResource HeaderWidth}" Text="忽略大小写" />
+            <ui:ToggleSwitch IsOn="{Binding IgnoreCase}" />
+          </DockPanel>
+          <DockPanel>
+            <TextBlock Width="{StaticResource HeaderWidth}" Text="提取模式" />
+            <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
+          </DockPanel>
         </ui:SimpleStackPanel>
-        <ui:SimpleStackPanel>
+        <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
           <widget:IconButton
             Click="SearchClick"
             Icon="&#xe612;"
@@ -93,20 +88,27 @@
             Text="清空输入" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
+    </UniformGrid>
+    <!--  输出  -->
+    <Grid Margin="4,0,0,0">
       <!--  匹配结果个数显示  -->
-      <StackPanel
-        x:Name="ResultDetailPanel"
+      <TextBlock
+        Name="ResultDetailTextBlock"
+        Padding="0,0,4,4"
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
         Visibility="Collapsed">
-        <TextBlock FontWeight="Bold" Text="{Binding MatchList.Count, StringFormat={}{0} 个匹配结果}" />
-      </StackPanel>
+        <Run
+          FontWeight="Bold"
+          Foreground="{StaticResource HighLightKeywordForeground}"
+          Text="{Binding MatchList.Count, Mode=OneWay}" />
+        <Run Text="个匹配结果" />
+      </TextBlock>
+      <TextBox
+        Background="Transparent"
+        IsReadOnly="True"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding OutputText}" />
     </Grid>
-    <!--  输出  -->
-    <TextBox
-      Grid.Row="2"
-      IsReadOnly="True"
-      Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText}" />
-  </Grid>
+  </UniformGrid>
 </Page>

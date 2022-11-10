@@ -115,6 +115,8 @@ public partial class RegexExtractionView : Page {
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         InputText = OutputText = string.Empty;
+        MatchList = Array.Empty<string>();
+        ResultDetailTextBlock.Visibility = Visibility.Collapsed;
         DragDropTextBox.Clear();
     }
 
@@ -122,7 +124,6 @@ public partial class RegexExtractionView : Page {
     /// 查找结果
     /// </summary>
     private async void SearchResult() {
-        ResultDetailPanel.Visibility = Visibility.Visible;
         // 输入检查
         if (!HasFile && InputText.Length == 0) {
             MessageBox.Error("输入不能为空");
@@ -143,6 +144,7 @@ public partial class RegexExtractionView : Page {
                 return;
             }
         }
+        ResultDetailTextBlock.Visibility = Visibility.Visible;
 
         // 文本处理
         if (!HasFile) {
