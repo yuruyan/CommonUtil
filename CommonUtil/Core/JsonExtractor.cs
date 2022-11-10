@@ -9,6 +9,10 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
+internal class PatternParseException : ArgumentException {
+    public PatternParseException(string message) : base(message) { }
+}
+
 public static class JsonExtractor {
     private static readonly Regex PatternRegex = new(@"^(?<name>[^/\[\]]+)(?<arrayIdentifier>\[(?<index>\d+|\*)\])?$");
 
@@ -28,7 +32,7 @@ public static class JsonExtractor {
     /// </summary>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentException">解析失败</exception>
+    /// <exception cref="PatternParseException">解析失败</exception>
     private static IList<PatternInfo> ParsePattern(string pattern) {
         var patterns = new List<PatternInfo>();
         var paths = pattern.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -37,7 +41,7 @@ public static class JsonExtractor {
             Match match = PatternRegex.Match(path);
             // 失败
             if (!match.Success) {
-                throw new ArgumentException("解析出错");
+                throw new PatternParseException("解析出错");
             }
             string name = match.Groups["name"].Value;
             // 不是数组
@@ -50,7 +54,11 @@ public static class JsonExtractor {
             if (index == "*") {
                 patterns.Add(new() { Name = name, IsArray = true, IsSelectAll = true });
             } else {
-                patterns.Add(new() { Name = name, IsArray = true, Index = int.Parse(index) });
+                // parse 失败
+                if (!int.TryParse(index, out var idx)) {
+                    throw new PatternParseException("解析出错");
+                }
+                patterns.Add(new() { Name = name, IsArray = true, Index = idx });
             }
         }
         return patterns;
@@ -62,6 +70,7 @@ public static class JsonExtractor {
     /// <param name="stream"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
+    /// <exception cref="PatternParseException">解析失败</exception>
     public static IEnumerable<string> Extract(Stream stream, string pattern) {
         var resultList = new List<string>();
         var patterns = ParsePattern(pattern);
@@ -130,6 +139,7 @@ public static class JsonExtractor {
     /// <param name="text"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
+    /// <exception cref="PatternParseException">解析失败</exception>
     public static IEnumerable<string> Extract(string text, string pattern) {
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
         return Extract(stream, pattern);
@@ -141,6 +151,7 @@ public static class JsonExtractor {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     /// <param name="pattern"></param>
+    /// <exception cref="PatternParseException">解析失败</exception>
     public static void FileExtract(string inputPath, string outputPath, string pattern) {
         using var stream = File.OpenRead(inputPath);
         File.WriteAllLines(outputPath, Extract(stream, pattern));
