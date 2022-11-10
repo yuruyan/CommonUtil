@@ -86,7 +86,9 @@ namespace CommonUtil.Resource {
         ///   key 尾部加上 &apos;[*]&apos; 或 &apos;[数字]&apos; 表示数组元素
         ///   [*] 表示提取所有子元素
         ///   [数字] 表示提取第几个子元素，下标从 0 开始
+        ///   根元素为数组时 key 为空，即 &apos;[*]&apos;
         ///*/
+        ///
         ///{
         ///  &quot;checksum&quot;: &quot;b2b64d8731508dfdb1947374f8d84c84&quot;,
         ///  &quot;roots&quot;: {
@@ -99,8 +101,7 @@ namespace CommonUtil.Resource {
         ///        &quot;name&quot;: &quot;163网易免费邮--中文邮箱第一品牌&quot;,
         ///        &quot;show_icon&quot;: false,
         ///        &quot;source&quot;: &quot;sync&quot;,
-        ///        &quot;type&quot;: &quot;url&quot;,
-        ///        &quot;url&quot;: [rest of string was truncated]&quot;;.
+        ///        &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string JsonExtractorViewDemoJson {
             get {
