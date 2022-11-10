@@ -33,7 +33,10 @@
         Orientation="Vertical">
         <DockPanel>
           <TextBlock Text="模式：" />
-          <TextBox MinWidth="300" Text="{Binding PatternText}" />
+          <TextBox
+            MinWidth="300"
+            KeyUp="PatternTextBoxKeyUpHandler"
+            Text="{Binding PatternText, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <!--  Control  -->
         <ui:SimpleStackPanel
