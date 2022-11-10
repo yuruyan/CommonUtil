@@ -75,6 +75,7 @@ public partial class JsonExtractorView : Page {
     }
 
     public JsonExtractorView() {
+        ResultList = Array.Empty<string>();
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
         PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();

@@ -16,9 +16,15 @@ internal class PatternParseException : ArgumentException {
 public static partial class JsonExtractor {
     [GeneratedRegex("^(?<name>[^/\\[\\]]+)(?<arrayIdentifier>\\[(?<index>\\d+|\\*)\\])?$")]
     private static partial Regex GetPatternRegex();
+
+    [GeneratedRegex("\\[(?<index>\\d+|\\*)\\]")]
+    private static partial Regex GetIndexRegex();
+
     private static readonly Regex PatternRegex = GetPatternRegex();
+    private static readonly Regex IndexRegex = GetIndexRegex();
 
     private struct PatternInfo {
+        // 根节点为数组时可为空
         public string Name { get; set; }
         public bool IsArray { get; set; }
         public bool IsSelectAll { get; set; }
@@ -38,8 +44,19 @@ public static partial class JsonExtractor {
     private static IList<PatternInfo> ParsePattern(string pattern) {
         var patterns = new List<PatternInfo>();
         var paths = pattern.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        int currentIndex = 0;
         // 解析
         foreach (var path in paths) {
+            // 第一个，判断是否是数组，没有前缀
+            if (currentIndex++ == 0 && (path.StartsWith('[') && path.EndsWith(']'))) {
+                Match firstMatch = IndexRegex.Match(path);
+                // 失败
+                if (!firstMatch.Success) {
+                    throw new PatternParseException("解析出错");
+                }
+                patterns.Add(ParseIndex(firstMatch.Groups["index"].Value));
+                continue;
+            }
             Match match = PatternRegex.Match(path);
             // 失败
             if (!match.Success) {
@@ -51,19 +68,30 @@ public static partial class JsonExtractor {
                 patterns.Add(new() { Name = name });
                 continue;
             }
-            string index = match.Groups["index"].Value;
-            // 全部
-            if (index == "*") {
-                patterns.Add(new() { Name = name, IsArray = true, IsSelectAll = true });
-            } else {
-                // parse 失败
-                if (!int.TryParse(index, out var idx)) {
-                    throw new PatternParseException("解析出错");
-                }
-                patterns.Add(new() { Name = name, IsArray = true, Index = idx });
-            }
+            PatternInfo patternInfo = ParseIndex(match.Groups["index"].Value);
+            patternInfo.Name = name;
+            patterns.Add(patternInfo);
         }
         return patterns;
+    }
+
+    /// <summary>
+    /// 解析 Index
+    /// </summary>
+    /// <param name="indexVal"></param>
+    /// <returns></returns>
+    /// <exception cref="PatternParseException"></exception>
+    private static PatternInfo ParseIndex(string indexVal) {
+        // 全部
+        if (indexVal == "*") {
+            return new() { IsArray = true, IsSelectAll = true };
+        } else {
+            // parse 失败
+            if (!int.TryParse(indexVal, out var idx)) {
+                throw new PatternParseException("解析出错");
+            }
+            return new() { IsArray = true, Index = idx };
+        }
     }
 
     /// <summary>
@@ -101,8 +129,11 @@ public static partial class JsonExtractor {
         }
         for (int i = index; i < patternInfos.Count; i++) {
             var patternInfo = patternInfos[i];
-            // 下移一层
-            rootToken = rootToken[patternInfo.Name];
+            // 根节点且为数组时不用下移
+            if (!(index == 0 && string.IsNullOrEmpty(patternInfo.Name))) {
+                // 下移一层
+                rootToken = rootToken[patternInfo.Name];
+            }
             // 终止
             if (rootToken is null) {
                 return;
