@@ -161,7 +161,7 @@
     </Resource>
     <Resource Include="Resource\image\wifi.svg" />
     <Resource Include="Resource\SplashWindow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
