@@ -9,18 +9,18 @@
       <ResourceDictionary.MergedDictionaries>
         <ui:ThemeResources />
         <ui:XamlControlsResources />
-        <!--  以下资源位置不能颠倒  -->
-        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ThemeResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/ThemeResources.xaml" />
-        <ResourceDictionary Source="/Resource/ResourceDictionary/OtherResources.xaml" />
+        <!--#region CommonUITools-->
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ColorResources.xaml" />
-        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ConverterResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ThemeResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/CommonResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ConverterResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/StyleResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/HoverEffectResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/DateTemplateResources.xaml" />
+        <!--#endregion-->
+        <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/ThemeResources.xaml" />
+        <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/OtherResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
-
     </ResourceDictionary>
   </Application.Resources>
 </Application>

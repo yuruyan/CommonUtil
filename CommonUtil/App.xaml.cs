@@ -12,8 +12,6 @@ public partial class App : Application {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public App() {
-        ThreadPool.SetMaxThreads(16, 8);
-        ThreadPool.SetMinThreads(8, 4);
         new SplashScreen("/Resource/SplashWindow.png").Show(true);
     }
 
@@ -61,11 +59,6 @@ public partial class App : Application {
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
         e.Handled = true;
         Logger.Fatal(e.Exception);
-        if (e.Exception is System.Runtime.InteropServices.COMException comException) {
-            if (comException.ErrorCode == -2147221040) {
-                return;
-            }
-        }
         string message = e.Exception switch {
             FileNotFoundException f => $"文件{f.FileName}找不到",
             DirectoryNotFoundException d => $"目录找不到\n{d.Message}",
