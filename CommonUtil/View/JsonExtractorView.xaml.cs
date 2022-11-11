@@ -3,7 +3,6 @@ using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.Collections.Generic;

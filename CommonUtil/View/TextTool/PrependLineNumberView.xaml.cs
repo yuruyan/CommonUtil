@@ -1,5 +1,4 @@
 ﻿using CommonUITools.Utils;
-using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;

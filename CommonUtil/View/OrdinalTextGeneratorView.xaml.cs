@@ -1,9 +1,7 @@
 ﻿using CommonUITools.Utils;
 using CommonUtil.Core;
-using ModernWpf.Controls;
 using NLog;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;

@@ -3,7 +3,6 @@ using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
-using NPOI.HPSF;
 using System;
 using System.Collections.Generic;
 using System.IO;

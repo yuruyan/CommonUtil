@@ -19,8 +19,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static QRCoder.QRCodeGenerator;
-using MessageBox = CommonUITools.Widget.MessageBox;
 using Bitmap = System.Drawing.Bitmap;
+using MessageBox = CommonUITools.Widget.MessageBox;
 namespace CommonUtil.View;
 
 public partial class QRCodeToolView : System.Windows.Controls.Page {
