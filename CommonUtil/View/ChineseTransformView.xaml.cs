@@ -99,21 +99,12 @@ public partial class ChineseTransformView : Page {
         }
         var outputPath = SaveFileDialog.FileName;
 
-        await Task.Run(() => {
-            try {
-                ChineseTransform.FileToTraditional(inputPath, outputPath);
-                // 通知
-                CommonUITools.Widget.NotificationBox.Success(
-                    "转换成功",
-                    "点击打开",
-                    () => UIUtils.OpenFileInDirectoryAsync(outputPath)
-                );
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-            } catch {
-                MessageBox.Error("转换失败");
-            }
-        });
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            ChineseTransform.FileToTraditional,
+            outputPath,
+            args: new object[] { inputPath, outputPath }
+        );
     }
 
     /// <summary>
