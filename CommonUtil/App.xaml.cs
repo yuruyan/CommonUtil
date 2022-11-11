@@ -1,5 +1,6 @@
 ﻿using NLog;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,10 +66,15 @@ public partial class App : Application {
                 return;
             }
         }
+        string message = e.Exception switch {
+            FileNotFoundException f => $"文件{f.FileName}找不到",
+            DirectoryNotFoundException d => $"目录找不到\n{d.Message}",
+            _ => e.Exception.Message
+        };
         // 提示信息
         MessageBox.Show(
             Current.MainWindow,
-            e.Exception.Message,
+            message,
             "错误",
             MessageBoxButton.OK,
             MessageBoxImage.Error
