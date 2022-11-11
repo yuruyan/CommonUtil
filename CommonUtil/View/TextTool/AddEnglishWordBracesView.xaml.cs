@@ -65,20 +65,11 @@ public partial class AddEnglishWordBraces : Page {
     /// <param name="e"></param>
     private async void TextProcessClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        bool includeNumber = IncludeNumberCheckBox.IsChecked ?? false;
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能是二进制文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
-        }
         // 输入检查
-        if (!HasFile && InputText.Length == 0) {
-            MessageBox.Info("请输入文本");
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
+        bool includeNumber = IncludeNumberCheckBox.IsChecked ?? false;
 
         // 文本处理
         if (!HasFile) {

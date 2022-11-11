@@ -1,5 +1,4 @@
 ﻿using CommonUITools.Utils;
-using CommonUITools.View;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
@@ -175,7 +174,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void EncodeClickHandler(object sender, RoutedEventArgs e) {
         // 输入检查
-        if (!HasFile && InputText.Length == 0) {
+        if (!HasFile && string.IsNullOrEmpty(InputText)) {
             MessageBox.Info("请输入文本");
             return;
         }
@@ -194,17 +193,8 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private async void DecodeClickHandler(object sender, RoutedEventArgs e) {
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能不是 Base64 文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
-        }
         // 输入检查
-        if (!HasFile && InputText.Length == 0) {
-            MessageBox.Info("请输入文本");
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
 

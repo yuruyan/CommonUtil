@@ -137,17 +137,8 @@ public partial class RemoveDuplicateView : Page {
     /// <param name="e"></param>
     private async void RemoveDuplicateClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能是二进制文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
-        }
-        // 检查输入
-        if (!HasFile && InputText == string.Empty) {
-            MessageBox.Info("请输入文本");
+        // 输入检查
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
 

@@ -124,11 +124,6 @@ public partial class RegexExtractionView : Page {
     /// 查找结果
     /// </summary>
     private async void SearchResult() {
-        // 输入检查
-        if (!HasFile && InputText.Length == 0) {
-            MessageBox.Error("输入不能为空");
-            return;
-        }
         // 检验输入
         if (!UIUtils.CheckInputNullOrEmpty(new KeyValuePair<string?, string>[] {
             new (SearchRegex,  "查找正则不能为空"),
@@ -136,14 +131,11 @@ public partial class RegexExtractionView : Page {
         })) {
             return;
         }
-        // 二进制文件警告
-        if (HasFile && CommonUtils.IsLikelyBinaryFile(FileName)) {
-            WarningDialog dialog = WarningDialog.Shared;
-            dialog.DetailText = "文件可能是二进制文件，是否继续？";
-            if (await dialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
-                return;
-            }
+        // 输入检查
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
+            return;
         }
+
         ResultDetailTextBlock.Visibility = Visibility.Visible;
 
         // 文本处理
