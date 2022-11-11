@@ -47,11 +47,8 @@ public partial class MainWindow : Window {
         TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
         #endregion
-
+        CommonUITools.App.RegisterWidgetPage(this);
         _ = new MainWindowRouter(ContentFrame);
-        ContentFrame.Navigated += ContentFrameNavigatedHandler; // navigation 改变事件
-        CommonUITools.Widget.MessageBox.PanelChildren = MessageBoxPanel.Children;  // 初始化
-        CommonUITools.Widget.NotificationBox.PanelChildren = NotificationPanel.Children;  // 初始化
         MainWindowRouter.Navigate(typeof(MainContentView));
         // 设置 AppTheme
         //ThemeManager.Current.AccentColor = ((SolidColorBrush)Global.ThemeResource["ApplicationAccentColor"]).Color;

@@ -18,7 +18,6 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   WindowStartupLocation="CenterScreen"
   mc:Ignorable="d">
-
   <Window.Resources>
     <Storyboard x:Key="TitleBarStoryboard">
       <DoubleAnimation
@@ -50,7 +49,6 @@
       <RowDefinition Height="35" />
       <RowDefinition />
     </Grid.RowDefinitions>
-
     <!--  标题  -->
     <StackPanel
       x:Name="TitleBar"
@@ -77,33 +75,16 @@
         Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfTrueConverter}}" />
       <TextBlock Text="{Binding RouteViewTitle}" />
     </StackPanel>
-
-    <ui:Frame x:Name="ContentFrame" Grid.Row="1">
+    <!--  Content  -->
+    <ui:Frame
+      x:Name="ContentFrame"
+      Grid.Row="1"
+      Navigated="ContentFrameNavigatedHandler">
       <ui:Frame.ContentTransitions>
         <ui:TransitionCollection>
           <ui:NavigationThemeTransition />
         </ui:TransitionCollection>
       </ui:Frame.ContentTransitions>
     </ui:Frame>
-
-    <!--  MessageBoxPanel  -->
-    <StackPanel
-      x:Name="MessageBoxPanel"
-      Grid.RowSpan="2"
-      Grid.Column="0"
-      Margin="0,10,0,0"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Top"
-      Panel.ZIndex="10000" />
-    <!--  NotificationPanel  -->
-    <StackPanel
-      x:Name="NotificationPanel"
-      Grid.RowSpan="2"
-      MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource DivideTwoConverter}}"
-      Margin="0,30,10,0"
-      HorizontalAlignment="Right"
-      VerticalAlignment="Bottom"
-      Panel.ZIndex="100000" />
-
   </Grid>
 </Window>
