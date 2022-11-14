@@ -1,8 +1,11 @@
 ﻿using CommonUITools.Route;
+using CommonUITools.Utils;
 using CommonUtil.Store;
 using CommonUtil.View;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -13,6 +16,7 @@ namespace CommonUtil;
 public partial class MainWindow : Window {
     public static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
+    public static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
 
     /// <summary>
     /// 返回Icon是否可见
@@ -27,6 +31,13 @@ public partial class MainWindow : Window {
     public string RouteViewTitle {
         get { return (string)GetValue(RouteViewTitleProperty); }
         set { SetValue(RouteViewTitleProperty, value); }
+    }
+    /// <summary>
+    /// 显示加载框
+    /// </summary>
+    public bool ShowLoadingBox {
+        get { return (bool)GetValue(ShowLoadingBoxProperty); }
+        set { SetValue(ShowLoadingBoxProperty, value); }
     }
     /// <summary>
     /// 标题动画
@@ -49,7 +60,11 @@ public partial class MainWindow : Window {
         #endregion
         CommonUITools.App.RegisterWidgetPage(this);
         _ = new MainWindowRouter(ContentFrame);
-        MainWindowRouter.Navigate(typeof(MainContentView));
+        // 延迟加载，减少卡顿
+        Loaded += (_, _) => Task.Run(() => {
+            Thread.Sleep(1000);
+            Dispatcher.BeginInvoke(() => MainWindowRouter.Navigate(typeof(MainContentView)));
+        });
         // 设置 AppTheme
         //ThemeManager.Current.AccentColor = ((SolidColorBrush)Global.ThemeResource["ApplicationAccentColor"]).Color;
     }
@@ -79,6 +94,7 @@ public partial class MainWindow : Window {
         }
         TitleBarStoryboard.Begin();
         MainContentViewLoadStoryboard.Begin();
+        ShowLoadingBox = false;
     }
 
     private void ToBackClick(object sender, RoutedEventArgs e) {

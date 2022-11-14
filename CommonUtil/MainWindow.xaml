@@ -6,6 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
+  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Name="Root"
   Title="MainWindow"
   Width="1000"
@@ -44,7 +46,7 @@
 
   </Window.Resources>
 
-  <Grid>
+  <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
     <Grid.RowDefinitions>
       <RowDefinition Height="35" />
       <RowDefinition />
