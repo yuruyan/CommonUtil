@@ -224,7 +224,7 @@ public partial class KeywordFinderView : Page {
     private void OpenSearchDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (sender is TextBlock element) {
-            UIUtils.OpenFileInDirectoryAsync(element.Text);
+            UIUtils.OpenFileInExplorerAsync(element.Text);
         }
     }
 
@@ -248,7 +248,7 @@ public partial class KeywordFinderView : Page {
     private void OpenDirectoryClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
-            UIUtils.OpenFileInDirectoryAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
+            UIUtils.OpenFileInExplorerAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
         }
     }
 

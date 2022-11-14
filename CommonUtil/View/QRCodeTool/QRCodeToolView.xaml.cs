@@ -192,7 +192,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         try {
             await File.WriteAllBytesAsync(path, data);
             NotificationBox.Success("保存成功", "点击打开", () => {
-                UIUtils.OpenFileInDirectoryAsync(path);
+                UIUtils.OpenFileInExplorerAsync(path);
             });
         } catch (Exception e) {
             MessageBox.Error("保存失败！");

@@ -72,7 +72,7 @@ public partial class FtpServerView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void OpenRootDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        UIUtils.OpenFileInDirectoryAsync(RootDirectory);
+        UIUtils.OpenFileInExplorerAsync(RootDirectory);
     }
 
     /// <summary>

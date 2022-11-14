@@ -104,7 +104,7 @@ public partial class SimpleFileSystemServerView : Page {
     private void OpenSharingDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (sender is TextBlock element) {
-            UIUtils.OpenFileInDirectoryAsync(element.Text);
+            UIUtils.OpenFileInExplorerAsync(element.Text);
         }
     }
 

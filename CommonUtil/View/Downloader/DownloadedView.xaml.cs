@@ -36,10 +36,10 @@ public partial class DownloadedView : Page {
             string filepath = Path.Combine(task.SaveDirectory.FullName, task.Name);
             // 文件存在
             if (File.Exists(filepath)) {
-                UIUtils.OpenFileInDirectoryAsync(filepath);
+                UIUtils.OpenFileInExplorerAsync(filepath);
             } else {
                 // 不存在则打开所在文件夹
-                UIUtils.OpenFileInDirectoryAsync(task.SaveDirectory.FullName);
+                UIUtils.OpenFileInExplorerAsync(task.SaveDirectory.FullName);
             }
         }
     }

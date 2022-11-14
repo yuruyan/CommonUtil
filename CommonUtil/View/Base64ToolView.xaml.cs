@@ -74,7 +74,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 try {
                     await File.WriteAllBytesAsync(savePath, result);
                     // 通知
-                    UIUtils.NotificationOpenFileInDirectoryAsync(savePath, title: "解码文件成功");
+                    UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
                 } catch {
                     MessageBox.Error("文件保存失败");
                 }
@@ -103,7 +103,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 try {
                     await File.WriteAllTextAsync(savePath, result);
                     // 通知
-                    UIUtils.NotificationOpenFileInDirectoryAsync(savePath, title: "编码文件成功");
+                    UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "编码文件成功");
                 } catch {
                     MessageBox.Error("文件保存失败");
                 }

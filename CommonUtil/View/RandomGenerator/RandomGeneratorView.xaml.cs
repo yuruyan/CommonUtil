@@ -55,6 +55,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
 
     public RandomGeneratorView() {
         InitializeComponent();
+        MainWindow.router.Navigate("/Root/RandomGeneratorView/RandomNumberGeneratorView");
         RouterService = new(ContentFrame, Routers);
     }
 
@@ -88,7 +89,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     /// <param name="args"></param>
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
-            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
+            //RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 }
