@@ -6,3 +6,4 @@ node_modules
 NodejsService/dist
 *.log
 TestConsoleApp
+TestWpfApp
