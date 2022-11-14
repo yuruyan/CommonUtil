@@ -27,13 +27,13 @@
         EasingFunction="{StaticResource AnimationEaseFunction}"
         Storyboard.TargetName="TitleBarTranslateTransform"
         Storyboard.TargetProperty="(TranslateTransform.X)"
-        Duration="0:0:0.3" />
+        Duration="0:0:0.4" />
       <DoubleAnimation
         Storyboard.TargetName="TitleBar"
         Storyboard.TargetProperty="Opacity"
         From="0"
         To="1"
-        Duration="0:0:0.3" />
+        Duration="0:0:0.4" />
     </Storyboard>
 
     <Storyboard x:Key="MainContentViewLoadStoryboard">
