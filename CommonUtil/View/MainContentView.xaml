@@ -16,7 +16,10 @@
   mc:Ignorable="d">
   <Page.Resources>
     <Duration x:Key="AnimationDuration">0:0:0.2</Duration>
+    <Duration x:Key="MenuItemLoadAnimationDuration">0:0:0.4</Duration>
+    <CircleEase x:Key="MenuItemLoadEasingFunction" EasingMode="EaseOut" />
   </Page.Resources>
+
   <ScrollViewer>
     <ItemsControl ItemsSource="{Binding ToolMenuItems}">
       <ItemsControl.ItemsPanel>
@@ -33,9 +36,11 @@
             Margin="8,6"
             Background="White"
             CornerRadius="4"
-            MouseLeftButtonUp="MenuMouseLeftButtonUp">
+            Loaded="MenuItemLoadedHandler"
+            MouseLeftButtonUp="MenuMouseLeftButtonUp"
+            Opacity="0">
             <Border.RenderTransform>
-              <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" />
+              <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" Y="25" />
             </Border.RenderTransform>
             <Border.Effect>
               <DropShadowEffect
@@ -47,7 +52,7 @@
                 Color="Gray" />
             </Border.Effect>
             <Border.Triggers>
-              <!--  BlurRadius、Translate Animation  -->
+              <!--  ShadowRadius、Translate Animation  -->
               <EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
                   <Storyboard>
@@ -103,7 +108,6 @@
                 Text="{Binding Name}" />
             </Grid>
           </Border>
-
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>

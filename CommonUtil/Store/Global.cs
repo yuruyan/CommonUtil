@@ -60,10 +60,12 @@ public class Global {
 
 }
 
-public class ToolMenuItem {
+public struct ToolMenuItem {
     public string Name { get; set; } = string.Empty;
     public string ImagePath { get; set; } = string.Empty;
-    public Type ClassType { get; set; } = typeof(MainContentView);
+    public Type ClassType { get; set; } = default!;
+
+    public ToolMenuItem() { }
 
     public override string ToString() {
         return $"{{{nameof(Name)}={Name}, {nameof(ImagePath)}={ImagePath}, {nameof(ClassType)}={ClassType}}}";
