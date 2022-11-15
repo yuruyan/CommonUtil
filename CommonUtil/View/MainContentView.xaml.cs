@@ -1,15 +1,12 @@
-﻿using CommonUtil.Store;
-using System;
-using System.Collections.Generic;
+﻿using CommonUITools.Route;
+using CommonUtil.Store;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;
 
@@ -68,7 +65,7 @@ public partial class MainContentView : Page {
         if (sender is FrameworkElement element && element.DataContext is ToolMenuItem menuItem) {
             var routerService = MainWindow.GetCurrentRouteService(this.GetType());
             if (routerService != null) {
-                routerService.Navigate(menuItem.ClassType);
+                routerService.Navigate(menuItem.ClassType, NavigationTransitionEffect.DrillIn);
                 MainWindow.PushRouteStack(routerService);
             }
         }
