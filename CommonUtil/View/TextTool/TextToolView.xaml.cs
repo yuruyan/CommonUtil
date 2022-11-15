@@ -12,6 +12,7 @@ public partial class TextToolView : System.Windows.Controls.Page {
         typeof(EnglishTextProcessView),
         typeof(PrependLineNumberView),
         typeof(AddEnglishWordBraces),
+        typeof(InvertTextView),
     };
 
     public TextToolView() {

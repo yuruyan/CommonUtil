@@ -342,6 +342,9 @@
     <Page Update="View\TempFileVersionControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\TextTool\InvertTextView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\TextTool\EnglishTextProcessView.xaml">
       <SubType>Designer</SubType>
     </Page>

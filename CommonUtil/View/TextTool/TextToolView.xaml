@@ -27,6 +27,7 @@
         <ui:NavigationViewItem x:Name="EnglishTextProcessView" Content="英文文本处理" />
         <ui:NavigationViewItem x:Name="PrependLineNumberView" Content="增加行号" />
         <ui:NavigationViewItem x:Name="AddEnglishWordBraces" Content="中英文之间加空格" />
+        <ui:NavigationViewItem x:Name="InvertTextView" Content="文本翻转" />
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>
