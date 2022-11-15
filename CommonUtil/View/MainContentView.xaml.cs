@@ -40,7 +40,7 @@ public partial class MainContentView : Page {
         Window = Window.GetWindow(this);
         // 延迟加载
         Task.Run(() => {
-            Thread.Sleep(500);
+            Thread.Sleep(300);
             Dispatcher.Invoke(() => Global.MenuItems.ForEach(ToolMenuItems.Add));
         });
     }
