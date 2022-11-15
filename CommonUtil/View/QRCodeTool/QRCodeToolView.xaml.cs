@@ -3,6 +3,7 @@ using CommonUITools.Utils;
 using CommonUITools.Widget;
 using CommonUtil.Core;
 using CommonUtil.Model;
+using CommonUtil.Route;
 using Microsoft.Win32;
 using ModernWpf.Controls;
 using NLog;
@@ -149,6 +150,11 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             .FromProperty(QRCodeForegroundProperty, typeof(QRCodeToolView))
             .AddValueChanged(this, (o, e) => QRCodeForegroundText = QRCodeForeground.ToString());
         RouterService = new(ContentFrame, Routers);
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            RouterService,
+            ContentFrame
+        );
     }
 
     /// <summary>
@@ -284,7 +290,6 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is FrameworkElement element) {
             IsQRCodeDecodeViewSelected = element.Name == typeof(QRCodeDecodeView).Name;
-            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 
