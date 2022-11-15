@@ -13,11 +13,11 @@
   mc:Ignorable="d">
 
   <ui:NavigationView
+    Name="NavigationView"
     IsBackButtonVisible="Collapsed"
     IsSettingsVisible="False"
     IsTabStop="False"
-    PaneDisplayMode="Top"
-    SelectionChanged="NavigationSelectionChanged">
+    PaneDisplayMode="Top">
     <ui:NavigationView.MenuItems>
       <ui:NavigationViewItem
         x:Name="CSharpDependencyView"
