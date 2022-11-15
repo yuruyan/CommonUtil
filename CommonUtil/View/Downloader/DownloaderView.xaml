@@ -15,11 +15,10 @@
   mc:Ignorable="d">
   <Grid>
     <ui:NavigationView
-      Name="DownloaderViewNavigationView"
+      Name="NavigationView"
       IsBackButtonVisible="Collapsed"
       IsSettingsVisible="False"
-      PaneDisplayMode="Top"
-      SelectionChanged="NavigationSelectionChanged">
+      PaneDisplayMode="Top">
       <ui:NavigationView.Resources>
         <Style TargetType="ui:FontIcon">
           <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
@@ -30,7 +29,10 @@
         <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="White" />
       </ui:NavigationView.Resources>
       <ui:NavigationView.MenuItems>
-        <ui:NavigationViewItem IsSelected="True" Tag="1">
+        <ui:NavigationViewItem
+          Name="DownloadingView"
+          IsSelected="True"
+          Tag="1">
           <ui:NavigationViewItem.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="正在下载" />
@@ -41,7 +43,7 @@
             <ui:FontIcon Glyph="&#xe703;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
-        <ui:NavigationViewItem Tag="2">
+        <ui:NavigationViewItem Name="DownloadedView" Tag="2">
           <ui:NavigationViewItem.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="下载记录" />

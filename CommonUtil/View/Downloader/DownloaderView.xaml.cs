@@ -1,6 +1,7 @@
 ﻿using CommonUITools.Route;
 using CommonUITools.Utils;
 using CommonUtil.Model;
+using CommonUtil.Route;
 using ModernWpf.Controls;
 using NLog;
 using System;
@@ -27,8 +28,8 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// 下载选择框
     /// </summary>
     private readonly DownloadInfoDialog DownloadInfoDialog = new();
-    private readonly DownloadingView DownloadingView;
-    private readonly DownloadedView DownloadedView;
+    private readonly DownloadingView DownloadingViewInstance;
+    private readonly DownloadedView DownloadedViewInstance;
     private readonly Core.Downloader Downloader = new();
     /// <summary>
     /// 下载任务列表，引用 DownloadingView
@@ -48,11 +49,16 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     public DownloaderView() {
         InitializeComponent();
         RouterService = new RouterService(ContentFrame, NavigationDict.Values);
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            RouterService,
+            ContentFrame
+        );
         // 显式初始化
-        DownloadingView = (DownloadingView)RouterService.GetInstance(typeof(DownloadingView));
-        DownloadedView = (DownloadedView)RouterService.GetInstance(typeof(DownloadedView));
-        DownloadingTaskList = DownloadingView.DownloadTaskList;
-        DownloadedTaskList = DownloadedView.DownloadTaskList;
+        DownloadingViewInstance = (DownloadingView)RouterService.GetInstance(typeof(DownloadingView));
+        DownloadedViewInstance = (DownloadedView)RouterService.GetInstance(typeof(DownloadedView));
+        DownloadingTaskList = DownloadingViewInstance.DownloadTaskList;
+        DownloadedTaskList = DownloadedViewInstance.DownloadTaskList;
         Downloader.DownloadCompleted += DownloadCompletedHandler;
         Downloader.DownloadFailed += DownloadFailedHandler;
     }
@@ -64,7 +70,7 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void DownloadFailedHandler(object? sender, DownloadTask e) {
         Dispatcher.Invoke(() => {
-            DownloadingView.DownloadTaskList.Remove(e);
+            DownloadingViewInstance.DownloadTaskList.Remove(e);
             MessageBox.Error($"下载 {e.Name} 失败");
         });
     }
@@ -76,23 +82,10 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void DownloadCompletedHandler(object? sender, DownloadTask e) {
         Dispatcher.Invoke(() => {
-            DownloadingView.DownloadTaskList.Remove(e);
+            DownloadingViewInstance.DownloadTaskList.Remove(e);
             MessageBox.Success($"下载 {e.Name} 成功");
-            DownloadedView.DownloadTaskList.Add(e);
+            DownloadedViewInstance.DownloadTaskList.Add(e);
         });
-    }
-
-    /// <summary>
-    /// 导航改变
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-        if (args.SelectedItem is NavigationViewItem viewItem) {
-            RouterService.Navigate(
-                NavigationDict[CommonUtils.NullCheck(viewItem.Tag.ToString())]
-            );
-        }
     }
 
     /// <summary>
@@ -116,7 +109,7 @@ public partial class DownloaderView : System.Windows.Controls.Page {
                 continue;
             }
             anySuccess = true;
-            DownloadingView.DownloadTaskList.Add(task);
+            DownloadingViewInstance.DownloadTaskList.Add(task);
         }
         // 如果任意一个任务开始
         if (anySuccess) {
