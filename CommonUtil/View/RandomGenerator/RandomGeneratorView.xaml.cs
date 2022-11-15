@@ -4,9 +4,7 @@ using CommonUtil.Route;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
-using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;
 
@@ -53,8 +51,6 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
         typeof(RandomDateTimeGeneratorView),
     };
     private readonly RouterService RouterService;
-    private Storyboard NavigationViewExpandStoryboard;
-    private Storyboard NavigationViewShrinkStoryboard;
 
     public RandomGeneratorView() {
         InitializeComponent();
@@ -64,27 +60,7 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
             RouterService,
             ContentFrame
         );
-        NavigationViewExpandStoryboard = (Storyboard)Resources["NavigationViewExpandStoryboard"];
-        NavigationViewShrinkStoryboard = (Storyboard)Resources["NavigationViewShrinkStoryboard"];
-    }
-
-    /// <summary>
-    /// Window 最大化时展开 NavigationPanel
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
-        Loaded -= ViewLoadedHandler;
-        var window = Window.GetWindow(this);
-        DependencyPropertyDescriptor
-            .FromProperty(Window.WindowStateProperty, typeof(Window))
-            .AddValueChanged(window, (_, _) => {
-                if (window.WindowState == WindowState.Maximized) {
-                    NavigationViewExpandStoryboard.Begin();
-                } else if (window.WindowState == WindowState.Normal) {
-                    NavigationViewShrinkStoryboard.Begin();
-                }
-            });
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     /// <summary>
