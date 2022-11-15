@@ -14,11 +14,13 @@ public partial class TextToolView : System.Windows.Controls.Page {
         typeof(PrependLineNumberView),
         typeof(AddEnglishWordBraces),
     };
-    private readonly RouterService RouterService;
 
     public TextToolView() {
         InitializeComponent();
-        RouterService = new(ContentFrame, Routers);
-        NavigationUtils.EnableNavigation(NavigationView, RouterService, ContentFrame);
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            new(ContentFrame, Routers),
+            ContentFrame
+        );
     }
 }
