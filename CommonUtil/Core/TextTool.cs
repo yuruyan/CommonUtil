@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace CommonUtil.Core;
 
-public class TextTool {
+public partial class TextTool {
     /// <summary>
     /// 英文句子分隔符
     /// </summary>
@@ -15,15 +15,15 @@ public class TextTool {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    public static readonly Regex EnglishWordRegex = new(@"[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase);
+    public static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
-    public static readonly Regex EnglishWordNumberRegex = new(@"[a-z0-9]+", RegexOptions.IgnoreCase);
+    public static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
-    private static readonly Regex MultipleWhiteSpace = new(@"[\t\r\f ]{2,}");
+    private static readonly Regex MultipleWhiteSpaceRegex = GetMultipleWhiteSpaceRegex();
     /// <summary>
     /// 半角全角 Dict
     /// </summary>
@@ -32,6 +32,13 @@ public class TextTool {
     /// 全角半角 Dict
     /// </summary>
     private static readonly Dictionary<char, char> FullHalfCharDict = new();
+
+    [GeneratedRegex("[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase)]
+    private static partial Regex GetEnglishWordRegex();
+    [GeneratedRegex("[a-z0-9]+", RegexOptions.IgnoreCase)]
+    private static partial Regex GetEnglishWordNumberRegex();
+    [GeneratedRegex("[\\t\\r\\f ]{2,}")]
+    private static partial Regex GetMultipleWhiteSpaceRegex();
 
     static TextTool() {
         // 空格
@@ -169,7 +176,7 @@ public class TextTool {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string ReplaceMultipleWhiteSpaceWithOne(string text) {
-        return MultipleWhiteSpace.Replace(text, " ");
+        return MultipleWhiteSpaceRegex.Replace(text, " ");
     }
 
     /// <summary>
