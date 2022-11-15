@@ -1,5 +1,6 @@
 ﻿using CommonUITools.Route;
 using CommonUtil.Model;
+using CommonUtil.Route;
 using ModernWpf.Controls;
 using NLog;
 using System;
@@ -56,6 +57,11 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
     public RandomGeneratorView() {
         InitializeComponent();
         RouterService = new(ContentFrame, Routers);
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            RouterService,
+            ContentFrame
+        );
     }
 
     /// <summary>
@@ -78,17 +84,6 @@ public partial class RandomGeneratorView : System.Windows.Controls.Page {
         e.Handled = true;
         if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<uint, IEnumerable<string>> generator) {
             OutputText = string.Join('\n', generator.Generate((uint)GenerateCount));
-        }
-    }
-
-    /// <summary>
-    /// 导航变化
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void NavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-        if (args.SelectedItem is FrameworkElement element) {
-            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
         }
     }
 }
