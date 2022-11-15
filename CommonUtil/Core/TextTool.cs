@@ -421,13 +421,15 @@ public partial class TextTool {
     /// <param name="text"></param>
     /// <param name="mode"></param>
     /// <returns></returns>
-    public static string InvertText(string text, InversionMode mode)
-        => mode switch {
+    public static string InvertText(string text, InversionMode mode) {
+        text = CommonUtils.NormalizeMultipleLineText(text);
+        return mode switch {
             InversionMode.Horizontal => string.Join('\n', text.Split('\n').Select(s => string.Join("", s.Reverse()))),
             InversionMode.Vertical => string.Join('\n', text.Split('\n').Reverse()),
             InversionMode.Both => string.Join("", text.Reverse()),
             _ => InvertText(text, InversionMode.Both),
         };
+    }
 
     /// <summary>
     /// 文件文本翻转
