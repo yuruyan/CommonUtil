@@ -1,9 +1,6 @@
-﻿using CommonUITools.Route;
-using ModernWpf.Controls;
+﻿using CommonUtil.Route;
 using NLog;
 using System;
-using System.Linq;
-using System.Windows;
 
 namespace CommonUtil.View;
 
@@ -15,21 +12,13 @@ public partial class CommonEncodingView : System.Windows.Controls.Page {
         typeof(URLEncodingView),
         typeof(HexEncodingView),
     };
-    private readonly RouterService RouterService;
 
     public CommonEncodingView() {
         InitializeComponent();
-        RouterService = new(ContentFrame, Routers);
-    }
-
-    /// <summary>
-    /// 路由跳转
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-        if (args.SelectedItem is FrameworkElement element) {
-            RouterService.Navigate(Routers.First(r => r.Name == element.Name));
-        }
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            new(ContentFrame, Routers),
+            ContentFrame
+        );
     }
 }
