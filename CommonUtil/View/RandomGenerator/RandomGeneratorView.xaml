@@ -13,11 +13,33 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
   mc:Ignorable="d">
   <Page.Resources>
     <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
+
+    <system:Double x:Key="NavigationViewMinWidth">45</system:Double>
+    <system:Double x:Key="NavigationViewMaxWidth">250</system:Double>
+    <Storyboard x:Key="NavigationViewExpandStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationView"
+        Storyboard.TargetProperty="OpenPaneLength"
+        From="{StaticResource NavigationViewMinWidth}"
+        To="{StaticResource NavigationViewMaxWidth}"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
+    <Storyboard x:Key="NavigationViewShrinkStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationView"
+        Storyboard.TargetProperty="OpenPaneLength"
+        From="{StaticResource NavigationViewMaxWidth}"
+        To="{StaticResource NavigationViewMinWidth}"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
   </Page.Resources>
 
   <UniformGrid Columns="2">
@@ -27,8 +49,9 @@
       IsPaneToggleButtonVisible="False"
       IsSettingsVisible="False"
       IsTabStop="False"
-      OpenPaneLength="45"
+      OpenPaneLength="{StaticResource NavigationViewMinWidth}"
       PaneDisplayMode="Left">
+
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
           Name="RandomStringGeneratorView"
