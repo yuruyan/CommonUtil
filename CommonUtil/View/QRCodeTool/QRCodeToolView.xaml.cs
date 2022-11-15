@@ -155,6 +155,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             RouterService,
             ContentFrame
         );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     /// <summary>
