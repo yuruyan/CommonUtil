@@ -63,6 +63,11 @@
         Margin="0,0,0,0"
         Click="ToBackClick"
         Visibility="{Binding IsBackIconVisible, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}">
+        <ui:TitleBarButton.ContextMenu>
+          <ContextMenu>
+            <MenuItem Click="ToMainPageClickHandler" Header="回到主页" />
+          </ContextMenu>
+        </ui:TitleBarButton.ContextMenu>
         <TextBlock
           FontSize="20"
           Style="{StaticResource IconFontStyle}"

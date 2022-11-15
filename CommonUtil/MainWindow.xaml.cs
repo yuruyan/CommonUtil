@@ -154,5 +154,14 @@ public partial class MainWindow : Window {
         GoBack();
     }
 
+    /// <summary>
+    /// 回到主页
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ToMainPageClickHandler(object sender, RoutedEventArgs e) {
+        RouterService.Navigate(typeof(MainContentView));
+        PushRouteStack(ContentFrame);
+    }
 }
 
