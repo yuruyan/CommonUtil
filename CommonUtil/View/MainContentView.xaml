@@ -36,11 +36,9 @@
             Margin="8,6"
             Background="White"
             CornerRadius="4"
-            Loaded="MenuItemLoadedHandler"
-            MouseLeftButtonUp="MenuMouseLeftButtonUp"
-            Opacity="0">
+            MouseLeftButtonUp="MenuMouseLeftButtonUp">
             <Border.RenderTransform>
-              <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" Y="25" />
+              <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" />
             </Border.RenderTransform>
             <Border.Effect>
               <DropShadowEffect

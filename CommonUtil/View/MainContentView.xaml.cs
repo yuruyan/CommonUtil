@@ -41,15 +41,10 @@ public partial class MainContentView : Page {
         Loaded -= InitializeLoadedHandler;
         MainContentViewBackground = (SolidColorBrush)FindResource("MainContentViewBackground");
         Window = Window.GetWindow(this);
-        //Global.MenuItems.ForEach(item => {
-        //    ToolMenuItems.Add(item);
-        //});
+        // 延迟加载
         Task.Run(() => {
             Thread.Sleep(500);
-            Global.MenuItems.ForEach(item => {
-                Thread.Sleep(1);
-                Dispatcher.Invoke(() => ToolMenuItems.Add(item));
-            });
+            Dispatcher.Invoke(() => Global.MenuItems.ForEach(ToolMenuItems.Add));
         });
     }
 
@@ -77,38 +72,5 @@ public partial class MainContentView : Page {
                 MainWindow.PushRouteStack(routerService);
             }
         }
-    }
-
-    private double BeginTime = 0;
-    private double Interval = 40;
-    private TimeSpan CurrentTimeSpan => TimeSpan.FromMilliseconds(BeginTime += (Interval--));
-    private readonly IEasingFunction EasingFunction = new CircleEase() { EasingMode = EasingMode.EaseOut };
-    private readonly Duration Duration = new(TimeSpan.FromMilliseconds(500));
-
-    /// <summary>
-    /// 加载动画，只在初始化时执行
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void MenuItemLoadedHandler(object sender, RoutedEventArgs e) {
-        if (sender is not FrameworkElement element) {
-            return;
-        }
-        element.Loaded -= MenuItemLoadedHandler;
-        var translateYAnimation = new DoubleAnimation(25, 0, Duration) {
-            BeginTime = CurrentTimeSpan,
-            EasingFunction = EasingFunction
-        };
-        var opacityAnimation = new DoubleAnimation(0.5, 1, Duration) {
-            BeginTime = CurrentTimeSpan,
-            EasingFunction = EasingFunction
-        };
-        Storyboard.SetTarget(translateYAnimation, element);
-        Storyboard.SetTarget(opacityAnimation, element);
-        Storyboard.SetTargetProperty(translateYAnimation, new("RenderTransform.(TranslateTransform.Y)"));
-        Storyboard.SetTargetProperty(opacityAnimation, new("Opacity"));
-        new Storyboard() {
-            Children = { translateYAnimation, opacityAnimation }
-        }.Begin();
     }
 }
