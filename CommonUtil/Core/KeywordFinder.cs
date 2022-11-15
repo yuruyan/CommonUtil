@@ -89,7 +89,7 @@ public class KeywordFinder {
     private Dictionary<string, string> GetFileData(IEnumerable<string> filenames) {
         var fileDataDict = new Dictionary<string, string>();
         int perThreadFilesCount = (int)Math.Ceiling(filenames.Count() / (double)ThreadCount);
-        var taskFilenameList = filenames.Split(ThreadCount);
+        var taskFilenameList = filenames.Chunk(ThreadCount);
         // 加载文件
         foreach (var filenameList in taskFilenameList) {
             var cancellationTokenSource = new CancellationTokenSource();
@@ -177,7 +177,7 @@ public class KeywordFinder {
         var fileDataDict = GetFileData(FilterFiles(SearchDirectory, excludeDirRegexes, excludeFileRegexes));
         var keywordCompiledRegex = CompileRegex(new string[] { keywordRegex }).First();
         // 文件名列表
-        var filenameList = fileDataDict.Keys.Split(ThreadCount);
+        var filenameList = fileDataDict.Keys.Chunk(ThreadCount);
         // 查找
         foreach (var list in filenameList) {
             var cancellationTokenSource = new CancellationTokenSource();
