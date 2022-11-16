@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="ChineseTransformView"
@@ -13,6 +14,9 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
+  </Page.Resources>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -33,22 +37,43 @@
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
     <!--  Control  -->
-    <ui:SimpleStackPanel
-      Grid.Row="1"
-      Margin="0,8"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-      <Button Click="ToTraditionalClick" Content="简体转繁体" />
-      <Button Click="ToSimplifiedClick" Content="繁体转简体" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe946;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
+    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8">
+      <ui:SimpleStackPanel.Style>
+        <!--  响应式布局  -->
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ui:SimpleStackPanel.Style>
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <Button Click="ToTraditionalClick" Content="简体转繁体" />
+        <Button Click="ToSimplifiedClick" Content="繁体转简体" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe946;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
     <!--  Output  -->
     <TextBox
