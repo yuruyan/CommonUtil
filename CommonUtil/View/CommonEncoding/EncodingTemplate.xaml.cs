@@ -77,6 +77,10 @@ public partial class EncodingTemplate : UserControl {
     /// <param name="e"></param>
     private void EncodingTextClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (string.IsNullOrEmpty(InputText)) {
+            CommonUITools.Widget.MessageBox.Info("请输入文本");
+            return;
+        }
         EncodingClick?.Invoke();
     }
 
@@ -87,6 +91,10 @@ public partial class EncodingTemplate : UserControl {
     /// <param name="e"></param>
     private void DecodingTextClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (string.IsNullOrEmpty(InputText)) {
+            CommonUITools.Widget.MessageBox.Info("请输入文本");
+            return;
+        }
         DecodingClick?.Invoke();
     }
 
