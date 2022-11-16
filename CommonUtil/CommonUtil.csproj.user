@@ -70,7 +70,7 @@
     <Compile Update="View\Dialog\CommonRegexListDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\DataDigest\DataDigestView.xaml.cs">
+    <Compile Update="View\DataDigestView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\FileMergeSplit\FileMergeSplitView.xaml.cs">
@@ -231,7 +231,7 @@
     <Page Update="View\Dialog\CommonRegexListDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\DataDigest\DataDigestView.xaml">
+    <Page Update="View\DataDigestView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\FileMergeSplit\FileMergeSplitView.xaml">
