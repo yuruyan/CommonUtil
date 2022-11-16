@@ -77,4 +77,21 @@
     <Setter Property="Width" Value="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}" />
   </Style>
   <!--#endregion-->
+
+  <!--  响应式布局，需要有 IsExpanded 属性  -->
+  <Style
+    x:Key="ResponsiveSimpleStackPanelStyle"
+    BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
+    TargetType="ui:SimpleStackPanel">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+        <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
 </ResourceDictionary>

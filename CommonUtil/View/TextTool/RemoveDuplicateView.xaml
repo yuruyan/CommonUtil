@@ -43,29 +43,13 @@
       Margin="0,8,0,8"
       HorizontalAlignment="Center"
       Orientation="Vertical">
-      <ui:SimpleStackPanel>
-        <ui:SimpleStackPanel.Style>
-          <!--  响应式布局  -->
-          <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                <Setter Property="Orientation" Value="Horizontal" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-                <Setter Property="Orientation" Value="Vertical" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </ui:SimpleStackPanel.Style>
+      <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
         <ui:SimpleStackPanel.Resources>
           <Style TargetType="StackPanel">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Orientation" Value="Horizontal" />
           </Style>
         </ui:SimpleStackPanel.Resources>
-
         <StackPanel>
           <TextBlock Text="去重前分隔符：" />
           <ComboBox

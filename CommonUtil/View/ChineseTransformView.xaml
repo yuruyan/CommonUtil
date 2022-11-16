@@ -37,22 +37,10 @@
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
     <!--  Control  -->
-    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8">
-      <ui:SimpleStackPanel.Style>
-        <!--  响应式布局  -->
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-              <Setter Property="Orientation" Value="Horizontal" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-              <Setter Property="Orientation" Value="Vertical" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </ui:SimpleStackPanel.Style>
+    <ui:SimpleStackPanel
+      Grid.Row="1"
+      Margin="0,8"
+      Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <ui:SimpleStackPanel.Resources>
         <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
           <Setter Property="HorizontalAlignment" Value="Center" />

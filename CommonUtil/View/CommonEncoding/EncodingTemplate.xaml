@@ -25,22 +25,11 @@
     </Grid.RowDefinitions>
     <!--  Input  -->
     <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText, ElementName=EncodingTemplateRoot}" />
-    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8">
-      <ui:SimpleStackPanel.Style>
-        <!--  响应式布局  -->
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpanded, ElementName=EncodingTemplateRoot}" Value="True">
-              <Setter Property="Orientation" Value="Horizontal" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpanded, ElementName=EncodingTemplateRoot}" Value="False">
-              <Setter Property="Orientation" Value="Vertical" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </ui:SimpleStackPanel.Style>
+    <ui:SimpleStackPanel
+      Grid.Row="1"
+      Margin="0,8"
+      DataContext="{Binding ElementName=EncodingTemplateRoot}"
+      Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <ui:SimpleStackPanel.Resources>
         <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
           <Setter Property="HorizontalAlignment" Value="Center" />

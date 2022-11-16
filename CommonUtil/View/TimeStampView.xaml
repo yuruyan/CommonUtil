@@ -20,22 +20,7 @@
     <system:Double x:Key="OutputWidth">220</system:Double>
     <system:Double x:Key="ComboBoxWidth">120</system:Double>
     <system:Double x:Key="IconButtonWidth">120</system:Double>
-    <!--  响应式布局  -->
-    <Style
-      x:Key="ResponsiveSimpleStackPanelStyle"
-      BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
-      TargetType="ui:SimpleStackPanel">
-      <Style.Triggers>
-        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-          <Setter Property="Orientation" Value="Horizontal" />
-          <Setter Property="HorizontalAlignment" Value="Center" />
-        </DataTrigger>
-        <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-          <Setter Property="Orientation" Value="Vertical" />
-          <Setter Property="HorizontalAlignment" Value="Center" />
-        </DataTrigger>
-      </Style.Triggers>
-    </Style>
+
     <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
       <Setter Property="HorizontalAlignment" Value="Left" />
       <Setter Property="Orientation" Value="Horizontal" />
