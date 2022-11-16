@@ -14,7 +14,6 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
   <Page.Resources>
     <local:ProcessVisibilityConverter x:Key="ProcessVisibilityConverter" />
   </Page.Resources>
@@ -84,7 +83,7 @@
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="auto" />
               </Grid.ColumnDefinitions>
               <TextBlock
                 FontWeight="Bold"
@@ -99,6 +98,7 @@
                 TextWrapping="Wrap" />
               <TextBlock
                 Grid.Column="2"
+                Padding="0,0,8,0"
                 FontFamily="Consolas"
                 FontWeight="Bold"
                 Foreground="#0A789D"
