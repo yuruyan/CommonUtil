@@ -68,6 +68,7 @@ public partial class ChineseTransformView : Page {
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
                 .AddValueChanged(window, (_, _) => {
