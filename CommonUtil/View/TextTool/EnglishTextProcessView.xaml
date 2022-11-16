@@ -53,25 +53,16 @@
           </Style.Triggers>
         </Style>
       </ui:SimpleStackPanel.Style>
-      <ui:SimpleStackPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Setter Property="HorizontalAlignment" Value="Center" />
-          <Setter Property="Orientation" Value="Horizontal" />
-        </Style>
-      </ui:SimpleStackPanel.Resources>
-
-      <ui:SimpleStackPanel>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="模式：" />
-          <ComboBox
-            Name="ProcessPatternComboBox"
-            VerticalAlignment="Center"
-            ItemsSource="{Binding ProcessPatternDict.Keys}"
-            SelectedIndex="0" />
-        </StackPanel>
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Text="模式：" />
+        <ComboBox
+          Name="ProcessPatternComboBox"
+          VerticalAlignment="Center"
+          ItemsSource="{Binding ProcessPatternDict.Keys}"
+          SelectedIndex="0" />
+      </StackPanel>
+      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <Button Click="TextProcessClick" Content="文本处理" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
