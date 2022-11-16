@@ -1,6 +1,7 @@
 ﻿using CommonUITools.Route;
 using CommonUITools.Utils;
 using ModernWpf.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -70,10 +71,21 @@ internal static class NavigationUtils {
                 EnableNavigationPanelResponsiveInternal(navigationView);
             }
             // 等待加载
-            navigationView.Loaded += (_, _) => EnableNavigationPanelResponsiveInternal(navigationView);
+            navigationView.Loaded += NavigationViewLoadedHandler;
         });
     }
 
+    private static void NavigationViewLoadedHandler(object sender, RoutedEventArgs e) {
+        if (sender is NavigationView navigationView) {
+            navigationView.Loaded -= NavigationViewLoadedHandler;
+            EnableNavigationPanelResponsiveInternal(navigationView);
+        }
+    }
+
+    /// <summary>
+    /// IsLoaded 时加载
+    /// </summary>
+    /// <param name="navigationView"></param>
     private static void EnableNavigationPanelResponsiveInternal(NavigationView navigationView) {
         NavigationViewInfoDict[navigationView] = new(
             navigationView.OpenPaneLength,
@@ -81,22 +93,45 @@ internal static class NavigationUtils {
             GetNavigationViewShrinkStoryboard(navigationView)
         );
         var window = Window.GetWindow(navigationView);
-        DependencyPropertyDescriptor
-            .FromProperty(Window.WindowStateProperty, typeof(Window))
-            .AddValueChanged(window, async (_, _) => {
-                // 展开
-                if (window.WindowState == WindowState.Maximized) {
-                    // 为了减少卡顿
-                    await Task.Delay(200);
-                    NavigationViewInfoDict[navigationView].ExpandStoryboard.Begin();
-                }
-                // 收缩
-                else if (window.WindowState == WindowState.Normal) {
-                    // 为了减少卡顿
-                    await Task.Delay(200);
-                    NavigationViewInfoDict[navigationView].ShrinkStoryboard.Begin();
-                }
-            });
+        BeginStoryBoard(window, new NavigationView[] { navigationView });
+        // 同时执行所有动画
+        CommonUtils.EnsureCalledOnce(NavigationViewInfoDict[navigationView], () => {
+            DependencyPropertyDescriptor
+                .FromProperty(Window.WindowStateProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    BeginStoryBoard(window, NavigationViewInfoDict.Keys);
+                });
+        });
+    }
+
+    /// <summary>
+    /// 开始动画
+    /// </summary>
+    /// <param name="window"></param>
+    /// <param name="navigationViews"></param>
+    private static void BeginStoryBoard(Window window, IEnumerable<NavigationView> navigationViews) {
+        // 展开
+        if (window.WindowState == WindowState.Maximized) {
+            // 并行
+            foreach (var item in navigationViews) {
+                // 为了减少卡顿
+                _ = CommonUtils.DelayTaskAsync(
+                    200,
+                    () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ExpandStoryboard.Begin())
+                );
+            }
+        }
+        // 收缩
+        else if (window.WindowState == WindowState.Normal) {
+            // 并行
+            foreach (var item in navigationViews) {
+                // 为了减少卡顿
+                _ = CommonUtils.DelayTaskAsync(
+                    200,
+                    () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ShrinkStoryboard.Begin())
+                );
+            }
+        }
     }
 
     private static Storyboard GetNavigationViewExpandStoryboard(NavigationView navigationView) {
