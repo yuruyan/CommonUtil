@@ -42,11 +42,21 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Orientation="Horizontal">
-        <ComboBox
+        <Button Content="选择算法">
+          <Button.Resources>
+            <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
+              <Setter Property="IsCheckable" Value="True" />
+            </Style>
+          </Button.Resources>
+          <ui:FlyoutService.Flyout>
+            <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" />
+          </ui:FlyoutService.Flyout>
+        </Button>
+        <!--<ComboBox
           Width="120"
           VerticalAlignment="Center"
           ItemsSource="{Binding DigestOptions, Mode=OneWay}"
-          SelectedIndex="{Binding SelectedDigestIndex}" />
+          SelectedIndex="{Binding SelectedDigestIndex}" />-->
         <!--  Start Button  -->
         <widget:WorkingButton
           IsWorking="{Binding IsWorking}"

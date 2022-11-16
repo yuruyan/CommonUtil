@@ -95,7 +95,6 @@ public partial class DataDigestView : Page {
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
-    public static readonly DependencyProperty SelectedDigestIndexProperty = DependencyProperty.Register("SelectedDigestIndex", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
     private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
@@ -115,20 +114,6 @@ public partial class DataDigestView : Page {
     public string InputText {
         get { return (string)GetValue(InputTextProperty); }
         set { SetValue(InputTextProperty, value); }
-    }
-    /// <summary>
-    /// 散列算法选择
-    /// </summary>
-    public List<string> DigestOptions {
-        get { return (List<string>)GetValue(DigestOptionsProperty); }
-        set { SetValue(DigestOptionsProperty, value); }
-    }
-    /// <summary>
-    /// 选中的 Digest 算法
-    /// </summary>
-    public int SelectedDigestIndex {
-        get { return (int)GetValue(SelectedDigestIndexProperty); }
-        set { SetValue(SelectedDigestIndexProperty, value); }
     }
     /// <summary>
     /// 摘要算法 Dict
@@ -162,19 +147,12 @@ public partial class DataDigestView : Page {
     /// 正在工作的 stream
     /// </summary>
     private readonly ICollection<FileStream> WorkingDigestStream = new List<FileStream>();
+    /// <summary>
+    /// 散列算法选择
+    /// </summary>
+    private readonly IList<string> DigestAlgorithms;
+
     public DataDigestView() {
-        DigestOptions = new() {
-            "全部",
-            "MD2",
-            "MD4",
-            "MD5",
-            "SHA1",
-            "SHA3",
-            "SHA224",
-            "SHA256",
-            "SHA384",
-            "SHA512",
-        };
         DigestInfoDict = new() {
             { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
             { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
@@ -186,8 +164,22 @@ public partial class DataDigestView : Page {
             { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
             { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
         };
+        DigestAlgorithms = DigestInfoDict.Keys.ToArray();
         InitializeComponent();
-        DependencyPropertyDescriptor.FromProperty(FileNameProperty, typeof(DataDigestView)).AddValueChanged(this, FileNameChangedHandler);
+        // 初始化 AlgorithmMenuFlyout
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            DigestAlgorithms.ForEach(item => AlgorithmMenuFlyout.Items.Add(
+                new MenuItem() {
+                    Header = item,
+                    Tag = item,
+                    // 默认选项
+                    IsChecked = item == "MD5" || item == "SHA256",
+                }
+            ));
+        });
+        DependencyPropertyDescriptor
+            .FromProperty(FileNameProperty, typeof(DataDigestView))
+            .AddValueChanged(this, FileNameChangedHandler);
     }
 
     private void FileNameChangedHandler(object? sender, EventArgs e) {
@@ -230,19 +222,15 @@ public partial class DataDigestView : Page {
     /// </summary>
     /// <returns></returns>
     private async Task CalculateDigest() {
-        if (SelectedDigestIndex != 0) {
-            var target = DigestInfoDict[DigestOptions[SelectedDigestIndex]];
-            // 隐藏其他
-            foreach (var item in DigestInfoDict.Values) {
-                if (item != target) {
-                    item.IsVivible = false;
-                }
-            }
-            await CalculateDigest(new DigestInfo[] { target });
-            return;
-        }
-        // 全部计算
-        await CalculateDigest(DigestInfoDict.Values);
+        var digestInfoSet = AlgorithmMenuFlyout.Items
+            .Cast<MenuItem>()
+            .Where(item => item.IsChecked)
+            .Select(item => DigestInfoDict[(string)item.Tag])
+            .ToHashSet();
+        // 设置 Visibility
+        DigestInfoDict.ForEach(kv => kv.Value.IsVivible = digestInfoSet.Contains(kv.Value));
+        // 计算
+        await CalculateDigest(digestInfoSet);
     }
 
     /// <summary>
