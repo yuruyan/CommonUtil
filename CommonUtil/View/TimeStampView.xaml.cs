@@ -1,6 +1,8 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using NLog;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -18,6 +20,7 @@ public partial class TimeStampView : Page {
     public static readonly DependencyProperty StringToTimeStampInputProperty = DependencyProperty.Register("StringToTimeStampInput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampOutputProperty = DependencyProperty.Register("StringToTimeStampOutput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampChoiceProperty = DependencyProperty.Register("StringToTimeStampChoice", typeof(string), typeof(TimeStampView), new PropertyMetadata("毫秒(ms)"));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(TimeStampView), new PropertyMetadata(true));
 
     /// <summary>
     /// 当前时间戳
@@ -69,6 +72,13 @@ public partial class TimeStampView : Page {
         set { SetValue(StringToTimeStampChoiceProperty, value); }
     }
     /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
+    /// <summary>
     /// 更新时间 Timer
     /// </summary>
     private readonly System.Timers.Timer Timer;
@@ -85,6 +95,24 @@ public partial class TimeStampView : Page {
         Timer.Elapsed += UpdateTimeStamp;
         Timer.Start();
         #endregion
+        // 响应式布局
+        DependencyPropertyDescriptor
+            .FromProperty(IsExpandedProperty, this.GetType())
+            .AddValueChanged(this, (_, _) => {
+                // 反转顺序
+                UIUtils.ReversePanelChildrenOrder(StringToTimeStampPanel);
+                UIUtils.ReversePanelChildrenOrder(TimeStampToStringPanel);
+            });
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
+        });
     }
 
     /// <summary>

@@ -5,7 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="TimeStampView"
@@ -14,11 +14,28 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <sys:Double x:Key="HeaderWidth">70</sys:Double>
-    <sys:Double x:Key="InputWidth">220</sys:Double>
-    <sys:Double x:Key="OutputWidth">180</sys:Double>
-    <sys:Double x:Key="ComboBoxWidth">120</sys:Double>
-    <sys:Double x:Key="IconButtonWidth">110</sys:Double>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <system:Double x:Key="HeaderWidth">70</system:Double>
+    <system:Double x:Key="InputWidth">220</system:Double>
+    <system:Double x:Key="OutputWidth">220</system:Double>
+    <system:Double x:Key="ComboBoxWidth">120</system:Double>
+    <system:Double x:Key="IconButtonWidth">120</system:Double>
+    <!--  响应式布局  -->
+    <Style
+      x:Key="ResponsiveSimpleStackPanelStyle"
+      BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
+      TargetType="ui:SimpleStackPanel">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+          <Setter Property="Orientation" Value="Horizontal" />
+          <Setter Property="HorizontalAlignment" Value="Center" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+          <Setter Property="Orientation" Value="Vertical" />
+          <Setter Property="HorizontalAlignment" Value="Center" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
     <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
       <Setter Property="HorizontalAlignment" Value="Left" />
       <Setter Property="Orientation" Value="Horizontal" />
@@ -68,33 +85,63 @@
         Icon="&#xe6ef;"
         Text="复制" />
     </ui:SimpleStackPanel>
+
     <!--  时间戳转字符串时间  -->
-    <ui:SimpleStackPanel>
-      <TextBlock Style="{StaticResource HeaderStyle}" Text="时间戳：" />
-      <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding TimeStampToStringInput}" />
-      <ComboBox SelectedValue="{Binding TimeStampToStringOption}">
-        <sys:String>毫秒(ms)</sys:String>
-        <sys:String>秒(s)</sys:String>
-      </ComboBox>
-      <widget:IconButton
-        Click="TimeStampToStringClick"
-        Icon="&#xe606;"
-        Text="转换" />
-      <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding TimeStampToStringOutput}" />
+    <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+      <ui:SimpleStackPanel>
+        <TextBlock Style="{StaticResource HeaderStyle}" Text="时间戳：" />
+        <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding TimeStampToStringInput}" />
+        <ComboBox SelectedValue="{Binding TimeStampToStringOption}">
+          <system:String>毫秒(ms)</system:String>
+          <system:String>秒(s)</system:String>
+        </ComboBox>
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel Name="TimeStampToStringPanel" HorizontalAlignment="Right">
+        <widget:ToggleBox IsOn="{Binding IsExpanded}">
+          <widget:ToggleBox.OnContent>
+            <widget:IconButton
+              Click="TimeStampToStringClick"
+              Icon="&#xe606;"
+              Text="转换" />
+          </widget:ToggleBox.OnContent>
+          <widget:ToggleBox.OffContent>
+            <widget:IconButton
+              Click="TimeStampToStringClick"
+              Icon="&#xfbdd;"
+              Text="转换" />
+          </widget:ToggleBox.OffContent>
+        </widget:ToggleBox>
+        <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding TimeStampToStringOutput}" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
+
     <!--  日期转时间戳  -->
-    <ui:SimpleStackPanel>
-      <TextBlock Style="{StaticResource HeaderStyle}" Text="时间：" />
-      <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding StringToTimeStampInput}" />
-      <ComboBox SelectedValue="{Binding StringToTimeStampChoice}">
-        <sys:String>毫秒(ms)</sys:String>
-        <sys:String>秒(s)</sys:String>
-      </ComboBox>
-      <widget:IconButton
-        Click="StringToTimeStampClick"
-        Icon="&#xe606;"
-        Text="转换" />
-      <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding StringToTimeStampOutput}" />
+    <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+      <ui:SimpleStackPanel>
+        <TextBlock Style="{StaticResource HeaderStyle}" Text="时间：" />
+        <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding StringToTimeStampInput}" />
+        <ComboBox SelectedValue="{Binding StringToTimeStampChoice}">
+          <system:String>毫秒(ms)</system:String>
+          <system:String>秒(s)</system:String>
+        </ComboBox>
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel Name="StringToTimeStampPanel" HorizontalAlignment="Right">
+        <widget:ToggleBox IsOn="{Binding IsExpanded}">
+          <widget:ToggleBox.OnContent>
+            <widget:IconButton
+              Click="StringToTimeStampClick"
+              Icon="&#xe606;"
+              Text="转换" />
+          </widget:ToggleBox.OnContent>
+          <widget:ToggleBox.OffContent>
+            <widget:IconButton
+              Click="StringToTimeStampClick"
+              Icon="&#xfbdd;"
+              Text="转换" />
+          </widget:ToggleBox.OffContent>
+        </widget:ToggleBox>
+        <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding StringToTimeStampOutput}" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
   </ui:SimpleStackPanel>
 </Page>
