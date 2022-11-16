@@ -64,6 +64,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
 
     public Base64ToolView() {
         InitializeComponent();
+        // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
