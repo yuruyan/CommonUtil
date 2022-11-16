@@ -52,17 +52,12 @@
           </Style.Triggers>
         </Style>
       </ui:SimpleStackPanel.Style>
-      <ui:SimpleStackPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Setter Property="HorizontalAlignment" Value="Center" />
-          <Setter Property="Orientation" Value="Horizontal" />
-        </Style>
-      </ui:SimpleStackPanel.Resources>
-      <ui:SimpleStackPanel>
-        <CheckBox x:Name="IncludeNumberCheckBox" Content="包括数字" />
+      <CheckBox
+        x:Name="IncludeNumberCheckBox"
+        HorizontalAlignment="Center"
+        Content="包括数字" />
+      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <Button Click="TextProcessClick" Content="文本处理" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
