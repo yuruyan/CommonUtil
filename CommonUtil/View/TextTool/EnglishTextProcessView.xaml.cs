@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ public partial class EnglishTextProcessView : Page {
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(false));
     public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>), typeof(EnglishTextProcessView), new PropertyMetadata());
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -61,6 +63,13 @@ public partial class EnglishTextProcessView : Page {
         get { return (IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>)GetValue(ProcessPatternDictProperty); }
         private set { SetValue(ProcessPatternDictProperty, value); }
     }
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
 
     public EnglishTextProcessView() {
         ProcessPatternDict = new Dictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>() {
@@ -73,6 +82,17 @@ public partial class EnglishTextProcessView : Page {
             {"句子首字母大写",new (TextTool.ToSentenceCase, TextTool.FileToSentenceCase) },
         };
         InitializeComponent();
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                 .AddValueChanged(window, (_, _) => {
+                     IsExpanded = window.ActualWidth >= expansionThreshold;
+                 });
+        });
     }
 
     /// <summary>
