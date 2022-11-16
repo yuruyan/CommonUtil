@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Route;
+using CommonUITools.Utils;
 using CommonUtil.Store;
 using System.Collections.ObjectModel;
 using System.Threading;
@@ -44,7 +45,10 @@ public partial class MainContentView : Page {
             Thread.Sleep(500);
             Dispatcher.Invoke(() => {
                 Global.MenuItems.ForEach(ToolMenuItems.Add);
-                (Resources["InitializeStoryboard"] as Storyboard)?.Begin();
+                if (Resources["InitializeStoryboard"] is Storyboard storyboard) {
+                    storyboard.Completed += (_, _) => Opacity = 1;
+                    storyboard.Begin();
+                }
             });
         });
     }

@@ -25,6 +25,7 @@
       <DoubleAnimation
         BeginTime="0:0:1.5"
         EasingFunction="{StaticResource AnimationEaseFunction}"
+        FillBehavior="HoldEnd"
         Storyboard.TargetName="MainContentViewRoot"
         Storyboard.TargetProperty="Opacity"
         From="0"
