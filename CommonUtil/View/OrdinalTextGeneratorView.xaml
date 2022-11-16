@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="OrdinalTextGeneratorView"
@@ -12,6 +13,9 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+  </Page.Resources>
 
   <UniformGrid Margin="8" Columns="2">
     <UniformGrid Margin="0,0,8,0" Rows="2">
@@ -20,53 +24,58 @@
         Style="{StaticResource MultilineTextBoxStyle}"
         Text="{Binding InputText}" />
       <!--  Control  -->
-      <ui:SimpleStackPanel Margin="0,8,0,0" HorizontalAlignment="Center">
-        <ui:SimpleStackPanel.Resources>
-          <Style TargetType="StackPanel">
-            <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-          </Style>
-        </ui:SimpleStackPanel.Resources>
-        <StackPanel>
-          <TextBlock Text="起始位置：" />
-          <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding StartIndex}" />
-        </StackPanel>
-        <StackPanel>
-          <TextBlock Text="生成数量：" />
-          <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding GenerationCount}" />
-        </StackPanel>
-        <StackPanel>
-          <TextBlock Text="数字类型：" />
-          <ComboBox
-            Name="OrdinalTypeComboBox"
-            Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
-            ItemsSource="{Binding OrdinalTypeDict.Keys}"
-            SelectedIndex="0" />
-        </StackPanel>
-        <StackPanel>
-          <TextBlock Text="文本顺序：" />
-          <ui:ToggleSwitch
-            Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
-            IsOn="{Binding IsAscendant}"
-            OffContent="逆序"
-            OnContent="正序" />
-        </StackPanel>
-        <ui:SimpleStackPanel Orientation="Horizontal">
-          <widget:IconButton
-            Click="GenerateClick"
-            Icon="&#xe601;"
-            Text="生    成" />
-          <widget:IconButton
-            Click="CopyResultClick"
-            Icon="&#xe6ef;"
-            Text="复制结果" />
-          <widget:IconButton
-            Click="ClearInputClick"
-            Icon="&#xe946;"
-            Style="{StaticResource GlobalErrorButtonStyle}"
-            Text="清空输入" />
+      <ScrollViewer Margin="0,8,0,0">
+        <ui:SimpleStackPanel HorizontalAlignment="Center">
+          <ui:SimpleStackPanel.Resources>
+            <Style TargetType="StackPanel">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+          </ui:SimpleStackPanel.Resources>
+          <StackPanel>
+            <TextBlock Text="起始位置：" />
+            <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding StartIndex}" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="生成数量：" />
+            <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding GenerationCount}" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="数字类型：" />
+            <ComboBox
+              Name="OrdinalTypeComboBox"
+              Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+              ItemsSource="{Binding OrdinalTypeDict.Keys}"
+              SelectedIndex="0" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Text="文本顺序：" />
+            <ui:ToggleSwitch
+              Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+              IsOn="{Binding IsAscendant}"
+              OffContent="逆序"
+              OnContent="正序" />
+          </StackPanel>
+          <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+            <widget:IconButton
+              Click="GenerateClick"
+              Icon="&#xe601;"
+              Text="生    成" />
+            <widget:IconButton
+              Click="CopyResultClick"
+              Icon="&#xe6ef;"
+              Text="复制结果" />
+            <widget:IconButton
+              Click="ClearInputClick"
+              Icon="&#xe946;"
+              Style="{StaticResource GlobalErrorButtonStyle}"
+              Text="清空输入" />
+          </ui:SimpleStackPanel>
         </ui:SimpleStackPanel>
-      </ui:SimpleStackPanel>
+      </ScrollViewer>
     </UniformGrid>
     <!--  输出  -->
     <TextBox

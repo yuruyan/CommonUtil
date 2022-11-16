@@ -3,6 +3,7 @@ using CommonUtil.Core;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 
@@ -17,6 +18,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
     public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty OrdinalTypeDictProperty = DependencyProperty.Register("OrdinalTypeDict", typeof(IDictionary<string, OrdinalTextGenerator.OrdinalType>), typeof(OrdinalTextGeneratorView), new PropertyMetadata());
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输入文本
@@ -60,6 +62,13 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
         get { return (IDictionary<string, OrdinalTextGenerator.OrdinalType>)GetValue(OrdinalTypeDictProperty); }
         private set { SetValue(OrdinalTypeDictProperty, value); }
     }
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
 
     public OrdinalTextGeneratorView() {
         InitializeComponent();
@@ -71,6 +80,17 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
         };
         InputText = "abc{} {{ }}";
         GenerateText();
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                 .AddValueChanged(window, (_, _) => {
+                     IsExpanded = window.ActualWidth >= expansionThreshold;
+                 });
+        });
     }
 
     /// <summary>
