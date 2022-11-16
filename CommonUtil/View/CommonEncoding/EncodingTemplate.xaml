@@ -5,46 +5,75 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
-  x:Name="Root"
+  x:Name="EncodingTemplateRoot"
   Margin="8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
+  <UserControl.Resources>
+    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+  </UserControl.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
-      <RowDefinition Height="50" />
+      <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText, ElementName=Root}" />
-    <ui:SimpleStackPanel
-      Grid.Row="1"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-      <widget:IconButton
-        Click="EncodingTextClick"
-        Icon="&#xe63e;"
-        Text="{Binding EncodingButtonText, ElementName=Root}" />
-      <widget:IconButton
-        Click="DecodingTextClick"
-        Icon="&#xe640;"
-        Text="{Binding DecodingButtonText, ElementName=Root}" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe946;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
+    <!--  Input  -->
+    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText, ElementName=EncodingTemplateRoot}" />
+    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8">
+      <ui:SimpleStackPanel.Style>
+        <!--  响应式布局  -->
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded, ElementName=EncodingTemplateRoot}" Value="True">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded, ElementName=EncodingTemplateRoot}" Value="False">
+              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ui:SimpleStackPanel.Style>
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="EncodingTextClick"
+          Icon="&#xe63e;"
+          Text="{Binding EncodingButtonText, ElementName=EncodingTemplateRoot}" />
+        <widget:IconButton
+          Click="DecodingTextClick"
+          Icon="&#xe640;"
+          Text="{Binding DecodingButtonText, ElementName=EncodingTemplateRoot}" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe946;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
+    <!--  Output  -->
     <TextBox
       Grid.Row="2"
       IsReadOnly="True"
       Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText, ElementName=Root}" />
+      Text="{Binding OutputText, ElementName=EncodingTemplateRoot}" />
   </Grid>
 </UserControl>
