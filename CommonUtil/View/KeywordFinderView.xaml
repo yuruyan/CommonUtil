@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="KeywordFinderView"
@@ -13,8 +14,20 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+  </Page.Resources>
 
-  <UniformGrid Columns="2">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*" />
+      <RowDefinition x:Name="SecondRowDefinition" Height="0" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition Name="SecondColumnDefinition" />
+    </Grid.ColumnDefinitions>
+
     <ui:SimpleStackPanel Spacing="10">
       <StackPanel Orientation="Horizontal">
         <Button Click="SelectSearchDirectoryClick" Content="选择搜索目录" />
@@ -79,7 +92,7 @@
       </Grid>
     </ui:SimpleStackPanel>
     <!--  结果  -->
-    <Grid>
+    <Grid x:Name="ResultPanel" Grid.Column="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="30" />
         <RowDefinition />
@@ -137,5 +150,5 @@
         </ListBox.ItemContainerStyle>
       </ListBox>
     </Grid>
-  </UniformGrid>
+  </Grid>
 </Page>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,9 +24,10 @@ public partial class KeywordFinderView : Page {
     public static readonly DependencyProperty ExcludeFileProperty = DependencyProperty.Register("ExcludeFile", typeof(string), typeof(KeywordFinderView), new PropertyMetadata(""));
     public static readonly DependencyProperty SearchTextProperty = DependencyProperty.Register("SearchText", typeof(string), typeof(KeywordFinderView), new PropertyMetadata(""));
     public static readonly DependencyProperty KeywordResultsProperty = DependencyProperty.Register("KeywordResults", typeof(ObservableCollection<KeywordResult>), typeof(KeywordFinderView), new PropertyMetadata());
-    public static readonly DependencyProperty IsExcludeDirectorySelectedProperty = DependencyProperty.Register("IsExcludeDirectorySelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsExcludeDirectorySelectedProperty = DependencyProperty.Register("IsExcludeDirectorySelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
     public static readonly DependencyProperty IsExcludeFileSelectedProperty = DependencyProperty.Register("IsExcludeFileSelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(false));
     public static readonly DependencyProperty IsSearchingFinishedProperty = DependencyProperty.Register("IsSearchingFinished", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
 
     /// <summary>
     /// 搜索目录
@@ -83,6 +85,13 @@ public partial class KeywordFinderView : Page {
         get { return (bool)GetValue(IsSearchingFinishedProperty); }
         set { SetValue(IsSearchingFinishedProperty, value); }
     }
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
     private KeywordFinder? KeywordFinder;
     /// <summary>
     /// 上次查询目录
@@ -93,6 +102,33 @@ public partial class KeywordFinderView : Page {
         KeywordResults = new();
         KeywordResults.CollectionChanged += KeywordResultsCollectionChanged;
         InitializeComponent();
+        #region 响应式布局
+        DependencyPropertyDescriptor
+            .FromProperty(IsExpandedProperty, this.GetType())
+            .AddValueChanged(this, (_, _) => {
+                if (IsExpanded) {
+                    SecondRowDefinition.Height = new(0);
+                    SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+                    Grid.SetColumn(ResultPanel, 1);
+                    Grid.SetRow(ResultPanel, 0);
+                } else {
+                    SecondRowDefinition.Height = new(1, GridUnitType.Star);
+                    SecondColumnDefinition.Width = new(0);
+                    Grid.SetColumn(ResultPanel, 0);
+                    Grid.SetRow(ResultPanel, 1);
+                }
+            });
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
+        });
+        #endregion
     }
 
     private void KeywordResultsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
