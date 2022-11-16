@@ -56,7 +56,8 @@
   <ui:SimpleStackPanel
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
-    Orientation="Vertical">
+    Orientation="Vertical"
+    Spacing="{StaticResource MediumItemSpacing}">
     <!--  时间戳  -->
     <ui:SimpleStackPanel>
       <TextBlock Style="{StaticResource HeaderStyle}" Text="现在：" />
