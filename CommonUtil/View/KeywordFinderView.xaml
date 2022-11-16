@@ -135,7 +135,10 @@
                   </MenuItem>
                   <MenuItem Click="OpenDirectoryClickHandler" Header="打开所在目录">
                     <MenuItem.Icon>
-                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe69d;" />
+                      <TextBlock
+                        Foreground="#f5a623"
+                        Style="{StaticResource IconFontStyle}"
+                        Text="&#xe660;" />
                     </MenuItem.Icon>
                   </MenuItem>
                 </ContextMenu>
