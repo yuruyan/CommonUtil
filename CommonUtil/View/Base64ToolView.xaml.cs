@@ -20,7 +20,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(Base64ToolView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsExpandProperty = DependencyProperty.Register("IsExpand", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(true));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "All Files|*.*"
@@ -57,9 +57,9 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <summary>
     /// 是否扩宽
     /// </summary>
-    public bool IsExpand {
-        get { return (bool)GetValue(IsExpandProperty); }
-        set { SetValue(IsExpandProperty, value); }
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
     }
 
     public Base64ToolView() {
@@ -70,7 +70,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
             DependencyPropertyDescriptor
                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
                 .AddValueChanged(window, (_, _) => {
-                    IsExpand = window.ActualWidth >= expansionThreshold;
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
                 });
         });
     }

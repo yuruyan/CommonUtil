@@ -42,11 +42,11 @@
       <ui:SimpleStackPanel.Style>
         <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpand}" Value="True">
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
               <Setter Property="Orientation" Value="Horizontal" />
               <Setter Property="HorizontalAlignment" Value="Center" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpand}" Value="False">
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
               <Setter Property="Orientation" Value="Vertical" />
               <Setter Property="HorizontalAlignment" Value="Center" />
             </DataTrigger>
