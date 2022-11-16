@@ -53,24 +53,17 @@
           </Style.Triggers>
         </Style>
       </ui:SimpleStackPanel.Style>
-      <ui:SimpleStackPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Setter Property="HorizontalAlignment" Value="Center" />
-          <Setter Property="Orientation" Value="Horizontal" />
-        </Style>
-      </ui:SimpleStackPanel.Resources>
-      <ui:SimpleStackPanel>
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-          <TextBlock Text="分隔文本：" />
-          <ComboBox
-            x:Name="SplitTextComboBox"
-            IsEditable="True"
-            ItemsSource="{Binding SplitTextOptions}"
-            SelectedIndex="0" />
-        </StackPanel>
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Text="分隔文本：" />
+        <ComboBox
+          x:Name="SplitTextComboBox"
+          VerticalAlignment="Center"
+          IsEditable="True"
+          ItemsSource="{Binding SplitTextOptions}"
+          SelectedIndex="0" />
+      </StackPanel>
+      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <Button Click="PrependLineNumberClick" Content="增加行号" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
