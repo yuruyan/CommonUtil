@@ -1,6 +1,8 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using NLog;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +17,7 @@ public partial class BMICalculatorView : Page {
     public static readonly DependencyProperty BMIProperty = DependencyProperty.Register("BMI", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthProperty = DependencyProperty.Register("Health", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthColorProperty = DependencyProperty.Register("HealthColor", typeof(string), typeof(BMICalculatorView), new PropertyMetadata("#DBDBDB"));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(BMICalculatorView), new PropertyMetadata(true));
 
     /// <summary>
     /// 身高
@@ -51,9 +54,43 @@ public partial class BMICalculatorView : Page {
         get { return (string)GetValue(HealthColorProperty); }
         set { SetValue(HealthColorProperty, value); }
     }
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
 
     public BMICalculatorView() {
         InitializeComponent();
+        #region 响应式布局
+        DependencyPropertyDescriptor
+            .FromProperty(IsExpandedProperty, this.GetType())
+            .AddValueChanged(this, (_, _) => {
+                if (IsExpanded) {
+                    SecondRowDefinition.Height = new(0);
+                    SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+                    Grid.SetColumn(ReferencePanel, 1);
+                    Grid.SetRow(ReferencePanel, 0);
+                } else {
+                    SecondRowDefinition.Height = new(1, GridUnitType.Star);
+                    SecondColumnDefinition.Width = new(0);
+                    Grid.SetColumn(ReferencePanel, 0);
+                    Grid.SetRow(ReferencePanel, 1);
+                }
+            });
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
+        });
+        #endregion
     }
 
     /// <summary>
