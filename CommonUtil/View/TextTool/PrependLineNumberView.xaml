@@ -4,6 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="PrependLineNumberView"
@@ -12,6 +13,9 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+  </Page.Resources>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -19,6 +23,7 @@
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
+    <!--  Input Box  -->
     <widget:DragDropTextBox
       Name="DragDropTextBox"
       DragDropEvent="DragDropEventHandler"
@@ -31,32 +36,54 @@
       </widget:DragDropTextBox.FileView>
     </widget:DragDropTextBox>
 
-    <ui:SimpleStackPanel
-      Grid.Row="1"
-      Margin="0,8,0,8"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal"
-      Spacing="8">
-      <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-        <TextBlock Text="分隔文本：" />
-        <ComboBox
-          x:Name="SplitTextComboBox"
-          IsEditable="True"
-          ItemsSource="{Binding SplitTextOptions}"
-          SelectedIndex="0" />
-      </StackPanel>
-      <Button Click="PrependLineNumberClick" Content="增加行号" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe946;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
+    <!--  Control  -->
+    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8,0,8">
+      <ui:SimpleStackPanel.Style>
+        <!--  响应式布局  -->
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ui:SimpleStackPanel.Style>
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+          <TextBlock Text="分隔文本：" />
+          <ComboBox
+            x:Name="SplitTextComboBox"
+            IsEditable="True"
+            ItemsSource="{Binding SplitTextOptions}"
+            SelectedIndex="0" />
+        </StackPanel>
+        <Button Click="PrependLineNumberClick" Content="增加行号" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe946;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
 
+    <!--  Output Box  -->
     <TextBox
       Grid.Row="2"
       IsReadOnly="True"

@@ -3,6 +3,7 @@ using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ public partial class PrependLineNumberView : Page {
     public static readonly DependencyProperty SplitTextOptionsProperty = DependencyProperty.Register("SplitTextOptions", typeof(List<string>), typeof(PrependLineNumberView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(PrependLineNumberView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(PrependLineNumberView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(PrependLineNumberView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -60,7 +62,14 @@ public partial class PrependLineNumberView : Page {
         get { return (List<string>)GetValue(SplitTextOptionsProperty); }
         set { SetValue(SplitTextOptionsProperty, value); }
     }
-    private IDictionary<string, string> SplitTextDict;
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
+    private readonly IDictionary<string, string> SplitTextDict;
 
     public PrependLineNumberView() {
         SplitTextDict = new Dictionary<string, string>() {
@@ -73,6 +82,17 @@ public partial class PrependLineNumberView : Page {
         };
         SplitTextOptions = new(SplitTextDict.Keys);
         InitializeComponent();
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                 .AddValueChanged(window, (_, _) => {
+                     IsExpanded = window.ActualWidth >= expansionThreshold;
+                 });
+        });
     }
 
     /// <summary>

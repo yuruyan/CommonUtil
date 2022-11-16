@@ -60,6 +60,7 @@
           <Setter Property="Orientation" Value="Horizontal" />
         </Style>
       </ui:SimpleStackPanel.Resources>
+
       <ui:SimpleStackPanel>
         <widget:IconButton
           Click="EncodeClickHandler"
