@@ -33,34 +33,49 @@
     </widget:DragDropTextBox>
 
     <!--  Control  -->
-    <WrapPanel
-      Grid.Row="1"
-      Margin="0,8"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-      <WrapPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
-          <Setter Property="Margin" Value="0,0,8,0" />
+    <ui:SimpleStackPanel Grid.Row="1" Margin="0,8">
+      <ui:SimpleStackPanel.Style>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpand}" Value="True">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpand}" Value="False">
+              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+          </Style.Triggers>
         </Style>
-      </WrapPanel.Resources>
-      <widget:IconButton
-        Click="EncodeClickHandler"
-        Icon="&#xe63e;"
-        Text="编码" />
-      <widget:IconButton
-        Click="DecodeClickHandler"
-        Icon="&#xe640;"
-        Text="解码" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe946;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
-    </WrapPanel>
+      </ui:SimpleStackPanel.Style>
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="EncodeClickHandler"
+          Icon="&#xe63e;"
+          Text="编码" />
+        <widget:IconButton
+          Click="DecodeClickHandler"
+          Icon="&#xe640;"
+          Text="解码" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe946;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
+    </ui:SimpleStackPanel>
 
     <!--  Output Box  -->
     <TextBox
