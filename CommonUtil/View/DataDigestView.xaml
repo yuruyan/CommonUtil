@@ -52,12 +52,6 @@
             <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" />
           </ui:FlyoutService.Flyout>
         </Button>
-        <!--<ComboBox
-          Width="120"
-          VerticalAlignment="Center"
-          ItemsSource="{Binding DigestOptions, Mode=OneWay}"
-          SelectedIndex="{Binding SelectedDigestIndex}" />-->
-        <!--  Start Button  -->
         <widget:WorkingButton
           IsWorking="{Binding IsWorking}"
           NormalClick="StartClick"
