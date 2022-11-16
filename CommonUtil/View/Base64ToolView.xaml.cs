@@ -66,10 +66,11 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         InitializeComponent();
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
             DependencyPropertyDescriptor
                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
                 .AddValueChanged(window, (_, _) => {
-                    IsExpand = window.ActualWidth >= 800;
+                    IsExpand = window.ActualWidth >= expansionThreshold;
                 });
         });
     }
