@@ -59,18 +59,16 @@
           <Setter Property="Orientation" Value="Horizontal" />
         </Style>
       </ui:SimpleStackPanel.Resources>
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Text="模式：" />
+        <ComboBox
+          Name="InversionModeComboBox"
+          VerticalAlignment="Center"
+          ItemsSource="{Binding InversionModeDict.Keys}"
+          SelectedIndex="0" />
+      </StackPanel>
       <ui:SimpleStackPanel>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="模式：" />
-          <ComboBox
-            Name="InversionModeComboBox"
-            VerticalAlignment="Center"
-            ItemsSource="{Binding InversionModeDict.Keys}"
-            SelectedIndex="0" />
-        </StackPanel>
         <Button Click="TextProcessClick" Content="文本翻转" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
