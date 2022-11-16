@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;
 
@@ -40,13 +41,16 @@ public partial class MainContentView : Page {
         Window = Window.GetWindow(this);
         // 延迟加载
         Task.Run(() => {
-            Thread.Sleep(300);
-            Dispatcher.Invoke(() => Global.MenuItems.ForEach(ToolMenuItems.Add));
+            Thread.Sleep(500);
+            Dispatcher.Invoke(() => {
+                Global.MenuItems.ForEach(ToolMenuItems.Add);
+                (Resources["InitializeStoryboard"] as Storyboard)?.Begin();
+            });
         });
     }
 
     private void RootLoaded(object sender, RoutedEventArgs e) {
-        e.Handled = true;
+        //e.Handled = true;
         Window.Background = MainContentViewBackground;
     }
 

@@ -7,17 +7,30 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  Name="MainContentViewRoot"
   Title="MainContent"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   Loaded="RootLoaded"
+  Opacity="0"
   Unloaded="RootUnloaded"
   mc:Ignorable="d">
   <Page.Resources>
     <Duration x:Key="AnimationDuration">0:0:0.2</Duration>
-    <Duration x:Key="MenuItemLoadAnimationDuration">0:0:0.4</Duration>
+    <Duration x:Key="MenuItemLoadAnimationDuration">0:0:0.5</Duration>
     <CircleEase x:Key="MenuItemLoadEasingFunction" EasingMode="EaseOut" />
+    <!--  初始化动画  -->
+    <Storyboard x:Key="InitializeStoryboard">
+      <DoubleAnimation
+        BeginTime="0:0:1.5"
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="MainContentViewRoot"
+        Storyboard.TargetProperty="Opacity"
+        From="0"
+        To="1"
+        Duration="{StaticResource MenuItemLoadAnimationDuration}" />
+    </Storyboard>
   </Page.Resources>
 
   <ScrollViewer>
