@@ -20,7 +20,6 @@ public partial class WhiteSpaceProcessView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(WhiteSpaceProcessView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(WhiteSpaceProcessView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(WhiteSpaceProcessView), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(WhiteSpaceProcessView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -54,27 +53,9 @@ public partial class WhiteSpaceProcessView : Page {
         get { return (string)GetValue(FileNameProperty); }
         set { SetValue(FileNameProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
     public WhiteSpaceProcessView() {
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
-        });
     }
 
     /// <summary>
@@ -89,10 +70,10 @@ public partial class WhiteSpaceProcessView : Page {
             return;
         }
 
-        bool trimText = TrimTextCheckBox.IsChecked == true;
-        bool removeWhiteSpace = RemoveWhiteSpaceLineCheckBox.IsChecked == true;
-        bool trimLine = TrimLineCheckBox.IsChecked == true;
-        bool replaceMultiWhiteSpace = ReplaceMultipleWhiteSpaceWithOneCheckBox.IsChecked == true;
+        bool trimText = TrimTextMenuItem.IsChecked == true;
+        bool removeWhiteSpace = RemoveWhiteSpaceLineMenuItem.IsChecked == true;
+        bool trimLine = TrimLineMenuItem.IsChecked == true;
+        bool replaceMultiWhiteSpace = ReplaceMultipleWhiteSpaceWithOneMenuItem.IsChecked == true;
 
         // 文本处理
         if (!HasFile) {
