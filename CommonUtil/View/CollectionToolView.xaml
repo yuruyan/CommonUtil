@@ -5,6 +5,8 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="CollectionToolView"
   Margin="8,0,8,8"
@@ -12,6 +14,9 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
+  </Page.Resources>
 
   <Grid>
     <Grid.RowDefinitions>
@@ -19,34 +24,41 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Control  -->
-    <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
-      <WrapPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
-          <Setter Property="Margin" Value="0,0,8,0" />
+    <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
         </Style>
-      </WrapPanel.Resources>
-      <widget:IconButton
-        Click="UnionClickHandler"
-        Icon="&#xe61c;"
-        Text="并集" />
-      <widget:IconButton
-        Click="IntersectClickHandler"
-        Icon="&#xe61f;"
-        Text="交集" />
-      <widget:IconButton
-        Click="ExceptClickHandler"
-        Icon="&#xe615;"
-        Text="差集" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe680;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
-    </WrapPanel>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="UnionClickHandler"
+          Icon="&#xe61c;"
+          Text="并集" />
+        <widget:IconButton
+          Click="IntersectClickHandler"
+          Icon="&#xe61f;"
+          Text="交集" />
+        <widget:IconButton
+          Click="ExceptClickHandler"
+          Icon="&#xe615;"
+          Text="差集" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe680;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
+    </ui:SimpleStackPanel>
+
+    <!--  InputOutput Box  -->
     <UniformGrid
       Grid.Row="1"
       Margin="0,8,0,0"
@@ -75,6 +87,7 @@
           <widget:FileNameSizeWidget FileName="{Binding FileName2}" />
         </widget:DragDropTextBox.FileView>
       </widget:DragDropTextBox>
+
       <!--  Output Box  -->
       <TextBox
         Grid.Row="2"
