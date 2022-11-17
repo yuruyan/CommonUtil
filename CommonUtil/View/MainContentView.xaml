@@ -15,6 +15,9 @@
   Opacity="0"
   Unloaded="RootUnloaded"
   mc:Ignorable="d">
+  <Page.RenderTransform>
+    <TranslateTransform x:Name="MainContentViewRootTranslateYTransform" />
+  </Page.RenderTransform>
   <Page.Resources>
     <Duration x:Key="AnimationDuration">0:0:0.2</Duration>
     <Duration x:Key="MenuItemLoadAnimationDuration">0:0:0.7</Duration>
@@ -22,13 +25,19 @@
     <!--  初始化动画  -->
     <Storyboard x:Key="InitializeStoryboard">
       <DoubleAnimation
-        BeginTime="0:0:1"
         EasingFunction="{StaticResource AnimationEaseFunction}"
         FillBehavior="HoldEnd"
         Storyboard.TargetName="MainContentViewRoot"
         Storyboard.TargetProperty="Opacity"
         From="0"
         To="1"
+        Duration="{StaticResource MenuItemLoadAnimationDuration}" />
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="MainContentViewRootTranslateYTransform"
+        Storyboard.TargetProperty="Y"
+        From="15"
+        To="0"
         Duration="{StaticResource MenuItemLoadAnimationDuration}" />
     </Storyboard>
   </Page.Resources>
