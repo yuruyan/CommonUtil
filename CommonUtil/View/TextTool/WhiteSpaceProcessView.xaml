@@ -15,7 +15,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
   </Page.Resources>
 
   <Grid>
@@ -41,33 +41,42 @@
     <ui:SimpleStackPanel
       Grid.Row="1"
       Margin="0,8,0,8"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal">
-      <Button Content="选择模式">
-        <Button.Resources>
-          <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
-            <Setter Property="IsCheckable" Value="True" />
-          </Style>
-        </Button.Resources>
-        <ui:FlyoutService.Flyout>
-          <ui:MenuFlyout>
-            <MenuItem x:Name="TrimTextMenuItem" Header="去除首尾空白" />
-            <MenuItem x:Name="TrimLineMenuItem" Header="去除每行首尾空白" />
-            <MenuItem x:Name="RemoveWhiteSpaceLineMenuItem" Header="去除空白行" />
-            <MenuItem x:Name="ReplaceMultipleWhiteSpaceWithOneMenuItem" Header="多个空白字符替换为一个空格" />
-          </ui:MenuFlyout>
-        </ui:FlyoutService.Flyout>
-      </Button>
-      <Button Click="TextProcessClick" Content="文本处理" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe680;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
+      Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="HorizontalAlignment" Value="Center" />
+          <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <Button Content="选择模式">
+          <Button.Resources>
+            <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
+              <Setter Property="IsCheckable" Value="True" />
+            </Style>
+          </Button.Resources>
+          <ui:FlyoutService.Flyout>
+            <ui:MenuFlyout>
+              <MenuItem x:Name="TrimTextMenuItem" Header="去除首尾空白" />
+              <MenuItem x:Name="TrimLineMenuItem" Header="去除每行首尾空白" />
+              <MenuItem x:Name="RemoveWhiteSpaceLineMenuItem" Header="去除空白行" />
+              <MenuItem x:Name="ReplaceMultipleWhiteSpaceWithOneMenuItem" Header="多个空白字符替换为一个空格" />
+            </ui:MenuFlyout>
+          </ui:FlyoutService.Flyout>
+        </Button>
+        <Button Click="TextProcessClick" Content="文本处理" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe680;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
 
     <!--  Output Box  -->
