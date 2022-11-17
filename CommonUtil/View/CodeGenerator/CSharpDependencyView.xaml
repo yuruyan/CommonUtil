@@ -64,7 +64,7 @@
                 <TextBox Text="{Binding Value}" />
                 <UniformGrid.ContextMenu>
                   <ContextMenu>
-                    <MenuItem Click="removePropertyClick" Header="删除">
+                    <MenuItem Click="RemovePropertyClick" Header="删除">
                       <MenuItem.Icon>
                         <TextBlock
                           Foreground="{StaticResource DeleteButtonForeground}"

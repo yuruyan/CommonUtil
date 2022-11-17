@@ -113,7 +113,7 @@ public partial class CSharpDependencyView : Page {
         OutputText = CSharpDependencyGenerator.CreateTemplate(TypeInfos);
     }
 
-    private void removePropertyClick(object sender, RoutedEventArgs e) {
+    private void RemovePropertyClick(object sender, RoutedEventArgs e) {
         if (sender is FrameworkElement elem && elem.DataContext is TypeInfo typeInfo) {
             TypeInfos.Remove(typeInfo);
         }
