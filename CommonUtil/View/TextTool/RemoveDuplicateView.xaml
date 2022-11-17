@@ -15,7 +15,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
   </Page.Resources>
 
   <Grid>
