@@ -29,7 +29,7 @@
         SelectedValue="C#" />
       <widget:IconButton
         Click="ClearInputClick"
-        Icon="&#xe946;"
+        Icon="&#xe680;"
         Style="{StaticResource GlobalErrorButtonStyle}"
         Text="清空输入" />
       <!--<widget:IconButton
