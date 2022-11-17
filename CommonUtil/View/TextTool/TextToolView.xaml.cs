@@ -22,5 +22,6 @@ public partial class TextToolView : System.Windows.Controls.Page {
             new(ContentFrame, Routers),
             ContentFrame
         );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 }

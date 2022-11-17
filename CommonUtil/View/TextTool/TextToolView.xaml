@@ -7,27 +7,76 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="TextToolView"
+  Margin="8,0,0,0"
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
+  <Page.Resources>
+    <!--  Resources for NavigationView  -->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
+  </Page.Resources>
 
   <Grid>
     <ui:NavigationView
       Name="NavigationView"
       IsBackButtonVisible="Collapsed"
+      IsPaneToggleButtonVisible="False"
       IsSettingsVisible="False"
       IsTabStop="False"
-      PaneDisplayMode="Top">
+      OpenPaneLength="40"
+      PaneDisplayMode="Left">
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
           x:Name="RemoveDuplicateView"
           Content="文本去重"
-          IsSelected="True" />
-        <ui:NavigationViewItem x:Name="WhiteSpaceProcessView" Content="空白处理" />
-        <ui:NavigationViewItem x:Name="EnglishTextProcessView" Content="英文文本处理" />
-        <ui:NavigationViewItem x:Name="PrependLineNumberView" Content="增加行号" />
-        <ui:NavigationViewItem x:Name="AddEnglishWordBraces" Content="中英文之间加空格" />
-        <ui:NavigationViewItem x:Name="InvertTextView" Content="文本翻转" />
+          IsSelected="True"
+          ToolTip="文本去重">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe677;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="WhiteSpaceProcessView"
+          Content="空白处理"
+          ToolTip="空白处理">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe6c4;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="EnglishTextProcessView"
+          Content="英文文本处理"
+          ToolTip="英文文本处理">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xebe0;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="PrependLineNumberView"
+          Content="增加行号"
+          ToolTip="增加行号">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe64f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="AddEnglishWordBraces"
+          Content="中英文之间加空格"
+          ToolTip="中英文之间加空格">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe626;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="InvertTextView"
+          Content="文本翻转"
+          ToolTip="文本翻转">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe71b;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>
