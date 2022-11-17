@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="JsonExtractorView"
@@ -13,6 +14,14 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+  </Page.Resources>
+
   <UniformGrid Columns="2">
     <UniformGrid Margin="0,0,4,0" Rows="2">
       <!--  Input  -->
@@ -28,13 +37,13 @@
         </widget:DragDropTextBox.FileView>
       </widget:DragDropTextBox>
       <ui:SimpleStackPanel
-        HorizontalAlignment="Center"
+        HorizontalAlignment="Stretch"
         VerticalAlignment="Center"
         Orientation="Vertical">
         <DockPanel>
           <TextBlock Text="模式：" />
           <TextBox
-            MinWidth="300"
+            MinWidth="150"
             KeyUp="PatternTextBoxKeyUpHandler"
             Text="{Binding PatternText, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
@@ -42,9 +51,11 @@
         <ui:SimpleStackPanel
           Grid.Row="1"
           Margin="0,8"
-          HorizontalAlignment="Center"
-          Orientation="Horizontal">
-          <Button Click="JsonExtractClickHandler" Content="数据提取" />
+          Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+          <Button
+            HorizontalAlignment="Center"
+            Click="JsonExtractClickHandler"
+            Content="数据提取" />
           <widget:IconButton
             Click="CopyResultClick"
             Icon="&#xe6ef;"
@@ -57,6 +68,7 @@
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </UniformGrid>
+
     <!--  Output  -->
     <Grid Margin="4,0,0,0">
       <!--  结果个数显示  -->

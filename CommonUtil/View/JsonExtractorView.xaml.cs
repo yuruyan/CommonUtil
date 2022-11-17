@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ public partial class JsonExtractorView : Page {
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(false));
     public static readonly DependencyProperty ResultListProperty = DependencyProperty.Register("ResultList", typeof(ICollection<string>), typeof(JsonExtractorView), new PropertyMetadata());
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "Text|*.txt|All Files|*.*"
@@ -72,12 +74,30 @@ public partial class JsonExtractorView : Page {
         get { return (ICollection<string>)GetValue(ResultListProperty); }
         set { SetValue(ResultListProperty, value); }
     }
+    /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
 
     public JsonExtractorView() {
         ResultList = Array.Empty<string>();
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
         PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
+        });
     }
 
     /// <summary>
