@@ -16,6 +16,10 @@
   mc:Ignorable="d">
   <Page.Resources>
     <system:Double x:Key="HeaderWidth">100</system:Double>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
   </Page.Resources>
 
   <UniformGrid Columns="2">
@@ -36,58 +40,57 @@
         </widget:DragDropTextBox.FileView>
       </widget:DragDropTextBox>
       <!--  control  -->
-      <ui:SimpleStackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Orientation="Vertical">
-        <ui:SimpleStackPanel Orientation="Vertical">
-          <ui:SimpleStackPanel.Resources>
-            <Style TargetType="DockPanel">
-              <Setter Property="HorizontalAlignment" Value="Center" />
-              <Setter Property="LastChildFill" Value="False" />
-            </Style>
-            <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-              <Setter Property="MinWidth" Value="150" />
-            </Style>
-          </ui:SimpleStackPanel.Resources>
-          <DockPanel>
-            <StackPanel Width="{StaticResource HeaderWidth}" Orientation="Horizontal">
-              <TextBlock Text="查找正则" />
-              <TextBlock
-                Padding="4"
-                FontFamily="{StaticResource IconFontUrI}"
-                MouseUp="MoreRegexMouseUp"
-                Style="{StaticResource HyperLinkStyle}"
-                Text="&#xe650;"
-                ToolTip="更多" />
-            </StackPanel>
-            <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding SearchRegex, UpdateSourceTrigger=PropertyChanged}" />
-          </DockPanel>
-          <DockPanel>
-            <TextBlock Width="{StaticResource HeaderWidth}" Text="忽略大小写" />
-            <ui:ToggleSwitch IsOn="{Binding IgnoreCase}" />
-          </DockPanel>
-          <DockPanel>
-            <TextBlock Width="{StaticResource HeaderWidth}" Text="提取模式" />
-            <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
-          </DockPanel>
+      <ScrollViewer>
+        <ui:SimpleStackPanel
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Center"
+          Orientation="Vertical"
+          Spacing="{StaticResource MediumItemSpacing}">
+          <ui:SimpleStackPanel Orientation="Vertical">
+            <ui:SimpleStackPanel.Resources>
+              <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
+                <Setter Property="MinWidth" Value="130" />
+              </Style>
+            </ui:SimpleStackPanel.Resources>
+            <DockPanel>
+              <StackPanel Width="{StaticResource HeaderWidth}" Orientation="Horizontal">
+                <TextBlock Text="查找正则" />
+                <TextBlock
+                  Padding="4"
+                  FontFamily="{StaticResource IconFontUrI}"
+                  MouseUp="MoreRegexMouseUp"
+                  Style="{StaticResource HyperLinkStyle}"
+                  Text="&#xe650;"
+                  ToolTip="更多" />
+              </StackPanel>
+              <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding SearchRegex, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+            <DockPanel>
+              <TextBlock Width="{StaticResource HeaderWidth}" Text="忽略大小写" />
+              <ui:ToggleSwitch IsOn="{Binding IgnoreCase}" />
+            </DockPanel>
+            <DockPanel>
+              <TextBlock Width="{StaticResource HeaderWidth}" Text="提取模式" />
+              <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
+            </DockPanel>
+          </ui:SimpleStackPanel>
+          <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+            <widget:IconButton
+              Click="SearchClick"
+              Icon="&#xe612;"
+              Text="查找" />
+            <widget:IconButton
+              Click="CopyResultClick"
+              Icon="&#xe6ef;"
+              Text="复制结果" />
+            <widget:IconButton
+              Click="ClearInputClick"
+              Icon="&#xe680;"
+              Style="{StaticResource GlobalErrorButtonStyle}"
+              Text="清空输入" />
+          </ui:SimpleStackPanel>
         </ui:SimpleStackPanel>
-        <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-          <widget:IconButton
-            Click="SearchClick"
-            Icon="&#xe612;"
-            Text="查找" />
-          <widget:IconButton
-            Click="CopyResultClick"
-            Icon="&#xe6ef;"
-            Text="复制结果" />
-          <widget:IconButton
-            Click="ClearInputClick"
-            Icon="&#xe680;"
-            Style="{StaticResource GlobalErrorButtonStyle}"
-            Text="清空输入" />
-        </ui:SimpleStackPanel>
-      </ui:SimpleStackPanel>
+      </ScrollViewer>
     </UniformGrid>
     <!--  输出  -->
     <Grid Margin="4,0,0,0">

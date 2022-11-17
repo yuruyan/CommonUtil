@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ public partial class RegexExtractionView : Page {
     public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register("MatchList", typeof(IList<string>), typeof(RegexExtractionView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(RegexExtractionView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(RegexExtractionView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(RegexExtractionView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -87,12 +89,30 @@ public partial class RegexExtractionView : Page {
         set { SetValue(MatchListProperty, value); }
     }
     /// <summary>
+    /// 是否扩宽
+    /// </summary>
+    public bool IsExpanded {
+        get { return (bool)GetValue(IsExpandedProperty); }
+        set { SetValue(IsExpandedProperty, value); }
+    }
+    /// <summary>
     /// 常用正则表达式 Dialog
     /// </summary>
     private CommonRegexListDialog? CommonRegexListDialog;
 
     public RegexExtractionView() {
         InitializeComponent();
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+            Window window = Window.GetWindow(this);
+            double expansionThreshold = (double)Resources["ExpansionThreshold"];
+            IsExpanded = window.ActualWidth >= expansionThreshold;
+            DependencyPropertyDescriptor
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
+        });
     }
 
     /// <summary>
