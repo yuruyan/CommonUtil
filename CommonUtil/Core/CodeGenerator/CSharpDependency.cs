@@ -35,8 +35,7 @@ public class CSharpDependencyGenerator {
         }
         string doClass = new StringBuilder($"public class {className} {{\n")
             .AppendLine(staticSb.ToString())
-            .AppendLine()
-            .AppendLine(propertySb.ToString())
+            .Append(propertySb)
             .AppendLine("}")
             .ToString();
         #endregion
