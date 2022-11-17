@@ -70,10 +70,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
             IsExpanded = window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
         });
     }
 

@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="CSharpDependencyView"
@@ -13,19 +14,23 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
   <Page.Resources>
-    <Thickness x:Key="itemGap">
-      8
-    </Thickness>
+    <Thickness x:Key="itemGap">8</Thickness>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
   </Page.Resources>
 
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
-      <ColumnDefinition Width="auto" />
-      <ColumnDefinition />
+      <ColumnDefinition Name="SecondColumnDefinition" Width="auto" />
+      <ColumnDefinition Name="ThirdColumnDefinition" />
     </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*" />
+      <RowDefinition x:Name="SecondRowDefinition" Height="0" />
+      <RowDefinition x:Name="ThirdRowDefinition" Height="0" />
+    </Grid.RowDefinitions>
+    <!--  Input Box  -->
     <Grid>
       <Grid.Resources>
         <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
@@ -87,32 +92,56 @@
         </ItemsControl>
       </ScrollViewer>
     </Grid>
+
+    <!--  Control  -->
     <ui:SimpleStackPanel
+      Name="ControlPanel"
       Grid.Column="1"
-      Margin="8,0,8,0"
+      Margin="8"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
-      Orientation="Vertical">
-      <widget:IconButton
-        Click="AddPropertyClick"
-        Icon="&#xe604;"
-        Text="增加属性" />
-      <widget:IconButton
-        Click="GenerateCodeClick"
-        Icon="&#xe6ef;"
-        Text="生成代码" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制结果" />
-      <widget:IconButton
-        Click="ClearInputClick"
-        Icon="&#xe680;"
-        Style="{StaticResource GlobalErrorButtonStyle}"
-        Text="清空输入" />
+      Orientation="Vertical"
+      Style="{StaticResource GlobalSimpleStackPanelStyle}">
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="AddPropertyClick"
+          Icon="&#xe604;"
+          Text="增加属性" />
+        <widget:IconButton
+          Click="GenerateCodeClick"
+          Icon="&#xe6ef;"
+          Text="生成代码" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
+        <widget:IconButton
+          Click="CopyResultClick"
+          Icon="&#xe6ef;"
+          Text="复制结果" />
+        <widget:IconButton
+          Click="ClearInputClick"
+          Icon="&#xe680;"
+          Style="{StaticResource GlobalErrorButtonStyle}"
+          Text="清空输入" />
+      </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
 
+    <!--  Output Box  -->
     <TextBox
+      x:Name="OutputTextBox"
       Grid.Column="2"
       IsReadOnly="True"
       Style="{StaticResource MultilineTextBoxStyle}"
