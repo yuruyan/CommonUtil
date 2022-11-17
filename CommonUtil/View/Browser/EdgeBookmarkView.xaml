@@ -16,7 +16,8 @@
     <TextBlock
       HorizontalAlignment="Center"
       Foreground="{StaticResource Black7}"
-      Text="{Binding EdgeBookmarkFilePath}" />
+      Text="{Binding EdgeBookmarkFilePath}"
+      TextWrapping="Wrap" />
     <Button
       HorizontalAlignment="Center"
       Click="ExportBookmarkClick"
