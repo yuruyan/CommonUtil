@@ -37,46 +37,6 @@
   <ItemGroup>
     <None Remove="favicon.ico" />
     <None Remove="Resource\iconfont.ttf" />
-    <None Remove="Resource\image\base64.svg" />
-    <None Remove="Resource\image\BaseConversion.svg" />
-    <None Remove="Resource\image\BMI.svg" />
-    <None Remove="Resource\image\ChineseTransform.svg" />
-    <None Remove="Resource\image\CodeGenerator.svg" />
-    <None Remove="Resource\image\ColorPicker.svg" />
-    <None Remove="Resource\image\DateTime.svg" />
-    <None Remove="Resource\image\download.svg" />
-    <None Remove="Resource\image\Edge.svg" />
-    <None Remove="Resource\image\encoding.svg" />
-    <None Remove="Resource\image\Encryption.svg" />
-    <None Remove="Resource\image\file-server.svg" />
-    <None Remove="Resource\image\FileSearch.svg" />
-    <None Remove="Resource\image\FileVersion.svg" />
-    <None Remove="Resource\image\format.svg" />
-    <None Remove="Resource\image\FTP.svg" />
-    <None Remove="Resource\image\IdiomMatching.svg" />
-    <None Remove="Resource\image\Intersection.svg" />
-    <None Remove="Resource\image\JapaneseSymbol.png" />
-    <None Remove="Resource\image\JSON.svg" />
-    <None Remove="Resource\image\link.svg" />
-    <None Remove="Resource\image\Merge.svg" />
-    <None Remove="Resource\image\order.svg" />
-    <None Remove="Resource\image\paint.svg" />
-    <None Remove="Resource\image\qrcode.svg" />
-    <None Remove="Resource\image\random.svg" />
-    <None Remove="Resource\image\regex.svg" />
-    <None Remove="Resource\image\sms.svg" />
-    <None Remove="Resource\image\TextTool.svg" />
-    <None Remove="Resource\image\wifi.svg" />
-    <None Remove="Resource\SplashWindow.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resource\iconfont.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\base64.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -95,74 +55,6 @@
     <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RandomDataGenerator.Net" Version="1.0.15" />
     <PackageReference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing" Version="0.16.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="favicon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\BaseConversion.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\BMI.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\ChineseTransform.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\CodeGenerator.svg" />
-    <Resource Include="Resource\image\ColorPicker.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\download.svg" />
-    <Resource Include="Resource\image\Edge.svg" />
-    <Resource Include="Resource\image\encoding.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\Encryption.svg" />
-    <Resource Include="Resource\image\file-server.svg" />
-    <Resource Include="Resource\image\FileSearch.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\FileVersion.svg" />
-    <Resource Include="Resource\image\format.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\FTP.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\Intersection.svg" />
-    <Resource Include="Resource\image\JapaneseSymbol.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\JSON.svg" />
-    <Resource Include="Resource\image\link.svg" />
-    <Resource Include="Resource\image\Merge.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\order.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\paint.svg" />
-    <Resource Include="Resource\image\qrcode.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\random.svg" />
-    <Resource Include="Resource\image\DateTime.svg" />
-    <Resource Include="Resource\image\regex.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\sms.svg" />
-    <Resource Include="Resource\image\TextTool.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\IdiomMatching.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resource\image\wifi.svg" />
-    <Resource Include="Resource\SplashWindow.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -186,9 +78,6 @@
     </None>
     <None Update="Resource\Ascii.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Resource\image\ascii.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\lib\uncrustify\defaults.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -214,6 +103,42 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
     <ProjectReference Include="..\SimpleFileSystemServer\SimpleFileSystemServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="favicon.ico" />
+    <Resource Include="Resource\iconfont.ttf" />
+    <Resource Include="Resource\SplashWindow.png" />
+    <Resource Include="Resource\image\ascii.png" />
+    <Resource Include="Resource\image\base64.png" />
+    <Resource Include="Resource\image\BaseConversion.png" />
+    <Resource Include="Resource\image\BMI.png" />
+    <Resource Include="Resource\image\ChineseTransform.png" />
+    <Resource Include="Resource\image\CodeGenerator.png" />
+    <Resource Include="Resource\image\ColorPicker.png" />
+    <Resource Include="Resource\image\DateTime.png" />
+    <Resource Include="Resource\image\download.png" />
+    <Resource Include="Resource\image\Edge.png" />
+    <Resource Include="Resource\image\encoding.png" />
+    <Resource Include="Resource\image\Encryption.png" />
+    <Resource Include="Resource\image\file-server.png" />
+    <Resource Include="Resource\image\FileSearch.png" />
+    <Resource Include="Resource\image\FileVersion.png" />
+    <Resource Include="Resource\image\format.png" />
+    <Resource Include="Resource\image\FTP.png" />
+    <Resource Include="Resource\image\IdiomMatching.png" />
+    <Resource Include="Resource\image\Intersection.png" />
+    <Resource Include="Resource\image\JSON.png" />
+    <Resource Include="Resource\image\link.png" />
+    <Resource Include="Resource\image\Merge.png" />
+    <Resource Include="Resource\image\order.png" />
+    <Resource Include="Resource\image\paint.png" />
+    <Resource Include="Resource\image\qrcode.png" />
+    <Resource Include="Resource\image\random.png" />
+    <Resource Include="Resource\image\regex.png" />
+    <Resource Include="Resource\image\sms.png" />
+    <Resource Include="Resource\image\TextTool.png" />
+    <Resource Include="Resource\image\wifi.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -360,10 +285,6 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resource\image\FileIcon\" />
   </ItemGroup>
 
   <ItemGroup>

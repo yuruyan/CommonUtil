@@ -5,7 +5,6 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Name="MainContentViewRoot"
   Title="MainContent"
@@ -108,7 +107,7 @@
                 <ColumnDefinition />
               </Grid.ColumnDefinitions>
               <!--  图标  -->
-              <svgc:SvgViewbox
+              <Image
                 Margin="8,4,4,4"
                 Source="{Binding ImagePath}"
                 Stretch="Uniform" />
