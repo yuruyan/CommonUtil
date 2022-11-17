@@ -38,7 +38,7 @@
         IsSelected="True"
         ToolTip="二维码解析">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe672;" />
+          <ui:FontIcon Foreground="{StaticResource ApplicationBackground}" Glyph="&#xe672;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -54,7 +54,7 @@
         Content="短信二维码"
         ToolTip="短信二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#20AC95" Glyph="&#xe61a;" />
+          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe61a;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -62,7 +62,7 @@
         Content="WiFi 二维码"
         ToolTip="WiFi 二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#19A3E0" Glyph="&#xe65f;" />
+          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe65f;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -70,7 +70,7 @@
         Content="邮件二维码"
         ToolTip="邮件二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#29AF86" Glyph="&#xe620;" />
+          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe620;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -78,7 +78,7 @@
         Content="拨打电话二维码"
         ToolTip="拨打电话二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#2FAFCE" Glyph="&#xe67d;" />
+          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe67d;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -86,7 +86,7 @@
         Content="地理位置二维码"
         ToolTip="地理位置二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#C25E2D" Glyph="&#xe76f;" />
+          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe76f;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
     </ui:NavigationView.MenuItems>
