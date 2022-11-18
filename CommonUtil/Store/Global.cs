@@ -5,9 +5,13 @@ using System.IO;
 
 namespace CommonUtil.Store;
 
-public class Global {
-    public static readonly string AppTitle = "工具集";
-    public static readonly string ImagePath = "/Resource/image/";
+public static class Global {
+    /// <summary>
+    /// 多任务并发数
+    /// </summary>
+    public const int ConcurrentTaskCount = 8;
+    public const string AppTitle = "工具集";
+    public const string ImagePath = "/Resource/image/";
     /// <summary>
     /// 当前可执行文件目录别名
     /// </summary>
@@ -57,7 +61,6 @@ public class Global {
         new() { Name = "集合工具", ImagePath = ImagePath + "Intersection.png", ClassType = typeof(CollectionToolView) },
         new() { Name = "JSON 数据提取", ImagePath = ImagePath + "json.png", ClassType = typeof(JsonExtractorView) },
     };
-
 }
 
 public struct ToolMenuItem {
