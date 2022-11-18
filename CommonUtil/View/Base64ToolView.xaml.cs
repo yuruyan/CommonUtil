@@ -1,7 +1,10 @@
 ﻿using CommonUITools.Utils;
 using CommonUtil.Core;
+using CommonUtil.Store;
 using Microsoft.Win32;
 using NLog;
+using NPOI.HPSF;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +21,22 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
-    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(Base64ToolView), new PropertyMetadata(string.Empty));
-    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(true));
+    private static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
+    private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
+    private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
+    /// <summary>
+    /// 保存文件对话框
+    /// </summary>
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "All Files|*.*"
+    };
+    /// <summary>
+    /// 保存目录对话框
+    /// </summary>
+    private readonly VistaFolderBrowserDialog SaveDirectoryDialog = new() {
+        Description = "选择保存目录",
+        UseDescriptionForTitle = true
     };
 
     /// <summary>
@@ -41,47 +54,58 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         set { SetValue(OutputTextProperty, value); }
     }
     /// <summary>
-    /// 是否有文件
-    /// </summary>
-    public bool HasFile {
-        get { return (bool)GetValue(HasFileProperty); }
-        set { SetValue(HasFileProperty, value); }
-    }
-    /// <summary>
-    /// 文件名
-    /// </summary>
-    public string FileName {
-        get { return (string)GetValue(FileNameProperty); }
-        set { SetValue(FileNameProperty, value); }
-    }
-    /// <summary>
     /// 是否扩宽
     /// </summary>
-    public bool IsExpanded {
+    private bool IsExpanded {
         get { return (bool)GetValue(IsExpandedProperty); }
         set { SetValue(IsExpandedProperty, value); }
     }
+    /// <summary>
+    /// 是否正在解码
+    /// </summary>
+    private bool IsDecodeRunning {
+        get { return (bool)GetValue(IsDecodeRunningProperty); }
+        set { SetValue(IsDecodeRunningProperty, value); }
+    }
+    /// <summary>
+    /// 是否正在编码
+    /// </summary>
+    private bool IsEncodeRunning {
+        get { return (bool)GetValue(IsEncodeRunningProperty); }
+        set { SetValue(IsEncodeRunningProperty, value); }
+    }
+    /// <summary>
+    /// 解码取消信号
+    /// </summary>
+    private bool IsDecodeCanceled;
+    /// <summary>
+    /// 编码取消信号
+    /// </summary>
+    private bool IsEncodeCanceled;
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window Window = App.Current.MainWindow;
 
     public Base64ToolView() {
         InitializeComponent();
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
+            Window = Window.GetWindow(this);
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
+            IsExpanded = Window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                .AddValueChanged(Window, (_, _) => {
+                    IsExpanded = Window.ActualWidth >= expansionThreshold;
                 });
         });
     }
 
     /// <summary>
-    /// 解码文件
+    /// 解码单个文件
     /// </summary>
-    private async Task DecodeFile() {
-        var filename = FileName;
+    private async Task DecodeOneFile(string filename) {
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
@@ -107,10 +131,120 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     }
 
     /// <summary>
+    /// 解码文件
+    /// </summary>
+    private async Task DecodeFile() {
+        var fileNames = DragDropTextBox.FileNames;
+        if (fileNames.Count == 1) {
+            await DecodeOneFile(fileNames[0]);
+        } else {
+            await DecodeMultiFiles(fileNames);
+        }
+    }
+
+    /// <summary>
     /// 编码文件
     /// </summary>
     private async Task EncodeFile() {
-        var filename = FileName;
+        var fileNames = DragDropTextBox.FileNames;
+        if (fileNames.Count == 1) {
+            await EncodeOneFile(fileNames[0]);
+        } else {
+            await EncodeMultiFiles(fileNames);
+        }
+    }
+
+    /// <summary>
+    /// 编码多个文件
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <returns></returns>
+    private async Task EncodeMultiFiles(ICollection<string> filenames) {
+        // 正在运行
+        if (IsEncodeRunning) {
+            return;
+        }
+        // 选择保存目录
+        if (SaveDirectoryDialog.ShowDialog(Window) != true) {
+            return;
+        }
+        IsEncodeRunning = true;
+        IsEncodeCanceled = false;
+        var saveDirectory = SaveDirectoryDialog.SelectedPath;
+        var tasks = new List<Task>();
+        // 分配任务运行
+        foreach (var files in filenames.Chunk(filenames.Count / Global.ConcurrentTaskCount)) {
+            tasks.Add(Task.Run(() => {
+                foreach (var file in files) {
+                    // 任务取消
+                    if (IsEncodeCanceled) {
+                        return;
+                    }
+                    try {
+                        Base64Tool.Base64EncodeFile(
+                            file,
+                            Path.Combine(saveDirectory, Path.GetFileName(file))
+                        );
+                    } catch (Exception error) {
+                        Logger.Error(error);
+                    }
+                }
+            }));
+        }
+        await Task.WhenAll(tasks);
+        IsEncodeRunning = false;
+        IsEncodeCanceled = false;
+    }
+
+    /// <summary>
+    /// 解码多个文件
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <returns></returns>
+    private async Task DecodeMultiFiles(ICollection<string> filenames) {
+        // 正在运行
+        if (IsDecodeRunning) {
+            return;
+        }
+        // 选择保存目录
+        if (SaveDirectoryDialog.ShowDialog(Window) != true) {
+            return;
+        }
+        IsDecodeRunning = true;
+        IsDecodeCanceled = false;
+        var saveDirectory = SaveDirectoryDialog.SelectedPath;
+        var tasks = new List<Task>();
+        // 分配任务运行
+        foreach (var files in filenames.Chunk(filenames.Count / Global.ConcurrentTaskCount)) {
+            tasks.Add(Task.Run(() => {
+                foreach (var file in files) {
+                    // 任务取消
+                    if (IsDecodeCanceled) {
+                        return;
+                    }
+                    try {
+                        Base64Tool.Base64DecodeFile(
+                            file,
+                            Path.Combine(saveDirectory, Path.GetFileName(file))
+                        );
+                    } catch (Exception error) {
+                        Logger.Error(error);
+                    }
+                }
+            }));
+        }
+        await Task.WhenAll(tasks);
+        IsDecodeRunning = false;
+        IsDecodeCanceled = false;
+    }
+
+    /// <summary>
+    /// 编码单个文件
+    /// </summary>
+    /// <returns></returns>
+    private async Task EncodeOneFile(string filename) {
+        // 选择保存文件
+        SaveFileDialog.FileName = Path.GetFileName(filename);
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
@@ -183,7 +317,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        FileName = OutputText = InputText = string.Empty;
+        OutputText = string.Empty;
         DragDropTextBox.Clear();
     }
 
@@ -193,14 +327,15 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void EncodeClickHandler(object sender, RoutedEventArgs e) {
+        var hasFile = DragDropTextBox.HasFile;
         // 输入检查
-        if (!HasFile && string.IsNullOrEmpty(InputText)) {
+        if (!hasFile && string.IsNullOrEmpty(InputText)) {
             MessageBox.Info("请输入文本");
             return;
         }
 
         // 处理
-        if (!HasFile) {
+        if (!hasFile) {
             EncodeString();
             return;
         }
@@ -213,13 +348,14 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private async void DecodeClickHandler(object sender, RoutedEventArgs e) {
+        var hasFile = DragDropTextBox.HasFile;
         // 输入检查
-        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, hasFile, DragDropTextBox.FileNames)) {
             return;
         }
 
         // 处理
-        if (!HasFile) {
+        if (!hasFile) {
             DecodeString();
             return;
         }
@@ -227,21 +363,22 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     }
 
     /// <summary>
-    /// DragDropEvent
+    /// 取消解码
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void DragDropEventHandler(object sender, object e) {
-        if (e is IEnumerable<string> array) {
-            if (!array.Any()) {
-                return;
-            }
-            // 判断是否为文件
-            if (File.Exists(array.First())) {
-                FileName = array.First();
-            } else {
-                DragDropTextBox.Clear();
-            }
-        }
+    private void CancelDecodeClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        IsDecodeCanceled = true;
+    }
+
+    /// <summary>
+    /// 取消编码
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelEncodeClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        IsEncodeCanceled = true;
     }
 }

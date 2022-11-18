@@ -25,17 +25,7 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input Box  -->
-    <widget:DragDropTextBox
-      Name="DragDropTextBox"
-      DragDropEvent="DragDropEventHandler"
-      HasFile="{Binding HasFile, Mode=TwoWay}">
-      <widget:DragDropTextBox.TextBox>
-        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      </widget:DragDropTextBox.TextBox>
-      <widget:DragDropTextBox.FileView>
-        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-      </widget:DragDropTextBox.FileView>
-    </widget:DragDropTextBox>
+    <widget:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
 
     <!--  Control  -->
     <ui:SimpleStackPanel
@@ -50,14 +40,32 @@
       </ui:SimpleStackPanel.Resources>
 
       <ui:SimpleStackPanel>
-        <widget:IconButton
-          Click="EncodeClickHandler"
-          Icon="&#xe63e;"
-          Text="编码" />
-        <widget:IconButton
-          Click="DecodeClickHandler"
-          Icon="&#xe640;"
-          Text="解码" />
+        <Grid>
+          <widget:IconButton
+            Click="EncodeClickHandler"
+            Icon="&#xe63e;"
+            Text="编码"
+            Visibility="{Binding IsEncodeRunning, Converter={StaticResource HideIfTrueConverter}}" />
+          <widget:IconButton
+            Click="CancelEncodeClickHandler"
+            Icon="&#xe614;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="取消"
+            Visibility="{Binding IsEncodeRunning, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
+        <Grid>
+          <widget:IconButton
+            Click="DecodeClickHandler"
+            Icon="&#xe640;"
+            Text="解码"
+            Visibility="{Binding IsDecodeRunning, Converter={StaticResource HideIfTrueConverter}}" />
+          <widget:IconButton
+            Click="CancelDecodeClickHandler"
+            Icon="&#xe614;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="取消"
+            Visibility="{Binding IsDecodeRunning, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <widget:IconButton
