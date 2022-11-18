@@ -55,6 +55,41 @@ public class Base64Tool {
         => Convert.ToBase64String(File.ReadAllBytes(path));
 
     /// <summary>
+    /// 编码文件
+    /// </summary>
+    /// <param name="inputFile"></param>
+    /// <param name="outputFile"></param>
+    public static void Base64EncodeFile(string inputFile, string outputFile) {
+        using var readStream = File.OpenRead(inputFile);
+        using var writeStream = new StreamWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
+        // 需要是 3 倍
+        var buffer = new byte[1024 * 3];
+        int readCount;
+        // 分批读取
+        while ((readCount = readStream.Read(buffer)) > 0) {
+            writeStream.Write(Convert.ToBase64String(buffer, 0, readCount));
+        }
+    }
+
+    /// <summary>
+    /// 解码文件
+    /// </summary>
+    /// <param name="inputFile"></param>
+    /// <param name="outputFile"></param>
+    public static void Base64DecodeFile(string inputFile, string outputFile) {
+        using var readStream = File.OpenRead(inputFile);
+        using var writeStream = new BinaryWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
+        // 需要是 4 倍
+        var buffer = new byte[1024 * 4];
+        int readCount;
+        // 分批读取
+        while ((readCount = readStream.Read(buffer, 0, buffer.Length)) > 0) {
+            var outData = Convert.FromBase64String(Encoding.ASCII.GetString(buffer, 0, readCount));
+            writeStream.Write(outData);
+        }
+    }
+
+    /// <summary>
     /// base64 转文件
     /// </summary>
     /// <param name="path"></param>
