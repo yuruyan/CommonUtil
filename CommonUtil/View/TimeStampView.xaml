@@ -83,20 +83,18 @@
         </ComboBox>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel Name="TimeStampToStringPanel" HorizontalAlignment="Right">
-        <widget:ToggleBox IsOn="{Binding IsExpanded}">
-          <widget:ToggleBox.OnContent>
-            <widget:IconButton
-              Click="TimeStampToStringClick"
-              Icon="&#xe606;"
-              Text="转换" />
-          </widget:ToggleBox.OnContent>
-          <widget:ToggleBox.OffContent>
-            <widget:IconButton
-              Click="TimeStampToStringClick"
-              Icon="&#xfbdd;"
-              Text="转换" />
-          </widget:ToggleBox.OffContent>
-        </widget:ToggleBox>
+        <Grid>
+          <widget:IconButton
+            Click="TimeStampToStringClick"
+            Icon="&#xe606;"
+            Text="转换"
+            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
+          <widget:IconButton
+            Click="TimeStampToStringClick"
+            Icon="&#xfbdd;"
+            Text="转换"
+            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
+        </Grid>
         <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding TimeStampToStringOutput}" />
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
@@ -112,20 +110,18 @@
         </ComboBox>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel Name="StringToTimeStampPanel" HorizontalAlignment="Right">
-        <widget:ToggleBox IsOn="{Binding IsExpanded}">
-          <widget:ToggleBox.OnContent>
-            <widget:IconButton
-              Click="StringToTimeStampClick"
-              Icon="&#xe606;"
-              Text="转换" />
-          </widget:ToggleBox.OnContent>
-          <widget:ToggleBox.OffContent>
-            <widget:IconButton
-              Click="StringToTimeStampClick"
-              Icon="&#xfbdd;"
-              Text="转换" />
-          </widget:ToggleBox.OffContent>
-        </widget:ToggleBox>
+        <Grid>
+          <widget:IconButton
+            Click="StringToTimeStampClick"
+            Icon="&#xe606;"
+            Text="转换"
+            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
+          <widget:IconButton
+            Click="StringToTimeStampClick"
+            Icon="&#xfbdd;"
+            Text="转换"
+            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
+        </Grid>
         <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding StringToTimeStampOutput}" />
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
