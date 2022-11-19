@@ -173,7 +173,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         var saveDirectory = SaveDirectoryDialog.SelectedPath;
         var tasks = new List<Task>();
         // 分配任务运行
-        foreach (var files in filenames.Chunk(filenames.Count / Global.ConcurrentTaskCount)) {
+        foreach (var files in filenames.Chunk((int)Math.Ceiling(filenames.Count / (double)Global.ConcurrentTaskCount))) {
             tasks.Add(Task.Run(() => {
                 foreach (var file in files) {
                     // 任务取消
@@ -215,7 +215,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         var saveDirectory = SaveDirectoryDialog.SelectedPath;
         var tasks = new List<Task>();
         // 分配任务运行
-        foreach (var files in filenames.Chunk(filenames.Count / Global.ConcurrentTaskCount)) {
+        foreach (var files in filenames.Chunk((int)Math.Ceiling(filenames.Count / (double)Global.ConcurrentTaskCount))) {
             tasks.Add(Task.Run(() => {
                 foreach (var file in files) {
                     // 任务取消
