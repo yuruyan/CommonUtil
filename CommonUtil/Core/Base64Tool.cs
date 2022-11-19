@@ -62,6 +62,7 @@ public static class Base64Tool {
     /// <param name="outputFile"></param>
     /// <param name="token"></param>
     /// <param name="callback">回调</param>
+    /// <returns>编码后文件长度，任务取消返回 0</returns>
     public static long Base64EncodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new StreamWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
@@ -90,6 +91,7 @@ public static class Base64Tool {
     /// <param name="outputFile"></param>
     /// <param name="token"></param>
     /// <param name="callback">回调</param>
+    /// <returns>解码后文件长度，任务取消返回 0</returns>
     public static long Base64DecodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new BinaryWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
