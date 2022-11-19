@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace CommonUtil.Core;
 
@@ -59,7 +60,8 @@ public class Base64Tool {
     /// </summary>
     /// <param name="inputFile"></param>
     /// <param name="outputFile"></param>
-    public static void Base64EncodeFile(string inputFile, string outputFile) {
+    /// <param name="token"></param>
+    public static void Base64EncodeFile(string inputFile, string outputFile, CancellationToken? token = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new StreamWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
         // 需要是 3 倍
@@ -67,6 +69,10 @@ public class Base64Tool {
         int readCount;
         // 分批读取
         while ((readCount = readStream.Read(buffer)) > 0) {
+            // 中断
+            if (token?.IsCancellationRequested == true) {
+                return;
+            }
             writeStream.Write(Convert.ToBase64String(buffer, 0, readCount));
         }
     }
@@ -76,7 +82,8 @@ public class Base64Tool {
     /// </summary>
     /// <param name="inputFile"></param>
     /// <param name="outputFile"></param>
-    public static void Base64DecodeFile(string inputFile, string outputFile) {
+    /// <param name="token"></param>
+    public static void Base64DecodeFile(string inputFile, string outputFile, CancellationToken? token = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new BinaryWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
         // 需要是 4 倍
@@ -84,6 +91,10 @@ public class Base64Tool {
         int readCount;
         // 分批读取
         while ((readCount = readStream.Read(buffer, 0, buffer.Length)) > 0) {
+            // 中断
+            if (token?.IsCancellationRequested == true) {
+                return;
+            }
             var outData = Convert.FromBase64String(Encoding.ASCII.GetString(buffer, 0, readCount));
             writeStream.Write(outData);
         }
