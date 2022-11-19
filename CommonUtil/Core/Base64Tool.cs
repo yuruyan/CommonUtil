@@ -62,7 +62,7 @@ public static class Base64Tool {
     /// <param name="outputFile"></param>
     /// <param name="token"></param>
     /// <param name="callback">回调</param>
-    public static void Base64EncodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
+    public static long Base64EncodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new StreamWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
         // 需要是 3 倍
@@ -73,13 +73,14 @@ public static class Base64Tool {
         while ((readCount = readStream.Read(buffer)) > 0) {
             // 中断
             if (token?.IsCancellationRequested == true) {
-                return;
+                return 0;
             }
             totalReadCount += readCount;
             callback?.Invoke((double)totalReadCount / totalLength);
             writeStream.Write(Convert.ToBase64String(buffer, 0, readCount));
         }
         callback?.Invoke(1);
+        return writeStream.BaseStream.Length;
     }
 
     /// <summary>
@@ -89,7 +90,7 @@ public static class Base64Tool {
     /// <param name="outputFile"></param>
     /// <param name="token"></param>
     /// <param name="callback">回调</param>
-    public static void Base64DecodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
+    public static long Base64DecodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
         using var readStream = File.OpenRead(inputFile);
         using var writeStream = new BinaryWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
         // 需要是 4 倍
@@ -100,7 +101,7 @@ public static class Base64Tool {
         while ((readCount = readStream.Read(buffer, 0, buffer.Length)) > 0) {
             // 中断
             if (token?.IsCancellationRequested == true) {
-                return;
+                return 0;
             }
             totalReadCount += readCount;
             callback?.Invoke((double)totalReadCount / totalLength);
@@ -108,6 +109,7 @@ public static class Base64Tool {
             writeStream.Write(outData);
         }
         callback?.Invoke(1);
+        return writeStream.BaseStream.Length;
     }
 
     /// <summary>
