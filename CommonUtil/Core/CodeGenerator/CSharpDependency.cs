@@ -33,7 +33,7 @@ public class CSharpDependencyGenerator {
                 .AppendLine($"{Indent}}}");
             staticSb.AppendLine($"{Indent}public static readonly DependencyProperty {type.Name}Property = DependencyProperty.Register(\"{type.Name}\", typeof({type.Type}), typeof({className}), new PropertyMetadata({type.Value}));");
         }
-        string doClass = new StringBuilder($"public class {className} {{\n")
+        string doClass = new StringBuilder($"public class {className} : DependencyObject {{\n")
             .AppendLine(staticSb.ToString())
             .Append(propertySb)
             .AppendLine("}")
