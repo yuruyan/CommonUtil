@@ -1,9 +1,23 @@
-﻿using CommonUtil.View;
+﻿using CommonUITools.Model;
+using CommonUtil.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace CommonUtil.Store;
+
+public struct ToolMenuItem {
+    public string Name { get; set; } = string.Empty;
+    public string ImagePath { get; set; } = string.Empty;
+    public Type ClassType { get; set; } = default!;
+
+    public ToolMenuItem() { }
+
+    public override string ToString() {
+        return $"{{{nameof(Name)}={Name}, {nameof(ImagePath)}={ImagePath}, {nameof(ClassType)}={ClassType}}}";
+    }
+}
 
 public static class Global {
     /// <summary>
@@ -63,15 +77,46 @@ public static class Global {
     };
 }
 
-public struct ToolMenuItem {
-    public string Name { get; set; } = string.Empty;
-    public string ImagePath { get; set; } = string.Empty;
-    public Type ClassType { get; set; } = default!;
+public static class GlobalUtils {
+    /// <summary>
+    /// 更新 ProcessStatus Status，如果是 Successful 则同时设置 Process 为 1
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="result"></param>
+    /// <remarks>可在任意线程调用</remarks>
+    public static void UpdateProcessStatus(FileProcessStatus status, ProcessResult result) {
+        App.Current.Dispatcher.Invoke(() => {
+            status.Status = result;
+            if (result == ProcessResult.Successful) {
+                status.Process = 1;
+            }
+        });
+    }
 
-    public ToolMenuItem() { }
+    /// <summary>
+    /// 更新 ProcessStatus Status，如果任务没有取消则设置为 Successful 并设置 Process 为 1
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="token"></param>
+    /// <remarks>可在任意线程调用</remarks>
+    public static void UpdateProcessStatus(FileProcessStatus status, CancellationToken token) {
+        App.Current.Dispatcher.Invoke(() => {
+            if (token.IsCancellationRequested) {
+                status.Status = ProcessResult.Interrupted;
+            } else {
+                status.Status = ProcessResult.Successful;
+                status.Process = 1;
+            }
+        });
+    }
 
-    public override string ToString() {
-        return $"{{{nameof(Name)}={Name}, {nameof(ImagePath)}={ImagePath}, {nameof(ClassType)}={ClassType}}}";
+    /// <summary>
+    /// 更新 ProcessStatus Process
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="process"></param>
+    /// <remarks>可在任意线程调用</remarks>
+    public static void UpdateProcessStatus(FileProcessStatus status, double process) {
+        App.Current.Dispatcher.Invoke(() => status.Process = process);
     }
 }
-
