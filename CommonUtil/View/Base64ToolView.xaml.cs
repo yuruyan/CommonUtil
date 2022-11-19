@@ -111,23 +111,72 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         }
         var savePath = SaveFileDialog.FileName;
         // 解码
-        await Task.Run(async () => {
+        await Task.Run(() => {
             try {
-                var result = Base64Tool.Base64DecodeFile(filename);
-                // 保存文件
-                try {
-                    await File.WriteAllBytesAsync(savePath, result);
-                    // 通知
-                    UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
-                } catch {
-                    MessageBox.Error("文件保存失败");
-                }
+                Base64Tool.Base64DecodeFile(filename, savePath);
+                // 通知
+                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             } catch (IOException) {
-                MessageBox.Error("文件读取失败");
+                MessageBox.Error("文件读取或保存失败");
             } catch (Exception) {
                 MessageBox.Error("解码失败");
             }
         });
+    }
+
+    /// <summary>
+    /// 编码单个文件
+    /// </summary>
+    /// <returns></returns>
+    private async Task EncodeOneFile(string filename) {
+        // 选择保存文件
+        SaveFileDialog.FileName = Path.GetFileName(filename);
+        if (SaveFileDialog.ShowDialog() != true) {
+            return;
+        }
+        var savePath = SaveFileDialog.FileName;
+        // 编码
+        await Task.Run(() => {
+            try {
+                Base64Tool.Base64EncodeFile(filename, savePath);
+                // 通知
+                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
+            } catch (IOException) {
+                MessageBox.Error("文件读取或写入失败");
+            } catch (Exception) {
+                MessageBox.Error("编码失败");
+            }
+        });
+    }
+
+    /// <summary>
+    /// 字符串解码
+    /// </summary>
+    private void DecodeString() {
+        if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
+            return;
+        }
+        string? output = CommonUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
+        if (output is null) {
+            MessageBox.Error("解码失败");
+            return;
+        }
+        OutputText = output;
+    }
+
+    /// <summary>
+    /// 字符串编码
+    /// </summary>
+    private void EncodeString() {
+        if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
+            return;
+        }
+        string? output = CommonUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
+        if (output is null) {
+            MessageBox.Error("编码失败");
+            return;
+        }
+        OutputText = output;
     }
 
     /// <summary>
@@ -236,67 +285,6 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         await Task.WhenAll(tasks);
         IsDecodeRunning = false;
         IsDecodeCanceled = false;
-    }
-
-    /// <summary>
-    /// 编码单个文件
-    /// </summary>
-    /// <returns></returns>
-    private async Task EncodeOneFile(string filename) {
-        // 选择保存文件
-        SaveFileDialog.FileName = Path.GetFileName(filename);
-        if (SaveFileDialog.ShowDialog() != true) {
-            return;
-        }
-        var savePath = SaveFileDialog.FileName;
-        // 编码
-        await Task.Run(async () => {
-            try {
-                string result = Base64Tool.Base64EncodeFile(filename);
-                // 保存文件
-                try {
-                    await File.WriteAllTextAsync(savePath, result);
-                    // 通知
-                    UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "编码文件成功");
-                } catch {
-                    MessageBox.Error("文件保存失败");
-                }
-            } catch (IOException) {
-                MessageBox.Error("文件读取失败");
-            } catch (Exception) {
-                MessageBox.Error("编码失败");
-            }
-        });
-    }
-
-    /// <summary>
-    /// 字符串解码
-    /// </summary>
-    private void DecodeString() {
-        if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
-            return;
-        }
-        string? output = CommonUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
-        if (output is null) {
-            MessageBox.Error("解码失败");
-            return;
-        }
-        OutputText = output;
-    }
-
-    /// <summary>
-    /// 字符串编码
-    /// </summary>
-    private void EncodeString() {
-        if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
-            return;
-        }
-        string? output = CommonUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
-        if (output is null) {
-            MessageBox.Error("编码失败");
-            return;
-        }
-        OutputText = output;
     }
 
     /// <summary>
