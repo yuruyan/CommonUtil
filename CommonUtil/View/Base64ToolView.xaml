@@ -80,11 +80,14 @@
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
 
-    <!--  Output Box  -->
-    <TextBox
-      Grid.Row="2"
-      IsReadOnly="True"
-      Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText}" />
+    <!--  Output  -->
+    <Grid Grid.Row="2">
+      <widget:FileProcessStatusWidget FileProcessStatusList="{Binding FileProcessStatuses}" Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
+      <TextBox
+        IsReadOnly="True"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding OutputText}"
+        Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfNotZeroConverter}}" />
+    </Grid>
   </Grid>
 </Page>
