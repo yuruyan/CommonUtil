@@ -125,15 +125,18 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         // 解码
         await Task.Run(() => {
             try {
-                Base64Tool.Base64DecodeFile(
-                    filename,
-                    savePath,
-                    DecodeCancellationTokenSource.Token,
-                    proc => ThrottleUtils.Throttle(status, () => {
-                        GlobalUtils.UpdateProcessStatus(status, proc);
-                    })
+                GlobalUtils.UpdateProcessStatus(
+                    status,
+                    EncodeCancellationTokenSource.Token,
+                    Base64Tool.Base64DecodeFile(
+                        filename,
+                        savePath,
+                        DecodeCancellationTokenSource.Token,
+                        proc => ThrottleUtils.Throttle(status, () => {
+                            GlobalUtils.UpdateProcessStatus(status, proc);
+                        })
+                    )
                 );
-                GlobalUtils.UpdateProcessStatus(status, EncodeCancellationTokenSource.Token);
                 // 通知
                 UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             } catch (IOException) {
@@ -166,15 +169,18 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         // 编码
         await Task.Run(() => {
             try {
-                Base64Tool.Base64EncodeFile(
-                    filename,
-                    savePath,
+                GlobalUtils.UpdateProcessStatus(
+                    status,
                     EncodeCancellationTokenSource.Token,
-                    proc => ThrottleUtils.Throttle(status, () => {
-                        GlobalUtils.UpdateProcessStatus(status, proc);
-                    })
+                    Base64Tool.Base64EncodeFile(
+                        filename,
+                        savePath,
+                        EncodeCancellationTokenSource.Token,
+                        proc => ThrottleUtils.Throttle(status, () => {
+                            GlobalUtils.UpdateProcessStatus(status, proc);
+                        })
+                    )
                 );
-                GlobalUtils.UpdateProcessStatus(status, EncodeCancellationTokenSource.Token);
                 // 通知
                 UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             } catch (IOException) {
@@ -262,9 +268,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         Logger.Info("编码任务取消");
                         return;
                     }
+                    var outputFile = Path.Combine(saveDirectory, Path.GetFileName(file));
                     var status = Dispatcher.Invoke(() => {
                         var status = new FileProcessStatus() {
-                            FileName = file,
+                            FileName = outputFile,
                             Status = ProcessResult.Processing
                         };
                         FileProcessStatuses.Add(status);
@@ -272,15 +279,18 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                     });
 
                     try {
-                        Base64Tool.Base64EncodeFile(
-                            file,
-                            Path.Combine(saveDirectory, Path.GetFileName(file)),
+                        GlobalUtils.UpdateProcessStatus(
+                            status,
                             EncodeCancellationTokenSource.Token,
-                            proc => ThrottleUtils.Throttle(status, () => {
-                                GlobalUtils.UpdateProcessStatus(status, proc);
-                            })
+                            Base64Tool.Base64EncodeFile(
+                                file,
+                                outputFile,
+                                EncodeCancellationTokenSource.Token,
+                                proc => ThrottleUtils.Throttle(status, () => {
+                                    GlobalUtils.UpdateProcessStatus(status, proc);
+                                })
+                            )
                         );
-                        GlobalUtils.UpdateProcessStatus(status, EncodeCancellationTokenSource.Token);
                     } catch (Exception error) {
                         Logger.Error(error);
                         GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
@@ -312,9 +322,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         Logger.Info("解码任务取消");
                         return;
                     }
+                    var outputFile = Path.Combine(saveDirectory, Path.GetFileName(file));
                     var status = Dispatcher.Invoke(() => {
                         var status = new FileProcessStatus() {
-                            FileName = file,
+                            FileName = outputFile,
                             Status = ProcessResult.Processing
                         };
                         FileProcessStatuses.Add(status);
@@ -322,15 +333,18 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                     });
 
                     try {
-                        Base64Tool.Base64DecodeFile(
-                            file,
-                            Path.Combine(saveDirectory, Path.GetFileName(file)),
+                        GlobalUtils.UpdateProcessStatus(
+                            status,
                             DecodeCancellationTokenSource.Token,
-                            proc => ThrottleUtils.Throttle(status, () => {
-                                GlobalUtils.UpdateProcessStatus(status, proc);
-                            })
+                            Base64Tool.Base64DecodeFile(
+                                file,
+                                outputFile,
+                                DecodeCancellationTokenSource.Token,
+                                proc => ThrottleUtils.Throttle(status, () => {
+                                    GlobalUtils.UpdateProcessStatus(status, proc);
+                                })
+                            )
                         );
-                        GlobalUtils.UpdateProcessStatus(status, DecodeCancellationTokenSource.Token);
                     } catch (Exception error) {
                         Logger.Error(error);
                         GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);

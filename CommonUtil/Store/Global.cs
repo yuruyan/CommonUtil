@@ -94,18 +94,20 @@ public static class GlobalUtils {
     }
 
     /// <summary>
-    /// 更新 ProcessStatus Status，如果任务没有取消则设置为 Successful 并设置 Process 为 1
+    /// 更新 ProcessStatus,如果任务没有取消则设置Status = Successful, Process = 1, FileSize = fileSize
     /// </summary>
     /// <param name="status"></param>
     /// <param name="token"></param>
+    /// <param name="fileSize"></param>
     /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatus(FileProcessStatus status, CancellationToken token) {
+    public static void UpdateProcessStatus(FileProcessStatus status, CancellationToken token, long fileSize) {
         App.Current.Dispatcher.Invoke(() => {
             if (token.IsCancellationRequested) {
                 status.Status = ProcessResult.Interrupted;
             } else {
                 status.Status = ProcessResult.Successful;
                 status.Process = 1;
+                status.FileSize = fileSize;
             }
         });
     }
