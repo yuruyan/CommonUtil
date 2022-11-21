@@ -25,7 +25,7 @@ public class RegexExtraction {
         try {
             re = new Regex(
                 regex,
-                (ignoreCase ? RegexOptions.IgnoreCase : RegexOptions.None) | RegexOptions.ECMAScript
+                (ignoreCase ? RegexOptions.IgnoreCase : RegexOptions.None) | RegexOptions.ECMAScript | RegexOptions.Multiline
             );
         } catch {
             return null;
