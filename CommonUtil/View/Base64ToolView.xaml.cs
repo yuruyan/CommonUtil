@@ -137,8 +137,6 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-                // 通知
-                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             } catch (IOException) {
                 MessageBox.Error("文件读取或保存失败");
                 GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
@@ -147,6 +145,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
             }
         });
+        // 通知
+        if (status.Status == ProcessResult.Successful) {
+            UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
+        }
     }
 
     /// <summary>
@@ -181,8 +183,6 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-                // 通知
-                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             } catch (IOException) {
                 MessageBox.Error("文件读取或写入失败");
                 GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
@@ -191,6 +191,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                 GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
             }
         });
+        // 通知
+        if (status.Status == ProcessResult.Successful) {
+            UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
+        }
     }
 
     /// <summary>
