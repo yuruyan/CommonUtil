@@ -25,9 +25,6 @@
     <None Update="Resource\ok.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resource\ok.png.base64">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Temp\Demo.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
