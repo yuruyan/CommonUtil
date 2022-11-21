@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace CommonUtil.Core;
@@ -47,26 +46,16 @@ public class IdiomMatching {
     }
 
     private static readonly IReadOnlyDictionary<char, List<string>> WordDict;
-    private static readonly Random Random = new();
-    private static readonly string WordSourcePath = "resource/idioms.txt";
-    private static readonly int MaxLayer = 16;
+    /// <summary>
+    /// 最大接龙个数
+    /// </summary>
+    private const int MaxLayer = 16;
 
     static IdiomMatching() {
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-        IEnumerable<string> wordList = null;
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-        // 加载失败则退出程序
-        try {
-            wordList = File.ReadAllLines(WordSourcePath);
-        } catch (Exception e) {
-            Logger.Fatal(e);
-            App.Current.Shutdown();
-        }
         var wordDict = new Dictionary<char, List<string>>();
-#pragma warning disable CS8604 // Possible null reference argument.
-        wordList = wordList.Select(x => x.Trim()).Where(s => s.Any());
+        var wordList = Resource.Resource.Idioms
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         idiomList = new List<string>(wordList);
-#pragma warning restore CS8604 // Possible null reference argument.
         foreach (var word in wordList) {
             char c = word.First();
             if (!wordDict.ContainsKey(c)) {
@@ -138,7 +127,7 @@ public class IdiomMatching {
             while (foundNum.Count < matches.Count) {
                 int index;
                 // 选择未查找的索引
-                while (foundNum.Contains(index = Random.Next(matches.Count)))
+                while (foundNum.Contains(index = Random.Shared.Next(matches.Count)))
                     ;
                 foundNum.Add(index);
                 var tMatch = matches[index]; // 一级匹配
@@ -151,7 +140,7 @@ public class IdiomMatching {
         }
         // 一级匹配列表所有词都没有后继，则随机选择
         if (!found) {
-            match = matches[Random.Next(matches.Count)];
+            match = matches[Random.Shared.Next(matches.Count)];
         }
         ancestors.Add(match); // 添加到已选择的列表
         var idiom = new Idiom(root.Layer + 1, match);
