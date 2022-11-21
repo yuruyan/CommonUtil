@@ -52,8 +52,19 @@ public static class Base64Tool {
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
+    /// <remarks>文件会全部加载进内存，适合小文件</remarks>
     public static string Base64EncodeFile(string path)
         => Convert.ToBase64String(File.ReadAllBytes(path));
+
+    /// <summary>
+    /// base64 转文件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    /// <remarks>文件会全部加载进内存，适合小文件</remarks>
+    public static byte[] Base64DecodeFile(string path) {
+        return Convert.FromBase64String(File.ReadAllText(path));
+    }
 
     /// <summary>
     /// 编码文件
@@ -114,15 +125,6 @@ public static class Base64Tool {
         callback?.Invoke(1);
         writeStream.Flush();
         return writeStream.BaseStream.Length;
-    }
-
-    /// <summary>
-    /// base64 转文件
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
-    public static byte[] Base64DecodeFile(string path) {
-        return Convert.FromBase64String(File.ReadAllText(path));
     }
 
     /// <summary>
