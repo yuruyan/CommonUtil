@@ -81,6 +81,7 @@ public static class Base64Tool {
             writeStream.Write(Convert.ToBase64String(buffer, 0, readCount));
         }
         callback?.Invoke(1);
+        writeStream.Flush();
         return writeStream.BaseStream.Length;
     }
 
@@ -111,6 +112,7 @@ public static class Base64Tool {
             writeStream.Write(outData);
         }
         callback?.Invoke(1);
+        writeStream.Flush();
         return writeStream.BaseStream.Length;
     }
 
