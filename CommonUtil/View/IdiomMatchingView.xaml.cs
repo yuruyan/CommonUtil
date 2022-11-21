@@ -33,6 +33,7 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
 
     public IdiomMatchingView() {
         InitializeComponent();
+        Task.Run(() => IdiomMatching.InitializeExplicitly());
     }
 
     /// <summary>
