@@ -19,7 +19,9 @@ public partial class App : Application {
         base.OnStartup(e);
         var mainWindow = new MainWindow();
         // 显式初始化 FileIcon
-        UIUtils.SetLoadedOnceEventHandler(mainWindow, (_, _) => FileIconUtils.InitializeExplicitly());
+        UIUtils.SetLoadedOnceEventHandler(mainWindow, (_, _) => {
+            Task.Run(() => FileIconUtils.InitializeExplicitly());
+        });
         mainWindow.Show();
         #region 全局错误处理
         // UI线程未捕获异常处理事件
