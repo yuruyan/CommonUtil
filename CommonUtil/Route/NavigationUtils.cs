@@ -56,6 +56,10 @@ internal static class NavigationUtils {
 
     private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
 
+    private static readonly IDictionary<Window, WindowState> WindowPreviousStateDict = new Dictionary<Window, WindowState>();
+
+    private static readonly IDictionary<Window, object> WindowKeyDict = new Dictionary<Window, object>();
+
     /// <summary>
     /// 启用响应式 NavigationView 布局
     /// </summary>
@@ -93,13 +97,23 @@ internal static class NavigationUtils {
             GetNavigationViewShrinkStoryboard(navigationView)
         );
         var window = Window.GetWindow(navigationView);
+        #region 设置 Dict
+        if (!WindowKeyDict.ContainsKey(window)) {
+            WindowKeyDict[window] = new object();
+        }
+        WindowPreviousStateDict[window] = window.WindowState;
+        #endregion
         BeginStoryBoard(window, new NavigationView[] { navigationView });
-        // 同时执行所有动画
-        CommonUtils.EnsureCalledOnce(NavigationViewInfoDict[navigationView], () => {
+        // 每个Window执行一次，同时执行所有动画
+        CommonUtils.EnsureCalledOnce(WindowKeyDict[window], () => {
             DependencyPropertyDescriptor
                 .FromProperty(Window.WindowStateProperty, typeof(Window))
                 .AddValueChanged(window, (_, _) => {
-                    BeginStoryBoard(window, NavigationViewInfoDict.Keys);
+                    // 从最小化变化而来则不执行
+                    if (WindowPreviousStateDict[window] != WindowState.Minimized) {
+                        BeginStoryBoard(window, NavigationViewInfoDict.Keys);
+                    }
+                    WindowPreviousStateDict[window] = window.WindowState;
                 });
         });
     }
