@@ -91,34 +91,16 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
     }
 
     /// <summary>
-    /// 复制当前行
+    /// 复制
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void CopyCurrentResultClickHandler(object sender, RoutedEventArgs e) {
+    private void CopyResultClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (sender is FrameworkElement element) {
-            Clipboard.SetDataObject(element.DataContext);
-            CommonUITools.Widget.MessageBox.Success("已复制");
-        }
+        Clipboard.SetDataObject(string.Join(
+            '\n',
+            ResultListBox.SelectedItems.Cast<string>()
+        ));
+        CommonUITools.Widget.MessageBox.Success("已复制");
     }
-
-    /// <summary>
-    /// 复制所有行
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void CopyAllResultsClickHandler(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        if (ResultListBox.ItemsSource is IEnumerable<string> list) {
-            var sb = new StringBuilder();
-            foreach (var item in list) {
-                sb.AppendLine(item);
-            }
-            Clipboard.SetDataObject(sb.ToString());
-            CommonUITools.Widget.MessageBox.Success("已复制");
-        }
-    }
-
 }
-

@@ -8,12 +8,13 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="IdiomMatchingView"
+  Margin="0,8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
 
-  <Grid Margin="8,8,0,8">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
       <RowDefinition />
@@ -43,7 +44,8 @@
     <ListBox
       x:Name="ResultListBox"
       Grid.Row="1"
-      ItemsSource="{Binding MatchList}">
+      ItemsSource="{Binding MatchList}"
+      SelectionMode="Extended">
       <ListBox.ItemContainerStyle>
         <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
           <Setter Property="Padding" Value="4,0,4,0" />
@@ -60,13 +62,8 @@
         <DataTemplate>
           <TextBlock Padding="0,12" Text="{Binding}">
             <TextBlock.ContextMenu>
-              <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
-                <MenuItem Click="CopyCurrentResultClickHandler" Header="复制">
-                  <MenuItem.Icon>
-                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
-                  </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Click="CopyAllResultsClickHandler" Header="复制全部">
+              <ContextMenu>
+                <MenuItem Click="CopyResultClickHandler" Header="复制">
                   <MenuItem.Icon>
                     <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
                   </MenuItem.Icon>
