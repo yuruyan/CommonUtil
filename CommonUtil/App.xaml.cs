@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using CommonUITools.Utils;
+using NLog;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,8 +17,10 @@ public partial class App : Application {
 
     protected override void OnStartup(StartupEventArgs e) {
         base.OnStartup(e);
-        new MainWindow().Show();
-
+        var mainWindow = new MainWindow();
+        // 显式初始化 FileIcon
+        UIUtils.SetLoadedOnceEventHandler(mainWindow, (_, _) => FileIconUtils.InitializeExplicitly());
+        mainWindow.Show();
         #region 全局错误处理
         // UI线程未捕获异常处理事件
         Current.DispatcherUnhandledException += GlobalDispatcherUnhandledException;
