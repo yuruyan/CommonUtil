@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CommonUtil.Core;
 
-public class IdiomMatching {
+public static class IdiomMatching {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public class Idiom {
@@ -40,9 +40,9 @@ public class IdiomMatching {
         }
     }
 
-    private static readonly IReadOnlyCollection<string> idiomList;
+    private static readonly IReadOnlyCollection<string> _IdiomList;
     public static IReadOnlyCollection<string> IdiomList {
-        get { return idiomList; }
+        get { return _IdiomList; }
     }
 
     private static readonly IReadOnlyDictionary<char, List<string>> WordDict;
@@ -55,7 +55,7 @@ public class IdiomMatching {
         var wordDict = new Dictionary<char, List<string>>();
         var wordList = Resource.Resource.Idioms
             .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        idiomList = new List<string>(wordList);
+        _IdiomList = new List<string>(wordList);
         foreach (var word in wordList) {
             char c = word.First();
             if (!wordDict.ContainsKey(c)) {
@@ -64,7 +64,13 @@ public class IdiomMatching {
             wordDict[c].Add(word);
         }
         WordDict = wordDict;
+        Logger.Debug("加载成语完毕");
     }
+
+    /// <summary>
+    /// 显式初始化，默认隐式初始化
+    /// </summary>
+    public static void InitializeExplicitly() => _ = _IdiomList;
 
     /// <summary>
     /// 获取匹配列表
@@ -148,5 +154,3 @@ public class IdiomMatching {
         FindNext(idiom, ancestors);
     }
 }
-
-
