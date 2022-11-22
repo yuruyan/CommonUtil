@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using NLog;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace CommonUtil.Core;
@@ -10,12 +10,29 @@ namespace CommonUtil.Core;
 /// <summary>
 /// 简繁体转换
 /// </summary>
-public class ChineseTransform {
+public static class ChineseTransform {
     private static Logger Logger = LogManager.GetCurrentClassLogger();
-    private static Dictionary<string, string> TraditionalSimplifiedMap = new();
-    private static Dictionary<string, string> SimplifiedTraditionalMap = new();
-    private static readonly string SourcePath = "./resource/wordmap.json";
-    private static bool IsLoaded = false;
+    private static readonly IDictionary<string, string> TraditionalSimplifiedMap;
+    private static readonly IDictionary<string, string> SimplifiedTraditionalMap;
+
+    /// <summary>
+    /// 加载数据
+    /// </summary>
+    static ChineseTransform() {
+        TraditionalSimplifiedMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+           Encoding.UTF8.GetString(Resource.Resource.ChineseCharacterMap)
+        )!;
+        SimplifiedTraditionalMap = new Dictionary<string, string>();
+        // 填充 SimplifiedTraditionalMap
+        foreach (var item in TraditionalSimplifiedMap) {
+            SimplifiedTraditionalMap[item.Value] = item.Key;
+        }
+    }
+
+    /// <summary>
+    /// 显式初始化，默认隐式初始化
+    /// </summary>
+    public static void InitializeExplicitly() => _ = TraditionalSimplifiedMap;
 
     /// <summary>
     /// 转繁体字
@@ -23,16 +40,9 @@ public class ChineseTransform {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string ToTraditional(string s) {
-        if (!IsLoaded) {
-            LoadData();
-        }
         var sb = new StringBuilder();
         foreach (var item in s) {
-            if (SimplifiedTraditionalMap.ContainsKey(item.ToString())) {
-                sb.Append(SimplifiedTraditionalMap[item.ToString()]);
-            } else {
-                sb.Append(item);
-            }
+            sb.Append(SimplifiedTraditionalMap.TryGetValue(item.ToString(), out var value) ? value : item);
         }
         return sb.ToString();
     }
@@ -43,16 +53,9 @@ public class ChineseTransform {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string ToSimplified(string s) {
-        if (!IsLoaded) {
-            LoadData();
-        }
         var sb = new StringBuilder();
         foreach (var item in s) {
-            if (TraditionalSimplifiedMap.ContainsKey(item.ToString())) {
-                sb.Append(TraditionalSimplifiedMap[item.ToString()]);
-            } else {
-                sb.Append(item);
-            }
+            sb.Append(TraditionalSimplifiedMap.TryGetValue(item.ToString(), out var value) ? value : item);
         }
         return sb.ToString();
     }
@@ -82,32 +85,6 @@ public class ChineseTransform {
         string? data = null;
         while ((data = reader.ReadLine()) != null) {
             writer.WriteLine(ToSimplified(data));
-        }
-    }
-
-    /// <summary>
-    /// 加载数据
-    /// </summary>
-    private static void LoadData() {
-        lock (typeof(ChineseTransform)) {
-            if (IsLoaded) {
-                return;
-            }
-            try {
-                var s = File.ReadAllText(SourcePath);
-                Dictionary<string, string>? dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(s);
-                // 填充 TraditionalSimplifiedMap
-                if (dict != null) {
-                    TraditionalSimplifiedMap = dict;
-                }
-                // 填充 SimplifiedTraditionalMap
-                foreach (var item in TraditionalSimplifiedMap) {
-                    SimplifiedTraditionalMap[item.Value] = item.Key;
-                }
-            } catch (Exception e) {
-                Logger.Error(e);
-            }
-            IsLoaded = true;
         }
     }
 }
