@@ -45,12 +45,28 @@ public static class ChineseTransform {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string ToTraditional(string s) {
-        var sb = new StringBuilder();
-        foreach (var item in s) {
-            sb.Append(SimplifiedTraditionalMap.TryGetValue(item, out var value) ? value : item);
+    public static string ToTraditional(string s) => new(ToTraditional(s.ToCharArray()));
+
+    /// <summary>
+    /// 转繁体
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns>同 <paramref name="text"/></returns>
+    public static char[] ToTraditional(char[] text) => ToTraditional(text, 0, text.Length);
+
+    /// <summary>
+    /// 转繁体，转换从 <paramref name="startIndex"/> 开始的 <paramref name="count"/> 个字符
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="startIndex">开始索引</param>
+    /// <param name="count">个数</param>
+    /// <returns>同 <paramref name="text"/></returns>
+    public static char[] ToTraditional(char[] text, int startIndex, int count) {
+        for (int i = startIndex; i < startIndex + count; i++) {
+            var ch = text[i];
+            text[i] = SimplifiedTraditionalMap.TryGetValue(ch, out var value) ? value : ch;
         }
-        return sb.ToString();
+        return text;
     }
 
     /// <summary>
@@ -58,12 +74,28 @@ public static class ChineseTransform {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string ToSimplified(string s) {
-        var sb = new StringBuilder();
-        foreach (var item in s) {
-            sb.Append(TraditionalSimplifiedMap.TryGetValue(item, out var value) ? value : item);
+    public static string ToSimplified(string s) => new(ToSimplified(s.ToCharArray()));
+
+    /// <summary>
+    /// 转简体
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns>同 <paramref name="text"/></returns>
+    public static char[] ToSimplified(char[] text) => ToSimplified(text, 0, text.Length);
+
+    /// <summary>
+    /// 转简体，转换从 <paramref name="startIndex"/> 开始的 <paramref name="count"/> 个字符
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="startIndex">开始索引</param>
+    /// <param name="count">个数</param>
+    /// <returns>同 <paramref name="text"/></returns>
+    public static char[] ToSimplified(char[] text, int startIndex, int count) {
+        for (int i = startIndex; i < startIndex + count; i++) {
+            var ch = text[i];
+            text[i] = TraditionalSimplifiedMap.TryGetValue(ch, out var value) ? value : ch;
         }
-        return sb.ToString();
+        return text;
     }
 
     /// <summary>
@@ -74,9 +106,14 @@ public static class ChineseTransform {
     public static void FileToTraditional(string inputPath, string outputPath) {
         using var reader = new StreamReader(inputPath);
         using var writer = new StreamWriter(outputPath);
-        string? data = null;
-        while ((data = reader.ReadLine()) != null) {
-            writer.WriteLine(ToTraditional(data));
+        var buffer = new char[4096];
+        int readCount;
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            writer.Write(
+                ToTraditional(buffer, 0, readCount),
+                0,
+                readCount
+            );
         }
     }
 
@@ -88,9 +125,14 @@ public static class ChineseTransform {
     public static void FileToSimplified(string inputPath, string outputPath) {
         using var reader = new StreamReader(inputPath);
         using var writer = new StreamWriter(outputPath);
-        string? data = null;
-        while ((data = reader.ReadLine()) != null) {
-            writer.WriteLine(ToSimplified(data));
+        var buffer = new char[4096];
+        int readCount;
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            writer.Write(
+                ToSimplified(buffer, 0, readCount),
+                0,
+                readCount
+            );
         }
     }
 }
