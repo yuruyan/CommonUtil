@@ -48,8 +48,8 @@
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
-        <Button Click="ToTraditionalClick" Content="简体转繁体" />
-        <Button Click="ToSimplifiedClick" Content="繁体转简体" />
+        <Button Click="ToTraditionalClick" Content="转繁体" />
+        <Button Click="ToSimplifiedClick" Content="转简体" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <widget:IconButton
