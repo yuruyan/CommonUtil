@@ -87,7 +87,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\ProgramingGetTimeStamp.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Resource\RandomDataSource.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

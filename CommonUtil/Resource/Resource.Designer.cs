@@ -211,5 +211,15 @@ namespace CommonUtil.Resource {
                 return ResourceManager.GetString("JsonExtractorViewDemoPattern", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ProgramingGetTimeStamp {
+            get {
+                object obj = ResourceManager.GetObject("ProgramingGetTimeStamp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

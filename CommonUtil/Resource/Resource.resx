@@ -168,4 +168,7 @@
   <data name="JsonExtractorViewDemoPattern" xml:space="preserve">
     <value>roots/bookmark_bar/children[*]/url</value>
   </data>
+  <data name="ProgramingGetTimeStamp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>programinggettimestamp.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
