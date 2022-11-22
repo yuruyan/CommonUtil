@@ -10,8 +10,14 @@ namespace CommonUtil.Core;
 /// 简繁体转换
 /// </summary>
 public static class ChineseTransform {
-    private static Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    /// <summary>
+    /// (繁体，简体) Dict
+    /// </summary>
     private static readonly IDictionary<string, string> TraditionalSimplifiedMap;
+    /// <summary>
+    /// (简体，繁体) Dict
+    /// </summary>
     private static readonly IDictionary<string, string> SimplifiedTraditionalMap;
 
     /// <summary>
