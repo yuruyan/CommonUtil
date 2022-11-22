@@ -98,6 +98,7 @@ public partial class ChineseTransformView : Page {
     /// </summary>
     private async Task FileToSimplified() {
         var inputPath = FileName;
+        SaveFileDialog.FileName = Path.GetFileName(inputPath);
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
@@ -116,6 +117,7 @@ public partial class ChineseTransformView : Page {
     /// </summary>
     private async Task FileToTraditional() {
         var inputPath = FileName;
+        SaveFileDialog.FileName = Path.GetFileName(inputPath);
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
