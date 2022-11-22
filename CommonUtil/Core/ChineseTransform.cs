@@ -2,7 +2,6 @@
 using NLog;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace CommonUtil.Core;
@@ -27,6 +26,7 @@ public static class ChineseTransform {
         foreach (var item in TraditionalSimplifiedMap) {
             SimplifiedTraditionalMap[item.Value] = item.Key;
         }
+        Logger.Debug("加载中文简繁体完毕");
     }
 
     /// <summary>

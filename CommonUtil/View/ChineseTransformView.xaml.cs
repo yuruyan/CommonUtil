@@ -64,6 +64,8 @@ public partial class ChineseTransformView : Page {
 
     public ChineseTransformView() {
         InitializeComponent();
+        // 后台加载
+        Task.Run(() => ChineseTransform.InitializeExplicitly());
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
