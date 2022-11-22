@@ -73,6 +73,16 @@ namespace CommonUtil.Resource {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ChineseCharacterMap {
+            get {
+                object obj = ResourceManager.GetObject("ChineseCharacterMap", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] CommonRegex {
             get {
                 object obj = ResourceManager.GetObject("CommonRegex", resourceCulture);
