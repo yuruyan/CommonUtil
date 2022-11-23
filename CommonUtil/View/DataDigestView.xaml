@@ -9,7 +9,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="DataDigestView"
-  Margin="8,8,0,8"
+  Margin="8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -28,7 +28,8 @@
     <widget:DragDropTextBox
       Name="DragDropTextBox"
       Margin="0,0,8,0"
-      DragDropEvent="DragDropEventHandler">
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasFile, Mode=OneWayToSource}">
       <widget:DragDropTextBox.TextBox>
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
       </widget:DragDropTextBox.TextBox>
@@ -74,8 +75,8 @@
           Text="清空输入" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-        <TextBlock Text="计算中" Visibility="{Binding RunningProcess, Converter={StaticResource HideIfZeroConverter}}" />
-        <ui:ProgressRing IsActive="{Binding RunningProcess}" />
+        <TextBlock Text="计算中" Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
+        <ui:ProgressRing IsActive="{Binding IsWorking}" />
       </ui:SimpleStackPanel>
     </Grid>
     <!--  输出  -->
@@ -91,7 +92,7 @@
               </Grid.ColumnDefinitions>
               <TextBlock
                 FontWeight="Bold"
-                Foreground="#0A789D"
+                Foreground="{StaticResource HighLightKeywordForeground}"
                 Text="{Binding Key}" />
               <TextBox
                 Grid.Column="1"
@@ -103,10 +104,9 @@
               <TextBlock
                 Grid.Column="2"
                 Padding="0,0,8,0"
-                FontFamily="Consolas"
-                FontWeight="Bold"
-                Foreground="#0A789D"
-                Text="{Binding Value.Process, StringFormat={}{0}%}"
+                FontFamily="{StaticResource ASCIIFontFamily}"
+                Foreground="{StaticResource HighLightKeywordForeground}"
+                Text="{Binding Value.Process, StringFormat='{}{0:P0}'}"
                 Visibility="{Binding Value.Process, Converter={StaticResource ProcessVisibilityConverter}}" />
             </Grid>
           </DataTemplate>

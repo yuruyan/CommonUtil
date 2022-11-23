@@ -3,11 +3,11 @@ using CommonUtil.Core;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,10 +15,13 @@ using System.Windows.Data;
 
 namespace CommonUtil.View;
 
+/// <summary>
+/// 等于 0 或等于 1 时隐藏
+/// </summary>
 internal class ProcessVisibilityConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        short v = System.Convert.ToInt16(value);
-        if (v == 0 || v == 100) {
+        var v = System.Convert.ToDouble(value);
+        if (v == 0 || v == 1) {
             return Visibility.Collapsed;
         }
         return Visibility.Visible;
@@ -30,11 +33,20 @@ internal class ProcessVisibilityConverter : IValueConverter {
 }
 
 public partial class DataDigestView : Page {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private delegate string? TextDigestHandler(string digest);
+    /// <summary>
+    /// StreamDigestHandler
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="callback">进度回调，参数为进度百分比</param>
+    /// <returns>任务取消返回 null</returns>
+    private delegate string? StreamDigestHandler(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null);
 
     private class DigestInfo : DependencyObject {
         public static readonly DependencyProperty IsVivibleProperty = DependencyProperty.Register("IsVivible", typeof(bool), typeof(DigestInfo), new PropertyMetadata(false));
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(DigestInfo), new PropertyMetadata(""));
-        public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(int), typeof(DigestInfo), new PropertyMetadata(0));
+        public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(double), typeof(DigestInfo), new PropertyMetadata(0.0));
 
         public DigestInfo(TextDigestHandler textDigestHandler, StreamDigestHandler streamDigestHandler) {
             TextDigestHandler = textDigestHandler;
@@ -66,34 +78,18 @@ public partial class DataDigestView : Page {
         /// <summary>
         /// 进度
         /// </summary>
-        public int Process {
-            get { return (int)GetValue(ProcessProperty); }
+        public double Process {
+            get { return (double)GetValue(ProcessProperty); }
             set { SetValue(ProcessProperty, value); }
         }
         /// <summary>
         /// 文件总大小
         /// </summary>
         public long FileTotalSize { get; set; } = 0;
-        /// <summary>
-        /// 上次更新 Process 时间
-        /// </summary>
-        public DateTime LastUpdateProcessTime { get; set; } = DateTime.Now;
     }
-    /// <summary>
-    /// 更新 Process 频率，ms
-    /// </summary>
-    private const int UpdateProcessFrequency = 500;
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private delegate string TextDigestHandler(string digest);
-    /// <summary>
-    /// StreamDigestHandler
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="callback">回调，参数为总读取的大小</param>
-    /// <returns></returns>
-    private delegate string StreamDigestHandler(FileStream stream, Action<long>? callback = null);
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
+    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
     public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
     private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
@@ -116,18 +112,18 @@ public partial class DataDigestView : Page {
         set { SetValue(InputTextProperty, value); }
     }
     /// <summary>
+    /// 是否有文件
+    /// </summary>
+    public bool HasFile {
+        get { return (bool)GetValue(HasFileProperty); }
+        set { SetValue(HasFileProperty, value); }
+    }
+    /// <summary>
     /// 摘要算法 Dict
     /// </summary>
     private Dictionary<string, DigestInfo> DigestInfoDict {
         get { return (Dictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty); }
         set { SetValue(DigestInfoDictProperty, value); }
-    }
-    /// <summary>
-    /// 当前进行的任务
-    /// </summary>
-    public int RunningProcess {
-        get { return (int)GetValue(RunningProcessProperty); }
-        set { SetValue(RunningProcessProperty, value); }
     }
     /// <summary>
     /// 文件大小
@@ -144,13 +140,10 @@ public partial class DataDigestView : Page {
         set { SetValue(IsWorkingProperty, value); }
     }
     /// <summary>
-    /// 正在工作的 stream
-    /// </summary>
-    private readonly ICollection<FileStream> WorkingDigestStream = new List<FileStream>();
-    /// <summary>
     /// 散列算法选择
     /// </summary>
     private readonly IList<string> DigestAlgorithms;
+    private CancellationTokenSource CancellationTokenSource = new();
 
     public DataDigestView() {
         DigestInfoDict = new() {
@@ -177,16 +170,6 @@ public partial class DataDigestView : Page {
                 }
             ));
         });
-        DependencyPropertyDescriptor
-            .FromProperty(FileNameProperty, typeof(DataDigestView))
-            .AddValueChanged(this, FileNameChangedHandler);
-    }
-
-    private void FileNameChangedHandler(object? sender, EventArgs e) {
-        if (string.IsNullOrEmpty(FileName)) {
-            return;
-        }
-        FileSize = new FileInfo(FileName).Length;
     }
 
     /// <summary>
@@ -209,12 +192,27 @@ public partial class DataDigestView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void StartClick(object sender, RoutedEventArgs e) {
+    private async void StartClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ThrottleUtils.ThrottleAsync(StartClick, async () => {
-            IsWorking = true;
+        if (IsWorking) {
+            return;
+        }
+        IsWorking = true;
+        CancellationTokenSource.Dispose();
+        CancellationTokenSource = new();
+        try {
             await CalculateDigest();
-        });
+        } catch (FileNotFoundException error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("文件找不到！");
+        } catch (IOException error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("文件读取失败！");
+        } catch (Exception error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("处理失败！");
+        }
+        IsWorking = false;
     }
 
     /// <summary>
@@ -240,48 +238,30 @@ public partial class DataDigestView : Page {
     /// <returns></returns>
     private async Task CalculateDigest(IEnumerable<DigestInfo> digests) {
         // 先清空
-        RunningProcess = 0;
         foreach (var item in digests) {
             item.Text = string.Empty;
             item.Process = 0;
-            RunningProcess++;
         }
-        var tasks = new List<Task>(RunningProcess);
-        // 计算
-        foreach (var item in digests) {
-            item.IsVivible = true;
-            var text = InputText;
-            var filename = FileName;
-            FileStream? fileStream = null;
-            if (!string.IsNullOrEmpty(filename)) {
-                item.FileTotalSize = FileSize;
-                fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                WorkingDigestStream.Add(fileStream);
-            }
-            tasks.Add(Task.Run(() => {
-                string resultHash = string.Empty;
-                // 计算文本 Hash
-                if (fileStream is null) {
-                    resultHash = item.TextDigestHandler.Invoke(text);
-                } else {
-                    // 计算文件 Hash
-                    resultHash = CalculateFileDigest(item, fileStream);
-                }
-                // 更新
-                Dispatcher.Invoke(() => {
-                    item.Text = resultHash;
-                    item.Process = 100;
-                    RunningProcess--;
-                });
-                if (fileStream is not null) {
-                    WorkingDigestStream.Remove(fileStream);
-                    fileStream.Close();
-                }
-            }));
-        }
+        var tasks = new List<Task>();
+        // 文件处理
+        tasks.AddRange(
+            HasFile ? digests.Select(info => CalculateFileDigestAsync(info, FileName))
+            : digests.Select(info => CalculateTextDigestAsync(info, InputText))
+        );
         // 等待全部完成
         await Task.WhenAll(tasks);
-        IsWorking = false;
+    }
+
+    /// <summary>
+    /// 计算文本摘要
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private async Task CalculateTextDigestAsync(DigestInfo info, string text) {
+        var result = await Task.Run(() => info.TextDigestHandler.Invoke(text));
+        info.Process = 1;
+        info.Text = result ?? string.Empty;
     }
 
     /// <summary>
@@ -290,25 +270,19 @@ public partial class DataDigestView : Page {
     /// <param name="info"></param>
     /// <param name="filename"></param>
     /// <returns></returns>
-    private string CalculateFileDigest(DigestInfo info, FileStream fileStream) {
-        try {
-            return info.StreamDigestHandler.Invoke(
-                fileStream,
-                read => {
-                    // 控制更新频率
-                    if ((DateTime.Now - info.LastUpdateProcessTime).TotalMilliseconds < UpdateProcessFrequency) {
-                        return;
-                    }
-                    info.LastUpdateProcessTime = DateTime.Now;
-                    Dispatcher.Invoke(() => {
-                        info.Process = (int)(100 * (double)read / info.FileTotalSize);
-                    });
-                }
+    private async Task CalculateFileDigestAsync(DigestInfo info, string filename) {
+        var result = await Task.Run(() => {
+            using var stream = File.OpenRead(filename);
+            return info.StreamDigestHandler(
+                stream,
+                CancellationTokenSource.Token,
+                process => ThrottleUtils.Throttle(info, () => {
+                    Dispatcher.Invoke(() => info.Process = process);
+                })
             );
-        } catch (Exception e) {
-            CommonUITools.Widget.MessageBox.Error(e.Message);
-            return string.Empty;
-        }
+        });
+        info.Process = 1;
+        info.Text = result ?? string.Empty;
     }
 
     /// <summary>
@@ -317,10 +291,8 @@ public partial class DataDigestView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void StopDigestClick(object sender, RoutedEventArgs e) {
-        foreach (var stream in WorkingDigestStream) {
-            DataDigest.StopDigest(stream);
-        }
-        IsWorking = false;
+        e.Handled = true;
+        CancellationTokenSource.Cancel();
     }
 
     /// <summary>
