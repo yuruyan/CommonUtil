@@ -50,20 +50,22 @@
             </Style>
           </Button.Resources>
           <ui:FlyoutService.Flyout>
-            <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" />
+            <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" TextBlock.FontFamily="{StaticResource ASCIIFontFamily}" />
           </ui:FlyoutService.Flyout>
         </Button>
-        <widget:WorkingButton
-          IsWorking="{Binding IsWorking}"
-          NormalClick="StartClick"
-          WorkingClick="StopDigestClick">
-          <widget:WorkingButton.NormalContent>
-            <widget:IconButtonContent Icon="&#xe601;" Text="计算" />
-          </widget:WorkingButton.NormalContent>
-          <widget:WorkingButton.WorkingContent>
-            <widget:IconButtonContent Icon="&#xe614;" Text="取消" />
-          </widget:WorkingButton.WorkingContent>
-        </widget:WorkingButton>
+        <Grid>
+          <widget:IconButton
+            Click="StartClick"
+            Icon="&#xe601;"
+            Text="计算"
+            Visibility="{Binding IsWorking, Converter={StaticResource HideIfTrueConverter}}" />
+          <widget:IconButton
+            Click="StopDigestClick"
+            Icon="&#xe614;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="取消"
+            Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
         <widget:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
