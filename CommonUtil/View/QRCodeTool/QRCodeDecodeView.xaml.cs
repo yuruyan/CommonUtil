@@ -1,14 +1,18 @@
-﻿using CommonUITools.Utils;
+﻿using CommonUITools.Model;
+using CommonUITools.Utils;
 using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 
 namespace CommonUtil.View;
 
@@ -27,6 +31,9 @@ public partial class QRCodeDecodeView : Page {
 
     public QRCodeDecodeView() {
         InitializeComponent();
+        Loaded += (_, _) => {
+            this.Focus();
+        };
     }
 
     /// <summary>
@@ -43,34 +50,69 @@ public partial class QRCodeDecodeView : Page {
         if (openFileDialog.ShowDialog() != true) {
             return;
         }
-        ParseQRCodeImage(openFileDialog.FileName);
+        // 释放资源
+        if (QRCodeImage.Source is IDisposable image) {
+            QRCodeImage.ClearValue(Image.SourceProperty);
+            image.Dispose();
+        }
+        DoParseQRCodeImage(openFileDialog.FileName);
+    }
+
+    /// <summary>
+    /// 解析 QRCode 错误处理
+    /// </summary>
+    /// <param name="method"></param>
+    [NoException]
+    private async void HandleParseQRCodeImageExceptionAsync(Func<Task<string?>> method) {
+        try {
+            var data = await method();
+            // 解析失败
+            if (data is null) {
+                // 清空
+                DecodeText = string.Empty;
+                throw new ParseException();
+            }
+            DecodeText = data;
+        } catch (LoadException error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("加载图片失败");
+        } catch (ParseException error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("解析失败");
+        } catch (Exception error) {
+            Logger.Error(error);
+            CommonUITools.Widget.MessageBox.Error("解析失败");
+        }
     }
 
     /// <summary>
     /// 解析 QRCode
     /// </summary>
     /// <param name="filepath">图片路径</param>
-    private void ParseQRCodeImage(string filepath) {
-        try {
+    [NoException]
+    private void DoParseQRCodeImage(string filepath)
+        => HandleParseQRCodeImageExceptionAsync(async () => {
             QRCodeImage.Source = UIUtils.CopyImageSource(filepath);
-            try {
-                string? data = QRCodeTool.DecodeQRCode(filepath);
-                // 解析成功
-                if (data != null) {
-                    DecodeText = data;
-                    return;
-                }
-                // 清空
-                DecodeText = string.Empty;
-                throw new Exception();
-            } catch {
-                CommonUITools.Widget.MessageBox.Error("解析失败");
+            return await Task.Run(() => QRCodeTool.DecodeQRCode(filepath));
+        });
+
+    /// <summary>
+    /// 解析 QRCode
+    /// </summary>
+    /// <param name="bitmapSource"></param>
+    [NoException]
+    private void DoParseQRCodeImage(BitmapSource bitmapSource)
+        => HandleParseQRCodeImageExceptionAsync(async () => {
+            using var bitmap = UIUtils.BitmapSourceToBitmap(bitmapSource);
+            // 加载图片失败
+            if (bitmap is null) {
+                throw new FormatException();
             }
-        } catch (Exception error) {
-            Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("加载图片失败");
-        }
-    }
+            return await Task.Run(() => {
+                using var stream = UIUtils.BitmapToStream(bitmap);
+                return QRCodeTool.DecodeQRCode(stream);
+            });
+        });
 
     /// <summary>
     /// 拖拽图片
@@ -82,7 +124,7 @@ public partial class QRCodeDecodeView : Page {
         if (e.Data.GetData(DataFormats.FileDrop) is IEnumerable<string> array) {
             // 判断是否为文件
             if (array.FirstOrDefault() is var file && file != null && File.Exists(file)) {
-                ParseQRCodeImage(file);
+                DoParseQRCodeImage(file);
             }
         }
     }
@@ -97,10 +139,37 @@ public partial class QRCodeDecodeView : Page {
         if (string.IsNullOrEmpty(DecodeText)) {
             return;
         }
-
-        CommonUtils.Try(() => Process.Start(new ProcessStartInfo() {
-            UseShellExecute = true,
-            FileName = DecodeText,
-        }));
+        CommonUtils.Try(() => UIUtils.OpenInBrowser(DecodeText));
     }
+
+    /// <summary>
+    /// PasteImageCanExecute
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void PasteImageCanExecuteHandler(object sender, CanExecuteRoutedEventArgs e) {
+        e.CanExecute = e.Handled = true;
+    }
+
+    /// <summary>
+    /// PasteImageExecuted
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void PasteImageExecutedHandler(object sender, ExecutedRoutedEventArgs e) {
+        e.Handled = true;
+        ThrottleUtils.Throttle(PasteImageExecutedHandler, () => {
+            var source = Clipboard.GetImage();
+            if (source is null) {
+                return;
+            }
+            // 释放资源
+            if (QRCodeImage.Source is IDisposable image) {
+                image.Dispose();
+            }
+            QRCodeImage.Source = source;
+            DoParseQRCodeImage(source);
+        }, 1000);
+    }
+
 }

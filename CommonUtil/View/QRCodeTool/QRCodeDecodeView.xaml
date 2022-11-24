@@ -12,8 +12,26 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Focusable="True"
   mc:Ignorable="d">
-
+  <Page.FocusVisualStyle>
+    <Style>
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="0" StrokeThickness="0" />
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Page.FocusVisualStyle>
+  <Page.CommandBindings>
+    <!--  粘贴图片识别  -->
+    <CommandBinding
+      CanExecute="PasteImageCanExecuteHandler"
+      Command="ApplicationCommands.Paste"
+      Executed="PasteImageExecutedHandler" />
+  </Page.CommandBindings>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
