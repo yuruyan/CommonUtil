@@ -25,17 +25,8 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input  -->
-    <widget:DragDropTextBox
-      Name="DragDropTextBox"
-      DragDropEvent="DragDropEventHandler"
-      HasFile="{Binding HasFile, Mode=TwoWay}">
-      <widget:DragDropTextBox.TextBox>
-        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      </widget:DragDropTextBox.TextBox>
-      <widget:DragDropTextBox.FileView>
-        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-      </widget:DragDropTextBox.FileView>
-    </widget:DragDropTextBox>
+    <widget:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
+
     <!--  Control  -->
     <ui:SimpleStackPanel
       Grid.Row="1"
@@ -48,8 +39,28 @@
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
-        <Button Click="ToTraditionalClick" Content="转繁体" />
-        <Button Click="ToSimplifiedClick" Content="转简体" />
+        <Grid>
+          <Button
+            Click="ToTraditionalClickHandler"
+            Content="转繁体"
+            Visibility="{Binding IsToTraditionalWorking, Converter={StaticResource HideIfTrueConverter}}" />
+          <Button
+            Click="CancelToTraditionalClickHandler"
+            Content="取消"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Visibility="{Binding IsToTraditionalWorking, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
+        <Grid>
+          <Button
+            Click="ToSimplifiedClickHandler"
+            Content="转简体"
+            Visibility="{Binding IsToSimplifiedWorking, Converter={StaticResource HideIfTrueConverter}}" />
+          <Button
+            Click="CancelToSimplifiedClickHandler"
+            Content="取消"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Visibility="{Binding IsToSimplifiedWorking, Converter={StaticResource HideIfFalseConverter}}" />
+        </Grid>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <widget:IconButton
@@ -63,11 +74,15 @@
           Text="清空输入" />
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
+
     <!--  Output  -->
-    <TextBox
-      Grid.Row="2"
-      IsReadOnly="True"
-      Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText, Mode=OneWay}" />
+    <Grid Grid.Row="2">
+      <widget:FileProcessStatusWidget FileProcessStatusList="{Binding FileProcessStatuses}" Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
+      <TextBox
+        IsReadOnly="True"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding OutputText}"
+        Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfNotZeroConverter}}" />
+    </Grid>
   </Grid>
 </Page>
