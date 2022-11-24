@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using CommonUITools.Utils;
+using Newtonsoft.Json;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace CommonUtil.Core;
 
@@ -103,18 +106,28 @@ public static class ChineseTransform {
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
-    public static void FileToTraditional(string inputPath, string outputPath) {
+    /// <param name="token"></param>
+    /// <param name="processCallback">进度回调，参数为进度百分比</param>
+    public static void FileToTraditional(string inputPath, string outputPath, CancellationToken? token = null, Action<double>? processCallback = null) {
         using var reader = new StreamReader(inputPath);
         using var writer = new StreamWriter(outputPath);
-        var buffer = new char[4096];
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        long totalLength = reader.BaseStream.Length, totalReadCount = 0;
         int readCount;
         while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            // 中断
+            if (token?.IsCancellationRequested == true) {
+                return;
+            }
+            totalReadCount += readCount;
+            processCallback?.Invoke((double)totalReadCount / totalLength);
             writer.Write(
                 ToTraditional(buffer, 0, readCount),
                 0,
                 readCount
             );
         }
+        processCallback?.Invoke(1);
     }
 
     /// <summary>
@@ -122,17 +135,27 @@ public static class ChineseTransform {
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
-    public static void FileToSimplified(string inputPath, string outputPath) {
+    /// <param name="token"></param>
+    /// <param name="processCallback">进度回调，参数为进度百分比</param>
+    public static void FileToSimplified(string inputPath, string outputPath, CancellationToken? token = null, Action<double>? processCallback = null) {
         using var reader = new StreamReader(inputPath);
         using var writer = new StreamWriter(outputPath);
-        var buffer = new char[4096];
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        long totalLength = reader.BaseStream.Length, totalReadCount = 0;
         int readCount;
         while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            // 中断
+            if (token?.IsCancellationRequested == true) {
+                return;
+            }
+            totalReadCount += readCount;
+            processCallback?.Invoke((double)totalReadCount / totalLength);
             writer.Write(
                 ToSimplified(buffer, 0, readCount),
                 0,
                 readCount
             );
         }
+        processCallback?.Invoke(1);
     }
 }
