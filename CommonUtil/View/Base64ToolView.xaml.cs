@@ -110,6 +110,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <summary>
     /// 解码单个文件
     /// </summary>
+    [NoException]
     private async Task DecodeOneFile(string filename) {
         // 选择保存文件路径
         if (SaveFileDialog.ShowDialog() != true) {
@@ -123,9 +124,9 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         FileProcessStatuses.Add(status);
 
         // 解码
-        await Task.Run(() => {
-            try {
-                GlobalUtils.UpdateProcessStatus(
+        try {
+            await Task.Run(() => {
+                GlobalUtils.UpdateProcessStatusWhenCompleted(
                     status,
                     DecodeCancellationTokenSource.Token,
                     Base64Tool.Base64DecodeFile(
@@ -137,17 +138,19 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-            } catch (IOException) {
-                MessageBox.Error("文件读取或保存失败");
-                GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
-            } catch (Exception) {
-                MessageBox.Error("解码失败");
-                GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
+            });
+            // 通知
+            if (status.Status == ProcessResult.Successful) {
+                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             }
-        });
-        // 通知
-        if (status.Status == ProcessResult.Successful) {
-            UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
+        } catch (IOException error) {
+            Logger.Error(error);
+            MessageBox.Error("文件读取或保存失败");
+            status.Status = ProcessResult.Failed;
+        } catch (Exception error) {
+            Logger.Error(error);
+            MessageBox.Error("解码失败");
+            status.Status = ProcessResult.Failed;
         }
     }
 
@@ -155,6 +158,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// 编码单个文件
     /// </summary>
     /// <returns></returns>
+    [NoException]
     private async Task EncodeOneFile(string filename) {
         // 选择保存文件路径
         SaveFileDialog.FileName = Path.GetFileName(filename);
@@ -169,9 +173,9 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         FileProcessStatuses.Add(status);
 
         // 编码
-        await Task.Run(() => {
-            try {
-                GlobalUtils.UpdateProcessStatus(
+        try {
+            await Task.Run(() => {
+                GlobalUtils.UpdateProcessStatusWhenCompleted(
                     status,
                     EncodeCancellationTokenSource.Token,
                     Base64Tool.Base64EncodeFile(
@@ -183,17 +187,19 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-            } catch (IOException) {
-                MessageBox.Error("文件读取或写入失败");
-                GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
-            } catch (Exception) {
-                MessageBox.Error("编码失败");
-                GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
+            });
+            // 通知
+            if (status.Status == ProcessResult.Successful) {
+                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
             }
-        });
-        // 通知
-        if (status.Status == ProcessResult.Successful) {
-            UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
+        } catch (IOException error) {
+            Logger.Error(error);
+            MessageBox.Error("文件读取或保存失败");
+            status.Status = ProcessResult.Failed;
+        } catch (Exception error) {
+            Logger.Error(error);
+            MessageBox.Error("编码失败");
+            status.Status = ProcessResult.Failed;
         }
     }
 
@@ -230,6 +236,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <summary>
     /// 解码文件
     /// </summary>
+    [NoException]
     private async Task DecodeFile() {
         var fileNames = DragDropTextBox.FileNames;
         if (fileNames.Count == 1) {
@@ -242,6 +249,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <summary>
     /// 编码文件
     /// </summary>
+    [NoException]
     private async Task EncodeFile() {
         var fileNames = DragDropTextBox.FileNames;
         if (fileNames.Count == 1) {
@@ -256,6 +264,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// </summary>
     /// <param name="filenames"></param>
     /// <returns></returns>
+    [NoException]
     private async Task EncodeMultiFiles(ICollection<string> filenames) {
         // 选择保存目录
         if (SaveDirectoryDialog.ShowDialog(Window) != true) {
@@ -283,7 +292,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                     });
 
                     try {
-                        GlobalUtils.UpdateProcessStatus(
+                        GlobalUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             EncodeCancellationTokenSource.Token,
                             Base64Tool.Base64EncodeFile(
@@ -297,7 +306,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
+                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }));
@@ -310,6 +319,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// </summary>
     /// <param name="filenames"></param>
     /// <returns></returns>
+    [NoException]
     private async Task DecodeMultiFiles(ICollection<string> filenames) {
         // 选择保存目录
         if (SaveDirectoryDialog.ShowDialog(Window) != true) {
@@ -337,7 +347,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                     });
 
                     try {
-                        GlobalUtils.UpdateProcessStatus(
+                        GlobalUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             DecodeCancellationTokenSource.Token,
                             Base64Tool.Base64DecodeFile(
@@ -351,7 +361,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatus(status, ProcessResult.Failed);
+                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }));
@@ -410,12 +420,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         EncodeCancellationTokenSource.Dispose();
         EncodeCancellationTokenSource = new();
         IsEncodeRunning = true;
-        try {
-            await EncodeFile();
-        } catch (Exception error) {
-            Logger.Error(error);
-            MessageBox.Error($"错误：{error.Message}");
-        }
+        await EncodeFile();
         IsEncodeRunning = false;
     }
 
@@ -443,12 +448,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         DecodeCancellationTokenSource.Dispose();
         DecodeCancellationTokenSource = new();
         IsDecodeRunning = true;
-        try {
-            await DecodeFile();
-        } catch (Exception error) {
-            Logger.Error(error);
-            MessageBox.Error($"错误：{error.Message}");
-        }
+        await DecodeFile();
         IsDecodeRunning = false;
     }
 

@@ -79,12 +79,12 @@ public static class Global {
 
 public static class GlobalUtils {
     /// <summary>
-    /// 更新 ProcessStatus Status，如果是 Successful 则同时设置 Process 为 1
+    /// 在任务完成后时，更新 ProcessStatus Status，如果是 Successful 则同时设置 Process 为 1
     /// </summary>
     /// <param name="status"></param>
     /// <param name="result"></param>
     /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatus(FileProcessStatus status, ProcessResult result) {
+    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, ProcessResult result) {
         App.Current.Dispatcher.Invoke(() => {
             status.Status = result;
             if (result == ProcessResult.Successful) {
@@ -94,13 +94,14 @@ public static class GlobalUtils {
     }
 
     /// <summary>
-    /// 更新 ProcessStatus,如果任务没有取消则设置Status = Successful, Process = 1, FileSize = fileSize
+    /// 在任务完成后时，更新 ProcessStatus，如果任务没有取消则设置 Status = Successful,
+    /// Process = 1, FileSize = fileSize，否则设置 Status = Interrupted
     /// </summary>
     /// <param name="status"></param>
     /// <param name="token"></param>
     /// <param name="fileSize"></param>
     /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatus(FileProcessStatus status, CancellationToken token, long fileSize) {
+    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token, long fileSize) {
         App.Current.Dispatcher.Invoke(() => {
             if (token.IsCancellationRequested) {
                 status.Status = ProcessResult.Interrupted;
@@ -108,6 +109,23 @@ public static class GlobalUtils {
                 status.Status = ProcessResult.Successful;
                 status.Process = 1;
                 status.FileSize = fileSize;
+            }
+        });
+    }
+
+    /// <summary>
+    /// 在任务完成后时，更新 ProcessStatus，如果任务没有取消则设置 Status = Successful, 
+    /// Process = 1，否则设置 Status = Interrupted
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="token"></param>
+    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token) {
+        App.Current.Dispatcher.Invoke(() => {
+            if (token.IsCancellationRequested) {
+                status.Status = ProcessResult.Interrupted;
+            } else {
+                status.Status = ProcessResult.Successful;
+                status.Process = 1;
             }
         });
     }
