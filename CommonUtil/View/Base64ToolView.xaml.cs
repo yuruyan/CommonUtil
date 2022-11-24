@@ -391,6 +391,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private async void EncodeClickHandler(object sender, RoutedEventArgs e) {
+        // 正在编码
+        if (IsEncodeRunning) {
+            return;
+        }
         var hasFile = DragDropTextBox.HasFile;
         // 输入检查
         if (!hasFile && string.IsNullOrEmpty(InputText)) {
@@ -421,6 +425,10 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private async void DecodeClickHandler(object sender, RoutedEventArgs e) {
+        // 正在解码
+        if (IsDecodeRunning) {
+            return;
+        }
         var hasFile = DragDropTextBox.HasFile;
         // 输入检查
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, hasFile, DragDropTextBox.FileNames)) {
