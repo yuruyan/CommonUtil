@@ -2,11 +2,21 @@
   x:Class="CommonUtil.Resource.ResourceDictionary.OtherResources"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019">
 
   <system:Double x:Key="NavigationViewMinWidth">45</system:Double>
   <system:Double x:Key="NavigationViewMaxWidth">250</system:Double>
+
+  <!--  avalonEdit:TextEditor  -->
+  <Style x:Key="GlobalAvalonEditTextEditorStyle" TargetType="avalonEdit:TextEditor">
+    <Setter Property="FontFamily" Value="Consolas" />
+    <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
+    <Setter Property="ShowLineNumbers" Value="True" />
+    <Setter Property="ContextMenu" Value="{StaticResource TextElementContextMenu}" />
+  </Style>
+  <Style BasedOn="{StaticResource GlobalAvalonEditTextEditorStyle}" TargetType="avalonEdit:TextEditor" />
 
   <!--#region RandomGenerator-->
   <system:Double x:Key="RandomGenerator_TextBoxWidth">120</system:Double>

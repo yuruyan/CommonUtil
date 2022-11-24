@@ -26,17 +26,22 @@
         Width="100"
         VerticalAlignment="Center"
         ItemsSource="{Binding Languages}"
-        SelectedValue="C#"
-        TextBlock.FontFamily="{StaticResource ASCIIFontFamily}" />
+        SelectedValue="C#">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock FontFamily="{StaticResource ASCIIFontFamily}" Text="{Binding}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+      <widget:IconButton
+        Click="CopyResultClick"
+        Icon="&#xe6ef;"
+        Text="复制内容" />
       <widget:IconButton
         Click="ClearInputClick"
         Icon="&#xe680;"
         Style="{StaticResource GlobalErrorButtonStyle}"
         Text="清空输入" />
-      <widget:IconButton
-        Click="CopyResultClick"
-        Icon="&#xe6ef;"
-        Text="复制内容" />
     </ui:SimpleStackPanel>
 
     <!--  Input Box  -->
@@ -44,9 +49,6 @@
       xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
       Name="TextEditor"
       Grid.Row="1"
-      FontFamily="Consolas"
-      FontSize="{DynamicResource SystemFontSize}"
-      ShowLineNumbers="True"
       SyntaxHighlighting="{Binding SelectedValue, ElementName=LanguageComboBox}" />
   </Grid>
 </Page>
