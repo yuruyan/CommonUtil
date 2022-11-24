@@ -138,7 +138,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-            });
+            }, DecodeCancellationTokenSource.Token);
             // 通知
             if (status.Status == ProcessResult.Successful) {
                 UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
@@ -187,7 +187,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         })
                     )
                 );
-            });
+            }, EncodeCancellationTokenSource.Token);
             // 通知
             if (status.Status == ProcessResult.Successful) {
                 UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "解码文件成功");
@@ -309,7 +309,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
-            }));
+            }, EncodeCancellationTokenSource.Token));
         }
         await Task.WhenAll(tasks);
     }
@@ -364,7 +364,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
                         GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
-            }));
+            }, DecodeCancellationTokenSource.Token));
         }
         await Task.WhenAll(tasks);
     }
