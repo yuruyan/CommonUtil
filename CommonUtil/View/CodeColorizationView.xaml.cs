@@ -1,8 +1,9 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Model;
+using CommonUtil.Core;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,12 +11,26 @@ namespace CommonUtil.View;
 
 public partial class CodeColorizationView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public IList<string> Languages { get; }
+
+    public static readonly DependencyProperty LanguagesProperty = DependencyProperty.Register("Languages", typeof(ExtendedObservableCollection<string>), typeof(CodeColorizationView), new PropertyMetadata());
+    /// <summary>
+    /// 语言
+    /// </summary>
+    public ExtendedObservableCollection<string> Languages {
+        get { return (ExtendedObservableCollection<string>)GetValue(LanguagesProperty); }
+        set { SetValue(LanguagesProperty, value); }
+    }
 
     public CodeColorizationView() {
-        var languages = CodeColorization.Languages.ToArray();
-        Array.Sort(languages);
-        Languages = languages;
+        Languages = new();
+        // 后台加载
+        Task.Run(() => {
+            var languages = CodeColorization.Languages.ToArray();
+            Array.Sort(languages);
+            Dispatcher.Invoke(() => {
+                Languages.AddRange(languages);
+            });
+        });
         InitializeComponent();
         TextEditor.Options.ConvertTabsToSpaces = true;
     }

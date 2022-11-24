@@ -36,7 +36,7 @@
       <widget:IconButton
         Click="CopyResultClick"
         Icon="&#xe6ef;"
-        Text="复制" />
+        Text="复制内容" />
     </ui:SimpleStackPanel>
 
     <!--  Input Box  -->
