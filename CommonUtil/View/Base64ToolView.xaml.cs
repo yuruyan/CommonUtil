@@ -127,7 +127,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
             try {
                 GlobalUtils.UpdateProcessStatus(
                     status,
-                    EncodeCancellationTokenSource.Token,
+                    DecodeCancellationTokenSource.Token,
                     Base64Tool.Base64DecodeFile(
                         filename,
                         savePath,
