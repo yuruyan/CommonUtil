@@ -15,7 +15,6 @@
   <ui:SimpleStackPanel VerticalAlignment="Center" Orientation="Vertical">
     <TextBlock
       HorizontalAlignment="Center"
-      Foreground="{StaticResource Black7}"
       Text="{Binding EdgeBookmarkFilePath}"
       TextWrapping="Wrap" />
     <Button
