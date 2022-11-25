@@ -237,4 +237,37 @@ public static partial class ColorTransform {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Luv() { L = args.Item1, U = args.Item2, V = args.Item3 }.To<Rgb>());
         });
+
+    public static Color? HEXToColor(double a, double r, double g, double b)
+        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
+
+    public static Color? RGBToColor(double r, double g, double b)
+        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b });
+
+    public static Color? RGBA1ToColor(double r, double g, double b, double a)
+        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
+
+    public static Color? RGBA2ToColor(double r, double g, double b, double a)
+        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)(a * 255) });
+
+    public static Color? HSLToColor(double h, double s, double l)
+        => CommonUtils.Try(() => GetColor(new Hsl() { H = h, S = s, L = l }.To<Rgb>()));
+
+    public static Color? HSVToColor(double g, double s, double v)
+        => CommonUtils.Try(() => GetColor(new Hsv() { H = g, S = s, V = v }.To<Rgb>()));
+
+    public static Color? LABToColor(double l, double a, double b)
+        => CommonUtils.Try(() => GetColor(new Lab() { L = l, A = a, B = b }.To<Rgb>()));
+
+    public static Color? XYZToColor(double x, double y, double z)
+        => CommonUtils.Try(() => GetColor(new Xyz() { X = x, Y = y, Z = z }.To<Rgb>()));
+
+    public static Color? LCHToColor(double l, double c, double h)
+        => CommonUtils.Try(() => GetColor(new Lch() { L = l, C = c, H = h }.To<Rgb>()));
+
+    public static Color? CMYKToColor(double c, double m, double y, double k)
+        => CommonUtils.Try(() => GetColor(new Cmyk() { C = c, M = m, Y = y, K = k }.To<Rgb>()));
+
+    public static Color? LUVToColor(double l, double u, double v)
+        => CommonUtils.Try(() => GetColor(new Luv() { L = l, U = u, V = v }.To<Rgb>()));
 }
