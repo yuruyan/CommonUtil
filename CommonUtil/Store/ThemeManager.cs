@@ -10,6 +10,9 @@ namespace CommonUtil.Store;
 internal class ThemeManager : DependencyObject {
     private const string LightThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml";
     private const string DarkThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/DarkThemeResources.xaml";
+    private const string CommonUIToolsLightThemeSource = "/CommonUITools;component/Resource/ResourceDictionary/LightThemeResources.xaml";
+    private const string CommonUIToolsDarkThemeSource = "/CommonUITools;component/Resource/ResourceDictionary/DarkThemeResources.xaml";
+
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public event EventHandler<ThemeMode>? ThemeChanged;
@@ -31,6 +34,7 @@ internal class ThemeManager : DependencyObject {
         }
         CurrentMode = ThemeMode.Light;
         ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+        ReplaceResourceDictionary(CommonUIToolsDarkThemeSource, CommonUIToolsLightThemeSource);
         ReplaceResourceDictionary(DarkThemeSource, LightThemeSource);
         ThemeChanged?.Invoke(Current, ThemeMode.Light);
     }
@@ -65,6 +69,7 @@ internal class ThemeManager : DependencyObject {
         }
         CurrentMode = ThemeMode.Dark;
         ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+        ReplaceResourceDictionary(CommonUIToolsLightThemeSource, CommonUIToolsDarkThemeSource);
         ReplaceResourceDictionary(LightThemeSource, DarkThemeSource);
         ThemeChanged?.Invoke(Current, ThemeMode.Dark);
     }

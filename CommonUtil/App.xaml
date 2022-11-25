@@ -12,6 +12,7 @@
         <!--#region CommonUITools-->
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ColorResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ThemeResources.xaml" />
+        <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/LightThemeResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/CommonResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/ConverterResources.xaml" />
         <ResourceDictionary Source="/CommonUITools;component/Resource/ResourceDictionary/StyleResources.xaml" />
