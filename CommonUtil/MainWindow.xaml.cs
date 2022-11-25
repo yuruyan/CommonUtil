@@ -18,6 +18,7 @@ public partial class MainWindow : Window {
     public static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
     public static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+    public static readonly DependencyProperty IsDarkThemeProperty = DependencyProperty.Register("IsDarkTheme", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
     /// <summary>
     /// 返回Icon是否可见
@@ -41,6 +42,13 @@ public partial class MainWindow : Window {
         set { SetValue(ShowLoadingBoxProperty, value); }
     }
     /// <summary>
+    /// 当前是否是 DarkTheme
+    /// </summary>
+    public bool IsDarkTheme {
+        get { return (bool)GetValue(IsDarkThemeProperty); }
+        set { SetValue(IsDarkThemeProperty, value); }
+    }
+    /// <summary>
     /// 标题动画
     /// </summary>
     private readonly Storyboard TitleBarStoryboard;
@@ -53,51 +61,14 @@ public partial class MainWindow : Window {
     private readonly RouterService RouterService;
     private static readonly Stack<Frame> FrameStack = new();
     private static readonly IDictionary<Type, RouterService> PageRouterServiceDict = new Dictionary<Type, RouterService>();
-
-    public static void PushRouteStack(Frame frame) {
-        FrameStack.Push(frame);
-        frame.Navigated += FrameNavigatedHandler;
-    }
-
-    private static void FrameNavigatedHandler(object sender, NavigationEventArgs e) {
-        if (e.Navigator is Frame frame) {
-            frame.Navigated -= FrameNavigatedHandler;
-        }
-        RouteChanged?.Invoke(null, null!);
-    }
-
-    public static void PushRouteStack(RouterService service) => PushRouteStack(service.Frame);
-
-    /// <summary>
-    /// 回退
-    /// </summary>
-    private static void GoBack() {
-        if (!CanGoBack) {
-            return;
-        }
-        var frame = FrameStack.Pop();
-        while (!frame.CanGoBack) {
-            frame = FrameStack.Pop();
-        }
-        frame.GoBack();
-        frame.Navigated += FrameNavigatedHandler;
-    }
-
-    /// <summary>
-    /// 获取当前页面所属 RouterService
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns> 
-    public static RouterService? GetCurrentRouteService(Type type)
-        => PageRouterServiceDict.TryGetValue(type, out RouterService? routerService) ? routerService : null;
+    private readonly IEnumerable<Type> PageTypes;
+    private static event EventHandler? RouteChanged;
     /// <summary>
     /// 是否可以回退
     /// </summary>
     private static bool CanGoBack {
         get => FrameStack.Any(f => f.CanGoBack);
     }
-    private readonly IEnumerable<Type> PageTypes;
-    private static event EventHandler? RouteChanged;
 
     public MainWindow() {
         InitializeComponent();
@@ -127,6 +98,43 @@ public partial class MainWindow : Window {
     }
 
     /// <summary>
+    /// 回退
+    /// </summary>
+    private static void GoBack() {
+        if (!CanGoBack) {
+            return;
+        }
+        var frame = FrameStack.Pop();
+        while (!frame.CanGoBack) {
+            frame = FrameStack.Pop();
+        }
+        frame.GoBack();
+        frame.Navigated += FrameNavigatedHandler;
+    }
+
+    /// <summary>
+    /// 获取当前页面所属 RouterService
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns> 
+    public static RouterService? GetCurrentRouteService(Type type)
+        => PageRouterServiceDict.TryGetValue(type, out RouterService? routerService) ? routerService : null;
+
+    public static void PushRouteStack(Frame frame) {
+        FrameStack.Push(frame);
+        frame.Navigated += FrameNavigatedHandler;
+    }
+
+    public static void PushRouteStack(RouterService service) => PushRouteStack(service.Frame);
+
+    private static void FrameNavigatedHandler(object sender, NavigationEventArgs e) {
+        if (e.Navigator is Frame frame) {
+            frame.Navigated -= FrameNavigatedHandler;
+        }
+        RouteChanged?.Invoke(null, null!);
+    }
+
+    /// <summary>
     /// 添加页面所属 RouterService
     /// </summary>
     /// <param name="pageTypes"></param>
@@ -150,7 +158,13 @@ public partial class MainWindow : Window {
         ShowLoadingBox = false;
     }
 
+    /// <summary>
+    /// 回退
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ToBackClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
         GoBack();
     }
 
@@ -160,8 +174,30 @@ public partial class MainWindow : Window {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void ToMainPageClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
         RouterService.Navigate(typeof(MainContentView));
         PushRouteStack(ContentFrame);
     }
-}
 
+    /// <summary>
+    /// 切换为 LightTheme
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SwitchToLightThemeClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+        IsDarkTheme = false;
+    }
+
+    /// <summary>
+    /// 切换为 DarkTheme
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SwitchToDarkThemeClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+        IsDarkTheme = true;
+    }
+}

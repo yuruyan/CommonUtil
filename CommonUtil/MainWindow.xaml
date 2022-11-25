@@ -35,7 +35,6 @@
         To="1"
         Duration="0:0:0.4" />
     </Storyboard>
-
     <Storyboard x:Key="MainContentViewLoadStoryboard">
       <ColorAnimation
         Name="BackgroundAnimation"
@@ -43,7 +42,9 @@
         Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
         Duration="{StaticResource AnimationDuration}" />
     </Storyboard>
-
+    <Style TargetType="ui:TitleBarButton">
+      <Setter Property="Margin" Value="0" />
+    </Style>
   </Window.Resources>
 
   <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
@@ -52,37 +53,55 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  标题  -->
-    <StackPanel
+    <DockPanel
       x:Name="TitleBar"
       VerticalAlignment="Top"
-      Orientation="Horizontal">
-      <StackPanel.RenderTransform>
+      LastChildFill="False">
+      <DockPanel.RenderTransform>
         <TranslateTransform x:Name="TitleBarTranslateTransform" />
-      </StackPanel.RenderTransform>
-      <ui:TitleBarButton
-        Margin="0"
-        Click="ToBackClick"
-        Visibility="{Binding IsBackIconVisible, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}">
-        <ui:TitleBarButton.ContextMenu>
-          <ContextMenu>
-            <MenuItem Click="ToMainPageClickHandler" Header="回到主页">
-              <MenuItem.Icon>
-                <ui:FontIcon Glyph="&#xe674;" />
-              </MenuItem.Icon>
-            </MenuItem>
-          </ContextMenu>
-        </ui:TitleBarButton.ContextMenu>
-        <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe60f;" />
-      </ui:TitleBarButton>
-      <Image
-        Width="40"
-        Height="18"
-        Margin="4,8,0,8"
-        Source="/favicon.ico"
-        Stretch="Uniform"
-        Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfTrueConverter}}" />
-      <TextBlock Text="{Binding RouteViewTitle}" />
-    </StackPanel>
+      </DockPanel.RenderTransform>
+      <StackPanel Orientation="Horizontal">
+        <ui:TitleBarButton Click="ToBackClick" Visibility="{Binding IsBackIconVisible, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}">
+          <ui:TitleBarButton.ContextMenu>
+            <ContextMenu>
+              <MenuItem Click="ToMainPageClickHandler" Header="回到主页">
+                <MenuItem.Icon>
+                  <ui:FontIcon Glyph="&#xe674;" />
+                </MenuItem.Icon>
+              </MenuItem>
+            </ContextMenu>
+          </ui:TitleBarButton.ContextMenu>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe60f;" />
+        </ui:TitleBarButton>
+        <Image
+          Width="40"
+          Height="18"
+          Margin="4,8,0,8"
+          Source="/favicon.ico"
+          Stretch="Uniform"
+          Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfTrueConverter}}" />
+        <!--  Title  -->
+        <TextBlock Text="{Binding RouteViewTitle}" />
+      </StackPanel>
+      <!--  切换主题  -->
+      <StackPanel Margin="0,0,140,0" DockPanel.Dock="Right">
+        <Grid>
+          <ui:TitleBarButton
+            Click="SwitchToLightThemeClickHandler"
+            ToolTip="切换为亮色模式"
+            Visibility="{Binding IsDarkTheme, Converter={StaticResource HideIfFalseConverter}}">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe88e;" />
+          </ui:TitleBarButton>
+          <ui:TitleBarButton
+            Click="SwitchToDarkThemeClickHandler"
+            ToolTip="切换为暗色模式"
+            Visibility="{Binding IsDarkTheme, Converter={StaticResource HideIfTrueConverter}}">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe71e;" />
+          </ui:TitleBarButton>
+        </Grid>
+      </StackPanel>
+    </DockPanel>
+
     <!--  Content  -->
     <ui:Frame
       x:Name="ContentFrame"
