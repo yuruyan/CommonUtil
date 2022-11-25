@@ -42,7 +42,7 @@
         Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
         Duration="{StaticResource AnimationDuration}" />
     </Storyboard>
-    <Style TargetType="ui:TitleBarButton">
+    <Style BasedOn="{StaticResource TitleBarButtonstyle}" TargetType="ui:TitleBarButton">
       <Setter Property="Margin" Value="0" />
     </Style>
   </Window.Resources>

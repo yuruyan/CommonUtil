@@ -56,7 +56,7 @@
             Width="230"
             Height="70"
             Margin="8,6"
-            Background="White"
+            Background="{DynamicResource MainContentViewItemBackgroundBrush}"
             CornerRadius="4"
             MouseLeftButtonUp="MenuMouseLeftButtonUp">
             <Border.RenderTransform>

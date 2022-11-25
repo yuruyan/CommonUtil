@@ -22,7 +22,7 @@ public partial class MainContentView : Page {
     public ObservableCollection<ToolMenuItem> ToolMenuItems {
         get => (ObservableCollection<ToolMenuItem>)GetValue(MenuItemsProperty);
     }
-    private SolidColorBrush MainContentViewBackgroundBrush = default!;
+    //private SolidColorBrush MainContentViewBackgroundBrush = default!;
     private Window Window = default!;
 
     public MainContentView() {
@@ -38,7 +38,7 @@ public partial class MainContentView : Page {
     /// <param name="e"></param>
     private void InitializeLoadedHandler(object sender, RoutedEventArgs e) {
         Loaded -= InitializeLoadedHandler;
-        MainContentViewBackgroundBrush = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
+        //MainContentViewBackgroundBrush = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
         Window = Window.GetWindow(this);
         // 延迟加载
         Task.Run(() => {
@@ -55,12 +55,12 @@ public partial class MainContentView : Page {
 
     private void RootLoaded(object sender, RoutedEventArgs e) {
         //e.Handled = true;
-        Window.Background = MainContentViewBackgroundBrush;
+        Window.Background = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
     }
 
     private void RootUnloaded(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        Window.Background = new SolidColorBrush(Colors.White);
+        Window.Background = (SolidColorBrush)FindResource("WindowBackgroundBrush");
     }
 
     /// <summary>
