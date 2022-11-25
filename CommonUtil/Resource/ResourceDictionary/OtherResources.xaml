@@ -14,6 +14,7 @@
     <Setter Property="FontFamily" Value="Consolas" />
     <Setter Property="FontSize" Value="{DynamicResource SystemFontSize}" />
     <Setter Property="ShowLineNumbers" Value="True" />
+    <!--<Setter Property="Background" Value="{DynamicResource TextControlBackground}" />-->
     <Setter Property="ContextMenu" Value="{StaticResource TextElementContextMenu}" />
   </Style>
   <Style BasedOn="{StaticResource GlobalAvalonEditTextEditorStyle}" TargetType="avalonEdit:TextEditor" />
