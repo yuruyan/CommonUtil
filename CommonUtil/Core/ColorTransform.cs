@@ -1,31 +1,20 @@
 ﻿using ColorMine.ColorSpaces;
+using CommonUITools.Utils;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 
 namespace CommonUtil.Core;
 
-public class ColorTransform {
-    private struct ThreeArgs {
-        public double First { get; set; }
-        public double Second { get; set; }
-        public double Third { get; set; }
+public static partial class ColorTransform {
+    private static readonly Regex RGBRegex = CompileThreeParametersRegex("rgb");
+    private static readonly Regex RGBARegex = CompileFourParametersRegex("rgba");
+    private static readonly Regex HSLRegex = GetHSLRegex();
+    private static readonly Regex ThreeColorsRegex = CompileThreeParametersRegex("");
+    private static readonly Regex FourColorsRegex = CompileFourParametersRegex("");
 
-        public override string ToString() {
-            return $"{{{nameof(First)}={First.ToString()}, {nameof(Second)}={Second.ToString()}, {nameof(Third)}={Third.ToString()}}}";
-        }
-    }
-
-    private struct FourArgs {
-        public double First { get; set; }
-        public double Second { get; set; }
-        public double Third { get; set; }
-        public double Fourth { get; set; }
-
-        public override string ToString() {
-            return $"{{{nameof(First)}={First.ToString()}, {nameof(Second)}={Second.ToString()}, {nameof(Third)}={Third.ToString()}, {nameof(Fourth)}={Fourth.ToString()}}}";
-        }
-    }
+    [GeneratedRegex("hsl *\\( *([\\d\\.\\-]+) *, *([\\d\\.\\-]+) *% *, *([\\d\\.\\-]+) *% *\\)", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex GetHSLRegex();
 
     /// <summary>
     /// 解析 3 个参数
@@ -36,17 +25,16 @@ public class ColorTransform {
     /// <exception cref="Exception">未匹配</exception>
     /// <exception cref="FormatException">解析为数字失败</exception>
     /// <exception cref="OverflowException"></exception>
-    private static ThreeArgs ParseThreeParameters(string input, Regex regex) {
+    private static ValueTuple<double, double, double> ParseThreeParameters(string input, Regex regex) {
         var match = regex.Match(input);
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
         }
-        var args = new ThreeArgs {
-            First = double.Parse(match.Groups[1].Value),
-            Second = double.Parse(match.Groups[2].Value),
-            Third = double.Parse(match.Groups[3].Value),
-        };
-        return args;
+        return new(
+            double.Parse(match.Groups[1].Value),
+            double.Parse(match.Groups[2].Value),
+            double.Parse(match.Groups[3].Value)
+        );
     }
 
     /// <summary>
@@ -58,26 +46,18 @@ public class ColorTransform {
     /// <exception cref="Exception">未匹配</exception>
     /// <exception cref="FormatException">解析为数字失败</exception>
     /// <exception cref="OverflowException"></exception>
-    private static FourArgs ParseFourParameters(string input, Regex regex) {
+    private static ValueTuple<double, double, double, double> ParseFourParameters(string input, Regex regex) {
         var match = regex.Match(input);
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
         }
-        var args = new FourArgs {
-            First = double.Parse(match.Groups[1].Value),
-            Second = double.Parse(match.Groups[2].Value),
-            Third = double.Parse(match.Groups[3].Value),
-            Fourth = double.Parse(match.Groups[4].Value),
-        };
-        return args;
+        return new(
+            double.Parse(match.Groups[1].Value),
+            double.Parse(match.Groups[2].Value),
+            double.Parse(match.Groups[3].Value),
+            double.Parse(match.Groups[4].Value)
+        );
     }
-
-    private static readonly Regex RGBRegex = CompileThreeParametersRegex("rgb");
-    private static readonly Regex RGBARegex = CompileFourParametersRegex("rgba");
-    private static readonly Regex HSLRegex = new(@"hsl *\( *([\d\.\-]+) *, *([\d\.\-]+) *% *, *([\d\.\-]+) *% *\)", RegexOptions.IgnoreCase);
-    private static readonly Regex ThreeColorsRegex = CompileThreeParametersRegex("");
-    private static readonly Regex FourColorsRegex = CompileFourParametersRegex("");
-
     /// <summary>
     /// 编译 3 个参数正则
     /// </summary>
@@ -110,11 +90,11 @@ public class ColorTransform {
     /// </summary>
     /// <param name="args"></param>
     /// <returns></returns>
-    private static Color GetColor(ThreeArgs args) {
+    private static Color GetColor(ValueTuple<double, double, double> args) {
         return new Color() {
-            R = (byte)args.First,
-            G = (byte)args.Second,
-            B = (byte)args.Third,
+            R = (byte)args.Item1,
+            G = (byte)args.Item2,
+            B = (byte)args.Item3,
             A = 255
         };
     }
@@ -124,12 +104,12 @@ public class ColorTransform {
     /// </summary>
     /// <param name="args"></param>
     /// <returns></returns>
-    private static Color GetColor(FourArgs args) {
+    private static Color GetColor(ValueTuple<double, double, double, double> args) {
         return new Color() {
-            R = (byte)args.First,
-            G = (byte)args.Second,
-            B = (byte)args.Third,
-            A = (byte)args.Fourth,
+            R = (byte)args.Item1,
+            G = (byte)args.Item2,
+            B = (byte)args.Item3,
+            A = (byte)args.Item4,
         };
     }
 
@@ -198,103 +178,63 @@ public class ColorTransform {
         return $"({luv.L:f2},{luv.U:f2},{luv.V:f2})";
     }
 
-    public static Color? HEXToColor(string hex) {
-        try {
-            return (Color)ColorConverter.ConvertFromString(hex);
-        } catch {
-            return null;
-        }
-    }
+    public static Color? HEXToColor(string hex)
+        => CommonUtils.Try(() => (Color)ColorConverter.ConvertFromString(hex));
 
-    public static Color? RGBToColor(string input) {
-        try {
-            return GetColor(ParseThreeParameters(input, RGBRegex));
-        } catch {
-            return null;
-        }
-    }
+    public static Color? RGBToColor(string input)
+        => CommonUtils.Try(() => GetColor(ParseThreeParameters(input, RGBRegex)));
 
-    public static Color? RGBA1ToColor(string input) {
-        try {
-            return GetColor(ParseFourParameters(input, RGBARegex));
-        } catch {
-            return null;
-        }
-    }
+    public static Color? RGBA1ToColor(string input)
+        => CommonUtils.Try(() => GetColor(ParseFourParameters(input, RGBARegex)));
 
-    public static Color? RGBA2ToColor(string input) {
-        try {
+    public static Color? RGBA2ToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseFourParameters(input, RGBARegex);
-            args.Fourth *= 255;
+            args.Item4 *= 255;
             return GetColor(args);
-        } catch {
-            return null;
-        }
-    }
+        });
 
-    public static Color? HSLToColor(string input) {
-        try {
+    public static Color? HSLToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, HSLRegex);
-            args.Second /= 100;
-            args.Third /= 100;
-            return GetColor(new Hsl() { H = args.First, S = args.Second, L = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            args.Item2 /= 100;
+            args.Item3 /= 100;
+            return GetColor(new Hsl() { H = args.Item1, S = args.Item2, L = args.Item3 }.To<Rgb>());
+        });
 
-    public static Color? HSVToColor(string input) {
-        try {
+    public static Color? HSVToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
-            return GetColor(new Hsv() { H = args.First, S = args.Second, V = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Hsv() { H = args.Item1, S = args.Item2, V = args.Item3 }.To<Rgb>());
+        });
 
-    public static Color? LABToColor(string input) {
-        try {
+    public static Color? LABToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
-            return GetColor(new Lab() { L = args.First, A = args.Second, B = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Lab() { L = args.Item1, A = args.Item2, B = args.Item3 }.To<Rgb>());
+        });
 
-    public static Color? XYZToColor(string input) {
-        try {
+    public static Color? XYZToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
-            return GetColor(new Xyz() { X = args.First, Y = args.Second, Z = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Xyz() { X = args.Item1, Y = args.Item2, Z = args.Item3 }.To<Rgb>());
+        });
 
-    public static Color? LCHToColor(string input) {
-        try {
+    public static Color? LCHToColor(string input) =>
+        CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
-            return GetColor(new Lch() { L = args.First, C = args.Second, H = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Lch() { L = args.Item1, C = args.Item2, H = args.Item3 }.To<Rgb>());
+        });
 
-    public static Color? CMYKToColor(string input) {
-        try {
+    public static Color? CMYKToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseFourParameters(input, FourColorsRegex);
-            return GetColor(new Cmyk() { C = args.First, M = args.Second, Y = args.Third, K = args.Fourth }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Cmyk() { C = args.Item1, M = args.Item2, Y = args.Item3, K = args.Item4 }.To<Rgb>());
+        });
 
-    public static Color? LUVToColor(string input) {
-        try {
+    public static Color? LUVToColor(string input)
+        => CommonUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
-            return GetColor(new Luv() { L = args.First, U = args.Second, V = args.Third }.To<Rgb>());
-        } catch {
-            return null;
-        }
-    }
+            return GetColor(new Luv() { L = args.Item1, U = args.Item2, V = args.Item3 }.To<Rgb>());
+        });
 }
-
