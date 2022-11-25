@@ -89,13 +89,13 @@
           <ui:TitleBarButton
             Click="SwitchToLightThemeClickHandler"
             ToolTip="切换为亮色模式"
-            Visibility="{Binding IsDarkTheme, Converter={StaticResource HideIfFalseConverter}}">
+            Visibility="{Binding CurrentThemeMode, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter='Light'}">
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe88e;" />
           </ui:TitleBarButton>
           <ui:TitleBarButton
             Click="SwitchToDarkThemeClickHandler"
             ToolTip="切换为暗色模式"
-            Visibility="{Binding IsDarkTheme, Converter={StaticResource HideIfTrueConverter}}">
+            Visibility="{Binding CurrentThemeMode, Converter={StaticResource HideIfTrueConverter}, ConverterParameter='Dark'}">
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe71e;" />
           </ui:TitleBarButton>
         </Grid>

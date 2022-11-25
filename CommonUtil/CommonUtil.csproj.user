@@ -149,10 +149,13 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resource\ResourceDictionary\OtherResources.xaml">
+    <Page Update="Resource\ResourceDictionary\DarkThemeResources.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resource\ResourceDictionary\ThemeResources.xaml">
+    <Page Update="Resource\ResourceDictionary\LightThemeResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resource\ResourceDictionary\OtherResources.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Downloader\DownloadedView.xaml">

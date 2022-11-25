@@ -1,5 +1,6 @@
 ﻿using CommonUITools.Route;
 using CommonUITools.Utils;
+using CommonUtil.Model;
 using CommonUtil.Store;
 using CommonUtil.View;
 using System;
@@ -18,7 +19,7 @@ public partial class MainWindow : Window {
     public static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
     public static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
-    public static readonly DependencyProperty IsDarkThemeProperty = DependencyProperty.Register("IsDarkTheme", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+    private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
 
     /// <summary>
     /// 返回Icon是否可见
@@ -42,11 +43,11 @@ public partial class MainWindow : Window {
         set { SetValue(ShowLoadingBoxProperty, value); }
     }
     /// <summary>
-    /// 当前是否是 DarkTheme
+    /// 当前 ThemeMode
     /// </summary>
-    public bool IsDarkTheme {
-        get { return (bool)GetValue(IsDarkThemeProperty); }
-        set { SetValue(IsDarkThemeProperty, value); }
+    private ThemeMode CurrentThemeMode {
+        get { return (ThemeMode)GetValue(CurrentThemeModeProperty); }
+        set { SetValue(CurrentThemeModeProperty, value); }
     }
     /// <summary>
     /// 标题动画
@@ -72,11 +73,16 @@ public partial class MainWindow : Window {
 
     public MainWindow() {
         InitializeComponent();
+        #region RouterService
         var types = Global.MenuItems.Select(t => t.ClassType).ToList();
         types.Add(typeof(MainContentView));
         PageTypes = types;
         RouterService = new(ContentFrame, PageTypes);
         AddPageFrame(PageTypes, RouterService);
+        RouteChanged += (_, _) => {
+            IsBackIconVisible = CanGoBack;
+        };
+        #endregion
         #region 设置 Storyboard
         TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
         MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
@@ -84,17 +90,16 @@ public partial class MainWindow : Window {
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
         #endregion 
         CommonUITools.App.RegisterWidgetPage(this);
-        RouteChanged += (_, _) => {
-            IsBackIconVisible = CanGoBack;
-        };
-        // 延迟加载，减少卡顿
+        // 导航到 MainContentView，
         Loaded += (_, _) => Task.Run(() => {
+            // 延迟加载，减少卡顿
             Thread.Sleep(1000);
             Dispatcher.BeginInvoke(() => {
                 RouterService.Navigate(typeof(MainContentView));
                 PushRouteStack(ContentFrame);
             });
         });
+        ThemeManager.Current.ThemeChanged += (_, mode) => CurrentThemeMode = mode;
     }
 
     /// <summary>
@@ -186,8 +191,7 @@ public partial class MainWindow : Window {
     /// <param name="e"></param>
     private void SwitchToLightThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
-        IsDarkTheme = false;
+        ThemeManager.Current.SwitchToLightTheme();
     }
 
     /// <summary>
@@ -197,7 +201,6 @@ public partial class MainWindow : Window {
     /// <param name="e"></param>
     private void SwitchToDarkThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
-        IsDarkTheme = true;
+        ThemeManager.Current.SwitchToDarkTheme();
     }
 }
