@@ -22,13 +22,30 @@ public partial class MainContentView : Page {
     public ObservableCollection<ToolMenuItem> ToolMenuItems {
         get => (ObservableCollection<ToolMenuItem>)GetValue(MenuItemsProperty);
     }
-    //private SolidColorBrush MainContentViewBackgroundBrush = default!;
     private Window Window = default!;
 
     public MainContentView() {
         SetValue(MenuItemsKey, new ObservableCollection<ToolMenuItem>());
-        Loaded += InitializeLoadedHandler;
+        UIUtils.SetLoadedOnceEventHandler(this, InitializeLoadedHandler);
         InitializeComponent();
+        // 监听主题变化
+        ThemeManager.Current.ThemeChanged += (_, _) => {
+            if (IsVisible) {
+                var brush = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
+                SetWindowTitleBarBackground(brush);
+                Background = brush;
+            }
+        };
+    }
+
+    /// <summary>
+    /// 设置 MainWindow TitleBarBackground
+    /// </summary>
+    /// <param name="brush"></param>
+    private void SetWindowTitleBarBackground(Brush brush) {
+        if (Window is MainWindow window) {
+            window.TitleBarBackground = brush;
+        }
     }
 
     /// <summary>
@@ -37,8 +54,6 @@ public partial class MainContentView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void InitializeLoadedHandler(object sender, RoutedEventArgs e) {
-        Loaded -= InitializeLoadedHandler;
-        //MainContentViewBackgroundBrush = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
         Window = Window.GetWindow(this);
         // 延迟加载
         Task.Run(() => {
@@ -54,13 +69,15 @@ public partial class MainContentView : Page {
     }
 
     private void RootLoaded(object sender, RoutedEventArgs e) {
-        //e.Handled = true;
-        Window.Background = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
+        e.Handled = true;
+        var brush = (SolidColorBrush)FindResource("MainContentViewBackgroundBrush");
+        SetWindowTitleBarBackground(brush);
+        Background = brush;
     }
 
     private void RootUnloaded(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        Window.Background = (SolidColorBrush)FindResource("WindowBackgroundBrush");
+        SetWindowTitleBarBackground(new SolidColorBrush(Colors.Transparent));
     }
 
     /// <summary>

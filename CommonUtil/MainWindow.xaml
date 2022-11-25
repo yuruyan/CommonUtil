@@ -49,13 +49,14 @@
 
   <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
     <Grid.RowDefinitions>
-      <RowDefinition Height="35" />
+      <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  标题  -->
     <DockPanel
       x:Name="TitleBar"
       VerticalAlignment="Top"
+      Background="{Binding TitleBarBackground}"
       LastChildFill="False">
       <DockPanel.RenderTransform>
         <TranslateTransform x:Name="TitleBarTranslateTransform" />

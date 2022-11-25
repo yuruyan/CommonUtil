@@ -1,4 +1,5 @@
-﻿using CommonUITools.Route;
+﻿using CommonUITools.Model;
+using CommonUITools.Route;
 using CommonUITools.Utils;
 using CommonUtil.Model;
 using CommonUtil.Store;
@@ -10,21 +11,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace CommonUtil;
 
+[SingleInstance]
 public partial class MainWindow : Window {
-    public static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
-    public static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+    public static readonly DependencyProperty TitleBarBackgroundProperty = DependencyProperty.Register("TitleBarBackground", typeof(Brush), typeof(MainWindow), new PropertyMetadata());
+    private static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+    private static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
     private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
 
     /// <summary>
     /// 返回Icon是否可见
     /// </summary>
-    public bool IsBackIconVisible {
+    private bool IsBackIconVisible {
         get { return (bool)GetValue(IsBackIconVisibleProperty); }
         set { SetValue(IsBackIconVisibleProperty, value); }
     }
@@ -38,7 +42,7 @@ public partial class MainWindow : Window {
     /// <summary>
     /// 显示加载框
     /// </summary>
-    public bool ShowLoadingBox {
+    private bool ShowLoadingBox {
         get { return (bool)GetValue(ShowLoadingBoxProperty); }
         set { SetValue(ShowLoadingBoxProperty, value); }
     }
@@ -48,6 +52,13 @@ public partial class MainWindow : Window {
     private ThemeMode CurrentThemeMode {
         get { return (ThemeMode)GetValue(CurrentThemeModeProperty); }
         set { SetValue(CurrentThemeModeProperty, value); }
+    }
+    /// <summary>
+    /// 标题栏背景
+    /// </summary>
+    public Brush TitleBarBackground {
+        get { return (Brush)GetValue(TitleBarBackgroundProperty); }
+        set { SetValue(TitleBarBackgroundProperty, value); }
     }
     /// <summary>
     /// 标题动画
@@ -99,7 +110,10 @@ public partial class MainWindow : Window {
                 PushRouteStack(ContentFrame);
             });
         });
-        ThemeManager.Current.ThemeChanged += (_, mode) => CurrentThemeMode = mode;
+        ThemeManager.Current.ThemeChanged += (_, mode) => {
+            CurrentThemeMode = mode;
+            Background = (SolidColorBrush)FindResource("WindowBackgroundBrush");
+        };
     }
 
     /// <summary>
