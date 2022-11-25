@@ -9,6 +9,7 @@
   Title="常用正则表达式"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  Background="{DynamicResource ApplicationBackgroundBrush}"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   PrimaryButtonText="关闭"
   mc:Ignorable="d">
