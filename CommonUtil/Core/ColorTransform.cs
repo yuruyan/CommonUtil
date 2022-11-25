@@ -178,6 +178,57 @@ public static partial class ColorTransform {
         return $"({luv.L:f2},{luv.U:f2},{luv.V:f2})";
     }
 
+    public static ValueTuple<double, double, double, double> ColorToHEXValues(Color color) {
+        return new(color.A, color.R, color.G, color.B);
+    }
+
+    public static ValueTuple<double, double, double> ColorToRGBValues(Color color) {
+        return new(color.R, color.G, color.B);
+    }
+
+    public static ValueTuple<double, double, double, double> ColorToRGBA1Values(Color color) {
+        return new(color.R, color.G, color.B, color.A);
+    }
+
+    public static ValueTuple<double, double, double, double> ColorToRGBA2Values(Color color) {
+        return new(color.R, color.G, color.B, color.A / (double)255);
+    }
+
+    public static ValueTuple<double, double, double> ColorToHSLValues(Color color) {
+        var hsl = GetRgb(color).To<Hsl>();
+        return new(hsl.H, hsl.S, hsl.L);
+    }
+
+    public static ValueTuple<double, double, double> ColorToHSVValues(Color color) {
+        var hsv = GetRgb(color).To<Hsv>();
+        return new(hsv.H, hsv.S, hsv.V);
+    }
+
+    public static ValueTuple<double, double, double> ColorToLABValues(Color color) {
+        var lab = GetRgb(color).To<Lab>();
+        return new(lab.L, lab.A, lab.B);
+    }
+
+    public static ValueTuple<double, double, double> ColorToXYZValues(Color color) {
+        var xyz = GetRgb(color).To<Xyz>();
+        return new(xyz.X, xyz.Y, xyz.Z);
+    }
+
+    public static ValueTuple<double, double, double> ColorToLCHValues(Color color) {
+        var lch = GetRgb(color).To<Lch>();
+        return new(lch.L, lch.C, lch.H);
+    }
+
+    public static ValueTuple<double, double, double, double> ColorToCMYKValues(Color color) {
+        var cmyk = GetRgb(color).To<Cmyk>();
+        return new(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
+    }
+
+    public static ValueTuple<double, double, double> ColorToLUVValues(Color color) {
+        var luv = GetRgb(color).To<Luv>();
+        return new(luv.L, luv.U, luv.V);
+    }
+
     public static Color? HEXToColor(string hex)
         => CommonUtils.Try(() => (Color)ColorConverter.ConvertFromString(hex));
 
