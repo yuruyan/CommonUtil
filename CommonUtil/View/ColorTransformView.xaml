@@ -28,7 +28,7 @@
               Margin="0,0,12,0"
               Style="{StaticResource IconFontStyle}"
               Text="&#xe6ef;" />
-            <TextBlock Text="{Binding Tag, StringFormat=复制 {0}}" />
+            <TextBlock Text="{Binding Tag, StringFormat='复制 {0}'}" />
           </StackPanel>
         </DataTemplate>
       </ContextMenu.ItemTemplate>
