@@ -62,7 +62,7 @@
         <TranslateTransform x:Name="TitleBarTranslateTransform" />
       </DockPanel.RenderTransform>
       <StackPanel Orientation="Horizontal">
-        <ui:TitleBarButton Click="ToBackClick" Visibility="{Binding IsBackIconVisible, Converter={StaticResource VisibilityEqualConverter}, ConverterParameter='False|Collapsed'}">
+        <ui:TitleBarButton Click="ToBackClick" Visibility="{Binding IsBackIconVisible, Converter={StaticResource HideIfFalseConverter}}">
           <ui:TitleBarButton.ContextMenu>
             <ContextMenu>
               <MenuItem Click="ToMainPageClickHandler" Header="回到主页">

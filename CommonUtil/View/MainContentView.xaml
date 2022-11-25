@@ -56,12 +56,23 @@
             Width="230"
             Height="70"
             Margin="8,6"
-            Background="{DynamicResource MainContentViewItemBackgroundBrush}"
             CornerRadius="4"
             MouseLeftButtonUp="MenuMouseLeftButtonUp">
             <Border.RenderTransform>
               <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" />
             </Border.RenderTransform>
+            <Border.Style>
+              <Style BasedOn="{StaticResource GlobalBorderStyle}" TargetType="Border">
+                <Style.Triggers>
+                  <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MainContentViewItemHoverBackgroundBrush}" />
+                  </Trigger>
+                  <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource MainContentViewItemBackgroundBrush}" />
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </Border.Style>
             <Border.Effect>
               <DropShadowEffect
                 x:Name="ShadowEffect"
