@@ -196,12 +196,12 @@ public static partial class ColorTransform {
 
     public static ValueTuple<double, double, double> ColorToHSLValues(Color color) {
         var hsl = GetRgb(color).To<Hsl>();
-        return new(hsl.H, hsl.S, hsl.L);
+        return new(hsl.H, hsl.S * 100, hsl.L * 100);
     }
 
     public static ValueTuple<double, double, double> ColorToHSVValues(Color color) {
         var hsv = GetRgb(color).To<Hsv>();
-        return new(hsv.H, hsv.S, hsv.V);
+        return new(hsv.H, hsv.S * 100, hsv.V * 100);
     }
 
     public static ValueTuple<double, double, double> ColorToLABValues(Color color) {
@@ -302,10 +302,10 @@ public static partial class ColorTransform {
         => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)(a * 255) });
 
     public static Color? HSLToColor(double h, double s, double l)
-        => CommonUtils.Try(() => GetColor(new Hsl() { H = h, S = s, L = l }.To<Rgb>()));
+        => CommonUtils.Try(() => GetColor(new Hsl() { H = h, S = s / 100, L = l / 100 }.To<Rgb>()));
 
-    public static Color? HSVToColor(double g, double s, double v)
-        => CommonUtils.Try(() => GetColor(new Hsv() { H = g, S = s, V = v }.To<Rgb>()));
+    public static Color? HSVToColor(double h, double s, double v)
+        => CommonUtils.Try(() => GetColor(new Hsv() { H = h, S = s / 100, V = v / 100 }.To<Rgb>()));
 
     public static Color? LABToColor(double l, double a, double b)
         => CommonUtils.Try(() => GetColor(new Lab() { L = l, A = a, B = b }.To<Rgb>()));
