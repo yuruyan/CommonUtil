@@ -19,6 +19,7 @@ public partial class ColorTransformView : Page {
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public string Header { get; }
         public double MinValue { get; }
         public double MaxValue { get; }
         public double SmallChange { get; }
@@ -30,7 +31,8 @@ public partial class ColorTransformView : Page {
             set { SetValue(ValueProperty, value); }
         }
 
-        public SliderInfo(double minValue, double maxValue, double smallChange) {
+        public SliderInfo(string header, double minValue, double maxValue, double smallChange) {
+            Header = header;
             MinValue = minValue;
             MaxValue = maxValue;
             SmallChange = smallChange;
@@ -87,11 +89,11 @@ public partial class ColorTransformView : Page {
                  ColorTransform.HEXToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.HEXToColor,
                  ColorTransform.ColorToHEXValues,
-                 new List<SliderInfo>(){
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
+                 new List<SliderInfo>() {
+                     new ("A",0, 255, 1),
+                     new ("R",0, 255, 1),
+                     new ("G",0, 255, 1),
+                     new ("B",0, 255, 1),
                  }
              ),
              new (
@@ -100,10 +102,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.RGBToColor,
                  (Func<double,double,double,Color?>)ColorTransform.RGBToColor,
                  ColorTransform.ColorToRGBValues,
-                 new List<SliderInfo>(){
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
+                 new List<SliderInfo>() {
+                     new ("R",0, 255, 1),
+                     new ("G",0, 255, 1),
+                     new ("B",0, 255, 1),
                  }
              ),
              new (
@@ -112,11 +114,11 @@ public partial class ColorTransformView : Page {
                  ColorTransform.RGBA1ToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.RGBA1ToColor,
                  ColorTransform.ColorToRGBA1Values,
-                 new List<SliderInfo>(){
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
+                 new List<SliderInfo>() {
+                     new ("R",0, 255, 1),
+                     new ("G",0, 255, 1),
+                     new ("B",0, 255, 1),
+                     new ("A",0, 255, 1),
                  }
              ),
              new (
@@ -125,11 +127,11 @@ public partial class ColorTransformView : Page {
                  ColorTransform.RGBA2ToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.RGBA2ToColor,
                  ColorTransform.ColorToRGBA2Values,
-                 new List<SliderInfo>(){
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 255, 1),
-                     new (0, 1, 0.01),
+                 new List<SliderInfo>() {
+                     new ("R",0, 255, 1),
+                     new ("G",0, 255, 1),
+                     new ("B",0, 255, 1),
+                     new ("A",0, 1, 0.01),
                  }
              ),
              new (
@@ -138,10 +140,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.HSLToColor,
                  (Func<double, double, double, Color?>)ColorTransform.HSLToColor,
                  ColorTransform.ColorToHSLValues,
-                 new List<SliderInfo>(){
-                     new (0, 360, 1),
-                     new (0, 100, 1),
-                     new (0, 100, 1),
+                 new List<SliderInfo>() {
+                     new ("H",0, 360, 1),
+                     new ("S",0, 100, 1),
+                     new ("L",0, 100, 1),
                  }
              ),
              new (
@@ -150,10 +152,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.HSVToColor,
                  (Func<double, double, double, Color?>)ColorTransform.HSVToColor,
                  ColorTransform.ColorToHSVValues,
-                 new List<SliderInfo>(){
-                     new (0, 360, 1),
-                     new (0, 100, 1),
-                     new (0, 100, 1),
+                 new List<SliderInfo>() {
+                     new ("H",0, 360, 1),
+                     new ("S",0, 100, 1),
+                     new ("V",0, 100, 1),
                  }
              ),
              new (
@@ -162,10 +164,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.LABToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LABToColor,
                  ColorTransform.ColorToLABValues,
-                 new List<SliderInfo>(){
-                     new (0, 100, 1),
-                     new (-128, 127, 1),
-                     new (-128, 127, 1),
+                 new List<SliderInfo>() {
+                     new ("L",0, 100, 1),
+                     new ("A",-128, 127, 1),
+                     new ("B",-128, 127, 1),
                  }
              ),
              new (
@@ -174,10 +176,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.XYZToColor,
                  (Func<double, double, double, Color?>)ColorTransform.XYZToColor,
                  ColorTransform.ColorToXYZValues,
-                 new List<SliderInfo>(){
-                     new (0, 95.05, 1),
-                     new (0, 100, 1),
-                     new (0, 108.88, 1),
+                 new List<SliderInfo>() {
+                     new ("X",0, 95.05, 1),
+                     new ("Y",0, 100, 1),
+                     new ("Z",0, 108.88, 1),
                  }
              ),
              new (
@@ -186,10 +188,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.LCHToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LCHToColor,
                  ColorTransform.ColorToLCHValues,
-                 new List<SliderInfo>(){
-                     new (0, 100, 1),
-                     new (0, 230, 1),
-                     new (0, 270, 1),
+                 new List<SliderInfo>() {
+                     new ("L",0, 100, 1),
+                     new ("C",0, 230, 1),
+                     new ("H",0, 270, 1),
                  }
              ),
              new (
@@ -198,11 +200,11 @@ public partial class ColorTransformView : Page {
                  ColorTransform.CMYKToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.CMYKToColor,
                  ColorTransform.ColorToCMYKValues,
-                 new List<SliderInfo>(){
-                     new (0, 1, 0.01),
-                     new (0, 1, 0.01),
-                     new (0, 1, 0.01),
-                     new (0, 1, 0.01),
+                 new List<SliderInfo>() {
+                     new ("C",0, 1, 0.01),
+                     new ("M",0, 1, 0.01),
+                     new ("Y",0, 1, 0.01),
+                     new ("K",0, 1, 0.01),
                  }
              ),
              new (
@@ -211,10 +213,10 @@ public partial class ColorTransformView : Page {
                  ColorTransform.LUVToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LUVToColor,
                  ColorTransform.ColorToLUVValues,
-                 new List<SliderInfo>(){
-                     new (0, 100, 1),
-                     new (-134, 220, 1),
-                     new (-140, 122, 1),
+                 new List<SliderInfo>() {
+                     new ("L",0, 100, 1),
+                     new ("U",-134, 220, 1),
+                     new ("V",-140, 122, 1),
                  }
              ),
         };

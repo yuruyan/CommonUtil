@@ -74,12 +74,20 @@
                     <ItemsControl ItemsSource="{Binding Sliders}">
                       <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                          <Slider
-                            Margin="0,4"
-                            Maximum="{Binding MaxValue, Mode=OneTime}"
-                            Minimum="{Binding MinValue, Mode=OneTime}"
-                            SmallChange="{Binding SmallChange, Mode=OneTime}"
-                            Value="{Binding Value}" />
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="20" />
+                              <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Width="20" Text="{Binding Header}" />
+                            <Slider
+                              Grid.Column="1"
+                              Margin="0,4"
+                              Maximum="{Binding MaxValue, Mode=OneTime}"
+                              Minimum="{Binding MinValue, Mode=OneTime}"
+                              SmallChange="{Binding SmallChange, Mode=OneTime}"
+                              Value="{Binding Value}" />
+                          </Grid>
                         </DataTemplate>
                       </ItemsControl.ItemTemplate>
                     </ItemsControl>
