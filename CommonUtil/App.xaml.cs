@@ -37,7 +37,6 @@ public partial class App : Application {
         Logger.Error(e);
         // 提示信息
         MessageBox.Show(
-            Current.MainWindow,
             e.Exception.Message,
             "错误",
             MessageBoxButton.OK,
@@ -50,7 +49,6 @@ public partial class App : Application {
             Logger.Fatal(exception);
             // 提示信息
             MessageBox.Show(
-                Current.MainWindow,
                 exception.Message,
                 "错误",
                 MessageBoxButton.OK,
