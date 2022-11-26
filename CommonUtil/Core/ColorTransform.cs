@@ -293,7 +293,7 @@ public static partial class ColorTransform {
         => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
 
     public static Color? RGBToColor(double r, double g, double b)
-        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b });
+        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = 255 });
 
     public static Color? RGBA1ToColor(double r, double g, double b, double a)
         => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
