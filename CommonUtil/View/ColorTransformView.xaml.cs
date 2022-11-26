@@ -1,11 +1,14 @@
-﻿using CommonUtil.Core;
+﻿using CommonUITools.Utils;
+using CommonUtil.Core;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace CommonUtil.View;
@@ -13,6 +16,8 @@ namespace CommonUtil.View;
 public partial class ColorTransformView : Page {
     public class SliderInfo : DependencyObject {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(SliderInfo), new PropertyMetadata(0.0));
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public double MinValue { get; }
         public double MaxValue { get; }
@@ -42,14 +47,16 @@ public partial class ColorTransformView : Page {
         public string Tag { get; set; } = string.Empty;
         public Func<Color, string> ColorToString { get; set; }
         public Func<string, Color?> StringToColor { get; set; }
-        public Delegate SliderConverter { get; }
+        public Delegate ValuesToColorConverter { get; }
+        public Delegate ColorToValuesConverter { get; }
         public IList<SliderInfo> Sliders { get; }
 
-        public ColorItem(string tag, Func<Color, string> colorToString, Func<string, Color?> stringToColor, Delegate sliderConverter, IList<SliderInfo> sliders) {
+        public ColorItem(string tag, Func<Color, string> colorToString, Func<string, Color?> stringToColor, Delegate valuesToColorConverter, Delegate colorToValuesConverter, IList<SliderInfo> sliders) {
             Tag = tag;
             ColorToString = colorToString;
             StringToColor = stringToColor;
-            SliderConverter = sliderConverter;
+            ValuesToColorConverter = valuesToColorConverter;
+            ColorToValuesConverter = colorToValuesConverter;
             Sliders = sliders;
         }
 
@@ -79,6 +86,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToHEX,
                  ColorTransform.HEXToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.HEXToColor,
+                 ColorTransform.ColorToHEXValues,
                  new List<SliderInfo>(){
                      new (0, 255, 1),
                      new (0, 255, 1),
@@ -91,6 +99,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToRGB,
                  ColorTransform.RGBToColor,
                  (Func<double,double,double,Color?>)ColorTransform.RGBToColor,
+                 ColorTransform.ColorToRGBValues,
                  new List<SliderInfo>(){
                      new (0, 255, 1),
                      new (0, 255, 1),
@@ -102,6 +111,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToRGBA1,
                  ColorTransform.RGBA1ToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.RGBA1ToColor,
+                 ColorTransform.ColorToRGBA1Values,
                  new List<SliderInfo>(){
                      new (0, 255, 1),
                      new (0, 255, 1),
@@ -114,6 +124,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToRGBA2,
                  ColorTransform.RGBA2ToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.RGBA2ToColor,
+                 ColorTransform.ColorToRGBA2Values,
                  new List<SliderInfo>(){
                      new (0, 255, 1),
                      new (0, 255, 1),
@@ -126,6 +137,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToHSL,
                  ColorTransform.HSLToColor,
                  (Func<double, double, double, Color?>)ColorTransform.HSLToColor,
+                 ColorTransform.ColorToHSLValues,
                  new List<SliderInfo>(){
                      new (0, 360, 1),
                      new (0, 100, 1),
@@ -137,6 +149,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToHSV,
                  ColorTransform.HSVToColor,
                  (Func<double, double, double, Color?>)ColorTransform.HSVToColor,
+                 ColorTransform.ColorToHSVValues,
                  new List<SliderInfo>(){
                      new (0, 360, 1),
                      new (0, 100, 1),
@@ -148,6 +161,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToLAB,
                  ColorTransform.LABToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LABToColor,
+                 ColorTransform.ColorToLABValues,
                  new List<SliderInfo>(){
                      new (0, 100, 1),
                      new (-128, 127, 1),
@@ -159,6 +173,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToXYZ,
                  ColorTransform.XYZToColor,
                  (Func<double, double, double, Color?>)ColorTransform.XYZToColor,
+                 ColorTransform.ColorToXYZValues,
                  new List<SliderInfo>(){
                      new (0, 95.05, 1),
                      new (0, 100, 1),
@@ -170,6 +185,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToLCH,
                  ColorTransform.LCHToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LCHToColor,
+                 ColorTransform.ColorToLCHValues,
                  new List<SliderInfo>(){
                      new (0, 100, 1),
                      new (0, 230, 1),
@@ -181,6 +197,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToCMYK,
                  ColorTransform.CMYKToColor,
                  (Func<double,double,double,double,Color?>)ColorTransform.CMYKToColor,
+                 ColorTransform.ColorToCMYKValues,
                  new List<SliderInfo>(){
                      new (0, 1, 0.01),
                      new (0, 1, 0.01),
@@ -193,6 +210,7 @@ public partial class ColorTransformView : Page {
                  ColorTransform.ColorToLUV,
                  ColorTransform.LUVToColor,
                  (Func<double, double, double, Color?>)ColorTransform.LUVToColor,
+                 ColorTransform.ColorToLUVValues,
                  new List<SliderInfo>(){
                      new (0, 100, 1),
                      new (-134, 220, 1),
@@ -204,7 +222,7 @@ public partial class ColorTransformView : Page {
         SelectedColor = Colors.White;
 
         // 定时更新而不是立即更新防止界面卡顿
-        var timer = new System.Timers.Timer {
+        var timer = new Timer {
             Interval = 100
         };
         timer.Elapsed += UpdateColor;
@@ -248,6 +266,10 @@ public partial class ColorTransformView : Page {
         IsColorChanged = true;
     }
 
+    /// <summary>
+    /// 更新输入颜色
+    /// </summary>
+    /// <param name="color"></param>
     private void UpdateInputColor(Color? color) {
         if (color is Color c) {
             // 不能和 SelectedColor 比较
@@ -262,9 +284,9 @@ public partial class ColorTransformView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void TextBoxKeyUpHandler(object sender, System.Windows.Input.KeyEventArgs e) {
+    private void TextBoxKeyUpHandler(object sender, KeyEventArgs e) {
         e.Handled = true;
-        if (e.Key != System.Windows.Input.Key.Enter) {
+        if (e.Key != Key.Enter) {
             return;
         }
         if (sender is TextBox box && box.DataContext is ColorItem colorItem) {
@@ -283,5 +305,69 @@ public partial class ColorTransformView : Page {
             Clipboard.SetDataObject(colorItem.ColorToString(SelectedColor));
             CommonUITools.Widget.MessageBox.Success("已复制");
         }
+    }
+
+    /// <summary>
+    /// 通过 SliderInfo 获取 ColorItem
+    /// </summary>
+    private readonly IDictionary<SliderInfo, ColorItem> SliderInfoColorItemDict = new Dictionary<SliderInfo, ColorItem>();
+
+    /// <summary>
+    /// SliderValueChanged
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SliderValueChangedHandler(object? sender, EventArgs e) {
+        DebounceUtils.Debounce(SliderValueChangedHandler, () => {
+            Dispatcher.Invoke(() => {
+                if (sender is SliderInfo info) {
+                    var colorItem = SliderInfoColorItemDict[info];
+                    var color = colorItem.ValuesToColorConverter.DynamicInvoke(
+                        colorItem.Sliders.Select(s => s.Value).Cast<object>().ToArray()
+                    ) as Color?;
+                    UpdateInputColor(color);
+                }
+            });
+        }, true, 100);
+    }
+
+    /// <summary>
+    /// ColorItemContextMenuLoaded
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ColorItemContextMenuLoadedHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (sender is not FrameworkElement element) {
+            return;
+        }
+        var colorItem = (ColorItem)element.DataContext;
+        #region 移除 Hook
+        foreach (var item in colorItem.Sliders) {
+            SliderInfoColorItemDict[item] = colorItem;
+            var descriptor = DependencyPropertyDescriptor.FromProperty(SliderInfo.ValueProperty, item.GetType());
+            descriptor.RemoveValueChanged(item, SliderValueChangedHandler);
+        }
+        #endregion
+        #region 设置 Slider Values
+        var values = colorItem.ColorToValuesConverter.DynamicInvoke(SelectedColor);
+        if (values is ValueTuple<double, double, double> threeValues) {
+            colorItem.Sliders[0].Value = threeValues.Item1;
+            colorItem.Sliders[1].Value = threeValues.Item2;
+            colorItem.Sliders[2].Value = threeValues.Item3;
+        } else if (values is ValueTuple<double, double, double, double> fourValues) {
+            colorItem.Sliders[0].Value = fourValues.Item1;
+            colorItem.Sliders[1].Value = fourValues.Item2;
+            colorItem.Sliders[2].Value = fourValues.Item3;
+            colorItem.Sliders[3].Value = fourValues.Item4;
+        }
+        #endregion
+        #region 添加 Hook
+        foreach (var item in colorItem.Sliders) {
+            SliderInfoColorItemDict[item] = colorItem;
+            var descriptor = DependencyPropertyDescriptor.FromProperty(SliderInfo.ValueProperty, item.GetType());
+            descriptor.AddValueChanged(item, SliderValueChangedHandler);
+        }
+        #endregion
     }
 }

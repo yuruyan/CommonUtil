@@ -13,9 +13,8 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
   <Page.ContextMenu>
-    <ContextMenu ItemsSource="{Binding ColorItems}" Style="{StaticResource GlobalContextMenuStyle}">
+    <ContextMenu ItemsSource="{Binding ColorItems}">
       <ContextMenu.Resources>
         <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
           <EventSetter Event="Click" Handler="CopyColorClick" />
@@ -64,11 +63,33 @@
               <TextBlock
                 Width="100"
                 FontSize="{DynamicResource HeaderFontSize}"
-                Text="{Binding Tag, StringFormat={}{0}：}" />
+                Style="{StaticResource HyperLinkStyle}"
+                Text="{Binding Tag, StringFormat='{}{0}：'}">
+                <TextBlock.ContextMenu>
+                  <ContextMenu Width="250" Loaded="ColorItemContextMenuLoadedHandler">
+                    <ContextMenu.Resources>
+                      <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPointerOver" Color="Transparent" />
+                      <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPressed" Color="Transparent" />
+                    </ContextMenu.Resources>
+                    <ItemsControl ItemsSource="{Binding Sliders}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <Slider
+                            Margin="0,4"
+                            Maximum="{Binding MaxValue, Mode=OneTime}"
+                            Minimum="{Binding MinValue, Mode=OneTime}"
+                            SmallChange="{Binding SmallChange, Mode=OneTime}"
+                            Value="{Binding Value}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </ContextMenu>
+                </TextBlock.ContextMenu>
+              </TextBlock>
               <TextBox
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
-                FontFamily="Consoles"
+                FontFamily="{StaticResource ASCIIFontFamily}"
                 KeyUp="TextBoxKeyUpHandler"
                 Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
