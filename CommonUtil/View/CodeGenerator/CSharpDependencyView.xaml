@@ -50,47 +50,43 @@
         <TextBlock Text="属性类型" />
         <TextBlock Text="默认值" />
       </UniformGrid>
-      <ScrollViewer Grid.Row="1">
-        <ItemsControl
-          BorderBrush="Black"
-          BorderThickness="1"
-          ItemsSource="{Binding TypeInfos}">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <UniformGrid Columns="4">
-                <TextBox Text="{Binding Name}" />
-                <TextBox Text="{Binding ClassName}" />
-                <TextBox Text="{Binding Type}" />
-                <TextBox Text="{Binding Value}" />
-                <UniformGrid.ContextMenu>
-                  <ContextMenu>
-                    <MenuItem Click="RemovePropertyClick" Header="删除">
-                      <MenuItem.Icon>
-                        <TextBlock
-                          Foreground="{StaticResource DeleteButtonForeground}"
-                          Style="{StaticResource IconFontStyle}"
-                          Text="&#xe6b4;" />
-                      </MenuItem.Icon>
-                    </MenuItem>
-                  </ContextMenu>
-                </UniformGrid.ContextMenu>
-                <UniformGrid.Resources>
-                  <Style TargetType="UniformGrid">
-                    <Style.Triggers>
-                      <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="{StaticResource Gray3}" />
-                      </Trigger>
-                      <Trigger Property="IsMouseOver" Value="False">
-                        <Setter Property="Background" Value="Transparent" />
-                      </Trigger>
-                    </Style.Triggers>
-                  </Style>
-                </UniformGrid.Resources>
-              </UniformGrid>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </ScrollViewer>
+      <ListBox
+        x:Name="TypeInfoListBox"
+        Grid.Row="1"
+        BorderBrush="Black"
+        BorderThickness="1"
+        ItemsSource="{Binding TypeInfos}">
+        <ListBox.ItemContainerStyle>
+          <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+          </Style>
+        </ListBox.ItemContainerStyle>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <UniformGrid
+              Width="{Binding ElementName=TypeInfoListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}"
+              Background="Transparent"
+              Columns="4">
+              <TextBox Text="{Binding Name}" />
+              <TextBox Text="{Binding ClassName}" />
+              <TextBox Text="{Binding Type}" />
+              <TextBox Text="{Binding Value}" />
+              <UniformGrid.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Click="RemovePropertyClick" Header="删除">
+                    <MenuItem.Icon>
+                      <TextBlock
+                        Foreground="{StaticResource DeleteButtonForeground}"
+                        Style="{StaticResource IconFontStyle}"
+                        Text="&#xe6b4;" />
+                    </MenuItem.Icon>
+                  </MenuItem>
+                </ContextMenu>
+              </UniformGrid.ContextMenu>
+            </UniformGrid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
     </Grid>
 
     <!--  Control  -->
