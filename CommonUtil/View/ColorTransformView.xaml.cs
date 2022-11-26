@@ -30,6 +30,7 @@ public partial class ColorTransformView : Page {
             get { return (double)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
+        public int ToolTipPrecision { get; set; } = 0;
 
         public SliderInfo(string header, double minValue, double maxValue, double smallChange) {
             Header = header;
@@ -131,7 +132,7 @@ public partial class ColorTransformView : Page {
                      new ("R",0, 255, 1),
                      new ("G",0, 255, 1),
                      new ("B",0, 255, 1),
-                     new ("A",0, 1, 0.01),
+                     new ("A",0, 1, 0.01) { ToolTipPrecision = 2},
                  }
              ),
              new (
@@ -201,10 +202,10 @@ public partial class ColorTransformView : Page {
                  (Func<double,double,double,double,Color?>)ColorTransform.CMYKToColor,
                  ColorTransform.ColorToCMYKValues,
                  new List<SliderInfo>() {
-                     new ("C",0, 1, 0.01),
-                     new ("M",0, 1, 0.01),
-                     new ("Y",0, 1, 0.01),
-                     new ("K",0, 1, 0.01),
+                     new ("C",0, 1, 0.01) { ToolTipPrecision = 2},
+                     new ("M",0, 1, 0.01) { ToolTipPrecision = 2},
+                     new ("Y",0, 1, 0.01) { ToolTipPrecision = 2},
+                     new ("K",0, 1, 0.01) { ToolTipPrecision = 2},
                  }
              ),
              new (

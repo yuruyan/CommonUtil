@@ -83,6 +83,8 @@
                             <Slider
                               Grid.Column="1"
                               Margin="0,4"
+                              AutoToolTipPlacement="TopLeft"
+                              AutoToolTipPrecision="{Binding ToolTipPrecision}"
                               Maximum="{Binding MaxValue, Mode=OneTime}"
                               Minimum="{Binding MinValue, Mode=OneTime}"
                               SmallChange="{Binding SmallChange, Mode=OneTime}"
