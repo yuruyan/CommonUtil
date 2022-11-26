@@ -302,6 +302,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private void QRCodeForegroundRectangleMouseUp(object sender, MouseButtonEventArgs e) {
         if (sender is FrameworkElement element) {
             element.ContextMenu.IsOpen = true;
+            element.ContextMenu.UpdateDefaultStyle();
         }
     }
 

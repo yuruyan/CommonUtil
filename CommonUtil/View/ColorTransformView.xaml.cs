@@ -344,6 +344,7 @@ public partial class ColorTransformView : Page {
         if (sender is not FrameworkElement element) {
             return;
         }
+        element.UpdateDefaultStyle();
         var colorItem = (ColorItem)element.DataContext;
         #region 移除 Hook
         foreach (var item in colorItem.Sliders) {
@@ -372,5 +373,17 @@ public partial class ColorTransformView : Page {
             descriptor.AddValueChanged(item, SliderValueChangedHandler);
         }
         #endregion
+    }
+
+    /// <summary>
+    /// 左键单击显示 ContextMenu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ColorItemHeaderMouseUpHandler(object sender, MouseButtonEventArgs e) {
+        if (sender is FrameworkElement element) {
+            element.ContextMenu.DataContext = element.DataContext;
+            element.ContextMenu.IsOpen = true;
+        }
     }
 }

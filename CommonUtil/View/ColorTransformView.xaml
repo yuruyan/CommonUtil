@@ -63,6 +63,7 @@
               <TextBlock
                 Width="100"
                 FontSize="{DynamicResource HeaderFontSize}"
+                MouseUp="ColorItemHeaderMouseUpHandler"
                 Style="{StaticResource HyperLinkStyle}"
                 Text="{Binding Tag, StringFormat='{}{0}：'}">
                 <TextBlock.ContextMenu>
