@@ -5,12 +5,17 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="using:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
   Title="下载"
+  Background="{DynamicResource ApplicationBackgroundBrush}"
   Closing="DialogClosingHandler"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <view:BaseDialog.Resources>
+    <system:Double x:Key="HeaderWidth">90</system:Double>
+  </view:BaseDialog.Resources>
 
   <ui:SimpleStackPanel
     Name="RootPanel"
@@ -20,7 +25,7 @@
       <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
         <Style.Triggers>
           <Trigger Property="Tag" Value="header">
-            <Setter Property="Width" Value="80" />
+            <Setter Property="Width" Value="{StaticResource HeaderWidth}" />
             <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
           </Trigger>
           <Trigger Property="Tag" Value="value">
@@ -32,10 +37,6 @@
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="Margin" Value="0,10,0,0" />
       </Style>
-      <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-        <Setter Property="Width" Value="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter=80}" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-      </Style>
     </ui:SimpleStackPanel.Resources>
 
     <!--  下载链接  -->
@@ -43,9 +44,10 @@
       <TextBlock Tag="header" Text="下载链接" />
       <TextBox
         x:Name="URLTextBox"
+        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
         ui:ControlHelper.PlaceholderText="一行一个链接"
-        AcceptsReturn="True"
-        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        MaxLines="16"
+        Style="{StaticResource MultilineTextBoxStyle}"
         Tag="value"
         Text="{Binding URL}" />
     </StackPanel>
@@ -53,7 +55,7 @@
     <StackPanel MouseUp="ChooseSaveDirMouseUpHandler" ToolTip="更改保存位置">
       <TextBlock Tag="header" Text="保存位置" />
       <TextBlock
-        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter=80}"
+        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
         Style="{StaticResource HyperLinkStyle}"
         Tag="value"
         Text="{Binding SaveDir}"
