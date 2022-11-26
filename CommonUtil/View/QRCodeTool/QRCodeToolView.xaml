@@ -38,7 +38,7 @@
         IsSelected="True"
         ToolTip="二维码解析">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="{DynamicResource SystemAccentColor}" Glyph="&#xe672;" />
+          <ui:FontIcon Foreground="{DynamicResource SystemControlBackgroundAccentBrush}" Glyph="&#xe672;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
