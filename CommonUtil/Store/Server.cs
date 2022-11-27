@@ -47,7 +47,7 @@ public class Server {
                 return;
             }
             // 先删除 cache 文件
-            CommonUtils.Try(() => File.Delete(NodeJsServerPortCacheFile));
+            TaskUtils.Try(() => File.Delete(NodeJsServerPortCacheFile));
             // 手动启动
             if (Config.Environment == Model.Environment.Development) {
                 string cmd = $"./node_modules/.bin/ts-node ./main/index.ts path=\"{NodeJsServerPortCacheFile}\"";

@@ -139,7 +139,7 @@ public partial class QRCodeDecodeView : Page {
         if (string.IsNullOrEmpty(DecodeText)) {
             return;
         }
-        CommonUtils.Try(() => UIUtils.OpenInBrowser(DecodeText));
+        TaskUtils.Try(() => UIUtils.OpenInBrowser(DecodeText));
     }
 
     /// <summary>

@@ -51,7 +51,7 @@ public partial class CodeFormatingView : Page {
         Languages = new(CodeFormating.LanguageDict.Keys);
         InitializeComponent();
         // 启动 nodejs 服务
-        Task.Run(() => CommonUtils.Try(() => Server.CheckNodeJsServer()));
+        Task.Run(() => TaskUtils.Try(() => Server.CheckNodeJsServer()));
     }
 
     /// <summary>

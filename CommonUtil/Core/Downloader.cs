@@ -38,7 +38,7 @@ public class Downloader {
         service.DownloadProgressChanged += DownloadProgressChangedHandler;
         service.DownloadFileCompleted += DownloadFileCompletedHandler;
         // 无效 url
-        if (CommonUtils.Try(() => new Uri(url)) is null) {
+        if (TaskUtils.Try(() => new Uri(url)) is null) {
             return null;
         }
         var downloadTask = new DownloadTask(url, directory) {

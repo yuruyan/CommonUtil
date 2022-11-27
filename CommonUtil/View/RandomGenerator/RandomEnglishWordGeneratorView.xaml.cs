@@ -17,7 +17,7 @@ public partial class RandomEnglishWordGeneratorView : Page, IGenerable<uint, IEn
         InitializeComponent();
         // 提前加载，减少卡顿
         Task.Run(() => {
-            CommonUtils.Try(() => RandomGenerator.GenerateRandomEnglishWords(1));
+            TaskUtils.Try(() => RandomGenerator.GenerateRandomEnglishWords(1));
         });
     }
 

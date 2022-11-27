@@ -70,7 +70,7 @@ internal static class NavigationUtils {
     /// EasingFunction：静态资源为 AnimationEaseFunction <br/>
     /// </remarks>
     public static void EnableNavigationPanelResponsive(NavigationView navigationView) {
-        CommonUtils.EnsureCalledOnce(navigationView, () => {
+        TaskUtils.EnsureCalledOnce(navigationView, () => {
             if (navigationView.IsLoaded) {
                 EnableNavigationPanelResponsiveInternal(navigationView);
             }
@@ -105,7 +105,7 @@ internal static class NavigationUtils {
         #endregion
         BeginStoryBoard(window, new NavigationView[] { navigationView });
         // 每个Window执行一次，同时执行所有动画
-        CommonUtils.EnsureCalledOnce(WindowKeyDict[window], () => {
+        TaskUtils.EnsureCalledOnce(WindowKeyDict[window], () => {
             DependencyPropertyDescriptor
                 .FromProperty(Window.WindowStateProperty, typeof(Window))
                 .AddValueChanged(window, (_, _) => {
@@ -129,7 +129,7 @@ internal static class NavigationUtils {
             // 并行
             foreach (var item in navigationViews) {
                 // 为了减少卡顿
-                _ = CommonUtils.DelayTaskAsync(
+                _ = TaskUtils.DelayTaskAsync(
                     200,
                     () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ExpandStoryboard.Begin())
                 );
@@ -140,7 +140,7 @@ internal static class NavigationUtils {
             // 并行
             foreach (var item in navigationViews) {
                 // 为了减少卡顿
-                _ = CommonUtils.DelayTaskAsync(
+                _ = TaskUtils.DelayTaskAsync(
                     200,
                     () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ShrinkStoryboard.Begin())
                 );

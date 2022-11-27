@@ -38,7 +38,7 @@ public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnum
             return Array.Empty<string>();
         }
         // 判断正则是否合法
-        if (CommonUtils.Try(() => new Regex(RegexInputText)) is null) {
+        if (TaskUtils.Try(() => new Regex(RegexInputText)) is null) {
             MessageBox.Error("正则表达式无效！");
             return Array.Empty<string>();
         }

@@ -248,7 +248,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             //    MessageBox.Error("图标不存在");
             //    return null;
             //}
-            icon = CommonUtils.Try(() => new Bitmap(IconBitmapImage.StreamSource));
+            icon = TaskUtils.Try(() => new Bitmap(IconBitmapImage.StreamSource));
             // 加载失败
             if (icon == null) {
                 MessageBox.Error("图片加载失败");
@@ -331,7 +331,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private void QRCodeForegroundKeyUpHandler(object sender, KeyEventArgs e) {
         if (sender is TextBox textBox) {
-            var color = CommonUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
+            var color = TaskUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
             // 转换失败
             if (color is null) {
                 return;

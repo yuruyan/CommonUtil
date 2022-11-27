@@ -210,7 +210,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
             return;
         }
-        string? output = CommonUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
+        string? output = TaskUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
         if (output is null) {
             MessageBox.Error("解码失败");
             return;
@@ -225,7 +225,7 @@ public partial class Base64ToolView : System.Windows.Controls.Page {
         if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
             return;
         }
-        string? output = CommonUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
+        string? output = TaskUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
         if (output is null) {
             MessageBox.Error("编码失败");
             return;

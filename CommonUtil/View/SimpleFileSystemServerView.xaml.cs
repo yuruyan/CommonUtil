@@ -153,7 +153,7 @@ public partial class SimpleFileSystemServerView : Page {
     /// </summary>
     /// <returns>成功返回 true，失败返回 false</returns>
     private async Task<bool> StartServerAsync() {
-        int port = CommonUtils.Try(GetFreePort, 0);
+        int port = TaskUtils.Try(GetFreePort, 0);
         // 端口不足
         if (port == 0) {
             CommonUITools.Widget.MessageBox.Error("端口不足");

@@ -62,7 +62,7 @@ public partial class FtpServerView : System.Windows.Controls.Page {
         UserInfoList.Add(new() { Username = "scott", Password = "123456", Permission = FtpServerUserPermission.R });
         InitializeComponent();
         // 启动 nodejs 服务
-        Task.Run(() => CommonUtils.Try(() => Server.CheckNodeJsServer()));
+        Task.Run(() => TaskUtils.Try(() => Server.CheckNodeJsServer()));
     }
 
     /// <summary>

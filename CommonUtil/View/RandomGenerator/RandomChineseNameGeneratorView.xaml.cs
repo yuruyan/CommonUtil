@@ -17,7 +17,7 @@ public partial class RandomChineseNameGeneratorView : Page, IGenerable<uint, IEn
         InitializeComponent();
         // 提前加载，减少卡顿
         Task.Run(() => {
-            CommonUtils.Try(() => RandomGenerator.GenerateRandomChineseNames(1));
+            TaskUtils.Try(() => RandomGenerator.GenerateRandomChineseNames(1));
         });
     }
 

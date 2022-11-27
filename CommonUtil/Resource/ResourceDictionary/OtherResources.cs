@@ -14,7 +14,7 @@ public partial class OtherResources {
         e.Handled = true;
         // 浮点数转整数
         if (sender is NumberBox numberBox) {
-            CommonUtils.Try(() => numberBox.Value = (int)numberBox.Value);
+            TaskUtils.Try(() => numberBox.Value = (int)numberBox.Value);
         }
     }
 }

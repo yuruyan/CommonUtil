@@ -133,5 +133,5 @@ public static class Base64Tool {
     /// <param name="encoded"></param>
     /// <returns>失败返回 null</returns>
     public static byte[]? TryDecode(string encoded)
-        => CommonUtils.Try(() => Convert.FromBase64String(encoded));
+        => TaskUtils.Try(() => Convert.FromBase64String(encoded));
 }

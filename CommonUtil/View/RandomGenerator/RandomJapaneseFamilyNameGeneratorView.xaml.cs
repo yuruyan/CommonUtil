@@ -17,7 +17,7 @@ public partial class RandomJapaneseFamilyNameGeneratorView : Page, IGenerable<ui
         InitializeComponent();
         // 提前加载，减少卡顿
         Task.Run(() => {
-            CommonUtils.Try(() => RandomGenerator.GenerateRandomJapaneseFamilyNames(1));
+            TaskUtils.Try(() => RandomGenerator.GenerateRandomJapaneseFamilyNames(1));
         });
     }
 

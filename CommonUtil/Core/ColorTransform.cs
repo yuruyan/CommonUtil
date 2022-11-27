@@ -230,23 +230,23 @@ public static partial class ColorTransform {
     }
 
     public static Color? HEXToColor(string hex)
-        => CommonUtils.Try(() => (Color)ColorConverter.ConvertFromString(hex));
+        => TaskUtils.Try(() => (Color)ColorConverter.ConvertFromString(hex));
 
     public static Color? RGBToColor(string input)
-        => CommonUtils.Try(() => GetColor(ParseThreeParameters(input, RGBRegex)));
+        => TaskUtils.Try(() => GetColor(ParseThreeParameters(input, RGBRegex)));
 
     public static Color? RGBA1ToColor(string input)
-        => CommonUtils.Try(() => GetColor(ParseFourParameters(input, RGBARegex)));
+        => TaskUtils.Try(() => GetColor(ParseFourParameters(input, RGBARegex)));
 
     public static Color? RGBA2ToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseFourParameters(input, RGBARegex);
             args.Item4 *= 255;
             return GetColor(args);
         });
 
     public static Color? HSLToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, HSLRegex);
             args.Item2 /= 100;
             args.Item3 /= 100;
@@ -254,71 +254,71 @@ public static partial class ColorTransform {
         });
 
     public static Color? HSVToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Hsv() { H = args.Item1, S = args.Item2, V = args.Item3 }.To<Rgb>());
         });
 
     public static Color? LABToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Lab() { L = args.Item1, A = args.Item2, B = args.Item3 }.To<Rgb>());
         });
 
     public static Color? XYZToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Xyz() { X = args.Item1, Y = args.Item2, Z = args.Item3 }.To<Rgb>());
         });
 
     public static Color? LCHToColor(string input) =>
-        CommonUtils.Try(() => {
+        TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Lch() { L = args.Item1, C = args.Item2, H = args.Item3 }.To<Rgb>());
         });
 
     public static Color? CMYKToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseFourParameters(input, FourColorsRegex);
             return GetColor(new Cmyk() { C = args.Item1, M = args.Item2, Y = args.Item3, K = args.Item4 }.To<Rgb>());
         });
 
     public static Color? LUVToColor(string input)
-        => CommonUtils.Try(() => {
+        => TaskUtils.Try(() => {
             var args = ParseThreeParameters(input, ThreeColorsRegex);
             return GetColor(new Luv() { L = args.Item1, U = args.Item2, V = args.Item3 }.To<Rgb>());
         });
 
     public static Color? HEXToColor(double a, double r, double g, double b)
-        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
+        => TaskUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
 
     public static Color? RGBToColor(double r, double g, double b)
-        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = 255 });
+        => TaskUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = 255 });
 
     public static Color? RGBA1ToColor(double r, double g, double b, double a)
-        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
+        => TaskUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)a });
 
     public static Color? RGBA2ToColor(double r, double g, double b, double a)
-        => CommonUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)(a * 255) });
+        => TaskUtils.Try(() => new Color() { R = (byte)r, G = (byte)g, B = (byte)b, A = (byte)(a * 255) });
 
     public static Color? HSLToColor(double h, double s, double l)
-        => CommonUtils.Try(() => GetColor(new Hsl() { H = h, S = s / 100, L = l / 100 }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Hsl() { H = h, S = s / 100, L = l / 100 }.To<Rgb>()));
 
     public static Color? HSVToColor(double h, double s, double v)
-        => CommonUtils.Try(() => GetColor(new Hsv() { H = h, S = s / 100, V = v / 100 }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Hsv() { H = h, S = s / 100, V = v / 100 }.To<Rgb>()));
 
     public static Color? LABToColor(double l, double a, double b)
-        => CommonUtils.Try(() => GetColor(new Lab() { L = l, A = a, B = b }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Lab() { L = l, A = a, B = b }.To<Rgb>()));
 
     public static Color? XYZToColor(double x, double y, double z)
-        => CommonUtils.Try(() => GetColor(new Xyz() { X = x, Y = y, Z = z }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Xyz() { X = x, Y = y, Z = z }.To<Rgb>()));
 
     public static Color? LCHToColor(double l, double c, double h)
-        => CommonUtils.Try(() => GetColor(new Lch() { L = l, C = c, H = h }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Lch() { L = l, C = c, H = h }.To<Rgb>()));
 
     public static Color? CMYKToColor(double c, double m, double y, double k)
-        => CommonUtils.Try(() => GetColor(new Cmyk() { C = c, M = m, Y = y, K = k }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Cmyk() { C = c, M = m, Y = y, K = k }.To<Rgb>()));
 
     public static Color? LUVToColor(double l, double u, double v)
-        => CommonUtils.Try(() => GetColor(new Luv() { L = l, U = u, V = v }.To<Rgb>()));
+        => TaskUtils.Try(() => GetColor(new Luv() { L = l, U = u, V = v }.To<Rgb>()));
 }
