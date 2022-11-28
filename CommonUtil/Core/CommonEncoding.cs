@@ -144,9 +144,23 @@ public static partial class CommonEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string UrlEncode(string s) {
-        return HttpUtility.UrlEncode(s);
-    }
+    public static string UrlEncode(string s) => HttpUtility.UrlEncode(s);
+
+    /// <summary>
+    /// Url 编码，新增到 <paramref name="sb"/> 后面
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="sb"></param>
+    /// <returns>同 <paramref name="sb"/></returns>
+    private static StringBuilder UrlEncode(string s, StringBuilder sb) => sb.Append(UrlEncode(s));
+
+    /// <summary>
+    /// Url 文件编码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void UrlEncodeFile(string inputPath, string outputPath)
+        => EncodeFileInternal(inputPath, outputPath, UrlEncode);
 
     /// <summary>
     /// URL 解码
