@@ -5,3 +5,6 @@ dotnet_diagnostic.ToStringGenerator.severity = silent
 
 # CS8974: Converting method group to non-delegate type
 dotnet_diagnostic.CS8974.severity = silent
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = warning
