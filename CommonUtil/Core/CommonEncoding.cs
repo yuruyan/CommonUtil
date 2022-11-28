@@ -111,9 +111,16 @@ public static partial class CommonEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string UnicodeEncode(string s) {
+    public static string UnicodeEncode(string s) => UnicodeEncode(s, new()).ToString();
+
+    /// <summary>
+    /// Unicode 编码，新增到 <paramref name="sb"/> 后面
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="sb"></param>
+    /// <returns>同 <paramref name="sb"/></returns>
+    private static StringBuilder UnicodeEncode(string s, StringBuilder sb) {
         byte[] vs = Encoding.Unicode.GetBytes(s);
-        var sb = new StringBuilder();
         for (int i = 0; i < vs.Length >> 1; i++) {
             byte n1 = vs[(i << 1) + 1];
             byte n2 = vs[i << 1];
@@ -122,7 +129,24 @@ public static partial class CommonEncoding {
             string s2 = Convert.ToString(n2, 16).PadLeft(2, '0');
             sb.Append($"\\u{s1}{s2}");
         }
-        return sb.ToString();
+        return sb;
+    }
+
+    /// <summary>
+    /// Unicode 文件编码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void UnicodeEncodeFile(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        int readCount;
+        var sb = new StringBuilder(buffer.Length << 3);
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            writer.Write(UnicodeEncode(new(buffer, 0, readCount), sb));
+            sb.Clear();
+        }
     }
 
     /// <summary>
