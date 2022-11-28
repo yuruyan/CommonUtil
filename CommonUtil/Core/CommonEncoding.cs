@@ -103,6 +103,7 @@ public static partial class CommonEncoding {
             // 当前解码的后部分
             preDecoded = currentDecoded[currentHead.Length..];
         }
+        // 写入最后数据
         writer.Write(preDecoded);
     }
 
@@ -159,9 +160,37 @@ public static partial class CommonEncoding {
             var value = m.Groups[1].Value;
             var s1 = value[..2];
             var s2 = value[2..];
-            byte[] bytes = new byte[] { Convert.ToByte(s2, 16), Convert.ToByte(s1, 16) };
-            return Encoding.Unicode.GetString(bytes);
+            return Encoding.Unicode.GetString(new byte[] {
+                Convert.ToByte(s2, 16),
+                Convert.ToByte(s1, 16)
+            });
         });
+    }
+
+    /// <summary>
+    /// Unicode 文件解码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void UnicodeDecodeFile(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        int readCount;
+        int lengthOfUnicode = 8;
+        string preDecoded = string.Empty;
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            var currentDecoded = UnicodeDecode(new(buffer, 0, readCount));
+            // 前一个解码的后部分
+            var preTail = preDecoded[^(Math.Min(preDecoded.Length, lengthOfUnicode))..];
+            // 当前解码的前部分
+            var currentHead = currentDecoded[..(Math.Min(currentDecoded.Length, lengthOfUnicode))];
+            writer.Write(preDecoded[..^(preTail.Length)] + UnicodeDecode(preTail + currentHead));
+            // 当前解码的后部分
+            preDecoded = currentDecoded[currentHead.Length..];
+        }
+        // 写入最后数据
+        writer.Write(preDecoded);
     }
 
     /// <summary>
