@@ -74,9 +74,36 @@ public static partial class CommonEncoding {
             var value = m.Groups[1].Value;
             var s1 = value[..2];
             var s2 = value[2..];
-            byte[] bytes = new byte[] { Convert.ToByte(s2, 16), Convert.ToByte(s1, 16) };
-            return Encoding.Unicode.GetString(bytes);
+            return Encoding.Unicode.GetString(new byte[] {
+                Convert.ToByte(s2, 16),
+                Convert.ToByte(s1, 16)
+            });
         });
+    }
+
+    /// <summary>
+    /// UTF8 文件解码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void UTF8DecodeFile(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        int readCount;
+        int lengthOfUTF8 = 8;
+        string preDecoded = string.Empty;
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            var currentDecoded = UTF8Decode(new(buffer, 0, readCount));
+            // 前一个解码的后部分
+            var preTail = preDecoded[^(Math.Min(preDecoded.Length, lengthOfUTF8))..];
+            // 当前解码的前部分
+            var currentHead = currentDecoded[..(Math.Min(currentDecoded.Length, lengthOfUTF8))];
+            writer.Write(preDecoded[..^(preTail.Length)] + UTF8Decode(preTail + currentHead));
+            // 当前解码的后部分
+            preDecoded = currentDecoded[currentHead.Length..];
+        }
+        writer.Write(preDecoded);
     }
 
     /// <summary>
