@@ -193,12 +193,8 @@ public static partial class CommonEncoding {
     /// <param name="s"></param>
     /// <param name="sb"></param>
     /// <returns>同 <paramref name="sb"/></returns>
-    private static StringBuilder HexEncode(string s, StringBuilder sb) {
-        foreach (var b in Encoding.UTF8.GetBytes(s)) {
-            sb.Append(Convert.ToString(b, 16));
-        }
-        return sb;
-    }
+    private static StringBuilder HexEncode(string s, StringBuilder sb)
+        => sb.Append(Convert.ToHexString(Encoding.UTF8.GetBytes(s)));
 
     /// <summary>
     /// Hex 文件编码
@@ -213,14 +209,17 @@ public static partial class CommonEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string HexDecode(string s) {
-        s = s.Trim();
-        byte[] data = new byte[s.Length >> 1];
-        for (int i = 0; i < s.Length; i += 2) {
-            data[i >> 1] = Convert.FromHexString($"{s[i]}{s[i + 1]}")[0];
-        }
-        return Encoding.UTF8.GetString(data);
-    }
+    public static string HexDecode(string s)
+        => Encoding.UTF8.GetString(Convert.FromHexString(s));
+
+    /// <summary>
+    /// Hex 文件解码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <remarks>数据全部加载进内存， 适合小型文件</remarks>
+    public static void HexDecodeFile(string inputPath, string outputPath)
+        => File.WriteAllText(outputPath, HexDecode(File.ReadAllText(inputPath)));
 
     /// <summary>
     /// 文件编码
