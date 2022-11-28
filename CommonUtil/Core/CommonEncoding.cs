@@ -185,14 +185,28 @@ public static partial class CommonEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string HexEncode(string s) {
-        byte[] bytes = Encoding.UTF8.GetBytes(s);
-        var sb = new StringBuilder(bytes.Length << 1);
-        foreach (var b in bytes) {
+    public static string HexEncode(string s) => HexEncode(s, new()).ToString();
+
+    /// <summary>
+    /// Hex 编码，新增到 <paramref name="sb"/> 后面
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="sb"></param>
+    /// <returns>同 <paramref name="sb"/></returns>
+    private static StringBuilder HexEncode(string s, StringBuilder sb) {
+        foreach (var b in Encoding.UTF8.GetBytes(s)) {
             sb.Append(Convert.ToString(b, 16));
         }
-        return sb.ToString();
+        return sb;
     }
+
+    /// <summary>
+    /// Hex 文件编码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void HexEncodeFile(string inputPath, string outputPath)
+        => EncodeFileInternal(inputPath, outputPath, HexEncode);
 
     /// <summary>
     /// Hex 解码
