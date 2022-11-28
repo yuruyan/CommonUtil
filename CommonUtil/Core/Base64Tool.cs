@@ -79,6 +79,7 @@ public static class Base64Tool {
         using var writeStream = new StreamWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
         // 需要是 3 倍
         var buffer = new byte[1024 * 3];
+        var outBuffer = new char[4096];
         long totalLength = readStream.Length, totalReadCount = 0;
         int readCount;
         // 分批读取
@@ -89,7 +90,8 @@ public static class Base64Tool {
             }
             totalReadCount += readCount;
             callback?.Invoke((double)totalReadCount / totalLength);
-            writeStream.Write(Convert.ToBase64String(buffer, 0, readCount));
+            int outBufferCount = Convert.ToBase64CharArray(buffer, 0, readCount, outBuffer, 0);
+            writeStream.Write(outBuffer, 0, outBufferCount);
         }
         callback?.Invoke(1);
         writeStream.Flush();
@@ -106,7 +108,7 @@ public static class Base64Tool {
     /// <returns>解码后文件长度，任务取消返回 0</returns>
     public static long Base64DecodeFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
         using var readStream = File.OpenRead(inputFile);
-        using var writeStream = new BinaryWriter(new FileStream(outputFile, FileMode.Create, FileAccess.Write));
+        using var writeStream = new FileStream(outputFile, FileMode.Create, FileAccess.Write);
         // 需要是 4 倍
         var buffer = new byte[1024 * 4];
         long totalLength = readStream.Length, totalReadCount = 0;
@@ -124,7 +126,7 @@ public static class Base64Tool {
         }
         callback?.Invoke(1);
         writeStream.Flush();
-        return writeStream.BaseStream.Length;
+        return writeStream.Length;
     }
 
     /// <summary>
