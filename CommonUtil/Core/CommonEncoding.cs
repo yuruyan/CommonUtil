@@ -172,6 +172,15 @@ public static partial class CommonEncoding {
     }
 
     /// <summary>
+    /// Url 文件解码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <remarks>数据全部加载进内存， 适合小型文件</remarks>
+    public static void UrlDecodeFile(string inputPath, string outputPath)
+        => File.WriteAllText(outputPath, UrlDecode(File.ReadAllText(inputPath)));
+
+    /// <summary>
     /// Hex 编码
     /// </summary>
     /// <param name="s"></param>
