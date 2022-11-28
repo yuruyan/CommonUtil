@@ -5,9 +5,14 @@ using System.Web;
 
 namespace CommonUtil.Core;
 
-public class CommonEncoding {
-    private static readonly Regex UTF8Regex = new(@"&#x(\w{4});", RegexOptions.IgnoreCase);
-    private static readonly Regex UnicodeRegex = new(@"\\u(\w{4})", RegexOptions.IgnoreCase);
+public static partial class CommonEncoding {
+    private static readonly Regex UTF8Regex = GetUTF8Regex();
+    private static readonly Regex UnicodeRegex = GetUnicodeRegex();
+
+    [GeneratedRegex("&#x(\\w{4});", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex GetUTF8Regex();
+    [GeneratedRegex("\\\\u(\\w{4})", RegexOptions.IgnoreCase, "zh-CN")]
+    private static partial Regex GetUnicodeRegex();
 
     /// <summary>
     /// UTF8 编码
