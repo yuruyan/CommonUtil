@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommonUITools.Utils;
+using System;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -19,9 +21,16 @@ public static partial class CommonEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string UTF8Encode(string s) {
+    public static string UTF8Encode(string s) => UTF8Encode(s, new()).ToString();
+
+    /// <summary>
+    /// UTF8 编码，新增到 <paramref name="sb"/> 后面
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="sb"></param>
+    /// <returns>同 <paramref name="sb"/></returns>
+    private static StringBuilder UTF8Encode(string s, StringBuilder sb) {
         byte[] vs = Encoding.Unicode.GetBytes(s);
-        var sb = new StringBuilder();
         for (int i = 0; i < vs.Length >> 1; i++) {
             byte n1 = vs[(i << 1) + 1];
             byte n2 = vs[i << 1];
@@ -35,7 +44,24 @@ public static partial class CommonEncoding {
             string s2 = Convert.ToString(n2, 16).PadLeft(2, '0');
             sb.Append($"&#x{s1}{s2};");
         }
-        return sb.ToString();
+        return sb;
+    }
+
+    /// <summary>
+    /// UTF8 文件编码
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void UTF8EncodeFile(string inputPath, string outputPath) {
+        using var reader = new StreamReader(inputPath);
+        using var writer = new StreamWriter(outputPath);
+        var buffer = new char[ConstantUtils.DefaultFileBufferSize];
+        int readCount;
+        var sb = new StringBuilder(buffer.Length << 3);
+        while ((readCount = reader.Read(buffer, 0, buffer.Length)) > 0) {
+            writer.Write(UTF8Encode(new(buffer, 0, readCount), sb));
+            sb.Clear();
+        }
     }
 
     /// <summary>
