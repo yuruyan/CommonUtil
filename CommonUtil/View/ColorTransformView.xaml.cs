@@ -355,15 +355,11 @@ public partial class ColorTransformView : Page {
         #endregion
         #region 设置 Slider Values
         var values = colorItem.ColorToValuesConverter.DynamicInvoke(SelectedColor);
+        var sliders = colorItem.Sliders;
         if (values is ValueTuple<double, double, double> threeValues) {
-            colorItem.Sliders[0].Value = threeValues.Item1;
-            colorItem.Sliders[1].Value = threeValues.Item2;
-            colorItem.Sliders[2].Value = threeValues.Item3;
+            (sliders[0].Value, sliders[1].Value, sliders[2].Value) = threeValues;
         } else if (values is ValueTuple<double, double, double, double> fourValues) {
-            colorItem.Sliders[0].Value = fourValues.Item1;
-            colorItem.Sliders[1].Value = fourValues.Item2;
-            colorItem.Sliders[2].Value = fourValues.Item3;
-            colorItem.Sliders[3].Value = fourValues.Item4;
+            (sliders[0].Value, sliders[1].Value, sliders[2].Value, sliders[3].Value) = fourValues;
         }
         #endregion
         #region 添加 Hook

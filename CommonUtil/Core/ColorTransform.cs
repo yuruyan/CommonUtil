@@ -30,7 +30,7 @@ public static partial class ColorTransform {
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
         }
-        return new(
+        return (
             double.Parse(match.Groups[1].Value),
             double.Parse(match.Groups[2].Value),
             double.Parse(match.Groups[3].Value)
@@ -51,7 +51,7 @@ public static partial class ColorTransform {
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
         }
-        return new(
+        return (
             double.Parse(match.Groups[1].Value),
             double.Parse(match.Groups[2].Value),
             double.Parse(match.Groups[3].Value),
@@ -179,54 +179,54 @@ public static partial class ColorTransform {
     }
 
     public static ValueTuple<double, double, double, double> ColorToHEXValues(Color color) {
-        return new(color.A, color.R, color.G, color.B);
+        return (color.A, color.R, color.G, color.B);
     }
 
     public static ValueTuple<double, double, double> ColorToRGBValues(Color color) {
-        return new(color.R, color.G, color.B);
+        return (color.R, color.G, color.B);
     }
 
     public static ValueTuple<double, double, double, double> ColorToRGBA1Values(Color color) {
-        return new(color.R, color.G, color.B, color.A);
+        return (color.R, color.G, color.B, color.A);
     }
 
     public static ValueTuple<double, double, double, double> ColorToRGBA2Values(Color color) {
-        return new(color.R, color.G, color.B, color.A / (double)255);
+        return (color.R, color.G, color.B, color.A / (double)255);
     }
 
     public static ValueTuple<double, double, double> ColorToHSLValues(Color color) {
         var hsl = GetRgb(color).To<Hsl>();
-        return new(hsl.H, hsl.S * 100, hsl.L * 100);
+        return (hsl.H, hsl.S * 100, hsl.L * 100);
     }
 
     public static ValueTuple<double, double, double> ColorToHSVValues(Color color) {
         var hsv = GetRgb(color).To<Hsv>();
-        return new(hsv.H, hsv.S * 100, hsv.V * 100);
+        return (hsv.H, hsv.S * 100, hsv.V * 100);
     }
 
     public static ValueTuple<double, double, double> ColorToLABValues(Color color) {
         var lab = GetRgb(color).To<Lab>();
-        return new(lab.L, lab.A, lab.B);
+        return (lab.L, lab.A, lab.B);
     }
 
     public static ValueTuple<double, double, double> ColorToXYZValues(Color color) {
         var xyz = GetRgb(color).To<Xyz>();
-        return new(xyz.X, xyz.Y, xyz.Z);
+        return (xyz.X, xyz.Y, xyz.Z);
     }
 
     public static ValueTuple<double, double, double> ColorToLCHValues(Color color) {
         var lch = GetRgb(color).To<Lch>();
-        return new(lch.L, lch.C, lch.H);
+        return (lch.L, lch.C, lch.H);
     }
 
     public static ValueTuple<double, double, double, double> ColorToCMYKValues(Color color) {
         var cmyk = GetRgb(color).To<Cmyk>();
-        return new(cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
+        return (cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
     }
 
     public static ValueTuple<double, double, double> ColorToLUVValues(Color color) {
         var luv = GetRgb(color).To<Luv>();
-        return new(luv.L, luv.U, luv.V);
+        return (luv.L, luv.U, luv.V);
     }
 
     public static Color? HEXToColor(string hex)
