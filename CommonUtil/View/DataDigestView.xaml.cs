@@ -161,14 +161,22 @@ public partial class DataDigestView : Page {
         InitializeComponent();
         // 初始化 AlgorithmMenuFlyout
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            DigestAlgorithms.ForEach(item => AlgorithmMenuFlyout.Items.Add(
-                new MenuItem() {
+            DigestAlgorithms.ForEach(item => {
+                var menuItem = new MenuItem() {
                     Header = item,
                     Tag = item,
                     // 默认选项
                     IsChecked = item == "MD5" || item == "SHA256",
-                }
-            ));
+                };
+                // 防止点击关闭
+                menuItem.PreviewMouseUp += (sender, e) => {
+                    e.Handled = true;
+                    if (sender is MenuItem menu) {
+                        menu.IsChecked = !menu.IsChecked;
+                    }
+                };
+                AlgorithmMenuFlyout.Items.Add(menuItem);
+            });
         });
     }
 
