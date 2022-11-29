@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace CommonUtil.Core;
 
-public class BaseConversion {
-    private static readonly string BaseChar = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+public static class BaseConversion {
+    private const string BaseChar = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /// <summary>
     /// 将十进制转换为指定的进制
@@ -59,4 +59,3 @@ public class BaseConversion {
         return r;
     }
 }
-
