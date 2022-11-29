@@ -156,6 +156,20 @@ public partial class DataDigestView : Page {
             { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
             { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
             { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
+            { "WhirlpoolDigest", new(DataDigest.WhirlpoolDigest, DataDigest.WhirlpoolDigest) },
+            { "TigerDigest", new(DataDigest.TigerDigest, DataDigest.TigerDigest) },
+            { "SM3Digest", new(DataDigest.SM3Digest, DataDigest.SM3Digest) },
+            { "ShakeDigest", new(DataDigest.ShakeDigest, DataDigest.ShakeDigest) },
+            { "RipeMD128Digest", new(DataDigest.RipeMD128Digest, DataDigest.RipeMD128Digest) },
+            { "RipeMD160Digest", new(DataDigest.RipeMD160Digest, DataDigest.RipeMD160Digest) },
+            { "RipeMD256Digest", new(DataDigest.RipeMD256Digest, DataDigest.RipeMD256Digest) },
+            { "RipeMD320Digest", new(DataDigest.RipeMD320Digest, DataDigest.RipeMD320Digest) },
+            { "KeccakDigest", new(DataDigest.KeccakDigest, DataDigest.KeccakDigest) },
+            { "Gost3411Digest", new(DataDigest.Gost3411Digest, DataDigest.Gost3411Digest) },
+            { "Gost3411_2012_256Digest", new(DataDigest.Gost3411_2012_256Digest, DataDigest.Gost3411_2012_256Digest) },
+            { "Gost3411_2012_512Digest", new(DataDigest.Gost3411_2012_512Digest, DataDigest.Gost3411_2012_512Digest) },
+            { "Blake2bDigest", new(DataDigest.Blake2bDigest, DataDigest.Blake2bDigest) },
+            { "Blake2sDigest", new(DataDigest.Blake2sDigest, DataDigest.Blake2sDigest) },
         };
         DigestAlgorithms = DigestInfoDict.Keys.ToArray();
         InitializeComponent();

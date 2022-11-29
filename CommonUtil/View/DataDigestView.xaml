@@ -50,7 +50,13 @@
             </Style>
           </Button.Resources>
           <ui:FlyoutService.Flyout>
-            <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" TextBlock.FontFamily="{StaticResource ASCIIFontFamily}" />
+            <ui:MenuFlyout x:Name="AlgorithmMenuFlyout" TextBlock.FontFamily="{StaticResource ASCIIFontFamily}">
+              <ui:MenuFlyout.MenuFlyoutPresenterStyle>
+                <Style TargetType="ui:MenuFlyoutPresenter">
+                  <Setter Property="MaxHeight" Value="400" />
+                </Style>
+              </ui:MenuFlyout.MenuFlyoutPresenterStyle>
+            </ui:MenuFlyout>
           </ui:FlyoutService.Flyout>
         </Button>
         <Grid>
@@ -88,14 +94,16 @@
           <DataTemplate>
             <Grid x:Name="Wrapper" Visibility="{Binding Value.IsVivible, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='True|Collapsed'}">
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="auto" />
               </Grid.ColumnDefinitions>
               <TextBlock
+                Width="100"
                 FontWeight="Bold"
                 Foreground="{DynamicResource HighLightKeywordForeground}"
-                Text="{Binding Key}" />
+                Text="{Binding Key}"
+                TextWrapping="Wrap" />
               <TextBox
                 Grid.Column="1"
                 Padding="0"
