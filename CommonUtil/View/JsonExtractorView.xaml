@@ -80,7 +80,7 @@
         Visibility="Collapsed">
         <Run
           FontWeight="Bold"
-          Foreground="{StaticResource HighLightKeywordForeground}"
+          Foreground="{DynamicResource HighLightKeywordForeground}"
           Text="{Binding ResultList.Count, Mode=OneWay}" />
         <Run Text="个结果" />
       </TextBlock>

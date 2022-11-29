@@ -94,7 +94,7 @@
               </Grid.ColumnDefinitions>
               <TextBlock
                 FontWeight="Bold"
-                Foreground="{StaticResource HighLightKeywordForeground}"
+                Foreground="{DynamicResource HighLightKeywordForeground}"
                 Text="{Binding Key}" />
               <TextBox
                 Grid.Column="1"
@@ -107,7 +107,7 @@
                 Grid.Column="2"
                 Padding="0,0,8,0"
                 FontFamily="{StaticResource ASCIIFontFamily}"
-                Foreground="{StaticResource HighLightKeywordForeground}"
+                Foreground="{DynamicResource HighLightKeywordForeground}"
                 Text="{Binding Value.Process, StringFormat='{}{0:P0}'}"
                 Visibility="{Binding Value.Process, Converter={StaticResource ProcessVisibilityConverter}}" />
             </Grid>

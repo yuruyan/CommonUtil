@@ -5,5 +5,5 @@
   <SolidColorBrush x:Key="MainContentViewItemBackgroundBrush">#5F5F5F</SolidColorBrush>
   <SolidColorBrush x:Key="MainContentViewItemHoverBackgroundBrush">#FF777777</SolidColorBrush>
 
-  <SolidColorBrush x:Key="HighLightKeywordForeground">#FF4987B9</SolidColorBrush>
+  <SolidColorBrush x:Key="HighLightKeywordForeground">#FF74B2E5</SolidColorBrush>
 </ResourceDictionary>

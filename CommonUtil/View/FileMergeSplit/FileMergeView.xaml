@@ -35,7 +35,7 @@
           <Button Click="SelectMergeFileDirClick" Content="选择合并目录" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource HighLightKeywordForeground}"
+            Foreground="{DynamicResource HighLightKeywordForeground}"
             Style="{StaticResource OpenFileTextBlockStyle}"
             Text="{Binding MergeFileDirectory}" />
         </ui:SimpleStackPanel>
@@ -45,7 +45,7 @@
           <Button Click="SelectMergeFileSaveClick" Content="选择保存路径" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource HighLightKeywordForeground}"
+            Foreground="{DynamicResource HighLightKeywordForeground}"
             Style="{StaticResource OpenFileTextBlockStyle}"
             Text="{Binding MergeFileSavePath}" />
         </ui:SimpleStackPanel>
@@ -80,7 +80,7 @@
             <Run Text="共 " />
             <Run
               FontWeight="Bold"
-              Foreground="{StaticResource HighLightKeywordForeground}"
+              Foreground="{DynamicResource HighLightKeywordForeground}"
               Text="{Binding MergeFiles.Count, Mode=OneWay}" />
             <Run Text=" 个文件，" />
           </TextBlock>
@@ -88,7 +88,7 @@
             <Run Text="总大小 " />
             <Run
               FontWeight="Bold"
-              Foreground="{StaticResource HighLightKeywordForeground}"
+              Foreground="{DynamicResource HighLightKeywordForeground}"
               Text="{Binding TotalFileSize, Mode=OneWay, Converter={StaticResource FileSizeConverter}}" />
           </TextBlock>
         </ui:SimpleStackPanel>

@@ -36,14 +36,14 @@
         <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource NarrowItemSpacing}">
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource HighLightKeywordForeground}"
+            Foreground="{DynamicResource HighLightKeywordForeground}"
             Style="{StaticResource OpenFileTextBlockStyle}"
             Tag="{Binding SplitFilePath}"
             Text="{Binding SplitFilePath, Converter={StaticResource FileNameConverter}}"
             TextTrimming="CharacterEllipsis" />
           <TextBlock
             FontWeight="Bold"
-            Foreground="{StaticResource HighLightKeywordForeground}"
+            Foreground="{DynamicResource HighLightKeywordForeground}"
             Text="{Binding SplitFileSize, Converter={StaticResource FileSizeConverter}}"
             Visibility="{Binding SplitFileSize, Converter={StaticResource HideIfZeroConverter}}" />
         </ui:SimpleStackPanel>
@@ -53,7 +53,7 @@
         <Button Click="SelectSaveFolderClickHandler" Content="选择保存目录" />
         <TextBlock
           FontWeight="Bold"
-          Foreground="{StaticResource HighLightKeywordForeground}"
+          Foreground="{DynamicResource HighLightKeywordForeground}"
           Style="{StaticResource OpenFileTextBlockStyle}"
           Text="{Binding SplitFileSaveDirectory}" />
       </ui:SimpleStackPanel>
