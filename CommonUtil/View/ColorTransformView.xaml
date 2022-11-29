@@ -80,7 +80,10 @@
                               <ColumnDefinition Width="20" />
                               <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Width="20" Text="{Binding Header}" />
+                            <TextBlock
+                              Width="20"
+                              Foreground="{DynamicResource ApplicationForegroundBrush}"
+                              Text="{Binding Header}" />
                             <Slider
                               Grid.Column="1"
                               Margin="0,4"
