@@ -23,7 +23,7 @@
       </ContextMenu>
     </ListView.Resources>
     <ListView.ItemContainerStyle>
-      <Style BasedOn="{StaticResource GridViewItemContainerStyleKey}" TargetType="ListViewItem">
+      <Style BasedOn="{StaticResource {x:Static GridView.GridViewItemContainerStyleKey}}" TargetType="ListViewItem">
         <Setter Property="ContextMenu" Value="{StaticResource FileItemContextMenu}" />
       </Style>
     </ListView.ItemContainerStyle>
