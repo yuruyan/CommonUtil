@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace CommonUtil.Core;
 
 public static class BaseConversion {
-    private const string BaseChar = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string BaseCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /// <summary>
     /// 将十进制转换为指定的进制
@@ -21,7 +22,7 @@ public static class BaseConversion {
         var numList = new List<char>();
         do {
             ulong y = val % (ulong)targetRadix;
-            numList.Add(BaseChar[Convert.ToInt32(y)]);
+            numList.Add(BaseCharacters[Convert.ToInt32(y)]);
             val = Convert.ToUInt64(Math.Floor(val / (double)targetRadix));
         } while (val > 0);
         numList.Reverse();
@@ -41,20 +42,16 @@ public static class BaseConversion {
         if (sourceRadix <= 1 || sourceRadix > 36) {
             throw new ArgumentException("基数错误");
         }
-        List<char> charList = value.Trim().ToUpper().ToCharArray().ToList();
-        charList.Reverse();
-        // 检查输入合法性
-        foreach (var c in charList) {
-            int index = BaseChar.IndexOf(c);
-            if (index >= sourceRadix || index < 0) {
-                throw new FormatException("格式有误");
-            }
-        }
-        for (int i = 0; i < charList.Count; i++) {
-            int index = BaseChar.IndexOf(charList[i]);
-            if (index > -1) {
-                r += Convert.ToUInt64(index * Math.Pow(sourceRadix, i));
-            }
+        var charArray = value.Trim().ToUpperInvariant().ToCharArray();
+        Array.Reverse(charArray);
+        for (int i = 0; i < charArray.Length; i++) {
+            var ch = charArray[i];
+            int index = ch switch {
+                >= '0' and <= '9' => ch - 48,
+                >= 'A' and <= 'Z' => ch - 55,
+                _ => throw new FormatException("格式有误")
+            };
+            r += Convert.ToUInt64(index * Math.Pow(sourceRadix, i));
         }
         return r;
     }
