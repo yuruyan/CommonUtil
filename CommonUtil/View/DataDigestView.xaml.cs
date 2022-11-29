@@ -224,6 +224,7 @@ public partial class DataDigestView : Page {
         CancellationTokenSource = new();
         try {
             await CalculateDigest();
+        } catch (TaskCanceledException) {
         } catch (FileNotFoundException error) {
             Logger.Error(error);
             CommonUITools.Widget.MessageBox.Error("文件找不到！");
@@ -302,7 +303,7 @@ public partial class DataDigestView : Page {
                     Dispatcher.Invoke(() => info.Process = process);
                 })
             );
-        });
+        }, CancellationTokenSource.Token);
         info.Process = 1;
         info.Text = result ?? string.Empty;
     }
