@@ -99,6 +99,7 @@
               <TextBox
                 Grid.Column="1"
                 Padding="0"
+                FontFamily="{StaticResource ASCIIFontFamily}"
                 IsReadOnly="True"
                 Style="{StaticResource BorderlessTextBoxStyle}"
                 Text="{Binding Value.Text}"
