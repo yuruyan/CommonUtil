@@ -30,7 +30,6 @@ internal class ThemeManager : DependencyObject {
             return;
         }
         CurrentMode = ThemeMode.Light;
-        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
         ReplaceResourceDictionary(DarkThemeSource, LightThemeSource);
         CommonUITools.Themes.ThemeManager.SwitchToLightTheme();
         ThemeChanged?.Invoke(Current, ThemeMode.Light);
@@ -44,7 +43,6 @@ internal class ThemeManager : DependencyObject {
             return;
         }
         CurrentMode = ThemeMode.Dark;
-        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
         ReplaceResourceDictionary(LightThemeSource, DarkThemeSource);
         CommonUITools.Themes.ThemeManager.SwitchToDarkTheme();
         ThemeChanged?.Invoke(Current, ThemeMode.Dark);
