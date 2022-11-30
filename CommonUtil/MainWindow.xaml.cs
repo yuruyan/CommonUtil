@@ -81,6 +81,7 @@ public partial class MainWindow : Window {
     private static bool CanGoBack {
         get => FrameStack.Any(f => f.CanGoBack);
     }
+    private readonly Storyboard WindowBackgroundStoryboard;
 
     public MainWindow() {
         InitializeComponent();
@@ -96,12 +97,13 @@ public partial class MainWindow : Window {
         #endregion
         #region 设置 Storyboard
         TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
+        WindowBackgroundStoryboard = (Storyboard)Resources["WindowBackgroundStoryboard"];
         MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
         TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
         #endregion 
         CommonUITools.App.RegisterWidgetPage(this);
-        // 导航到 MainContentView，
+        // 导航到 MainContentView
         Loaded += (_, _) => Task.Run(() => {
             // 延迟加载，减少卡顿
             Thread.Sleep(1000);
@@ -205,7 +207,11 @@ public partial class MainWindow : Window {
     /// <param name="e"></param>
     private void SwitchToLightThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ThemeManager.Current.SwitchToLightTheme();
+        ThrottleUtils.Throttle(
+            sender,
+            () => ThemeManager.Current.SwitchToLightTheme(),
+            1000
+        );
     }
 
     /// <summary>
@@ -215,6 +221,10 @@ public partial class MainWindow : Window {
     /// <param name="e"></param>
     private void SwitchToDarkThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ThemeManager.Current.SwitchToDarkTheme();
+        ThrottleUtils.Throttle(
+            sender,
+            () => ThemeManager.Current.SwitchToDarkTheme(),
+            1000
+        );
     }
 }

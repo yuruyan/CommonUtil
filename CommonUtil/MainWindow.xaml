@@ -8,7 +8,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
-  Name="Root"
+  Name="WindowRoot"
   Title="MainWindow"
   Width="1000"
   Height="600"
@@ -38,7 +38,7 @@
     <Storyboard x:Key="MainContentViewLoadStoryboard">
       <ColorAnimation
         Name="BackgroundAnimation"
-        Storyboard.TargetName="Root"
+        Storyboard.TargetName="WindowRoot"
         Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
         Duration="{StaticResource AnimationDuration}" />
     </Storyboard>
