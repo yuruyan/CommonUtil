@@ -145,6 +145,10 @@ public partial class TempFileVersionControlView : Page {
                 return;
             }
             string destFile = Path.Combine(Dispatcher.Invoke(() => targetFile.SaveFolder), $"{CommonUtils.CuruentSeconds}-{f.Name}");
+            // 创建文件夹
+            if (!TaskUtils.Try(() => { saveFolderInfo.Create(); return true; })) {
+                Logger.Error($"创建文件夹 {saveFolderInfo.FullName} 失败");
+            }
             // 保存当前文件副本
             File.Copy(f.FullName, destFile, true);
             Logger.Debug($"copied {destFile}");
