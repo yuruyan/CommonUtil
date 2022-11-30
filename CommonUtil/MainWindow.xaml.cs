@@ -24,6 +24,8 @@ public partial class MainWindow : Window {
     private static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     private static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
     private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
+    public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
+    public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
 
     /// <summary>
     /// 返回Icon是否可见
@@ -61,6 +63,20 @@ public partial class MainWindow : Window {
         set { SetValue(TitleBarBackgroundProperty, value); }
     }
     /// <summary>
+    /// 上一个 WindowBackgroundColor
+    /// </summary>
+    public Color PreviousBackgroundColor {
+        get { return (Color)GetValue(PreviousBackgroundColorProperty); }
+        set { SetValue(PreviousBackgroundColorProperty, value); }
+    }
+    /// <summary>
+    /// 当前 WindowBackgroundColor
+    /// </summary>
+    public Color CurrentBackgroundColor {
+        get { return (Color)GetValue(CurrentBackgroundColorProperty); }
+        set { SetValue(CurrentBackgroundColorProperty, value); }
+    }
+    /// <summary>
     /// 标题动画
     /// </summary>
     private readonly Storyboard TitleBarStoryboard;
@@ -68,6 +84,7 @@ public partial class MainWindow : Window {
     /// 背景颜色动画
     /// </summary>
     private readonly Storyboard MainContentViewLoadStoryboard;
+    private readonly Storyboard MainWindowBackgroundStoryboard;
     private readonly DoubleAnimation TranslateTransformXAnimation;
     private readonly ColorAnimation MainContentViewBackgroundAnimation;
     private readonly RouterService RouterService;
@@ -85,6 +102,7 @@ public partial class MainWindow : Window {
         #endregion
         #region 设置 Storyboard
         TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
+        MainWindowBackgroundStoryboard = (Storyboard)Resources["MainWindowBackgroundStoryboard"];
         MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
         TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
@@ -101,7 +119,9 @@ public partial class MainWindow : Window {
         });
         ThemeManager.Current.ThemeChanged += (_, mode) => {
             CurrentThemeMode = mode;
-            Background = (SolidColorBrush)FindResource("WindowBackgroundBrush");
+            PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
+            CurrentBackgroundColor = ((SolidColorBrush)FindResource("WindowBackgroundBrush")).Color;
+            MainWindowBackgroundStoryboard.Begin();
         };
     }
 

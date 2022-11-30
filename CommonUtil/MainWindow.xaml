@@ -17,6 +17,7 @@
   ui:TitleBar.ExtendViewIntoTitleBar="True"
   ui:TitleBar.IsIconVisible="True"
   ui:WindowHelper.UseModernWindowStyle="True"
+  Background="White"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   WindowStartupLocation="CenterScreen"
   mc:Ignorable="d">
@@ -45,6 +46,14 @@
     <Style BasedOn="{StaticResource TitleBarButtonstyle}" TargetType="ui:TitleBarButton">
       <Setter Property="Margin" Value="0" />
     </Style>
+    <Storyboard x:Key="MainWindowBackgroundStoryboard">
+      <ColorAnimation
+        Storyboard.TargetName="WindowRoot"
+        Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
+        From="{Binding PreviousBackgroundColor}"
+        To="{Binding CurrentBackgroundColor}"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
   </Window.Resources>
 
   <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
