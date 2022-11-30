@@ -23,10 +23,6 @@
         <Style TargetType="ui:FontIcon">
           <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />
         </Style>
-        <!--  Resources for NavigationView  -->
-        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
       </ui:NavigationView.Resources>
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
