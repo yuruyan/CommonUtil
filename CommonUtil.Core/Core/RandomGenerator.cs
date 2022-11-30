@@ -135,7 +135,7 @@ public class RandomGenerator {
         );
         string[] results = new string[count];
         for (int i = 0; i < count; i++) {
-            results[i] = randomizerTextRegex.Generate();
+            results[i] = randomizerTextRegex.Generate() ?? string.Empty;
         }
         return results;
     }

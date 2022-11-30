@@ -17,8 +17,6 @@ public partial class ColorTransformView : Page {
     public class SliderInfo : DependencyObject {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(SliderInfo), new PropertyMetadata(0.0));
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public string Header { get; }
         public double MinValue { get; }
         public double MaxValue { get; }
