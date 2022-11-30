@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CommonUtil.Model;
+namespace CommonUtil.Core.Model;
 
 public enum Environment {
     [JsonProperty("production")]

@@ -1,5 +1,5 @@
 ﻿using CommonUITools.Utils;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using Downloader;
 using System;
 using System.Collections.Generic;

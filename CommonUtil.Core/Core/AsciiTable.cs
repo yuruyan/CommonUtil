@@ -1,4 +1,4 @@
-﻿using CommonUtil.Model;
+﻿using CommonUtil.Core.Model;
 using Newtonsoft.Json;
 using NLog;
 using System;

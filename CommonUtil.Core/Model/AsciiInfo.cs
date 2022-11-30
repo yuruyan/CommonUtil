@@ -1,4 +1,4 @@
-﻿namespace CommonUtil.Model;
+﻿namespace CommonUtil.Core.Model;
 
 public class AsciiInfo {
     public string Binary { get; set; } = string.Empty;

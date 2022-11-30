@@ -28,7 +28,7 @@ public partial class CommonRegexListDialog : ContentDialog {
     /// </summary>
     static CommonRegexListDialog() {
         var list = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(
-            Encoding.UTF8.GetString(Resource.Resource.CommonRegex)
+            Encoding.UTF8.GetString(CommonUtil.Core.Resource.Resource.CommonRegex)
         );
         if (list == null) {
             throw new JsonSerializationException("解析 CommonRegexList 失败");

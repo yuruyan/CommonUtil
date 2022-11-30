@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommonUtil\CommonUtil.csproj" />
+    <ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

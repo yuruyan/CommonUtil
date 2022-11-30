@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace CommonUtil.Model;
+namespace CommonUtil.Core.Model;
 
 public enum FtpServerUserPermission {
     /// <summary>

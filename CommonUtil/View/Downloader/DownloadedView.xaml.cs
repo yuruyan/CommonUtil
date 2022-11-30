@@ -1,5 +1,5 @@
 ﻿using CommonUITools.Utils;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using NLog;
 using System.Collections.ObjectModel;
 using System.IO;

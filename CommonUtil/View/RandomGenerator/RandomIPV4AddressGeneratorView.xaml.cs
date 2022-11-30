@@ -1,5 +1,5 @@
 ﻿using CommonUtil.Core;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using NLog;
 using System;
 using System.Collections.Generic;

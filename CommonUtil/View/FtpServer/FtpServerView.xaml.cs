@@ -1,7 +1,7 @@
 ﻿using CommonUITools.Utils;
 using CommonUITools.View;
 using CommonUtil.Core;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using CommonUtil.Store;
 using ModernWpf.Controls;
 using NLog;

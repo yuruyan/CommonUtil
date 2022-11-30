@@ -1,5 +1,5 @@
 ﻿using CommonUITools.Model;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using CommonUtil.Store;
 using Flurl.Http;
 using Newtonsoft.Json;

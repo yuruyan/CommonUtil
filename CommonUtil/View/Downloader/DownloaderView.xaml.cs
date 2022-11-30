@@ -1,6 +1,6 @@
 ﻿using CommonUITools.Route;
 using CommonUITools.Utils;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using CommonUtil.Route;
 using ModernWpf.Controls;
 using NLog;

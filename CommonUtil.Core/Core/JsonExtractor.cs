@@ -9,10 +9,6 @@ using System.Text.RegularExpressions;
 
 namespace CommonUtil.Core;
 
-internal class PatternParseException : ArgumentException {
-    public PatternParseException(string message) : base(message) { }
-}
-
 public static partial class JsonExtractor {
     [GeneratedRegex("^(?<name>[^/\\[\\]]+)(?<arrayIdentifier>\\[(?<index>\\d+|\\*)\\])?$")]
     private static partial Regex GetPatternRegex();

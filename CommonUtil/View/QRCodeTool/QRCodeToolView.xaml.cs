@@ -2,7 +2,7 @@
 using CommonUITools.Utils;
 using CommonUITools.Widget;
 using CommonUtil.Core;
-using CommonUtil.Model;
+using CommonUtil.Core.Model;
 using CommonUtil.Route;
 using Microsoft.Win32;
 using ModernWpf.Controls;

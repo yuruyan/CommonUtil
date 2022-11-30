@@ -49,7 +49,7 @@ public class Server {
             // 先删除 cache 文件
             TaskUtils.Try(() => File.Delete(NodeJsServerPortCacheFile));
             // 手动启动
-            if (Config.Environment == Model.Environment.Development) {
+            if (Config.Environment == CommonUtil.Core.Model.Environment.Development) {
                 string cmd = $"./node_modules/.bin/ts-node ./main/index.ts path=\"{NodeJsServerPortCacheFile}\"";
                 Console.WriteLine($"Please go to NodejsService root folder, open the terminal, and type {cmd}");
             } else {
@@ -93,7 +93,7 @@ public class Server {
         NodejsHeartbeatTimer = new Timer(async o => {
             try {
                 var resp = await $"http://localhost:{NodeJsServerPort}/heartbeat".GetAsync();
-                if (Config.Environment == Model.Environment.Development) {
+                if (Config.Environment == CommonUtil.Core.Model.Environment.Development) {
                     Logger.Debug($"Nodejs heartbeat, result code: {resp.StatusCode}");
                 }
             } catch (Exception error) {

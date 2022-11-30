@@ -1,4 +1,4 @@
-﻿namespace CommonUtil.Model;
+﻿namespace CommonUtil.Core.Model;
 
 public enum SkeinDigestBlockSize {
     /// <summary>
