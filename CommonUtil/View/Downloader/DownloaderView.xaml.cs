@@ -89,11 +89,12 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     }
 
     /// <summary>
-    /// 下载按钮
+    /// 点击下载
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void DownloadTaskMouseUpHandler(object sender, MouseButtonEventArgs e) {
+    private async void DownloadTaskClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
         if (await DownloadInfoDialog.ShowAsync() != ContentDialogResult.Primary) {
             return;
         }

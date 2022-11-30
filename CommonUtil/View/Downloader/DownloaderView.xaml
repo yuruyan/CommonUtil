@@ -58,14 +58,12 @@
       Margin="8,0"
       HorizontalAlignment="Right"
       VerticalAlignment="Top">
-      <Border
-        Padding="8"
-        VerticalAlignment="Center"
-        MouseUp="DownloadTaskMouseUpHandler"
-        Style="{StaticResource BorderHoverEffectStyle}"
+      <Button
+        Click="DownloadTaskClickHandler"
+        Style="{StaticResource GlobalSingleIconButtonStyle}"
         ToolTip="添加下载任务">
-        <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe703;" />
-      </Border>
+        <TextBlock Text="&#xe703;" />
+      </Button>
     </Grid>
   </Grid>
 </Page>
