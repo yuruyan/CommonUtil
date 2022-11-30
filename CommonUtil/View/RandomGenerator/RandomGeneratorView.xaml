@@ -9,7 +9,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="RandomGenerator"
-  Margin="8,0,8,8"
+  Margin="0,0,8,8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -19,6 +19,12 @@
     <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <Style BasedOn="{StaticResource GlobalFontIconStyle}" TargetType="ui:FontIcon">
+      <Setter Property="Margin" Value="0,0,-8,0" />
+    </Style>
+    <Style TargetType="ui:BitmapIcon">
+      <Setter Property="Margin" Value="0,0,-14,0" />
+    </Style>
   </Page.Resources>
 
   <ui:NavigationView

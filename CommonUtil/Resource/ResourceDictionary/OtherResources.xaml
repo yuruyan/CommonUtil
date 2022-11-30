@@ -6,7 +6,7 @@
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019">
 
-  <system:Double x:Key="NavigationViewMinWidth">45</system:Double>
+  <system:Double x:Key="NavigationViewMinWidth">50</system:Double>
   <system:Double x:Key="NavigationViewMaxWidth">250</system:Double>
 
   <!--  avalonEdit:TextEditor  -->
