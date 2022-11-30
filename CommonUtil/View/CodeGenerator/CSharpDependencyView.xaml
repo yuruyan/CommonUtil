@@ -53,7 +53,7 @@
       <ListBox
         x:Name="TypeInfoListBox"
         Grid.Row="1"
-        BorderBrush="Black"
+        BorderBrush="{DynamicResource ApplicationForegroundBrush}"
         BorderThickness="1"
         ItemsSource="{Binding TypeInfos}">
         <ListBox.ItemContainerStyle>
