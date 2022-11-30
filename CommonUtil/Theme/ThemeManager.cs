@@ -4,7 +4,7 @@ using NLog;
 using System;
 using System.Windows;
 
-namespace CommonUtil.Store;
+namespace CommonUtil.Theme;
 
 internal class ThemeManager : DependencyObject {
     private const string LightThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml";
