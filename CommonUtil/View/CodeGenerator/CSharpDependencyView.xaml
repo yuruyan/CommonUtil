@@ -55,7 +55,8 @@
         Grid.Row="1"
         BorderBrush="{DynamicResource ApplicationForegroundBrush}"
         BorderThickness="1"
-        ItemsSource="{Binding TypeInfos}">
+        ItemsSource="{Binding TypeInfos}"
+        SelectionMode="Extended">
         <ListBox.ItemContainerStyle>
           <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
             <Setter Property="Padding" Value="0" />

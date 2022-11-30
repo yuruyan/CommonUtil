@@ -35,8 +35,8 @@ public partial class CSharpDependencyView : Page {
     }
 
     public CSharpDependencyView() {
-        InitializeComponent();
         TypeInfos = new();
+        InitializeComponent();
         #region 响应式布局
         DependencyPropertyDescriptor
             .FromProperty(IsExpandedProperty, this.GetType())
@@ -101,6 +101,7 @@ public partial class CSharpDependencyView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AddPropertyClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
         TypeInfos.Add(TypeInfos.Any() ? TypeInfos[^1] with { } : new());
     }
 
@@ -110,13 +111,22 @@ public partial class CSharpDependencyView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void GenerateCodeClick(object sender, RoutedEventArgs e) {
+        e.Handled = true;
         OutputText = CSharpDependencyGenerator.CreateTemplate(TypeInfos);
     }
 
+    /// <summary>
+    /// 移除属性
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemovePropertyClick(object sender, RoutedEventArgs e) {
-        if (sender is FrameworkElement elem && elem.DataContext is TypeInfo typeInfo) {
-            TypeInfos.Remove(typeInfo);
-        }
+        e.Handled = true;
+        TypeInfoListBox.SelectedItems
+            .Cast<TypeInfo>()
+            .ToList()
+            .ForEach(info => {
+                TypeInfos.Remove(info);
+            });
     }
 }
-

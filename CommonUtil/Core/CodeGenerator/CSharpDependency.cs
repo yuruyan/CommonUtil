@@ -17,7 +17,7 @@ public class CSharpDependencyGenerator {
         var poSb = new StringBuilder();
         poSb.AppendLine($"public class {className}PO {{");
         foreach (TypeInfo type in types) {
-            poSb.AppendLine($@"    public {type.Type} {type.Name} {{get; set;}} = {type.Value};");
+            poSb.AppendLine($@"{Indent}public {type.Type} {type.Name} {{get; set;}} = {type.Value};");
         }
         poSb.AppendLine("}");
         string poClass = poSb.ToString();
