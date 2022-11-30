@@ -89,10 +89,10 @@ public partial class MainContentView : Page {
     private void MenuMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is ToolMenuItem menuItem) {
-            var routerService = MainWindow.GetCurrentRouteService(this.GetType());
+            var routerService = MainWindowRouter.GetCurrentRouteService(this.GetType());
             if (routerService != null) {
                 routerService.Navigate(menuItem.ClassType, NavigationTransitionEffect.DrillIn);
-                MainWindow.PushRouteStack(routerService);
+                MainWindowRouter.PushRouteStack(routerService);
             }
         }
     }

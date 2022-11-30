@@ -71,33 +71,20 @@ public partial class MainWindow : Window {
     private readonly DoubleAnimation TranslateTransformXAnimation;
     private readonly ColorAnimation MainContentViewBackgroundAnimation;
     private readonly RouterService RouterService;
-    private static readonly Stack<Frame> FrameStack = new();
-    private static readonly IDictionary<Type, RouterService> PageRouterServiceDict = new Dictionary<Type, RouterService>();
-    private readonly IEnumerable<Type> PageTypes;
-    private static event EventHandler? RouteChanged;
-    /// <summary>
-    /// 是否可以回退
-    /// </summary>
-    private static bool CanGoBack {
-        get => FrameStack.Any(f => f.CanGoBack);
-    }
-    private readonly Storyboard WindowBackgroundStoryboard;
 
     public MainWindow() {
         InitializeComponent();
         #region RouterService
-        var types = Global.MenuItems.Select(t => t.ClassType).ToList();
-        types.Add(typeof(MainContentView));
-        PageTypes = types;
-        RouterService = new(ContentFrame, PageTypes);
-        AddPageFrame(PageTypes, RouterService);
-        RouteChanged += (_, _) => {
-            IsBackIconVisible = CanGoBack;
+        var pageTypes = Global.MenuItems.Select(t => t.ClassType).ToList();
+        pageTypes.Add(typeof(MainContentView));
+        RouterService = new(ContentFrame, pageTypes);
+        MainWindowRouter.AddPageFrame(pageTypes, RouterService);
+        MainWindowRouter.RouteChanged += (_, _) => {
+            IsBackIconVisible = MainWindowRouter.CanGoBack;
         };
         #endregion
         #region 设置 Storyboard
         TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
-        WindowBackgroundStoryboard = (Storyboard)Resources["WindowBackgroundStoryboard"];
         MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
         TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
@@ -109,7 +96,7 @@ public partial class MainWindow : Window {
             Thread.Sleep(1000);
             Dispatcher.BeginInvoke(() => {
                 RouterService.Navigate(typeof(MainContentView));
-                PushRouteStack(ContentFrame);
+                MainWindowRouter.PushRouteStack(ContentFrame);
             });
         });
         ThemeManager.Current.ThemeChanged += (_, mode) => {
@@ -117,51 +104,6 @@ public partial class MainWindow : Window {
             Background = (SolidColorBrush)FindResource("WindowBackgroundBrush");
         };
     }
-
-    /// <summary>
-    /// 回退
-    /// </summary>
-    private static void GoBack() {
-        if (!CanGoBack) {
-            return;
-        }
-        var frame = FrameStack.Pop();
-        while (!frame.CanGoBack) {
-            frame = FrameStack.Pop();
-        }
-        frame.GoBack();
-        frame.Navigated += FrameNavigatedHandler;
-    }
-
-    /// <summary>
-    /// 获取当前页面所属 RouterService
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns> 
-    public static RouterService? GetCurrentRouteService(Type type)
-        => PageRouterServiceDict.TryGetValue(type, out RouterService? routerService) ? routerService : null;
-
-    public static void PushRouteStack(Frame frame) {
-        FrameStack.Push(frame);
-        frame.Navigated += FrameNavigatedHandler;
-    }
-
-    public static void PushRouteStack(RouterService service) => PushRouteStack(service.Frame);
-
-    private static void FrameNavigatedHandler(object sender, NavigationEventArgs e) {
-        if (e.Navigator is Frame frame) {
-            frame.Navigated -= FrameNavigatedHandler;
-        }
-        RouteChanged?.Invoke(null, null!);
-    }
-
-    /// <summary>
-    /// 添加页面所属 RouterService
-    /// </summary>
-    /// <param name="pageTypes"></param>
-    /// <param name="service"></param>
-    private static void AddPageFrame(IEnumerable<Type> pageTypes, RouterService service)
-        => pageTypes.ForEach(r => PageRouterServiceDict[r] = service);
 
     /// <summary>
     /// navigation 改变事件
@@ -186,7 +128,7 @@ public partial class MainWindow : Window {
     /// <param name="e"></param>
     private void ToBackClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        GoBack();
+        MainWindowRouter.GoBack();
     }
 
     /// <summary>
@@ -197,7 +139,7 @@ public partial class MainWindow : Window {
     private void ToMainPageClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         RouterService.Navigate(typeof(MainContentView));
-        PushRouteStack(ContentFrame);
+        MainWindowRouter.PushRouteStack(ContentFrame);
     }
 
     /// <summary>

@@ -27,11 +27,12 @@ internal static class NavigationUtils {
         RouterService routerService,
         Frame frame
     ) {
+        MainWindowRouter.AddPageFrame(routerService.GetRouteTypes(), routerService);
         // 主动导航跳转
         navigationView.SelectionChanged += (s, e) => {
             if (e.SelectedItem is FrameworkElement element) {
                 routerService.Navigate(routerService.GetRouteTypes().First(t => t.Name == element.Name));
-                MainWindow.PushRouteStack(routerService);
+                MainWindowRouter.PushRouteStack(routerService);
             }
         };
         // 自动导航跳转
