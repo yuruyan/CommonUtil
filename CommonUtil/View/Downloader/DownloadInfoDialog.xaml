@@ -29,7 +29,7 @@
             <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
           </Trigger>
           <Trigger Property="Tag" Value="value">
-            <Setter Property="Foreground" Value="{StaticResource Black9}" />
+            <Setter Property="Foreground" Value="{StaticResource BlackBrush9}" />
           </Trigger>
         </Style.Triggers>
       </Style>

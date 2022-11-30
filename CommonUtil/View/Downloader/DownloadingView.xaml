@@ -38,7 +38,7 @@
               Height="8"
               Margin="0,8"
               VerticalAlignment="Stretch"
-              Background="{StaticResource Gray3}"
+              Background="{StaticResource GrayBrush3}"
               Foreground="#FF4FAAC2"
               Value="{Binding Process}" />
             <TextBlock Text="{Binding DownloadSpeed, Converter={StaticResource FileSizeConverter}, StringFormat='{}{0} / s'}" />

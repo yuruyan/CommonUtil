@@ -14,7 +14,7 @@
     <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
       <Style.Triggers>
         <Trigger Property="Tag" Value="gray">
-          <Setter Property="Foreground" Value="{StaticResource Black16}" />
+          <Setter Property="Foreground" Value="{StaticResource BlackBrush16}" />
         </Trigger>
       </Style.Triggers>
     </Style>
