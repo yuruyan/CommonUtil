@@ -37,10 +37,19 @@
       </TextBlock>
     </StackPanel>
     <!--  点击切换服务器状态  -->
-    <Button
-      HorizontalAlignment="Center"
-      Click="ToggleServerStateClickHandler"
-      Content="{Binding IsServerStarted, Converter={StaticResource BoolToStringConverter}, ConverterParameter='停止服务|开启服务'}" />
+    <Grid>
+      <Button
+        HorizontalAlignment="Center"
+        Click="ToggleServerStateClickHandler"
+        Content="开启服务"
+        Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfTrueConverter}}" />
+      <Button
+        HorizontalAlignment="Center"
+        Click="ToggleServerStateClickHandler"
+        Content="停止服务"
+        Style="{StaticResource GlobalErrorButtonStyle}"
+        Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}" />
+    </Grid>
     <!--  分享链接  -->
     <StackPanel
       HorizontalAlignment="Center"
