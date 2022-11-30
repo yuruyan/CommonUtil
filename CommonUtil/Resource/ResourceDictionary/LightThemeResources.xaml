@@ -6,4 +6,6 @@
   <SolidColorBrush x:Key="MainContentViewItemHoverBackgroundBrush">#F6F6F6</SolidColorBrush>
 
   <SolidColorBrush x:Key="HighLightKeywordForeground">#FF4987B9</SolidColorBrush>
+
+  <SolidColorBrush x:Key="BMICalculatorViewReferencePanelHeaderBorderBrush">#80808080</SolidColorBrush>
 </ResourceDictionary>
