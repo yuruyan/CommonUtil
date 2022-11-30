@@ -3,10 +3,10 @@ using CommonUtil.Core;
 using Microsoft.Win32;
 using NLog;
 using Ookii.Dialogs.Wpf;
-using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +19,7 @@ public partial class TempFileVersionControlView : Page {
         public static readonly DependencyProperty FilenameProperty = DependencyProperty.Register("Filename", typeof(string), typeof(WatchFile), new PropertyMetadata(""));
         public static readonly DependencyProperty SaveFolderProperty = DependencyProperty.Register("SaveFolder", typeof(string), typeof(WatchFile), new PropertyMetadata(""));
         public static readonly DependencyProperty StartedProperty = DependencyProperty.Register("Started", typeof(bool), typeof(WatchFile), new PropertyMetadata(false));
+        public static readonly DependencyProperty GeneratedFilenamesProperty = DependencyProperty.Register("GeneratedFilenames", typeof(ObservableCollection<string>), typeof(WatchFile), new PropertyMetadata());
 
         public string Filename {
             get { return (string)GetValue(FilenameProperty); }
@@ -31,6 +32,13 @@ public partial class TempFileVersionControlView : Page {
         public bool Started {
             get { return (bool)GetValue(StartedProperty); }
             set { SetValue(StartedProperty, value); }
+        }
+        /// <summary>
+        /// 生成的文件
+        /// </summary>
+        public ObservableCollection<string> GeneratedFilenames {
+            get { return (ObservableCollection<string>)GetValue(GeneratedFilenamesProperty); }
+            set { SetValue(GeneratedFilenamesProperty, value); }
         }
         public TempFileVersionControl TempFileVersionControl { get; set; }
         // 查找时用于标识
@@ -54,7 +62,14 @@ public partial class TempFileVersionControlView : Page {
         set { SetValue(SelectedWatchFileProperty, value); }
     }
     private int fileId = 0;
-
+    private readonly OpenFileDialog SelectFileDialog = new() {
+        Title = "选择文件",
+        Filter = "All Files|*.*"
+    };
+    private readonly VistaFolderBrowserDialog SaveFolderDialog = new() {
+        Description = "选择保存文件夹",
+        UseDescriptionForTitle = true
+    };
     public TempFileVersionControlView() {
         WatchFiles = new();
         InitializeComponent();
@@ -70,15 +85,11 @@ public partial class TempFileVersionControlView : Page {
         if (SelectedWatchFile is null) {
             return;
         }
-        var dialog = new VistaFolderBrowserDialog {
-            SelectedPath = SelectedWatchFile.SaveFolder,
-            Description = "选择保存文件夹",
-            UseDescriptionForTitle = true // This applies to the Vista style dialog only, not the old dialog.
-        };
-        if (dialog.ShowDialog(Application.Current.MainWindow) != true) {
+        SaveFolderDialog.SelectedPath = SelectedWatchFile.SaveFolder;
+        if (SaveFolderDialog.ShowDialog(Application.Current.MainWindow) != true) {
             return;
         }
-        SelectedWatchFile.SaveFolder = dialog.SelectedPath;
+        SelectedWatchFile.SaveFolder = SaveFolderDialog.SelectedPath;
     }
 
     /// <summary>
@@ -116,51 +127,66 @@ public partial class TempFileVersionControlView : Page {
     /// <param name="e"></param>
     private void AddWatchFileClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        var openFileDialog = new OpenFileDialog() {
-            Title = "选择文件",
-            Filter = "All Files|*.*"
-        };
-        if (openFileDialog.ShowDialog() == false) {
+        if (SelectFileDialog.ShowDialog() == false) {
             return;
         }
-        var watchFile = openFileDialog.FileName;
-        var watchFileInfo = new FileInfo(watchFile);
+        var watchFilename = SelectFileDialog.FileName;
+        var watchFileInfo = new FileInfo(watchFilename);
         // 默认保存目录，即文件名作为目录
-        var saveFolderInfo = Directory.CreateDirectory(Path.Combine(
-            CommonUtils.NullCheck(watchFileInfo.DirectoryName),
+        var saveDirectory = Directory.CreateDirectory(Path.Combine(
+            watchFileInfo.DirectoryName!,
             // 去掉后缀名
             watchFileInfo.Name[0..(watchFileInfo.Name.LastIndexOf(watchFileInfo.Extension))]
-        ));
+        )).FullName;
         var tempFileId = fileId++;
         // 创建监听实例
-        var fileWatcher = TempFileVersionControl.Watch(watchFile, f => {
-            // 查找
-            WatchFile? targetFile = Dispatcher.Invoke(() => WatchFiles.FirstOrDefault(f => f.Id == tempFileId));
-            if (targetFile == null) {
-                Console.WriteLine("targetFile not found");
-                return;
-            }
-            // 未开启监听
-            if (!Dispatcher.Invoke(() => targetFile.Started)) {
-                return;
-            }
-            string destFile = Path.Combine(Dispatcher.Invoke(() => targetFile.SaveFolder), $"{CommonUtils.CuruentSeconds}-{f.Name}");
-            // 创建文件夹
-            if (!TaskUtils.Try(() => { saveFolderInfo.Create(); return true; })) {
-                Logger.Error($"创建文件夹 {saveFolderInfo.FullName} 失败");
-            }
-            // 保存当前文件副本
-            File.Copy(f.FullName, destFile, true);
-            Logger.Debug($"copied {destFile}");
-        });
+        var fileWatcher = CreateFileWatch(watchFilename, tempFileId);
         // 添加到 WatchFiles
         var newWatchFile = new WatchFile(tempFileId, fileWatcher) {
-            Filename = watchFile,
-            SaveFolder = saveFolderInfo.FullName,
+            Filename = watchFilename,
+            SaveFolder = saveDirectory,
             Started = true,
+            GeneratedFilenames = new()
         };
         WatchFiles.Add(newWatchFile);
         SelectedWatchFile = newWatchFile;
+    }
+
+    /// <summary>
+    /// 创建监听文件
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="fileId"></param>
+    /// <returns></returns>
+    private TempFileVersionControl CreateFileWatch(string filename, int fileId) {
+        return TempFileVersionControl.Watch(filename, fileInfo => {
+            Dispatcher.Invoke(async () => {
+                // 查找
+                var targetFile = WatchFiles.FirstOrDefault(f => f.Id == fileId);
+                if (targetFile == null) {
+                    Logger.Error("TargetFile not found");
+                    return;
+                }
+                // 未开启监听
+                if (!targetFile.Started) {
+                    return;
+                }
+                string destFile = Path.Combine(targetFile.SaveFolder, $"{CommonUtils.CuruentSeconds}-{fileInfo.Name}");
+                // 创建文件夹
+                if (!TaskUtils.Try(() => { Directory.CreateDirectory(targetFile.SaveFolder); return true; })) {
+                    var dirName = Path.GetFileName(targetFile.SaveFolder);
+                    CommonUITools.Widget.MessageBox.Error($"创建文件夹 {dirName} 失败");
+                    Logger.Error($"创建文件夹 {dirName} 失败");
+                    return;
+                }
+                // 保存当前文件副本
+                await Task.Run(() => {
+                    File.Copy(fileInfo.FullName, destFile, true);
+                });
+                targetFile.GeneratedFilenames.Add(destFile);
+                Logger.Debug($"Temp file {destFile} created");
+            });
+        });
     }
 
     /// <summary>
@@ -169,9 +195,9 @@ public partial class TempFileVersionControlView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void WatchFilesSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
+        e.Handled = true;
         if (sender is ListBox control && control.SelectedItem is WatchFile file) {
             SelectedWatchFile = file;
         }
     }
 }
-

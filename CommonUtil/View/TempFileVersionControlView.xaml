@@ -23,33 +23,59 @@
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
+
     <!--  详情  -->
-    <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
-      <Button
-        HorizontalAlignment="Right"
-        Click="AddWatchFileClickHandler"
-        Content="添加文件" />
+    <DockPanel>
       <ui:SimpleStackPanel
+        DockPanel.Dock="Top"
         Orientation="Vertical"
-        Spacing="{StaticResource MediumItemSpacing}"
-        Visibility="{Binding SelectedWatchFile, Converter={StaticResource HideIfNullConverter}}">
-        <DockPanel>
-          <TextBlock Text="保存目录：" />
-          <TextBlock
-            MouseUp="SaveFolderMouseUpHandler"
-            Style="{StaticResource HyperLinkStyle}"
-            Text="{Binding SelectedWatchFile.SaveFolder}"
-            TextWrapping="Wrap" />
-        </DockPanel>
-        <DockPanel LastChildFill="False">
-          <Button Click="ToggleWatchFileStateClickHandler" Content="{Binding SelectedWatchFile.Started, Converter={StaticResource BoolToStringConverter}, ConverterParameter='取消监听|开始监听'}" />
-          <Button
-            Click="DeleteWatchFileClickHandler"
-            Content="删除"
-            DockPanel.Dock="Right"
-            Style="{StaticResource GlobalErrorButtonStyle}" />
-        </DockPanel>
+        Spacing="{StaticResource MediumItemSpacing}">
+        <Button
+          HorizontalAlignment="Right"
+          Click="AddWatchFileClickHandler"
+          Content="添加文件" />
+        <ui:SimpleStackPanel
+          Orientation="Vertical"
+          Spacing="{StaticResource MediumItemSpacing}"
+          Visibility="{Binding SelectedWatchFile, Converter={StaticResource HideIfNullConverter}}">
+          <DockPanel>
+            <TextBlock Text="保存目录：" />
+            <TextBlock
+              MouseUp="SaveFolderMouseUpHandler"
+              Style="{StaticResource HyperLinkStyle}"
+              Text="{Binding SelectedWatchFile.SaveFolder}"
+              TextWrapping="Wrap" />
+          </DockPanel>
+          <DockPanel LastChildFill="False">
+            <Canvas>
+              <Button
+                Click="ToggleWatchFileStateClickHandler"
+                Content="开始监听"
+                Visibility="{Binding SelectedWatchFile.Started, Converter={StaticResource HideIfTrueConverter}}" />
+              <Button
+                Click="ToggleWatchFileStateClickHandler"
+                Content="取消监听"
+                Style="{StaticResource GlobalErrorButtonStyle}"
+                Visibility="{Binding SelectedWatchFile.Started, Converter={StaticResource HideIfFalseConverter}}" />
+            </Canvas>
+            <Button
+              Click="DeleteWatchFileClickHandler"
+              Content="删除"
+              DockPanel.Dock="Right"
+              Style="{StaticResource GlobalErrorButtonStyle}" />
+          </DockPanel>
+        </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
-    </ui:SimpleStackPanel>
+      <ListBox
+        Margin="0,16,0,0"
+        DockPanel.Dock="Bottom"
+        ItemsSource="{Binding SelectedWatchFile.GeneratedFilenames}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding ., Converter={StaticResource FileNameConverter}}" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </DockPanel>
   </UniformGrid>
 </Page>
