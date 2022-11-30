@@ -170,7 +170,7 @@ public partial class MainWindow : Window {
     private void SwitchToLightThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         ThrottleUtils.Throttle(
-            sender,
+            ThemeManager.Current,
             () => ThemeManager.Current.SwitchToLightTheme(),
             1000
         );
@@ -184,7 +184,7 @@ public partial class MainWindow : Window {
     private void SwitchToDarkThemeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         ThrottleUtils.Throttle(
-            sender,
+            ThemeManager.Current,
             () => ThemeManager.Current.SwitchToDarkTheme(),
             1000
         );

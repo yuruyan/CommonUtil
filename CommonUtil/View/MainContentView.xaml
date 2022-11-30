@@ -40,6 +40,22 @@
         To="0"
         Duration="{StaticResource MenuItemLoadAnimationDuration}" />
     </Storyboard>
+    <!--  主题切换动画  -->
+    <Storyboard x:Key="MainContentViewBackgroundStoryboard">
+      <ColorAnimation
+        Storyboard.TargetName="MainContentViewRoot"
+        Storyboard.TargetProperty="(Page.Background).(SolidColorBrush.Color)"
+        From="{Binding PreviousBackgroundColor}"
+        To="{Binding CurrentBackgroundColor}"
+        Duration="{StaticResource AnimationDuration}" />
+      <ColorAnimation
+        Name="TitleBarBackgroundColorAnimation"
+        Storyboard.TargetProperty="(TitleBarBackground).(SolidColorBrush.Color)"
+        From="{Binding PreviousBackgroundColor}"
+        To="{Binding CurrentBackgroundColor}"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
+    <SolidColorBrush x:Key="MainContentViewItemBackgroundBrushProxy" />
   </Page.Resources>
 
   <ScrollViewer>
@@ -68,7 +84,7 @@
                     <Setter Property="Background" Value="{DynamicResource MainContentViewItemHoverBackgroundBrush}" />
                   </Trigger>
                   <Trigger Property="IsMouseOver" Value="False">
-                    <Setter Property="Background" Value="{DynamicResource MainContentViewItemBackgroundBrush}" />
+                    <Setter Property="Background" Value="{DynamicResource MainContentViewItemBackgroundBrushProxy}" />
                   </Trigger>
                 </Style.Triggers>
               </Style>
