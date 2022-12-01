@@ -1,11 +1,9 @@
 ﻿namespace SimpleFileSystemServer;
 
 public class Global {
-    public static string WorkingDirectory { get; private set; }
+    public static string WorkingDirectory { get; private set; } = default!;
 
     public Global(IConfiguration configuration) {
-        if (WorkingDirectory == null) {
-            WorkingDirectory = configuration["dir"];
-        }
+        WorkingDirectory ??= configuration["dir"];
     }
 }
