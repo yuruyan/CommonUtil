@@ -1,5 +1,5 @@
 ﻿using CommonUITools.Utils;
-using ModernWpf.Controls;
+using CommonUITools.View;
 using Newtonsoft.Json;
 using NLog;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace CommonUtil.View;
 
-public partial class CommonRegexListDialog : ContentDialog {
+public partial class CommonRegexListDialog : BaseDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly IEnumerable<KeyValuePair<string, string>> CommonRegexList;
 
