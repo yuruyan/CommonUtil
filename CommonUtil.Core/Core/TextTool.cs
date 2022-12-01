@@ -171,6 +171,52 @@ public partial class TextTool {
     }
 
     /// <summary>
+    /// 去除每行首部空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimLineStart(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Select(s => s.TrimStart())
+        );
+    }
+
+    /// <summary>
+    /// 文件文本去除每行首部空格
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void TrimLineStart(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, TrimLineStart(File.ReadAllText(inputPath)));
+    }
+
+    /// <summary>
+    /// 去除每行尾部空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimLineEnd(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Select(s => s.TrimEnd())
+        );
+    }
+
+    /// <summary>
+    /// 文件文本去除每行尾部空格
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void TrimLineEnd(string inputPath, string outputPath) {
+        File.WriteAllText(outputPath, TrimLineEnd(File.ReadAllText(inputPath)));
+    }
+
+    /// <summary>
     /// 将多个空白字符替换成一个空格
     /// </summary>
     /// <param name="text"></param>
