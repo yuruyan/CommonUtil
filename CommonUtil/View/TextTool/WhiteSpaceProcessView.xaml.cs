@@ -160,6 +160,12 @@ public partial class WhiteSpaceProcessView : Page {
                 if (options.TrimLine) {
                     TextTool.FileTrimLine(inputPath, outputPath);
                 }
+                if (options.TrimLineStart) {
+                    TextTool.FileTrimLineStart(inputPath, outputPath);
+                }
+                if (options.TrimLineEnd) {
+                    TextTool.FileTrimLineEnd(inputPath, outputPath);
+                }
                 if (options.ReplaceMultiWhiteSpace) {
                     TextTool.FileReplaceMultipleWhiteSpaceWithOne(inputPath, outputPath);
                 }
