@@ -69,7 +69,7 @@ public class SimpleFileSystemServer {
             JsonResponse? resp = null;
             resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 启动成功
-            if (resp != null && resp.code == 200) {
+            if (resp != null && resp.Code == 200) {
                 IsStarted = true;
                 CheckStartedTimer.Stop();
             }
@@ -79,7 +79,7 @@ public class SimpleFileSystemServer {
             JsonResponse? resp = null;
             resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 成功
-            if (resp != null && resp.code == 200) {
+            if (resp != null && resp.Code == 200) {
                 // 清零
                 NoResponseTimes = 0;
             } else {

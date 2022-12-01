@@ -25,7 +25,7 @@ public class FtpServer {
             if (resp == null) {
                 throw new Exception("deserialize object failed");
             }
-            return resp.code == 200;
+            return resp.Code == 200;
         } catch (Exception e) {
             Logger.Info(e);
             return false;
@@ -44,7 +44,7 @@ public class FtpServer {
             if (resp == null) {
                 throw new Exception("deserialize object failed");
             }
-            return resp.code == 200;
+            return resp.Code == 200;
         } catch (Exception e) {
             Logger.Info(e);
             return false;
