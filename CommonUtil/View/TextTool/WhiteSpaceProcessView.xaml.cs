@@ -88,48 +88,59 @@ public partial class WhiteSpaceProcessView : Page {
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
-
-        bool trimText = TrimTextMenuItem.IsChecked == true;
-        bool removeWhiteSpace = RemoveWhiteSpaceLineMenuItem.IsChecked == true;
-        bool trimLine = TrimLineMenuItem.IsChecked == true;
-        bool replaceMultiWhiteSpace = ReplaceMultipleWhiteSpaceWithOneMenuItem.IsChecked == true;
+        var options = new ProcessOptions {
+            TrimText = TrimTextMenuItem.IsChecked,
+            TrimLine = TrimLineMenuItem.IsChecked,
+            TrimLineStart = TrimLineStartMenuItem.IsChecked,
+            TrimLineEnd = TrimLineEndMenuItem.IsChecked,
+            RemoveWhiteSpace = RemoveWhiteSpaceLineMenuItem.IsChecked,
+            ReplaceMultiWhiteSpace = ReplaceMultipleWhiteSpaceWithOneMenuItem.IsChecked,
+        };
 
         // 文本处理
         if (!HasFile) {
-            TextProcessString(trimText, removeWhiteSpace, trimLine, replaceMultiWhiteSpace);
+            TextProcessString(options);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             TextProcessClick,
-            () => TextProcessFile(trimText, removeWhiteSpace, trimLine, replaceMultiWhiteSpace)
+            () => TextProcessFile(options)
         );
     }
 
     /// <summary>
     /// 文本处理
     /// </summary>
-    /// <param name="trimText"></param>
-    /// <param name="removeWhiteSpace"></param>
-    /// <param name="trimLine"></param>
-    /// <param name="replaceMultiWhiteSpace"></param>
-    private void TextProcessString(bool trimText, bool removeWhiteSpace, bool trimLine, bool replaceMultiWhiteSpace) {
+    /// <param name="options">选项</param>
+    private void TextProcessString(ProcessOptions options) {
         var s = InputText;
-        if (trimText) {
+        if (options.TrimText) {
             s = TextTool.TrimText(s);
         }
-        if (removeWhiteSpace) {
+        if (options.RemoveWhiteSpace) {
             s = TextTool.RemoveWhiteSpaceLine(s);
         }
-        if (trimLine) {
+        if (options.TrimLineStart) {
+            s = TextTool.TrimLineStart(s);
+        }
+        if (options.TrimLineEnd) {
+            s = TextTool.TrimLineEnd(s);
+        }
+        if (options.TrimLine) {
             s = TextTool.TrimLine(s);
         }
-        if (replaceMultiWhiteSpace) {
+        if (options.ReplaceMultiWhiteSpace) {
             s = TextTool.ReplaceMultipleWhiteSpaceWithOne(s);
         }
         OutputText = s;
     }
 
-    private async Task TextProcessFile(bool trimText, bool removeWhiteSpace, bool trimLine, bool replaceMultiWhiteSpace) {
+    /// <summary>
+    /// 文件处理
+    /// </summary>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    private async Task TextProcessFile(ProcessOptions options) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -140,16 +151,16 @@ public partial class WhiteSpaceProcessView : Page {
         // 处理
         await UIUtils.CreateFileProcessTask(
             () => {
-                if (trimText) {
+                if (options.TrimText) {
                     TextTool.FileTrimText(inputPath, outputPath);
                 }
-                if (removeWhiteSpace) {
+                if (options.RemoveWhiteSpace) {
                     TextTool.FileRemoveWhiteSpaceLine(inputPath, outputPath);
                 }
-                if (trimLine) {
+                if (options.TrimLine) {
                     TextTool.FileTrimLine(inputPath, outputPath);
                 }
-                if (replaceMultiWhiteSpace) {
+                if (options.ReplaceMultiWhiteSpace) {
                     TextTool.FileReplaceMultipleWhiteSpaceWithOne(inputPath, outputPath);
                 }
             },
@@ -198,4 +209,15 @@ public partial class WhiteSpaceProcessView : Page {
         }
     }
 
+    /// <summary>
+    /// 处理选项
+    /// </summary>
+    private readonly struct ProcessOptions {
+        public bool TrimText { get; init; }
+        public bool RemoveWhiteSpace { get; init; }
+        public bool TrimLine { get; init; }
+        public bool TrimLineStart { get; init; }
+        public bool TrimLineEnd { get; init; }
+        public bool ReplaceMultiWhiteSpace { get; init; }
+    }
 }

@@ -58,6 +58,8 @@
           <ui:FlyoutService.Flyout>
             <ui:MenuFlyout>
               <MenuItem x:Name="TrimTextMenuItem" Header="去除首尾空白" />
+              <MenuItem x:Name="TrimLineStartMenuItem" Header="去除每行首部空白" />
+              <MenuItem x:Name="TrimLineEndMenuItem" Header="去除每行尾部空白" />
               <MenuItem x:Name="TrimLineMenuItem" Header="去除每行首尾空白" />
               <MenuItem x:Name="RemoveWhiteSpaceLineMenuItem" Header="去除空白行" />
               <MenuItem x:Name="ReplaceMultipleWhiteSpaceWithOneMenuItem" Header="多个空白字符替换为一个空格" />
