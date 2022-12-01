@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 namespace CommonUtil.Core;
 
 public partial class TextTool {
+    #region Field
     /// <summary>
     /// 英文句子分隔符
     /// </summary>
@@ -16,11 +17,11 @@ public partial class TextTool {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    public static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
+    private static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
-    public static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
+    private static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
@@ -33,6 +34,7 @@ public partial class TextTool {
     /// 全角半角 Dict
     /// </summary>
     private static readonly Dictionary<char, char> FullHalfCharDict = new();
+    #endregion
 
     [GeneratedRegex("[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordRegex();
@@ -54,6 +56,7 @@ public partial class TextTool {
         }
     }
 
+    #region 文本处理
     /// <summary>
     /// 文本去重
     /// </summary>
@@ -305,6 +308,18 @@ public partial class TextTool {
             _ => InvertText(text, InversionMode.Both),
         };
     }
+    #endregion
+
+    #region 文件处理
+    /// <summary>
+    /// 文件文本处理
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <param name="func"></param>
+    private static void ProcessFileText(string inputPath, string outputPath, Func<string, string> func) {
+        File.WriteAllText(outputPath, func(File.ReadAllText(inputPath)));
+    }
 
     /// <summary>
     /// 文件文本去重
@@ -338,7 +353,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileTrimText(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, TrimText(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, TrimText);
     }
 
     /// <summary>
@@ -347,7 +362,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileRemoveWhiteSpaceLine(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, RemoveWhiteSpaceLine(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, RemoveWhiteSpaceLine);
     }
 
     /// <summary>
@@ -356,7 +371,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileTrimLine(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, TrimLine(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, TrimLine);
     }
 
     /// <summary>
@@ -365,7 +380,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileTrimLineStart(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, TrimLineStart(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, TrimLineStart);
     }
 
     /// <summary>
@@ -374,7 +389,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileTrimLineEnd(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, TrimLineEnd(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, TrimLineEnd);
     }
 
     /// <summary>
@@ -384,7 +399,7 @@ public partial class TextTool {
     /// <param name="outputPath"></param>
     /// <returns></returns>
     public static void FileReplaceMultipleWhiteSpaceWithOne(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, ReplaceMultipleWhiteSpaceWithOne(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, ReplaceMultipleWhiteSpaceWithOne);
     }
 
     /// <summary>
@@ -393,7 +408,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileHalfCharToFullChar(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, HalfCharToFullChar(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, HalfCharToFullChar);
     }
 
     /// <summary>
@@ -402,7 +417,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileFullCharToHalfChar(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, FullCharToHalfChar(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, FullCharToHalfChar);
     }
 
     /// <summary>
@@ -433,7 +448,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToLowerCase(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, ToLowerCase(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, ToLowerCase);
     }
 
     /// <summary>
@@ -442,7 +457,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToUpperCase(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, ToUpperCase(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, ToUpperCase);
     }
 
     /// <summary>
@@ -451,7 +466,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToggleCase(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, ToggleCase(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, ToggleCase);
     }
 
     /// <summary>
@@ -460,7 +475,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileCapitalizeWords(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, CapitalizeWords(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, CapitalizeWords);
     }
 
     /// <summary>
@@ -469,7 +484,7 @@ public partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToSentenceCase(string inputPath, string outputPath) {
-        File.WriteAllText(outputPath, ToSentenceCase(File.ReadAllText(inputPath)));
+        ProcessFileText(inputPath, outputPath, ToSentenceCase);
     }
 
     /// <summary>
@@ -481,4 +496,5 @@ public partial class TextTool {
     public static void FileInvertText(string inputPath, string outputPath, InversionMode mode) {
         File.WriteAllText(outputPath, InvertText(File.ReadAllText(inputPath), mode));
     }
+    #endregion
 }
