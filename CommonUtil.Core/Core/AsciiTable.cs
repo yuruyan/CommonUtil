@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
-public class AsciiTable {
+public static class AsciiTable {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>

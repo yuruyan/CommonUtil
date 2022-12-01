@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
-public class CSharpDependencyGenerator {
+public static class CSharpDependencyGenerator {
     private const string Indent = "    ";
     private const string DoubleIndent = "        ";
 

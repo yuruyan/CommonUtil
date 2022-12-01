@@ -6,7 +6,7 @@ namespace CommonUtil.Core;
 /// <summary>
 /// 时间戳 (ms)
 /// </summary>
-public class TimeStamp {
+public static class TimeStamp {
     /// <summary>
     /// 获取当前时间戳
     /// </summary>

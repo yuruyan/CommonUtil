@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CommonUtil.Core;
 
-public class FileMergeSplit {
+public static class FileMergeSplit {
     /// <summary>
     /// 默认缓冲区大小
     /// </summary>

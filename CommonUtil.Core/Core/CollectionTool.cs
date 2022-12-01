@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CommonUtil.Core;
 
-public class CollectionTool {
+public static class CollectionTool {
     /// <summary>
     /// 交集
     /// </summary>

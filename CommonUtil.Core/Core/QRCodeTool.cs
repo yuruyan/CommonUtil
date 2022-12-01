@@ -37,7 +37,7 @@ public class QRCodeInfo {
     }
 }
 
-public class QRCodeTool {
+public static class QRCodeTool {
     private static readonly Dictionary<QRCodeFormat, Func<string, QRCodeInfo, byte[]>> QRCodeGeneratorDict = new();
 
     static QRCodeTool() {

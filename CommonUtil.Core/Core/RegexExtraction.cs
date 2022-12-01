@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace CommonUtil.Core;
 
-public class RegexExtraction {
+public static class RegexExtraction {
     private static readonly Regex GroupRegex = new(@"\\(\d+)");
     private static readonly Regex GroupSplitRegex = new(@"\\\d+");
 

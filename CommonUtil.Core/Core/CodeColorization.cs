@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace CommonUtil.Core;
 
-public class CodeColorization {
+public static class CodeColorization {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     /// <summary>
     /// 代码着色解压缩目录

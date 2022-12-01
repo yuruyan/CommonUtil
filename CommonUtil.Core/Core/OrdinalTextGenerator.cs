@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CommonUtil.Core;
 
-public class OrdinalTextGenerator {
+public static class OrdinalTextGenerator {
     public enum OrdinalType {
         Number,
         Alphabet,

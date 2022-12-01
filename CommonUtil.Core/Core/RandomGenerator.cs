@@ -19,7 +19,7 @@ public enum RandomStringChoice {
     SpacialCharacter = 8
 }
 
-public class RandomGenerator {
+public static class RandomGenerator {
     private const string NumberCharacter = "0123456789";
     private const string UpperCaseCharacter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string LowerCaseCharacter = "abcdefghijklmnopqrstuvwxyz";
