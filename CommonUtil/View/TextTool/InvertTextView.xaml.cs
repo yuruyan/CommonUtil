@@ -1,5 +1,6 @@
 ﻿using CommonUITools.Utils;
 using CommonUtil.Core;
+using CommonUtil.Core.Model;
 using Microsoft.Win32;
 using NLog;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public partial class InvertTextView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(InvertTextView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(InvertTextView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(InvertTextView), new PropertyMetadata(false));
-    public static readonly DependencyProperty InversionModeDictProperty = DependencyProperty.Register("InversionModeDict", typeof(IDictionary<string, TextTool.InversionMode>), typeof(InvertTextView), new PropertyMetadata());
+    public static readonly DependencyProperty InversionModeDictProperty = DependencyProperty.Register("InversionModeDict", typeof(IDictionary<string, InversionMode>), typeof(InvertTextView), new PropertyMetadata());
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(InvertTextView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
@@ -30,8 +31,8 @@ public partial class InvertTextView : Page {
     /// <summary>
     /// 翻转模式
     /// </summary>
-    public IDictionary<string, TextTool.InversionMode> InversionModeDict {
-        get { return (IDictionary<string, TextTool.InversionMode>)GetValue(InversionModeDictProperty); }
+    public IDictionary<string, InversionMode> InversionModeDict {
+        get { return (IDictionary<string, InversionMode>)GetValue(InversionModeDictProperty); }
         set { SetValue(InversionModeDictProperty, value); }
     }
     /// <summary>
@@ -71,10 +72,10 @@ public partial class InvertTextView : Page {
     }
 
     public InvertTextView() {
-        InversionModeDict = new Dictionary<string, TextTool.InversionMode>() {
-            {"水平翻转", TextTool.InversionMode.Horizontal },
-            {"垂直翻转", TextTool.InversionMode.Vertical},
-            {"全部翻转", TextTool.InversionMode.Both },
+        InversionModeDict = new Dictionary<string, InversionMode>() {
+            {"水平翻转", InversionMode.Horizontal },
+            {"垂直翻转", InversionMode.Vertical},
+            {"全部翻转", InversionMode.Both },
         };
         InitializeComponent();
         // 响应式布局
@@ -118,7 +119,7 @@ public partial class InvertTextView : Page {
     /// 文本处理
     /// </summary>
     /// <param name="includeNumber"></param>
-    private void StringTextProcess(TextTool.InversionMode mode) {
+    private void StringTextProcess(InversionMode mode) {
         OutputText = TextTool.InvertText(InputText, mode);
     }
 
@@ -126,7 +127,7 @@ public partial class InvertTextView : Page {
     /// 文件文本处理
     /// </summary>
     /// <param name="includeNumber"></param>
-    private async Task FileTextProcess(TextTool.InversionMode mode) {
+    private async Task FileTextProcess(InversionMode mode) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {

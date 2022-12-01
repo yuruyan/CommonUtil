@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Utils;
+using CommonUtil.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,6 +82,231 @@ public partial class TextTool {
     }
 
     /// <summary>
+    /// 去除空白行
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string RemoveWhiteSpaceLine(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Where(s => s.Trim().Any())
+        );
+    }
+
+    /// <summary>
+    /// 去除首尾空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimText(string text) {
+        return text.Trim();
+    }
+
+    /// <summary>
+    /// 去除每行首尾空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimLine(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Select(s => s.Trim())
+        );
+    }
+
+    /// <summary>
+    /// 去除每行首部空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimLineStart(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Select(s => s.TrimStart())
+        );
+    }
+
+    /// <summary>
+    /// 去除每行尾部空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string TrimLineEnd(string text) {
+        return string.Join(
+            '\n',
+            CommonUtils.NormalizeMultipleLineText(text)
+                .Split('\n')
+                .Select(s => s.TrimEnd())
+        );
+    }
+
+    /// <summary>
+    /// 半角转全角
+    /// </summary>
+    /// <param name="halfCharText"></param>
+    /// <returns></returns>
+    public static string HalfCharToFullChar(string halfCharText) {
+        char[] array = halfCharText.ToCharArray();
+        for (int i = 0; i < array.Length; i++) {
+            if (HalfFullCharDict.ContainsKey(array[i])) {
+                array[i] = HalfFullCharDict[array[i]];
+            }
+        }
+        return new(array);
+    }
+
+    /// <summary>
+    /// 全角转半角
+    /// </summary>
+    /// <param name="fullCharText"></param>
+    /// <returns></returns>
+    public static string FullCharToHalfChar(string fullCharText) {
+        char[] array = fullCharText.ToCharArray();
+        for (int i = 0; i < array.Length; i++) {
+            if (FullHalfCharDict.ContainsKey(array[i])) {
+                array[i] = FullHalfCharDict[array[i]];
+            }
+        }
+        return new(array);
+    }
+
+    /// <summary>
+    /// 添加行号
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="separator">数字与文本分隔符</param>
+    /// <returns></returns>
+    public static string PrependLineNumber(string text, string separator) {
+        string[] lines = CommonUtils.NormalizeMultipleLineText(text).Split('\n');
+        for (int i = 0; i < lines.Length; i++) {
+            lines[i] = $"{i + 1}{separator}" + lines[i];
+        }
+        return string.Join('\n', lines);
+    }
+
+    /// <summary>
+    /// 英文两边加空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="includeNumber">包括数字</param>
+    /// <returns></returns>
+    public static string AddEnglishWordBraces(string text, bool includeNumber = false) {
+        if (includeNumber) {
+            return EnglishWordNumberRegex.Replace(text, match => $" {match} ");
+        }
+        return EnglishWordRegex.Replace(text, match => $" {match} ");
+    }
+
+    /// <summary>
+    /// 将多个空白字符替换成一个空格
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ReplaceMultipleWhiteSpaceWithOne(string text) {
+        return MultipleWhiteSpaceRegex.Replace(text, " ");
+    }
+
+    /// <summary>
+    /// 小写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToLowerCase(string text) => text.ToLowerInvariant();
+
+    /// <summary>
+    /// 大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToUpperCase(string text) => text.ToUpperInvariant();
+
+    /// <summary>
+    /// 切换大小写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToggleCase(string text) {
+        char[] chars = text.ToCharArray();
+        for (int i = 0; i < chars.Length; i++) {
+            char ch = chars[i];
+            chars[i] = ch switch {
+                >= 'a' and <= 'z' => char.ToUpper(ch),
+                >= 'A' and <= 'Z' => char.ToLower(ch),
+                _ => ch
+            };
+        }
+        return new(chars);
+    }
+
+    /// <summary>
+    /// 将每个单词首字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string CapitalizeWords(string text)
+        => EnglishWordRegex.Replace(
+            ToLowerCase(text),
+            match => CapitalizeFirstWordCharacter(match.Value)
+        );
+
+    /// <summary>
+    /// 将文本第一个字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static string CapitalizeFirstWordCharacter(string text) {
+        var chars = text.ToCharArray();
+        for (int i = 0; i < chars.Length; i++) {
+            char ch = chars[i];
+            if (char.IsLetter(ch)) {
+                chars[i] = char.ToUpper(ch);
+                break;
+            }
+        }
+        return new(chars);
+    }
+
+    /// <summary>
+    /// 将每一句话首字母大写
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string ToSentenceCase(string text) {
+        var lines = ToLowerCase(text).Split('\n');
+        // 对每一行根据 EnglishSentenceSeparator 分割
+        for (int i = 0; i < lines.Length; i++) {
+            var sentences = lines[i].Split(EnglishSentenceSeparator);
+            for (int j = 0; j < sentences.Length; j++) {
+                sentences[j] = CapitalizeFirstWordCharacter(sentences[j]);
+            }
+            lines[i] = string.Join(EnglishSentenceSeparator, sentences);
+        }
+        return string.Join('\n', lines);
+    }
+
+    /// <summary>
+    /// 翻转文本
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="mode"></param>
+    /// <returns></returns>
+    public static string InvertText(string text, InversionMode mode) {
+        text = CommonUtils.NormalizeMultipleLineText(text);
+        return mode switch {
+            InversionMode.Horizontal => string.Join('\n', text.Split('\n').Select(s => string.Join("", s.Reverse()))),
+            InversionMode.Vertical => string.Join('\n', text.Split('\n').Reverse()),
+            InversionMode.Both => string.Join("", text.Reverse()),
+            _ => InvertText(text, InversionMode.Both),
+        };
+    }
+
+    /// <summary>
     /// 文件文本去重
     /// </summary>
     /// <param name="inputPath"></param>
@@ -107,35 +333,12 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 去除首尾空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string TrimText(string text) {
-        return text.Trim();
-    }
-
-    /// <summary>
     /// 文件文本去除首尾空格
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileTrimText(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, TrimText(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
-    /// 去除空白行
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string RemoveWhiteSpaceLine(string text) {
-        return string.Join(
-            '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
-                .Split('\n')
-                .Where(s => s.Trim().Any())
-        );
     }
 
     /// <summary>
@@ -148,20 +351,6 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 去除每行首尾空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string TrimLine(string text) {
-        return string.Join(
-            '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
-                .Split('\n')
-                .Select(s => s.Trim())
-        );
-    }
-
-    /// <summary>
     /// 文件文本去除每行首尾空格
     /// </summary>
     /// <param name="inputPath"></param>
@@ -171,40 +360,12 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 去除每行首部空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string TrimLineStart(string text) {
-        return string.Join(
-            '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
-                .Split('\n')
-                .Select(s => s.TrimStart())
-        );
-    }
-
-    /// <summary>
     /// 文件文本去除每行首部空格
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
-    public static void TrimLineStart(string inputPath, string outputPath) {
+    public static void FileTrimLineStart(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, TrimLineStart(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
-    /// 去除每行尾部空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string TrimLineEnd(string text) {
-        return string.Join(
-            '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
-                .Split('\n')
-                .Select(s => s.TrimEnd())
-        );
     }
 
     /// <summary>
@@ -212,17 +373,8 @@ public partial class TextTool {
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
-    public static void TrimLineEnd(string inputPath, string outputPath) {
+    public static void FileTrimLineEnd(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, TrimLineEnd(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
-    /// 将多个空白字符替换成一个空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ReplaceMultipleWhiteSpaceWithOne(string text) {
-        return MultipleWhiteSpaceRegex.Replace(text, " ");
     }
 
     /// <summary>
@@ -236,21 +388,6 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 半角转全角
-    /// </summary>
-    /// <param name="halfCharText"></param>
-    /// <returns></returns>
-    public static string HalfCharToFullChar(string halfCharText) {
-        char[] array = halfCharText.ToCharArray();
-        for (int i = 0; i < array.Length; i++) {
-            if (HalfFullCharDict.ContainsKey(array[i])) {
-                array[i] = HalfFullCharDict[array[i]];
-            }
-        }
-        return new(array);
-    }
-
-    /// <summary>
     /// 文件文本半角转全角
     /// </summary>
     /// <param name="inputPath"></param>
@@ -260,41 +397,12 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 全角转半角
-    /// </summary>
-    /// <param name="fullCharText"></param>
-    /// <returns></returns>
-    public static string FullCharToHalfChar(string fullCharText) {
-        char[] array = fullCharText.ToCharArray();
-        for (int i = 0; i < array.Length; i++) {
-            if (FullHalfCharDict.ContainsKey(array[i])) {
-                array[i] = FullHalfCharDict[array[i]];
-            }
-        }
-        return new(array);
-    }
-
-    /// <summary>
     /// 文件文本全角转半角
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileFullCharToHalfChar(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, FullCharToHalfChar(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
-    /// 添加行号
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="separator">数字与文本分隔符</param>
-    /// <returns></returns>
-    public static string PrependLineNumber(string text, string separator) {
-        string[] lines = CommonUtils.NormalizeMultipleLineText(text).Split('\n');
-        for (int i = 0; i < lines.Length; i++) {
-            lines[i] = $"{i + 1}{separator}" + lines[i];
-        }
-        return string.Join('\n', lines);
     }
 
     /// <summary>
@@ -309,19 +417,6 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 英文两边加空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="includeNumber">包括数字</param>
-    /// <returns></returns>
-    public static string AddEnglishWordBraces(string text, bool includeNumber = false) {
-        if (includeNumber) {
-            return EnglishWordNumberRegex.Replace(text, match => $" {match} ");
-        }
-        return EnglishWordRegex.Replace(text, match => $" {match} ");
-    }
-
-    /// <summary>
     /// 文件文本英文两边加空格
     /// </summary>
     /// <param name="inputPath"></param>
@@ -333,13 +428,6 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 小写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToLowerCase(string text) => text.ToLowerInvariant();
-
-    /// <summary>
     /// 文件文本小写
     /// </summary>
     /// <param name="inputPath"></param>
@@ -349,37 +437,12 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToUpperCase(string text) => text.ToUpperInvariant();
-
-    /// <summary>
     /// 文件文本大写
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToUpperCase(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, ToUpperCase(File.ReadAllText(inputPath)));
-    }
-
-    /// <summary>
-    /// 切换大小写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToggleCase(string text) {
-        char[] chars = text.ToCharArray();
-        for (int i = 0; i < chars.Length; i++) {
-            char ch = chars[i];
-            chars[i] = ch switch {
-                >= 'a' and <= 'z' => char.ToUpper(ch),
-                >= 'A' and <= 'Z' => char.ToLower(ch),
-                _ => ch
-            };
-        }
-        return new(chars);
     }
 
     /// <summary>
@@ -392,34 +455,6 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 将文本第一个字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    private static string CapitalizeFirstWordCharacter(string text) {
-        var chars = text.ToCharArray();
-        for (int i = 0; i < chars.Length; i++) {
-            char ch = chars[i];
-            if (char.IsLetter(ch)) {
-                chars[i] = char.ToUpper(ch);
-                break;
-            }
-        }
-        return new(chars);
-    }
-
-    /// <summary>
-    /// 将每个单词首字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string CapitalizeWords(string text)
-        => EnglishWordRegex.Replace(
-            ToLowerCase(text),
-            match => CapitalizeFirstWordCharacter(match.Value)
-        );
-
-    /// <summary>
     /// 文件文本将每个单词首字母大写
     /// </summary>
     /// <param name="inputPath"></param>
@@ -429,52 +464,12 @@ public partial class TextTool {
     }
 
     /// <summary>
-    /// 将每一句话首字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToSentenceCase(string text) {
-        var lines = ToLowerCase(text).Split('\n');
-        // 对每一行根据 EnglishSentenceSeparator 分割
-        for (int i = 0; i < lines.Length; i++) {
-            var sentences = lines[i].Split(EnglishSentenceSeparator);
-            for (int j = 0; j < sentences.Length; j++) {
-                sentences[j] = CapitalizeFirstWordCharacter(sentences[j]);
-            }
-            lines[i] = string.Join(EnglishSentenceSeparator, sentences);
-        }
-        return string.Join('\n', lines);
-    }
-
-    /// <summary>
     /// 文件文本将每一句话首字母大写
     /// </summary>
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     public static void FileToSentenceCase(string inputPath, string outputPath) {
         File.WriteAllText(outputPath, ToSentenceCase(File.ReadAllText(inputPath)));
-    }
-
-    public enum InversionMode {
-        Horizontal,
-        Vertical,
-        Both
-    }
-
-    /// <summary>
-    /// 翻转文本
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="mode"></param>
-    /// <returns></returns>
-    public static string InvertText(string text, InversionMode mode) {
-        text = CommonUtils.NormalizeMultipleLineText(text);
-        return mode switch {
-            InversionMode.Horizontal => string.Join('\n', text.Split('\n').Select(s => string.Join("", s.Reverse()))),
-            InversionMode.Vertical => string.Join('\n', text.Split('\n').Reverse()),
-            InversionMode.Both => string.Join("", text.Reverse()),
-            _ => InvertText(text, InversionMode.Both),
-        };
     }
 
     /// <summary>
