@@ -1,0 +1,267 @@
+[
+  {
+    "Name": "C#",
+    "FileTypes": [
+      ".cs"
+    ],
+    "ResourceName": "CSharp-Mode.xshd"
+  },
+  {
+    "Name": "JavaScript",
+    "FileTypes": [
+      ".js"
+    ],
+    "ResourceName": "JavaScript-Mode.xshd"
+  },
+  {
+    "Name": "HTML",
+    "FileTypes": [
+      ".htm",
+      ".html"
+    ],
+    "ResourceName": "HTML-Mode.xshd"
+  },
+  {
+    "Name": "ASP/XHTML",
+    "FileTypes": [
+      ".asp",
+      ".aspx",
+      ".asax",
+      ".asmx",
+      ".ascx",
+      ".master"
+    ],
+    "ResourceName": "ASPX.xshd"
+  },
+  {
+    "Name": "Boo",
+    "FileTypes": [
+      ".boo"
+    ],
+    "ResourceName": "Boo.xshd"
+  },
+  {
+    "Name": "Coco",
+    "FileTypes": [
+      ".atg"
+    ],
+    "ResourceName": "Coco-Mode.xshd"
+  },
+  {
+    "Name": "CSS",
+    "FileTypes": [
+      ".css"
+    ],
+    "ResourceName": "CSS-Mode.xshd"
+  },
+  {
+    "Name": "C++",
+    "FileTypes": [
+      ".c",
+      ".h",
+      ".cc",
+      ".cpp",
+      ".hpp"
+    ],
+    "ResourceName": "CPP-Mode.xshd"
+  },
+  {
+    "Name": "Java",
+    "FileTypes": [
+      ".java"
+    ],
+    "ResourceName": "Java-Mode.xshd"
+  },
+  {
+    "Name": "Patch",
+    "FileTypes": [
+      ".patch",
+      ".diff"
+    ],
+    "ResourceName": "Patch-Mode.xshd"
+  },
+  {
+    "Name": "PowerShell",
+    "FileTypes": [
+      ".ps1",
+      ".psm1",
+      ".psd1"
+    ],
+    "ResourceName": "PowerShell.xshd"
+  },
+  {
+    "Name": "PHP",
+    "FileTypes": [
+      ".php"
+    ],
+    "ResourceName": "PHP-Mode.xshd"
+  },
+  {
+    "Name": "Python",
+    "FileTypes": [
+      ".py",
+      ".pyw"
+    ],
+    "ResourceName": "Python-Mode.xshd"
+  },
+  {
+    "Name": "TeX",
+    "FileTypes": [
+      ".tex"
+    ],
+    "ResourceName": "Tex-Mode.xshd"
+  },
+  {
+    "Name": "TSQL",
+    "FileTypes": [
+      ".sql"
+    ],
+    "ResourceName": "TSQL-Mode.xshd"
+  },
+  {
+    "Name": "VB",
+    "FileTypes": [
+      ".vb"
+    ],
+    "ResourceName": "VB-Mode.xshd"
+  },
+  {
+    "Name": "XML",
+    "FileTypes": [
+      ".xml",
+      ".xsl",
+      ".xslt",
+      ".xsd",
+      ".manifest",
+      ".config",
+      ".addin",
+      ".xshd",
+      ".wxs",
+      ".wxi",
+      ".wxl",
+      ".proj",
+      ".csproj",
+      ".vbproj",
+      ".ilproj",
+      ".booproj",
+      ".build",
+      ".xfrm",
+      ".targets",
+      ".xaml",
+      ".xpt",
+      ".xft",
+      ".map",
+      ".wsdl",
+      ".disco",
+      ".ps1xml",
+      ".nuspec"
+    ],
+    "ResourceName": "XML-Mode.xshd"
+  },
+  {
+    "Name": "MarkDown",
+    "FileTypes": [
+      ".md"
+    ],
+    "ResourceName": "MarkDown-Mode.xshd"
+  },
+  {
+    "Name": "ActionScript3",
+    "FileTypes": [
+      ".as"
+    ],
+    "ResourceName": "AS3.xshd"
+  },
+  {
+    "Name": "BAT",
+    "FileTypes": [
+      ".bat",
+      ".dos"
+    ],
+    "ResourceName": "DOSBATCH.xshd"
+  },
+  {
+    "Name": "F#",
+    "FileTypes": [
+      ".fs"
+    ],
+    "ResourceName": "FSharp-Mode.xshd"
+  },
+  {
+    "Name": "HLSL",
+    "FileTypes": [
+      ".fx"
+    ],
+    "ResourceName": "HLSL.xshd"
+  },
+  {
+    "Name": "INI",
+    "FileTypes": [
+      ".cfg",
+      ".conf",
+      ".ini",
+      ".iss"
+    ],
+    "ResourceName": "INI.xshd"
+  },
+  {
+    "Name": "LOG",
+    "FileTypes": [
+      ".log"
+    ],
+    "ResourceName": "Log.xshd"
+  },
+  {
+    "Name": "Pascal",
+    "FileTypes": [
+      ".pas"
+    ],
+    "ResourceName": "Pascal.xshd"
+  },
+  {
+    "Name": "PLSQL",
+    "FileTypes": [
+      ".plsql"
+    ],
+    "ResourceName": "PLSQL.xshd"
+  },
+  {
+    "Name": "Ruby",
+    "FileTypes": [
+      ".rb"
+    ],
+    "ResourceName": "Ruby.xshd"
+  },
+  {
+    "Name": "Scheme",
+    "FileTypes": [
+      ".sls",
+      ".sps",
+      ".ss",
+      ".scm"
+    ],
+    "ResourceName": "scheme.xshd"
+  },
+  {
+    "Name": "Squirrel",
+    "FileTypes": [
+      ".nut"
+    ],
+    "ResourceName": "squirrel.xshd"
+  },
+  {
+    "Name": "TXT",
+    "FileTypes": [
+      ".txt"
+    ],
+    "ResourceName": "TXT.xshd"
+  },
+  {
+    "Name": "VTL",
+    "FileTypes": [
+      ".vtl",
+      ".vm"
+    ],
+    "ResourceName": "vtl.xshd"
+  }
+]
