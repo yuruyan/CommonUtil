@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
-using NLog;
-using System;
-using System.IO;
 
 namespace CommonUtil.Core;
 

@@ -1,12 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Newtonsoft.Json;
-using NLog;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace CommonUtil.Core;

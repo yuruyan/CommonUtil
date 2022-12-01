@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class CollectionTool {
     /// <summary>

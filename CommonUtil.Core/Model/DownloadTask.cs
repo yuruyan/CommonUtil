@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows;
-
-namespace CommonUtil.Core.Model;
+﻿namespace CommonUtil.Core.Model;
 
 /// <summary>
 /// 下载信息

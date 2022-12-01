@@ -1,5 +1,4 @@
-﻿using CommonUITools.Model;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
 

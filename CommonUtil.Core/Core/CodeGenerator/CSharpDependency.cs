@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class CSharpDependencyGenerator {
     private const string Indent = "    ";

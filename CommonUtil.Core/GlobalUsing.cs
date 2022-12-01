@@ -1,7 +1,6 @@
 ﻿global using CommonTools.Model;
 global using CommonTools.Utils;
 global using CommonUITools.Utils;
-global using CommonUtil.Core;
 global using NLog;
 global using System;
 global using System.Collections.Generic;
@@ -11,8 +10,3 @@ global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using System.Windows;
-global using System.Windows.Controls;
-global using System.Windows.Input;
-global using System.Windows.Media;
-global using MessageBox = CommonUITools.Widget.MessageBox;
-global using NotificationBox = CommonUITools.Widget.NotificationBox;

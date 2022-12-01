@@ -1,5 +1,4 @@
 ﻿using CommonUITools.Model;
-
 namespace CommonUtil.View;
 
 public partial class CodeColorizationView : Page {

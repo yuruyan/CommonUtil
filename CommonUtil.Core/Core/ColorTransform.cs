@@ -1,6 +1,4 @@
 ﻿using ColorMine.ColorSpaces;
-using CommonUITools.Utils;
-using System;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 

@@ -1,12 +1,6 @@
-﻿using CommonUITools.Utils;
-using QRCoder;
-using System;
-using System.Collections.Generic;
+﻿using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Text;
-using System.Windows.Media.Imaging;
 using ZXing.Common;
 using static QRCoder.PayloadGenerator;
 using static QRCoder.QRCodeGenerator;

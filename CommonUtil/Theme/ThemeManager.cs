@@ -1,5 +1,4 @@
 ﻿using CommonUITools.Model;
-
 namespace CommonUtil.Theme;
 
 internal class ThemeManager : DependencyObject {

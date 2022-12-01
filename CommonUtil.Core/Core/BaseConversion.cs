@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class BaseConversion {
     private const string BaseCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

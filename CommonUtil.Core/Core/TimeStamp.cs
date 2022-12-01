@@ -1,7 +1,4 @@
-﻿using CommonUITools.Utils;
-using System;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 /// <summary>
 /// 时间戳 (ms)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class OrdinalTextGenerator {
     public enum OrdinalType {

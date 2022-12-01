@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.CoreTests", "Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.Core", "CommonUtil.Core\CommonUtil.Core.csproj", "{3DCADE8F-123B-453F-8847-7668B7076EC8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTools", "..\CommonUITools\CommonTools\CommonTools.csproj", "{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,14 @@ Global
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|x64.ActiveCfg = Release|Any CPU
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|x64.Build.0 = Release|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

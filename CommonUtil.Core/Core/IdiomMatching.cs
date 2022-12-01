@@ -1,9 +1,4 @@
-﻿using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class IdiomMatching {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
