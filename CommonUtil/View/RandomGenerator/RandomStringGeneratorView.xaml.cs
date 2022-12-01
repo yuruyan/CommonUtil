@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class RandomStringGeneratorView : System.Windows.Controls.Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomStringGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
     public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty UppercaseCheckedProperty = DependencyProperty.Register("UppercaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty LowerCaseCheckedProperty = DependencyProperty.Register("LowerCaseChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(false));
@@ -64,7 +64,7 @@ public partial class RandomStringGeneratorView : System.Windows.Controls.Page, I
     public IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
-            CommonUITools.Widget.MessageBox.Error("字符串范围无效");
+            MessageBox.Error("字符串范围无效");
             return Array.Empty<string>();
         }
         var choice = RandomStringChoice.None;

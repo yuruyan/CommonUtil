@@ -1,6 +1,4 @@
 ﻿using System.Timers;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace CommonUtil.View;
 
@@ -295,7 +293,7 @@ public partial class ColorTransformView : Page {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is ColorItem colorItem) {
             Clipboard.SetDataObject(colorItem.ColorToString(SelectedColor));
-            CommonUITools.Widget.MessageBox.Success("已复制");
+            MessageBox.Success("已复制");
         }
     }
 

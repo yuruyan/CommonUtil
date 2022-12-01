@@ -33,7 +33,7 @@ public partial class HexEncodingView : Page {
             OutputText = CommonEncoding.HexEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("编码失败");
+            MessageBox.Error("编码失败");
         }
     }
 
@@ -45,7 +45,7 @@ public partial class HexEncodingView : Page {
             OutputText = CommonEncoding.HexDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("解码失败");
+            MessageBox.Error("解码失败");
         }
     }
 }

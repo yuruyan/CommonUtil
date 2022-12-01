@@ -1,6 +1,4 @@
-﻿using System.Windows.Media;
-
-namespace CommonUtil.Widget;
+﻿namespace CommonUtil.Widget;
 
 public partial class ProgressBar : UserControl {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

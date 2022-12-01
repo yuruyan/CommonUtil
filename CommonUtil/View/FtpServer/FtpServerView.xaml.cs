@@ -1,16 +1,15 @@
 ﻿using CommonUITools.View;
 using CommonUtil.Core.Model;
 using CommonUtil.Store;
-using ModernWpf.Controls;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Input;
+using ContentDialogResult = ModernWpf.Controls.ContentDialogResult;
 
 namespace CommonUtil.View;
 
-public partial class FtpServerView : System.Windows.Controls.Page {
+public partial class FtpServerView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty RootDirectoryProperty = DependencyProperty.Register("RootDirectory", typeof(string), typeof(FtpServerView), new PropertyMetadata(""));
@@ -150,9 +149,9 @@ public partial class FtpServerView : System.Windows.Controls.Page {
             bool status = await FtpServer.StartFtpServerAsync(config);
             if (status) {
                 Dispatcher.Invoke(() => IsStopServerButtonVisible = true);
-                CommonUITools.Widget.MessageBox.Success("启动成功");
+                MessageBox.Success("启动成功");
             } else {
-                CommonUITools.Widget.MessageBox.Error("启动失败");
+                MessageBox.Error("启动失败");
             }
         });
     }
@@ -163,7 +162,7 @@ public partial class FtpServerView : System.Windows.Controls.Page {
     /// <returns></returns>
     private bool CheckInput() {
         if (string.IsNullOrEmpty(RootDirectory)) {
-            CommonUITools.Widget.MessageBox.Info("请选择共享目录");
+            MessageBox.Info("请选择共享目录");
             return false;
         }
         return true;
@@ -179,9 +178,9 @@ public partial class FtpServerView : System.Windows.Controls.Page {
             bool status = await FtpServer.StopFtpServerAsync();
             if (status) {
                 Dispatcher.Invoke(() => IsStopServerButtonVisible = false);
-                CommonUITools.Widget.MessageBox.Success("停止成功");
+                MessageBox.Success("停止成功");
             } else {
-                CommonUITools.Widget.MessageBox.Error("停止失败");
+                MessageBox.Error("停止失败");
             }
         });
     }
@@ -196,7 +195,7 @@ public partial class FtpServerView : System.Windows.Controls.Page {
             if (element.DataContext is FtpServerUserInfo userInfo) {
                 string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{NetworkUtils.GetLocalIpAddress()}";
                 Clipboard.SetDataObject(address);
-                CommonUITools.Widget.MessageBox.Success("已复制");
+                MessageBox.Success("已复制");
             }
         }
     }

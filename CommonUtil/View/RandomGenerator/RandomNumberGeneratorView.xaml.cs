@@ -34,7 +34,7 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<uint, IEnumera
         int minValue = (int)MinValue;
         int maxValue = (int)MaxValue;
         if (minValue > maxValue) {
-            CommonUITools.Widget.MessageBox.Error("数字范围无效");
+            MessageBox.Error("数字范围无效");
             return Array.Empty<string>();
         }
         if (maxValue != int.MaxValue) {

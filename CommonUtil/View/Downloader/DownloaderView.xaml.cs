@@ -1,12 +1,11 @@
 ﻿using CommonUITools.Route;
 using CommonUtil.Core.Model;
 using CommonUtil.Route;
-using ModernWpf.Controls;
 using System.Collections.ObjectModel;
 
 namespace CommonUtil.View;
 
-public partial class DownloaderView : System.Windows.Controls.Page {
+public partial class DownloaderView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty DownloadingTaskListProperty = DependencyProperty.Register("DownloadingTaskList", typeof(ObservableCollection<DownloadTask>), typeof(DownloaderView), new PropertyMetadata());
     public static readonly DependencyProperty DownloadedTaskListProperty = DependencyProperty.Register("DownloadedTaskList", typeof(ObservableCollection<DownloadTask>), typeof(DownloaderView), new PropertyMetadata());
@@ -87,7 +86,7 @@ public partial class DownloaderView : System.Windows.Controls.Page {
     /// <param name="e"></param>
     private async void DownloadTaskClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (await DownloadInfoDialog.ShowAsync() != ContentDialogResult.Primary) {
+        if (await DownloadInfoDialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
             return;
         }
         var urls = CommonUtils

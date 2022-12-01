@@ -216,13 +216,13 @@ public partial class DataDigestView : Page {
         } catch (TaskCanceledException) {
         } catch (FileNotFoundException error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("文件找不到！");
+            MessageBox.Error("文件找不到！");
         } catch (IOException error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("文件读取失败！");
+            MessageBox.Error("文件读取失败！");
         } catch (Exception error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("处理失败！");
+            MessageBox.Error("处理失败！");
         }
         IsWorking = false;
     }
@@ -321,7 +321,7 @@ public partial class DataDigestView : Page {
             }
         }
         Clipboard.SetDataObject(sb.ToString());
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>

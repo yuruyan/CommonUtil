@@ -71,7 +71,7 @@ public partial class EncodingTemplate : UserControl {
     private void EncodingTextClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (string.IsNullOrEmpty(InputText)) {
-            CommonUITools.Widget.MessageBox.Info("请输入文本");
+            MessageBox.Info("请输入文本");
             return;
         }
         EncodingClick?.Invoke();
@@ -85,7 +85,7 @@ public partial class EncodingTemplate : UserControl {
     private void DecodingTextClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (string.IsNullOrEmpty(InputText)) {
-            CommonUITools.Widget.MessageBox.Info("请输入文本");
+            MessageBox.Info("请输入文本");
             return;
         }
         DecodingClick?.Invoke();
@@ -99,7 +99,7 @@ public partial class EncodingTemplate : UserControl {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>

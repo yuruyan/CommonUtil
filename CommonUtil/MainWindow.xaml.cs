@@ -4,7 +4,6 @@ using CommonUtil.Store;
 using CommonUtil.Theme;
 using CommonUtil.View;
 using System.Threading;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 

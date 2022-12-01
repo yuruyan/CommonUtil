@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class BMICalculatorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -95,12 +93,12 @@ public partial class BMICalculatorView : Page {
             height = Convert.ToDouble(HeightText) / 100;
             weight = Convert.ToDouble(WeightText);
         } catch {
-            CommonUITools.Widget.MessageBox.Error("输入有误！");
+            MessageBox.Error("输入有误！");
             return;
         }
         // 检查身高体重
         if (height <= 0 || weight <= 0) {
-            CommonUITools.Widget.MessageBox.Error("身高或体重有误！");
+            MessageBox.Error("身高或体重有误！");
             return;
         }
 

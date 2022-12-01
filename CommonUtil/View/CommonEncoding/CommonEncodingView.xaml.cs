@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class CommonEncodingView : System.Windows.Controls.Page {
+public partial class CommonEncodingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Type[] Routers = {
         typeof(UnicodeEncodingView),

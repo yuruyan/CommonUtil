@@ -3,8 +3,6 @@ using CommonUtil.Store;
 using CommonUtil.Theme;
 using System.Collections.ObjectModel;
 using System.Threading;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;

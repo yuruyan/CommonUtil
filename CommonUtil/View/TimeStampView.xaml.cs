@@ -128,7 +128,7 @@ public partial class TimeStampView : Page {
     private void CopyTimeStampClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(CurrentTimeStamp);
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public partial class TimeStampView : Page {
             TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(t);
         } catch (Exception error) {
             Logger.Info(error);
-            CommonUITools.Widget.MessageBox.Error("转换失败！");
+            MessageBox.Error("转换失败！");
         }
     }
 
@@ -167,7 +167,7 @@ public partial class TimeStampView : Page {
             StringToTimeStampOutput = t.ToString();
         } catch (Exception error) {
             Logger.Info(error);
-            CommonUITools.Widget.MessageBox.Error("格式有误！");
+            MessageBox.Error("格式有误！");
         }
     }
 }

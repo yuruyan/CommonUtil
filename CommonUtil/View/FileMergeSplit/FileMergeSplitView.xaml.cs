@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class FileMergeSplitView : System.Windows.Controls.Page {
+public partial class FileMergeSplitView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private readonly Type[] Routers = {

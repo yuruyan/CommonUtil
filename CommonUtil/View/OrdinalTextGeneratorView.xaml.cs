@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
+public partial class OrdinalTextGeneratorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(OrdinalTextGeneratorView), new PropertyMetadata(""));
@@ -97,9 +97,9 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
             );
             OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
         } catch (FormatException) {
-            CommonUITools.Widget.MessageBox.Error("格式错误");
+            MessageBox.Error("格式错误");
         } catch {
-            CommonUITools.Widget.MessageBox.Error("生成失败");
+            MessageBox.Error("生成失败");
         }
     }
 
@@ -121,7 +121,7 @@ public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>

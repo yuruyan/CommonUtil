@@ -39,7 +39,7 @@ public partial class EdgeBookmarkView : Page {
                     UIUtils.OpenFileInExplorerAsync(dialog.FileName);
                 });
             } catch (Exception error) {
-                CommonUITools.Widget.MessageBox.Error("导出失败！" + error.Message);
+                MessageBox.Error("导出失败！" + error.Message);
                 Logger.Error(error);
             }
         });

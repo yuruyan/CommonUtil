@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls.Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomGeneratorWithDataSourceView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private const string DefaultDataSource = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -43,12 +43,12 @@ public partial class RandomGeneratorWithDataSourceView : System.Windows.Controls
     public IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
-            CommonUITools.Widget.MessageBox.Error("字符串范围无效");
+            MessageBox.Error("字符串范围无效");
             return Array.Empty<string>();
         }
         // 检查数据源
         if (string.IsNullOrEmpty(DataSourceText)) {
-            CommonUITools.Widget.MessageBox.Info("请输入数据源");
+            MessageBox.Info("请输入数据源");
             return Array.Empty<string>();
         }
         return RandomGenerator.GenerateRandomStringWithDataSource(

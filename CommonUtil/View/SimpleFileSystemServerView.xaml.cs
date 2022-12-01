@@ -1,7 +1,6 @@
 ﻿using Ookii.Dialogs.Wpf;
 using System.Net;
 using System.Net.Sockets;
-using System.Windows.Input;
 
 namespace CommonUtil.View;
 
@@ -108,7 +107,7 @@ public partial class SimpleFileSystemServerView : Page {
         e.Handled = true;
         #region 检查是否选择分享目录
         if (string.IsNullOrEmpty(SharingDirectory)) {
-            CommonUITools.Widget.MessageBox.Info("未选择分享目录！");
+            MessageBox.Info("未选择分享目录！");
             return;
         }
         #endregion
@@ -123,11 +122,11 @@ public partial class SimpleFileSystemServerView : Page {
             IsServerStarted = state;
             // 开启成功
             if (state) {
-                CommonUITools.Widget.MessageBox.Success("服务器启动成功");
+                MessageBox.Success("服务器启动成功");
                 return;
             }
             StopServer();
-            CommonUITools.Widget.MessageBox.Error("服务器启动失败");
+            MessageBox.Error("服务器启动失败");
         });
     }
 
@@ -147,7 +146,7 @@ public partial class SimpleFileSystemServerView : Page {
         int port = TaskUtils.Try(GetFreePort, 0);
         // 端口不足
         if (port == 0) {
-            CommonUITools.Widget.MessageBox.Error("端口不足");
+            MessageBox.Error("端口不足");
             return false;
         }
         ServerPort = port;

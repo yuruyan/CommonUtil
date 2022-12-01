@@ -1,6 +1,5 @@
 ﻿using CommonUITools.Model;
 using Microsoft.Win32;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
 
@@ -65,13 +64,13 @@ public partial class QRCodeDecodeView : Page {
             DecodeText = data;
         } catch (LoadException error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("加载图片失败");
+            MessageBox.Error("加载图片失败");
         } catch (ParseException error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("解析失败");
+            MessageBox.Error("解析失败");
         } catch (Exception error) {
             Logger.Error(error);
-            CommonUITools.Widget.MessageBox.Error("解析失败");
+            MessageBox.Error("解析失败");
         }
     }
 

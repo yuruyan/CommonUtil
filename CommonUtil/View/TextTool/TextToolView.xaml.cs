@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class TextToolView : System.Windows.Controls.Page {
+public partial class TextToolView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Type[] Routers = {
         typeof(RemoveDuplicateView),

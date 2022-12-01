@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class CodeGeneratorView : System.Windows.Controls.Page {
+public partial class CodeGeneratorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Type[] Routers = {
         typeof(CSharpDependencyView),

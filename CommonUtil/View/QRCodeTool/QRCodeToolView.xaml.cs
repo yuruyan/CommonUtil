@@ -4,8 +4,6 @@ using CommonUtil.Route;
 using Microsoft.Win32;
 using ModernWpf.Controls;
 using QRCoder.Exceptions;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static QRCoder.QRCodeGenerator;
 using Bitmap = System.Drawing.Bitmap;

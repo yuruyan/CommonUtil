@@ -10,5 +10,7 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System.Windows;
 global using System.Windows.Controls;
+global using System.Windows.Input;
+global using System.Windows.Media;
 global using MessageBox = CommonUITools.Widget.MessageBox;
 global using NotificationBox = CommonUITools.Widget.NotificationBox;

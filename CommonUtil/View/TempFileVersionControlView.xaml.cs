@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace CommonUtil.View;
 
@@ -167,7 +166,7 @@ public partial class TempFileVersionControlView : Page {
                 // 创建文件夹
                 if (!TaskUtils.Try(() => { Directory.CreateDirectory(targetFile.SaveFolder); return true; })) {
                     var dirName = Path.GetFileName(targetFile.SaveFolder);
-                    CommonUITools.Widget.MessageBox.Error($"创建文件夹 {dirName} 失败");
+                    MessageBox.Error($"创建文件夹 {dirName} 失败");
                     Logger.Error($"创建文件夹 {dirName} 失败");
                     return;
                 }

@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace CommonUtil.View;
 
-public partial class Base64ToolView : System.Windows.Controls.Page {
+public partial class Base64ToolView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));

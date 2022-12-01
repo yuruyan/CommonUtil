@@ -54,7 +54,7 @@ public partial class CodeFormatingView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        CommonUITools.Widget.MessageBox.Success("已复制");
+        MessageBox.Success("已复制");
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public partial class CodeFormatingView : Page {
                 string formatedCode = await CodeFormating.FormatAsync(code, lang);
                 Dispatcher.Invoke(() => OutputText = formatedCode);
             } catch (Exception error) {
-                Dispatcher.Invoke(() => CommonUITools.Widget.MessageBox.Error("格式化失败 " + error.Message));
+                Dispatcher.Invoke(() => MessageBox.Error("格式化失败 " + error.Message));
                 Logger.Error(error);
             }
         });

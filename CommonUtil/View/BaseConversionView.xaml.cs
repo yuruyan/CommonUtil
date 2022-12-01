@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class BaseConversionView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -91,7 +89,7 @@ public partial class BaseConversionView : Page {
                 //Logger.Info(error);
                 sb.Append('\n');
                 //OutputText = string.Empty; // 清空输入
-                //CommonUITools.Widget.MessageBox.Error("转换失败！");
+                //MessageBox.Error("转换失败！");
                 //return;
             }
         }
