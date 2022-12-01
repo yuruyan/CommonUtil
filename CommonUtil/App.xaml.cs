@@ -1,10 +1,4 @@
-﻿using CommonUITools.Utils;
-using NLog;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 
 namespace CommonUtil;
 
@@ -36,7 +30,7 @@ public partial class App : Application {
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
         Logger.Error(e);
         // 提示信息
-        MessageBox.Show(
+        System.Windows.MessageBox.Show(
             e.Exception.Message,
             "错误",
             MessageBoxButton.OK,
@@ -48,7 +42,7 @@ public partial class App : Application {
         if (e.ExceptionObject is Exception exception) {
             Logger.Fatal(exception);
             // 提示信息
-            MessageBox.Show(
+            System.Windows.MessageBox.Show(
                 exception.Message,
                 "错误",
                 MessageBoxButton.OK,
@@ -67,7 +61,7 @@ public partial class App : Application {
             _ => e.Exception.Message
         };
         // 提示信息
-        MessageBox.Show(
+        System.Windows.MessageBox.Show(
             Current.MainWindow,
             message,
             "错误",

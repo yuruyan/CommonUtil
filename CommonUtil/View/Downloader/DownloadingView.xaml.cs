@@ -1,8 +1,5 @@
 ﻿using CommonUtil.Core.Model;
-using NLog;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace CommonUtil.View;
 public partial class DownloadingView : Page {

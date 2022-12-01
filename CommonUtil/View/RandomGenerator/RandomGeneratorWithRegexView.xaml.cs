@@ -1,13 +1,5 @@
-﻿using CommonUITools.Utils;
-using CommonUtil.Core;
-using CommonUtil.Core.Model;
-using NLog;
-using System;
-using System.Collections.Generic;
+﻿using CommonUtil.Core.Model;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using MessageBox = CommonUITools.Widget.MessageBox;
 
 namespace CommonUtil.View;
 

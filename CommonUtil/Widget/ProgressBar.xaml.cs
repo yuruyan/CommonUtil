@@ -1,8 +1,4 @@
-﻿using CommonUITools.Utils;
-using NLog;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace CommonUtil.Widget;
 

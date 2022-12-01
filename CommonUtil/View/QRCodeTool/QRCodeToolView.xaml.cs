@@ -1,27 +1,15 @@
 ﻿using CommonUITools.Route;
-using CommonUITools.Utils;
-using CommonUITools.Widget;
-using CommonUtil.Core;
 using CommonUtil.Core.Model;
 using CommonUtil.Route;
 using Microsoft.Win32;
 using ModernWpf.Controls;
-using NLog;
 using QRCoder.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static QRCoder.QRCodeGenerator;
 using Bitmap = System.Drawing.Bitmap;
-using MessageBox = CommonUITools.Widget.MessageBox;
+
 namespace CommonUtil.View;
 
 public partial class QRCodeToolView : System.Windows.Controls.Page {

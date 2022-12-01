@@ -1,14 +1,9 @@
 ﻿using CommonUITools.Model;
 using CommonUITools.Route;
-using CommonUITools.Utils;
 using CommonUtil.Store;
 using CommonUtil.Theme;
 using CommonUtil.View;
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;

@@ -1,8 +1,4 @@
-﻿using NLog;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class DownloadTaskInfoWidget : UserControl {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

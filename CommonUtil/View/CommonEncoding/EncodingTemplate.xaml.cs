@@ -1,11 +1,4 @@
-﻿using CommonUITools.Utils;
-using NLog;
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class EncodingTemplate : UserControl {
     private static Logger Logger = LogManager.GetCurrentClassLogger();

@@ -1,11 +1,4 @@
-﻿using CommonUtil.Core;
-using CommonUtil.Core.Model;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+﻿using CommonUtil.Core.Model;
 
 namespace CommonUtil.View;
 

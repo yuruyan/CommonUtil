@@ -1,8 +1,4 @@
 ﻿using CommonUITools.Model;
-using CommonUITools.Utils;
-using NLog;
-using System;
-using System.Windows;
 
 namespace CommonUtil.Theme;
 

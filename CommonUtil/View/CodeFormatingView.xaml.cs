@@ -1,12 +1,4 @@
-﻿using CommonUITools.Utils;
-using CommonUtil.Core;
-using CommonUtil.Store;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using CommonUtil.Store;
 
 namespace CommonUtil.View;
 

@@ -1,12 +1,5 @@
-﻿using CommonUITools.Utils;
-using CommonUtil.Core;
-using NLog;
-using System;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.Threading;
 using System.Timers;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace CommonUtil.View;
 

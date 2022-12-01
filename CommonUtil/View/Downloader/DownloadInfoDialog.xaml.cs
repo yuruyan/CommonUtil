@@ -1,9 +1,6 @@
 ﻿using CommonUITools.View;
 using ModernWpf.Controls;
-using NLog;
 using Ookii.Dialogs.Wpf;
-using System;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CommonUtil.View;

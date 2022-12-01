@@ -1,10 +1,4 @@
-﻿using CommonUtil.Core;
-using NLog;
-using System;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class UTF8EncodingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

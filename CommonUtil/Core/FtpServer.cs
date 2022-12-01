@@ -3,9 +3,6 @@ using CommonUtil.Core.Model;
 using CommonUtil.Store;
 using Flurl.Http;
 using Newtonsoft.Json;
-using NLog;
-using System;
-using System.Threading.Tasks;
 
 namespace CommonUtil.Core;
 

@@ -1,13 +1,4 @@
-﻿using CommonUITools.Utils;
-using CommonUtil.Core;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Timers;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
 

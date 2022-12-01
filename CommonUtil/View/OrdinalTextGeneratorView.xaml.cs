@@ -1,13 +1,4 @@
-﻿using CommonUITools.Utils;
-using CommonUtil.Core;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class OrdinalTextGeneratorView : System.Windows.Controls.Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
