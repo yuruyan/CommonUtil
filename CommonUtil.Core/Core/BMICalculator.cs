@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.Core;
 
-public class BMICalculator {
+public static class BMICalculator {
     /// <summary>
     /// 计算 BMI
     /// </summary>
