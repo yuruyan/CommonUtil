@@ -1,17 +1,8 @@
 {
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:22696",
-      "sslPort": 0
-    }
-  },
   "profiles": {
     "SimpleFileSystemServer": {
       "commandName": "Project",
-      "commandLineArgs": " --urls=http://*:8080 --dir=E:\\FFOutput",
+      "commandLineArgs": " --urls=http://*:8080 rootDir=e:\\temp",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -26,6 +17,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:22696",
+      "sslPort": 0
     }
   }
 }

@@ -1,42 +1,36 @@
-﻿using SimpleFileSystemServer.Model;
-using System.Text.RegularExpressions;
+﻿namespace SimpleFileSystemServer.Service;
 
-namespace SimpleFileSystemServer.Service;
-
-public class FileService {
+public static class FileService {
     /// <summary>
     /// 获取目录下的文件信息
     /// </summary>
-    /// <param name="dir">相对路径，以'/'开头</param>
-    /// <returns></returns>
-    public IList<FileVO> ListFiles(string dir) {
-        var directoryInfo = new DirectoryInfo(Path.Combine(Global.WorkingDirectory, dir[1..]));
+    /// <param name="dirPath">绝对路径，以'/'开头</param>
+    /// <returns>失败返回空列表</returns>
+    public static IList<FileVO> ListFiles(string dirPath) {
+        var directoryInfo = new DirectoryInfo(PathUtils.GetAbsolutePath(dirPath));
+        // 不在根目录范围内
+        if (!PathUtils.CheckPathRange(directoryInfo.FullName)) {
+            return new List<FileVO>();
+        }
+        // 目录不存在
+        if (!directoryInfo.Exists) {
+            return new List<FileVO>();
+        }
+
+        var results = new List<FileVO>();
         // 获取目录
-        var dirs = directoryInfo
-                .GetDirectories()
-                .Select(f => new FileVO(f.Name, dir, true))
-                .ToList();
+        results.AddRange(directoryInfo
+            .GetDirectories()
+            .Select(f => new FileVO(f.Name, dirPath, true))
+        );
         // 获取文件
-        var files = directoryInfo
-                .GetFiles()
-                .Select(f => new FileVO(f.Name, dir, false))
-                .ToList();
-        dirs.AddRange(files);
-        return dirs;
+        results.AddRange(directoryInfo
+            .GetFiles()
+            .Select(f => new FileVO(f.Name, dirPath, false) {
+                FileSize = f.Length,
+            })
+        );
+        return results;
     }
 
-    private static readonly Regex PathSpliter = new(@"[\\/]");
-
-    /// <summary>
-    /// 检查路径范围
-    /// </summary>
-    /// <param name="path">文件相对路径，以'/'开头</param>
-    /// <returns></returns>
-    public bool CheckPathRange(string path) {
-        path = Path.Combine(Global.WorkingDirectory, path[1..]);
-        var absPath = Path.GetFullPath(path);
-        string rootNoSpliterPath = PathSpliter.Replace(Global.WorkingDirectory, "").ToLowerInvariant();
-        string fileNoSpliterPath = PathSpliter.Replace(absPath, "").ToLowerInvariant();
-        return fileNoSpliterPath.StartsWith(rootNoSpliterPath);
-    }
 }

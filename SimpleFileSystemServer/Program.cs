@@ -10,10 +10,9 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseAuthorization();
-
 app.UseExceptionHandler("/error");
 app.MapControllers();
 
-var _ = new Global(builder.Configuration);
+Global.Initialize(builder.Configuration);
 
 app.Run();

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileSystemServer", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileSystemServerTests", "SimpleFileSystemServerTests\SimpleFileSystemServerTests.csproj", "{DF9CB678-CC2F-415E-92BD-27D2080AB1D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUIToolsTests", "..\CommonUITools\CommonUIToolsTests\CommonUIToolsTests.csproj", "{CD17E702-0DAF-44C7-AF48-BEF50E922C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonToolsTests", "..\CommonUITools\CommonUIToolsTests\CommonToolsTests.csproj", "{CD17E702-0DAF-44C7-AF48-BEF50E922C1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{566ECEA7-7059-4CB4-9808-DA543A7FF2A9}"
 	ProjectSection(SolutionItems) = preProject

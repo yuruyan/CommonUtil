@@ -1,50 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using SimpleFileSystemServer.Model;
 using SimpleFileSystemServer.Service;
 
 namespace SimpleFileSystemServer.Controllers;
 
 [Route("")]
 public class HomeController : Controller {
-    private readonly FileService FileService = new();
-
     /// <summary>
     /// 列出文件列表
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="dir">文件夹路径，以 '/' 开头</param>
     /// <returns></returns>
-    /// <exception cref="FileNotFoundException"></exception>
-    [HttpGet("/path")]
-    [HttpGet("")]
-    public ActionResult Index([FromQuery()] string path = "/") {
-        path = "/" + (path ?? "").Trim('\\', '/');
+    [HttpGet("{dir}")]
+    public JsonResponse<IEnumerable<FileVO>> ListFiles(string dir = "/") {
+        dir = "/" + (dir ?? "").Trim('\\', '/');
         // 非法访问
-        if (!FileService.CheckPathRange(path)) {
-            throw new FileNotFoundException(path);
+        if (!PathUtils.CheckPathRange(dir)) {
+            return JsonResponse<IEnumerable<FileVO>>.Forbidden;
         }
-        ViewData["data"] = JsonConvert.SerializeObject(new {
-            currentPath = path,
-            files = FileService.ListFiles(path)
-        });
-        return View("/views/index.cshtml");
+        return JsonResponse<IEnumerable<FileVO>>.Success with {
+            Data = FileService.ListFiles(dir)
+        };
     }
+
+    /// <summary>
+    /// 主页，列出根目录文件列表
+    /// </summary>
+    /// <returns></returns>
+    public JsonResponse<IEnumerable<FileVO>> Index() => ListFiles();
 
     /// <summary>
     /// 下载文件
     /// </summary>
-    /// <param name="path">文件相对路径</param>
+    /// <param name="path">文件路径，以 '/' 开头</param>
     /// <returns></returns>
-    /// <exception cref="FileNotFoundException"></exception>
-    [HttpGet("/download")]
-    public FileResult Donwload([FromQuery()] string path) {
-        path = (path ?? "").Trim('\\', '/');
+    [HttpGet("/download/{path}")]
+    public FileResult? Donwload(string path) {
         // 非法访问
-        if (!FileService.CheckPathRange(path)) {
-            throw new FileNotFoundException(path);
+        if (!PathUtils.CheckPathRange(path)) {
+            return null;
         }
-        var filePath = Path.Combine(Global.WorkingDirectory, path);
-        return File(new FileStream(filePath, FileMode.Open, FileAccess.Read), "application/octet-stream", Path.GetFileName(filePath));
+        var filePath = PathUtils.GetAbsolutePath(path);
+        return File(
+            System.IO.File.OpenRead(filePath),
+            "application/octet-stream",
+            Path.GetFileName(filePath)
+        );
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class HomeController : Controller {
     /// </summary>
     /// <returns></returns>
     [HttpGet("/heartbeat")]
-    public GeneralResponse HeartBeat() {
-        return new GeneralResponse() { code = 200, message = "success" };
+    public JsonResponse HeartBeat() {
+        return new JsonResponse() { Code = 200, Message = "success" };
     }
 }
