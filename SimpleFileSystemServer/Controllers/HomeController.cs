@@ -10,9 +10,10 @@ public class HomeController : Controller {
     /// </summary>
     /// <param name="dir">文件夹路径，以 '/' 开头</param>
     /// <returns></returns>
-    [HttpGet("{dir}")]
+    [HttpGet("list")]
+    [HttpGet("list/{dir}")]
     public JsonResponse<IEnumerable<FileVO>> ListFiles(string dir = "/") {
-        dir = "/" + (dir ?? "").Trim('\\', '/');
+        dir = PathUtils.Normalize(dir);
         // 非法访问
         if (!PathUtils.CheckPathRange(dir)) {
             return JsonResponse<IEnumerable<FileVO>>.Forbidden;
@@ -29,12 +30,20 @@ public class HomeController : Controller {
     public JsonResponse<IEnumerable<FileVO>> Index() => ListFiles();
 
     /// <summary>
+    /// favicon
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("favicon.ico")]
+    public FileResult Favicon() => File(System.IO.File.OpenRead("favicon.ico"), "image/x-icon");
+
+    /// <summary>
     /// 下载文件
     /// </summary>
-    /// <param name="path">文件路径，以 '/' 开头</param>
+    /// <param name="path">文件夹路径，以 '/' 开头</param>
     /// <returns></returns>
     [HttpGet("/download/{path}")]
     public FileResult? Donwload(string path) {
+        path = PathUtils.Normalize(path);
         // 非法访问
         if (!PathUtils.CheckPathRange(path)) {
             return null;
@@ -52,7 +61,5 @@ public class HomeController : Controller {
     /// </summary>
     /// <returns></returns>
     [HttpGet("/heartbeat")]
-    public JsonResponse HeartBeat() {
-        return new JsonResponse() { Code = 200, Message = "success" };
-    }
+    public JsonResponse HeartBeat() => JsonResponse.Success;
 }

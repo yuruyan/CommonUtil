@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using CommonTools.Utils;
+using System.Text.RegularExpressions;
 
 namespace SimpleFileSystemServer.Utils;
 
@@ -15,6 +16,22 @@ public partial class PathUtils {
     /// <returns></returns>
     public static string GetAbsolutePath(string path) {
         return Path.Combine(Global.Argument.RootDir, path[1..]);
+    }
+
+    /// <summary>
+    /// 标准化路径
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns>失败返回 '/'</returns>
+    public static string Normalize(string? path) {
+        if (string.IsNullOrWhiteSpace(path)) {
+            return "/";
+        }
+        path = path.Trim().ReplaceBackSlashWithSlash();
+        if (!path.StartsWith('/')) {
+            path = '/' + path;
+        }
+        return path;
     }
 
     /// <summary>
