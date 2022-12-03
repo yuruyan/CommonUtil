@@ -89,10 +89,15 @@ changeCurrentDirectory("/", true);
       }}</a-breadcrumb-item>
     </a-breadcrumb>
     <FileList class="file-list" @on-item-click="onItemClick" :files="files" />
+    <div class="file-list-description">共 {{ files?.length }} 个文件</div>
   </div>
 </template>
 
 <style scoped>
+.file-list-description {
+  padding: 10px 2em;
+}
+
 .file-list-view-root {
   height: 100%;
   width: 100%;
