@@ -2,12 +2,11 @@
   "profiles": {
     "SimpleFileSystemServer": {
       "commandName": "Project",
-      "commandLineArgs": " --urls=http://*:8080 rootDir=e:\\temp",
+      //"commandLineArgs": "url=http://localhost:5000/ rootDir=e:\\temp environment=Development",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5100",
       "dotnetRunMessages": true
     },
     "IIS Express": {

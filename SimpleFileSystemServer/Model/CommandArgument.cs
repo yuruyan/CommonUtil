@@ -5,6 +5,7 @@
 /// </summary>
 public record CommandArgument {
     public string RootDir { get; init; }
+    public EnvironmentMode EnvironmentMode { get; init; } = EnvironmentMode.Production;
 
     public CommandArgument(string rootDir) {
         RootDir = rootDir;

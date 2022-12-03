@@ -1,2 +1,5 @@
 ﻿命令行参数：
+	url: 项目 url，默认 http://localhost:5000/
 	rootDir：要分享的根目录，必需
+	environment: 项目环境
+		范围：[Production, Development]

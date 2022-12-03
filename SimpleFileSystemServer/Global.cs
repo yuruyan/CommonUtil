@@ -28,6 +28,11 @@ public static class Global {
         if (configuration["rootDir"] is not string rootDir || string.IsNullOrWhiteSpace(rootDir)) {
             throw new NullReferenceException("rootDir cannot be null or empty");
         }
-        return new(rootDir);
+        if (!Enum.TryParse(configuration["environment"], out EnvironmentMode mode)) {
+            mode = EnvironmentMode.Production;
+        }
+        return new(rootDir) {
+            EnvironmentMode = mode
+        };
     }
 }

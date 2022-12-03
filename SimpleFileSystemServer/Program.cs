@@ -1,18 +1,26 @@
 using SimpleFileSystemServer;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddRazorPages();
 
+builder.Services.AddCors();
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+Global.Initialize(app.Configuration);
+app.UseStaticFiles();
 app.UseAuthorization();
 app.UseExceptionHandler("/error");
 app.MapControllers();
 
-Global.Initialize(builder.Configuration);
-
+if (app.Environment.IsDevelopment()) {
+    app.UseDeveloperExceptionPage();
+    app.Use(async (context, next) => {
+        context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+        await next();
+    });
+}
 app.Run();

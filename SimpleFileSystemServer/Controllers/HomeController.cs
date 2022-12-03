@@ -11,8 +11,7 @@ public class HomeController : Controller {
     /// <param name="dir">文件夹路径，以 '/' 开头</param>
     /// <returns></returns>
     [HttpGet("list")]
-    [HttpGet("list/{dir}")]
-    public JsonResponse<IEnumerable<FileVO>> ListFiles(string dir = "/") {
+    public JsonResponse<IEnumerable<FileVO>> ListFiles([FromQuery] string dir = "/") {
         dir = PathUtils.Normalize(dir);
         // 非法访问
         if (!PathUtils.CheckPathRange(dir)) {
@@ -41,14 +40,18 @@ public class HomeController : Controller {
     /// </summary>
     /// <param name="path">文件夹路径，以 '/' 开头</param>
     /// <returns></returns>
-    [HttpGet("/download/{path}")]
-    public FileResult? Donwload(string path) {
+    [HttpGet("/download")]
+    public FileResult? Donwload([FromQuery] string path) {
         path = PathUtils.Normalize(path);
         // 非法访问
         if (!PathUtils.CheckPathRange(path)) {
             return null;
         }
         var filePath = PathUtils.GetAbsolutePath(path);
+        // 文件不存在
+        if (!System.IO.File.Exists(filePath)) {
+            return null;
+        }
         return File(
             System.IO.File.OpenRead(filePath),
             "application/octet-stream",
