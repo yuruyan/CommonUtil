@@ -119,7 +119,7 @@ changeCurrentDirectory("/", true);
 .file-list {
   width: 100%;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 </style>
