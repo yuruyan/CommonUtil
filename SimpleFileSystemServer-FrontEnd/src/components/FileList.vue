@@ -27,7 +27,7 @@ const onItemClick = (item: FileVO) => emits("onItemClick", item);
 }
 
 .file-list-item-parent:hover {
-  background-color: gainsboro;
+  background-color: #e4e4e4;
   cursor: pointer;
 }
 </style>
