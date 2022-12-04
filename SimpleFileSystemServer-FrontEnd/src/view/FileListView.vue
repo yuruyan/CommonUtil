@@ -3,7 +3,6 @@ import { ref } from "vue";
 import FileList from "./../components/FileList.vue";
 import { FileVO, JsonResponse } from "./../model/index";
 import axios from "axios";
-import { Store } from "./../store/Index";
 import { message } from "ant-design-vue";
 
 const files = ref<FileVO[]>();
@@ -17,7 +16,7 @@ const getFileListData = (path: string): Promise<FileVO[]> => {
     try {
       path = path.replace(/^\/+/, "");
       const data = (
-        await axios.get(`${Store.GlobalUrl}/list`, {
+        await axios.get(`/list`, {
           params: {
             dir: path,
           },
@@ -66,7 +65,7 @@ const onItemClick = (item: FileVO) => {
   );
   // 点击文件下载
   if (!item.isDir) {
-    window.open(`${Store.GlobalUrl}/download?path=${encodeURIComponent(targetPath)}`)
+    window.open(`$/download?path=${encodeURIComponent(targetPath)}`)
     return;
   }
   changeCurrentDirectory(targetPath);
