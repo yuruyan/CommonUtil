@@ -23,10 +23,12 @@ public class HomeController : Controller {
     }
 
     /// <summary>
-    /// 主页，列出根目录文件列表
+    /// 主页
     /// </summary>
     /// <returns></returns>
-    public JsonResponse<IEnumerable<FileVO>> Index() => ListFiles();
+    public IActionResult Index() {
+        return View("Views/Index.cshtml");
+    }
 
     /// <summary>
     /// favicon
