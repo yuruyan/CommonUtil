@@ -18,6 +18,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="scripts\package.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -40,7 +44,11 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="node ./scripts/CopyDistToServer.js $(OutDir)" />
+    <Exec Command="node ./scripts/CopyDistToServer-AfterBuild.js $(OutDir)" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="node ./scripts/CopyDistToServer-BeforeBuild.js" />
   </Target>
 
 </Project>
