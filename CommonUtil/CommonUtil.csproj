@@ -60,7 +60,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
-    <ProjectReference Include="..\SimpleFileSystemServer\SimpleFileSystemServer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
