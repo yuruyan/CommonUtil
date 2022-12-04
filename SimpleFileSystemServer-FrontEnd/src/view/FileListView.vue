@@ -65,7 +65,7 @@ const onItemClick = (item: FileVO) => {
   );
   // 点击文件下载
   if (!item.isDir) {
-    window.open(`$/download?path=${encodeURIComponent(targetPath)}`)
+    window.open(`/download?path=${encodeURIComponent(targetPath)}`)
     return;
   }
   changeCurrentDirectory(targetPath);
