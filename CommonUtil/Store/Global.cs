@@ -1,7 +1,5 @@
-﻿using CommonUITools.Model;
-using CommonUtil.Model;
+﻿using CommonUtil.Model;
 using CommonUtil.View;
-using System.Threading;
 
 namespace CommonUtil.Store;
 
@@ -45,7 +43,7 @@ public static class Global {
     /// <summary>
     /// 菜单项目
     /// </summary>
-    public static readonly List<ToolMenuItem> MenuItems = new() {
+    public static readonly IList<ToolMenuItem> MenuItems = new List<ToolMenuItem>() {
         new() { Name = "Base64 编码/解码", ImagePath = ImagePath + "base64.png", ClassType = typeof(Base64ToolView) },
         new() { Name = "随机数/文本生成器", ImagePath = ImagePath + "random.png", ClassType = typeof(RandomGeneratorView) },
         new() { Name = "简体繁体转换", ImagePath = ImagePath + "ChineseTransform.png", ClassType = typeof(ChineseTransformView) },
@@ -74,68 +72,4 @@ public static class Global {
         new() { Name = "集合工具", ImagePath = ImagePath + "Intersection.png", ClassType = typeof(CollectionToolView) },
         new() { Name = "JSON 数据提取", ImagePath = ImagePath + "json.png", ClassType = typeof(JsonExtractorView) },
     };
-}
-
-public static class GlobalUtils {
-    /// <summary>
-    /// 在任务完成后时，更新 ProcessStatus Status，如果是 Successful 则同时设置 Process 为 1
-    /// </summary>
-    /// <param name="status"></param>
-    /// <param name="result"></param>
-    /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, ProcessResult result) {
-        App.Current.Dispatcher.Invoke(() => {
-            status.Status = result;
-            if (result == ProcessResult.Successful) {
-                status.Process = 1;
-            }
-        });
-    }
-
-    /// <summary>
-    /// 在任务完成后时，更新 ProcessStatus，如果任务没有取消则设置 Status = Successful,
-    /// Process = 1, FileSize = fileSize，否则设置 Status = Interrupted
-    /// </summary>
-    /// <param name="status"></param>
-    /// <param name="token"></param>
-    /// <param name="fileSize"></param>
-    /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token, long fileSize) {
-        App.Current.Dispatcher.Invoke(() => {
-            if (token.IsCancellationRequested) {
-                status.Status = ProcessResult.Interrupted;
-            } else {
-                status.Status = ProcessResult.Successful;
-                status.Process = 1;
-                status.FileSize = fileSize;
-            }
-        });
-    }
-
-    /// <summary>
-    /// 在任务完成后时，更新 ProcessStatus，如果任务没有取消则设置 Status = Successful, 
-    /// Process = 1，否则设置 Status = Interrupted
-    /// </summary>
-    /// <param name="status"></param>
-    /// <param name="token"></param>
-    public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token) {
-        App.Current.Dispatcher.Invoke(() => {
-            if (token.IsCancellationRequested) {
-                status.Status = ProcessResult.Interrupted;
-            } else {
-                status.Status = ProcessResult.Successful;
-                status.Process = 1;
-            }
-        });
-    }
-
-    /// <summary>
-    /// 更新 ProcessStatus Process
-    /// </summary>
-    /// <param name="status"></param>
-    /// <param name="process"></param>
-    /// <remarks>可在任意线程调用</remarks>
-    public static void UpdateProcessStatus(FileProcessStatus status, double process) {
-        App.Current.Dispatcher.Invoke(() => status.Process = process);
-    }
 }

@@ -1,9 +1,9 @@
 ﻿using CommonUITools.Model;
 using CommonUtil.Store;
+using CommonUtil.Utils;
 using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
-using System.Threading;
 
 namespace CommonUtil.View;
 
@@ -164,7 +164,7 @@ public partial class ChineseTransformView : Page {
                 savePath,
                 ToSimplifiedCancellationTokenSource.Token,
                 proc => ThrottleUtils.Throttle(status, () => {
-                    GlobalUtils.UpdateProcessStatus(status, proc);
+                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
                 })
             ), ToSimplifiedCancellationTokenSource.Token);
             // 任务取消
@@ -214,7 +214,7 @@ public partial class ChineseTransformView : Page {
                 savePath,
                 ToTraditionalCancellationTokenSource.Token,
                 proc => ThrottleUtils.Throttle(status, () => {
-                    GlobalUtils.UpdateProcessStatus(status, proc);
+                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
                 })
             ), ToTraditionalCancellationTokenSource.Token);
             // 任务取消
@@ -276,17 +276,17 @@ public partial class ChineseTransformView : Page {
                             outputFile,
                             ToSimplifiedCancellationTokenSource.Token,
                             proc => ThrottleUtils.Throttle(status, () => {
-                                GlobalUtils.UpdateProcessStatus(status, proc);
+                                ProcessStatusUtils.UpdateProcessStatus(status, proc);
                             })
                         );
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             ToSimplifiedCancellationTokenSource.Token,
                             new FileInfo(outputFile).Length
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }, ToSimplifiedCancellationTokenSource.Token));
@@ -331,17 +331,17 @@ public partial class ChineseTransformView : Page {
                             outputFile,
                             ToTraditionalCancellationTokenSource.Token,
                             proc => ThrottleUtils.Throttle(status, () => {
-                                GlobalUtils.UpdateProcessStatus(status, proc);
+                                ProcessStatusUtils.UpdateProcessStatus(status, proc);
                             })
                         );
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             ToTraditionalCancellationTokenSource.Token,
                             new FileInfo(outputFile).Length
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }, ToTraditionalCancellationTokenSource.Token));

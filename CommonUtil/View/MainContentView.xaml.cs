@@ -2,7 +2,6 @@
 using CommonUtil.Store;
 using CommonUtil.Theme;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;

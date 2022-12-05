@@ -1,6 +1,5 @@
 ﻿using Flurl.Http;
 using System.Diagnostics;
-using System.Threading;
 
 namespace CommonUtil.Store;
 

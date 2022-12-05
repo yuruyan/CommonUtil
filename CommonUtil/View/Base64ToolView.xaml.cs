@@ -1,9 +1,9 @@
 ﻿using CommonUITools.Model;
 using CommonUtil.Store;
+using CommonUtil.Utils;
 using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 using System.Collections.ObjectModel;
-using System.Threading;
 
 namespace CommonUtil.View;
 
@@ -115,7 +115,7 @@ public partial class Base64ToolView : Page {
         // 解码
         try {
             await Task.Run(() => {
-                GlobalUtils.UpdateProcessStatusWhenCompleted(
+                ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                     status,
                     DecodeCancellationTokenSource.Token,
                     Base64Tool.Base64DecodeFile(
@@ -123,7 +123,7 @@ public partial class Base64ToolView : Page {
                         savePath,
                         DecodeCancellationTokenSource.Token,
                         proc => ThrottleUtils.Throttle(status, () => {
-                            GlobalUtils.UpdateProcessStatus(status, proc);
+                            ProcessStatusUtils.UpdateProcessStatus(status, proc);
                         })
                     )
                 );
@@ -164,7 +164,7 @@ public partial class Base64ToolView : Page {
         // 编码
         try {
             await Task.Run(() => {
-                GlobalUtils.UpdateProcessStatusWhenCompleted(
+                ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                     status,
                     EncodeCancellationTokenSource.Token,
                     Base64Tool.Base64EncodeFile(
@@ -172,7 +172,7 @@ public partial class Base64ToolView : Page {
                         savePath,
                         EncodeCancellationTokenSource.Token,
                         proc => ThrottleUtils.Throttle(status, () => {
-                            GlobalUtils.UpdateProcessStatus(status, proc);
+                            ProcessStatusUtils.UpdateProcessStatus(status, proc);
                         })
                     )
                 );
@@ -281,7 +281,7 @@ public partial class Base64ToolView : Page {
                     });
 
                     try {
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             EncodeCancellationTokenSource.Token,
                             Base64Tool.Base64EncodeFile(
@@ -289,13 +289,13 @@ public partial class Base64ToolView : Page {
                                 outputFile,
                                 EncodeCancellationTokenSource.Token,
                                 proc => ThrottleUtils.Throttle(status, () => {
-                                    GlobalUtils.UpdateProcessStatus(status, proc);
+                                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
                                 })
                             )
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }, EncodeCancellationTokenSource.Token));
@@ -336,7 +336,7 @@ public partial class Base64ToolView : Page {
                     });
 
                     try {
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
                             status,
                             DecodeCancellationTokenSource.Token,
                             Base64Tool.Base64DecodeFile(
@@ -344,13 +344,13 @@ public partial class Base64ToolView : Page {
                                 outputFile,
                                 DecodeCancellationTokenSource.Token,
                                 proc => ThrottleUtils.Throttle(status, () => {
-                                    GlobalUtils.UpdateProcessStatus(status, proc);
+                                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
                                 })
                             )
                         );
                     } catch (Exception error) {
                         Logger.Error(error);
-                        GlobalUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
+                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
                     }
                 }
             }, DecodeCancellationTokenSource.Token));
