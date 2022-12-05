@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class CSharpDependencyView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

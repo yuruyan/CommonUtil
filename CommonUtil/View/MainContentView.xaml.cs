@@ -1,7 +1,7 @@
 ﻿using CommonUITools.Route;
+using CommonUtil.Model;
 using CommonUtil.Store;
 using CommonUtil.Theme;
-using System.Collections.ObjectModel;
 using System.Windows.Media.Animation;
 
 namespace CommonUtil.View;

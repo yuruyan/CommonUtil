@@ -5,6 +5,7 @@ global using CommonUtil.Core;
 global using NLog;
 global using System;
 global using System.Collections.Generic;
+global using System.Collections.ObjectModel;
 global using System.ComponentModel;
 global using System.IO;
 global using System.Linq;

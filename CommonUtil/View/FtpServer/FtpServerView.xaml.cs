@@ -2,7 +2,6 @@
 using CommonUtil.Core.Model;
 using CommonUtil.Store;
 using Ookii.Dialogs.Wpf;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Data;
 using ContentDialogResult = ModernWpf.Controls.ContentDialogResult;

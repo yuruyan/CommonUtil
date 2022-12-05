@@ -1,5 +1,4 @@
 ﻿using CommonUtil.Core.Model;
-using System.Collections.ObjectModel;
 
 namespace CommonUtil.View;
 public partial class DownloadingView : Page {

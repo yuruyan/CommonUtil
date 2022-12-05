@@ -3,18 +3,6 @@ using CommonUtil.View;
 
 namespace CommonUtil.Store;
 
-public struct ToolMenuItem {
-    public string Name { get; set; } = string.Empty;
-    public string ImagePath { get; set; } = string.Empty;
-    public Type ClassType { get; set; } = default!;
-
-    public ToolMenuItem() { }
-
-    public override string ToString() {
-        return $"{{{nameof(Name)}={Name}, {nameof(ImagePath)}={ImagePath}, {nameof(ClassType)}={ClassType}}}";
-    }
-}
-
 public static class Global {
     /// <summary>
     /// 多任务并发数
@@ -43,7 +31,7 @@ public static class Global {
     /// <summary>
     /// 菜单项目
     /// </summary>
-    public static readonly IList<ToolMenuItem> MenuItems = new List<ToolMenuItem>() {
+    internal static readonly IList<ToolMenuItem> MenuItems = new List<ToolMenuItem>() {
         new() { Name = "Base64 编码/解码", ImagePath = ImagePath + "base64.png", ClassType = typeof(Base64ToolView) },
         new() { Name = "随机数/文本生成器", ImagePath = ImagePath + "random.png", ClassType = typeof(RandomGeneratorView) },
         new() { Name = "简体繁体转换", ImagePath = ImagePath + "ChineseTransform.png", ClassType = typeof(ChineseTransformView) },

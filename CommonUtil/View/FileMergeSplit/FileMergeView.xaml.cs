@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
-using System.Collections.ObjectModel;
 
 namespace CommonUtil.View;
 

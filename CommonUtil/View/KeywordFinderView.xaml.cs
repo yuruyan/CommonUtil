@@ -1,5 +1,4 @@
 ﻿using Ookii.Dialogs.Wpf;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
 namespace CommonUtil.View;
