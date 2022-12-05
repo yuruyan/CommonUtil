@@ -6,6 +6,7 @@ NodejsService/dist
 *.log
 TestConsoleApp
 TestWpfApp
+*.user
 
 # Logs
 logs

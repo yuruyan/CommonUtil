@@ -1,4 +1,5 @@
 ﻿using CommonUITools.Model;
+using CommonUtil.Model;
 using CommonUtil.View;
 using System.Threading;
 
@@ -40,6 +41,7 @@ public static class Global {
             return _CacheDirectory;
         }
     }
+    internal static readonly CommandLineArgument CommandLineArgument = CommandLineArgument.Parse(Environment.GetCommandLineArgs());
     /// <summary>
     /// 菜单项目
     /// </summary>

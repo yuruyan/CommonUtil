@@ -1,12 +1,19 @@
-﻿using System.Windows.Threading;
+﻿using CommonUtil.Store;
+using System.IO.Pipes;
+using System.Windows.Threading;
 
 namespace CommonUtil;
 
 public partial class App : Application {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly string? BootstrapPipeName = Global.CommandLineArgument.BootstrapPipeName;
 
     public App() {
-        new SplashScreen("/Resource/SplashWindow.png").Show(true);
+        // 确保路径为当前可执行程序目录
+        Environment.CurrentDirectory = Path.GetDirectoryName(Environment.ProcessPath)!;
+        if (BootstrapPipeName is null) {
+            new SplashScreen("/Resource/SplashWindow.png").Show(true);
+        }
     }
 
     protected override void OnStartup(StartupEventArgs e) {
@@ -15,6 +22,19 @@ public partial class App : Application {
         // 显式初始化 FileIcon
         UIUtils.SetLoadedOnceEventHandler(mainWindow, (_, _) => {
             Task.Run(() => FileIconUtils.InitializeExplicitly());
+            if (BootstrapPipeName is null) {
+                return;
+            }
+            Task.Run(() => {
+                TaskUtils.Try(() => {
+                    using NamedPipeServerStream pipeServer = new(BootstrapPipeName, PipeDirection.InOut, 1);
+                    Logger.Debug("Wait for connection");
+                    pipeServer.WaitForConnection();
+                    pipeServer.Write(Encoding.UTF8.GetBytes("close"));
+                    pipeServer.Flush();
+                    Logger.Debug("Close pipe");
+                });
+            });
         });
         mainWindow.Show();
         #region 全局错误处理
