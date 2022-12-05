@@ -1,5 +1,4 @@
-﻿using CommonUITools.Model;
-namespace CommonUtil.Theme;
+﻿namespace CommonUtil.Theme;
 
 internal class ThemeManager : DependencyObject {
     private const string LightThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml";

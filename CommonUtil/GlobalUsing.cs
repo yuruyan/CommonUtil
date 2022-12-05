@@ -1,7 +1,9 @@
 ﻿global using CommonTools.Model;
 global using CommonTools.Utils;
+global using CommonUITools.Model;
 global using CommonUITools.Utils;
 global using CommonUtil.Core;
+global using CommonUtil.Model;
 global using NLog;
 global using System;
 global using System.Collections.Generic;

@@ -1,6 +1,4 @@
-﻿using CommonUITools.Model;
-
-namespace CommonUtil.Utils;
+﻿namespace CommonUtil.Utils;
 
 public static class ProcessStatusUtils {
     /// <summary>
