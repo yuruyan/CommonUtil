@@ -1,6 +1,4 @@
-﻿using System.Timers;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class ColorTransformView : Page {
     public class SliderInfo : DependencyObject {
@@ -64,9 +62,15 @@ public partial class ColorTransformView : Page {
         get { return (IList<ColorItem>)GetValue(ColorItemsProperty); }
         set { SetValue(ColorItemsProperty, value); }
     }
-
+    /// <summary>
+    /// 更新时间间隔，ms
+    /// </summary>
+    private const int UpdateInterval = 100;
     private Color CompareColor;
-    private bool IsColorChanged = false;
+    /// <summary>
+    /// UpdateColorResults，提示为成员变量，节省内存
+    /// </summary>
+    private readonly List<string> UpdateColorResults;
 
     public ColorTransformView() {
         DependencyPropertyDescriptor.FromProperty(SelectedColorProperty, typeof(ColorTransformView)).AddValueChanged(this, ColorChangedHandler);
@@ -208,15 +212,9 @@ public partial class ColorTransformView : Page {
                  }
              ),
         };
+        UpdateColorResults = new(ColorItems.Count);
         InitializeComponent();
         SelectedColor = Colors.White;
-
-        // 定时更新而不是立即更新防止界面卡顿
-        var timer = new Timer {
-            Interval = 100
-        };
-        timer.Elapsed += UpdateColor;
-        timer.Start();
     }
 
     /// <summary>
@@ -224,26 +222,20 @@ public partial class ColorTransformView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void UpdateColor(object? sender, ElapsedEventArgs e) {
-        if (!IsColorChanged) {
-            return;
-        }
-        IsColorChanged = false;
-        Color color = Dispatcher.Invoke(() => SelectedColor);
-        // 最好加锁
-        lock (this) {
-            var results = new List<string>();
+    private void UpdateColor(Color color) {
+        DebounceUtils.Debounce(UpdateColor, () => {
+            UpdateColorResults.Clear();
             foreach (var item in Dispatcher.Invoke(() => ColorItems)) {
-                results.Add(item.ColorToString(color));
+                UpdateColorResults.Add(item.ColorToString(color));
             }
             CompareColor = color;
             // 更新修改
             Dispatcher.Invoke(() => {
-                for (int i = 0; i < results.Count; i++) {
-                    ColorItems[i].Color = results[i];
+                for (int i = 0; i < UpdateColorResults.Count; i++) {
+                    ColorItems[i].Color = UpdateColorResults[i];
                 }
             });
-        }
+        }, true, UpdateInterval);
     }
 
     /// <summary>
@@ -253,7 +245,7 @@ public partial class ColorTransformView : Page {
     /// <param name="e"></param>
     private void ColorChangedHandler(object? sender, EventArgs e) {
         ColorPanel.Fill = new SolidColorBrush(SelectedColor);
-        IsColorChanged = true;
+        UpdateColor(SelectedColor);
     }
 
     /// <summary>
@@ -318,7 +310,7 @@ public partial class ColorTransformView : Page {
                     UpdateInputColor(color);
                 }
             });
-        }, true, 100);
+        }, true, UpdateInterval);
     }
 
     /// <summary>
