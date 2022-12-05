@@ -74,7 +74,7 @@ public class Server {
             // 服务已启动
             StartNodejsHeartbeat();
             // 退出 hook
-            App.Current.Dispatcher.Invoke(() => {
+            UIUtils.RunOnUIThread(() => {
                 App.Current.Exit += (o, e) => NodejsProcess?.Close();
             });
         }

@@ -124,7 +124,7 @@ internal static class NavigationUtils {
                 // 为了减少卡顿
                 _ = TaskUtils.DelayTaskAsync(
                     200,
-                    () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ExpandStoryboard.Begin())
+                    () => UIUtils.RunOnUIThread(() => NavigationViewInfoDict[item].ExpandStoryboard.Begin())
                 );
             }
         }
@@ -135,7 +135,7 @@ internal static class NavigationUtils {
                 // 为了减少卡顿
                 _ = TaskUtils.DelayTaskAsync(
                     200,
-                    () => App.Current.Dispatcher.Invoke(() => NavigationViewInfoDict[item].ShrinkStoryboard.Begin())
+                    () => UIUtils.RunOnUIThread(() => NavigationViewInfoDict[item].ShrinkStoryboard.Begin())
                 );
             }
         }
