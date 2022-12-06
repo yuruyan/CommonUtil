@@ -88,6 +88,7 @@ public partial class RegexExtractionView : Page {
     private CommonRegexListDialog? CommonRegexListDialog;
 
     public RegexExtractionView() {
+        MatchList = Array.Empty<string>();
         InitializeComponent();
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
@@ -214,9 +215,10 @@ public partial class RegexExtractionView : Page {
     /// <param name="e"></param>
     private void SearchRegexComboBoxKeyUp(object sender, KeyEventArgs e) {
         e.Handled = true;
-        if (e.Key == Key.Enter) {
-            SearchResult();
-        }
+        // todo bug：按下Enter键保存文件后又会自动触发事件
+        //if (e.Key == Key.Enter) {
+        //    SearchResult();
+        //}
     }
 
     /// <summary>
