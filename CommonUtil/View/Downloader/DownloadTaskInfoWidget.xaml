@@ -6,38 +6,32 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  x:Name="Root"
+  x:Name="DownloadTaskInfoWidgetRoot"
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
-  <UserControl.Resources>
-    <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-      <Style.Triggers>
-        <Trigger Property="Tag" Value="gray">
-          <Setter Property="Foreground" Value="{StaticResource BlackBrush16}" />
-        </Trigger>
-      </Style.Triggers>
-    </Style>
-  </UserControl.Resources>
-  <StackPanel Margin="8" Orientation="Horizontal">
+  <StackPanel Orientation="Horizontal">
     <!--  文件图标  -->
-    <svgc:SvgViewbox
-      Width="20"
-      Height="20"
-      Margin="8,0,16,0"
-      Source="{Binding FilePath, ElementName=Root, Mode=OneWay, Converter={StaticResource FileIconConverter}}"
+    <Image
+      Width="25"
+      Height="25"
+      Margin="8,0"
+      Source="{Binding FilePath, ElementName=DownloadTaskInfoWidgetRoot, Mode=OneWay, Converter={StaticResource FilePngIconConverter}}"
       Stretch="Uniform" />
-    <ui:SimpleStackPanel Orientation="Vertical" Spacing="4">
+    <ui:SimpleStackPanel
+      VerticalAlignment="Center"
+      Orientation="Vertical"
+      Spacing="4">
       <!--  文件名  -->
-      <TextBlock Text="{Binding FilePath, ElementName=Root, Converter={StaticResource FileNameConverter}}" />
+      <TextBlock Text="{Binding FilePath, ElementName=DownloadTaskInfoWidgetRoot, Converter={StaticResource FileNameConverter}}" />
       <!--  文件大小  -->
       <StackPanel Orientation="Horizontal">
         <!--  为 0 则隐藏  -->
         <TextBlock
-          Tag="gray"
-          Text="{Binding TransferSize, ElementName=Root, Converter={StaticResource FileSizeConverter}, StringFormat='{}{0} / '}"
-          Visibility="{Binding TransferSize, ElementName=Root, Converter={StaticResource HideIfZeroConverter}}" />
-        <TextBlock Tag="gray" Text="{Binding TotalSize, ElementName=Root, Converter={StaticResource FileSizeConverter}}" />
+          Foreground="{DynamicResource TextControlSecondaryForeground}"
+          Text="{Binding TransferSize, ElementName=DownloadTaskInfoWidgetRoot, Converter={StaticResource FileSizeConverter}, StringFormat='{}{0} / '}"
+          Visibility="{Binding TransferSize, ElementName=DownloadTaskInfoWidgetRoot, Converter={StaticResource HideIfZeroConverter}}" />
+        <TextBlock Foreground="{DynamicResource TextControlSecondaryForeground}" Text="{Binding TotalSize, ElementName=DownloadTaskInfoWidgetRoot, Converter={StaticResource FileSizeConverter}}" />
       </StackPanel>
     </ui:SimpleStackPanel>
   </StackPanel>
