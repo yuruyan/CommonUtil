@@ -6,7 +6,7 @@ public static class ProcessStatusUtils {
     /// </summary>
     /// <param name="status"></param>
     /// <param name="result"></param>
-    /// <remarks>可在任意线程调用</remarks>
+    [CanBeCalledInAnyThread]
     public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, ProcessResult result) {
         UIUtils.RunOnUIThread(() => {
             status.Status = result;
@@ -23,7 +23,7 @@ public static class ProcessStatusUtils {
     /// <param name="status"></param>
     /// <param name="token"></param>
     /// <param name="fileSize"></param>
-    /// <remarks>可在任意线程调用</remarks>
+    [CanBeCalledInAnyThread]
     public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token, long fileSize) {
         UIUtils.RunOnUIThread(() => {
             if (token.IsCancellationRequested) {
@@ -42,6 +42,7 @@ public static class ProcessStatusUtils {
     /// </summary>
     /// <param name="status"></param>
     /// <param name="token"></param>
+    [CanBeCalledInAnyThread]
     public static void UpdateProcessStatusWhenCompleted(FileProcessStatus status, CancellationToken token) {
         UIUtils.RunOnUIThread(() => {
             if (token.IsCancellationRequested) {
@@ -58,7 +59,7 @@ public static class ProcessStatusUtils {
     /// </summary>
     /// <param name="status"></param>
     /// <param name="process"></param>
-    /// <remarks>可在任意线程调用</remarks>
+    [CanBeCalledInAnyThread]
     public static void UpdateProcessStatus(FileProcessStatus status, double process) {
         UIUtils.RunOnUIThread(() => status.Process = process);
     }
