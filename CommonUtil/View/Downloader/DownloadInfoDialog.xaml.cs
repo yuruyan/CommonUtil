@@ -1,6 +1,8 @@
 ﻿using CommonUITools.View;
+using CommonUtil.Store;
 using ModernWpf.Controls;
 using Ookii.Dialogs.Wpf;
+using System.Net;
 
 namespace CommonUtil.View;
 
@@ -10,6 +12,8 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
     public static readonly DependencyProperty SaveDirProperty = DependencyProperty.Register("SaveDir", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty ErrorMessageProperty = DependencyProperty.Register("ErrorMessage", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasProxyProperty = DependencyProperty.Register("HasProxy", typeof(bool), typeof(DownloadInfoDialog), new PropertyMetadata(false));
+    public static readonly DependencyProperty ProxyAddressProperty = DependencyProperty.Register("ProxyAddress", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty ProxyTypesProperty = DependencyProperty.Register("ProxyTypes", typeof(IList<string>), typeof(DownloadInfoDialog), new PropertyMetadata());
 
     /// <summary>
     /// 下载链接
@@ -40,26 +44,35 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         set { SetValue(HasProxyProperty, value); }
     }
     /// <summary>
+    /// 代理地址，不包括协议头
+    /// </summary>
+    public string ProxyAddress {
+        get { return (string)GetValue(ProxyAddressProperty); }
+        set { SetValue(ProxyAddressProperty, value); }
+    }
+    /// <summary>
     /// 保存文件夹 Dialog
     /// </summary>
-    private readonly VistaFolderBrowserDialog SaveFolderDialog = new VistaFolderBrowserDialog {
+    private readonly VistaFolderBrowserDialog SaveFolderDialog = new() {
         Description = "选择保存文件夹",
         UseDescriptionForTitle = true
     };
     /// <summary>
     /// 代理类型
     /// </summary>
-    private static readonly IList<string> ProxyTypes = new List<string>() {
-        "http",
-        "https",
-        "socks4",
-        "socks4a",
-        "socks5",
-    };
+    public IList<string> ProxyTypes {
+        get { return (IList<string>)GetValue(ProxyTypesProperty); }
+        private set { SetValue(ProxyTypesProperty, value); }
+    }
+    /// <summary>
+    /// 代理地址，包括协议头
+    /// </summary>
+    public string FullProxyAddress => $"{ProxyTypeComboBox.Text}://{ProxyAddress}";
 
     public DownloadInfoDialog() {
-        InitializeComponent();
+        ProxyTypes = DataSet.ProxyTypes.ToArray();
         SaveDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
+        InitializeComponent();
     }
 
     /// <summary>
@@ -89,9 +102,22 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         if (string.IsNullOrEmpty(SaveDir)) {
             ErrorMessage = "保存文件夹不能为空";
             args.Cancel = true;
-        } else if (string.IsNullOrEmpty(URL)) {
+        }
+        // 判断下载链接是否为空
+        else if (string.IsNullOrEmpty(URL)) {
             ErrorMessage = "下载链接不能为空";
             args.Cancel = true;
+        }
+        // 判断代理地址是否正确
+        else if (HasProxy) {
+            var proxy = TaskUtils.Try(() => new WebProxy(
+                $"{ProxyTypeComboBox.Text}://{ProxyAddress}",
+                true
+            ));
+            if (proxy == null) {
+                ErrorMessage = "代理地址无效";
+                args.Cancel = true;
+            }
         }
         // 清空错误消息
         if (!args.Cancel) {

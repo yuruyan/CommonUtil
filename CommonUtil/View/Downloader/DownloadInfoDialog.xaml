@@ -29,6 +29,12 @@
           TargetType="TextBlock">
           <Setter Property="Width" Value="{StaticResource HeaderWidth}" />
         </Style>
+        <Style
+          x:Key="InputBoxStyle"
+          BasedOn="{StaticResource GlobalTextBoxStyle}"
+          TargetType="TextBox">
+          <Setter Property="Width" Value="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}" />
+        </Style>
         <Style TargetType="StackPanel">
           <Setter Property="Orientation" Value="Horizontal" />
         </Style>
@@ -56,6 +62,39 @@
           TextWrapping="Wrap"
           ToolTip="更改保存位置" />
       </StackPanel>
+      <!--  选择代理  -->
+      <StackPanel>
+        <TextBlock Style="{StaticResource HeaderStyle}" Text="启用代理" />
+        <ui:ToggleSwitch IsOn="{Binding HasProxy}" />
+      </StackPanel>
+      <!--  代理  -->
+      <ui:SimpleStackPanel
+        Orientation="Vertical"
+        Spacing="{StaticResource MediumItemSpacing}"
+        Visibility="{Binding HasProxy, Converter={StaticResource HideIfFalseConverter}}">
+        <!--  代理地址  -->
+        <StackPanel>
+          <TextBlock Style="{StaticResource HeaderStyle}" Text="代理地址" />
+          <TextBox
+            ui:ControlHelper.PlaceholderText="如：127.0.0.1:8080"
+            Style="{StaticResource InputBoxStyle}"
+            Text="{Binding ProxyAddress, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <!--  代理模式  -->
+        <StackPanel>
+          <TextBlock Style="{StaticResource HeaderStyle}" Text="代理模式" />
+          <ComboBox
+            Name="ProxyTypeComboBox"
+            ItemsSource="{Binding ProxyTypes}"
+            SelectedIndex="0">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock FontFamily="{StaticResource ASCIIFontFamily}" Text="{Binding}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+        </StackPanel>
+      </ui:SimpleStackPanel>
       <!--  错误信息提示  -->
       <StackPanel>
         <TextBlock
