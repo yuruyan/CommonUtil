@@ -9,6 +9,7 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
     public static readonly DependencyProperty URLProperty = DependencyProperty.Register("URL", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty SaveDirProperty = DependencyProperty.Register("SaveDir", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty ErrorMessageProperty = DependencyProperty.Register("ErrorMessage", typeof(string), typeof(DownloadInfoDialog), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty HasProxyProperty = DependencyProperty.Register("HasProxy", typeof(bool), typeof(DownloadInfoDialog), new PropertyMetadata(false));
 
     /// <summary>
     /// 下载链接
@@ -31,6 +32,30 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         get { return (string)GetValue(ErrorMessageProperty); }
         set { SetValue(ErrorMessageProperty, value); }
     }
+    /// <summary>
+    /// 是否有 Proxy
+    /// </summary>
+    public bool HasProxy {
+        get { return (bool)GetValue(HasProxyProperty); }
+        set { SetValue(HasProxyProperty, value); }
+    }
+    /// <summary>
+    /// 保存文件夹 Dialog
+    /// </summary>
+    private readonly VistaFolderBrowserDialog SaveFolderDialog = new VistaFolderBrowserDialog {
+        Description = "选择保存文件夹",
+        UseDescriptionForTitle = true
+    };
+    /// <summary>
+    /// 代理类型
+    /// </summary>
+    private static readonly IList<string> ProxyTypes = new List<string>() {
+        "http",
+        "https",
+        "socks4",
+        "socks4a",
+        "socks5",
+    };
 
     public DownloadInfoDialog() {
         InitializeComponent();
@@ -44,12 +69,8 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
     /// <param name="e"></param>
     private void ChooseSaveDirMouseUpHandler(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        var dialog = new VistaFolderBrowserDialog {
-            Description = "选择保存文件夹",
-            UseDescriptionForTitle = true
-        };
-        if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
-            SaveDir = dialog.SelectedPath;
+        if (SaveFolderDialog.ShowDialog(Application.Current.MainWindow) == true) {
+            SaveDir = SaveFolderDialog.SelectedPath;
         }
     }
 
