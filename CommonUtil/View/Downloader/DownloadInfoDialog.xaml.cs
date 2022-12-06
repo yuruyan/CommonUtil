@@ -18,7 +18,7 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         set { SetValue(URLProperty, value); }
     }
     /// <summary>
-    /// 保存目录，默认当前用户桌面
+    /// 保存目录，默认 Documents
     /// </summary>
     public string SaveDir {
         get { return (string)GetValue(SaveDirProperty); }
@@ -34,7 +34,7 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
 
     public DownloadInfoDialog() {
         InitializeComponent();
-        SaveDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        SaveDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
     }
 
     /// <summary>

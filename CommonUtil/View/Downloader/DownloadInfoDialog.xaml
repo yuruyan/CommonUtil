@@ -16,57 +16,58 @@
   <view:BaseDialog.Resources>
     <system:Double x:Key="HeaderWidth">90</system:Double>
   </view:BaseDialog.Resources>
+  <ScrollViewer Padding="0,0,16,0">
+    <ui:SimpleStackPanel
+      Name="RootPanel"
+      Width="360"
+      Orientation="Vertical">
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
+          <Style.Triggers>
+            <Trigger Property="Tag" Value="header">
+              <Setter Property="Width" Value="{StaticResource HeaderWidth}" />
+              <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="value">
+              <Setter Property="Foreground" Value="{StaticResource BlackBrush9}" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+        <Style TargetType="StackPanel">
+          <Setter Property="Orientation" Value="Horizontal" />
+          <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
 
-  <ui:SimpleStackPanel
-    Name="RootPanel"
-    Width="360"
-    Orientation="Vertical">
-    <ui:SimpleStackPanel.Resources>
-      <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-        <Style.Triggers>
-          <Trigger Property="Tag" Value="header">
-            <Setter Property="Width" Value="{StaticResource HeaderWidth}" />
-            <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
-          </Trigger>
-          <Trigger Property="Tag" Value="value">
-            <Setter Property="Foreground" Value="{StaticResource BlackBrush9}" />
-          </Trigger>
-        </Style.Triggers>
-      </Style>
-      <Style TargetType="StackPanel">
-        <Setter Property="Orientation" Value="Horizontal" />
-        <Setter Property="Margin" Value="0,10,0,0" />
-      </Style>
-    </ui:SimpleStackPanel.Resources>
-
-    <!--  下载链接  -->
-    <StackPanel>
-      <TextBlock Tag="header" Text="下载链接" />
-      <TextBox
-        x:Name="URLTextBox"
-        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
-        ui:ControlHelper.PlaceholderText="一行一个链接"
-        MaxLines="16"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Tag="value"
-        Text="{Binding URL}" />
-    </StackPanel>
-    <!--  选择保存位置  -->
-    <StackPanel MouseUp="ChooseSaveDirMouseUpHandler" ToolTip="更改保存位置">
-      <TextBlock Tag="header" Text="保存位置" />
-      <TextBlock
-        Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
-        Style="{StaticResource HyperLinkStyle}"
-        Tag="value"
-        Text="{Binding SaveDir}"
-        TextWrapping="Wrap" />
-    </StackPanel>
-    <!--  错误信息提示  -->
-    <StackPanel>
-      <TextBlock
-        Foreground="{StaticResource ErrorBackgroundDark3}"
-        Text="{Binding ErrorMessage}"
-        Visibility="{Binding ErrorMessage, Converter={StaticResource HideIfEmptyConverter}}" />
-    </StackPanel>
-  </ui:SimpleStackPanel>
+      <!--  下载链接  -->
+      <StackPanel>
+        <TextBlock Tag="header" Text="下载链接" />
+        <TextBox
+          x:Name="URLTextBox"
+          Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
+          ui:ControlHelper.PlaceholderText="一行一个链接"
+          MaxLines="16"
+          Style="{StaticResource MultilineTextBoxStyle}"
+          Tag="value"
+          Text="{Binding URL}" />
+      </StackPanel>
+      <!--  选择保存位置  -->
+      <StackPanel MouseUp="ChooseSaveDirMouseUpHandler" ToolTip="更改保存位置">
+        <TextBlock Tag="header" Text="保存位置" />
+        <TextBlock
+          Width="{Binding ActualWidth, ElementName=RootPanel, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource HeaderWidth}}"
+          Style="{StaticResource HyperLinkStyle}"
+          Tag="value"
+          Text="{Binding SaveDir}"
+          TextWrapping="Wrap" />
+      </StackPanel>
+      <!--  错误信息提示  -->
+      <StackPanel>
+        <TextBlock
+          Foreground="{StaticResource ErrorBackground}"
+          Text="{Binding ErrorMessage}"
+          Visibility="{Binding ErrorMessage, Converter={StaticResource HideIfEmptyConverter}}" />
+      </StackPanel>
+    </ui:SimpleStackPanel>
+  </ScrollViewer>
 </view:BaseDialog>
