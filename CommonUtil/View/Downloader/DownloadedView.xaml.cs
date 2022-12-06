@@ -39,11 +39,17 @@ public partial class DownloadedView : Page {
     }
 
     /// <summary>
-    /// 删除下载文件
+    /// 移除下载文件
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void DeleteHistoryClickHandler(object sender, RoutedEventArgs e) {
-
+    private void RemoveHistoryClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        DownloadTaskListBox.SelectedItems
+            .Cast<DownloadTask>()
+            .ToList()
+            .ForEach(task => {
+                DownloadTaskList.Remove(task);
+            });
     }
 }
