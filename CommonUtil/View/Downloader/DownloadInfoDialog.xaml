@@ -26,7 +26,6 @@
           <Style.Triggers>
             <Trigger Property="Tag" Value="header">
               <Setter Property="Width" Value="{StaticResource HeaderWidth}" />
-              <Setter Property="FontSize" Value="{StaticResource DescriptionHeaderFontSize}" />
             </Trigger>
             <Trigger Property="Tag" Value="value">
               <Setter Property="Foreground" Value="{StaticResource BlackBrush9}" />
