@@ -1,5 +1,4 @@
-﻿using CommonUtil.Core.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace CommonUtil.Core;
 

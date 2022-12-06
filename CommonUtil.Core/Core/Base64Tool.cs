@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static class Base64Tool {
     /// <summary>

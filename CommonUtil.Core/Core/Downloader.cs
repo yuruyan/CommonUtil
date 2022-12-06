@@ -1,5 +1,4 @@
-﻿using CommonUtil.Core.Model;
-using Downloader;
+﻿using Downloader;
 
 namespace CommonUtil.Core;
 
@@ -32,11 +31,11 @@ public class Downloader {
         service.DownloadProgressChanged += DownloadProgressChangedHandler;
         service.DownloadFileCompleted += DownloadFileCompletedHandler;
         // 无效 url
-        if (TaskUtils.Try(() => new Uri(url)) is null) {
+        if (TaskUtils.Try(() => new Uri(url)) is not Uri uri) {
             return null;
         }
         var downloadTask = new DownloadTask(url, directory) {
-            Name = new Uri(url).Segments.LastOrDefault() ?? "未知文件名"
+            Name = uri.Segments.LastOrDefault() ?? "未知文件名"
         };
         DownloadTaskInfoDict[service] = downloadTask;
         service.DownloadFileTaskAsync(url, directory);
