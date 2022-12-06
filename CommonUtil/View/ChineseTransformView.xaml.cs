@@ -143,47 +143,14 @@ public partial class ChineseTransformView : Page {
     /// <returns></returns>
     [NoException]
     private async Task FileToSimplified(string filename) {
-        SaveFileDialog.FileName = Path.GetFileName(filename);
-        if (SaveFileDialog.ShowDialog() != true) {
-            return;
-        }
-        var savePath = SaveFileDialog.FileName;
-        var status = new FileProcessStatus() {
-            FileName = savePath,
-            Status = ProcessResult.Processing,
-        };
-        FileProcessStatuses.Add(status);
-
-        // 处理
-        try {
-            await Task.Run(() => ChineseTransform.FileToSimplified(
-                filename,
-                savePath,
-                ToSimplifiedCancellationTokenSource.Token,
-                proc => ThrottleUtils.Throttle(status, () => {
-                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
-                })
-            ), ToSimplifiedCancellationTokenSource.Token);
-            // 任务取消
-            if (ToSimplifiedCancellationTokenSource.IsCancellationRequested) {
-                status.Status = ProcessResult.Interrupted;
-            }
-            // 通知
-            else {
-                status.Status = ProcessResult.Successful;
-                status.Process = 1;
-                status.FileSize = new FileInfo(savePath).Length;
-                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "转换成功");
-            }
-        } catch (IOException error) {
-            Logger.Error(error);
-            MessageBox.Error("文件读取或保存失败");
-            status.Status = ProcessResult.Failed;
-        } catch (Exception error) {
-            Logger.Error(error);
-            MessageBox.Error("转换失败");
-            status.Status = ProcessResult.Failed;
-        }
+        await FileProcessUtils.ProcessOneFileAsync(
+            filename,
+            SaveFileDialog,
+            ToSimplifiedCancellationTokenSource,
+            FileProcessStatuses,
+            ChineseTransform.FileToSimplified,
+            Logger
+        );
     }
 
     /// <summary>
@@ -193,47 +160,14 @@ public partial class ChineseTransformView : Page {
     /// <returns></returns>
     [NoException]
     private async Task FileToTraditional(string filename) {
-        SaveFileDialog.FileName = Path.GetFileName(filename);
-        if (SaveFileDialog.ShowDialog() != true) {
-            return;
-        }
-        var savePath = SaveFileDialog.FileName;
-        var status = new FileProcessStatus() {
-            FileName = savePath,
-            Status = ProcessResult.Processing,
-        };
-        FileProcessStatuses.Add(status);
-
-        // 处理
-        try {
-            await Task.Run(() => ChineseTransform.FileToTraditional(
-                filename,
-                savePath,
-                ToTraditionalCancellationTokenSource.Token,
-                proc => ThrottleUtils.Throttle(status, () => {
-                    ProcessStatusUtils.UpdateProcessStatus(status, proc);
-                })
-            ), ToTraditionalCancellationTokenSource.Token);
-            // 任务取消
-            if (ToTraditionalCancellationTokenSource.IsCancellationRequested) {
-                status.Status = ProcessResult.Interrupted;
-            }
-            // 通知
-            else {
-                status.Status = ProcessResult.Successful;
-                status.Process = 1;
-                status.FileSize = new FileInfo(savePath).Length;
-                UIUtils.NotificationOpenFileInExplorerAsync(savePath, title: "转换成功");
-            }
-        } catch (IOException error) {
-            Logger.Error(error);
-            MessageBox.Error("文件读取或保存失败");
-            status.Status = ProcessResult.Failed;
-        } catch (Exception error) {
-            Logger.Error(error);
-            MessageBox.Error("转换失败");
-            status.Status = ProcessResult.Failed;
-        }
+        await FileProcessUtils.ProcessOneFileAsync(
+            filename,
+            SaveFileDialog,
+            ToTraditionalCancellationTokenSource,
+            FileProcessStatuses,
+            ChineseTransform.FileToTraditional,
+            Logger
+        );
     }
 
     /// <summary>
@@ -242,53 +176,16 @@ public partial class ChineseTransformView : Page {
     /// <param name="filenames"></param>
     /// <returns></returns>
     private async Task MultiFilesToSimplified(ICollection<string> filenames) {
-        // 选择保存目录
-        if (SaveDirectoryDialog.ShowDialog(Window) != true) {
-            return;
-        }
-        var saveDirectory = SaveDirectoryDialog.SelectedPath;
-        var tasks = new List<Task>();
-        // 分配任务运行
-        foreach (var files in filenames.Chunk((int)Math.Ceiling(filenames.Count / (double)Global.ConcurrentTaskCount))) {
-            tasks.Add(Task.Run(() => {
-                foreach (var file in files) {
-                    // 任务取消
-                    if (ToSimplifiedCancellationTokenSource.IsCancellationRequested) {
-                        Logger.Info("转换为简体任务取消");
-                        return;
-                    }
-                    var outputFile = Path.Combine(saveDirectory, Path.GetFileName(file));
-                    var status = Dispatcher.Invoke(() => {
-                        var status = new FileProcessStatus() {
-                            FileName = outputFile,
-                            Status = ProcessResult.Processing
-                        };
-                        FileProcessStatuses.Add(status);
-                        return status;
-                    });
-
-                    try {
-                        ChineseTransform.FileToSimplified(
-                            file,
-                            outputFile,
-                            ToSimplifiedCancellationTokenSource.Token,
-                            proc => ThrottleUtils.Throttle(status, () => {
-                                ProcessStatusUtils.UpdateProcessStatus(status, proc);
-                            })
-                        );
-                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
-                            status,
-                            ToSimplifiedCancellationTokenSource.Token,
-                            new FileInfo(outputFile).Length
-                        );
-                    } catch (Exception error) {
-                        Logger.Error(error);
-                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
-                    }
-                }
-            }, ToSimplifiedCancellationTokenSource.Token));
-        }
-        await Task.WhenAll(tasks);
+        await FileProcessUtils.ProcessMultiFilesAsync(
+            filenames,
+            SaveDirectoryDialog,
+            ToSimplifiedCancellationTokenSource,
+            FileProcessStatuses,
+            ChineseTransform.FileToSimplified,
+            Dispatcher,
+            Window,
+            Logger
+        );
     }
 
     /// <summary>
@@ -297,53 +194,16 @@ public partial class ChineseTransformView : Page {
     /// <param name="filenames"></param>
     /// <returns></returns>
     private async Task MultiFilesToTraditional(ICollection<string> filenames) {
-        // 选择保存目录
-        if (SaveDirectoryDialog.ShowDialog(Window) != true) {
-            return;
-        }
-        var saveDirectory = SaveDirectoryDialog.SelectedPath;
-        var tasks = new List<Task>();
-        // 分配任务运行
-        foreach (var files in filenames.Chunk((int)Math.Ceiling(filenames.Count / (double)Global.ConcurrentTaskCount))) {
-            tasks.Add(Task.Run(() => {
-                foreach (var file in files) {
-                    // 任务取消
-                    if (ToTraditionalCancellationTokenSource.IsCancellationRequested) {
-                        Logger.Info("转换为繁体任务取消");
-                        return;
-                    }
-                    var outputFile = Path.Combine(saveDirectory, Path.GetFileName(file));
-                    var status = Dispatcher.Invoke(() => {
-                        var status = new FileProcessStatus() {
-                            FileName = outputFile,
-                            Status = ProcessResult.Processing
-                        };
-                        FileProcessStatuses.Add(status);
-                        return status;
-                    });
-
-                    try {
-                        ChineseTransform.FileToTraditional(
-                            file,
-                            outputFile,
-                            ToTraditionalCancellationTokenSource.Token,
-                            proc => ThrottleUtils.Throttle(status, () => {
-                                ProcessStatusUtils.UpdateProcessStatus(status, proc);
-                            })
-                        );
-                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(
-                            status,
-                            ToTraditionalCancellationTokenSource.Token,
-                            new FileInfo(outputFile).Length
-                        );
-                    } catch (Exception error) {
-                        Logger.Error(error);
-                        ProcessStatusUtils.UpdateProcessStatusWhenCompleted(status, ProcessResult.Failed);
-                    }
-                }
-            }, ToTraditionalCancellationTokenSource.Token));
-        }
-        await Task.WhenAll(tasks);
+        await FileProcessUtils.ProcessMultiFilesAsync(
+            filenames,
+            SaveDirectoryDialog,
+            ToTraditionalCancellationTokenSource,
+            FileProcessStatuses,
+            ChineseTransform.FileToTraditional,
+            Dispatcher,
+            Window,
+            Logger
+        );
     }
 
     /// <summary>
