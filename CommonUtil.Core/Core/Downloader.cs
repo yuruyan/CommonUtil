@@ -63,24 +63,25 @@ public class Downloader {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void DownloadFileCompletedHandler(object? sender, AsyncCompletedEventArgs e) {
-        if (sender is DownloadService service) {
-            var taskInfo = DownloadTaskInfoDict[service];
-            // 更新视图
-            UIUtils.RunOnUIThread(() => {
-                taskInfo.LastUpdateTime = DateTime.Now;
-                taskInfo.DownloadedSize = taskInfo.TotalSize;
-                taskInfo.Process = 100;
-                taskInfo.FinishTime = DateTime.Now;
-                taskInfo.IsFinished = true;
-                // 从下载列表中移除
-                DownloadTaskInfoDict.Remove(service);
-            });
-            // 下载成功
-            if (e.Error is null) {
-                DownloadCompleted?.Invoke(null, taskInfo);
-            } else {
-                DownloadFailed?.Invoke(null, taskInfo);
-            }
+        if (sender is not DownloadService service) {
+            return;
+        }
+        var taskInfo = DownloadTaskInfoDict[service];
+        // 更新视图
+        UIUtils.RunOnUIThread(() => {
+            taskInfo.LastUpdateTime = DateTime.Now;
+            taskInfo.DownloadedSize = taskInfo.TotalSize;
+            taskInfo.Process = 100;
+            taskInfo.FinishTime = DateTime.Now;
+            taskInfo.IsFinished = true;
+            // 从下载列表中移除
+            DownloadTaskInfoDict.Remove(service);
+        });
+        // 下载成功
+        if (e.Error is null) {
+            DownloadCompleted?.Invoke(null, taskInfo);
+        } else {
+            DownloadFailed?.Invoke(null, taskInfo);
         }
     }
 
@@ -90,10 +91,11 @@ public class Downloader {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void DownloadProgressChangedHandler(object? sender, DownloadProgressChangedEventArgs e) {
-        if (sender is DownloadService service) {
-            var taskInfo = DownloadTaskInfoDict[service];
-            // 未到更新时间
-            if ((DateTime.Now - taskInfo.LastUpdateTime).TotalMilliseconds <= UpdateProcessInterval) {
+        if (sender is not DownloadService service) {
+            return;
+        }
+        DebounceUtils.Debounce(service, () => {
+            if (!DownloadTaskInfoDict.TryGetValue(service, out var taskInfo)) {
                 return;
             }
             // 更新视图
@@ -103,7 +105,7 @@ public class Downloader {
                 taskInfo.DownloadSpeed = e.BytesPerSecondSpeed;
                 taskInfo.Process = (byte)e.ProgressPercentage;
             });
-        }
+        }, true);
     }
 
 }
