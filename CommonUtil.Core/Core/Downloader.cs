@@ -1,4 +1,6 @@
 ﻿using Downloader;
+using System.Net;
+using DownloadProgressChangedEventArgs = Downloader.DownloadProgressChangedEventArgs;
 
 namespace CommonUtil.Core;
 
@@ -6,7 +8,7 @@ public class Downloader {
     /// <summary>
     /// 下载配置
     /// </summary>
-    private static readonly DownloadConfiguration DownloadConfiguration = new() { OnTheFlyDownload = false };
+    private static DownloadConfiguration DefaultDownloadConfiguration => new() { OnTheFlyDownload = false };
     /// <summary>
     /// 下载任务列表 dict，用于更新，与 DownloadTaskInfoList 同步更新
     /// </summary>
@@ -24,9 +26,14 @@ public class Downloader {
     /// </summary>
     /// <param name="url"></param>
     /// <param name="directory"></param>
-    /// <returns>url无效返回 null</returns>
-    public DownloadTask? Download(string url, DirectoryInfo directory) {
-        var service = new DownloadService(DownloadConfiguration);
+    /// <param name="proxy">代理</param>
+    /// <returns>url 无效返回 null</returns>
+    public DownloadTask? Download(string url, DirectoryInfo directory, WebProxy? proxy = null) {
+        var options = DefaultDownloadConfiguration;
+        options.RequestConfiguration = new() {
+            Proxy = proxy,
+        };
+        var service = new DownloadService(options);
         service.DownloadStarted += DownloadStartedHandler;
         service.DownloadProgressChanged += DownloadProgressChangedHandler;
         service.DownloadFileCompleted += DownloadFileCompletedHandler;

@@ -1,6 +1,7 @@
 ﻿using CommonUITools.Route;
 using CommonUtil.Core.Model;
 using CommonUtil.Route;
+using System.Net;
 
 namespace CommonUtil.View;
 
@@ -87,13 +88,22 @@ public partial class DownloaderView : Page {
         if (await DownloadInfoDialog.ShowAsync() != ModernWpf.Controls.ContentDialogResult.Primary) {
             return;
         }
+        bool anySuccess = false;
+        WebProxy? proxy = null;
         var urls = CommonUtils
             .NormalizeMultipleLineText(DownloadInfoDialog.URL)
             .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(u => (u.StartsWith("http://") || u.StartsWith("https://")) ? u : $"https://{u}");
-        bool anySuccess = false;
+        // 设置代理
+        if (DownloadInfoDialog.HasProxy) {
+            proxy = new(DownloadInfoDialog.FullProxyAddress, true);
+        }
         foreach (var url in urls) {
-            var task = Downloader.Download(url, new(DownloadInfoDialog.SaveDir));
+            var task = Downloader.Download(
+                url,
+                new(DownloadInfoDialog.SaveDir),
+                proxy
+            );
             if (task is null) {
                 continue;
             }
