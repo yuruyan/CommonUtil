@@ -73,7 +73,6 @@ public partial class DownloaderView : Page {
     private void DownloadCompletedHandler(object? sender, DownloadTask e) {
         Dispatcher.Invoke(() => {
             DownloadingViewInstance.DownloadTaskList.Remove(e);
-            MessageBox.Success($"下载 {e.Name} 成功");
             DownloadedViewInstance.DownloadTaskList.Add(e);
         });
     }
@@ -90,13 +89,12 @@ public partial class DownloaderView : Page {
         }
         var urls = CommonUtils
             .NormalizeMultipleLineText(DownloadInfoDialog.URL)
-            .Split('\n')
-            .Where(s => s.Trim().Any());
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(u => (u.StartsWith("http://") || u.StartsWith("https://")) ? u : $"https://{u}");
         bool anySuccess = false;
         foreach (var url in urls) {
             var task = Downloader.Download(url, new(DownloadInfoDialog.SaveDir));
             if (task is null) {
-                MessageBox.Info($"url '{url}' 无效");
                 continue;
             }
             anySuccess = true;

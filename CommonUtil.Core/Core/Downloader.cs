@@ -69,6 +69,7 @@ public class Downloader {
         var taskInfo = DownloadTaskInfoDict[service];
         // 更新视图
         UIUtils.RunOnUIThread(() => {
+            taskInfo.TotalSize = service.Package.ReceivedBytesSize;
             taskInfo.LastUpdateTime = DateTime.Now;
             taskInfo.DownloadedSize = taskInfo.TotalSize;
             taskInfo.Process = 100;

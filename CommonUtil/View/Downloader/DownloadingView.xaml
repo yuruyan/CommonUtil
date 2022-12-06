@@ -32,14 +32,13 @@
           <!--  进度条  -->
           <StackPanel
             Grid.Column="1"
-            Margin="8"
+            Margin="4"
             Orientation="Vertical">
             <ProgressBar
               Height="8"
               Margin="0,8"
               VerticalAlignment="Stretch"
               Background="{StaticResource GrayBrush3}"
-              Foreground="#FF4FAAC2"
               Value="{Binding Process}" />
             <TextBlock Text="{Binding DownloadSpeed, Converter={StaticResource FileSizeConverter}, StringFormat='{}{0} / s'}" />
           </StackPanel>
