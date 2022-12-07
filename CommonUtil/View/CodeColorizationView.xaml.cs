@@ -26,15 +26,18 @@ public partial class CodeColorizationView : Page {
         });
         InitializeComponent();
         LanguageComboBox.SelectedValue = "C#";
-        LanguageComboBox.Text = "C#";
         TextEditor.Options.ConvertTabsToSpaces = true;
         #region 设置 SyntaxHighlighting
         ThemeManager.Current.ThemeChanged += (_, mode) => SetCurrentSyntaxHighlighting(mode);
         #endregion
     }
 
+    /// <summary>
+    /// 设置当前 SyntaxHighlighting
+    /// </summary>
+    /// <param name="themeMode"></param>
     private void SetCurrentSyntaxHighlighting(ThemeMode themeMode) {
-        TextEditor.SyntaxHighlighting = CodeColorization.GetHighlighting(LanguageComboBox.Text, themeMode);
+        TextEditor.SyntaxHighlighting = CodeColorization.GetHighlighting(LanguageComboBox.SelectedValue.ToString()!, themeMode);
     }
 
     /// <summary>
