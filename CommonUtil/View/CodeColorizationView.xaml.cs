@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using CommonUtil.Theme;
+
+namespace CommonUtil.View;
 
 public partial class CodeColorizationView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -23,7 +25,16 @@ public partial class CodeColorizationView : Page {
             });
         });
         InitializeComponent();
+        LanguageComboBox.SelectedValue = "C#";
+        LanguageComboBox.Text = "C#";
         TextEditor.Options.ConvertTabsToSpaces = true;
+        #region 设置 SyntaxHighlighting
+        ThemeManager.Current.ThemeChanged += (_, mode) => SetCurrentSyntaxHighlighting(mode);
+        #endregion
+    }
+
+    private void SetCurrentSyntaxHighlighting(ThemeMode themeMode) {
+        TextEditor.SyntaxHighlighting = CodeColorization.GetHighlighting(LanguageComboBox.Text, themeMode);
     }
 
     /// <summary>
@@ -46,5 +57,15 @@ public partial class CodeColorizationView : Page {
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         TextEditor.Text = string.Empty;
+    }
+
+    /// <summary>
+    /// 选择语言
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void LanguageComboBoxSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
+        e.Handled = true;
+        SetCurrentSyntaxHighlighting(ThemeManager.Current.CurrentMode);
     }
 }

@@ -124,11 +124,14 @@
   <data name="ChineseCharacterMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ChineseCharacterMap.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="CodeColorScheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>codecolorscheme.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="CodeColorSchemeConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>codecolorschemeconfig.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CodeColorSchemeDark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>codecolorschemedark.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CodeColorSchemeLight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>codecolorschemelight.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="CommonRegex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>CommonRegex.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

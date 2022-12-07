@@ -83,9 +83,9 @@ namespace CommonUtil.Core.Resource {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CodeColorScheme {
+        public static byte[] CodeColorSchemeConfig {
             get {
-                object obj = ResourceManager.GetObject("CodeColorScheme", resourceCulture);
+                object obj = ResourceManager.GetObject("CodeColorSchemeConfig", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +93,19 @@ namespace CommonUtil.Core.Resource {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CodeColorSchemeConfig {
+        public static byte[] CodeColorSchemeDark {
             get {
-                object obj = ResourceManager.GetObject("CodeColorSchemeConfig", resourceCulture);
+                object obj = ResourceManager.GetObject("CodeColorSchemeDark", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] CodeColorSchemeLight {
+            get {
+                object obj = ResourceManager.GetObject("CodeColorSchemeLight", resourceCulture);
                 return ((byte[])(obj));
             }
         }

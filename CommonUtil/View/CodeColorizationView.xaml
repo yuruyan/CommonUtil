@@ -26,7 +26,7 @@
         Width="140"
         VerticalAlignment="Center"
         ItemsSource="{Binding Languages}"
-        SelectedValue="C#">
+        SelectionChanged="LanguageComboBoxSelectionChangedHandler">
         <ComboBox.ItemTemplate>
           <DataTemplate>
             <TextBlock
@@ -52,6 +52,6 @@
       xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
       Name="TextEditor"
       Grid.Row="1"
-      SyntaxHighlighting="{Binding SelectedValue, ElementName=LanguageComboBox}" />
+      Background="Transparent" />
   </Grid>
 </Page>
