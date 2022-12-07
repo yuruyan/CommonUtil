@@ -12,7 +12,17 @@
   mc:Ignorable="d">
 
   <Page.Resources>
-    <ContextMenu x:Key="ItemContextMenu" Style="{StaticResource GlobalContextMenuStyle}">
+    <ContextMenu x:Key="ItemContextMenu">
+      <MenuItem Click="CopyLinkClickHandler" Header="复制链接">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Click="OpenFileClickHandler" Header="打开文件">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
+        </MenuItem.Icon>
+      </MenuItem>
       <MenuItem Click="OpenFolderClickHandler" Header="打开所在文件夹">
         <MenuItem.Icon>
           <TextBlock

@@ -52,4 +52,29 @@ public partial class DownloadedView : Page {
                 DownloadTaskList.Remove(task);
             });
     }
+
+    /// <summary>
+    /// 打开文件点击
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (sender is FrameworkElement element && element.DataContext is DownloadTask result) {
+            UIUtils.OpenFileWithAsync(Path.Join(result.SaveDirectory.FullName, result.Name));
+        }
+    }
+
+    /// <summary>
+    /// 复制下载链接
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CopyLinkClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (sender is FrameworkElement element && element.DataContext is DownloadTask result) {
+            Clipboard.SetDataObject(result.Url);
+            MessageBox.Success("已复制");
+        }
+    }
 }
