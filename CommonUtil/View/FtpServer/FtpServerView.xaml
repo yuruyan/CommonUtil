@@ -72,15 +72,7 @@
       <ListBox
         x:Name="UserInfoListBox"
         Grid.Row="1"
-        Background="Transparent"
         ItemsSource="{Binding UserInfoList}">
-        <ListBox.ItemContainerStyle>
-          <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-          </Style>
-        </ListBox.ItemContainerStyle>
-
         <ListBox.ItemTemplate>
           <DataTemplate>
             <Grid
@@ -106,11 +98,6 @@
                 ToolTip="权限" />
               <Grid.ContextMenu>
                 <ContextMenu>
-                  <ContextMenu.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="MenuItem">
-                      <Setter Property="Padding" Value="0" />
-                    </Style>
-                  </ContextMenu.ItemContainerStyle>
                   <ContextMenu.Resources>
                     <Style TargetType="StackPanel">
                       <Setter Property="Orientation" Value="Horizontal" />

@@ -46,11 +46,6 @@
     x:Name="DownloadTaskListBox"
     ItemsSource="{Binding DownloadTaskList}"
     SelectionMode="Extended">
-    <ListBox.ItemContainerStyle>
-      <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
-        <Setter Property="Padding" Value="0" />
-      </Style>
-    </ListBox.ItemContainerStyle>
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Grid

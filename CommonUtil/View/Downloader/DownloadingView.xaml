@@ -12,11 +12,6 @@
   mc:Ignorable="d">
 
   <ListBox x:Name="DownloadListBox" ItemsSource="{Binding DownloadTaskList}">
-    <ListBox.ItemContainerStyle>
-      <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
-        <Setter Property="Padding" Value="0" />
-      </Style>
-    </ListBox.ItemContainerStyle>
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Grid Width="{Binding ActualWidth, ElementName=DownloadListBox}" Background="Transparent">

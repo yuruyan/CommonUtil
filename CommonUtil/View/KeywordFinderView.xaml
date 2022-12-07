@@ -146,11 +146,6 @@
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>
-        <ListBox.ItemContainerStyle>
-          <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
-            <Setter Property="Padding" Value="4,0" />
-          </Style>
-        </ListBox.ItemContainerStyle>
       </ListBox>
     </Grid>
   </Grid>
