@@ -17,8 +17,7 @@
         <MenuItem.Icon>
           <TextBlock
             Foreground="#f5a623"
-            Opacity="{StaticResource ColorIconOpacity}"
-            Style="{StaticResource IconFontStyle}"
+            Style="{StaticResource ColorIconFontStyle}"
             Text="&#xe660;" />
         </MenuItem.Icon>
       </MenuItem>
@@ -26,15 +25,17 @@
         <MenuItem.Icon>
           <TextBlock
             Foreground="{StaticResource ErrorBackground}"
-            Opacity="{StaticResource ColorIconOpacity}"
-            Style="{StaticResource IconFontStyle}"
+            Style="{StaticResource ColorIconFontStyle}"
             Text="&#xe6b4;" />
         </MenuItem.Icon>
       </MenuItem>
     </ContextMenu>
   </Page.Resources>
 
-  <ListBox x:Name="DownloadTaskListBox" ItemsSource="{Binding DownloadTaskList}">
+  <ListBox
+    x:Name="DownloadTaskListBox"
+    ItemsSource="{Binding DownloadTaskList}"
+    SelectionMode="Extended">
     <ListBox.ItemContainerStyle>
       <Style BasedOn="{StaticResource DefaultListBoxItemStyle}" TargetType="ListBoxItem">
         <Setter Property="Padding" Value="0" />

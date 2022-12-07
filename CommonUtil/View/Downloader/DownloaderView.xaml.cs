@@ -60,10 +60,10 @@ public partial class DownloaderView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void DownloadFailedHandler(object? sender, DownloadTask e) {
-        Dispatcher.Invoke(() => {
-            DownloadingViewInstance.DownloadTaskList.Remove(e);
-            MessageBox.Error($"下载 {e.Name} 失败");
-        });
+        //Dispatcher.Invoke(() => {
+        //    DownloadingViewInstance.DownloadTaskList.Remove(e);
+        //    MessageBox.Error($"下载 {e.Name} 失败");
+        //});
     }
 
     /// <summary>
