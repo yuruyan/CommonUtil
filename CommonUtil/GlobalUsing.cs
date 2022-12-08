@@ -3,6 +3,7 @@ global using CommonTools.Utils;
 global using CommonUITools.Model;
 global using CommonUITools.Utils;
 global using CommonUtil.Core;
+global using CommonUtil.Core.Model;
 global using CommonUtil.Model;
 global using CommonUtil.Utils;
 global using NLog;

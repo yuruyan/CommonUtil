@@ -2,7 +2,7 @@
 
 namespace CommonUtil.Core.Model;
 
-public enum Environment {
+public enum ApplicationEnvironment {
     [JsonProperty("production")]
     Production,
     [JsonProperty("development")]

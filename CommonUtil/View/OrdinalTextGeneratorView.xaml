@@ -47,7 +47,7 @@
             <TextBlock Text="数字类型：" />
             <ComboBox
               Name="OrdinalTypeComboBox"
-              Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+              MinWidth="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
               ItemsSource="{Binding OrdinalTypeDict.Keys}"
               SelectedIndex="0" />
           </StackPanel>

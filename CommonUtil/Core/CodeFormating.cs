@@ -241,7 +241,7 @@ public class CodeFormating {
         var proc = new Process();
         proc.StartInfo.FileName = Path.Combine(libDir, "uncrustify.exe");
         proc.StartInfo.Arguments = $"-c \"{configFile}\" -f \"{cacheFile}\" -o \"{cacheOutFile}\"";
-        if (Config.Environment == Model.Environment.Development) {
+        if (Config.Environment == Model.ApplicationEnvironment.Development) {
             proc.StartInfo.RedirectStandardOutput = true;
         }
         proc.Start();

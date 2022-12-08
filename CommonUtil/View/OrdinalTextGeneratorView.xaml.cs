@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using CommonUtil.Store;
+
+namespace CommonUtil.View;
 
 public partial class OrdinalTextGeneratorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -8,7 +10,7 @@ public partial class OrdinalTextGeneratorView : Page {
     public static readonly DependencyProperty StartIndexProperty = DependencyProperty.Register("StartIndex", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
     public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
-    public static readonly DependencyProperty OrdinalTypeDictProperty = DependencyProperty.Register("OrdinalTypeDict", typeof(IDictionary<string, OrdinalTextGenerator.OrdinalType>), typeof(OrdinalTextGeneratorView), new PropertyMetadata());
+    public static readonly DependencyProperty OrdinalTypeDictProperty = DependencyProperty.Register("OrdinalTypeDict", typeof(IDictionary<string, OrdinalTextType>), typeof(OrdinalTextGeneratorView), new PropertyMetadata());
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
 
     /// <summary>
@@ -49,8 +51,8 @@ public partial class OrdinalTextGeneratorView : Page {
     /// <summary>
     /// 数字类型
     /// </summary>
-    public IDictionary<string, OrdinalTextGenerator.OrdinalType> OrdinalTypeDict {
-        get { return (IDictionary<string, OrdinalTextGenerator.OrdinalType>)GetValue(OrdinalTypeDictProperty); }
+    public IDictionary<string, OrdinalTextType> OrdinalTypeDict {
+        get { return (IDictionary<string, OrdinalTextType>)GetValue(OrdinalTypeDictProperty); }
         private set { SetValue(OrdinalTypeDictProperty, value); }
     }
     /// <summary>
@@ -63,12 +65,7 @@ public partial class OrdinalTextGeneratorView : Page {
 
     public OrdinalTextGeneratorView() {
         InitializeComponent();
-        OrdinalTypeDict = new Dictionary<string, OrdinalTextGenerator.OrdinalType>() {
-            {"数字", OrdinalTextGenerator.OrdinalType.Number },
-            {"字母", OrdinalTextGenerator.OrdinalType.Alphabet },
-            {"中文数字", OrdinalTextGenerator.OrdinalType.ChineseNumber },
-            {"中文大写数字", OrdinalTextGenerator.OrdinalType.ChineseUpperNumber},
-        };
+        OrdinalTypeDict = new Dictionary<string, OrdinalTextType>(DataSet.OrdinalTextTypeDict);
         InputText = "abc{} {{ }}";
         GenerateText();
         // 响应式布局

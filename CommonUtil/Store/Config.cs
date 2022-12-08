@@ -9,7 +9,7 @@ public class Config {
     /// <summary>
     /// 环境模式
     /// </summary>
-    public static readonly CommonUtil.Core.Model.Environment Environment = Core.Model.Environment.Development;
+    public static readonly CommonUtil.Core.Model.ApplicationEnvironment Environment = Core.Model.ApplicationEnvironment.Development;
 
     static Config() {
         try {
@@ -17,7 +17,7 @@ public class Config {
             var jObject = JObject.Parse(File.ReadAllText(ConfigPath));
             JToken? environment = jObject.GetValue("environment");
             if (environment != null) {
-                if (environment.ToObject<Core.Model.Environment>() is Core.Model.Environment env) {
+                if (environment.ToObject<Core.Model.ApplicationEnvironment>() is Core.Model.ApplicationEnvironment env) {
                     Environment = env;
                 }
             }

@@ -1,13 +1,6 @@
 ﻿namespace CommonUtil.Core;
 
 public static class OrdinalTextGenerator {
-    public enum OrdinalType {
-        Number,
-        Alphabet,
-        ChineseNumber,
-        ChineseUpperNumber,
-    }
-
     private const string LeftBracketReplacement = "\0\u0001\u0020\u0300\u1234\uffff\u1234\u0300\u0020\u0001\0";
     private const string RightBracketReplacement = "\uffff\u0001\u0020\u0300\u1234\0\u1234\u0300\u0020\u0001\uffff";
     private static readonly char[] Alphabet = {
@@ -144,7 +137,7 @@ public static class OrdinalTextGenerator {
     /// <param name="type">数字类型</param>
     /// <param name="count"></param>
     /// <returns></returns>
-    public static string[] Generate(string format, int startIndex, OrdinalType type, uint count) {
+    public static string[] Generate(string format, int startIndex, OrdinalTextType type, uint count) {
         format = format.Replace("{{", LeftBracketReplacement)
             .Replace("}}", RightBracketReplacement)
             .Replace("{}", "{0}")
@@ -152,19 +145,19 @@ public static class OrdinalTextGenerator {
             .Replace(RightBracketReplacement, "}}");
         string[] data = new string[count];
 
-        if (type == OrdinalType.Number) {
+        if (type == OrdinalTextType.Number) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, i + startIndex);
             }
-        } else if (type == OrdinalType.Alphabet) {
+        } else if (type == OrdinalTextType.Alphabet) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, ConvertToAlphabet(i + startIndex));
             }
-        } else if (type == OrdinalType.ChineseNumber) {
+        } else if (type == OrdinalTextType.ChineseNumber) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, ConvertToChinese(i + startIndex));
             }
-        } else if (type == OrdinalType.ChineseUpperNumber) {
+        } else if (type == OrdinalTextType.ChineseUpperNumber) {
             for (int i = 0; i < data.Length; i++) {
                 data[i] = string.Format(format, ConvertToChineseUpperCase(i + startIndex));
             }

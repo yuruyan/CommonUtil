@@ -57,4 +57,14 @@ public static class DataSet {
         "毫秒(ms)",
         "秒(s)",
     };
+
+    /// <summary>
+    /// 顺序文本类型
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, OrdinalTextType> OrdinalTextTypeDict = new Dictionary<string, OrdinalTextType>() {
+        {"数字", OrdinalTextType.Number },
+        {"字母", OrdinalTextType.Alphabet },
+        {"中文数字", OrdinalTextType.ChineseNumber },
+        {"中文大写数字", OrdinalTextType.ChineseUpperNumber},
+    };
 }
