@@ -77,10 +77,7 @@
       <ui:SimpleStackPanel>
         <TextBlock Style="{StaticResource HeaderStyle}" Text="时间戳：" />
         <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding TimeStampToStringInput}" />
-        <ComboBox SelectedValue="{Binding TimeStampToStringOption}">
-          <system:String>毫秒(ms)</system:String>
-          <system:String>秒(s)</system:String>
-        </ComboBox>
+        <ComboBox ItemsSource="{Binding TimeStampOptions}" SelectedValue="{Binding TimeStampToStringOption}" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel Name="TimeStampToStringPanel" HorizontalAlignment="Right">
         <Grid>
@@ -104,10 +101,7 @@
       <ui:SimpleStackPanel>
         <TextBlock Style="{StaticResource HeaderStyle}" Text="时间：" />
         <TextBox Style="{StaticResource InputBoxStyle}" Text="{Binding StringToTimeStampInput}" />
-        <ComboBox SelectedValue="{Binding StringToTimeStampChoice}">
-          <system:String>毫秒(ms)</system:String>
-          <system:String>秒(s)</system:String>
-        </ComboBox>
+        <ComboBox ItemsSource="{Binding TimeStampOptions}" SelectedValue="{Binding StringToTimeStampChoice}" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel Name="StringToTimeStampPanel" HorizontalAlignment="Right">
         <Grid>

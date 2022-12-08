@@ -1,4 +1,4 @@
-﻿using System.Timers;
+﻿using CommonUtil.Store;
 
 namespace CommonUtil.View;
 
@@ -13,6 +13,7 @@ public partial class TimeStampView : Page {
     public static readonly DependencyProperty StringToTimeStampOutputProperty = DependencyProperty.Register("StringToTimeStampOutput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampChoiceProperty = DependencyProperty.Register("StringToTimeStampChoice", typeof(string), typeof(TimeStampView), new PropertyMetadata("毫秒(ms)"));
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(TimeStampView), new PropertyMetadata(true));
+    public static readonly DependencyProperty TimeStampOptionsProperty = DependencyProperty.Register("TimeStampOptions", typeof(IList<string>), typeof(TimeStampView), new PropertyMetadata());
 
     /// <summary>
     /// 当前时间戳
@@ -71,23 +72,38 @@ public partial class TimeStampView : Page {
         set { SetValue(IsExpandedProperty, value); }
     }
     /// <summary>
+    /// 时间戳选项
+    /// </summary>
+    public IList<string> TimeStampOptions {
+        get { return (IList<string>)GetValue(TimeStampOptionsProperty); }
+        set { SetValue(TimeStampOptionsProperty, value); }
+    }
+    /// <summary>
     /// 更新时间 Timer
     /// </summary>
-    private readonly System.Timers.Timer Timer;
+    private readonly DispatcherTimer UpdateTimeStampTimer = new();
+    /// <summary>
+    /// 毫秒选项值
+    /// </summary>
+    private readonly string MillisecondValue;
 
     public TimeStampView() {
         InitializeComponent();
+        #region 初始化 TimeStamp
+        TimeStampOptions = DataSet.TimeStampOptions.ToArray();
+        MillisecondValue = TimeStampOptions[0];
         CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
-        TimeStampToStringInput = CurrentTimeStamp;
-        TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(TimeStamp.GetCurrentMilliSeconds());
-        StringToTimeStampInput = TimeStampToStringOutput;
-        StringToTimeStampOutput = TimeStampToStringInput;
-        #region 更新时间戳
-        Timer = new System.Timers.Timer(1000);
-        Timer.Elapsed += UpdateTimeStamp;
-        Timer.Start();
+        StringToTimeStampOutput = TimeStampToStringInput = CurrentTimeStamp;
+        StringToTimeStampInput = TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(TimeStamp.GetCurrentMilliSeconds());
         #endregion
-        // 响应式布局
+        #region 更新时间戳
+        UpdateTimeStampTimer.Interval = TimeSpan.FromSeconds(1);
+        UpdateTimeStampTimer.Tick += (_, _) => {
+            CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
+        };
+        UpdateTimeStampTimer.Start();
+        #endregion
+        #region 响应式布局
         DependencyPropertyDescriptor
             .FromProperty(IsExpandedProperty, this.GetType())
             .AddValueChanged(this, (_, _) => {
@@ -105,18 +121,7 @@ public partial class TimeStampView : Page {
                     IsExpanded = window.ActualWidth >= expansionThreshold;
                 });
         });
-    }
-
-    /// <summary>
-    /// 更新时间
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    private void UpdateTimeStamp(object? sender, ElapsedEventArgs e) {
-        Dispatcher.Invoke(() => {
-            CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
-        });
+        #endregion
     }
 
     /// <summary>
@@ -138,13 +143,9 @@ public partial class TimeStampView : Page {
     private void TimeStampToStringClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         try {
-            long t = 0;
-            if (TimeStampToStringOption.Contains("ms")) {
-                t = (long)Convert.ToUInt64(TimeStampToStringInput);
-            } else {
-                t = (long)Convert.ToUInt64(TimeStampToStringInput + "000");
-            }
-            TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(t);
+            TimeStampToStringOutput = TimeStamp.TimeStampToDateTimeString(Convert.ToInt64(
+                TimeStampToStringOption == MillisecondValue ? TimeStampToStringInput : TimeStampToStringInput + "000"
+            ));
         } catch (Exception error) {
             Logger.Info(error);
             MessageBox.Error("转换失败！");
@@ -160,13 +161,13 @@ public partial class TimeStampView : Page {
         e.Handled = true;
         try {
             long t = TimeStamp.StringToMilliSeconds(StringToTimeStampInput);
-            if (!StringToTimeStampChoice.Contains("ms")) {
+            if (StringToTimeStampChoice != MillisecondValue) {
                 t /= 1000;
             }
             StringToTimeStampOutput = t.ToString();
         } catch (Exception error) {
             Logger.Info(error);
-            MessageBox.Error("格式有误！");
+            MessageBox.Error("转换失败！");
         }
     }
 }

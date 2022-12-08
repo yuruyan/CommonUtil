@@ -49,4 +49,12 @@ public static class DataSet {
         new("集合工具", $"{Global.ImagePath}Intersection.png", typeof(CollectionToolView)),
         new("JSON 数据提取", $"{Global.ImagePath}json.png", typeof(JsonExtractorView)),
     };
+
+    /// <summary>
+    /// 时间戳选项
+    /// </summary>
+    public static readonly IReadOnlyList<string> TimeStampOptions = new List<string>() {
+        "毫秒(ms)",
+        "秒(s)",
+    };
 }
