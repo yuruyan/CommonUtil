@@ -145,4 +145,12 @@ public static class DataSet {
         { "英文句号（.）", "." },
     };
 
+    /// <summary>
+    /// 翻转模式选项
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, InversionMode> InversionModeDict = new Dictionary<string, InversionMode>() {
+        {"水平翻转", InversionMode.Horizontal },
+        {"垂直翻转", InversionMode.Vertical},
+        {"全部翻转", InversionMode.Both },
+    };
 }

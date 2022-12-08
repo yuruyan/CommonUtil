@@ -1,4 +1,4 @@
-﻿using CommonUtil.Core.Model;
+﻿using CommonUtil.Store;
 using Microsoft.Win32;
 
 namespace CommonUtil.View;
@@ -61,11 +61,7 @@ public partial class InvertTextView : Page {
     }
 
     public InvertTextView() {
-        InversionModeDict = new Dictionary<string, InversionMode>() {
-            {"水平翻转", InversionMode.Horizontal },
-            {"垂直翻转", InversionMode.Vertical},
-            {"全部翻转", InversionMode.Both },
-        };
+        InversionModeDict = new Dictionary<string, InversionMode>(DataSet.InversionModeDict);
         InitializeComponent();
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
@@ -73,10 +69,10 @@ public partial class InvertTextView : Page {
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
             IsExpanded = window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
         });
     }
 
