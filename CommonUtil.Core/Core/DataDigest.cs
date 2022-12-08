@@ -6,6 +6,21 @@ namespace CommonUtil.Core;
 
 public static class DataDigest {
     /// <summary>
+    /// 文本摘要
+    /// </summary>
+    /// <param name="text">文本</param>
+    /// <returns>摘要</returns>
+    public delegate string TextDigest(string text);
+    /// <summary>
+    /// 文件流摘要
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="callback">进度回调，参数为进度百分比</param>
+    /// <returns>任务取消返回 null</returns>
+    public delegate string? StreamDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null);
+
+    /// <summary>
     /// 默认读取缓冲区大小
     /// </summary>
     private const int FileReadBuffer = 8192;
@@ -13,9 +28,8 @@ public static class DataDigest {
     /// <summary>
     /// 摘要算法
     /// </summary>
-    /// <param name="s"></param>
+    /// <inheritdoc cref="TextDigest"/>
     /// <param name="digest"></param>
-    /// <returns></returns>
     private static string GeneralDigest(string s, IDigest digest) {
         byte[] sourceBuffer = Encoding.UTF8.GetBytes(s);
         byte[] resultBuffer = new byte[digest.GetDigestSize()];
@@ -31,7 +45,6 @@ public static class DataDigest {
     /// <param name="digest"></param>
     /// <param name="cancellationToken"></param>
     /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns></returns>
     private static string? GeneralDigest(
         FileStream stream,
         IDigest digest,
@@ -59,238 +72,210 @@ public static class DataDigest {
     /// <summary>
     /// sha1 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA1Digest(string s) {
-        return GeneralDigest(s, new Sha1Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA1Digest(string text) {
+        return GeneralDigest(text, new Sha1Digest());
     }
 
     /// <summary>
     /// sha3 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA3Digest(string s) {
-        return GeneralDigest(s, new Sha3Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA3Digest(string text) {
+        return GeneralDigest(text, new Sha3Digest());
     }
 
     /// <summary>
     /// sha224 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA224Digest(string s) {
-        return GeneralDigest(s, new Sha224Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA224Digest(string text) {
+        return GeneralDigest(text, new Sha224Digest());
     }
 
     /// <summary>
     /// sha256 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA256Digest(string s) {
-        return GeneralDigest(s, new Sha256Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA256Digest(string text) {
+        return GeneralDigest(text, new Sha256Digest());
     }
 
     /// <summary>
     /// sha384 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA384Digest(string s) {
-        return GeneralDigest(s, new Sha384Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA384Digest(string text) {
+        return GeneralDigest(text, new Sha384Digest());
     }
 
     /// <summary>
     /// sha512 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SHA512Digest(string s) {
-        return GeneralDigest(s, new Sha512Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SHA512Digest(string text) {
+        return GeneralDigest(text, new Sha512Digest());
     }
 
     /// <summary>
     /// md5 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string MD5Digest(string s) {
-        return GeneralDigest(s, new MD5Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string MD5Digest(string text) {
+        return GeneralDigest(text, new MD5Digest());
     }
 
     /// <summary>
     /// md4 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string MD4Digest(string s) {
-        return GeneralDigest(s, new MD4Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string MD4Digest(string text) {
+        return GeneralDigest(text, new MD4Digest());
     }
 
     /// <summary>
     /// md2 摘要
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string MD2Digest(string s) {
-        return GeneralDigest(s, new MD2Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string MD2Digest(string text) {
+        return GeneralDigest(text, new MD2Digest());
     }
 
     /// <summary>
     /// WhirlpoolDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string WhirlpoolDigest(string s) {
-        return GeneralDigest(s, new WhirlpoolDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string WhirlpoolDigest(string text) {
+        return GeneralDigest(text, new WhirlpoolDigest());
     }
 
     /// <summary>
     /// TigerDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string TigerDigest(string s) {
-        return GeneralDigest(s, new TigerDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string TigerDigest(string text) {
+        return GeneralDigest(text, new TigerDigest());
     }
 
     /// <summary>
     /// SM3Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string SM3Digest(string s) {
-        return GeneralDigest(s, new SM3Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SM3Digest(string text) {
+        return GeneralDigest(text, new SM3Digest());
     }
 
     /// <summary>
     /// Sha512tDigest
     /// </summary>
-    /// <param name="s"></param>
     /// <param name="multipleOfEight">8 的倍数</param>
-    /// <returns></returns>
-    public static string Sha512tDigest(string s, int multipleOfEight) {
-        return GeneralDigest(s, new Sha512tDigest(multipleOfEight));
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Sha512tDigest(string text, int multipleOfEight) {
+        return GeneralDigest(text, new Sha512tDigest(multipleOfEight));
     }
 
     /// <summary>
     /// SkeinDigest
     /// </summary>
-    /// <param name="s"></param>
     /// <param name="blockSize"></param>
     /// <param name="multipleOfEight">8 的倍数</param>
-    /// <returns></returns>
-    public static string SkeinDigest(string s, SkeinDigestBlockSize blockSize, int multipleOfEight) {
-        return GeneralDigest(s, new SkeinDigest((int)blockSize, multipleOfEight));
+    /// <inheritdoc cref="TextDigest"/>
+    public static string SkeinDigest(string text, SkeinDigestBlockSize blockSize, int multipleOfEight) {
+        return GeneralDigest(text, new SkeinDigest((int)blockSize, multipleOfEight));
     }
 
     /// <summary>
     /// ShakeDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string ShakeDigest(string s) {
-        return GeneralDigest(s, new ShakeDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string ShakeDigest(string text) {
+        return GeneralDigest(text, new ShakeDigest());
     }
 
     /// <summary>
     /// RipeMD128Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string RipeMD128Digest(string s) {
-        return GeneralDigest(s, new RipeMD128Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string RipeMD128Digest(string text) {
+        return GeneralDigest(text, new RipeMD128Digest());
     }
 
     /// <summary>
     /// RipeMD160Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string RipeMD160Digest(string s) {
-        return GeneralDigest(s, new RipeMD160Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string RipeMD160Digest(string text) {
+        return GeneralDigest(text, new RipeMD160Digest());
     }
 
     /// <summary>
     /// RipeMD256Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string RipeMD256Digest(string s) {
-        return GeneralDigest(s, new RipeMD256Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string RipeMD256Digest(string text) {
+        return GeneralDigest(text, new RipeMD256Digest());
     }
 
     /// <summary>
     /// RipeMD320Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string RipeMD320Digest(string s) {
-        return GeneralDigest(s, new RipeMD320Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string RipeMD320Digest(string text) {
+        return GeneralDigest(text, new RipeMD320Digest());
     }
 
     /// <summary>
     /// KeccakDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string KeccakDigest(string s) {
-        return GeneralDigest(s, new KeccakDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string KeccakDigest(string text) {
+        return GeneralDigest(text, new KeccakDigest());
     }
 
     /// <summary>
     /// Gost3411Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string Gost3411Digest(string s) {
-        return GeneralDigest(s, new Gost3411Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Gost3411Digest(string text) {
+        return GeneralDigest(text, new Gost3411Digest());
     }
 
     /// <summary>
     /// Gost3411_2012_256Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string Gost3411_2012_256Digest(string s) {
-        return GeneralDigest(s, new Gost3411_2012_256Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Gost3411_2012_256Digest(string text) {
+        return GeneralDigest(text, new Gost3411_2012_256Digest());
     }
 
     /// <summary>
     /// Gost3411_2012_512Digest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string Gost3411_2012_512Digest(string s) {
-        return GeneralDigest(s, new Gost3411_2012_512Digest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Gost3411_2012_512Digest(string text) {
+        return GeneralDigest(text, new Gost3411_2012_512Digest());
     }
 
     /// <summary>
     /// Blake2bDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string Blake2bDigest(string s) {
-        return GeneralDigest(s, new Blake2bDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Blake2bDigest(string text) {
+        return GeneralDigest(text, new Blake2bDigest());
     }
 
     /// <summary>
     /// Blake2sDigest
     /// </summary>
-    /// <param name="s"></param>
-    /// <returns></returns>
-    public static string Blake2sDigest(string s) {
-        return GeneralDigest(s, new Blake2sDigest());
+    /// <inheritdoc cref="TextDigest"/>
+    public static string Blake2sDigest(string text) {
+        return GeneralDigest(text, new Blake2sDigest());
     }
 
     /// <summary>
     /// SHA1 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA1Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha1Digest(), cancellationToken, callback);
     }
@@ -298,10 +283,7 @@ public static class DataDigest {
     /// <summary>
     /// sha3 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA3Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha3Digest(), cancellationToken, callback);
     }
@@ -309,10 +291,7 @@ public static class DataDigest {
     /// <summary>
     /// sha224 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA224Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha224Digest(), cancellationToken, callback);
     }
@@ -320,10 +299,7 @@ public static class DataDigest {
     /// <summary>
     /// sha256 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA256Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha256Digest(), cancellationToken, callback);
     }
@@ -331,10 +307,7 @@ public static class DataDigest {
     /// <summary>
     /// sha384 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA384Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha384Digest(), cancellationToken, callback);
     }
@@ -342,10 +315,7 @@ public static class DataDigest {
     /// <summary>
     /// sha512 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SHA512Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha512Digest(), cancellationToken, callback);
     }
@@ -353,10 +323,7 @@ public static class DataDigest {
     /// <summary>
     /// md5 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? MD5Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new MD5Digest(), cancellationToken, callback);
     }
@@ -364,10 +331,7 @@ public static class DataDigest {
     /// <summary>
     /// md4 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? MD4Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new MD4Digest(), cancellationToken, callback);
     }
@@ -375,10 +339,7 @@ public static class DataDigest {
     /// <summary>
     /// md2 摘要
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? MD2Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new MD2Digest(), cancellationToken, callback);
     }
@@ -386,10 +347,7 @@ public static class DataDigest {
     /// <summary>
     /// WhirlpoolDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? WhirlpoolDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new WhirlpoolDigest(), cancellationToken, callback);
     }
@@ -397,10 +355,7 @@ public static class DataDigest {
     /// <summary>
     /// TigerDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? TigerDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new TigerDigest(), cancellationToken, callback);
     }
@@ -408,10 +363,7 @@ public static class DataDigest {
     /// <summary>
     /// SM3Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SM3Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new SM3Digest(), cancellationToken, callback);
     }
@@ -419,12 +371,9 @@ public static class DataDigest {
     /// <summary>
     /// SkeinDigest
     /// </summary>
-    /// <param name="stream"></param>
     /// <param name="blockSize"></param>
     /// <param name="multipleOfEight">8 的倍数</param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? SkeinDigest(FileStream stream, SkeinDigestBlockSize blockSize, int multipleOfEight, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new SkeinDigest((int)blockSize, multipleOfEight), cancellationToken, callback);
     }
@@ -432,10 +381,7 @@ public static class DataDigest {
     /// <summary>
     /// ShakeDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? ShakeDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new ShakeDigest(), cancellationToken, callback);
     }
@@ -443,11 +389,8 @@ public static class DataDigest {
     /// <summary>
     /// Sha512tDigest
     /// </summary>
-    /// <param name="stream"></param>
     /// <param name="multipleOfEight">8 的倍数</param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Sha512tDigest(FileStream stream, int multipleOfEight, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Sha512tDigest(multipleOfEight), cancellationToken, callback);
     }
@@ -455,10 +398,7 @@ public static class DataDigest {
     /// <summary>
     /// RipeMD128Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? RipeMD128Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new RipeMD128Digest(), cancellationToken, callback);
     }
@@ -466,10 +406,7 @@ public static class DataDigest {
     /// <summary>
     /// RipeMD160Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? RipeMD160Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new RipeMD160Digest(), cancellationToken, callback);
     }
@@ -477,10 +414,7 @@ public static class DataDigest {
     /// <summary>
     /// RipeMD256Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? RipeMD256Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new RipeMD256Digest(), cancellationToken, callback);
     }
@@ -488,10 +422,7 @@ public static class DataDigest {
     /// <summary>
     /// RipeMD320Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? RipeMD320Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new RipeMD320Digest(), cancellationToken, callback);
     }
@@ -499,10 +430,7 @@ public static class DataDigest {
     /// <summary>
     /// KeccakDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? KeccakDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new KeccakDigest(), cancellationToken, callback);
     }
@@ -510,10 +438,7 @@ public static class DataDigest {
     /// <summary>
     /// Gost3411Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Gost3411Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Gost3411Digest(), cancellationToken, callback);
     }
@@ -521,10 +446,7 @@ public static class DataDigest {
     /// <summary>
     /// Gost3411_2012_256Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Gost3411_2012_256Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Gost3411_2012_256Digest(), cancellationToken, callback);
     }
@@ -532,10 +454,7 @@ public static class DataDigest {
     /// <summary>
     /// Gost3411_2012_512Digest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Gost3411_2012_512Digest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Gost3411_2012_512Digest(), cancellationToken, callback);
     }
@@ -543,10 +462,7 @@ public static class DataDigest {
     /// <summary>
     /// Blake2bDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Blake2bDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Blake2bDigest(), cancellationToken, callback);
     }
@@ -554,10 +470,7 @@ public static class DataDigest {
     /// <summary>
     /// Blake2sDigest
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
+    /// <inheritdoc cref="StreamDigest"/>
     public static string? Blake2sDigest(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null) {
         return GeneralDigest(stream, new Blake2sDigest(), cancellationToken, callback);
     }
