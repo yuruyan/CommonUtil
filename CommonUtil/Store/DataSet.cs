@@ -78,4 +78,16 @@ public static class DataSet {
         { "中文逗号（，）", "，" },
         { "英文逗号（,）", "," },
     };
+
+    /// <summary>
+    /// 空白处理选项
+    /// </summary>
+    public static readonly IReadOnlyList<(string, TextTool.TextProcess, TextTool.FileProcess)> WhiteSpaceProcessOptions = new (string, TextTool.TextProcess, TextTool.FileProcess)[] {
+        ("去除首尾空白", TextTool.TrimText, TextTool.FileTrimText),
+        ("去除每行首部空白", TextTool.TrimLineStart, TextTool.FileTrimLineStart),
+        ("去除每行尾部空白", TextTool.TrimLineEnd, TextTool.FileTrimLineEnd),
+        ("去除每行首尾空白", TextTool.TrimLine, TextTool.FileTrimLine),
+        ("去除空白行", TextTool.RemoveWhiteSpaceLine, TextTool.FileRemoveWhiteSpaceLine),
+        ("多个空白字符替换为一个空格", TextTool.ReplaceMultipleWhiteSpaceWithOne, TextTool.FileReplaceMultipleWhiteSpaceWithOne),
+    };
 }

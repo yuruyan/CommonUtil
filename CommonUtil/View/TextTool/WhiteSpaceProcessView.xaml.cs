@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CommonUtil.Store;
+using Microsoft.Win32;
 
 namespace CommonUtil.View;
 
@@ -50,9 +51,20 @@ public partial class WhiteSpaceProcessView : Page {
         get { return (bool)GetValue(IsExpandedProperty); }
         set { SetValue(IsExpandedProperty, value); }
     }
+    /// <summary>
+    /// MenuChecked Array
+    /// </summary>
+    private readonly bool[] CheckedArray;
 
     public WhiteSpaceProcessView() {
         InitializeComponent();
+        // 初始化 ProcessOptionsMenuFlyout
+        DataSet.WhiteSpaceProcessOptions.ForEach(item => {
+            ProcessOptionsMenuFlyout.Items.Add(new MenuItem() {
+                Header = item.Item1,
+            });
+        });
+        CheckedArray = new bool[ProcessOptionsMenuFlyout.Items.Count];
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
@@ -77,49 +89,34 @@ public partial class WhiteSpaceProcessView : Page {
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
-        var options = new ProcessOptions {
-            TrimText = TrimTextMenuItem.IsChecked,
-            TrimLine = TrimLineMenuItem.IsChecked,
-            TrimLineStart = TrimLineStartMenuItem.IsChecked,
-            TrimLineEnd = TrimLineEndMenuItem.IsChecked,
-            RemoveWhiteSpace = RemoveWhiteSpaceLineMenuItem.IsChecked,
-            ReplaceMultiWhiteSpace = ReplaceMultipleWhiteSpaceWithOneMenuItem.IsChecked,
-        };
+        // 更新 CheckedArray
+        ProcessOptionsMenuFlyout.Items
+            .Cast<MenuItem>()
+            .ForEach((index, item) => {
+                CheckedArray[index] = item.IsChecked;
+            });
 
         // 文本处理
         if (!HasFile) {
-            TextProcessString(options);
+            TextProcessString();
             return;
         }
         ThrottleUtils.ThrottleAsync(
             TextProcessClick,
-            () => TextProcessFile(options)
+            () => TextProcessFile()
         );
     }
 
     /// <summary>
     /// 文本处理
     /// </summary>
-    /// <param name="options">选项</param>
-    private void TextProcessString(ProcessOptions options) {
+    private void TextProcessString() {
         var s = InputText;
-        if (options.TrimText) {
-            s = TextTool.TrimText(s);
-        }
-        if (options.RemoveWhiteSpace) {
-            s = TextTool.RemoveWhiteSpaceLine(s);
-        }
-        if (options.TrimLineStart) {
-            s = TextTool.TrimLineStart(s);
-        }
-        if (options.TrimLineEnd) {
-            s = TextTool.TrimLineEnd(s);
-        }
-        if (options.TrimLine) {
-            s = TextTool.TrimLine(s);
-        }
-        if (options.ReplaceMultiWhiteSpace) {
-            s = TextTool.ReplaceMultipleWhiteSpaceWithOne(s);
+        for (int i = 0; i < CheckedArray.Length; i++) {
+            if (!CheckedArray[i]) {
+                continue;
+            }
+            s = DataSet.WhiteSpaceProcessOptions[i].Item2(s);
         }
         OutputText = s;
     }
@@ -127,9 +124,8 @@ public partial class WhiteSpaceProcessView : Page {
     /// <summary>
     /// 文件处理
     /// </summary>
-    /// <param name="options"></param>
     /// <returns></returns>
-    private async Task TextProcessFile(ProcessOptions options) {
+    private async Task TextProcessFile() {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -138,29 +134,14 @@ public partial class WhiteSpaceProcessView : Page {
         var outputPath = SaveFileDialog.FileName;
 
         // 处理
-        await UIUtils.CreateFileProcessTask(
-            () => {
-                if (options.TrimText) {
-                    TextTool.FileTrimText(inputPath, outputPath);
+        await UIUtils.CreateFileProcessTask(() => {
+            for (int i = 0; i < CheckedArray.Length; i++) {
+                if (!CheckedArray[i]) {
+                    continue;
                 }
-                if (options.RemoveWhiteSpace) {
-                    TextTool.FileRemoveWhiteSpaceLine(inputPath, outputPath);
-                }
-                if (options.TrimLine) {
-                    TextTool.FileTrimLine(inputPath, outputPath);
-                }
-                if (options.TrimLineStart) {
-                    TextTool.FileTrimLineStart(inputPath, outputPath);
-                }
-                if (options.TrimLineEnd) {
-                    TextTool.FileTrimLineEnd(inputPath, outputPath);
-                }
-                if (options.ReplaceMultiWhiteSpace) {
-                    TextTool.FileReplaceMultipleWhiteSpaceWithOne(inputPath, outputPath);
-                }
-            },
-            outputPath
-        );
+                DataSet.WhiteSpaceProcessOptions[i].Item3(inputPath, outputPath);
+            }
+        }, outputPath);
     }
 
     /// <summary>
@@ -202,17 +183,5 @@ public partial class WhiteSpaceProcessView : Page {
                 DragDropTextBox.Clear();
             }
         }
-    }
-
-    /// <summary>
-    /// 处理选项
-    /// </summary>
-    private readonly struct ProcessOptions {
-        public bool TrimText { get; init; }
-        public bool RemoveWhiteSpace { get; init; }
-        public bool TrimLine { get; init; }
-        public bool TrimLineStart { get; init; }
-        public bool TrimLineEnd { get; init; }
-        public bool ReplaceMultiWhiteSpace { get; init; }
     }
 }

@@ -3,6 +3,9 @@
 namespace CommonUtil.Core;
 
 public partial class TextTool {
+    public delegate string TextProcess(string text);
+    public delegate void FileProcess(string inputFile, string outputFile);
+
     #region Field
     /// <summary>
     /// 英文句子分隔符
