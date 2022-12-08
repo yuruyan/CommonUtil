@@ -13,10 +13,6 @@ public partial class CollectionToolView : Page {
     public static readonly DependencyProperty FileName2Property = DependencyProperty.Register("FileName2", typeof(string), typeof(CollectionToolView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFile2Property = DependencyProperty.Register("HasFile2", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(false));
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(true));
-    private readonly SaveFileDialog SaveFileDialog = new() {
-        Title = "保存文件",
-        Filter = "文本文件|*.txt|All Files|*.*"
-    };
 
     /// <summary>
     /// 输入
@@ -74,6 +70,11 @@ public partial class CollectionToolView : Page {
         get { return (bool)GetValue(IsExpandedProperty); }
         set { SetValue(IsExpandedProperty, value); }
     }
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Title = "保存文件",
+        Filter = "文本文件|*.txt|All Files|*.*"
+    };
+    public delegate IList<string> ProcessHanlder(IEnumerable<string> list1, IEnumerable<string> list2);
 
     public CollectionToolView() {
         InitializeComponent();
@@ -117,7 +118,7 @@ public partial class CollectionToolView : Page {
     /// 文本处理
     /// </summary>
     /// <param name="func"></param>
-    private void StringProcess(Func<IEnumerable<string>, IEnumerable<string>, IEnumerable<string>> func) {
+    private void StringProcess(ProcessHanlder func) {
         OutputText = string.Join(
                         '\n',
                         func(
@@ -132,7 +133,7 @@ public partial class CollectionToolView : Page {
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    private async Task FileProcess(Func<IEnumerable<string>, IEnumerable<string>, IEnumerable<string>> func) {
+    private async Task FileProcess(ProcessHanlder func) {
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }

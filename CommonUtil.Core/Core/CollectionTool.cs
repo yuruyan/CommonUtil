@@ -7,8 +7,8 @@ public static class CollectionTool {
     /// <param name="list1"></param>
     /// <param name="list2"></param>
     /// <returns></returns>
-    public static IEnumerable<string> Intersect(IEnumerable<string> list1, IEnumerable<string> list2) {
-        return list1.Intersect(list2);
+    public static IList<string> Intersect(IEnumerable<string> list1, IEnumerable<string> list2) {
+        return list1.Intersect(list2).ToList();
     }
 
     /// <summary>
@@ -17,8 +17,8 @@ public static class CollectionTool {
     /// <param name="list1"></param>
     /// <param name="list2"></param>
     /// <returns></returns>
-    public static IEnumerable<string> Except(IEnumerable<string> list1, IEnumerable<string> list2) {
-        return list1.Except(list2);
+    public static IList<string> Except(IEnumerable<string> list1, IEnumerable<string> list2) {
+        return list1.Except(list2).ToList();
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public static class CollectionTool {
     /// <param name="list1"></param>
     /// <param name="list2"></param>
     /// <returns></returns>
-    public static IEnumerable<string> Union(IEnumerable<string> list1, IEnumerable<string> list2) {
-        return list1.Union(list2);
+    public static IList<string> Union(IEnumerable<string> list1, IEnumerable<string> list2) {
+        return list1.Union(list2).ToList();
     }
 }
