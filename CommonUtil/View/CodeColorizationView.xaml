@@ -31,7 +31,7 @@
           <DataTemplate>
             <TextBlock
               Width="120"
-              FontFamily="{StaticResource ASCIIFontFamily}"
+              Style="{StaticResource ASCIIFontStyle}"
               Text="{Binding}" />
           </DataTemplate>
         </ComboBox.ItemTemplate>

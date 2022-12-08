@@ -172,7 +172,7 @@
               SelectedIndex="{Binding ECCLevelComboxSelectedIndex}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock FontFamily="{StaticResource ASCIIFontFamily}" Text="{Binding ., StringFormat='{}{0} %'}" />
+                  <TextBlock Style="{StaticResource ASCIIFontStyle}" Text="{Binding ., StringFormat='{}{0} %'}" />
                 </DataTemplate>
               </ComboBox.ItemTemplate>
             </ComboBox>

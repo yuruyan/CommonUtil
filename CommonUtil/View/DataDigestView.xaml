@@ -115,7 +115,7 @@
               <TextBlock
                 Grid.Column="2"
                 Padding="0,0,8,0"
-                FontFamily="{StaticResource ASCIIFontFamily}"
+                Style="{StaticResource ASCIIFontStyle}"
                 Foreground="{DynamicResource HighLightKeywordForeground}"
                 Text="{Binding Value.Process, StringFormat='{}{0:P0}'}"
                 Visibility="{Binding Value.Process, Converter={StaticResource ProcessVisibilityConverter}}" />

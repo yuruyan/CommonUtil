@@ -89,7 +89,7 @@
             SelectedIndex="0">
             <ComboBox.ItemTemplate>
               <DataTemplate>
-                <TextBlock FontFamily="{StaticResource ASCIIFontFamily}" Text="{Binding}" />
+                <TextBlock Style="{StaticResource ASCIIFontStyle}" Text="{Binding}" />
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>
