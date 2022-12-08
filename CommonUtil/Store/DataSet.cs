@@ -132,4 +132,17 @@ public static class DataSet {
         {"单词首字母大写", (TextTool.CapitalizeWords, TextTool.FileCapitalizeWords) },
         {"句子首字母大写", (TextTool.ToSentenceCase, TextTool.FileToSentenceCase) },
     };
+
+    /// <summary>
+    /// 增加行号分割文本选项
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, string> PrependLineNumberSplitOptionDict = new Dictionary<string, string>() {
+        { "制表符（→）", "\t" },
+        { "空格（ ）", " " },
+        { "中文逗号（，）", "，" },
+        { "英文逗号（,）", "," },
+        { "中文句号（。）", "。" },
+        { "英文句号（.）", "." },
+    };
+
 }

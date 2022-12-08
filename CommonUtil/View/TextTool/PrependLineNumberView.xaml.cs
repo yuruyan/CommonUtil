@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CommonUtil.Store;
+using Microsoft.Win32;
 
 namespace CommonUtil.View;
 
@@ -61,14 +62,7 @@ public partial class PrependLineNumberView : Page {
     private readonly IDictionary<string, string> SplitTextDict;
 
     public PrependLineNumberView() {
-        SplitTextDict = new Dictionary<string, string>() {
-            { "制表符（→）", "\t" },
-            { "空格（ ）", " " },
-            { "中文逗号（，）", "，" },
-            { "英文逗号（,）", "," },
-            { "中文句号（。）", "。" },
-            { "英文句号（.）", "." },
-        };
+        SplitTextDict = new Dictionary<string, string>(DataSet.PrependLineNumberSplitOptionDict);
         SplitTextOptions = new(SplitTextDict.Keys);
         InitializeComponent();
         // 响应式布局
