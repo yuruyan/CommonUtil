@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CommonUtil.Store;
+using Microsoft.Win32;
 
 namespace CommonUtil.View;
 
@@ -9,7 +10,7 @@ public partial class EnglishTextProcessView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(false));
-    public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>), typeof(EnglishTextProcessView), new PropertyMetadata());
+    public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>), typeof(EnglishTextProcessView), new PropertyMetadata());
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
@@ -47,8 +48,8 @@ public partial class EnglishTextProcessView : Page {
     /// <summary>
     /// 处理模式
     /// </summary>
-    public IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>> ProcessPatternDict {
-        get { return (IReadOnlyDictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>)GetValue(ProcessPatternDictProperty); }
+    public IDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)> ProcessPatternDict {
+        get { return (IDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>)GetValue(ProcessPatternDictProperty); }
         private set { SetValue(ProcessPatternDictProperty, value); }
     }
     /// <summary>
@@ -60,15 +61,7 @@ public partial class EnglishTextProcessView : Page {
     }
 
     public EnglishTextProcessView() {
-        ProcessPatternDict = new Dictionary<string, KeyValuePair<Func<string, string>, Action<string, string>>>() {
-            {"大写",new (TextTool.ToUpperCase, TextTool.FileToUpperCase) },
-            {"小写",new (TextTool.ToLowerCase, TextTool.FileToLowerCase) },
-            {"切换大小写",new (TextTool.ToggleCase, TextTool.FileToggleCase) },
-            {"转全角",new (TextTool.HalfCharToFullChar, TextTool.FileHalfCharToFullChar) },
-            {"转半角",new (TextTool.FullCharToHalfChar, TextTool.FileFullCharToHalfChar) },
-            {"单词首字母大写",new (TextTool.CapitalizeWords, TextTool.FileCapitalizeWords) },
-            {"句子首字母大写",new (TextTool.ToSentenceCase, TextTool.FileToSentenceCase) },
-        };
+        ProcessPatternDict = new Dictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>(DataSet.EnglishTextProcessOptionDict);
         InitializeComponent();
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
@@ -76,10 +69,10 @@ public partial class EnglishTextProcessView : Page {
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
             IsExpanded = window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
         });
     }
 
@@ -109,7 +102,7 @@ public partial class EnglishTextProcessView : Page {
     /// 文本处理
     /// </summary>
     /// <param name="func"></param>
-    private void StringTextProcess(Func<string, string> func) {
+    private void StringTextProcess(TextTool.TextProcess func) {
         OutputText = func(InputText);
     }
 
@@ -118,7 +111,7 @@ public partial class EnglishTextProcessView : Page {
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    private async Task FileTextProcess(Action<string, string> func) {
+    private async Task FileTextProcess(TextTool.FileProcess func) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -165,18 +158,18 @@ public partial class EnglishTextProcessView : Page {
             return;
         }
 
-        var pattern = ProcessPatternDict[
+        var (textProcess, fileProcess) = ProcessPatternDict[
             CommonUtils.NullCheck(ProcessPatternComboBox.SelectedValue.ToString())
         ];
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(pattern.Key);
+            StringTextProcess(textProcess);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             TextProcessClick,
-            () => FileTextProcess(pattern.Value)
+            () => FileTextProcess(fileProcess)
         );
     }
 }
