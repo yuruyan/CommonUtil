@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using CommonUtil.Store;
+using System.Globalization;
 using System.Windows.Data;
 
 namespace CommonUtil.View;
@@ -22,33 +23,25 @@ internal class ProcessVisibilityConverter : IValueConverter {
 
 public partial class DataDigestView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private delegate string? TextDigestHandler(string digest);
-    /// <summary>
-    /// StreamDigestHandler
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="callback">进度回调，参数为进度百分比</param>
-    /// <returns>任务取消返回 null</returns>
-    private delegate string? StreamDigestHandler(FileStream stream, CancellationToken? cancellationToken = null, Action<double>? callback = null);
 
     private class DigestInfo : DependencyObject {
         public static readonly DependencyProperty IsVivibleProperty = DependencyProperty.Register("IsVivible", typeof(bool), typeof(DigestInfo), new PropertyMetadata(false));
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(DigestInfo), new PropertyMetadata(""));
         public static readonly DependencyProperty ProcessProperty = DependencyProperty.Register("Process", typeof(double), typeof(DigestInfo), new PropertyMetadata(0.0));
 
-        public DigestInfo(TextDigestHandler textDigestHandler, StreamDigestHandler streamDigestHandler) {
-            TextDigestHandler = textDigestHandler;
-            StreamDigestHandler = streamDigestHandler;
+        public DigestInfo(DataDigest.TextDigest textDigestHandler, DataDigest.StreamDigest streamDigestHandler) {
+            TextDigest = textDigestHandler;
+            StreamDigest = streamDigestHandler;
         }
 
         /// <summary>
         /// 文本 Hash 处理器
         /// </summary>
-        public TextDigestHandler TextDigestHandler { get; set; }
+        public DataDigest.TextDigest TextDigest { get; set; }
         /// <summary>
         /// 文件流 Hash 处理器
         /// </summary>
-        public StreamDigestHandler StreamDigestHandler { get; set; }
+        public DataDigest.StreamDigest StreamDigest { get; set; }
         /// <summary>
         /// 是否可见
         /// </summary>
@@ -79,7 +72,7 @@ public partial class DataDigestView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
     public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
-    private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(Dictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
+    private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(IDictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
     public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
@@ -109,8 +102,8 @@ public partial class DataDigestView : Page {
     /// <summary>
     /// 摘要算法 Dict
     /// </summary>
-    private Dictionary<string, DigestInfo> DigestInfoDict {
-        get { return (Dictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty); }
+    private IDictionary<string, DigestInfo> DigestInfoDict {
+        get { return (IDictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty); }
         set { SetValue(DigestInfoDictProperty, value); }
     }
     /// <summary>
@@ -134,31 +127,10 @@ public partial class DataDigestView : Page {
     private CancellationTokenSource CancellationTokenSource = new();
 
     public DataDigestView() {
-        DigestInfoDict = new() {
-            { "MD2", new(DataDigest.MD2Digest, DataDigest.MD2Digest) },
-            { "MD4", new(DataDigest.MD4Digest, DataDigest.MD4Digest) },
-            { "MD5", new(DataDigest.MD5Digest, DataDigest.MD5Digest) },
-            { "SHA1", new(DataDigest.SHA1Digest, DataDigest.SHA1Digest) },
-            { "SHA3", new(DataDigest.SHA3Digest, DataDigest.SHA3Digest) },
-            { "SHA224", new(DataDigest.SHA224Digest, DataDigest.SHA224Digest) },
-            { "SHA256", new(DataDigest.SHA256Digest, DataDigest.SHA256Digest) },
-            { "SHA384", new(DataDigest.SHA384Digest, DataDigest.SHA384Digest) },
-            { "SHA512", new(DataDigest.SHA512Digest, DataDigest.SHA512Digest) },
-            { "WhirlpoolDigest", new(DataDigest.WhirlpoolDigest, DataDigest.WhirlpoolDigest) },
-            { "TigerDigest", new(DataDigest.TigerDigest, DataDigest.TigerDigest) },
-            { "SM3Digest", new(DataDigest.SM3Digest, DataDigest.SM3Digest) },
-            { "ShakeDigest", new(DataDigest.ShakeDigest, DataDigest.ShakeDigest) },
-            { "RipeMD128Digest", new(DataDigest.RipeMD128Digest, DataDigest.RipeMD128Digest) },
-            { "RipeMD160Digest", new(DataDigest.RipeMD160Digest, DataDigest.RipeMD160Digest) },
-            { "RipeMD256Digest", new(DataDigest.RipeMD256Digest, DataDigest.RipeMD256Digest) },
-            { "RipeMD320Digest", new(DataDigest.RipeMD320Digest, DataDigest.RipeMD320Digest) },
-            { "KeccakDigest", new(DataDigest.KeccakDigest, DataDigest.KeccakDigest) },
-            { "Gost3411Digest", new(DataDigest.Gost3411Digest, DataDigest.Gost3411Digest) },
-            { "Gost3411_2012_256Digest", new(DataDigest.Gost3411_2012_256Digest, DataDigest.Gost3411_2012_256Digest) },
-            { "Gost3411_2012_512Digest", new(DataDigest.Gost3411_2012_512Digest, DataDigest.Gost3411_2012_512Digest) },
-            { "Blake2bDigest", new(DataDigest.Blake2bDigest, DataDigest.Blake2bDigest) },
-            { "Blake2sDigest", new(DataDigest.Blake2sDigest, DataDigest.Blake2sDigest) },
-        };
+        DigestInfoDict = DataSet.DigestOptions.ToDictionary(
+            item => item.Item1,
+            item => new DigestInfo(item.Item2, item.Item3)
+        );
         DigestAlgorithms = DigestInfoDict.Keys.ToArray();
         InitializeComponent();
         // 初始化 AlgorithmMenuFlyout
@@ -270,7 +242,7 @@ public partial class DataDigestView : Page {
     /// <param name="text"></param>
     /// <returns></returns>
     private async Task CalculateTextDigestAsync(DigestInfo info, string text) {
-        var result = await Task.Run(() => info.TextDigestHandler.Invoke(text));
+        var result = await Task.Run(() => info.TextDigest.Invoke(text));
         info.Process = 1;
         info.Text = result ?? string.Empty;
     }
@@ -284,7 +256,7 @@ public partial class DataDigestView : Page {
     private async Task CalculateFileDigestAsync(DigestInfo info, string filename) {
         var result = await Task.Run(() => {
             using var stream = File.OpenRead(filename);
-            return info.StreamDigestHandler(
+            return info.StreamDigest(
                 stream,
                 CancellationTokenSource.Token,
                 process => ThrottleUtils.Throttle(info, () => {

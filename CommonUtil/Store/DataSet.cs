@@ -90,4 +90,33 @@ public static class DataSet {
         ("去除空白行", TextTool.RemoveWhiteSpaceLine, TextTool.FileRemoveWhiteSpaceLine),
         ("多个空白字符替换为一个空格", TextTool.ReplaceMultipleWhiteSpaceWithOne, TextTool.FileReplaceMultipleWhiteSpaceWithOne),
     };
+
+    /// <summary>
+    /// 摘要算法选项
+    /// </summary>
+    public static readonly IReadOnlyList<(string, DataDigest.TextDigest, DataDigest.StreamDigest)> DigestOptions = new (string, DataDigest.TextDigest, DataDigest.StreamDigest)[] {
+        ("MD2", DataDigest.MD2Digest, DataDigest.MD2Digest),
+        ("MD4", DataDigest.MD4Digest, DataDigest.MD4Digest),
+        ("MD5", DataDigest.MD5Digest, DataDigest.MD5Digest),
+        ("SHA1", DataDigest.SHA1Digest, DataDigest.SHA1Digest),
+        ("SHA3", DataDigest.SHA3Digest, DataDigest.SHA3Digest),
+        ("SHA224", DataDigest.SHA224Digest, DataDigest.SHA224Digest),
+        ("SHA256", DataDigest.SHA256Digest, DataDigest.SHA256Digest),
+        ("SHA384", DataDigest.SHA384Digest, DataDigest.SHA384Digest),
+        ("SHA512", DataDigest.SHA512Digest, DataDigest.SHA512Digest),
+        ("WhirlpoolDigest", DataDigest.WhirlpoolDigest, DataDigest.WhirlpoolDigest),
+        ("TigerDigest", DataDigest.TigerDigest, DataDigest.TigerDigest),
+        ("SM3Digest", DataDigest.SM3Digest, DataDigest.SM3Digest),
+        ("ShakeDigest", DataDigest.ShakeDigest, DataDigest.ShakeDigest),
+        ("RipeMD128Digest", DataDigest.RipeMD128Digest, DataDigest.RipeMD128Digest),
+        ("RipeMD160Digest", DataDigest.RipeMD160Digest, DataDigest.RipeMD160Digest),
+        ("RipeMD256Digest", DataDigest.RipeMD256Digest, DataDigest.RipeMD256Digest),
+        ("RipeMD320Digest", DataDigest.RipeMD320Digest, DataDigest.RipeMD320Digest),
+        ("KeccakDigest", DataDigest.KeccakDigest, DataDigest.KeccakDigest),
+        ("Gost3411Digest", DataDigest.Gost3411Digest, DataDigest.Gost3411Digest),
+        ("Gost3411_2012_256Digest", DataDigest.Gost3411_2012_256Digest, DataDigest.Gost3411_2012_256Digest),
+        ("Gost3411_2012_512Digest", DataDigest.Gost3411_2012_512Digest, DataDigest.Gost3411_2012_512Digest),
+        ("Blake2bDigest", DataDigest.Blake2bDigest, DataDigest.Blake2bDigest),
+        ("Blake2sDigest", DataDigest.Blake2sDigest, DataDigest.Blake2sDigest),
+    };
 }
