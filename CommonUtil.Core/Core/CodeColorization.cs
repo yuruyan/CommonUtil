@@ -12,14 +12,14 @@ public static class CodeColorization {
     /// <summary>
     /// 代码着色配置列表
     /// </summary>
-    private static readonly ICollection<SchemeInfo> Schemes;
+    private static readonly IReadOnlyList<SchemeInfo> Schemes;
     /// <summary>
     /// 语言名称
     /// </summary>
-    public static readonly ICollection<string> Languages;
+    public static readonly IReadOnlyList<string> Languages;
 
     static CodeColorization() {
-        var themes = JsonConvert.DeserializeObject<IList<SchemeInfo>>(
+        var themes = JsonConvert.DeserializeObject<List<SchemeInfo>>(
             Encoding.UTF8.GetString(Resource.Resource.CodeColorSchemeConfig)
         );
         if (themes is null) {
