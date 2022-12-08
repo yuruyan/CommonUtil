@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CommonUtil.Store;
+using Microsoft.Win32;
 
 namespace CommonUtil.View;
 
@@ -58,17 +59,9 @@ public partial class RemoveDuplicateView : Page {
         get { return (bool)GetValue(IsExpandedProperty); }
         set { SetValue(IsExpandedProperty, value); }
     }
-    private readonly Dictionary<string, string> SymbolDict;
 
     public RemoveDuplicateView() {
-        SymbolDict = new() {
-            { "换行符（⮠  ）", "\n" },
-            { "制表符（→）", "\t" },
-            { "空格（ ）", " " },
-            { "中文逗号（，）", "，" },
-            { "英文逗号（,）", "," },
-        };
-        SymbolOptions = new(SymbolDict.Keys);
+        SymbolOptions = new(DataSet.RemoveDuplicateSplitSymbolDict.Keys);
         InitializeComponent();
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
@@ -76,10 +69,10 @@ public partial class RemoveDuplicateView : Page {
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
             IsExpanded = window.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
+                .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                .AddValueChanged(window, (_, _) => {
+                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                });
         });
     }
 
@@ -175,7 +168,7 @@ public partial class RemoveDuplicateView : Page {
         // 非用户输入
         if (selectedValue != null) {
             if (selectedValue is string t) {
-                text = SymbolDict[t];
+                text = DataSet.RemoveDuplicateSplitSymbolDict[t];
             }
         }
         return text;

@@ -67,4 +67,15 @@ public static class DataSet {
         {"中文数字", OrdinalTextType.ChineseNumber },
         {"中文大写数字", OrdinalTextType.ChineseUpperNumber},
     };
+
+    /// <summary>
+    /// 文本去重分割符
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, string> RemoveDuplicateSplitSymbolDict = new Dictionary<string, string>() {
+        { "换行符（⮠  ）", "\n" },
+        { "制表符（→）", "\t" },
+        { "空格（ ）", " " },
+        { "中文逗号（，）", "，" },
+        { "英文逗号（,）", "," },
+    };
 }
