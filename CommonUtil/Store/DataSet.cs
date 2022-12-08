@@ -1,4 +1,5 @@
 ﻿using CommonUtil.View;
+using static QRCoder.QRCodeGenerator;
 
 namespace CommonUtil.Store;
 
@@ -152,5 +153,24 @@ public static class DataSet {
         {"水平翻转", InversionMode.Horizontal },
         {"垂直翻转", InversionMode.Vertical},
         {"全部翻转", InversionMode.Both },
+    };
+
+    /// <summary>
+    /// 二维码容错率
+    /// </summary>
+    public static readonly IReadOnlyDictionary<byte, ECCLevel> QRCodeECCLevelDict = new Dictionary<byte, ECCLevel>() {
+        {7, ECCLevel.L },
+        {15, ECCLevel.M },
+        {25, ECCLevel.Q },
+        {35, ECCLevel.H },
+    };
+
+    /// <summary>
+    /// 二维码图片质量
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, byte> QRCodeImageQualityDict = new Dictionary<string, byte>() {
+        {"低", 8},
+        {"中", 16},
+        {"高", 32 }
     };
 }

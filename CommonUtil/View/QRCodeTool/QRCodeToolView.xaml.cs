@@ -1,11 +1,10 @@
 ﻿using CommonUITools.Route;
-using CommonUtil.Core.Model;
 using CommonUtil.Route;
+using CommonUtil.Store;
 using Microsoft.Win32;
 using ModernWpf.Controls;
 using QRCoder.Exceptions;
 using System.Windows.Media.Imaging;
-using static QRCoder.QRCodeGenerator;
 using Bitmap = System.Drawing.Bitmap;
 
 namespace CommonUtil.View;
@@ -22,40 +21,6 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     public static readonly DependencyProperty ImageQualityListProperty = DependencyProperty.Register("ImageQualityList", typeof(IList<string>), typeof(QRCodeToolView), new PropertyMetadata());
     public static readonly DependencyProperty IsQRCodeDecodeViewSelectedProperty = DependencyProperty.Register("IsQRCodeDecodeViewSelected", typeof(bool), typeof(QRCodeToolView), new PropertyMetadata(true));
     public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register("IconPath", typeof(string), typeof(QRCodeToolView), new PropertyMetadata(string.Empty));
-
-    /// <summary>
-    /// 二维码容错率
-    /// </summary>
-    private static readonly IDictionary<byte, ECCLevel> ECCLevelDict = new Dictionary<byte, ECCLevel>() {
-        {7, ECCLevel.L },
-        {15, ECCLevel.M },
-        {25, ECCLevel.Q },
-        {35, ECCLevel.H },
-    };
-    /// <summary>
-    /// 图片质量
-    /// </summary>
-    private static readonly IDictionary<string, byte> ImageQualityDict = new Dictionary<string, byte>() {
-        {"低", 8},
-        {"中", 16},
-        {"高", 32 }
-    };
-    private readonly Type[] Routers = {
-        typeof(QRCodeDecodeView),
-        typeof(URLQRCodeView),
-        typeof(SMSQRCodeView),
-        typeof(WIFIQRCodeView),
-        typeof(MailQRCodeView),
-        typeof(PhoneNumberQRCodeView),
-        typeof(GeolocationQRCodeView),
-    };
-    private readonly RouterService RouterService;
-    private readonly SaveFileDialog SaveFileDialog = new() {
-        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
-    };
-    private readonly OpenFileDialog OpenFileDialog = new() {
-        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|All Files|*.*",
-    };
 
     /// <summary>
     /// 二维码 ImageSource
@@ -120,7 +85,22 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         get { return (string)GetValue(IconPathProperty); }
         set { SetValue(IconPathProperty, value); }
     }
-
+    private readonly Type[] Routers = {
+        typeof(QRCodeDecodeView),
+        typeof(URLQRCodeView),
+        typeof(SMSQRCodeView),
+        typeof(WIFIQRCodeView),
+        typeof(MailQRCodeView),
+        typeof(PhoneNumberQRCodeView),
+        typeof(GeolocationQRCodeView),
+    };
+    private readonly RouterService RouterService;
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|SVG File|*.svg|PDF File|*.pdf",
+    };
+    private readonly OpenFileDialog OpenFileDialog = new() {
+        Filter = "PNG File|*.png|BMP File|*.bmp|JPG File|*.jpg|All Files|*.*",
+    };
     /// <summary>
     /// 当前图片缓存
     /// </summary>
@@ -128,8 +108,8 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
     private BitmapImage? IconBitmapImage;
 
     public QRCodeToolView() {
-        ECCLevels = ECCLevelDict.Keys.ToList();
-        ImageQualityList = ImageQualityDict.Keys.ToList();
+        ECCLevels = DataSet.QRCodeECCLevelDict.Keys.ToList();
+        ImageQualityList = DataSet.QRCodeImageQualityDict.Keys.ToList();
         InitializeComponent();
         // 更新 QRCodeForegroundText
         DependencyPropertyDescriptor
@@ -249,8 +229,8 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                     QRCodeForeground.B
                 ),
                 Image = icon,
-                PixelPerModule = ImageQualityDict[ImageQualityList[ImageQualityComboSelectedIndex]],
-                ECCLevel = ECCLevelDict[ECCLevels[ECCLevelComboxSelectedIndex]]
+                PixelPerModule = DataSet.QRCodeImageQualityDict[ImageQualityList[ImageQualityComboSelectedIndex]],
+                ECCLevel = DataSet.QRCodeECCLevelDict[ECCLevels[ECCLevelComboxSelectedIndex]]
             }));
         } catch (DataTooLongException) {
             MessageBox.Error("文本过长！");
@@ -259,9 +239,6 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             MessageBox.Error($"生成失败：{e.Message}");
             return null;
         }
-        //finally {
-        //    icon?.Dispose();
-        //}
         // 验证不通过
         if (!data.Any()) {
             return null;
