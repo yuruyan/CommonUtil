@@ -5,12 +5,12 @@ namespace CommonUtil.View;
 public partial class AsciiTableView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty AsciiTableListProperty = DependencyProperty.Register("AsciiTableList", typeof(ObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
+    public static readonly DependencyProperty AsciiTableListProperty = DependencyProperty.Register("AsciiTableList", typeof(ExtendedObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
     /// <summary>
     /// ASCII 列表
     /// </summary>
-    public ObservableCollection<AsciiInfo> AsciiTableList {
-        get { return (ObservableCollection<AsciiInfo>)GetValue(AsciiTableListProperty); }
+    public ExtendedObservableCollection<AsciiInfo> AsciiTableList {
+        get { return (ExtendedObservableCollection<AsciiInfo>)GetValue(AsciiTableListProperty); }
         set { SetValue(AsciiTableListProperty, value); }
     }
 
@@ -20,11 +20,7 @@ public partial class AsciiTableView : Page {
         // 加载数据
         Task.Run(() => {
             var list = AsciiTable.GetAsciiInfoList();
-            Dispatcher.Invoke(() => {
-                for (int i = 0; i < list.Count; i++) {
-                    AsciiTableList.Add(list[i]);
-                }
-            });
+            Dispatcher.Invoke(() => AsciiTableList.AddRange(list));
         });
     }
 
