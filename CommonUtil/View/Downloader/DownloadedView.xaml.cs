@@ -1,6 +1,4 @@
-﻿using CommonUtil.Core.Model;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class DownloadedView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -27,7 +25,7 @@ public partial class DownloadedView : Page {
     private void OpenFolderClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is DownloadTask task) {
-            string filepath = Path.Combine(task.SaveDirectory.FullName, task.Name);
+            string filepath = Path.Combine(task.SaveDirectory.FullName, task.FileName);
             // 文件存在
             if (File.Exists(filepath)) {
                 UIUtils.OpenFileInExplorerAsync(filepath);
@@ -61,7 +59,7 @@ public partial class DownloadedView : Page {
     private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is DownloadTask result) {
-            UIUtils.OpenFileWithAsync(Path.Join(result.SaveDirectory.FullName, result.Name));
+            UIUtils.OpenFileWithAsync(Path.Join(result.SaveDirectory.FullName, result.FileName));
         }
     }
 

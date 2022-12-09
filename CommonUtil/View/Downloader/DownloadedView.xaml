@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="DownloadedView"
   d:DesignHeight="450"
   d:DesignWidth="800"
@@ -57,11 +58,16 @@
             <ColumnDefinition Width="auto" />
           </Grid.ColumnDefinitions>
           <!--  文件信息  -->
-          <local:DownloadTaskInfoWidget FilePath="{Binding Name}" TotalSize="{Binding TotalSize}" />
-          <TextBlock
-            Grid.Column="1"
-            Padding="16"
-            Text="{Binding FinishTime, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" />
+          <local:DownloadTaskInfoWidget FilePath="{Binding FileName}" TotalSize="{Binding FileSize}" />
+          <!--  状态信息  -->
+          <ui:SimpleStackPanel Grid.Column="1" Orientation="Horizontal">
+            <TextBlock
+              Foreground="{Binding Status, Converter={StaticResource ProcessResultIconForegroundConverter}}"
+              Style="{StaticResource ColorIconFontStyle}"
+              Text="{Binding Status, Converter={StaticResource ProcessResultIconConverter}}"
+              ToolTip="{Binding Status, Converter={StaticResource ProcessResultMessageConverter}}" />
+            <TextBlock Padding="16" Text="{Binding FinishTime, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" />
+          </ui:SimpleStackPanel>
         </Grid>
       </DataTemplate>
     </ListBox.ItemTemplate>

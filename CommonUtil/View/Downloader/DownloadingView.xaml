@@ -21,8 +21,8 @@
           </Grid.ColumnDefinitions>
           <!--  文件信息  -->
           <local:DownloadTaskInfoWidget
-            FilePath="{Binding Name}"
-            TotalSize="{Binding TotalSize}"
+            FilePath="{Binding FileName}"
+            TotalSize="{Binding FileSize}"
             TransferSize="{Binding DownloadedSize}" />
           <!--  进度条  -->
           <StackPanel

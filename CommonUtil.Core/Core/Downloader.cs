@@ -41,8 +41,9 @@ public class Downloader {
         if (TaskUtils.Try(() => new Uri(url)) is not Uri uri) {
             return null;
         }
-        var downloadTask = new DownloadTask(url, directory) {
-            Name = uri.Segments.LastOrDefault() ?? "未知文件名"
+        var downloadTask = new DownloadTask(url, directory, uri.Segments.LastOrDefault() ?? "未知文件名") {
+            Proxy = proxy,
+            Status = ProcessResult.Processing,
         };
         DownloadTaskInfoDict[service] = downloadTask;
         service.DownloadFileTaskAsync(url, directory);
@@ -58,8 +59,8 @@ public class Downloader {
         if (sender is DownloadService service) {
             var taskInfo = DownloadTaskInfoDict[service];
             UIUtils.RunOnUIThread(() => {
-                taskInfo.TotalSize = e.TotalBytesToReceive;
-                taskInfo.Name = Path.GetFileName(e.FileName);
+                taskInfo.FileSize = e.TotalBytesToReceive;
+                taskInfo.FileName = Path.GetFileName(e.FileName);
             });
         }
     }
@@ -74,14 +75,14 @@ public class Downloader {
             return;
         }
         var taskInfo = DownloadTaskInfoDict[service];
-        // 更新视图
+        // 更新视图 
         UIUtils.RunOnUIThread(() => {
-            taskInfo.TotalSize = service.Package.ReceivedBytesSize;
+            taskInfo.FileSize = service.Package.ReceivedBytesSize;
             taskInfo.LastUpdateTime = DateTime.Now;
-            taskInfo.DownloadedSize = taskInfo.TotalSize;
+            taskInfo.DownloadedSize = taskInfo.FileSize;
             taskInfo.Process = 100;
             taskInfo.FinishTime = DateTime.Now;
-            taskInfo.IsFinished = true;
+            taskInfo.Status = e.Error is null ? ProcessResult.Successful : ProcessResult.Failed;
             // 从下载列表中移除
             DownloadTaskInfoDict.Remove(service);
         });

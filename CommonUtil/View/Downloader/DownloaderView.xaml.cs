@@ -19,8 +19,8 @@ public partial class DownloaderView : Page {
     /// 下载选择框
     /// </summary>
     private readonly DownloadInfoDialog DownloadInfoDialog = new();
-    private readonly DownloadingView DownloadingViewInstance;
-    private readonly DownloadedView DownloadedViewInstance;
+    //private readonly DownloadingView DownloadingViewInstance;
+    //private readonly DownloadedView DownloadedViewInstance;
     private readonly Core.Downloader Downloader = new();
     /// <summary>
     /// 下载任务列表，引用 DownloadingView
@@ -46,10 +46,8 @@ public partial class DownloaderView : Page {
             ContentFrame
         );
         // 显式初始化
-        DownloadingViewInstance = (DownloadingView)RouterService.GetInstance(typeof(DownloadingView));
-        DownloadedViewInstance = (DownloadedView)RouterService.GetInstance(typeof(DownloadedView));
-        DownloadingTaskList = DownloadingViewInstance.DownloadTaskList;
-        DownloadedTaskList = DownloadedViewInstance.DownloadTaskList;
+        DownloadingTaskList = ((DownloadingView)RouterService.GetInstance(typeof(DownloadingView))).DownloadTaskList;
+        DownloadedTaskList = ((DownloadedView)RouterService.GetInstance(typeof(DownloadedView))).DownloadTaskList;
         Downloader.DownloadCompleted += DownloadCompletedHandler;
         Downloader.DownloadFailed += DownloadFailedHandler;
     }
@@ -60,10 +58,10 @@ public partial class DownloaderView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void DownloadFailedHandler(object? sender, DownloadTask e) {
-        //Dispatcher.Invoke(() => {
-        //    DownloadingViewInstance.DownloadTaskList.Remove(e);
-        //    MessageBox.Error($"下载 {e.Name} 失败");
-        //});
+        Dispatcher.Invoke(() => {
+            DownloadingTaskList.Remove(e);
+            DownloadedTaskList.Add(e);
+        });
     }
 
     /// <summary>
@@ -73,8 +71,8 @@ public partial class DownloaderView : Page {
     /// <param name="e"></param>
     private void DownloadCompletedHandler(object? sender, DownloadTask e) {
         Dispatcher.Invoke(() => {
-            DownloadingViewInstance.DownloadTaskList.Remove(e);
-            DownloadedViewInstance.DownloadTaskList.Add(e);
+            DownloadingTaskList.Remove(e);
+            DownloadedTaskList.Add(e);
         });
     }
 
@@ -108,7 +106,7 @@ public partial class DownloaderView : Page {
                 continue;
             }
             anySuccess = true;
-            DownloadingViewInstance.DownloadTaskList.Add(task);
+            DownloadingTaskList.Add(task);
         }
         // 如果任意一个任务开始
         if (anySuccess) {

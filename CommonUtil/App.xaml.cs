@@ -47,7 +47,7 @@ public partial class App : Application {
     }
 
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
-        Logger.Error(e);
+        Logger.Error(e.Exception);
         // 提示信息
         System.Windows.MessageBox.Show(
             e.Exception.Message,
