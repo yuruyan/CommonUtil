@@ -4,16 +4,23 @@ using System.Text.RegularExpressions;
 
 namespace CommonUtil.Core;
 
+#if NET7_0_OR_GREATER
 public static partial class JsonExtractor {
+#elif NET6_0_OR_GREATER
+public static class JsonExtractor {
+#endif
+#if NET7_0_OR_GREATER
     [GeneratedRegex("^(?<name>[^/\\[\\]]+)(?<arrayIdentifier>\\[(?<index>\\d+|\\*)\\])?$")]
     private static partial Regex GetPatternRegex();
-
     [GeneratedRegex("\\[(?<index>\\d+|\\*)\\]")]
     private static partial Regex GetIndexRegex();
 
     private static readonly Regex PatternRegex = GetPatternRegex();
     private static readonly Regex IndexRegex = GetIndexRegex();
-
+#elif NET6_0_OR_GREATER
+    private static readonly Regex PatternRegex = new(@"^(?<name>[^/\[\]]+)(?<arrayIdentifier>\[(?<index>\d+|\*)\])?$");
+    private static readonly Regex IndexRegex = new(@"\[(?<index>\d+|\*)\]");
+#endif
     private struct PatternInfo {
         // 根节点为数组时可为空
         public string Name { get; set; }

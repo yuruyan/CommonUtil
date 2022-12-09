@@ -2,7 +2,11 @@
 
 namespace CommonUtil.Core;
 
+#if NET7_0_OR_GREATER
 public partial class TextTool {
+#elif NET6_0_OR_GREATER
+public class TextTool {
+#endif
     public delegate string TextProcess(string text);
     public delegate void FileProcess(string inputFile, string outputFile);
 
@@ -11,6 +15,7 @@ public partial class TextTool {
     /// 英文句子分隔符
     /// </summary>
     private const char EnglishSentenceSeparator = '.';
+#if NET7_0_OR_GREATER
     /// <summary>
     /// 英文单词正则
     /// </summary>
@@ -23,6 +28,20 @@ public partial class TextTool {
     /// 多个空白字符正则
     /// </summary>
     private static readonly Regex MultipleWhiteSpaceRegex = GetMultipleWhiteSpaceRegex();
+#elif NET6_0_OR_GREATER
+    /// <summary>
+    /// 英文单词正则
+    /// </summary>
+    private static readonly Regex EnglishWordRegex = new(@"[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase);
+    /// <summary>
+    /// 英文单词、数字正则
+    /// </summary>
+    private static readonly Regex EnglishWordNumberRegex = new(@"[a-z0-9]+", RegexOptions.IgnoreCase);
+    /// <summary>
+    /// 多个空白字符正则
+    /// </summary>
+    private static readonly Regex MultipleWhiteSpaceRegex = new(@"[\t\r\f ]{2,}");
+#endif
     /// <summary>
     /// 半角全角 Dict
     /// </summary>
@@ -33,12 +52,14 @@ public partial class TextTool {
     private static readonly Dictionary<char, char> FullHalfCharDict = new();
     #endregion
 
+#if NET7_0_OR_GREATER
     [GeneratedRegex("[a-z]+('[a-z]+)?", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordRegex();
     [GeneratedRegex("[a-z0-9]+", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordNumberRegex();
     [GeneratedRegex("[\\t\\r\\f ]{2,}")]
     private static partial Regex GetMultipleWhiteSpaceRegex();
+#endif
 
     static TextTool() {
         // 空格

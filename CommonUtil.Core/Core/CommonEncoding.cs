@@ -3,14 +3,24 @@ using System.Web;
 
 namespace CommonUtil.Core;
 
+#if NET7_0_OR_GREATER
 public static partial class CommonEncoding {
+#elif NET6_0_OR_GREATER
+public static class CommonEncoding {
+#endif
+#if NET7_0_OR_GREATER
     private static readonly Regex UTF8Regex = GetUTF8Regex();
     private static readonly Regex UnicodeRegex = GetUnicodeRegex();
-
+#elif NET6_0_OR_GREATER
+    private static readonly Regex UTF8Regex = new(@"&#x(\w{4});", RegexOptions.IgnoreCase);
+    private static readonly Regex UnicodeRegex = new(@"\\u(\w{4})", RegexOptions.IgnoreCase);
+#endif
+#if NET7_0_OR_GREATER
     [GeneratedRegex("&#x(\\w{4});", RegexOptions.IgnoreCase, "zh-CN")]
     private static partial Regex GetUTF8Regex();
     [GeneratedRegex("\\\\u(\\w{4})", RegexOptions.IgnoreCase, "zh-CN")]
     private static partial Regex GetUnicodeRegex();
+#endif
 
     /// <summary>
     /// UTF8 编码

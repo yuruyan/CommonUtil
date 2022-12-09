@@ -4,15 +4,25 @@ using System.Windows.Media;
 
 namespace CommonUtil.Core;
 
+#if NET7_0_OR_GREATER
 public static partial class ColorTransform {
+#elif NET6_0_OR_GREATER
+public static class ColorTransform {
+#endif
     private static readonly Regex RGBRegex = CompileThreeParametersRegex("rgb");
     private static readonly Regex RGBARegex = CompileFourParametersRegex("rgba");
+#if NET7_0_OR_GREATER
     private static readonly Regex HSLRegex = GetHSLRegex();
+#elif NET6_0_OR_GREATER
+    private static readonly Regex HSLRegex = new(@"hsl *\( *([\d\.\-]+) *, *([\d\.\-]+) *% *, *([\d\.\-]+) *% *\)", RegexOptions.IgnoreCase);
+#endif
     private static readonly Regex ThreeColorsRegex = CompileThreeParametersRegex("");
     private static readonly Regex FourColorsRegex = CompileFourParametersRegex("");
 
+#if NET7_0_OR_GREATER
     [GeneratedRegex("hsl *\\( *([\\d\\.\\-]+) *, *([\\d\\.\\-]+) *% *, *([\\d\\.\\-]+) *% *\\)", RegexOptions.IgnoreCase, "zh-CN")]
     private static partial Regex GetHSLRegex();
+#endif
 
     /// <summary>
     /// 解析 3 个参数
