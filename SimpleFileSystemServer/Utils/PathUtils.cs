@@ -3,12 +3,20 @@ using System.Text.RegularExpressions;
 
 namespace SimpleFileSystemServer.Utils;
 
+#if NET7_0_OR_GREATER
 public partial class PathUtils {
+#elif NET6_0_OR_GREATER
+public class PathUtils {
+#endif
+#if NET7_0_OR_GREATER
     private static readonly Regex PathSpliter = GetPathSpliterRegex();
-
+#elif NET6_0_OR_GREATER
+    private static readonly Regex PathSpliter = new(@"[\\/]");
+#endif
+#if NET7_0_OR_GREATER
     [GeneratedRegex("[\\\\/]")]
     private static partial Regex GetPathSpliterRegex();
-
+#endif
     /// <summary>
     /// 获取绝对路径
     /// </summary>
