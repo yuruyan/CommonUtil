@@ -23,7 +23,7 @@ public static partial class ColorTransform {
     /// <exception cref="Exception">未匹配</exception>
     /// <exception cref="FormatException">解析为数字失败</exception>
     /// <exception cref="OverflowException"></exception>
-    private static ValueTuple<double, double, double> ParseThreeParameters(string input, Regex regex) {
+    private static (double, double, double) ParseThreeParameters(string input, Regex regex) {
         var match = regex.Match(input);
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
@@ -44,7 +44,7 @@ public static partial class ColorTransform {
     /// <exception cref="Exception">未匹配</exception>
     /// <exception cref="FormatException">解析为数字失败</exception>
     /// <exception cref="OverflowException"></exception>
-    private static ValueTuple<double, double, double, double> ParseFourParameters(string input, Regex regex) {
+    private static (double, double, double, double) ParseFourParameters(string input, Regex regex) {
         var match = regex.Match(input);
         if (!match.Success) {
             throw new Exception("input doesn't match " + regex);
@@ -56,6 +56,7 @@ public static partial class ColorTransform {
             double.Parse(match.Groups[4].Value)
         );
     }
+
     /// <summary>
     /// 编译 3 个参数正则
     /// </summary>
@@ -86,13 +87,14 @@ public static partial class ColorTransform {
     /// <summary>
     /// 转 Color
     /// </summary>
-    /// <param name="args"></param>
+    /// <param name="args">(r, g, b)</param>
     /// <returns></returns>
-    private static Color GetColor(ValueTuple<double, double, double> args) {
+    private static Color GetColor((double, double, double) args) {
+        var (r, g, b) = args;
         return new Color() {
-            R = (byte)args.Item1,
-            G = (byte)args.Item2,
-            B = (byte)args.Item3,
+            R = (byte)r,
+            G = (byte)g,
+            B = (byte)b,
             A = 255
         };
     }
@@ -100,14 +102,15 @@ public static partial class ColorTransform {
     /// <summary>
     /// 转 Color
     /// </summary>
-    /// <param name="args"></param>
+    /// <param name="args">(r, g, b, a)</param>
     /// <returns></returns>
-    private static Color GetColor(ValueTuple<double, double, double, double> args) {
+    private static Color GetColor((double, double, double, double) args) {
+        var (r, g, b, a) = args;
         return new Color() {
-            R = (byte)args.Item1,
-            G = (byte)args.Item2,
-            B = (byte)args.Item3,
-            A = (byte)args.Item4,
+            R = (byte)r,
+            G = (byte)g,
+            B = (byte)b,
+            A = (byte)a,
         };
     }
 
@@ -176,53 +179,53 @@ public static partial class ColorTransform {
         return $"({luv.L:f2},{luv.U:f2},{luv.V:f2})";
     }
 
-    public static ValueTuple<double, double, double, double> ColorToHEXValues(Color color) {
+    public static (double, double, double, double) ColorToHEXValues(Color color) {
         return (color.A, color.R, color.G, color.B);
     }
 
-    public static ValueTuple<double, double, double> ColorToRGBValues(Color color) {
+    public static (double, double, double) ColorToRGBValues(Color color) {
         return (color.R, color.G, color.B);
     }
 
-    public static ValueTuple<double, double, double, double> ColorToRGBA1Values(Color color) {
+    public static (double, double, double, double) ColorToRGBA1Values(Color color) {
         return (color.R, color.G, color.B, color.A);
     }
 
-    public static ValueTuple<double, double, double, double> ColorToRGBA2Values(Color color) {
+    public static (double, double, double, double) ColorToRGBA2Values(Color color) {
         return (color.R, color.G, color.B, color.A / (double)255);
     }
 
-    public static ValueTuple<double, double, double> ColorToHSLValues(Color color) {
+    public static (double, double, double) ColorToHSLValues(Color color) {
         var hsl = GetRgb(color).To<Hsl>();
         return (hsl.H, hsl.S * 100, hsl.L * 100);
     }
 
-    public static ValueTuple<double, double, double> ColorToHSVValues(Color color) {
+    public static (double, double, double) ColorToHSVValues(Color color) {
         var hsv = GetRgb(color).To<Hsv>();
         return (hsv.H, hsv.S * 100, hsv.V * 100);
     }
 
-    public static ValueTuple<double, double, double> ColorToLABValues(Color color) {
+    public static (double, double, double) ColorToLABValues(Color color) {
         var lab = GetRgb(color).To<Lab>();
         return (lab.L, lab.A, lab.B);
     }
 
-    public static ValueTuple<double, double, double> ColorToXYZValues(Color color) {
+    public static (double, double, double) ColorToXYZValues(Color color) {
         var xyz = GetRgb(color).To<Xyz>();
         return (xyz.X, xyz.Y, xyz.Z);
     }
 
-    public static ValueTuple<double, double, double> ColorToLCHValues(Color color) {
+    public static (double, double, double) ColorToLCHValues(Color color) {
         var lch = GetRgb(color).To<Lch>();
         return (lch.L, lch.C, lch.H);
     }
 
-    public static ValueTuple<double, double, double, double> ColorToCMYKValues(Color color) {
+    public static (double, double, double, double) ColorToCMYKValues(Color color) {
         var cmyk = GetRgb(color).To<Cmyk>();
         return (cmyk.C, cmyk.M, cmyk.Y, cmyk.K);
     }
 
-    public static ValueTuple<double, double, double> ColorToLUVValues(Color color) {
+    public static (double, double, double) ColorToLUVValues(Color color) {
         var luv = GetRgb(color).To<Luv>();
         return (luv.L, luv.U, luv.V);
     }
