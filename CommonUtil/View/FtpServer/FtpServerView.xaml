@@ -120,8 +120,8 @@
                     <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
                     <TextBlock VerticalAlignment="Center" Text="复制 ftp 地址" />
                   </StackPanel>
-                  <StackPanel MouseUp="DeleteUserInfoMouseUp" TextBlock.Foreground="{DynamicResource DeleteButtonForeground}">
-                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6b4;" />
+                  <StackPanel MouseUp="DeleteUserInfoMouseUp" TextBlock.Foreground="{DynamicResource ErrorBackground}">
+                    <TextBlock Style="{StaticResource ColorIconFontStyle}" Text="&#xe6b4;" />
                     <TextBlock VerticalAlignment="Center" Text="删除" />
                   </StackPanel>
                 </ContextMenu>

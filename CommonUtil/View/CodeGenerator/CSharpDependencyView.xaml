@@ -72,8 +72,8 @@
                   <MenuItem Click="RemovePropertyClick" Header="删除">
                     <MenuItem.Icon>
                       <TextBlock
-                        Foreground="{StaticResource DeleteButtonForeground}"
-                        Style="{StaticResource IconFontStyle}"
+                        Foreground="{StaticResource ErrorBackground}"
+                        Style="{StaticResource ColorIconFontStyle}"
                         Text="&#xe6b4;" />
                     </MenuItem.Icon>
                   </MenuItem>

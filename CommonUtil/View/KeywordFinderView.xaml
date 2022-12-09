@@ -137,7 +137,7 @@
                     <MenuItem.Icon>
                       <TextBlock
                         Foreground="#f5a623"
-                        Style="{StaticResource IconFontStyle}"
+                        Style="{StaticResource ColorIconFontStyle}"
                         Text="&#xe660;" />
                     </MenuItem.Icon>
                   </MenuItem>
