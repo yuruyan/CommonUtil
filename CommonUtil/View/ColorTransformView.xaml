@@ -103,7 +103,7 @@
               <TextBox
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
-                Style="{StaticResource ASCIIFontStyle}"
+                FontFamily="{StaticResource ASCIIFontFamily}"
                 KeyUp="TextBoxKeyUpHandler"
                 Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
