@@ -66,38 +66,8 @@
   <ItemGroup>
     <Resource Include="favicon.ico" />
     <Resource Include="Resource\iconfont.ttf" />
-    <Resource Include="Resource\image\JapaneseSymbol.png" />
+    <Resource Include="Resource\image\*" />
     <Resource Include="Resource\SplashWindow.png" />
-    <Resource Include="Resource\image\ascii.png" />
-    <Resource Include="Resource\image\base64.png" />
-    <Resource Include="Resource\image\BaseConversion.png" />
-    <Resource Include="Resource\image\BMI.png" />
-    <Resource Include="Resource\image\ChineseTransform.png" />
-    <Resource Include="Resource\image\CodeGenerator.png" />
-    <Resource Include="Resource\image\ColorPicker.png" />
-    <Resource Include="Resource\image\DateTime.png" />
-    <Resource Include="Resource\image\download.png" />
-    <Resource Include="Resource\image\Edge.png" />
-    <Resource Include="Resource\image\encoding.png" />
-    <Resource Include="Resource\image\Encryption.png" />
-    <Resource Include="Resource\image\file-server.png" />
-    <Resource Include="Resource\image\FileSearch.png" />
-    <Resource Include="Resource\image\FileVersion.png" />
-    <Resource Include="Resource\image\format.png" />
-    <Resource Include="Resource\image\FTP.png" />
-    <Resource Include="Resource\image\IdiomMatching.png" />
-    <Resource Include="Resource\image\Intersection.png" />
-    <Resource Include="Resource\image\JSON.png" />
-    <Resource Include="Resource\image\link.png" />
-    <Resource Include="Resource\image\Merge.png" />
-    <Resource Include="Resource\image\order.png" />
-    <Resource Include="Resource\image\paint.png" />
-    <Resource Include="Resource\image\qrcode.png" />
-    <Resource Include="Resource\image\random.png" />
-    <Resource Include="Resource\image\regex.png" />
-    <Resource Include="Resource\image\sms.png" />
-    <Resource Include="Resource\image\TextTool.png" />
-    <Resource Include="Resource\image\wifi.png" />
   </ItemGroup>
 
   <ItemGroup>
