@@ -41,4 +41,10 @@
     <ProjectReference Include="..\..\CommonUITools\CommonUITools\CommonUITools.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resource\RandomDataSource.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
