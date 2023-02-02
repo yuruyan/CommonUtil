@@ -1,4 +1,4 @@
-﻿namespace CommonUtilBootstrapper {
+﻿namespace CommonUtilStarter {
     partial class MainForm {
         /// <summary>
         ///  Required designer variable.

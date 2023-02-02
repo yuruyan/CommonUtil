@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.Core", "CommonUt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTools", "..\CommonUITools\CommonTools\CommonTools.csproj", "{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtilBootstrapper", "CommonUtilBootstrapper\CommonUtilBootstrapper.csproj", "{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtilStarter", "CommonUtilStarter\CommonUtilStarter.csproj", "{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

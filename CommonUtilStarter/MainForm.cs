@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace CommonUtilBootstrapper;
+namespace CommonUtilStarter;
 
 public partial class MainForm : Form {
     public MainForm() {

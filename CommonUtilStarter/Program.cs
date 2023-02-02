@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO.Pipes;
 using System.Security.Principal;
 
-namespace CommonUtilBootstrapper;
+namespace CommonUtilStarter;
 
 internal static class Program {
     private static readonly Logger Log = LogManager.GetCurrentClassLogger();
