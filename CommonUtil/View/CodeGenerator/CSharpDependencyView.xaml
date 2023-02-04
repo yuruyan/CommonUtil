@@ -16,19 +16,14 @@
   mc:Ignorable="d">
   <Page.Resources>
     <Thickness x:Key="itemGap">8</Thickness>
-    <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <system:Double x:Key="ExpansionThreshold">700</system:Double>
   </Page.Resources>
 
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition Name="SecondColumnDefinition" Width="auto" />
-      <ColumnDefinition Name="ThirdColumnDefinition" />
-    </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="1*" />
-      <RowDefinition x:Name="SecondRowDefinition" Height="0" />
-      <RowDefinition x:Name="ThirdRowDefinition" Height="0" />
+      <RowDefinition />
+      <RowDefinition Height="auto" />
+      <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input Box  -->
     <Grid>
@@ -44,11 +39,12 @@
         <RowDefinition Height="auto" />
         <RowDefinition />
       </Grid.RowDefinitions>
-      <UniformGrid Columns="4">
+      <UniformGrid Columns="5">
         <TextBlock Text="属性名" />
         <TextBlock Text="类名" />
         <TextBlock Text="属性类型" />
         <TextBlock Text="默认值" />
+        <TextBlock Text="注释" />
       </UniformGrid>
       <ListBox
         x:Name="TypeInfoListBox"
@@ -62,11 +58,12 @@
             <UniformGrid
               Width="{Binding ElementName=TypeInfoListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}"
               Background="Transparent"
-              Columns="4">
+              Columns="5">
               <TextBox Text="{Binding Name}" />
               <TextBox Text="{Binding ClassName}" />
               <TextBox Text="{Binding Type}" />
               <TextBox Text="{Binding Value}" />
+              <TextBox Text="{Binding Comment}" />
               <UniformGrid.ContextMenu>
                 <ContextMenu>
                   <MenuItem Click="RemovePropertyClick" Header="删除">
@@ -88,21 +85,21 @@
     <!--  Control  -->
     <ui:SimpleStackPanel
       Name="ControlPanel"
-      Grid.Column="1"
+      Grid.Row="1"
       Margin="8"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
-      Orientation="Vertical"
+      Orientation="Horizontal"
       Style="{StaticResource GlobalSimpleStackPanelStyle}">
       <ui:SimpleStackPanel.Resources>
         <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="Orientation" Value="Vertical" />
               <Setter Property="HorizontalAlignment" Value="Center" />
             </DataTrigger>
             <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-              <Setter Property="Orientation" Value="Vertical" />
+              <Setter Property="Orientation" Value="Horizontal" />
               <Setter Property="HorizontalAlignment" Value="Center" />
             </DataTrigger>
           </Style.Triggers>
@@ -134,7 +131,7 @@
     <!--  Output Box  -->
     <TextBox
       x:Name="OutputTextBox"
-      Grid.Column="2"
+      Grid.Row="2"
       IsReadOnly="True"
       Style="{StaticResource MultilineTextBoxStyle}"
       Text="{Binding OutputText}" />
