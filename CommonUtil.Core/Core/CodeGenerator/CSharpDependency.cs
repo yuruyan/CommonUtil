@@ -13,6 +13,9 @@ public static class CSharpDependencyGenerator {
         var poSb = new StringBuilder();
         poSb.AppendLine($"public class {className}PO {{");
         foreach (TypeInfo type in types) {
+            poSb.AppendLine($"{Indent}/// <summary>");
+            poSb.AppendLine($"{Indent}/// {type.Comment}");
+            poSb.AppendLine($"{Indent}/// </summary>");
             poSb.AppendLine($@"{Indent}public {type.Type} {type.Name} {{get; set;}} = {type.Value};");
         }
         poSb.AppendLine("}");
@@ -23,6 +26,9 @@ public static class CSharpDependencyGenerator {
         var propertySb = new StringBuilder();
         var staticSb = new StringBuilder();
         foreach (var type in types) {
+            propertySb.AppendLine($"{Indent}/// <summary>");
+            propertySb.AppendLine($"{Indent}/// {type.Comment}");
+            propertySb.AppendLine($"{Indent}/// </summary>");
             propertySb.AppendLine($"{Indent}public {type.Type} {type.Name} {{")
                 .AppendLine($"{DoubleIndent}get {{ return ({type.Type})GetValue({type.Name}Property); }}")
                 .AppendLine($"{DoubleIndent}set {{ SetValue({type.Name}Property, value); }}")
@@ -44,15 +50,17 @@ public record TypeInfo {
 
     }
 
-    public TypeInfo(string name, string className, string type, string value) {
+    public TypeInfo(string name, string className, string type, string value, string comment) {
         Name = name;
         Type = type;
         ClassName = className;
         Value = value;
+        Comment = comment;
     }
 
     public string Name { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
     public string ClassName { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;
+    public string Comment { get; set; } = string.Empty;
 }
