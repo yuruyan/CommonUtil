@@ -15,7 +15,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <Thickness x:Key="itemGap">8</Thickness>
+    <Thickness x:Key="ItemGap">8</Thickness>
     <system:Double x:Key="ExpansionThreshold">700</system:Double>
   </Page.Resources>
 
@@ -29,10 +29,10 @@
     <Grid>
       <Grid.Resources>
         <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-          <Setter Property="Margin" Value="{StaticResource itemGap}" />
+          <Setter Property="Margin" Value="{StaticResource ItemGap}" />
         </Style>
         <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
-          <Setter Property="Margin" Value="{StaticResource itemGap}" />
+          <Setter Property="Margin" Value="{StaticResource ItemGap}" />
         </Style>
       </Grid.Resources>
       <Grid.RowDefinitions>

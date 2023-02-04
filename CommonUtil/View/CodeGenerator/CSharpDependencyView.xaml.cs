@@ -84,6 +84,7 @@ public partial class CSharpDependencyView : Page {
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         OutputText = string.Empty;
+        TypeInfos = new();
     }
 
     /// <summary>
