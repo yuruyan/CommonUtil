@@ -42,6 +42,7 @@
       <!--  control  -->
       <ScrollViewer>
         <ui:SimpleStackPanel
+          Margin="0,8,0,0"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Center"
           Orientation="Vertical"
@@ -71,7 +72,12 @@
             </DockPanel>
             <DockPanel>
               <TextBlock Width="{StaticResource HeaderWidth}" Text="提取模式" />
-              <TextBox KeyUp="SearchRegexComboBoxKeyUp" Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
+              <TextBox
+                MinWidth="130"
+                KeyUp="SearchRegexComboBoxKeyUp"
+                MaxLines="12"
+                Style="{StaticResource MultilineTextBoxStyle}"
+                Text="{Binding ExtractionPattern, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
           </ui:SimpleStackPanel>
           <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
