@@ -161,7 +161,7 @@ public partial class TempFileVersionControlView : Page {
                 if (!targetFile.Started) {
                     return;
                 }
-                string destFile = Path.Combine(targetFile.SaveFolder, $"{CommonUtils.CuruentSeconds}-{fileInfo.Name}");
+                string destFile = Path.Combine(targetFile.SaveFolder, $"{DateTimeUtils.CuruentSeconds}-{fileInfo.Name}");
                 // 创建文件夹
                 if (!TaskUtils.Try(() => { Directory.CreateDirectory(targetFile.SaveFolder); return true; })) {
                     var dirName = Path.GetFileName(targetFile.SaveFolder);

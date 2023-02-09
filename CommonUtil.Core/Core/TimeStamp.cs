@@ -19,7 +19,7 @@ public static class TimeStamp {
     /// <param name="pattern"></param>
     /// <returns></returns>
     public static long StringToMilliSeconds(string time, string pattern = "yyyy-MM-dd HH:mm:ss") {
-        return CommonUtils.ConvertToTimestamp(CommonUtils.ConvertToDateTime(time, pattern));
+        return DateTimeUtils.ConvertToTimestamp(DateTimeUtils.ConvertToDateTime(time, pattern));
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public static class TimeStamp {
     /// <param name="time"></param>
     /// <returns></returns>
     public static string TimeStampToDateTimeString(long time) {
-        return CommonUtils.ConvertToDateTime(time).ToString("yyyy-MM-dd HH:mm:ss");
+        return DateTimeUtils.ConvertToDateTime(time).ToString("yyyy-MM-dd HH:mm:ss");
     }
 }
 
