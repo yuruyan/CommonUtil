@@ -5,13 +5,19 @@ namespace CommonUtil.Core;
 
 public static class DesktopAutomation {
     private static readonly IKeyboardEventSource KeyboardEvent = WindowsInput.Capture.Global.KeyboardAsync();
+    private static readonly IMouseEventSource MouseEvent = WindowsInput.Capture.Global.MouseAsync();
     private static readonly IDictionary<EventBuilder, CancellationTokenSource> EventBuilderCancellationTokenDict = new Dictionary<EventBuilder, CancellationTokenSource>();
     /// <summary>
     /// 创建 EventBuilder
     /// </summary>
     public static EventBuilder NewEventBuilder => WindowsInput.Simulate.Events();
+    /// <summary>
+    /// 当前鼠标位置
+    /// </summary>
+    public static Point CurrentMousePosition { get; private set; } = new();
 
     static DesktopAutomation() {
+        // 监听键盘
         KeyboardEvent.KeyDown += (_, e) => {
             // 监听 Escape 按下事件
             if (e.Data.Key == KeyCode.Escape) {
@@ -20,7 +26,13 @@ public static class DesktopAutomation {
                 }
             }
         };
-        Application.Current.Exit += (_, _) => KeyboardEvent.Dispose();
+        // 监听鼠标
+        MouseEvent.MouseMove += (_, e) => CurrentMousePosition = new(e.Data.X, e.Data.Y);
+        // 自动退出
+        Application.Current.Exit += (_, _) => {
+            KeyboardEvent.Dispose();
+            MouseEvent.Dispose();
+        };
     }
 
     /// <summary>
