@@ -6,6 +6,10 @@ namespace CommonUtil.Core;
 public static class DesktopAutomation {
     private static readonly IKeyboardEventSource KeyboardEvent = WindowsInput.Capture.Global.KeyboardAsync();
     private static readonly IDictionary<EventBuilder, CancellationTokenSource> EventBuilderCancellationTokenDict = new Dictionary<EventBuilder, CancellationTokenSource>();
+    /// <summary>
+    /// 创建 EventBuilder
+    /// </summary>
+    public static EventBuilder NewEventBuilder => WindowsInput.Simulate.Events();
 
     static DesktopAutomation() {
         KeyboardEvent.KeyDown += (_, e) => {
@@ -16,6 +20,7 @@ public static class DesktopAutomation {
                 }
             }
         };
+        Application.Current.Exit += (_, _) => KeyboardEvent.Dispose();
     }
 
     /// <summary>
@@ -23,10 +28,7 @@ public static class DesktopAutomation {
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
-    public static EventBuilder CancelOnEscape(EventBuilder builder) {
-        EventBuilderCancellationTokenDict[builder] = new();
-        return builder;
-    }
+    public static void CancelOnEscape(EventBuilder builder) => EventBuilderCancellationTokenDict[builder] = new();
 
     /// <summary>
     /// 输入文本
@@ -34,7 +36,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="text"></param>
     /// <returns></returns>
-    public static EventBuilder InputText(EventBuilder builder, string text) => builder.Click(text);
+    public static void InputText(EventBuilder builder, string text) => builder.Click(text);
 
     /// <summary>
     /// 鼠标单击
@@ -42,7 +44,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="button"></param>
     /// <returns></returns>
-    public static EventBuilder MouseClick(EventBuilder builder, ButtonCode button) => builder.Click(button);
+    public static void MouseClick(EventBuilder builder, ButtonCode button) => builder.Click(button);
 
     /// <summary>
     /// 鼠标双击
@@ -50,7 +52,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="button"></param>
     /// <returns></returns>
-    public static EventBuilder MouseDoubleClick(EventBuilder builder, ButtonCode button) => builder.DoubleClick(button);
+    public static void MouseDoubleClick(EventBuilder builder, ButtonCode button) => builder.DoubleClick(button);
 
     /// <summary>
     /// 鼠标双击
@@ -58,7 +60,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="point"></param>
     /// <returns></returns>
-    public static EventBuilder MouseMove(EventBuilder builder, Point point) => builder.MoveTo((int)point.X, (int)point.Y);
+    public static void MouseMove(EventBuilder builder, Point point) => builder.MoveTo((int)point.X, (int)point.Y);
 
     /// <summary>
     /// 鼠标滚动
@@ -66,7 +68,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="button"></param>
     /// <returns></returns>
-    public static EventBuilder MouseScroll(EventBuilder builder, ButtonCode button, int offset) => builder.Scroll(button, offset);
+    public static void MouseScroll(EventBuilder builder, ButtonCode button, int offset) => builder.Scroll(button, offset);
 
     /// <summary>
     /// 等待
@@ -74,7 +76,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="millisecond"></param>
     /// <returns></returns>
-    public static EventBuilder Wait(EventBuilder builder, uint millisecond) => builder.Wait(millisecond);
+    public static void Wait(EventBuilder builder, uint millisecond) => builder.Wait(millisecond);
 
     /// <summary>
     /// 按下按键后松开
@@ -82,7 +84,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public static EventBuilder PressKey(EventBuilder builder, KeyCode code) => builder.Click(code);
+    public static void PressKey(EventBuilder builder, KeyCode code) => builder.Click(code);
 
     /// <summary>
     /// 按下快捷键后松开
@@ -90,7 +92,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="shortcuts"></param>
     /// <returns></returns>
-    public static EventBuilder PressKeyShortcut(EventBuilder builder, params KeyCode[] shortcuts) => builder.Click(shortcuts);
+    public static void PressKeyShortcut(EventBuilder builder, params KeyCode[] shortcuts) => builder.Click(shortcuts);
 
     /// <summary>
     /// 异步运行
