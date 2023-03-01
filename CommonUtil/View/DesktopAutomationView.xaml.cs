@@ -1,9 +1,9 @@
 ﻿namespace CommonUtil.View;
 
-public partial class DesktopAutomation : Page {
+public partial class DesktopAutomationView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public DesktopAutomation() {
+    public DesktopAutomationView() {
         InitializeComponent();
     }
 }
