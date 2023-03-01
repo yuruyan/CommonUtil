@@ -67,7 +67,7 @@ public static class DesktopAutomation {
     public static void MouseDoubleClick(EventBuilder builder, ButtonCode button) => builder.DoubleClick(button);
 
     /// <summary>
-    /// 鼠标双击
+    /// 鼠标移动
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="point"></param>

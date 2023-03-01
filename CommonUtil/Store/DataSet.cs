@@ -49,7 +49,7 @@ public static class DataSet {
         new("文件下载器", $"{Global.ImagePath}download.png", typeof(DownloaderView)),
         new("集合工具", $"{Global.ImagePath}Intersection.png", typeof(CollectionToolView)),
         new("JSON 数据提取", $"{Global.ImagePath}json.png", typeof(JsonExtractorView)),
-        new("桌面自动化", $"{Global.ImagePath}Automation.png", typeof(DesktopAutomation)),
+        new("桌面自动化", $"{Global.ImagePath}Automation.png", typeof(DesktopAutomationView)),
     };
 
     /// <summary>
