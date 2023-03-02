@@ -18,10 +18,7 @@
       <ColumnDefinition Width="1*" />
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
-    <TreeView
-      Name="AutomationItemTreeView"
-      ItemsSource="{Binding AutomationItems}"
-      MouseDoubleClick="MenuMouseUpHandler">
+    <TreeView ItemsSource="{Binding AutomationItems}" MouseDoubleClick="MenuMouseDoubleClickHandler">
       <TreeView.ItemTemplate>
         <HierarchicalDataTemplate ItemsSource="{Binding Children}">
           <ui:SimpleStackPanel Orientation="Horizontal">
@@ -34,5 +31,24 @@
         </HierarchicalDataTemplate>
       </TreeView.ItemTemplate>
     </TreeView>
+    <ListBox
+      Grid.Column="1"
+      ItemsSource="{Binding AutomationSteps}"
+      MouseDoubleClick="AutomationStepsListBoxMouseDoubleClickHandler">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <TextBlock
+              Padding="12,12,8,12"
+              Style="{StaticResource IconFontStyle}"
+              Text="{Binding Icon}" />
+            <ui:SimpleStackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding DescriptionHeader}" />
+              <TextBlock Foreground="{DynamicResource HighLightKeywordForeground}" Text="{Binding DescriptionValue}" />
+            </ui:SimpleStackPanel>
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
   </Grid>
 </Page>

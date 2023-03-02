@@ -1,28 +1,34 @@
-﻿using CommonUITools.View;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class DesktopAutomationView : Page {
-    private class AutomationItemDialog {
+    private class AutomationDialogItem {
         public Type DialogType { get; }
-        public BaseDialog? Dialog { get; set; }
+        public DesktopAutomationDialog? Dialog { get; set; }
 
-        public AutomationItemDialog(Type dialogType) {
+        public AutomationDialogItem(Type dialogType) {
             DialogType = dialogType;
         }
     }
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty AutomationItemsProperty = DependencyProperty.Register("AutomationItems", typeof(IList<AutomationItem>), typeof(DesktopAutomationView), new PropertyMetadata());
+    public static readonly DependencyProperty AutomationStepsProperty = DependencyProperty.Register("AutomationSteps", typeof(ExtendedObservableCollection<AutomationStep>), typeof(DesktopAutomationView), new PropertyMetadata());
 
+    /// <summary>
+    /// 执行步骤
+    /// </summary>
+    public ExtendedObservableCollection<AutomationStep> AutomationSteps {
+        get { return (ExtendedObservableCollection<AutomationStep>)GetValue(AutomationStepsProperty); }
+        set { SetValue(AutomationStepsProperty, value); }
+    }
     /// <summary>
     /// 菜单
     /// </summary>
     public IList<AutomationItem> AutomationItems {
         get { return (IList<AutomationItem>)GetValue(AutomationItemsProperty); }
-        set { SetValue(AutomationItemsProperty, value); }
+        private set { SetValue(AutomationItemsProperty, value); }
     }
-    private static readonly IReadOnlyDictionary<uint, AutomationItemDialog> AutomationItemDialogDict = new Dictionary<uint, AutomationItemDialog>() {
+    private static readonly IReadOnlyDictionary<uint, AutomationDialogItem> AutomationItemDialogDict = new Dictionary<uint, AutomationDialogItem>() {
         {1, new (typeof(InputTextDialog)) },
         {2, new (typeof(PressKeyDialog)) },
         {3, new (typeof(PressKeyShortcutDialog)) },
@@ -33,6 +39,7 @@ public partial class DesktopAutomationView : Page {
     };
 
     public DesktopAutomationView() {
+        AutomationSteps = new();
         // Place before InitializeComponent();
         InitAutomationItems();
         InitializeComponent();
@@ -66,21 +73,38 @@ public partial class DesktopAutomationView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void MenuMouseUpHandler(object sender, MouseButtonEventArgs e) {
+    private async void MenuMouseDoubleClickHandler(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (e.ChangedButton != MouseButton.Left) {
             return;
         }
         if (e.OriginalSource is not FrameworkElement element
-            || element.DataContext is not AutomationItem item
-            || item.IsFolder
+            || element.DataContext is not AutomationItem automationItem
+            || automationItem.IsFolder
         ) {
             return;
         }
-        var dialogItem = AutomationItemDialogDict[item.Id];
+        var dialogItem = AutomationItemDialogDict[automationItem.Id];
         // Initialize
-        dialogItem.Dialog ??= (BaseDialog)Activator.CreateInstance(AutomationItemDialogDict[item.Id].DialogType)!;
-        dialogItem.Dialog.Title = item.Name;
-        await dialogItem.Dialog.ShowAsync();
+        dialogItem.Dialog ??= (DesktopAutomationDialog)Activator.CreateInstance(AutomationItemDialogDict[automationItem.Id].DialogType)!;
+        var dialog = dialogItem.Dialog;
+        dialog.Title = automationItem.Name;
+        // 确定
+        if (await dialog.ShowAsync() == ModernWpf.Controls.ContentDialogResult.Primary) {
+            AutomationSteps.Add(new(dialog.AutomationMethod, dialog.Parameters) {
+                Icon = automationItem.Icon,
+                DescriptionHeader = dialog.DescriptionHeader,
+                DescriptionValue = dialog.DescriptionValue,
+            });
+        }
+    }
+
+    /// <summary>
+    /// 双击步骤
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void AutomationStepsListBoxMouseDoubleClickHandler(object sender, MouseButtonEventArgs e) {
+
     }
 }
