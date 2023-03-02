@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class InputTextDialog : BaseDialog {
+public partial class InputTextDialog : DesktopAutomationDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public InputTextDialog() {

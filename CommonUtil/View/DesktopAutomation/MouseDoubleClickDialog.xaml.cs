@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class MouseDoubleClickDialog : BaseDialog {
+public partial class MouseDoubleClickDialog : DesktopAutomationDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public MouseDoubleClickDialog() {

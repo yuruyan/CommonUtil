@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class PressKeyShortcutDialog : BaseDialog {
+public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public PressKeyShortcutDialog() {
