@@ -46,7 +46,12 @@
             Style="{StaticResource IntegerNumberBoxStyle}"
             Value="{Binding StepsIntervalTime}" />
         </StackPanel>
-        <Button Click="StartClickHandler" Content="开始" />
+        <Grid>
+          <Button
+            Click="StartClickHandler"
+            Content="开始"
+            IsEnabled="{Binding IsRunning, Converter={StaticResource InvertBoolConverter}}" />
+        </Grid>
       </ui:SimpleStackPanel>
       <ListBox
         Grid.Row="1"

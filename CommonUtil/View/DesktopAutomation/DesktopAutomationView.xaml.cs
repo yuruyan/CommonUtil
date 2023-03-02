@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using WindowsInput.Events;
+
+namespace CommonUtil.View;
 
 public partial class DesktopAutomationView : Page {
     private class AutomationDialogItem {
@@ -14,7 +16,15 @@ public partial class DesktopAutomationView : Page {
     public static readonly DependencyProperty AutomationItemsProperty = DependencyProperty.Register("AutomationItems", typeof(IList<AutomationItem>), typeof(DesktopAutomationView), new PropertyMetadata());
     public static readonly DependencyProperty AutomationStepsProperty = DependencyProperty.Register("AutomationSteps", typeof(ExtendedObservableCollection<AutomationStep>), typeof(DesktopAutomationView), new PropertyMetadata());
     public static readonly DependencyProperty StepsIntervalTimeProperty = DependencyProperty.Register("StepsIntervalTime", typeof(double), typeof(DesktopAutomationView), new PropertyMetadata(100.0));
+    public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(DesktopAutomationView), new PropertyMetadata(false));
 
+    /// <summary>
+    /// 是否正在运行
+    /// </summary>
+    public bool IsRunning {
+        get { return (bool)GetValue(IsRunningProperty); }
+        set { SetValue(IsRunningProperty, value); }
+    }
     /// <summary>
     /// 步骤运行间隔时间 (ms)
     /// </summary>
@@ -118,23 +128,36 @@ public partial class DesktopAutomationView : Page {
 
     }
 
-    private bool IsStarted = false;
-
     /// <summary>
     /// 开始运行
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void StartClickHandler(object sender, RoutedEventArgs e) {
+    private async void StartClickHandler(object sender, RoutedEventArgs e) {
         // Empty list
         if (!AutomationSteps.Any()) {
             return;
         }
         // Already started
-        if (IsStarted) {
+        if (IsRunning) {
             return;
         }
-        IsStarted = true;
+        IsRunning = true;
+        var builder = BuildSteps();
+        // Start
+        var isSuccessful = await TaskUtils.TryAsync(() => DesktopAutomation.RunAsync(builder));
+        IsRunning = false;
+        // Failed
+        if (!isSuccessful) {
+            MessageBox.Error("执行失败");
+        }
+    }
+
+    /// <summary>
+    /// 构建步骤
+    /// </summary>
+    /// <returns></returns>
+    private EventBuilder BuildSteps() {
         var builder = DesktopAutomation.NewEventBuilder;
         // Build steps
         if (StepsIntervalTime == 0) {
@@ -143,21 +166,22 @@ public partial class DesktopAutomationView : Page {
             }
         } else {
             for (int i = 0; i < AutomationSteps.Count - 1; i++) {
-                var step = AutomationSteps[i];
-                step.AutomationMethod.DynamicInvoke(builder, step.Parameters);
+                _BuildEventStep(builder, AutomationSteps[i]);
                 DesktopAutomation.Wait(builder, (uint)StepsIntervalTime);
             }
-            var lastStep = AutomationSteps[^1];
-            lastStep.AutomationMethod.DynamicInvoke(builder, lastStep.Parameters);
+            // The last
+            _BuildEventStep(builder, AutomationSteps[^1]);
         }
         DesktopAutomation.CancelOnEscape(builder);
-        Task.Run(async () => {
-            var isSuccessful = await TaskUtils.TryAsync(() => DesktopAutomation.RunAsync(builder));
-            IsStarted = false;
-            // Failed
-            if (!isSuccessful) {
-                MessageBox.Error("执行失败");
-            }
-        });
+        return builder;
+
+        static void _BuildEventStep(EventBuilder builder, AutomationStep step) {
+            // Create arguments object
+            var paramList = new object[1 + step.Parameters.Length];
+            paramList[0] = builder;
+            step.Parameters.CopyTo(paramList, 1);
+            step.AutomationMethod.DynamicInvoke(paramList);
+        }
     }
+
 }

@@ -34,7 +34,7 @@ public class AutomationStep : DependencyObject {
     /// <summary>
     /// 方法参数
     /// </summary>
-    public object[]? Parameters { get; }
+    public object[] Parameters { get; }
     /// <summary>
     /// 描述信息头
     /// </summary>

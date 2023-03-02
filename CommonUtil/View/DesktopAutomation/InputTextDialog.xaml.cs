@@ -20,7 +20,12 @@ public partial class InputTextDialog : DesktopAutomationDialog {
         InitializeComponent();
     }
 
-    private void ClosingHandler(ContentDialog _, ContentDialogClosingEventArgs e) {
+    /// <summary>
+    /// Set values
+    /// </summary>
+    /// <param name="dialog"></param>
+    /// <param name="e"></param>
+    private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
         Parameters = new object[] { InputText };
         DescriptionValue = InputText;
     }
