@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
   Title="DesktopAutomationView"
   Margin="8,0,8,8"
   d:DesignHeight="450"
@@ -17,7 +18,10 @@
       <ColumnDefinition Width="1*" />
       <ColumnDefinition Width="2*" />
     </Grid.ColumnDefinitions>
-    <TreeView ItemsSource="{Binding AutomationItems}">
+    <TreeView
+      Name="AutomationItemTreeView"
+      ItemsSource="{Binding AutomationItems}"
+      MouseDoubleClick="MenuMouseUpHandler">
       <TreeView.ItemTemplate>
         <HierarchicalDataTemplate ItemsSource="{Binding Children}">
           <ui:SimpleStackPanel Orientation="Horizontal">
