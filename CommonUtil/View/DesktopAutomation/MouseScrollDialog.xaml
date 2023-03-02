@@ -5,10 +5,30 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  Closing="ClosingHandler"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <Grid />
+  <local:DesktopAutomationDialog.Resources>
+    <system:Double x:Key="HeaderWidth">120</system:Double>
+  </local:DesktopAutomationDialog.Resources>
+
+  <ui:SimpleStackPanel Orientation="Vertical">
+    <DockPanel>
+      <TextBlock Width="{StaticResource HeaderWidth}" Text="滚动方向：" />
+      <ComboBox Name="ScrollDirectionComboBox" HorizontalAlignment="Stretch" />
+    </DockPanel>
+    <DockPanel>
+      <TextBlock Width="{StaticResource HeaderWidth}" Text="偏移量：" />
+      <ui:NumberBox
+        Maximum="100000"
+        Minimum="0"
+        SmallChange="10"
+        Style="{StaticResource IntegerNumberBoxStyle}"
+        Value="{Binding ScrollOffset}" />
+    </DockPanel>
+  </ui:SimpleStackPanel>
 </local:DesktopAutomationDialog>
