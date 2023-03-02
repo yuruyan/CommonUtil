@@ -13,6 +13,7 @@ public partial class DesktopAutomationView : Page {
     }
 
     public DesktopAutomationView() {
+        // Place before InitializeComponent();
         InitAutomationItems();
         InitializeComponent();
     }
