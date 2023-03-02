@@ -184,4 +184,24 @@ public partial class DesktopAutomationView : Page {
         }
     }
 
+    private void DeleteExecutedHandler(object sender, ExecutedRoutedEventArgs e) {
+        e.Handled = true;
+    }
+
+    /// <summary>
+    /// CanExecute
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <remarks>Set CanExecute to true</remarks>
+    private void CanExecuteHandler(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+    /// <summary>
+    /// 修改步骤
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ModifyAutomationStepClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+    }
 }
