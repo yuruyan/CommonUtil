@@ -9,8 +9,6 @@ public partial class MouseClickDialog : DesktopAutomationDialog {
         {"左键", ButtonCode.Left},
         {"右键", ButtonCode.Right},
         {"中键", ButtonCode.Middle},
-        {"水平滚动", ButtonCode.HScroll},
-        {"垂直滚动", ButtonCode.VScroll},
     };
     private readonly IList<string> ButtonCodeKeys;
 
