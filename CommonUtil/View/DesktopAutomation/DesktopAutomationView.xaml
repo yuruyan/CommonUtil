@@ -31,24 +31,42 @@
         </HierarchicalDataTemplate>
       </TreeView.ItemTemplate>
     </TreeView>
-    <ListBox
-      Grid.Column="1"
-      ItemsSource="{Binding AutomationSteps}"
-      MouseDoubleClick="AutomationStepsListBoxMouseDoubleClickHandler">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <DockPanel>
-            <TextBlock
-              Padding="12,12,8,12"
-              Style="{StaticResource IconFontStyle}"
-              Text="{Binding Icon}" />
-            <ui:SimpleStackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding DescriptionHeader}" />
-              <TextBlock Foreground="{DynamicResource HighLightKeywordForeground}" Text="{Binding DescriptionValue}" />
-            </ui:SimpleStackPanel>
-          </DockPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+        <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+          <TextBlock Text="步骤间隔时间 (ms)：" />
+          <ui:NumberBox
+            Maximum="100000"
+            Minimum="0"
+            SmallChange="10"
+            Style="{StaticResource IntegerNumberBoxStyle}"
+            Value="{Binding StepsIntervalTime}" />
+        </StackPanel>
+        <Button Click="StartClickHandler" Content="开始" />
+      </ui:SimpleStackPanel>
+      <ListBox
+        Grid.Row="1"
+        ItemsSource="{Binding AutomationSteps}"
+        MouseDoubleClick="AutomationStepsListBoxMouseDoubleClickHandler">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <DockPanel>
+              <TextBlock
+                Padding="12,12,8,12"
+                Style="{StaticResource IconFontStyle}"
+                Text="{Binding Icon}" />
+              <ui:SimpleStackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding DescriptionHeader}" />
+                <TextBlock Foreground="{DynamicResource HighLightKeywordForeground}" Text="{Binding DescriptionValue}" />
+              </ui:SimpleStackPanel>
+            </DockPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Grid>
   </Grid>
 </Page>
