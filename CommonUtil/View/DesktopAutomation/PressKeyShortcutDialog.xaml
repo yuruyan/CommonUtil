@@ -6,9 +6,10 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  Closing="ClosingHandler"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Grid />
 </local:DesktopAutomationDialog>
