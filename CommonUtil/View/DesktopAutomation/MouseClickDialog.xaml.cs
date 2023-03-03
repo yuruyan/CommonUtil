@@ -10,12 +10,12 @@ public partial class MouseClickDialog : DesktopAutomationDialog {
         {"右键", ButtonCode.Right},
         {"中键", ButtonCode.Middle},
     };
-    private readonly IList<string> ButtonCodeKeys;
+    private static readonly IList<string> ButtonCodeKeys = ButtonCodes.Keys.ToList();
+    private static readonly IList<ButtonCode> ButtonCodeValues = ButtonCodes.Values.ToList();
 
     public MouseClickDialog() {
-        ButtonCodeKeys = ButtonCodes.Keys.ToList();
         AutomationMethod = DesktopAutomation.MouseClick;
-        DescriptionHeader = "点击鼠标";
+        Title = DescriptionHeader = "点击鼠标";
         InitializeComponent();
         ButtonCodeComboBox.ItemsSource = ButtonCodeKeys;
         ButtonCodeComboBox.SelectedIndex = 0;
@@ -32,5 +32,9 @@ public partial class MouseClickDialog : DesktopAutomationDialog {
             ButtonCodes[value]
         };
         DescriptionValue = value;
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        ButtonCodeComboBox.SelectedIndex = ButtonCodeValues.IndexOf((ButtonCode)parameters[0]);
     }
 }

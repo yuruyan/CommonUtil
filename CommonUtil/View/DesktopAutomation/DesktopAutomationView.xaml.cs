@@ -104,14 +104,11 @@ public partial class DesktopAutomationView : Page {
         ) {
             return;
         }
-        var dialogItem = AutomationItemDialogDict[automationItem.Id];
-        // Initialize
-        dialogItem.Dialog ??= (DesktopAutomationDialog)Activator.CreateInstance(AutomationItemDialogDict[automationItem.Id].DialogType)!;
-        var dialog = dialogItem.Dialog;
-        dialog.Title = automationItem.Name;
+        var dialog = EnsureDialogIsCreated(AutomationItemDialogDict[automationItem.Id]);
         // 确定
         if (await dialog.ShowAsync() == ModernWpf.Controls.ContentDialogResult.Primary) {
-            AutomationSteps.Add(new(dialog.AutomationMethod, dialog.Parameters) {
+            AutomationSteps.Add(new(automationItem.Id, dialog.AutomationMethod) {
+                Parameters = dialog.Parameters,
                 Icon = automationItem.Icon,
                 DescriptionHeader = dialog.DescriptionHeader,
                 DescriptionValue = dialog.DescriptionValue,
@@ -184,8 +181,18 @@ public partial class DesktopAutomationView : Page {
         }
     }
 
+    /// <summary>
+    /// 删除步骤
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void DeleteExecutedHandler(object sender, ExecutedRoutedEventArgs e) {
         e.Handled = true;
+        if (sender is ListBox listBox) {
+            AutomationSteps.RemoveList(
+                listBox.SelectedItems.Cast<AutomationStep>().ToArray()
+            );
+        }
     }
 
     /// <summary>
@@ -201,7 +208,27 @@ public partial class DesktopAutomationView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ModifyAutomationStepClickHandler(object sender, RoutedEventArgs e) {
+    private async void ModifyAutomationStepClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (sender is not FrameworkElement element || element.DataContext is not AutomationStep step) {
+            return;
+        }
+        var dialog = EnsureDialogIsCreated(AutomationItemDialogDict[step.AutomationItemId]);
+        dialog.ParseParameters(step.Parameters);
+        // 确定
+        if (await dialog.ShowAsync() == ModernWpf.Controls.ContentDialogResult.Primary) {
+            step.Parameters = dialog.Parameters;
+            step.DescriptionValue = dialog.DescriptionValue;
+        }
+    }
+
+    /// <summary>
+    /// 确保 Dialog 已创建
+    /// </summary>
+    /// <param name="dialogItem"></param>
+    /// <returns></returns>
+    private DesktopAutomationDialog EnsureDialogIsCreated(AutomationDialogItem dialogItem) {
+        dialogItem.Dialog ??= (DesktopAutomationDialog)Activator.CreateInstance(dialogItem.DialogType)!;
+        return dialogItem.Dialog;
     }
 }

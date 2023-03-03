@@ -10,7 +10,8 @@ public partial class MouseScrollDialog : DesktopAutomationDialog {
         {"水平滚动", ButtonCode.HScroll},
         {"垂直滚动", ButtonCode.VScroll},
     };
-    private readonly IList<string> ButtonCodeKeys;
+    private static readonly IList<string> ButtonCodeKeys = ButtonCodes.Keys.ToList();
+    private static readonly IList<ButtonCode> ButtonCodeValues = ButtonCodes.Values.ToList();
 
     /// <summary>
     /// 滚动偏移量
@@ -21,9 +22,8 @@ public partial class MouseScrollDialog : DesktopAutomationDialog {
     }
 
     public MouseScrollDialog() {
-        ButtonCodeKeys = ButtonCodes.Keys.ToList();
         AutomationMethod = DesktopAutomation.MouseScroll;
-        DescriptionHeader = "滚动鼠标";
+        Title = DescriptionHeader = "滚动鼠标";
         InitializeComponent();
         ScrollDirectionComboBox.ItemsSource = ButtonCodeKeys;
         ScrollDirectionComboBox.SelectedIndex = 0;
@@ -41,5 +41,10 @@ public partial class MouseScrollDialog : DesktopAutomationDialog {
             (int)ScrollOffset,
         };
         DescriptionValue = $"{value}, {ScrollOffset}";
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        ScrollDirectionComboBox.SelectedIndex = ButtonCodeValues.IndexOf((ButtonCode)parameters[0]);
+        ScrollOffset = (double)parameters[1];
     }
 }

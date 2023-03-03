@@ -20,6 +20,7 @@ public class AutomationStep : DependencyObject {
     public static readonly DependencyProperty DescriptionHeaderProperty = DependencyProperty.Register("DescriptionHeader", typeof(string), typeof(AutomationStep), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty DescriptionValueProperty = DependencyProperty.Register("DescriptionValue", typeof(string), typeof(AutomationStep), new PropertyMetadata(string.Empty));
 
+    public uint AutomationItemId { get; }
     /// <summary>
     /// 图标
     /// </summary>
@@ -34,7 +35,7 @@ public class AutomationStep : DependencyObject {
     /// <summary>
     /// 方法参数
     /// </summary>
-    public object[] Parameters { get; }
+    public object[] Parameters { get; set; }
     /// <summary>
     /// 描述信息头
     /// </summary>
@@ -50,8 +51,8 @@ public class AutomationStep : DependencyObject {
         set { SetValue(DescriptionValueProperty, value); }
     }
 
-    public AutomationStep(Delegate automationMethod, object[]? parameters) {
+    public AutomationStep(uint automationItemId, Delegate automationMethod) {
+        AutomationItemId = automationItemId;
         AutomationMethod = automationMethod;
-        Parameters = parameters;
     }
 }

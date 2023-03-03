@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public class DesktopAutomationDialog : BaseDialog {
+public abstract class DesktopAutomationDialog : BaseDialog {
     public static readonly DependencyProperty AutomationMethodProperty = DependencyProperty.Register("AutomationMethod", typeof(Delegate), typeof(DesktopAutomationDialog), new PropertyMetadata());
     public static readonly DependencyProperty ParametersProperty = DependencyProperty.Register("Parameters", typeof(object[]), typeof(DesktopAutomationDialog), new PropertyMetadata());
     public static readonly DependencyProperty DescriptionHeaderProperty = DependencyProperty.Register("DescriptionHeader", typeof(string), typeof(DesktopAutomationDialog), new PropertyMetadata(string.Empty));
@@ -36,4 +36,10 @@ public class DesktopAutomationDialog : BaseDialog {
         get { return (string)GetValue(DescriptionValueProperty); }
         set { SetValue(DescriptionValueProperty, value); }
     }
+
+    /// <summary>
+    /// 解析参数
+    /// </summary>
+    /// <param name="parameters"></param>
+    public abstract void ParseParameters(object[] parameters);
 }

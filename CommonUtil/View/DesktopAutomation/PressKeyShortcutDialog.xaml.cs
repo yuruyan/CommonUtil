@@ -8,7 +8,7 @@ public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
 
     public PressKeyShortcutDialog() {
         AutomationMethod = DesktopAutomation.PressKeyShortcut;
-        DescriptionHeader = "按下快捷键";
+        Title = DescriptionHeader = "按下快捷键";
         InitializeComponent();
     }
 
@@ -22,5 +22,9 @@ public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
             new KeyCode[] { KeyCode.None }
         };
         DescriptionValue = "";
+    }
+
+    public override void ParseParameters(object[] parameters) {
+
     }
 }

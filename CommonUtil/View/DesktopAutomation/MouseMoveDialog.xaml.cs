@@ -24,7 +24,7 @@ public partial class MouseMoveDialog : DesktopAutomationDialog {
 
     public MouseMoveDialog() {
         AutomationMethod = DesktopAutomation.MouseMove;
-        DescriptionHeader = "移动鼠标";
+        Title = DescriptionHeader = "移动鼠标";
         InitializeComponent();
     }
 
@@ -36,5 +36,11 @@ public partial class MouseMoveDialog : DesktopAutomationDialog {
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
         Parameters = new object[] { new Point(XPosition, YPosition) };
         DescriptionValue = $"({(int)XPosition}, {(int)YPosition})";
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        var point = (Point)parameters[0];
+        XPosition = point.X;
+        YPosition = point.Y;
     }
 }

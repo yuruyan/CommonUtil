@@ -16,7 +16,7 @@ public partial class InputTextDialog : DesktopAutomationDialog {
 
     public InputTextDialog() {
         AutomationMethod = DesktopAutomation.InputText;
-        DescriptionHeader = "输入文本";
+        Title = DescriptionHeader = "输入文本";
         InitializeComponent();
     }
 
@@ -28,5 +28,9 @@ public partial class InputTextDialog : DesktopAutomationDialog {
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
         Parameters = new object[] { InputText };
         DescriptionValue = InputText;
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        InputText = (string?)parameters[0] ?? string.Empty;
     }
 }

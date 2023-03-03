@@ -16,7 +16,7 @@ public partial class WaitDialog : DesktopAutomationDialog {
 
     public WaitDialog() {
         AutomationMethod = DesktopAutomation.Wait;
-        DescriptionHeader = "等待";
+        Title = DescriptionHeader = "等待";
         InitializeComponent();
     }
 
@@ -28,5 +28,9 @@ public partial class WaitDialog : DesktopAutomationDialog {
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
         Parameters = new object[] { (uint)WaitTime };
         DescriptionValue = $"{(uint)WaitTime} ms";
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        WaitTime = (uint)parameters[0];
     }
 }

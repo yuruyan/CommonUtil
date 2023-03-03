@@ -5,12 +5,11 @@ namespace CommonUtil.View;
 
 public partial class PressKeyDialog : DesktopAutomationDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private readonly IList<string> KeyCodeKeys;
+    private static readonly IList<string> KeyCodeKeys = Enum.GetNames<KeyCode>();
 
     public PressKeyDialog() {
-        KeyCodeKeys = Enum.GetNames<KeyCode>();
         AutomationMethod = DesktopAutomation.PressKey;
-        DescriptionHeader = "按下键盘";
+        Title = DescriptionHeader = "按下键盘";
         InitializeComponent();
         KeyCodeComboBox.ItemsSource = KeyCodeKeys;
         KeyCodeComboBox.SelectedIndex = 0;
@@ -25,5 +24,9 @@ public partial class PressKeyDialog : DesktopAutomationDialog {
         var value = KeyCodeKeys[KeyCodeComboBox.SelectedIndex];
         Parameters = new object[] { Enum.Parse<KeyCode>(value) };
         DescriptionValue = value;
+    }
+
+    public override void ParseParameters(object[] parameters) {
+        KeyCodeComboBox.SelectedIndex = KeyCodeKeys.IndexOf(((KeyCode)parameters[0]).ToString());
     }
 }

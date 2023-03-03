@@ -78,23 +78,29 @@
             Command="ApplicationCommands.Delete"
             Executed="DeleteExecutedHandler" />
         </ListBox.CommandBindings>
-        <ListBox.ContextMenu>
-          <ContextMenu>
-            <MenuItem Command="ApplicationCommands.Delete" Header="删除">
-              <MenuItem.Icon>
-                <TextBlock
-                  Foreground="{StaticResource ErrorBackground}"
-                  Style="{StaticResource ColorIconFontStyle}"
-                  Text="&#xe6b4;" />
-              </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Click="ModifyAutomationStepClickHandler" Header="修改">
-              <MenuItem.Icon>
-                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe657;" />
-              </MenuItem.Icon>
-            </MenuItem>
-          </ContextMenu>
-        </ListBox.ContextMenu>
+        <ListBox.ItemContainerStyle>
+          <Style BasedOn="{StaticResource GlobalListBoxItemStyle}" TargetType="ListBoxItem">
+            <Setter Property="ContextMenu">
+              <Setter.Value>
+                <ContextMenu>
+                  <MenuItem Command="ApplicationCommands.Delete" Header="删除">
+                    <MenuItem.Icon>
+                      <TextBlock
+                        Foreground="{StaticResource ErrorBackground}"
+                        Style="{StaticResource ColorIconFontStyle}"
+                        Text="&#xe6b4;" />
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  <MenuItem Click="ModifyAutomationStepClickHandler" Header="修改">
+                    <MenuItem.Icon>
+                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe657;" />
+                    </MenuItem.Icon>
+                  </MenuItem>
+                </ContextMenu>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </ListBox.ItemContainerStyle>
       </ListBox>
     </Grid>
   </Grid>
