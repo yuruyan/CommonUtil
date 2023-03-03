@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\luxiu\.nuget\packages\windowsinput\6.4.0\contentFiles\any\netcoreapp3.1\.nuget\mouse-keyboard-hook-logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resource\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
