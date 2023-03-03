@@ -63,7 +63,7 @@
         <RowDefinition Height="auto" />
       </Grid.RowDefinitions>
       <ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-        <StackPanel Margin="0,0,0,4" Orientation="Horizontal">
+        <StackPanel Margin="0,4" Orientation="Horizontal">
           <TextBlock Text="步骤间隔时间 (ms)：" />
           <ui:NumberBox
             Maximum="100000"
