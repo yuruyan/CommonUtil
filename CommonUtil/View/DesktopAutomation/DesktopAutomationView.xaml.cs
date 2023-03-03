@@ -17,7 +17,25 @@ public partial class DesktopAutomationView : Page {
     public static readonly DependencyProperty AutomationStepsProperty = DependencyProperty.Register("AutomationSteps", typeof(ExtendedObservableCollection<AutomationStep>), typeof(DesktopAutomationView), new PropertyMetadata());
     public static readonly DependencyProperty StepsIntervalTimeProperty = DependencyProperty.Register("StepsIntervalTime", typeof(double), typeof(DesktopAutomationView), new PropertyMetadata(100.0));
     public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(DesktopAutomationView), new PropertyMetadata(false));
+    public static readonly DependencyProperty CurrentMousePositionProperty = DependencyProperty.Register("CurrentMousePosition", typeof(Point), typeof(DesktopAutomationView), new PropertyMetadata());
+    private static readonly IReadOnlyDictionary<uint, AutomationDialogItem> AutomationItemDialogDict = new Dictionary<uint, AutomationDialogItem>() {
+        {1, new (typeof(InputTextDialog)) },
+        {2, new (typeof(PressKeyDialog)) },
+        {3, new (typeof(PressKeyShortcutDialog)) },
+        {4, new (typeof(MouseClickDialog)) },
+        {5, new (typeof(MouseDoubleClickDialog)) },
+        {6, new (typeof(MouseMoveDialog)) },
+        {7, new (typeof(MouseScrollDialog)) },
+        {8, new (typeof(WaitDialog)) },
+    };
 
+    /// <summary>
+    /// 当前鼠标位置
+    /// </summary>
+    public Point CurrentMousePosition {
+        get { return (Point)GetValue(CurrentMousePositionProperty); }
+        set { SetValue(CurrentMousePositionProperty, value); }
+    }
     /// <summary>
     /// 是否正在运行
     /// </summary>
@@ -46,15 +64,11 @@ public partial class DesktopAutomationView : Page {
         get { return (IList<AutomationItem>)GetValue(AutomationItemsProperty); }
         private set { SetValue(AutomationItemsProperty, value); }
     }
-    private static readonly IReadOnlyDictionary<uint, AutomationDialogItem> AutomationItemDialogDict = new Dictionary<uint, AutomationDialogItem>() {
-        {1, new (typeof(InputTextDialog)) },
-        {2, new (typeof(PressKeyDialog)) },
-        {3, new (typeof(PressKeyShortcutDialog)) },
-        {4, new (typeof(MouseClickDialog)) },
-        {5, new (typeof(MouseDoubleClickDialog)) },
-        {6, new (typeof(MouseMoveDialog)) },
-        {7, new (typeof(MouseScrollDialog)) },
-        {8, new (typeof(WaitDialog)) },
+    /// <summary>
+    /// 更新当前鼠标位置定时器
+    /// </summary>
+    private readonly DispatcherTimer UpdateCurrentMousePositionTimer = new() {
+        Interval = TimeSpan.FromMilliseconds(250),
     };
 
     public DesktopAutomationView() {
@@ -62,6 +76,13 @@ public partial class DesktopAutomationView : Page {
         // Place before InitializeComponent();
         InitAutomationItems();
         InitializeComponent();
+        UpdateCurrentMousePositionTimer.Tick += (_, _) => {
+            var newPosition = DesktopAutomation.CurrentMousePosition;
+            if (newPosition != CurrentMousePosition) {
+                CurrentMousePosition = newPosition;
+            }
+        };
+        UpdateCurrentMousePositionTimer.Start();
     }
 
     /// <summary>
