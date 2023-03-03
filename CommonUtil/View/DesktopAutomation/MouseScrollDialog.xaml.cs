@@ -35,6 +35,8 @@ public partial class MouseScrollDialog : DesktopAutomationDialog {
     /// <param name="dialog"></param>
     /// <param name="e"></param>
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
+        _ = dialog;
+        _ = e;
         var value = ButtonCodeKeys[ScrollDirectionComboBox.SelectedIndex];
         Parameters = new object[] {
             ButtonCodes[value],

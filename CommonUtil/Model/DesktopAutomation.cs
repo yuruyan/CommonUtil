@@ -35,7 +35,7 @@ public class AutomationStep : DependencyObject {
     /// <summary>
     /// 方法参数
     /// </summary>
-    public object[] Parameters { get; set; }
+    public object[] Parameters { get; set; } = Array.Empty<object>();
     /// <summary>
     /// 描述信息头
     /// </summary>

@@ -26,6 +26,8 @@ public partial class WaitDialog : DesktopAutomationDialog {
     /// <param name="dialog"></param>
     /// <param name="e"></param>
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
+        _ = dialog;
+        _ = e;
         Parameters = new object[] { (uint)WaitTime };
         DescriptionValue = $"{(uint)WaitTime} ms";
     }

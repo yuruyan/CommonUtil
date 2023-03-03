@@ -18,6 +18,8 @@ public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
     /// <param name="dialog"></param>
     /// <param name="e"></param>
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
+        _ = dialog;
+        _ = e;
         Parameters = new object[] {
             new KeyCode[] { KeyCode.None }
         };

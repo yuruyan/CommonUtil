@@ -21,6 +21,8 @@ public partial class PressKeyDialog : DesktopAutomationDialog {
     /// <param name="dialog"></param>
     /// <param name="e"></param>
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
+        _ = dialog;
+        _ = e;
         var value = KeyCodeKeys[KeyCodeComboBox.SelectedIndex];
         Parameters = new object[] { Enum.Parse<KeyCode>(value) };
         DescriptionValue = value;

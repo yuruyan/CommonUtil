@@ -34,6 +34,8 @@ public partial class MouseMoveDialog : DesktopAutomationDialog {
     /// <param name="dialog"></param>
     /// <param name="e"></param>
     private void ClosingHandler(ContentDialog dialog, ContentDialogClosingEventArgs e) {
+        _ = dialog;
+        _ = e;
         Parameters = new object[] { new Point(XPosition, YPosition) };
         DescriptionValue = $"({(int)XPosition}, {(int)YPosition})";
     }
