@@ -36,6 +36,26 @@ public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
     }
 
     /// <summary>
+    /// CanExecute
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <remarks>Set CanExecute to true</remarks>
+    private void CanExecuteHandler(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+    /// <summary>
+    /// 删除步骤
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DeleteExecutedHandler(object sender, ExecutedRoutedEventArgs e) {
+        e.Handled = true;
+        if (sender is ListBox listBox) {
+            KeyCodeList.RemoveList(listBox.SelectedItems.Cast<KeyStrokeItem>().ToArray());
+        }
+    }
+
+    /// <summary>
     /// Set values
     /// </summary>
     /// <param name="dialog"></param>

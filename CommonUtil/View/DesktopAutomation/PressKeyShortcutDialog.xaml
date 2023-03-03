@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:dd="urn:gong-wpf-dragdrop"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -18,7 +19,19 @@
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <ListBox Grid.Row="1" ItemsSource="{Binding KeyCodeList}">
+    <ListBox
+      Grid.Row="1"
+      dd:DragDrop.IsDragSource="True"
+      dd:DragDrop.IsDropTarget="True"
+      dd:DragDrop.UseDefaultDragAdorner="True"
+      ItemsSource="{Binding KeyCodeList}"
+      SelectionMode="Extended">
+      <ListBox.CommandBindings>
+        <CommandBinding
+          CanExecute="CanExecuteHandler"
+          Command="ApplicationCommands.Delete"
+          Executed="DeleteExecutedHandler" />
+      </ListBox.CommandBindings>
       <ListBox.ItemTemplate>
         <DataTemplate>
           <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ListBox}}">
@@ -30,6 +43,24 @@
           </Grid>
         </DataTemplate>
       </ListBox.ItemTemplate>
+      <ListBox.ItemContainerStyle>
+        <Style BasedOn="{StaticResource GlobalListBoxItemStyle}" TargetType="ListBoxItem">
+          <Setter Property="ContextMenu">
+            <Setter.Value>
+              <ContextMenu>
+                <MenuItem Command="ApplicationCommands.Delete" Header="删除">
+                  <MenuItem.Icon>
+                    <TextBlock
+                      Foreground="{StaticResource ErrorBackground}"
+                      Style="{StaticResource ColorIconFontStyle}"
+                      Text="&#xe6b4;" />
+                  </MenuItem.Icon>
+                </MenuItem>
+              </ContextMenu>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </ListBox.ItemContainerStyle>
     </ListBox>
   </Grid>
 </local:DesktopAutomationDialog>
