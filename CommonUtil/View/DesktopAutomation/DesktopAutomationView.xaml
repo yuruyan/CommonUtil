@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:dd="urn:gong-wpf-dragdrop"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -13,6 +14,24 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <ContextMenu x:Key="AutomationStepsListBoxContextMenu">
+      <MenuItem Command="ApplicationCommands.Delete" Header="删除">
+        <MenuItem.Icon>
+          <TextBlock
+            Foreground="{StaticResource ErrorBackground}"
+            Style="{StaticResource ColorIconFontStyle}"
+            Text="&#xe6b4;" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Click="ModifyAutomationStepClickHandler" Header="修改">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe657;" />
+        </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
+  </Page.Resources>
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="1*" />
@@ -56,8 +75,13 @@
       <ListBox
         Grid.Row="1"
         VerticalAlignment="Top"
+        dd:DragDrop.DragDropCopyKeyState="ControlKey"
+        dd:DragDrop.IsDragSource="True"
+        dd:DragDrop.IsDropTarget="True"
+        dd:DragDrop.UseDefaultDragAdorner="True"
         ItemsSource="{Binding AutomationSteps}"
-        MouseDoubleClick="AutomationStepsListBoxMouseDoubleClickHandler">
+        MouseDoubleClick="AutomationStepsListBoxMouseDoubleClickHandler"
+        SelectionMode="Extended">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <DockPanel>
@@ -80,25 +104,7 @@
         </ListBox.CommandBindings>
         <ListBox.ItemContainerStyle>
           <Style BasedOn="{StaticResource GlobalListBoxItemStyle}" TargetType="ListBoxItem">
-            <Setter Property="ContextMenu">
-              <Setter.Value>
-                <ContextMenu>
-                  <MenuItem Command="ApplicationCommands.Delete" Header="删除">
-                    <MenuItem.Icon>
-                      <TextBlock
-                        Foreground="{StaticResource ErrorBackground}"
-                        Style="{StaticResource ColorIconFontStyle}"
-                        Text="&#xe6b4;" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <MenuItem Click="ModifyAutomationStepClickHandler" Header="修改">
-                    <MenuItem.Icon>
-                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe657;" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                </ContextMenu>
-              </Setter.Value>
-            </Setter>
+            <Setter Property="ContextMenu" Value="{StaticResource AutomationStepsListBoxContextMenu}" />
           </Style>
         </ListBox.ItemContainerStyle>
       </ListBox>

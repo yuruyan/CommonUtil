@@ -15,7 +15,7 @@ public class AutomationItem {
     }
 }
 
-public class AutomationStep : DependencyObject {
+public class AutomationStep : DependencyObject, ICloneable {
     public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(string), typeof(AutomationStep), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty DescriptionHeaderProperty = DependencyProperty.Register("DescriptionHeader", typeof(string), typeof(AutomationStep), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty DescriptionValueProperty = DependencyProperty.Register("DescriptionValue", typeof(string), typeof(AutomationStep), new PropertyMetadata(string.Empty));
@@ -55,4 +55,11 @@ public class AutomationStep : DependencyObject {
         AutomationItemId = automationItemId;
         AutomationMethod = automationMethod;
     }
+
+    public object Clone() => new AutomationStep(AutomationItemId, AutomationMethod) {
+        Icon = Icon,
+        DescriptionHeader = DescriptionHeader,
+        DescriptionValue = DescriptionValue,
+        Parameters = Parameters
+    };
 }
