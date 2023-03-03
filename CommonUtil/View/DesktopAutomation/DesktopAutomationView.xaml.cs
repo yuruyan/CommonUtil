@@ -143,7 +143,24 @@ public partial class DesktopAutomationView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void AutomationStepsListBoxMouseDoubleClickHandler(object sender, MouseButtonEventArgs e) {
+        e.Handled = true;
+        if (e.OriginalSource is FrameworkElement element && element.DataContext is AutomationStep step) {
+            ModifyAutomationStep(step);
+        }
+    }
 
+    /// <summary>
+    /// 修改 AutomationStep
+    /// </summary>
+    /// <param name="step"></param>
+    private async void ModifyAutomationStep(AutomationStep step) {
+        var dialog = EnsureDialogIsCreated(AutomationItemDialogDict[step.AutomationItemId]);
+        dialog.ParseParameters(step.Parameters);
+        // 确定
+        if (await dialog.ShowAsync() == ModernWpf.Controls.ContentDialogResult.Primary) {
+            step.Parameters = dialog.Parameters;
+            step.DescriptionValue = dialog.DescriptionValue;
+        }
     }
 
     /// <summary>
@@ -229,17 +246,10 @@ public partial class DesktopAutomationView : Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void ModifyAutomationStepClickHandler(object sender, RoutedEventArgs e) {
+    private void ModifyAutomationStepClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        if (sender is not FrameworkElement element || element.DataContext is not AutomationStep step) {
-            return;
-        }
-        var dialog = EnsureDialogIsCreated(AutomationItemDialogDict[step.AutomationItemId]);
-        dialog.ParseParameters(step.Parameters);
-        // 确定
-        if (await dialog.ShowAsync() == ModernWpf.Controls.ContentDialogResult.Primary) {
-            step.Parameters = dialog.Parameters;
-            step.DescriptionValue = dialog.DescriptionValue;
+        if (sender is FrameworkElement element && element.DataContext is AutomationStep step) {
+            ModifyAutomationStep(step);
         }
     }
 
