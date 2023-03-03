@@ -50,6 +50,11 @@
           </ui:SimpleStackPanel>
         </HierarchicalDataTemplate>
       </TreeView.ItemTemplate>
+      <TreeView.ItemContainerStyle>
+        <Style BasedOn="{StaticResource DefaultTreeViewItemStyle}" TargetType="TreeViewItem">
+          <Setter Property="IsExpanded" Value="True" />
+        </Style>
+      </TreeView.ItemContainerStyle>
     </TreeView>
     <Grid Grid.Column="1">
       <Grid.RowDefinitions>
