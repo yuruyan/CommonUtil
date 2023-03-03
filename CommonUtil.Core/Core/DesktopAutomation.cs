@@ -104,7 +104,7 @@ public static class DesktopAutomation {
     /// <param name="builder"></param>
     /// <param name="shortcuts"></param>
     /// <returns></returns>
-    public static void PressKeyShortcut(EventBuilder builder, params KeyCode[] shortcuts) => builder.Click(shortcuts);
+    public static void PressKeyShortcut(EventBuilder builder, params KeyCode[] shortcuts) => builder.ClickChord(shortcuts);
 
     /// <summary>
     /// 异步运行
