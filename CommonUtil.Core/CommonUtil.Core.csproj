@@ -56,7 +56,7 @@
   </ItemGroup>
 
   <Choose>
-    <When Condition=" '$(TargetFramework)'=='net7.0-windows10.0.17763.0' ">
+    <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))'=='true' ">
       <ItemGroup>
         <Reference Include="CommonTools">
           <HintPath>Lib\Net7\CommonTools.dll</HintPath>
@@ -66,7 +66,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition=" '$(TargetFramework)'=='net6.0-windows10.0.17763.0' ">
+    <When Condition=" '$(TargetFramework.StartsWith(`net6.0`))'=='true' ">
       <ItemGroup>
         <Reference Include="CommonTools">
           <HintPath>Lib\Net6\CommonTools.dll</HintPath>
