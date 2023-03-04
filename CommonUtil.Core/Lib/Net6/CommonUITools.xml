@@ -1,0 +1,1958 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommonUITools</name>
+    </assembly>
+    <members>
+        <member name="M:CommonUITools.App.RegisterWidgetPage(System.Windows.Window)">
+            <summary>
+            注册 MessageBox 和 NotificationBox 界面
+            多次调用无效果
+            </summary>
+        </member>
+        <member name="M:CommonUITools.WindowAdorner.CreateMessageBoxPanel(System.Windows.Window)">
+            <summary>
+            创建 MessageBoxPanel
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.WindowAdorner.CreateNotificationPanel">
+            <summary>
+            创建 NotificationPanel
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Converter.SafeDoubleConverter">
+            <summary>
+            转 double，不抛异常，失败返回 0
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DivideHalfThreeConverter">
+            <summary>
+            除以 1.5 Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DivideTwoConverter">
+            <summary>
+            除以 2 Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DivideThreeConverter">
+            <summary>
+            除以 3 Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.AddConvert">
+            <summary>
+            加法 Convert，value + parameter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.SubtractConverter">
+            <summary>
+            减法 Converter，value - parameter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.SubtractInvertConverter">
+            <summary>
+            减法 Converter，parameter - value
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.MultiplyConverter">
+            <summary>
+            乘法 Converter，value * parameter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DivideConverter">
+            <summary>
+            除法 Converter，value / parameter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DivideInvertConverter">
+            <summary>
+            除法 Converter，parameter / value
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.ColorToBrushConverter">
+            <summary>
+            Color 转 Brush
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.BrushToColorConverter">
+            <summary>
+            Brush 转 Color
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.StringToBrushConverter">
+            <summary>
+            string 转 Brush
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.StringToColorConverter">
+            <summary>
+            string 转 Color
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideZeroConverter">
+            <summary>
+            为 0 则返回 ""
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.EqualConverter">
+            <summary>
+            相等则返回 True
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.NotEqualConverter">
+            <summary>
+            不相等则返回 True
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:CommonUITools.Converter.StringAppendConverter" -->
+        <member name="T:CommonUITools.Converter.FileNameConverter">
+            <summary>
+            显示文件名 Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.FileSizeConverter">
+            <summary>
+            文件大小 Converter，自动显示相应大小
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.BoolToStringConverter">
+            <summary>
+            Bool 条件转 String
+            parameter 格式：trueValue|falseValue
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.NumberToGridLengthConverter">
+            <summary>
+            数值转 GridLength
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.NumberToThicknessConverter">
+            <summary>
+            数值转 Thickness
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.NumberToCornerRadiusConverter">
+            <summary>
+            数值转 CornerRadius
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.ObjectToStringConverter">
+            <summary>
+            对象转字符串
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.InvertBoolConverter">
+            <summary>
+            反转 Bool
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DateTimeToDateTimeStringConverter">
+            <summary>
+            DateTime 转 DateTime String Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.DateTimeToDateStringConverter">
+            <summary>
+            DateTime 转 Date String Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.TimeStampStringConverter">
+            <summary>
+            时间戳转字符串
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.AgeConverter">
+            <summary>
+            DateTime 转年龄
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.FileIconConverter">
+            <summary>
+            文件图标 Converter，返回 string，以 '/' 开头
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.FilePngIconConverter">
+            <summary>
+            文件图标 Converter
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.ProcessResultIconConverter">
+            <summary>
+            ResultIcon
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Convert
+            </summary>
+            <param name="value">ProcessResult</param>
+            <param name="targetType"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Converter.ProcessResultMessageConverter">
+            <summary>
+            ResultMessage
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Converter.ProcessResultMessageConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        </member>
+        <member name="T:CommonUITools.Converter.ProcessResultIconForegroundConverter">
+            <summary>
+            ResultIconForeground
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Converter.ProcessResultIconForegroundConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        </member>
+        <member name="T:CommonUITools.Converter.ProcessResultVisibilityConverter">
+            <summary>
+            ResultVisibility
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Converter.ProcessResultVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        </member>
+        <member name="T:CommonUITools.Converter.VisibilityEqualConverter">
+            <summary>
+            value 与 parameter 内容相同，返回 parameter 指定的 Visibility
+            不满足则返回 Visible
+            parameter 格式：value|Visibility(大小写均可)
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.VisibilityIncludesConverter">
+            <summary>
+            value 与 parameter 包括的内容匹配，返回 parameter 指定的 Visibility
+            不满足则返回 Visible
+            parameter 格式：[a b c]|Visibility(大小写均可)
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.VisibilityNotIncludesConverter">
+            <summary>
+            value 与 parameter 包括的内容不匹配，返回 parameter 指定的 Visibility
+            不满足则返回 Visible
+            parameter 格式：[a b c]|Visibility(大小写均可)
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.VisibilityNotEqualConverter">
+            <summary>
+            value 与 parameter 内容不相同，返回 parameter 指定的 Visibility
+            不满足则返回 Visible
+            parameter 格式：value|Visibility(大小写均可)
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfEuqalConverter">
+            <summary>
+            相等则隐藏，比较的是 ToString
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfNotEuqalConverter">
+            <summary>
+            不相等则隐藏，比较的是 ToString
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfZeroConverter">
+            <summary>
+            为 0 则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfNotZeroConverter">
+            <summary>
+            不为 0 则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfEmptyConverter">
+            <summary>
+            为空则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfNotEmptyConverter">
+            <summary>
+            不为空则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfTrueConverter">
+            <summary>
+            为True则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfFalseConverter">
+            <summary>
+            为False则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfNullConverter">
+            <summary>
+            为 Null 则隐藏
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.HideIfNotNullConverter">
+            <summary>
+            不为 Null 则隐藏
+            </summary>
+        </member>
+        <member name="P:CommonUITools.View.BaseDialog.DetailText">
+            <summary>
+            DetailText
+            </summary>
+        </member>
+        <member name="T:CommonUITools.View.InfoDialog">
+            <summary>
+            InfoDialog
+            </summary>
+        </member>
+        <member name="M:CommonUITools.View.InfoDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.View.SimpleInputDialog">
+            <summary>
+            SimpleInputDialog
+            </summary>
+        </member>
+        <member name="P:CommonUITools.View.SimpleInputDialog.Header">
+            <summary>
+            Input Header
+            </summary>
+        </member>
+        <member name="M:CommonUITools.View.SimpleInputDialog.Show">
+            <summary>
+            Show Dialog
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.View.SimpleInputDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.View.WarningDialog">
+            <summary>
+            WarningDialog
+            </summary>
+        </member>
+        <member name="F:CommonUITools.View.WarningDialog.Shared">
+            <summary>
+            全局 WarningDialog
+            </summary>
+        </member>
+        <member name="M:CommonUITools.View.WarningDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.NotStarted">
+            <summary>
+            未开始
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.Processing">
+            <summary>
+            处理中
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.Paused">
+            <summary>
+            暂停
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.Interrupted">
+            <summary>
+            终止
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.Successful">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Model.ProcessResult.Failed">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Model.FileProcessStatus">
+            <summary>
+            文件进度状态
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Model.FileProcessStatus.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Model.FileProcessStatus.FileSize">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Model.FileProcessStatus.Process">
+            <summary>
+            进度，[0 - 1]
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Model.FileProcessStatus.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Model.ShowCommands">
+            <summary>
+            Sets the specified window's show state.
+            </summary>
+            <see href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow"/>
+        </member>
+        <member name="T:CommonUITools.Resource.Resource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Resource.Resource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Resource.Resource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Resource.Resource.Icon">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Resource.ResourceDictionary.ButtonResources">
+            <summary>
+            ButtonResources
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Resource.ResourceDictionary.ButtonResources.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Resource.ResourceDictionary.StyleResources">
+            <summary>
+            StyleResources
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Resource.ResourceDictionary.StyleResources.IntegerNumberBoxLostFocusHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            转换浮点数为整数
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Resource.ResourceDictionary.StyleResources.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.RouterNode.Name">
+            <summary>
+            路由名称，会清除两边的 <see cref="F:CommonUITools.Route.Router.RouterSeparator"/>
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.RouterNode.PageType">
+            <summary>
+            页面 Type
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.RouterNode.FrameName">
+            <summary>
+            Frame 名称，即 Name 属性
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.RouterNode.Children">
+            <summary>
+            子节点
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Route.Router">
+            <summary>
+            路由，一个 Window 最多一个路由
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Route.Router.RouterInternalNode.Instance">
+            <summary>
+            对象实例
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RouterInternalNode.HasChild">
+            <summary>
+            是否有子节点
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RouterInternalNode.IsCreated">
+            <summary>
+            是否已创建
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RouterInternalNode.IsCreating">
+            <summary>
+            是否正在创建
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RouterInternalNode.Children">
+            <summary>
+            子节点
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RouterInternalNode.ChildrenDict">
+            <summary>
+            (Name, RouterInternalNode)
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Route.Router.RouterInternalNode.CreateFromRouterNode(CommonUITools.Route.RouterNode)">
+            <summary>
+            从 RouterNode 创建
+            </summary>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Route.Router.RouterInternalNode.GetInstance">
+            <summary>
+            获取对象，如未创建则立即创建
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">对象创建失败</exception>
+        </member>
+        <member name="M:CommonUITools.Route.Router.RouterInternalNode.InitFromExisting(System.Windows.Controls.Frame,System.Object)">
+            <summary>
+            从已创建结点初始化
+            </summary>
+            <param name="frame"></param>
+            <param name="instance"></param>
+        </member>
+        <member name="F:CommonUITools.Route.Router.RouterSeparator">
+            <summary>
+            路由分隔符
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.RootNode">
+            <summary>
+            根节点
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Route.Router.CurrentRoute">
+            <summary>
+            当前路由
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Route.Router.RouteStack">
+            <summary>
+            导航路径
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Route.Router.GetRoutes(System.String)">
+            <summary>
+            获取路由
+            </summary>
+            <param name="routePath">全路径</param>
+            <returns>not empty routes</returns>
+            <exception cref="T:System.ArgumentException">
+            routePath isNullOrEmpty or routes is empty
+            </exception>
+        </member>
+        <member name="M:CommonUITools.Route.Router.GetRouteNodesWithoutRoot(CommonUITools.Route.Router.RouterInternalNode,System.String)">
+            <summary>
+            获取路由结点，不包括根节点
+            </summary>
+            <param name="routePath">全路径</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">路由不匹配</exception>
+        </member>
+        <member name="M:CommonUITools.Route.Router.EnsureNodeAreCreated(System.Collections.Generic.IList{CommonUITools.Route.Router.RouterInternalNode})">
+            <summary>
+            确保路径结点都已经初始化
+            </summary>
+            <param name="routeNodes"></param>
+            <returns>全部初始化完成返回 true，正在初始化返回 false</returns>
+        </member>
+        <member name="M:CommonUITools.Route.Router.Navigate(System.String,System.Object)">
+            <summary>
+            导航
+            </summary>
+            <param name="routePath">路由以 <see cref="F:CommonUITools.Route.Router.RouterSeparator"/> 分隔，包含根路由</param>
+            <param name="args">额外参数</param>
+        </member>
+        <member name="M:CommonUITools.Route.Router.GetInstance(System.String)">
+            <summary>
+            获取路由对应实例对象
+            </summary>
+            <param name="routePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Route.Router.GoBack">
+            <summary>
+            回到上一级
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Route.Router.CanGoBack">
+            <summary>
+            是否能回退
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:CommonUITools.Route.RouterService.DefalutNavigationTransitionEffect">
+            <summary>
+            默认 NavigationTransitionInfo
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.GetInstance(System.Type)">
+            <summary>
+            获取实例对象，对象未创建则会动态创建
+            </summary>
+            <param name="view"></param>
+            <returns></returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">View 不存在</exception>
+            <exception cref="T:System.NullReferenceException">对象创建失败</exception>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.GetRouteTypes">
+            <summary>
+            获取子路由类型信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type,CommonUITools.Route.NavigationTransitionEffect)">
+            <summary>
+            导航至页面
+            </summary>
+            <param name="view">路由</param>
+            <param name="effect">过渡动画</param>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Back">
+            <summary>
+            返回
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Themes.ThemeManager.SwitchToLightTheme">
+            <summary>
+            切换为 LightTheme
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Themes.ThemeManager.SwitchToDarkTheme">
+            <summary>
+            切换为 DarkTheme
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.FileIconUtils.IconDict">
+            <summary>
+            文件后缀-图标路径
+            [extension, filepathWithoutExtension]
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.FileIconUtils.SortedIconList">
+            <summary>
+            根据文件后缀长度降序排列 Icon List
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.FileIconUtils.DefaultIconKey">
+            <summary>
+            默认 Icon Key
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.FileIconUtils.CompressedIconFile">
+            <summary>
+            图标压缩文件路径
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.FileIconUtils.DeCompressedIconFolder">
+            <summary>
+            图标解压缩目录
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.FileIconUtils.ConvertToImagePath(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            转换为 Image Path
+            </summary>
+            <param name="pairs"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.FileIconUtils.CheckAndDecompressFileIcons">
+            <summary>
+            检查 Icon 文件是否已解压
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.FileIconUtils.InitializeExplicitly">
+            <summary>
+            显式初始化
+            </summary>
+            <remarks>不调用该方法，程序会自动初始化</remarks>
+        </member>
+        <member name="M:CommonUITools.Utils.FileIconUtils.GetIcon(System.String)">
+            <summary>
+            返回匹配 Icon 文件名，以 '/' 开头
+            </summary>
+            <param name="fileName">文件名或绝对路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.FileIconUtils.GetPngIcon(System.String)">
+            <summary>
+            返回匹配 PngIcon 文件名，以 '/' 开头
+            </summary>
+            <param name="fileName">文件名或绝对路径</param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.ScaleAnimationHelper">
+            <summary>
+            显示时开始动画
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.ScaleAnimationHelper.StoryboardDict">
+            <summary>
+            Storyboard 缓存
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.GetIsEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.GetScaleOption(System.Windows.DependencyObject)">
+            <summary>
+            缩放选项
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.ScaleOptionPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            ScaleOptionPropertyChangedHandler
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.CheckAndSetStoryboardDict(System.Windows.FrameworkElement)">
+            <summary>
+            检查并设置 StoryboardDict
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.IsEnabledPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            IsEnabledPropertyChangedHandler
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.IsVisibleChangedHandler(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            IsVisible 变化
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.GetStoryboard(System.Windows.FrameworkElement)">
+            <summary>
+            获取 Storyboard
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement,CommonUITools.Utils.ScaleAnimationHelper.ScaleOption)">
+            <summary>
+            创建 ScaleTransform
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.ScaleAnimationHelper.ScaleTransformFactory">
+            <summary>
+            ScaleTransformFactory
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Utils.MouseEventScaleAnimationHelper">
+            <summary>
+            点击自身开始缩放动画
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.GetTriggerCollection(System.Windows.FrameworkElement)">
+            <summary>
+            获取 TriggerCollection
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateTriggerCollection(System.Windows.FrameworkElement)">
+            <summary>
+            创建 TriggerCollection
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateTrigger(System.Windows.FrameworkElement,System.Windows.RoutedEvent,System.Double)">
+            <summary>
+            创建 Trigger
+            </summary>
+            <param name="element"></param>
+            <param name="routedEvent"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateDoubleAnimation(System.Windows.FrameworkElement,System.Double,CommonUITools.Utils.MouseEventScaleAnimationHelper.Direction,System.Int32)">
+            <summary>
+            创建 DoubleAnimation
+            </summary>
+            <param name="element"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CheckAndSetRenderTransform(System.Windows.FrameworkElement)">
+            <summary>
+            检查并设置 RenderTransform
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement)">
+            <summary>
+            创建 ScaleTransform
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.FadeInAnimationHelper">
+            <summary>
+            淡入动画
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.GetEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.GetDuration(System.Windows.DependencyObject)">
+            <summary>
+            持续时间 ms
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CommonUITools.Utils.FadeInAnimationHelper.DefaultDuration">
+            <summary>
+            默认动画持续时间
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.IsEnabledPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            IsEnabled 改变
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.DurationPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Duration 改变
+            </summary>
+            <param name="d"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.IsVisibleChangedHandler(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            播放动画
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.GetStoryboard(System.Windows.FrameworkElement)">
+            <summary>
+            获取 Storyboard，未获取到则自动设置
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.GridViewColumnHelper">
+            <summary>
+            GridViewColumnHelper
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.GridViewColumnHelper.HeaderMinWidthProperty">
+            <summary>
+            Header 最小宽度
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Utils.DragDropHelper">
+            <summary>
+            DragDropHelper，DragOver 时背景会发生变化
+            默认背景为 ApplicationBackgroundBrushLight1
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.GetIsEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.GetOverBackground(System.Windows.DependencyObject)">
+            <summary>
+            拖拽进入区域时背景颜色
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CommonUITools.Utils.DragDropHelper.ElementBackgroundDict">
+            <summary>
+            元素初始状态设置的 Background
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.DragDropHelper.ElementPropertyDict">
+            <summary>
+            元素 Background PropertyInfo
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.TextBoxPreviewDragOverHandler(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            文本框 PreviewDragOver
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonUITools.Utils.LoadingBoxHelper">
+            <summary>
+            加载状态
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.GetIsLoading(System.Windows.DependencyObject)">
+            <summary>
+            是否显示加载
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.GetSize(System.Windows.DependencyObject)">
+            <summary>
+            loading size
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CommonUITools.Utils.LoadingBoxHelper.UndoneTasks">
+            <summary>
+            未完成的任务
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.Proceed(System.Windows.FrameworkElement,System.Boolean)">
+            <summary>
+            继续
+            </summary>
+            <param name="element"></param>
+            <param name="isLoading"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.AddLoadingAdorner(System.Windows.FrameworkElement)">
+            <summary>
+            添加 LoadingAdorner
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="T:CommonUITools.Utils.NameHelper">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.NameHelper.GetName(System.Windows.DependencyObject)">
+            <summary>
+            Name
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.LongPressHelper">
+            <summary>
+            长按事件
+            </summary>
+            <remarks>
+            注意在其他自定义事件中根据 <see cref="M:CommonUITools.Utils.LongPressHelper.GetIsLongPressEventHappend(System.Windows.DependencyObject)"/> 来做进一步处理
+            </remarks>
+        </member>
+        <member name="M:CommonUITools.Utils.LongPressHelper.GetLongPress(System.Windows.DependencyObject)">
+            <summary>
+            长按事件
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.LongPressHelper.GetIsLongPressEventHappend(System.Windows.DependencyObject)">
+            <summary>
+            是否触发了长按事件
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.LongPressHelper.GetIsEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.LoadedStoryboardHelper">
+            <summary>
+            加载动画
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.GetStoryboard(System.Windows.DependencyObject)">
+            <summary>
+            动画
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.GetTimes(System.Windows.DependencyObject)">
+            <summary>
+            执行时间，小于 0 表示无限执行，默认 -1
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+            <remarks>
+            只能设置一次，多次设置无效
+            </remarks>
+        </member>
+        <member name="F:CommonUITools.Utils.LoadedStoryboardHelper.ElementInvokeTimesDict">
+            <summary>
+            执行次数
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.ElementLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            元素加载
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CommonUITools.Utils.DropShadowEffectHelper">
+            <summary>
+            添加阴影
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.DropShadowEffectHelper.GetWeight(System.Windows.DependencyObject)">
+            <summary>
+            阴影程度
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.RemoveListBoxDefaultSelectionBehavior">
+            <summary>
+            移除 ListBox DragSelection 行为
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.RemoveListBoxDefaultSelectionBehavior.GetIsEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.RemoveListBoxItemDefaultSelectionBehavior">
+            <summary>
+            移除 ListBoxItem MouseRightClickSelection 行为
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.RemoveListBoxItemDefaultSelectionBehavior.GetIsEnabled(System.Windows.DependencyObject)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Utils.DoubleMouseClickHelper">
+            <summary>
+            双击鼠标事件，DoubleMouseUp
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.DoubleMouseClickHelper.GetHandler(System.Windows.DependencyObject)">
+            <summary>
+            MouseButtonEventHandler
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.PInvokeUtils.ShellExecuteW(System.IntPtr,System.String,System.String,System.String,System.String,CommonUITools.Model.ShowCommands)">
+            <summary>
+            Performs an operation on a specified file.
+            </summary>
+            <param name="hwnd"></param>
+            <param name="lpOperation"></param>
+            <param name="lpFile"></param>
+            <param name="lpParameters"></param>
+            <param name="lpDirectory"></param>
+            <param name="nShowCmd"></param>
+            <returns></returns>
+            <see href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew"/>
+        </member>
+        <member name="M:CommonUITools.Utils.PInvokeUtils.GetDoubleClickTime">
+            <summary>
+            Retrieves the current double-click time for the mouse. A double-click is a series of two clicks of the mouse button, the second occurring within a specified time after the first. The double-click time is the maximum number of milliseconds that may occur between the first and second click of a double-click. The maximum double-click time is 5000 milliseconds.
+            </summary>
+            <returns></returns>
+            <see cref="!:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime"/>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.TargetBindingElement">
+            <summary>
+            绑定对象，为 null 则绑定到 adornedElement
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindWidth">
+            <summary>
+            是否绑定 Width
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindHeight">
+            <summary>
+            是否绑定 Height
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.Elements">
+            <summary>
+            UIElement 集合
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.IsLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            左键是否单击
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.IsRightButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            右键是否单击
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.AlignContextMenu(System.Windows.FrameworkElement,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            对齐 ContextMenu 位置、调整宽度
+            </summary>
+            <param name="menuOf">ContextMenu 所属控件</param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.StringToBrush(System.String)">
+            <summary>
+            string 转 Brush
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.StringToColor(System.String)">
+            <summary>
+            string 转 Color
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.DrawingColorToColor(System.Drawing.Color)">
+            <summary>
+            SystemDrawing.Color 转 System.Windows.Media.Color
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.OpenFileInExplorerAsync(System.String,System.Action{System.Exception})">
+            <summary>
+            在文件资源管理器中异步打开文件
+            </summary>
+            <param name="path">文件绝对路径</param>
+            <param name="failedCallback">发生异常回调</param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.OpenFileInExistingExplorerAsync(System.String,System.Action{System.Exception})">
+            <summary>
+            在文件资源管理器中异步打开文件，如果存在路径相同的窗口，则不会新建窗口
+            </summary>
+            <param name="path"></param>
+            <param name="failedCallback"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.OpenFileWithAsync(System.String,System.Action{System.Exception})">
+            <summary>
+            选择以什么方式异步打开文件
+            </summary>
+            <param name="path">文件绝对路径</param>
+            <param name="failedCallback">发生异常回调</param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.NotificationOpenFileInExplorerAsync(System.String,System.String,System.String)">
+            <summary>
+            通知打开文件
+            </summary>
+            <param name="filepath"></param>
+            <param name="title"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThread(System.Action)">
+            <summary>
+            在 UI 线程中运行
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThread``1(System.Func{``0})">
+            <summary>
+            在 UI 线程中运行
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CheckInputNullOrEmpty(System.String,System.Boolean,System.String)">
+            <summary>
+            检查输入是否为 null 或空
+            </summary>
+            <param name="input"></param>
+            <param name="showMessage">如果不合法则显示消息提示</param>
+            <param name="message">显示的消息</param>
+            <returns>合法返回 true</returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CheckInputNullOrEmpty(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Boolean,System.String)">
+            <summary>
+            检查输入是否都不为空或 null
+            </summary>
+            <param name="inputWithMessageList">(inputValue, message)</param>
+            <param name="showMessage">如果不合法则显示消息提示</param>
+            <param name="message">显示的消息</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.OpenInBrowser(System.String)">
+            <summary>
+            在浏览器中打开
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CreateFileProcessTask(System.Delegate,System.String,System.Boolean,System.String,System.String,System.Action,System.Action,System.Action,System.Boolean,System.Boolean,System.Object[])">
+            <summary>
+            创建通用文件处理任务
+            </summary>
+            <param name="func">主调用函数</param>
+            <param name="outputPath">文件保存路径</param>
+            <param name="notify">是否通知用户</param>
+            <param name="notificationTitle">通知 Title</param>
+            <param name="notificationMessage">通知详情</param>
+            <param name="successCallback">成功回调</param>
+            <param name="errorCallback">失败回调</param>
+            <param name="finallyCallback">回调函数</param>
+            <param name="showErrorInfo">显示错误信息</param>
+            <param name="reThrowError">是否抛出异常</param>
+            <param name="args">主调用函数参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CheckTextAndFileInputAsync(System.String,System.Boolean,System.String,System.String)">
+            <summary>
+            检查文本和文件输入
+            </summary>
+            <param name="inputText"></param>
+            <param name="hasFile"></param>
+            <param name="filePath"></param>
+            <param name="warningDetail"></param>
+            <returns>通过返回 true</returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CheckTextAndFileInputAsync(System.String,System.Boolean,System.Collections.Generic.ICollection{System.String},System.String)">
+            <summary>
+            检查文本和文件输入
+            </summary>
+            <param name="inputText"></param>
+            <param name="hasFile"></param>
+            <param name="filepaths"></param>
+            <param name="warningDetail"></param>
+            <returns>通过返回 true</returns>
+            <remarks>
+            如果有多个文件则不检查
+            </remarks>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.BindSize(System.Windows.FrameworkElement,System.Windows.FrameworkElement,System.Boolean,System.Boolean)">
+            <summary>
+            将 <paramref name="thisElement"/> width、height 绑定到 <paramref name="targetElement"/>
+            </summary>
+            <param name="thisElement"></param>
+            <param name="targetElement"></param>
+            <param name="bindWidth">是否绑定 width</param>
+            <param name="bindHeight">是否绑定 height</param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.SetLoadedOnceEventHandler(System.Windows.FrameworkElement,System.Windows.RoutedEventHandler)">
+            <summary>
+            设置只执行一次的 Loaded EventHandler
+            </summary>
+            <param name="element"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.ReversePanelChildrenOrder(System.Windows.Controls.Panel)">
+            <summary>
+            反转 Panel Children 顺序
+            </summary>
+            <param name="panel"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.CopyImageSource(System.String)">
+            <summary>
+            拷贝 ImageSource
+            </summary>
+            <param name="filepath">图像路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.BitmapSourceToBitmap(System.Windows.Media.Imaging.BitmapSource)">
+            <summary>
+            BitmapSource 转为Bitmap
+            </summary>
+            <param name="bitmapSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.BitmapToImageSource(System.Drawing.Bitmap)">
+            <summary>
+            Bitmap 转为位图
+            </summary>
+            <param name="bitmap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.BitmapToStream(System.Drawing.Bitmap)">
+            <summary>
+            Bitmap 转 Stream
+            </summary>
+            <param name="bitmap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.FindResourceInMergedDictionaries(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String)">
+            <summary>
+            在 MergedDictionaries 中查找
+            </summary>
+            <param name="mergedDictionaries"></param>
+            <param name="sourcePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.ReplaceResourceDictionary(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String,System.String)">
+            <summary>
+            替换 ResourceDictionary
+            </summary>
+            <param name="mergedDictionaries"></param>
+            <param name="oldSource"></param>
+            <param name="newSource"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonUITools.Widget.DragDropTextBox">
+            <summary>
+            DragDropTextBox
+            </summary>
+        </member>
+        <member name="E:CommonUITools.Widget.DragDropTextBox.DragDropEvent">
+            <summary>
+            DragDropEvent，参数为 FileData
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.DragDropTextBox.TextBox">
+            <summary>
+            输入框
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.DragDropTextBox.FileView">
+            <summary>
+            文件界面
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.DragDropTextBox.HasFile">
+            <summary>
+            是否有文件
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.DragDropTextBox.FileData">
+            <summary>
+            文件数据
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.TextBoxPropertyChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            TextBox 变化
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.FileDragOverHandler(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            更改 TextBox 默认拖拽行为
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.HasFilePropertyChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            HasFile 变化
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.PreviewDropHandler(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            Drop 事件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.Clear">
+            <summary>
+            清空输入
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.DragDropTextBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.FileNameIconWidget">
+            <summary>
+            文件名、图标 widget
+            </summary>
+            <summary>
+            FileNameIconWidget
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileNameIconWidget.IconPath">
+            <summary>
+            图标，用于显示
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileNameIconWidget.IconSize">
+            <summary>
+            图标大小，默认 20
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileNameIconWidget.AutoIcon">
+            <summary>
+            是否自动获取 Icon，默认 true
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.FileNameIconWidget.AutoIconPropertyChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            AutoIconProperty 改变
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileNameIconWidget.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.FileNameSizeWidget">
+            <summary>
+            FileNameSizeWidget
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileNameSizeWidget.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.FileNameSizeWidget.OpenFileClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件点击
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileNameSizeWidget.OpenInFileExplorerHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件夹
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileNameSizeWidget.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.FileProcessStatusWidget">
+            <summary>
+            FileProcessStatusWidget
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileProcessStatusWidget.FileProcessStatusList">
+            <summary>
+            FileProcessStatusList
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileProcessStatusWidget.FinishedCount">
+            <summary>
+            完成任务数
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileProcessStatusWidget.HasTaskRunning">
+            <summary>
+            是否有任务正在运行
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.FileProcessStatusWidget.UpdateStatusTimer">
+            <summary>
+            更新状态 Timer
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.OpenFileClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.OpenDirectoryClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件夹
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.OpenFileMenuItemLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            OpenFileMenuItem
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.ViewLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            开启定时器
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.ViewUnloadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            暂停定时器
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.FileSizeWidget">
+            <summary>
+            FileSizeWidget
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileSizeWidget.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileSizeWidget.FileSize">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileSizeWidget.Prefix">
+            <summary>
+            前缀
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.FileSizeWidget.Suffix">
+            <summary>
+            后缀
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.FileSizeWidget.FileNamePropertyChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            FileNamePropertyChanged
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.FileSizeWidget.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.IconButton">
+            <summary>
+            IconButton
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.IconButton.Text">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.IconButton.Icon">
+            <summary>
+            图标
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.IconButton.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.IconButtonContent">
+            <summary>
+            IconButtonContent
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.IconButtonContent.Text">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.IconButtonContent.Icon">
+            <summary>
+            图标
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.IconButtonContent.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.LoadingBox">
+            <summary>
+            LoadingBox
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.LoadingBox.Size">
+            <summary>
+            ProcessRing 大小
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.LoadingBox.Show">
+            <summary>
+            显示
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.LoadingBox.Close">
+            <summary>
+            关闭
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.LoadingBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.MessageBox">
+            <summary>
+            无论是否在 ui 线程，都可以调用静态方法
+            </summary>
+            <summary>
+            MessageBox
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.MessageBox.PanelChildren">
+            <summary>
+            用于添加 MessageBox
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.BoxBackground">
+            <summary>
+            Background
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.BoxForeground">
+            <summary>
+            Foreground
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.BorderColor">
+            <summary>
+            BorderColor
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.Icon">
+            <summary>
+            Icon
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.MessageType">
+            <summary>
+            MessageType
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.MessageBox.UnloadTimer">
+            <summary>
+            关闭定时器
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MessageBox.ShowingDuration">
+            <summary>
+            显示时间 (ms)
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.SetContentPanel(System.Windows.Controls.Panel)">
+            <summary>
+            设置内容 Panel
+            </summary>
+            <param name="contentPanel"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.UnloadMessageBox">
+            <summary>
+            卸载 MessageBox
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.RootUnLoad(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            消失时触发
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.RootLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            显示时触发
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.UpdateBrush">
+            <summary>
+            更新 Color
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.MessageBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.MultiDragDropTextBox">
+            <summary>
+            MultiDragDropTextBox
+            </summary>
+        </member>
+        <member name="E:CommonUITools.Widget.MultiDragDropTextBox.DragDropEvent">
+            <summary>
+            DragDropEvent，参数为 本次拖拽的 FileNames
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.InputText">
+            <summary>
+            输入文本，默认双向绑定
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.TextBoxStyle">
+            <summary>
+            文本框样式，默认 MultilineTextBoxStyle
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.HasFile">
+            <summary>
+            是否有文件
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileNameList">
+            <summary>
+            文件名列表
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FirstFileName">
+            <summary>
+            第一个文件名
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.IsSupportDirectory">
+            <summary>
+            是否支持文件夹，默认 false
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileNameSet">
+            <summary>
+            文件名集合
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileData">
+            <summary>
+            文件数据
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileNames">
+            <summary>
+            获取完整文件名列表
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileListInfoBorderFadeOutStoryboard">
+            <summary>
+            FileListInfoBorderFadeOut 动画
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.PreviewDropHandler(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            Drop 事件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.Clear">
+            <summary>
+            清空输入
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.OpenFileClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件点击
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.OpenDirectoryClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            打开文件夹
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.DeleteClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            移除文件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.ViewMouseLeaveHandler(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移开
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.ViewMouseEnterHandler(System.Object,System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标移入
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.MultiDragDropTextBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.NotificationBox">
+            <summary>
+            NotificationBox
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.NotificationBox.PanelChildren">
+            <summary>
+            用于添加 NotificationBox
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.BoxForeground">
+            <summary>
+            Background
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.Message">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.Icon">
+            <summary>
+            图标
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.ShowingDuration">
+            <summary>
+            显示时间 (ms)
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.NotificationBox.UnloadTimer">
+            <summary>
+            关闭定时器
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.NotificationBox.ClickCallback">
+            <summary>
+            点击回调
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.SetContentPanel(System.Windows.Controls.Panel)">
+            <summary>
+            设置内容 Panel
+            </summary>
+            <param name="contentPanel"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.RootUnLoad(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            消失时触发
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.UnLoadNotificationBox">
+            <summary>
+            关闭通知
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.RootLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            显示时触发
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.CloseMouseUp(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            关闭通知
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.ActionTextBlockMouseUp(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            点击
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.NotificationBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Widget.WorkingButton">
+            <summary>
+            状态 Button
+            注意不要直接设置 Content、ClickEventHandler
+            NormalContent、WorkingContent 如果设置 Binding 则会失效
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.WorkingButton.IsWorking">
+            <summary>
+            是否正在工作，默认 false
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.WorkingButton.NormalContent">
+            <summary>
+            非 working 时内容
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.WorkingButton.WorkingContent">
+            <summary>
+            Working 时内容
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.WorkingButton.ClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Click 事件
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.WorkingButton.IsWorkingPropertyChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            IsWorking 切换
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+    </members>
+</doc>

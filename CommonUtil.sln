@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil", "CommonUtil\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{EF1E90A1-5390-424A-9E2D-D8B61724E862}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUITools", "..\CommonUITools\CommonUITools\CommonUITools.csproj", "{46116AAA-A878-4F57-9C6E-912D56182345}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileSystemServer", "SimpleFileSystemServer\SimpleFileSystemServer.csproj", "{AA5E726A-1F66-4A02-AA92-83166189A991}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileSystemServerTests", "SimpleFileSystemServerTests\SimpleFileSystemServerTests.csproj", "{DF9CB678-CC2F-415E-92BD-27D2080AB1D4}"
@@ -25,8 +23,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.CoreTests", "CommonUtil.CoreTests\CommonUtil.CoreTests.csproj", "{8F884D85-1D43-4368-B745-0DE472258651}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.Core", "CommonUtil.Core\CommonUtil.Core.csproj", "{3DCADE8F-123B-453F-8847-7668B7076EC8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonTools", "..\CommonUITools\CommonTools\CommonTools.csproj", "{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtilStarter", "CommonUtilStarter\CommonUtilStarter.csproj", "{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}"
 EndProject
@@ -50,12 +46,6 @@ Global
 		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Debug|x64.Build.0 = Debug|Any CPU
 		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Release|Any CPU.ActiveCfg = Release|x64
 		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Release|x64.ActiveCfg = Release|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Debug|x64.ActiveCfg = Debug|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Debug|x64.Build.0 = Debug|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Release|Any CPU.ActiveCfg = Release|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Release|x64.ActiveCfg = Release|x64
-		{46116AAA-A878-4F57-9C6E-912D56182345}.Release|x64.Build.0 = Release|x64
 		{AA5E726A-1F66-4A02-AA92-83166189A991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA5E726A-1F66-4A02-AA92-83166189A991}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA5E726A-1F66-4A02-AA92-83166189A991}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -85,12 +75,6 @@ Global
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|Any CPU.ActiveCfg = Release|x64
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|x64.ActiveCfg = Release|x64
 		{3DCADE8F-123B-453F-8847-7668B7076EC8}.Release|x64.Build.0 = Release|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|x64.ActiveCfg = Debug|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Debug|x64.Build.0 = Debug|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|Any CPU.ActiveCfg = Release|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|x64.ActiveCfg = Release|x64
-		{2AE6D2F8-FF43-4FAA-AF49-B20CC4C534AA}.Release|x64.Build.0 = Release|x64
 		{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}.Debug|x64.ActiveCfg = Debug|x64
 		{BA4819C0-58C0-4AFF-8C6C-1C46F0C26843}.Debug|x64.Build.0 = Debug|x64

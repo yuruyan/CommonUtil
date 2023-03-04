@@ -8,7 +8,7 @@ public class Downloader {
     /// <summary>
     /// 下载配置
     /// </summary>
-    private static DownloadConfiguration DefaultDownloadConfiguration => new() { OnTheFlyDownload = false };
+    private static DownloadConfiguration DefaultDownloadConfiguration => new();
     /// <summary>
     /// 下载任务列表 dict，用于更新，与 DownloadTaskInfoList 同步更新
     /// </summary>
