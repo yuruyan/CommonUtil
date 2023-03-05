@@ -3,9 +3,9 @@
 namespace CommonUtil.Core;
 
 #if NET7_0_OR_GREATER
-public partial class TextTool {
+public static partial class TextTool {
 #elif NET6_0_OR_GREATER
-public class TextTool {
+public static class TextTool {
 #endif
     public delegate string TextProcess(string text);
     public delegate void FileProcess(string inputFile, string outputFile);
@@ -326,6 +326,17 @@ public class TextTool {
             _ => InvertText(text, InversionMode.Both),
         };
     }
+
+    /// <summary>
+    /// 排序文本行
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string SortLines(string text) {
+        var lines = text.Split('\n');
+        Array.Sort(lines);
+        return string.Join('\n', lines);
+    }
     #endregion
 
     #region 文件处理
@@ -513,6 +524,15 @@ public class TextTool {
     /// <param name="mode"></param>
     public static void FileInvertText(string inputPath, string outputPath, InversionMode mode) {
         File.WriteAllText(outputPath, InvertText(File.ReadAllText(inputPath), mode));
+    }
+
+    /// <summary>
+    /// 文件排序文本行
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileSortLines(string inputPath, string outputPath) {
+        ProcessFileText(inputPath, outputPath, SortLines);
     }
     #endregion
 }

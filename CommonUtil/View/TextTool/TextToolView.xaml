@@ -70,11 +70,11 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
-          x:Name="InvertTextView"
-          Content="文本翻转"
-          ToolTip="文本翻转">
+          x:Name="SortLinesView"
+          Content="文本行排序"
+          ToolTip="文本行排序">
           <ui:NavigationViewItem.Icon>
-            <ui:FontIcon Glyph="&#xe71b;" />
+            <ui:FontIcon Glyph="&#xe65e;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>

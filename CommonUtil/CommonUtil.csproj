@@ -123,6 +123,9 @@
     <Compile Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\TextTool\SortLinesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\TextTool\InvertTextView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -220,6 +223,9 @@
     <Page Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\TextTool\SortLinesView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\TextTool\InvertTextView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
