@@ -21,21 +21,21 @@
     <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))' == 'true' ">
       <ItemGroup>
         <Reference Include="CommonTools">
-          <HintPath>..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
+          <HintPath>..\..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
         </Reference>
       </ItemGroup>
     </When>
     <When Condition=" '$(TargetFramework.StartsWith(`net6.0`))' == 'true' ">
       <ItemGroup>
         <Reference Include="CommonTools">
-          <HintPath>..\CommonUtil.Core\Lib\Net6\CommonTools.dll</HintPath>
+          <HintPath>..\..\CommonUtil.Core\Lib\Net6\CommonTools.dll</HintPath>
         </Reference>
       </ItemGroup>
     </When>
   </Choose>
 
   <ItemGroup>
-    <Content Remove="scripts\package.json" />
+    <Content Remove="Scripts\package.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="scripts\package.json" />
+    <None Include="Scripts\package.json" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
