@@ -90,7 +90,8 @@ namespace CommonUtil.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to roots/bookmark_bar/children[*]/url.
+        ///   Looks up a localized string similar to roots/bookmark_bar/children[*]/id
+        ///roots/bookmark_bar/children[*]/url.
         /// </summary>
         internal static string JsonExtractorViewDemoPattern {
             get {

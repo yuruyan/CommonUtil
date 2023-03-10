@@ -4,7 +4,6 @@ public partial class JsonExtractorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
-    //public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
     public static readonly DependencyProperty PatternTextProperty = DependencyProperty.Register("PatternText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(false));
@@ -22,13 +21,6 @@ public partial class JsonExtractorView : Page {
         get { return (string)GetValue(InputTextProperty); }
         set { SetValue(InputTextProperty, value); }
     }
-    ///// <summary>
-    ///// 输出文本
-    ///// </summary>
-    //public string OutputText {
-    //    get { return (string)GetValue(OutputTextProperty); }
-    //    set { SetValue(OutputTextProperty, value); }
-    //}
     /// <summary>
     /// 是否有文件
     /// </summary>
@@ -133,7 +125,6 @@ public partial class JsonExtractorView : Page {
     private void StringExtract() {
         var patterns = ParsePattern();
         ResultList = new(JsonExtractor.Extract(InputText, patterns).Transpose());
-        //OutputText = string.Join('\n', ResultList);
         ResultListGridView.Columns.Clear();
         var headers = JsonExtractor.GetPatternHeaders(patterns);
         int index = 0;
@@ -181,7 +172,7 @@ public partial class JsonExtractorView : Page {
     /// <param name="e"></param>
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        //Clipboard.SetDataObject(OutputText);
+        CopyResultViewItems(ResultList);
         MessageBox.Success("已复制");
     }
 
@@ -225,5 +216,28 @@ public partial class JsonExtractorView : Page {
     private void JsonExtractClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         HandleExtract();
+    }
+
+    /// <summary>
+    /// 复制结果
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CopyResultClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        CopyResultViewItems(ResultListView.SelectedItems.Cast<IList<string>>());
+        MessageBox.Success("已复制");
+    }
+
+    /// <summary>
+    /// 复制结果集
+    /// </summary>
+    /// <param name="data"></param>
+    private static void CopyResultViewItems(IEnumerable<IEnumerable<string>> data) {
+        var copyData = new List<string>();
+        foreach (var item in data) {
+            copyData.Add(string.Join('\t', item));
+        }
+        Clipboard.SetDataObject(string.Join('\n', copyData));
     }
 }

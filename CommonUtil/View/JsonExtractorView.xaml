@@ -19,6 +19,13 @@
     <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
       <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    <ContextMenu x:Key="ResultViewItemContextMenu">
+      <MenuItem Click="CopyResultClickHandler" Header="复制">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+        </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
   </Page.Resources>
 
   <UniformGrid Columns="2">
@@ -84,16 +91,19 @@
           Text="{Binding ResultList.Count, Mode=OneWay}" />
         <Run Text="个结果" />
       </TextBlock>
-      <ListView x:Name="ResultListView" ItemsSource="{Binding ResultList}">
+      <ListView
+        x:Name="ResultListView"
+        ItemsSource="{Binding ResultList}"
+        Visibility="{Binding ResultList.Count, Converter={StaticResource HideIfZeroConverter}}">
+        <ListView.ItemContainerStyle>
+          <Style BasedOn="{StaticResource {x:Static GridView.GridViewItemContainerStyleKey}}" TargetType="ListViewItem">
+            <Setter Property="ContextMenu" Value="{StaticResource ResultViewItemContextMenu}" />
+          </Style>
+        </ListView.ItemContainerStyle>
         <ListView.View>
           <GridView x:Name="ResultListGridView" />
         </ListView.View>
       </ListView>
-      <!--<TextBox
-        Background="Transparent"
-        IsReadOnly="True"
-        Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding OutputText, Mode=OneWay}" />-->
     </Grid>
   </UniformGrid>
 </Page>
