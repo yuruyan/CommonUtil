@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Csv;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
@@ -102,7 +103,8 @@ public static class JsonExtractor {
     private static IList<string> Extract(Stream stream, string pattern) {
         var resultList = new List<string>();
         var patterns = ParsePattern(pattern);
-        using var streamReader = new StreamReader(stream);
+        // 不用 using
+        var streamReader = new StreamReader(stream);
         // 解析
         var jToken = JToken.Load(new JsonTextReader(streamReader), new());
         Extract(patterns, 0, jToken, resultList);
@@ -165,13 +167,33 @@ public static class JsonExtractor {
     /// <summary>
     /// 数据提取
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="json"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    /// <exception cref="PatternParseException">解析失败</exception>
-    public static IList<string> Extract(string text, string pattern) {
-        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(text));
+    /// <inheritdoc cref="Extract(Stream, string)"/>
+    public static IList<string> Extract(string json, string pattern) {
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
         return Extract(stream, pattern);
+    }
+
+    /// <summary>
+    /// 提取多列数据
+    /// </summary>
+    /// <param name="json"></param>
+    /// <param name="patterns"></param>
+    /// <returns>每列具有相同的长度</returns>
+    /// <inheritdoc cref="Extract(string, string)"/>
+    public static IList<IList<string>> Extract(string json, IEnumerable<string> patterns) {
+        var data = new List<IList<string>>();
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
+        foreach (var pattern in patterns) {
+            stream.Seek(0, SeekOrigin.Begin);
+            data.Add(Extract(stream, pattern));
+        }
+        var itemLength = data.Max(list => list.Count);
+        // 填充值
+        data.ForEach(list => list.ResizeToLength(itemLength, string.Empty));
+        return data;
     }
 
     /// <summary>
@@ -184,5 +206,66 @@ public static class JsonExtractor {
     public static void FileExtract(string inputPath, string outputPath, string pattern) {
         using var stream = File.OpenRead(inputPath);
         File.WriteAllLines(outputPath, Extract(stream, pattern));
+    }
+
+    /// <summary>
+    /// 文件提取多列，文件保存为 CSV 格式
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    /// <param name="patterns"></param>
+    public static void FileExtract(string inputPath, string outputPath, IEnumerable<string> patterns) {
+        using var readStream = File.OpenRead(inputPath);
+        var data = new List<IList<string>>();
+        foreach (var pattern in patterns) {
+            readStream.Seek(0, SeekOrigin.Begin);
+            data.Add(Extract(readStream, pattern));
+        }
+        var itemLength = data.Max(list => list.Count);
+        // 填充值
+        data.ForEach(list => list.ResizeToLength(itemLength, string.Empty));
+
+        #region Construct Record
+        var headers = GetPatternHeaders(patterns).ToArray();
+        var records = new List<string[]>();
+        for (int i = 0; i < itemLength; i++) {
+            var record = new string[headers.Length];
+            for (int j = 0; j < record.Length; j++) {
+                record[j] = data[j][i];
+            }
+            records.Add(record);
+        }
+        #endregion
+
+        #region Write to CSV
+        using var streamWriter = new StreamWriter(File.OpenWrite(outputPath));
+        CsvWriter.Write(streamWriter, headers, records);
+        #endregion
+    }
+
+    /// <summary>
+    /// 获取 Pattern Headers
+    /// </summary>
+    /// <param name="patterns"></param>
+    /// <returns></returns>
+    public static IList<string> GetPatternHeaders(IEnumerable<string> patterns) {
+        var headers = new List<string>();
+        var newPatters = patterns
+            .Select(p => p.Trim())
+            .Select(p => p.Trim('/'))
+            .Where(p => !string.IsNullOrEmpty(p))
+            .ToArray();
+        for (int i = 0; i < newPatters.Length; i++) {
+            var pattern = newPatters[i];
+            var indexHeader = $"Column {i + 1}";
+            var lastSplashIndex = pattern.LastIndexOf('/');
+            if (lastSplashIndex != -1) {
+                var trimedHeader = pattern[lastSplashIndex..].Trim().Trim('/');
+                headers.Add(string.IsNullOrEmpty(trimedHeader) ? indexHeader : trimedHeader);
+            } else {
+                headers.Add(indexHeader);
+            }
+        }
+        return headers;
     }
 }

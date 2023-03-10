@@ -1,20 +1,18 @@
-﻿
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class JsonExtractorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
-    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
+    //public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
     public static readonly DependencyProperty PatternTextProperty = DependencyProperty.Register("PatternText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(false));
-    public static readonly DependencyProperty ResultListProperty = DependencyProperty.Register("ResultList", typeof(ICollection<string>), typeof(JsonExtractorView), new PropertyMetadata());
+    public static readonly DependencyProperty ResultListProperty = DependencyProperty.Register("ResultList", typeof(ExtendedObservableCollection<IList<string>>), typeof(JsonExtractorView), new PropertyMetadata());
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
-        Filter = "Text|*.txt|All Files|*.*"
+        Filter = "CSV|*.csv"
     };
 
     /// <summary>
@@ -24,13 +22,13 @@ public partial class JsonExtractorView : Page {
         get { return (string)GetValue(InputTextProperty); }
         set { SetValue(InputTextProperty, value); }
     }
-    /// <summary>
-    /// 输出文本
-    /// </summary>
-    public string OutputText {
-        get { return (string)GetValue(OutputTextProperty); }
-        set { SetValue(OutputTextProperty, value); }
-    }
+    ///// <summary>
+    ///// 输出文本
+    ///// </summary>
+    //public string OutputText {
+    //    get { return (string)GetValue(OutputTextProperty); }
+    //    set { SetValue(OutputTextProperty, value); }
+    //}
     /// <summary>
     /// 是否有文件
     /// </summary>
@@ -55,8 +53,8 @@ public partial class JsonExtractorView : Page {
     /// <summary>
     /// 结果集
     /// </summary>
-    public ICollection<string> ResultList {
-        get { return (ICollection<string>)GetValue(ResultListProperty); }
+    public ExtendedObservableCollection<IList<string>> ResultList {
+        get { return (ExtendedObservableCollection<IList<string>>)GetValue(ResultListProperty); }
         set { SetValue(ResultListProperty, value); }
     }
     /// <summary>
@@ -68,7 +66,7 @@ public partial class JsonExtractorView : Page {
     }
 
     public JsonExtractorView() {
-        ResultList = Array.Empty<string>();
+        ResultList = new();
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
         PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
@@ -133,15 +131,33 @@ public partial class JsonExtractorView : Page {
     /// 文本提取
     /// </summary>
     private void StringExtract() {
-        ResultList = JsonExtractor.Extract(InputText, PatternText);
-        OutputText = string.Join('\n', ResultList);
+        var patterns = ParsePattern();
+        ResultList = new(JsonExtractor.Extract(InputText, patterns).Transpose());
+        //OutputText = string.Join('\n', ResultList);
+        ResultListGridView.Columns.Clear();
+        var headers = JsonExtractor.GetPatternHeaders(patterns);
+        int index = 0;
+        foreach (var header in headers) {
+            ResultListGridView.Columns.Add(new() {
+                Header = header,
+                DisplayMemberBinding = new Binding($"[{index++}]")
+            });
+        }
+    }
+
+    /// <summary>
+    /// 解析输入的 Pattern
+    /// </summary>
+    /// <returns></returns>
+    private string[] ParsePattern() {
+        return PatternText.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
     }
 
     /// <summary>
     /// 文件文本提取
     /// </summary>
     private async Task FileExtract() {
-        var pattern = PatternText;
+        var patterns = ParsePattern();
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
             return;
@@ -150,11 +166,11 @@ public partial class JsonExtractorView : Page {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            JsonExtractor.FileExtract,
+            (Action<string, string, IEnumerable<string>>)JsonExtractor.FileExtract,
             outputPath,
             showErrorInfo: false,
             reThrowError: true,
-            args: new object[] { inputPath, outputPath, pattern }
+            args: new object[] { inputPath, outputPath, patterns }
         );
     }
 
@@ -165,7 +181,7 @@ public partial class JsonExtractorView : Page {
     /// <param name="e"></param>
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        Clipboard.SetDataObject(OutputText);
+        //Clipboard.SetDataObject(OutputText);
         MessageBox.Success("已复制");
     }
 
@@ -176,8 +192,8 @@ public partial class JsonExtractorView : Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        FileName = InputText = OutputText = string.Empty;
-        ResultList = Array.Empty<string>();
+        FileName = InputText = string.Empty;
+        ResultList = new();
         ResultDetailTextBlock.Visibility = Visibility.Collapsed;
         DragDropTextBox.Clear();
     }
@@ -198,18 +214,6 @@ public partial class JsonExtractorView : Page {
             } else {
                 DragDropTextBox.Clear();
             }
-        }
-    }
-
-    /// <summary>
-    /// 按下回车提取
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void PatternTextBoxKeyUpHandler(object sender, KeyEventArgs e) {
-        e.Handled = true;
-        if (e.Key == Key.Enter) {
-            HandleExtract();
         }
     }
 

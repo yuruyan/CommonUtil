@@ -424,7 +424,12 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:CommonUITools.Resource.Resource.Icon">
+        <member name="P:CommonUITools.Resource.Resource.FileIconConfiguration">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Resource.Resource.FileIconData">
             <summary>
               Looks up a localized resource of type System.Byte[].
             </summary>
@@ -644,6 +649,11 @@
             切换为 DarkTheme
             </summary>
         </member>
+        <member name="T:CommonUITools.Utils.FileIconUtils">
+            <summary>
+            文件 Icon 工具
+            </summary>
+        </member>
         <member name="F:CommonUITools.Utils.FileIconUtils.IconDict">
             <summary>
             文件后缀-图标路径
@@ -689,14 +699,14 @@
         </member>
         <member name="M:CommonUITools.Utils.FileIconUtils.GetIcon(System.String)">
             <summary>
-            返回匹配 Icon 文件名，以 '/' 开头
+            返回匹配 Icon 文件路径，以 '/' 开头
             </summary>
             <param name="fileName">文件名或绝对路径</param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.FileIconUtils.GetPngIcon(System.String)">
             <summary>
-            返回匹配 PngIcon 文件名，以 '/' 开头
+            返回匹配 PngIcon 文件路径，以 '/' 开头
             </summary>
             <param name="fileName">文件名或绝对路径</param>
             <returns></returns>
@@ -1079,6 +1089,25 @@
             <param name="obj"></param>
             <returns></returns>
         </member>
+        <member name="T:CommonUITools.Utils.ListViewGroupHelper">
+            <summary>
+            设置 ListViewGroup Style
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.ListViewGroupHelper.SetEnableDefaultGroupStyle(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            设置默认 GroupStyle
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ListViewGroupHelper.CreateGroupStyle(System.Windows.Controls.ItemsControl)">
+            <summary>
+            创建 GroupStyle
+            </summary>
+            <param name="control"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonUITools.Utils.PInvokeUtils.ShellExecuteW(System.IntPtr,System.String,System.String,System.String,System.String,CommonUITools.Model.ShowCommands)">
             <summary>
             Performs an operation on a specified file.
@@ -1117,6 +1146,11 @@
         <member name="F:CommonUITools.Utils.CommonAdorner.Elements">
             <summary>
             UIElement 集合
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Utils.UIUtils">
+            <summary>
+            UI 工具类
             </summary>
         </member>
         <member name="M:CommonUITools.Utils.UIUtils.IsLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
@@ -1334,6 +1368,33 @@
             <param name="oldSource"></param>
             <param name="newSource"></param>
             <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.GetElementDataContext``1(System.Object)">
+            <summary>
+            获取 sender 的 DataContext
+            </summary>
+            <typeparam name="T">DataContext type</typeparam>
+            <param name="sender">继承自 FrameworkContentElement 或 FrameworkElement</param>
+            <returns>获取失败返回 default(<typeparamref name="T"/>)</returns>
+        </member>
+        <member name="T:CommonUITools.Utils.UIUtilsExtension">
+            <summary>
+            Extention for UIUtils
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.UIUtilsExtension.ContentDialogResizeRatio">
+            <summary>
+            ContentDialogResizeRatio
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.EnableContentDialogAutoResize(ModernWpf.Controls.ContentDialog,System.Double,System.Double,System.Double)">
+            <summary>
+            启用 ContentDialog 自动调整大小
+            </summary>
+            <param name="dialog"></param>
+            <param name="minWidth"></param>
+            <param name="maxWidth"></param>
+            <param name="resizeRatio">NewWidth = Window.ActualWidth / <paramref name="resizeRatio"/></param>
         </member>
         <member name="T:CommonUITools.Widget.DragDropTextBox">
             <summary>

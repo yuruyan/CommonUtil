@@ -19,7 +19,6 @@
     <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
       <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
-
   </Page.Resources>
 
   <UniformGrid Columns="2">
@@ -44,7 +43,8 @@
           <TextBlock Text="模式：" />
           <TextBox
             MinWidth="150"
-            KeyUp="PatternTextBoxKeyUpHandler"
+            MaxLines="8"
+            Style="{StaticResource MultilineTextBoxStyle}"
             Text="{Binding PatternText, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <!--  Control  -->
@@ -84,11 +84,16 @@
           Text="{Binding ResultList.Count, Mode=OneWay}" />
         <Run Text="个结果" />
       </TextBlock>
-      <TextBox
+      <ListView x:Name="ResultListView" ItemsSource="{Binding ResultList}">
+        <ListView.View>
+          <GridView x:Name="ResultListGridView" />
+        </ListView.View>
+      </ListView>
+      <!--<TextBox
         Background="Transparent"
         IsReadOnly="True"
         Style="{StaticResource MultilineTextBoxStyle}"
-        Text="{Binding OutputText, Mode=OneWay}" />
+        Text="{Binding OutputText, Mode=OneWay}" />-->
     </Grid>
   </UniformGrid>
 </Page>

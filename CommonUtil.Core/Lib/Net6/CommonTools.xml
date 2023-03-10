@@ -89,6 +89,27 @@
             设置时触发
             </summary>
         </member>
+        <member name="T:CommonTools.Resource.Resource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Resource.Resource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Resource.Resource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Resource.Resource.ChineseCharacterPinYin">
+            <summary>
+              Looks up a localized resource of type System.Byte[].
+            </summary>
+        </member>
         <member name="M:CommonTools.Utils.CommonUtils.Copy``1(``0)">
             <summary>
             拷贝对象
@@ -383,6 +404,11 @@
             <param name="interval"></param>
             <returns></returns>
         </member>
+        <member name="T:CommonTools.Utils.ExtensionUtils">
+            <summary>
+            扩展方法
+            </summary>
+        </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Remove``1(System.Collections.Generic.ICollection{``0},System.Func{``0,System.Boolean})">
             <summary>
             从 collection 中移除符合 predicate 条件的第一个元素
@@ -506,6 +532,89 @@
             <param name="func"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.ResizeToLength``1(System.Collections.Generic.ICollection{``0},System.Int32,``0)">
+            <summary>
+            扩充集合到指定长度
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="length"></param>
+            <param name="defaultValue">填充默认值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.ResizeByCount``1(System.Collections.Generic.ICollection{``0},System.Int32,``0)">
+            <summary>
+            扩充集合 <paramref name="count"/> 个元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="count"></param>
+            <param name="defaultValue">填充默认值</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Transpose``1(``0[0:,0:])">
+            <summary>
+            数组转置
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Transpose``1(System.Collections.Generic.ICollection{System.Collections.Generic.IList{``0}})">
+            <summary>
+            集合转置，第二维长度必须相同
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CommonTools.Utils.MessageUtils">
+            <summary>
+            消息工具
+            </summary>
+        </member>
+        <member name="T:CommonTools.Utils.MessageUtils.MessageEventHandler">
+            <summary>
+            消息处理
+            </summary>
+            <param name="sender"></param>
+            <param name="message"></param>
+        </member>
+        <member name="F:CommonTools.Utils.MessageUtils.LastMessageDict">
+            <summary>
+            最近一次消息数据
+            </summary>
+        </member>
+        <member name="M:CommonTools.Utils.MessageUtils.SendMessage(System.String,System.Object,System.Object)">
+            <summary>
+            发送消息
+            </summary>
+            <param name="groupName">组名称，区分大小写</param>
+            <param name="sender"></param>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:CommonTools.Utils.MessageUtils.GetLastMessage(System.String,System.Object@)">
+            <summary>
+            获取最近一次消息
+            </summary>
+            <param name="groupName">分组名称</param>
+            <param name="message">返回的消息</param>
+            <returns>存在消息返回 true，否则返回 false</returns>
+        </member>
+        <member name="M:CommonTools.Utils.MessageUtils.SubscribeMessage(System.String,CommonTools.Utils.MessageUtils.MessageEventHandler)">
+            <summary>
+            订阅消息
+            </summary>
+            <param name="groupName">组名称，区分大小写</param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:CommonTools.Utils.MessageUtils.UnSubscribeMessage(System.String,CommonTools.Utils.MessageUtils.MessageEventHandler)">
+            <summary>
+            取消订阅消息
+            </summary>
+            <param name="groupName">组名称，区分大小写</param>
+            <param name="handler"></param>
+        </member>
         <member name="M:CommonTools.Utils.NetworkUtils.GetLocalIpAddress">
             <summary>
             获取本机 IP 地址
@@ -517,6 +626,11 @@
             获取正在使用的端口
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:CommonTools.Utils.RandomUtils">
+            <summary>
+            随机数工具
+            </summary>
         </member>
         <member name="F:CommonTools.Utils.RandomUtils.Numbers">
             <summary>
@@ -581,6 +695,28 @@
             </summary>
             <param name="length">长度</param>
             <returns></returns>
+        </member>
+        <member name="T:CommonTools.Utils.ResourceUtils">
+            <summary>
+            资源工具
+            </summary>
+        </member>
+        <member name="F:CommonTools.Utils.ResourceUtils.ChineseCharacterPinYinDict">
+            <summary>
+            中文汉字拼音
+            </summary>
+        </member>
+        <member name="F:CommonTools.Utils.ResourceUtils.ToneLetterDict">
+            <summary>
+            声调对应字母
+            </summary>
+        </member>
+        <member name="M:CommonTools.Utils.ResourceUtils.GetChineseCharacterPinYin(System.Char)">
+            <summary>
+            获取汉字拼音
+            </summary>
+            <param name="character">汉字</param>
+            <returns>找不到返回空</returns>
         </member>
         <member name="M:CommonTools.Utils.TaskUtils.Try(System.Action)">
             <summary>
