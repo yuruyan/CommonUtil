@@ -29,29 +29,6 @@ public partial class CSharpDependencyView : Page {
         TypeInfos = new();
         InitializeComponent();
         #region 响应式布局
-        //DependencyPropertyDescriptor
-        //    .FromProperty(IsExpandedProperty, this.GetType())
-        //    .AddValueChanged(this, (_, _) => {
-        //        if (IsExpanded) {
-        //            SecondRowDefinition.Height = new(0);
-        //            ThirdRowDefinition.Height = new(0);
-        //            SecondColumnDefinition.Width = GridLength.Auto;
-        //            ThirdColumnDefinition.Width = new(1, GridUnitType.Star);
-        //            Grid.SetColumn(ControlPanel, 1);
-        //            Grid.SetRow(ControlPanel, 0);
-        //            Grid.SetColumn(OutputTextBox, 2);
-        //            Grid.SetRow(OutputTextBox, 0);
-        //        } else {
-        //            SecondRowDefinition.Height = GridLength.Auto;
-        //            ThirdRowDefinition.Height = new(1, GridUnitType.Star);
-        //            SecondColumnDefinition.Width = new(0);
-        //            ThirdColumnDefinition.Width = new(0);
-        //            Grid.SetColumn(ControlPanel, 0);
-        //            Grid.SetRow(ControlPanel, 1);
-        //            Grid.SetColumn(OutputTextBox, 0);
-        //            Grid.SetRow(OutputTextBox, 2);
-        //        }
-        //    });
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
             Window window = Window.GetWindow(this);
             double expansionThreshold = (double)Resources["ExpansionThreshold"];

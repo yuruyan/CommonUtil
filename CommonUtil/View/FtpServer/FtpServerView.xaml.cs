@@ -48,12 +48,17 @@ public partial class FtpServerView : Page {
     /// 添加用户 Dialog
     /// </summary>
     private AddFtpServerUserDialog FtpServerUserDialog = new();
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public FtpServerView() {
         UserInfoList.Add(new() { Username = "scott", Password = "123456", Permission = FtpServerUserPermission.R });
         InitializeComponent();
         // 启动 nodejs 服务
         Task.Run(() => TaskUtils.Try(() => Server.CheckNodeJsServer()));
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -91,7 +96,7 @@ public partial class FtpServerView : Page {
             Description = "选择分享目录",
             UseDescriptionForTitle = true
         };
-        if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
+        if (dialog.ShowDialog(CurrentWindow) == true) {
             RootDirectory = dialog.SelectedPath;
         }
     }

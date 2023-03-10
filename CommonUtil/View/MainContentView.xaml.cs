@@ -36,7 +36,10 @@ public partial class MainContentView : Page {
     }
     private readonly Storyboard MainContentViewBackgroundStoryboard;
     private readonly ColorAnimation TitleBarBackgroundColorAnimation;
-    private Window Window = default!;
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public MainContentView() {
         SetValue(MenuItemsKey, new ObservableCollection<ToolMenuItem>());
@@ -58,7 +61,7 @@ public partial class MainContentView : Page {
                 var brush = (SolidColorBrush)FindResource(MainContentViewBackgroundBrushKey);
                 PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
                 CurrentBackgroundColor = brush.Color;
-                Storyboard.SetTarget(TitleBarBackgroundColorAnimation, (MainWindow)Window);
+                Storyboard.SetTarget(TitleBarBackgroundColorAnimation, (MainWindow)CurrentWindow);
                 MainContentViewBackgroundStoryboard.Begin();
             }
         };
@@ -69,7 +72,7 @@ public partial class MainContentView : Page {
     /// </summary>
     /// <param name="brush"></param>
     private void SetWindowTitleBarBackground(Brush brush) {
-        if (Window is MainWindow window) {
+        if (CurrentWindow is MainWindow window) {
             window.TitleBarBackground = brush;
         }
     }
@@ -80,7 +83,7 @@ public partial class MainContentView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void InitializeLoadedHandler(object sender, RoutedEventArgs e) {
-        Window = Window.GetWindow(this);
+        CurrentWindow = Window.GetWindow(this);
         // 延迟加载
         Task.Run(() => {
             Thread.Sleep(500);

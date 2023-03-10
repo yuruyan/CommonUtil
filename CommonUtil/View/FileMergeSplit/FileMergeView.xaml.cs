@@ -71,12 +71,17 @@ public partial class FileMergeView : Page {
     /// 是否请求取消
     /// </summary>
     private bool IsCancelRequested = false;
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public FileMergeView() {
         DependencyPropertyDescriptor.FromProperty(MergeFilesProperty, typeof(FileMergeView))
             .AddValueChanged(this, CalculateTotalFileSizeHandler);
         MergeFiles = new();
         InitializeComponent();
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -130,7 +135,7 @@ public partial class FileMergeView : Page {
             Description = "选择合并文件夹",
             UseDescriptionForTitle = true
         };
-        if (dialog.ShowDialog(Application.Current.MainWindow) != true) {
+        if (dialog.ShowDialog(CurrentWindow) != true) {
             return;
         }
         MergeFileDirectory = dialog.SelectedPath;

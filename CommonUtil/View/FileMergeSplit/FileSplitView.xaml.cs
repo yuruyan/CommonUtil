@@ -113,12 +113,17 @@ public partial class FileSplitView : Page {
     /// 是否请求取消
     /// </summary>
     private bool IsCancelRequested = false;
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public FileSplitView() {
         DependencyPropertyDescriptor.FromProperty(SplitFilePathProperty, typeof(FileSplitView))
             .AddValueChanged(this, (o, e) => SplitFileSize = (ulong)new FileInfo(SplitFilePath).Length);
         FileSizeTypeOptions = FileSizeTypeOptionMap.Keys.ToArray();
         InitializeComponent();
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -150,7 +155,7 @@ public partial class FileSplitView : Page {
             UseDescriptionForTitle = true
         };
 
-        if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
+        if (dialog.ShowDialog(CurrentWindow) == true) {
             SplitFileSaveDirectory = dialog.SelectedPath;
         }
     }

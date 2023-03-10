@@ -68,11 +68,16 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
     /// 代理地址，包括协议头
     /// </summary>
     public string FullProxyAddress => $"{ProxyTypeComboBox.Text}://{ProxyAddress}";
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public DownloadInfoDialog() {
         ProxyTypes = DataSet.ProxyTypes.ToArray();
         SaveDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
         InitializeComponent();
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -82,7 +87,7 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
     /// <param name="e"></param>
     private void ChooseSaveDirMouseUpHandler(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        if (SaveFolderDialog.ShowDialog(Application.Current.MainWindow) == true) {
+        if (SaveFolderDialog.ShowDialog(CurrentWindow) == true) {
             SaveDir = SaveFolderDialog.SelectedPath;
         }
     }

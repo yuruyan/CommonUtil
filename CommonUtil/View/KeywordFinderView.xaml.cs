@@ -84,6 +84,10 @@ public partial class KeywordFinderView : Page {
     /// 上次查询目录
     /// </summary>
     private string LastSearchDirectory = string.Empty;
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public KeywordFinderView() {
         KeywordResults = new();
@@ -106,13 +110,13 @@ public partial class KeywordFinderView : Page {
                 }
             });
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
+            CurrentWindow = Window.GetWindow(this);
             double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
+            IsExpanded = CurrentWindow.ActualWidth >= expansionThreshold;
             DependencyPropertyDescriptor
                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
+                .AddValueChanged(CurrentWindow, (_, _) => {
+                    IsExpanded = CurrentWindow.ActualWidth >= expansionThreshold;
                 });
         });
         #endregion

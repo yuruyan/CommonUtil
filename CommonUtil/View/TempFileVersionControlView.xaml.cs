@@ -60,9 +60,15 @@ public partial class TempFileVersionControlView : Page {
         Description = "选择保存文件夹",
         UseDescriptionForTitle = true
     };
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
+
     public TempFileVersionControlView() {
         WatchFiles = new();
         InitializeComponent();
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -76,7 +82,7 @@ public partial class TempFileVersionControlView : Page {
             return;
         }
         SaveFolderDialog.SelectedPath = SelectedWatchFile.SaveFolder;
-        if (SaveFolderDialog.ShowDialog(Application.Current.MainWindow) != true) {
+        if (SaveFolderDialog.ShowDialog(CurrentWindow) != true) {
             return;
         }
         SelectedWatchFile.SaveFolder = SaveFolderDialog.SelectedPath;

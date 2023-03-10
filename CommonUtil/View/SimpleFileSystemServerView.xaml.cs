@@ -45,11 +45,16 @@ public partial class SimpleFileSystemServerView : Page {
         get { return (string)GetValue(ServerURLProperty); }
         set { SetValue(ServerURLProperty, value); }
     }
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = Application.Current.MainWindow;
 
     public SimpleFileSystemServerView() {
         InitializeComponent();
         SharingDirectory = Directory.GetCurrentDirectory();
         DependencyPropertyDescriptor.FromProperty(IsServerStartedProperty, typeof(SimpleFileSystemServerView)).AddValueChanged(this, ServerStateChangedHandler);
+        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -81,7 +86,7 @@ public partial class SimpleFileSystemServerView : Page {
             Description = "选择分享目录",
             UseDescriptionForTitle = true
         };
-        if (dialog.ShowDialog(Application.Current.MainWindow) == true) {
+        if (dialog.ShowDialog(CurrentWindow) == true) {
             SharingDirectory = dialog.SelectedPath;
         }
     }
