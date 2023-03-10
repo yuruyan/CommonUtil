@@ -1,8 +1,4 @@
-﻿using CommonUtil.Store;
-using Microsoft.Win32;
-using Ookii.Dialogs.Wpf;
-
-namespace CommonUtil.Utils;
+﻿namespace CommonUtil.Utils;
 
 /// <summary>
 /// 文件处理工具

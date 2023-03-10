@@ -1,6 +1,4 @@
-﻿using CommonUITools.View;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public abstract class DesktopAutomationDialog : BaseDialog {
     public static readonly DependencyProperty AutomationMethodProperty = DependencyProperty.Register("AutomationMethod", typeof(Delegate), typeof(DesktopAutomationDialog), new PropertyMetadata());

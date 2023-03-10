@@ -1,7 +1,4 @@
-﻿using CommonUITools.View;
-using Newtonsoft.Json;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class CommonRegexListDialog : BaseDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

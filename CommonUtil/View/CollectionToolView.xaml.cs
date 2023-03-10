@@ -1,7 +1,4 @@
-﻿using CommonUITools.View;
-using Microsoft.Win32;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class CollectionToolView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

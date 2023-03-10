@@ -1,8 +1,4 @@
-﻿using CommonUITools.Route;
-using CommonUtil.Store;
-using CommonUtil.Theme;
-using System.Windows.Media.Animation;
-
+﻿
 namespace CommonUtil.View;
 
 public partial class MainContentView : Page {

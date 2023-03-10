@@ -1,5 +1,4 @@
-﻿using CommonUtil.Route;
-
+﻿
 namespace CommonUtil.View;
 
 public partial class CodeGeneratorView : Page {

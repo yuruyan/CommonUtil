@@ -1,8 +1,4 @@
-﻿using CommonUITools.Route;
-using CommonUtil.Route;
-using CommonUtil.Store;
-using Microsoft.Win32;
-using ModernWpf.Controls;
+﻿using ModernWpf.Controls;
 using QRCoder.Exceptions;
 using System.Windows.Media.Imaging;
 using Bitmap = System.Drawing.Bitmap;

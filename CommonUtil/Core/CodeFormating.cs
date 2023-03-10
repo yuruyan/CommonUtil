@@ -1,5 +1,4 @@
-﻿using CommonUtil.Store;
-using Flurl.Http;
+﻿using Flurl.Http;
 using System.Diagnostics;
 
 namespace CommonUtil.Core;

@@ -1,8 +1,4 @@
-﻿using CommonUtil.Store;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 /// <summary>
 /// 等于 0 或等于 1 时隐藏

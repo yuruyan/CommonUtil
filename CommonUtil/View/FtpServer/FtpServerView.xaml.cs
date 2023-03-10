@@ -1,9 +1,4 @@
-﻿using CommonUITools.View;
-using CommonUtil.Store;
-using Ookii.Dialogs.Wpf;
-using System.Globalization;
-using System.Windows.Data;
-using ContentDialogResult = ModernWpf.Controls.ContentDialogResult;
+﻿using ContentDialogResult = ModernWpf.Controls.ContentDialogResult;
 
 namespace CommonUtil.View;
 

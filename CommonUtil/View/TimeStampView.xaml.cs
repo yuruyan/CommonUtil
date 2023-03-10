@@ -1,6 +1,4 @@
-﻿using CommonUtil.Store;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class TimeStampView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

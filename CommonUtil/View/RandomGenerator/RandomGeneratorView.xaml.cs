@@ -1,7 +1,4 @@
-﻿using CommonUITools.Route;
-using CommonUtil.Route;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class RandomGeneratorView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

@@ -1,6 +1,4 @@
-﻿using CommonUtil.Route;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class CommonEncodingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

@@ -1,6 +1,4 @@
-﻿using CommonUITools.Route;
-using System.Windows.Media.Animation;
-using NavigationView = ModernWpf.Controls.NavigationView;
+﻿using NavigationView = ModernWpf.Controls.NavigationView;
 
 namespace CommonUtil.Route;
 

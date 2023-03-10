@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
 
 namespace CommonUtil.View;

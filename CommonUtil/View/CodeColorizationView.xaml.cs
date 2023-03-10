@@ -1,6 +1,4 @@
-﻿using CommonUtil.Theme;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class CodeColorizationView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

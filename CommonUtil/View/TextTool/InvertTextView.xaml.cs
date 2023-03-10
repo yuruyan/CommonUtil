@@ -1,7 +1,4 @@
-﻿using CommonUtil.Store;
-using Microsoft.Win32;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class InvertTextView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

@@ -1,6 +1,4 @@
-﻿using CommonUtil.Route;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class TextToolView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

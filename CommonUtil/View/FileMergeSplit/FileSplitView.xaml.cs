@@ -1,7 +1,4 @@
-﻿using Microsoft.Win32;
-using Ookii.Dialogs.Wpf;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class FileSplitView : Page {
     /// <summary>
