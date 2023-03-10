@@ -18,7 +18,6 @@ public static class FileProcessUtils {
     /// <param name="source">CancellationTokenSource</param>
     /// <param name="fileProcessStatuses">进度列表</param>
     /// <param name="processFunc">处理方法，参数列表为 (inputFile, outputFile, FileProcessStatus)</param>
-    /// <param name="dispatcher">Dispatcher，默认为 Application.Current.Dispatcher</param>
     /// <param name="parentWindow">所属 Window，默认为 Application.Current.MainWindow</param>
     /// <param name="log">日志，默认为 <see cref="Logger"/></param>
     /// <returns>Task</returns>
@@ -29,12 +28,11 @@ public static class FileProcessUtils {
          CancellationTokenSource source,
          ObservableCollection<FileProcessStatus> fileProcessStatuses,
          Action<string, string, FileProcessStatus> processFunc,
-         Dispatcher? dispatcher = null,
          Window? parentWindow = null,
          Logger? log = null
     ) {
-        dispatcher ??= Application.Current.Dispatcher;
         parentWindow ??= Application.Current.MainWindow;
+        var dispatcher = parentWindow.Dispatcher;
         log ??= Logger;
         // 选择保存目录
         if (saveDirectoryDialog.ShowDialog(parentWindow) != true) {
@@ -80,14 +78,13 @@ public static class FileProcessUtils {
     }
 
     /// <param name="processFunc">处理方法</param>
-    /// <inheritdoc cref="ProcessMultiFilesAsync(ICollection{string}, VistaFolderBrowserDialog, CancellationTokenSource, ObservableCollection{FileProcessStatus}, Action{string, string, FileProcessStatus}, Dispatcher?, Window?, Logger?)"/>
+    /// <inheritdoc cref="ProcessMultiFilesAsync(ICollection{string}, VistaFolderBrowserDialog, CancellationTokenSource, ObservableCollection{FileProcessStatus}, Action{string, string, FileProcessStatus}, Window?, Logger?)"/>
     public static async Task ProcessMultiFilesAsync(
         ICollection<string> sourceFilenames,
         VistaFolderBrowserDialog saveDirectoryDialog,
         CancellationTokenSource source,
         ObservableCollection<FileProcessStatus> fileProcessStatuses,
         CommonFileProcess processFunc,
-        Dispatcher? dispatcher = null,
         Window? parentWindow = null,
         Logger? log = null
      ) {
@@ -104,20 +101,18 @@ public static class FileProcessUtils {
                     ProcessStatusUtils.UpdateProcessStatus(status, proc);
                 })
             ),
-            dispatcher,
             parentWindow,
             log
         );
     }
 
-    /// <inheritdoc cref="ProcessMultiFilesAsync(ICollection{string}, VistaFolderBrowserDialog, CancellationTokenSource, ObservableCollection{FileProcessStatus}, CommonFileProcess, Dispatcher?, Window?, Logger?)"/>
+    /// <inheritdoc cref="ProcessMultiFilesAsync(ICollection{string}, VistaFolderBrowserDialog, CancellationTokenSource, ObservableCollection{FileProcessStatus}, CommonFileProcess, Window?, Logger?)"/>
     public static async Task ProcessMultiFilesAsync<T>(
         ICollection<string> sourceFilenames,
         VistaFolderBrowserDialog saveDirectoryDialog,
         CancellationTokenSource source,
         ObservableCollection<FileProcessStatus> fileProcessStatuses,
         CommonFileProcess<T> processFunc,
-        Dispatcher? dispatcher = null,
         Window? parentWindow = null,
         Logger? log = null
      ) {
@@ -129,7 +124,6 @@ public static class FileProcessUtils {
             (inputFile, outputFile, token, callback) => {
                 processFunc(inputFile, outputFile, token, callback);
             },
-            dispatcher,
             parentWindow,
             log
         );

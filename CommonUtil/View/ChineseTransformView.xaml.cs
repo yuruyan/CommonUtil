@@ -182,7 +182,6 @@ public partial class ChineseTransformView : Page {
             ToSimplifiedCancellationTokenSource,
             FileProcessStatuses,
             ChineseTransform.FileToSimplified,
-            Dispatcher,
             Window,
             Logger
         );
@@ -200,7 +199,6 @@ public partial class ChineseTransformView : Page {
             ToTraditionalCancellationTokenSource,
             FileProcessStatuses,
             ChineseTransform.FileToTraditional,
-            Dispatcher,
             Window,
             Logger
         );

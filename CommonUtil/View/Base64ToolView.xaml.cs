@@ -193,7 +193,6 @@ public partial class Base64ToolView : Page {
             EncodeCancellationTokenSource,
             FileProcessStatuses,
             Base64Tool.Base64EncodeFile,
-            Dispatcher,
             Window,
             Logger
         );
@@ -212,7 +211,6 @@ public partial class Base64ToolView : Page {
             DecodeCancellationTokenSource,
             FileProcessStatuses,
             Base64Tool.Base64DecodeFile,
-            Dispatcher,
             Window,
             Logger
         );
