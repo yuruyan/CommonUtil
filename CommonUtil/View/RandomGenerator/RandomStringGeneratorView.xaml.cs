@@ -1,6 +1,4 @@
-﻿using CommonUtil.Core.Model;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class RandomStringGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
     public static readonly DependencyProperty NumberCheckedProperty = DependencyProperty.Register("NumberChecked", typeof(bool), typeof(RandomStringGeneratorView), new PropertyMetadata(true));

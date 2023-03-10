@@ -1,6 +1,4 @@
-﻿using CommonUtil.Core.Model;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class RandomChineseFamilyNameGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

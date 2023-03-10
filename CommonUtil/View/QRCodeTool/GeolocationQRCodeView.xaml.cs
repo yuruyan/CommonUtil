@@ -1,6 +1,4 @@
-﻿using CommonUtil.Core.Model;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 
 public partial class GeolocationQRCodeView : Page, IGenerable<KeyValuePair<QRCodeFormat, QRCodeInfo>, Task<byte[]>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

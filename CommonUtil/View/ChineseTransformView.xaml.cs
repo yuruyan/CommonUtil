@@ -1,5 +1,4 @@
-﻿using CommonUtil.Store;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
 
 namespace CommonUtil.View;

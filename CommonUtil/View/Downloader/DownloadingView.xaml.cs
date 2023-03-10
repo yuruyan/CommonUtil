@@ -1,6 +1,4 @@
-﻿using CommonUtil.Core.Model;
-
-namespace CommonUtil.View;
+﻿namespace CommonUtil.View;
 public partial class DownloadingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty DownloadTaskListProperty = DependencyProperty.Register("DownloadTaskList", typeof(ObservableCollection<DownloadTask>), typeof(DownloadingView), new PropertyMetadata());

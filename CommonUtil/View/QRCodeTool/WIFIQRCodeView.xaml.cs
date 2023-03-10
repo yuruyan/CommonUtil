@@ -1,5 +1,4 @@
-﻿using CommonUtil.Core.Model;
-using static QRCoder.PayloadGenerator;
+﻿using static QRCoder.PayloadGenerator;
 
 namespace CommonUtil.View;
 

@@ -1,5 +1,4 @@
 ﻿using CommonUITools.View;
-using CommonUtil.Core.Model;
 using CommonUtil.Store;
 using Ookii.Dialogs.Wpf;
 using System.Globalization;
