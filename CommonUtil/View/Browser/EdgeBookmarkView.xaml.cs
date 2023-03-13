@@ -33,11 +33,11 @@ public partial class EdgeBookmarkView : Page {
         Task.Factory.StartNew(() => {
             try {
                 new EdgeBookmark().ExportBookmarks(Dispatcher.Invoke(() => EdgeBookmarkFilePath), dialog.FileName);
-                NotificationBox.Success("导出成功！", "点击打开", () => {
+                MessageBoxUtils.NotifySuccess("导出成功！", "点击打开", callback: () => {
                     UIUtils.OpenFileInExplorerAsync(dialog.FileName);
                 });
             } catch (Exception error) {
-                MessageBox.Error("导出失败！" + error.Message);
+                MessageBoxUtils.Error("导出失败！" + error.Message);
                 Logger.Error(error);
             }
         });

@@ -62,13 +62,13 @@ public partial class QRCodeDecodeView : Page {
             DecodeText = data;
         } catch (LoadException error) {
             Logger.Error(error);
-            MessageBox.Error("加载图片失败");
+            MessageBoxUtils.Error("加载图片失败");
         } catch (ParseException error) {
             Logger.Error(error);
-            MessageBox.Error("解析失败");
+            MessageBoxUtils.Error("解析失败");
         } catch (Exception error) {
             Logger.Error(error);
-            MessageBox.Error("解析失败");
+            MessageBoxUtils.Error("解析失败");
         }
     }
 

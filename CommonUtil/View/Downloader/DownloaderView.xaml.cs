@@ -107,7 +107,7 @@ public partial class DownloaderView : Page {
         }
         // 如果任意一个任务开始
         if (anySuccess) {
-            MessageBox.Info($"开始下载");
+            MessageBoxUtils.Info($"开始下载");
         }
     }
 }

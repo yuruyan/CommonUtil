@@ -15,7 +15,7 @@ public partial class RandomEmailAddressGeneratorView : Page, IGenerable<uint, IE
         try {
             return RandomGenerator.GenerateRandomEmailAddresses(generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

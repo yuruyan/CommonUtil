@@ -32,7 +32,7 @@ public partial class URLEncodingView : Page {
             OutputText = CommonEncoding.UrlEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            MessageBox.Error("编码失败");
+            MessageBoxUtils.Error("编码失败");
         }
     }
 
@@ -44,7 +44,7 @@ public partial class URLEncodingView : Page {
             OutputText = CommonEncoding.UrlDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            MessageBox.Error("解码失败");
+            MessageBoxUtils.Error("解码失败");
         }
     }
 }

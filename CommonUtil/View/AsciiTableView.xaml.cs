@@ -41,6 +41,6 @@ public partial class AsciiTableView : Page {
             sb.Append(info.Description).Append('\n');
         }
         Clipboard.SetDataObject(sb.ToString());
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 }

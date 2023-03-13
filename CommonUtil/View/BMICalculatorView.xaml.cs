@@ -93,12 +93,12 @@ public partial class BMICalculatorView : Page {
             height = Convert.ToDouble(HeightText) / 100;
             weight = Convert.ToDouble(WeightText);
         } catch {
-            MessageBox.Error("输入有误！");
+            MessageBoxUtils.Error("输入有误！");
             return;
         }
         // 检查身高体重
         if (height <= 0 || weight <= 0) {
-            MessageBox.Error("身高或体重有误！");
+            MessageBoxUtils.Error("身高或体重有误！");
             return;
         }
 

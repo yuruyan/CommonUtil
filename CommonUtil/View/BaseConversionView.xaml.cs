@@ -89,7 +89,7 @@ public partial class BaseConversionView : Page {
                 //Logger.Info(error);
                 sb.Append('\n');
                 //OutputText = string.Empty; // 清空输入
-                //MessageBox.Error("转换失败！");
+                //MessageBoxUtils.Error("转换失败！");
                 //return;
             }
         }

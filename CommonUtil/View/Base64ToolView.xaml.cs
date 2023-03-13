@@ -129,7 +129,7 @@ public partial class Base64ToolView : Page {
         }
         string? output = TaskUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
         if (output is null) {
-            MessageBox.Error("解码失败");
+            MessageBoxUtils.Error("解码失败");
             return;
         }
         OutputText = output;
@@ -144,7 +144,7 @@ public partial class Base64ToolView : Page {
         }
         string? output = TaskUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
         if (output is null) {
-            MessageBox.Error("编码失败");
+            MessageBoxUtils.Error("编码失败");
             return;
         }
         OutputText = output;
@@ -220,7 +220,7 @@ public partial class Base64ToolView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>
@@ -251,7 +251,7 @@ public partial class Base64ToolView : Page {
         var hasFile = DragDropTextBox.HasFile;
         // 输入检查
         if (!hasFile && string.IsNullOrEmpty(InputText)) {
-            MessageBox.Info("请输入文本");
+            MessageBoxUtils.Info("请输入文本");
             return;
         }
 

@@ -33,7 +33,7 @@ public partial class UnicodeEncodingView : Page {
             OutputText = CommonEncoding.UnicodeEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            MessageBox.Error("编码失败");
+            MessageBoxUtils.Error("编码失败");
         }
     }
 
@@ -45,7 +45,7 @@ public partial class UnicodeEncodingView : Page {
             OutputText = CommonEncoding.UnicodeDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
-            MessageBox.Error("解码失败");
+            MessageBoxUtils.Error("解码失败");
         }
     }
 }

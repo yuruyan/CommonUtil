@@ -47,7 +47,7 @@ public partial class CodeColorizationView : Page {
         e.Handled = true;
         TextEditor.SelectAll();
         TextEditor.Copy();
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>

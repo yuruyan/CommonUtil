@@ -25,18 +25,18 @@ public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnum
     /// <returns></returns>
     public IEnumerable<string> Generate(uint generateCount) {
         if (string.IsNullOrEmpty(RegexInputText)) {
-            MessageBox.Info("正则表达式不能为空！");
+            MessageBoxUtils.Info("正则表达式不能为空！");
             return Array.Empty<string>();
         }
         // 判断正则是否合法
         if (TaskUtils.Try(() => new Regex(RegexInputText)) is null) {
-            MessageBox.Error("正则表达式无效！");
+            MessageBoxUtils.Error("正则表达式无效！");
             return Array.Empty<string>();
         }
         try {
             return RandomGenerator.GenerateRandomStringWithRegex(RegexInputText, generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

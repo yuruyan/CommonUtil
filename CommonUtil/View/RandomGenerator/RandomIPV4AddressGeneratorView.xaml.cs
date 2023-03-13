@@ -15,7 +15,7 @@ public partial class RandomIPV4AddressGeneratorView : Page, IGenerable<uint, IEn
         try {
             return RandomGenerator.GenerateRandomIPV4Addresses(generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

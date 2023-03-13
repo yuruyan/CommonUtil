@@ -43,7 +43,7 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
     /// </summary>
     private void GenerateMatchList() {
         if (InputIdiom.Trim() == string.Empty) {
-            MessageBox.Info("请输入文本");
+            MessageBoxUtils.Info("请输入文本");
             return;
         }
         string idiom = InputIdiom.Trim();
@@ -93,6 +93,6 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
             '\n',
             ResultListBox.SelectedItems.Cast<string>()
         ));
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 }

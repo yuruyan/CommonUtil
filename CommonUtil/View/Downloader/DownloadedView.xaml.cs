@@ -72,7 +72,7 @@ public partial class DownloadedView : Page {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is DownloadTask result) {
             Clipboard.SetDataObject(result.Url);
-            MessageBox.Success("已复制");
+            MessageBoxUtils.Success("已复制");
         }
     }
 }

@@ -147,9 +147,9 @@ public partial class FtpServerView : Page {
             bool status = await FtpServer.StartFtpServerAsync(config);
             if (status) {
                 Dispatcher.Invoke(() => IsStopServerButtonVisible = true);
-                MessageBox.Success("启动成功");
+                MessageBoxUtils.Success("启动成功");
             } else {
-                MessageBox.Error("启动失败");
+                MessageBoxUtils.Error("启动失败");
             }
         });
     }
@@ -160,7 +160,7 @@ public partial class FtpServerView : Page {
     /// <returns></returns>
     private bool CheckInput() {
         if (string.IsNullOrEmpty(RootDirectory)) {
-            MessageBox.Info("请选择共享目录");
+            MessageBoxUtils.Info("请选择共享目录");
             return false;
         }
         return true;
@@ -176,9 +176,9 @@ public partial class FtpServerView : Page {
             bool status = await FtpServer.StopFtpServerAsync();
             if (status) {
                 Dispatcher.Invoke(() => IsStopServerButtonVisible = false);
-                MessageBox.Success("停止成功");
+                MessageBoxUtils.Success("停止成功");
             } else {
-                MessageBox.Error("停止失败");
+                MessageBoxUtils.Error("停止失败");
             }
         });
     }
@@ -193,7 +193,7 @@ public partial class FtpServerView : Page {
             if (element.DataContext is FtpServerUserInfo userInfo) {
                 string address = $"ftp://{userInfo.Username}:{userInfo.Password}@{NetworkUtils.GetLocalIpAddress()}";
                 Clipboard.SetDataObject(address);
-                MessageBox.Success("已复制");
+                MessageBoxUtils.Success("已复制");
             }
         }
     }

@@ -210,10 +210,10 @@ public partial class FileSplitView : Page {
             );
             // 没有取消则提示
             if (!IsCancelRequested) {
-                MessageBox.Success("分割完成");
+                MessageBoxUtils.Success("分割完成");
             }
         } catch (Exception error) {
-            MessageBox.Error($"分割失败：{error.Message}");
+            MessageBoxUtils.Error($"分割失败：{error.Message}");
         }
         IsCancelRequested = IsWorking = false;
     }

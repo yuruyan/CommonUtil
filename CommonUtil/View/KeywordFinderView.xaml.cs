@@ -140,15 +140,15 @@ public partial class KeywordFinderView : Page {
     /// </summary>
     private void HandleKeywordFinding() {
         if (string.IsNullOrEmpty(SearchDirectory.Trim())) {
-            MessageBox.Info("请选择查询目录！");
+            MessageBoxUtils.Info("请选择查询目录！");
             return;
         }
         if (string.IsNullOrEmpty(SearchText)) {
-            MessageBox.Info("搜索文本不能为空！");
+            MessageBoxUtils.Info("搜索文本不能为空！");
             return;
         }
         if (!IsSearchingFinished) {
-            MessageBox.Info("正在搜索...");
+            MessageBoxUtils.Info("正在搜索...");
             return;
         }
         ResultNumber.Visibility = Visibility.Visible;
@@ -180,7 +180,7 @@ public partial class KeywordFinderView : Page {
                     Dispatcher.Invoke(() => KeywordFinder = keywordFinder);
                     FindKeyword(excludeDirs, excludeFiles);
                 } catch (Exception error) {
-                    MessageBox.Error(error.Message);
+                    MessageBoxUtils.Error(error.Message);
                     Logger.Error(error);
                 }
             });
@@ -218,7 +218,7 @@ public partial class KeywordFinderView : Page {
             } catch (OperationCanceledException) {
                 // 忽略
             } catch (Exception error) {
-                MessageBox.Error(error.Message);
+                MessageBoxUtils.Error(error.Message);
                 Logger.Error(error);
             } finally {
                 Dispatcher.Invoke(() => IsSearchingFinished = true);

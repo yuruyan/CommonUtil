@@ -24,7 +24,7 @@ public partial class RandomGuidGeneratorView : Page, IGenerable<uint, IEnumerabl
         try {
             return RandomGenerator.GenerateRandomGuids(generateCount, IsUpperCase);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

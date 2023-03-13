@@ -23,7 +23,7 @@ public partial class RandomIPV6AddressGeneratorView : Page, IGenerable<uint, IEn
         try {
             return RandomGenerator.GenerateRandomIPV6Addresses(generateCount, IsUpperCase);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

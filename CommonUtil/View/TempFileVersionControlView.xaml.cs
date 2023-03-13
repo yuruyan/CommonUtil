@@ -168,7 +168,7 @@ public partial class TempFileVersionControlView : Page {
                 // 创建文件夹
                 if (!TaskUtils.Try(() => { Directory.CreateDirectory(targetFile.SaveFolder); return true; })) {
                     var dirName = Path.GetFileName(targetFile.SaveFolder);
-                    MessageBox.Error($"创建文件夹 {dirName} 失败");
+                    MessageBoxUtils.Error($"创建文件夹 {dirName} 失败");
                     Logger.Error($"创建文件夹 {dirName} 失败");
                     return;
                 }

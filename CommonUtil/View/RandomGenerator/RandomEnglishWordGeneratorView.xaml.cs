@@ -19,7 +19,7 @@ public partial class RandomEnglishWordGeneratorView : Page, IGenerable<uint, IEn
         try {
             return RandomGenerator.GenerateRandomEnglishWords(generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

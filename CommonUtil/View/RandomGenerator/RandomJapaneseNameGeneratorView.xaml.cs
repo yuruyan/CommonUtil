@@ -19,7 +19,7 @@ public partial class RandomJapaneseNameGeneratorView : Page, IGenerable<uint, IE
         try {
             return RandomGenerator.GenerateRandomJapaneseNames(generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

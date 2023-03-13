@@ -41,12 +41,12 @@ public partial class RandomGeneratorWithDataSourceView : Page, IGenerable<uint, 
     public IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
-            MessageBox.Error("字符串范围无效");
+            MessageBoxUtils.Error("字符串范围无效");
             return Array.Empty<string>();
         }
         // 检查数据源
         if (string.IsNullOrEmpty(DataSourceText)) {
-            MessageBox.Info("请输入数据源");
+            MessageBoxUtils.Info("请输入数据源");
             return Array.Empty<string>();
         }
         return RandomGenerator.GenerateRandomStringWithDataSource(

@@ -175,10 +175,10 @@ public partial class FileMergeView : Page {
             ));
             // 没有取消则提示
             if (!IsCancelRequested) {
-                MessageBox.Success("合并完成");
+                MessageBoxUtils.Success("合并完成");
             }
         } catch (Exception error) {
-            MessageBox.Error($"合并文件失败：{error.Message}");
+            MessageBoxUtils.Error($"合并文件失败：{error.Message}");
         }
         IsCancelRequested = IsWorking = false;
     }

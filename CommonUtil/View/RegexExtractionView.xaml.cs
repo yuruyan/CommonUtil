@@ -109,7 +109,7 @@ public partial class RegexExtractionView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>
@@ -162,7 +162,7 @@ public partial class RegexExtractionView : Page {
             ignoreCase: IgnoreCase
         );
         if (list is null) {
-            MessageBox.Error("正则表达式有误");
+            MessageBoxUtils.Error("正则表达式有误");
             return;
         }
         MatchList = list;
@@ -192,7 +192,7 @@ public partial class RegexExtractionView : Page {
                 args: new object[] { inputPath, outputPath, searchRegex, extractionPattern, ignoreCase }
             );
         } catch (ArgumentException) {
-            MessageBox.Error("正则表达式有误");
+            MessageBoxUtils.Error("正则表达式有误");
         } catch { }
     }
 

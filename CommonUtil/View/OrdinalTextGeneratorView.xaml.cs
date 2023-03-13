@@ -92,9 +92,9 @@ public partial class OrdinalTextGeneratorView : Page {
             );
             OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
         } catch (FormatException) {
-            MessageBox.Error("格式错误");
+            MessageBoxUtils.Error("格式错误");
         } catch {
-            MessageBox.Error("生成失败");
+            MessageBoxUtils.Error("生成失败");
         }
     }
 
@@ -116,7 +116,7 @@ public partial class OrdinalTextGeneratorView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>

@@ -184,7 +184,7 @@ public partial class DesktopAutomationView : Page {
         IsRunning = false;
         // Failed
         if (!isSuccessful) {
-            MessageBox.Error("执行失败");
+            MessageBoxUtils.Error("执行失败");
         }
     }
 

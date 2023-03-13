@@ -96,7 +96,7 @@ public partial class CollectionToolView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public partial class CollectionToolView : Page {
                 list2 = File.ReadAllLines(FileName2);
             }
         } catch {
-            MessageBox.Error("文件读取失败");
+            MessageBoxUtils.Error("文件读取失败");
             return;
         }
 

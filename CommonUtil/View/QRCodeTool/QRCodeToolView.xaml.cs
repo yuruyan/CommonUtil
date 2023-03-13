@@ -160,11 +160,11 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         }
         try {
             await File.WriteAllBytesAsync(path, data);
-            NotificationBox.Success("保存成功", "点击打开", () => {
+            MessageBoxUtils.NotifySuccess("保存成功", "点击打开", callback: () => {
                 UIUtils.OpenFileInExplorerAsync(path);
             });
         } catch {
-            MessageBox.Error("保存失败！");
+            MessageBoxUtils.Error("保存失败！");
         }
     }
 
@@ -207,13 +207,13 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
         if (IconBitmapImage != null) {
             //// 文件不存在
             //if (!File.Exists(IconPath)) {
-            //    MessageBox.Error("图标不存在");
+            //    MessageBoxUtils.Error("图标不存在");
             //    return null;
             //}
             icon = TaskUtils.Try(() => new Bitmap(IconBitmapImage.StreamSource));
             // 加载失败
             if (icon == null) {
-                MessageBox.Error("图片加载失败");
+                MessageBoxUtils.Error("图片加载失败");
                 return null;
             }
         }
@@ -229,10 +229,10 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
                 ECCLevel = DataSet.QRCodeECCLevelDict[ECCLevels[ECCLevelComboxSelectedIndex]]
             }));
         } catch (DataTooLongException) {
-            MessageBox.Error("文本过长！");
+            MessageBoxUtils.Error("文本过长！");
             return null;
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return null;
         }
         // 验证不通过
@@ -318,7 +318,7 @@ public partial class QRCodeToolView : System.Windows.Controls.Page {
             IconBitmapImage?.StreamSource?.Close();
             IconBitmapImage = iconBi;
         } catch {
-            MessageBox.Error("加载图标失败");
+            MessageBoxUtils.Error("加载图标失败");
         }
     }
 

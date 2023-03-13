@@ -111,7 +111,7 @@ public partial class SimpleFileSystemServerView : Page {
         e.Handled = true;
         #region 检查是否选择分享目录
         if (string.IsNullOrEmpty(SharingDirectory)) {
-            MessageBox.Info("未选择分享目录！");
+            MessageBoxUtils.Info("未选择分享目录！");
             return;
         }
         #endregion
@@ -126,11 +126,11 @@ public partial class SimpleFileSystemServerView : Page {
             IsServerStarted = state;
             // 开启成功
             if (state) {
-                MessageBox.Success("服务器启动成功");
+                MessageBoxUtils.Success("服务器启动成功");
                 return;
             }
             StopServer();
-            MessageBox.Error("服务器启动失败");
+            MessageBoxUtils.Error("服务器启动失败");
         });
     }
 
@@ -150,7 +150,7 @@ public partial class SimpleFileSystemServerView : Page {
         int port = TaskUtils.Try(GetFreePort, 0);
         // 端口不足
         if (port == 0) {
-            MessageBox.Error("端口不足");
+            MessageBoxUtils.Error("端口不足");
             return false;
         }
         ServerPort = port;

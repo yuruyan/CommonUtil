@@ -19,7 +19,7 @@ public partial class RandomChineseNameGeneratorView : Page, IGenerable<uint, IEn
         try {
             return RandomGenerator.GenerateRandomChineseNames(generateCount);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

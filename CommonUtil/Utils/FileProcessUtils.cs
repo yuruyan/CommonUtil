@@ -176,11 +176,11 @@ public static class FileProcessUtils {
         } catch (IOException error) {
             status.Status = ProcessResult.Failed;
             log.Error(error);
-            MessageBox.Error("文件读取或保存失败");
+            MessageBoxUtils.Error("文件读取或保存失败");
         } catch (Exception error) {
             status.Status = ProcessResult.Failed;
             log.Error(error);
-            MessageBox.Error("处理失败");
+            MessageBoxUtils.Error("处理失败");
         }
     }
 

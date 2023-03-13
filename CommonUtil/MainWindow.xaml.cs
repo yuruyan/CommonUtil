@@ -1,10 +1,11 @@
-﻿using CommonUtil.View;
+﻿using CommonUITools.Widget;
+using CommonUtil.View;
 using System.Windows.Navigation;
 
 namespace CommonUtil;
 
 [SingleInstance]
-public partial class MainWindow : Window {
+public partial class MainWindow : BaseWindow {
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
     public static readonly DependencyProperty TitleBarBackgroundProperty = DependencyProperty.Register("TitleBarBackground", typeof(Brush), typeof(MainWindow), new PropertyMetadata());
     private static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
@@ -93,7 +94,6 @@ public partial class MainWindow : Window {
         TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
         MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
         #endregion 
-        CommonUITools.App.RegisterWidgetPage(this);
         // 导航到 MainContentView
         Loaded += (_, _) => Task.Run(() => {
             // 延迟加载，减少卡顿

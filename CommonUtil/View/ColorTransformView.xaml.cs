@@ -285,7 +285,7 @@ public partial class ColorTransformView : Page {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is ColorItem colorItem) {
             Clipboard.SetDataObject(colorItem.ColorToString(SelectedColor));
-            MessageBox.Success("已复制");
+            MessageBoxUtils.Success("已复制");
         }
     }
 

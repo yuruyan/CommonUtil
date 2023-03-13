@@ -109,11 +109,11 @@ public partial class JsonExtractorView : Page {
             }
             await FileExtract();
         } catch (JsonException) {
-            MessageBox.Error("Json 解析失败");
+            MessageBoxUtils.Error("Json 解析失败");
         } catch (PatternParseException) {
-            MessageBox.Error("提取模式解析失败");
+            MessageBoxUtils.Error("提取模式解析失败");
         } catch {
-            MessageBox.Error("失败");
+            MessageBoxUtils.Error("失败");
         } finally {
             ThrottleUtils.SetFinished(HandleExtract);
         }
@@ -173,7 +173,7 @@ public partial class JsonExtractorView : Page {
     private void CopyResultClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         CopyResultViewItems(ResultList);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>
@@ -226,7 +226,7 @@ public partial class JsonExtractorView : Page {
     private void CopyResultClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         CopyResultViewItems(ResultListView.SelectedItems.Cast<IList<string>>());
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>

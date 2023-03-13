@@ -62,7 +62,7 @@ public partial class RandomStringGeneratorView : Page, IGenerable<uint, IEnumera
     public IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
-            MessageBox.Error("字符串范围无效");
+            MessageBoxUtils.Error("字符串范围无效");
             return Array.Empty<string>();
         }
         var choice = RandomStringChoice.None;

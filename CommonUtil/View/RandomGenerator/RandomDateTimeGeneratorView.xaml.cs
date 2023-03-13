@@ -38,7 +38,7 @@ public partial class RandomDateTimeGeneratorView : Page, IGenerable<uint, IEnume
                 .GenerateRandomDateTime(StartDateTime, EndDateTime, generateCount)
                 .Select(t => t.ToString());
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

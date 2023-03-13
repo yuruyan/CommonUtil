@@ -23,7 +23,7 @@ public partial class RandomMACAddressGeneratorView : Page, IGenerable<uint, IEnu
         try {
             return RandomGenerator.GenerateRandomMACAddresses(generateCount, IsUpperCase);
         } catch (Exception e) {
-            MessageBox.Error($"生成失败：{e.Message}");
+            MessageBoxUtils.Error($"生成失败：{e.Message}");
             return Array.Empty<string>();
         }
     }

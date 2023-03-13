@@ -130,7 +130,7 @@ public partial class TimeStampView : Page {
     private void CopyTimeStampClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(CurrentTimeStamp);
-        MessageBox.Success("已复制");
+        MessageBoxUtils.Success("已复制");
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public partial class TimeStampView : Page {
             ));
         } catch (Exception error) {
             Logger.Info(error);
-            MessageBox.Error("转换失败！");
+            MessageBoxUtils.Error("转换失败！");
         }
     }
 
@@ -165,7 +165,7 @@ public partial class TimeStampView : Page {
             StringToTimeStampOutput = t.ToString();
         } catch (Exception error) {
             Logger.Info(error);
-            MessageBox.Error("转换失败！");
+            MessageBoxUtils.Error("转换失败！");
         }
     }
 }
