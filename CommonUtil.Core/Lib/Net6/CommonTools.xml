@@ -568,6 +568,24 @@
             <param name="source"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0}[])">
+            <summary>
+            批量添加数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="data"></param>
+            <returns>this</returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Join``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0}[])">
+            <summary>
+            按顺序集合多个数据集
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="data"></param>
+            <returns>A new list which contains all data from <paramref name="source"/> and <paramref name="data"/></returns>
+        </member>
         <member name="T:CommonTools.Utils.MessageUtils">
             <summary>
             消息工具
