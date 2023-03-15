@@ -80,16 +80,12 @@ public partial class MainContentView : Page {
     /// <param name="e"></param>
     private void InitializeLoadedHandler(object sender, RoutedEventArgs e) {
         CurrentWindow = Window.GetWindow(this);
-        // 延迟加载
-        Task.Run(() => {
-            Thread.Sleep(500);
-            Dispatcher.Invoke(() => {
-                Global.MenuItems.ForEach(ToolMenuItems.Add);
-                if (Resources["InitializeStoryboard"] is Storyboard storyboard) {
-                    storyboard.Completed += (_, _) => Opacity = 1;
-                    storyboard.Begin();
-                }
-            });
+        Dispatcher.InvokeAsync(() => {
+            Global.MenuItems.ForEach(ToolMenuItems.Add);
+            if (Resources["InitializeStoryboard"] is Storyboard storyboard) {
+                storyboard.Completed += (_, _) => Opacity = 1;
+                storyboard.Begin();
+            }
         });
     }
 
