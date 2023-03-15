@@ -404,6 +404,70 @@
             <param name="interval"></param>
             <returns></returns>
         </member>
+        <member name="F:CommonTools.Utils.DigestUtils.ReadBufferSize">
+            <summary>
+            默认读取缓冲区大小
+            </summary>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.String,Org.BouncyCastle.Crypto.IDigest)">
+            <summary>
+            摘要算法
+            </summary>
+            <param name="text"></param>
+            <param name="digest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)">
+            <summary>
+            摘要算法
+            </summary>
+            <param name="stream"></param>
+            <param name="digest"></param>
+            <returns>digest</returns>
+            <remarks>不会自动关闭 stream</remarks>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.MD5Digest(System.String)">
+            <summary>
+            md5 摘要
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.MD5Digest(System.IO.Stream)">
+            <summary>
+            md5 摘要
+            </summary>
+            <param name="stream"></param>
+            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.String)">
+            <summary>
+            Sha256Digest 摘要
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.IO.Stream)">
+            <summary>
+            Sha256Digest 摘要
+            </summary>
+            <param name="stream"></param>
+            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.String)">
+            <summary>
+            Sha512Digest 摘要
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.IO.Stream)">
+            <summary>
+            Sha512Digest 摘要
+            </summary>
+            <param name="stream"></param>
+            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
+        </member>
         <member name="T:CommonTools.Utils.ExtensionUtils">
             <summary>
             扩展方法
@@ -889,52 +953,6 @@
             <param name="callback"></param>
             <param name="interval">间隔多长时间才允许再次调用</param>
             <param name="fallbackValue">未调用返回值</param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Core.DigestUtils.GeneralDigest(System.String,Org.BouncyCastle.Crypto.IDigest)">
-            <summary>
-            摘要算法
-            </summary>
-            <param name="s"></param>
-            <param name="digest"></param>
-            <returns></returns>
-        </member>
-        <member name="F:CommonTools.Core.DigestUtils.ReadBufferQueue">
-            <summary>
-            读取缓冲区队列
-            </summary>
-        </member>
-        <member name="F:CommonTools.Core.DigestUtils.DefaultReadBufferSize">
-            <summary>
-            默认读取缓冲区个数
-            </summary>
-        </member>
-        <member name="F:CommonTools.Core.DigestUtils.FileReadBuffer">
-            <summary>
-            默认读取缓冲区大小
-            </summary>
-        </member>
-        <member name="M:CommonTools.Core.DigestUtils.GeneralDigest(System.IO.FileStream,Org.BouncyCastle.Crypto.IDigest,System.Action{System.Int64})">
-            <summary>
-            摘要算法
-            </summary>
-            <param name="stream"></param>
-            <param name="digest"></param>
-            <param name="callback">回调，参数为总读取的大小</param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Core.DigestUtils.MD5Digest(System.String)">
-            <summary>
-            md5 摘要
-            </summary>
-            <param name="s"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Core.DigestUtils.MD5Digest(System.IO.FileStream,System.Action{System.Int64})">
-            <summary>
-            md5 摘要
-            </summary>
-            <param name="stream"></param>
             <returns></returns>
         </member>
     </members>
