@@ -1158,6 +1158,44 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:CommonUITools.Utils.ElementVisibilityHelper">
+            <summary>
+            控件自动显示 / 隐藏
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.EnableAutoHideOnClickOuter(System.Windows.FrameworkElement,System.String)">
+            <summary>
+            启用当点击 <paramref name="element"/> 外部时自动隐藏
+            </summary>
+            <param name="element">要隐藏 / 显示的控件</param>
+            <param name="targetId">标识 <paramref name="element"/> id</param>
+        </member>
+        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.SetOpenOnClick(System.Windows.UIElement,System.String)">
+            <summary>
+            设置点击 <paramref name="element"/> 时显示 <paramref name="targetId"/> 对应的控件
+            </summary>
+            <param name="element"></param>
+            <param name="targetId"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.HandleMouseEvent(System.Object)">
+            <summary>
+            Toggle open state
+            </summary>
+            <param name="sender"></param>
+            <remarks>Happens after WindowPreviewMouseUp</remarks>
+        </member>
+        <member name="T:CommonUITools.Utils.HoverVisibleHelper">
+            <summary>
+            鼠标移入显示，移除隐藏 TargetElement
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.HoverVisibleHelper.SetTargetElement(System.Windows.DependencyObject,System.Windows.FrameworkElement)">
+            <summary>
+            目标元素
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
@@ -1288,7 +1326,7 @@
         </member>
         <member name="M:CommonUITools.Utils.UIUtils.DrawingColorToColor(System.Drawing.Color)">
             <summary>
-            SystemDrawing.Color 转 System.Windows.Media.Color
+            <see cref="T:System.Drawing.Color"/> 转 <see cref="T:System.Windows.Media.Color"/>
             </summary>
             <param name="color"></param>
             <returns></returns>
@@ -1416,6 +1454,9 @@
             <param name="element"></param>
             <param name="handler"></param>
         </member>
+        <member name="M:CommonUITools.Utils.UIUtils.SetLoadedOnceEventHandler(System.Windows.FrameworkContentElement,System.Windows.RoutedEventHandler)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.SetLoadedOnceEventHandler(System.Windows.FrameworkElement,System.Windows.RoutedEventHandler)"/>
+        </member>
         <member name="M:CommonUITools.Utils.UIUtils.ReversePanelChildrenOrder(System.Windows.Controls.Panel)">
             <summary>
             反转 Panel Children 顺序
@@ -1431,14 +1472,14 @@
         </member>
         <member name="M:CommonUITools.Utils.UIUtils.BitmapSourceToBitmap(System.Windows.Media.Imaging.BitmapSource)">
             <summary>
-            BitmapSource 转为Bitmap
+            BitmapSource 转为 <see cref="T:System.Drawing.Bitmap"/>
             </summary>
             <param name="bitmapSource"></param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.UIUtils.BitmapToImageSource(System.Drawing.Bitmap)">
             <summary>
-            Bitmap 转为位图
+            <see cref="T:System.Drawing.Bitmap"/> 转为 ImageSource
             </summary>
             <param name="bitmap"></param>
             <returns></returns>
@@ -1485,6 +1526,71 @@
             ContentDialogResizeRatio
             </summary>
         </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.IsLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.IsLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.IsRightButtonDown(System.Windows.Input.MouseButtonEventArgs)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.IsRightButtonDown(System.Windows.Input.MouseButtonEventArgs)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.IsLeftButtonDown(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标左键是否按下
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToBrush(System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.StringToBrush(System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToColor(System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.StringToColor(System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToColor(System.Drawing.Color)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.DrawingColorToColor(System.Drawing.Color)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.OpenFileInExplorerAsync(System.String,System.Action{System.Exception})">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.OpenFileInExplorerAsync(System.String,System.Action{System.Exception})"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.OpenFileInExistingExplorerAsync(System.String,System.Action{System.Exception})">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.OpenFileInExistingExplorerAsync(System.String,System.Action{System.Exception})"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.OpenFileWithAsync(System.String,System.Action{System.Exception})">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.OpenFileWithAsync(System.String,System.Action{System.Exception})"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.OpenInBrowser(System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.OpenInBrowser(System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ReverseChildrenOrder(System.Windows.Controls.Panel)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.ReversePanelChildrenOrder(System.Windows.Controls.Panel)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.GetImageSource(System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.CopyImageSource(System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToBitmap(System.Windows.Media.Imaging.BitmapSource)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.BitmapSourceToBitmap(System.Windows.Media.Imaging.BitmapSource)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToImageSource(System.Drawing.Bitmap)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.BitmapToImageSource(System.Drawing.Bitmap)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToStream(System.Drawing.Bitmap)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.BitmapToStream(System.Drawing.Bitmap)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.FindResource(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.FindResourceInMergedDictionaries(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ReplaceResourceDictionary(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String,System.String)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.ReplaceResourceDictionary(System.Collections.ObjectModel.Collection{System.Windows.ResourceDictionary},System.String,System.String)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.GetElementDataContext``1(System.Object)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.GetElementDataContext``1(System.Object)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.IsRightButtonDown(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            鼠标右键是否按下
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.EnableContentDialogAutoResize(ModernWpf.Controls.ContentDialog,System.Double,System.Double,System.Double)">
             <summary>
             启用 ContentDialog 自动调整大小
@@ -1493,6 +1599,12 @@
             <param name="minWidth"></param>
             <param name="maxWidth"></param>
             <param name="resizeRatio">NewWidth = Window.ActualWidth / <paramref name="resizeRatio"/></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.SetLoadedOnceEventHandler(System.Windows.FrameworkContentElement,System.Windows.RoutedEventHandler)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.SetLoadedOnceEventHandler(System.Windows.FrameworkContentElement,System.Windows.RoutedEventHandler)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.SetLoadedOnceEventHandler(System.Windows.FrameworkElement,System.Windows.RoutedEventHandler)">
+            <inheritdoc cref="M:CommonUITools.Utils.UIUtils.SetLoadedOnceEventHandler(System.Windows.FrameworkElement,System.Windows.RoutedEventHandler)"/>
         </member>
         <member name="T:CommonUITools.Widget.DragDropTextBox">
             <summary>
@@ -2161,6 +2273,36 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>
