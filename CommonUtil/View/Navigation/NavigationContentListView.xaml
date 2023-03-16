@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:dd="urn:gong-wpf-dragdrop"
   xmlns:local="clr-namespace:CommonUtil.View.Navigation"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
@@ -29,10 +30,12 @@
   <ListBox
     x:Name="MenuItemListBox"
     VerticalAlignment="Top"
+    dd:DragDrop.IsDragSource="True"
+    dd:DragDrop.IsDropTarget="True"
+    dd:DragDrop.UseDefaultDragAdorner="True"
     utils:RemoveListBoxDefaultSelectionBehavior.IsEnabled="True"
     ItemsSource="{Binding ToolMenuItems, ElementName=NavigationContentListRoot}"
-    SelectionChanged="MenuItemSelectionChangedHandler"
-    Style="{StaticResource TransparentListBoxStyle}">
+    SelectionChanged="MenuItemSelectionChangedHandler">
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Border
