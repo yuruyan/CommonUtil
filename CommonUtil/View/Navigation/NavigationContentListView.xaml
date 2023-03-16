@@ -20,7 +20,7 @@
         EasingFunction="{StaticResource AnimationEaseFunction}"
         Storyboard.TargetName="RootTranslateTransform"
         Storyboard.TargetProperty="X"
-        From="{StaticResource NavigationContentListViewWidth}"
+        From="{Binding Source={StaticResource NavigationContentListViewWidth}, Mode=OneTime, Converter={StaticResource ToNegativeConverter}}"
         To="0"
         Duration="{StaticResource AnimationDuration}" />
     </Storyboard>
@@ -38,8 +38,9 @@
         <Border
           utils:HoverVisibleHelper.TargetElement="{Binding ElementName=CloseButton}"
           utils:RemoveListBoxItemDefaultSelectionBehavior.IsEnabled="True"
+          Background="Transparent"
           BorderThickness="0,1">
-          <Grid Background="#cfFFFFFF">
+          <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="auto" />
               <ColumnDefinition />

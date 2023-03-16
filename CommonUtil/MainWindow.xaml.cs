@@ -168,4 +168,14 @@ public partial class MainWindow : BaseWindow {
         e.Handled = true;
         RouterService.Navigate(typeof(MainContentView));
     }
+
+    /// <summary>
+    /// 导航到 NavigationContentView
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void NavigateToNavigationContentViewClickHandler(object sender, RoutedEventArgs e) {
+        // Do not set 'e.Handled = true'
+        RouterService.Navigate(typeof(NavigationContentView));
+    }
 }

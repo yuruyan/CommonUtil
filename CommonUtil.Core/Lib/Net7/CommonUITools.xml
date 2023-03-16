@@ -72,6 +72,16 @@
             除法 Converter，parameter / value
             </summary>
         </member>
+        <member name="T:CommonUITools.Converter.ToNegativeConverter">
+            <summary>
+            转为负数
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.ToPositiveConverter">
+            <summary>
+            转为正数
+            </summary>
+        </member>
         <member name="T:CommonUITools.Converter.ColorToBrushConverter">
             <summary>
             Color 转 Brush

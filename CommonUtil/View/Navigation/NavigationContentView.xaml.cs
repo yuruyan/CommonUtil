@@ -77,5 +77,14 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
             element.Visibility = Visibility.Collapsed;
         }
     }
+
+    /// <summary>
+    /// Hide ListView
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        NavigationContentListView.Visibility = Visibility.Collapsed;
+    }
 }
 

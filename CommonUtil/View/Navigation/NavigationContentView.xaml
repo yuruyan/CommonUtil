@@ -12,13 +12,14 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
   mc:Ignorable="d">
   <Grid>
     <ui:Frame Name="ContentFrame" Margin="{StaticResource PageMargin}" />
     <navigation:NavigationContentListView
       x:Name="NavigationContentListView"
       Width="{StaticResource NavigationContentListViewWidth}"
-      Margin="0,40,0,0"
+      Padding="0,40,0,0"
       HorizontalAlignment="Left"
       utils:DropShadowEffectHelper.Weight="Lighter"
       Background="{DynamicResource ApplicationBackgroundBrush}"

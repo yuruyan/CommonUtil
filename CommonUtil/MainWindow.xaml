@@ -45,17 +45,15 @@
       <ui:SimpleStackPanel Orientation="Horizontal">
         <!--  Navigation, Home  -->
         <StackPanel Orientation="Horizontal">
-          <ui:TitleBarButton Name="NavigationButton" Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
-            <TextBlock
-              Style="{StaticResource IconFontStyle}"
-              Text="&#xe61d;"
-              ToolTip="导航" />
+          <ui:TitleBarButton
+            Name="NavigationButton"
+            Click="NavigateToNavigationContentViewClickHandler"
+            ToolTip="导航"
+            Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe61d;" />
           </ui:TitleBarButton>
-          <ui:TitleBarButton Click="NavigateToMainContentViewClickHandler">
-            <TextBlock
-              Style="{StaticResource IconFontStyle}"
-              Text="&#xe674;"
-              ToolTip="主页" />
+          <ui:TitleBarButton Click="NavigateToMainContentViewClickHandler" ToolTip="主页">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe674;" />
           </ui:TitleBarButton>
         </StackPanel>
         <!--  Icon, Title  -->
