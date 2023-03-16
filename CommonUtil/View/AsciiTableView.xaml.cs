@@ -1,9 +1,9 @@
 ﻿namespace CommonUtil.View;
 
-public partial class AsciiTableView : Page {
+public partial class AsciiTableView : Page, IDisposable {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
     public static readonly DependencyProperty AsciiTableListProperty = DependencyProperty.Register("AsciiTableList", typeof(ExtendedObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
+
     /// <summary>
     /// ASCII 列表
     /// </summary>
@@ -42,5 +42,12 @@ public partial class AsciiTableView : Page {
         }
         Clipboard.SetDataObject(sb.ToString());
         MessageBoxUtils.Success("已复制");
+    }
+
+    public void Dispose() {
+        AsciiListView.ClearValue(ItemsControl.ItemsSourceProperty);
+        AsciiTableList.Clear();
+        AsciiTableList = null!;
+        GC.SuppressFinalize(this);
     }
 }
