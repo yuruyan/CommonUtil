@@ -1,14 +1,14 @@
 ﻿namespace CommonUtil.View;
 
-public partial class Base64ToolView : Page {
+public partial class Base64ToolView : Page, IDisposable {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     private static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     public static readonly DependencyProperty FileProcessStatusesProperty = DependencyProperty.Register("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64ToolView), new PropertyMetadata());
+
     /// <summary>
     /// 保存文件对话框
     /// </summary>
@@ -72,21 +72,26 @@ public partial class Base64ToolView : Page {
     private Window Window = App.Current.MainWindow;
     private CancellationTokenSource EncodeCancellationTokenSource = new();
     private CancellationTokenSource DecodeCancellationTokenSource = new();
+    private readonly double ExpansionThreshold;
 
     public Base64ToolView() {
         FileProcessStatuses = new();
         InitializeComponent();
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = Window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(Window, (_, _) => {
-                    IsExpanded = Window.ActualWidth >= expansionThreshold;
-                });
+        UIUtils.SetLoadedOnceEventHandler(this, (sender, _) => {
+            if (sender is DependencyObject dp) {
+                Window = Window.GetWindow(dp);
+                IsExpanded = Window.ActualWidth >= ExpansionThreshold;
+                DependencyPropertyDescriptor
+                    .FromProperty(Window.ActualWidthProperty, typeof(Window))
+                    .AddValueChanged(Window, WindowWidthChangedHandler);
+            }
         });
+    }
+
+    private void WindowWidthChangedHandler(object? sender, EventArgs e) {
+        IsExpanded = Window.ActualWidth >= ExpansionThreshold;
     }
 
     /// <summary>
@@ -230,6 +235,13 @@ public partial class Base64ToolView : Page {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        ClearInput();
+    }
+
+    /// <summary>
+    /// 清空输入
+    /// </summary>
+    private void ClearInput() {
         OutputText = string.Empty;
         // 没有正在处理的任务
         if (!IsDecodeRunning && !IsEncodeRunning) {
@@ -313,5 +325,19 @@ public partial class Base64ToolView : Page {
     private void CancelEncodeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         EncodeCancellationTokenSource.Cancel();
+    }
+
+    public void Dispose() {
+        DataContext = null;
+        DependencyPropertyDescriptor
+            .FromProperty(Window.ActualWidthProperty, typeof(Window))
+            .RemoveValueChanged(Window, WindowWidthChangedHandler);
+        ClearInput();
+        FileProcessStatuses.Clear();
+        FileProcessStatuses = null!;
+        Window = null!;
+        EncodeCancellationTokenSource.Dispose();
+        DecodeCancellationTokenSource.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
