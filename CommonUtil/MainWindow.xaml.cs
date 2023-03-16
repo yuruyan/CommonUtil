@@ -7,20 +7,11 @@ namespace CommonUtil;
 [SingleInstance]
 public partial class MainWindow : BaseWindow {
     public static readonly DependencyProperty RouteViewTitleProperty = DependencyProperty.Register("RouteViewTitle", typeof(string), typeof(MainWindow), new PropertyMetadata(Global.AppTitle));
-    //public static readonly DependencyProperty TitleBarBackgroundProperty = DependencyProperty.Register("TitleBarBackground", typeof(Brush), typeof(MainWindow), new PropertyMetadata());
-    //private static readonly DependencyProperty IsBackIconVisibleProperty = DependencyProperty.Register("IsBackIconVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
     private static readonly DependencyProperty ShowLoadingBoxProperty = DependencyProperty.Register("ShowLoadingBox", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
     private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
     public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
 
-    ///// <summary>
-    ///// 返回Icon是否可见
-    ///// </summary>
-    //private bool IsBackIconVisible {
-    //    get { return (bool)GetValue(IsBackIconVisibleProperty); }
-    //    set { SetValue(IsBackIconVisibleProperty, value); }
-    //}
     /// <summary>
     /// 标题
     /// </summary>
@@ -42,13 +33,6 @@ public partial class MainWindow : BaseWindow {
         get { return (ThemeMode)GetValue(CurrentThemeModeProperty); }
         set { SetValue(CurrentThemeModeProperty, value); }
     }
-    ///// <summary>
-    ///// 标题栏背景
-    ///// </summary>
-    //public Brush TitleBarBackground {
-    //    get { return (Brush)GetValue(TitleBarBackgroundProperty); }
-    //    set { SetValue(TitleBarBackgroundProperty, value); }
-    //}
     /// <summary>
     /// 上一个 WindowBackgroundColor
     /// </summary>
@@ -63,36 +47,22 @@ public partial class MainWindow : BaseWindow {
         get { return (Color)GetValue(CurrentBackgroundColorProperty); }
         set { SetValue(CurrentBackgroundColorProperty, value); }
     }
-    ///// <summary>
-    ///// 标题动画
-    ///// </summary>
-    //private readonly Storyboard TitleBarStoryboard;
-    /// <summary>
-    /// 背景颜色动画
-    /// </summary>
-    //private readonly Storyboard MainContentViewLoadStoryboard;
     private readonly Storyboard MainWindowBackgroundStoryboard;
-    //private readonly DoubleAnimation TranslateTransformXAnimation;
-    //private readonly ColorAnimation MainContentViewBackgroundAnimation;
     private readonly RouterService RouterService;
 
     public MainWindow() {
         InitializeComponent();
         RouterService = InitRouterService();
-        #region 设置 Storyboard
-        //TitleBarStoryboard = (Storyboard)Resources["TitleBarStoryboard"];
         MainWindowBackgroundStoryboard = (Storyboard)Resources["MainWindowBackgroundStoryboard"];
-        //MainContentViewLoadStoryboard = (Storyboard)Resources["MainContentViewLoadStoryboard"];
-        //TranslateTransformXAnimation = (DoubleAnimation)TitleBarStoryboard.Children.First(t => t.Name == "TranslateTransformX");
-        //MainContentViewBackgroundAnimation = (ColorAnimation)MainContentViewLoadStoryboard.Children.First(t => t.Name == "BackgroundAnimation");
-        #endregion 
+
         // 导航到 MainContentView
-        Loaded += (_, _) => Task.Run(async () => {
+        Loaded += async (_, _) => {
             // 延迟加载，减少卡顿
             await Task.Delay(1000);
             RouterService.Navigate(typeof(MainContentView));
-            //MainWindowRouter.PushRouteStack(ContentFrame);
-        });
+            ShowLoadingBox = false;
+        };
+        // ThemeChanged
         ThemeManager.Current.ThemeChanged += (_, mode) => {
             CurrentThemeMode = mode;
             PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
@@ -102,16 +72,12 @@ public partial class MainWindow : BaseWindow {
     }
 
     private RouterService InitRouterService() {
-        var service = new RouterService(
+        return new RouterService(
             ContentFrame,
             Global.MenuItems.Select(t => t.ClassType).Join(new Type[] {
                 typeof(MainContentView)
             })
         );
-        ////MainWindowRouter.RouteChanged += (_, _) => {
-        ////    IsBackIconVisible = MainWindowRouter.CanGoBack;
-        //};
-        return service;
     }
 
     /// <summary>
