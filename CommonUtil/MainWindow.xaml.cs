@@ -12,6 +12,7 @@ public partial class MainWindow : BaseWindow {
     public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty IsNavigationButtonVisibleProperty = DependencyProperty.Register("IsNavigationButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsHomeButtonVisibleProperty = DependencyProperty.Register("IsHomeButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
     /// <summary>
     /// 导航按钮是否可见
@@ -19,6 +20,13 @@ public partial class MainWindow : BaseWindow {
     public bool IsNavigationButtonVisible {
         get { return (bool)GetValue(IsNavigationButtonVisibleProperty); }
         set { SetValue(IsNavigationButtonVisibleProperty, value); }
+    }
+    /// <summary>
+    /// 主页按钮是否可见
+    /// </summary>
+    public bool IsHomeButtonVisible {
+        get { return (bool)GetValue(IsHomeButtonVisibleProperty); }
+        set { SetValue(IsHomeButtonVisibleProperty, value); }
     }
     /// <summary>
     /// 标题
@@ -109,17 +117,12 @@ public partial class MainWindow : BaseWindow {
             }
             IsNavigationContentViewInitialized = true;
         }
+        // Update IsHomeButtonVisible
+        IsHomeButtonVisible = e.Content is not MainContentView;
         if (e.Content is INavigationRequest<NavigationRequestArgs> navigator) {
             navigator.NavigationRequested -= ContentNavigationRequested;
             navigator.NavigationRequested += ContentNavigationRequested;
         }
-        //// 修改 title
-        //if (contentType == typeof(MainContentView)) {
-        //    RouteViewTitle = Global.AppTitle;
-        //} else {
-        //    RouteViewTitle = Global.MenuItems.First(t => t.ClassType == e.Content.GetType()).Name;
-        //}
-        //ShowLoadingBox = false;
     }
 
     /// <summary>

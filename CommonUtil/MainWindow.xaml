@@ -52,7 +52,10 @@
             Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe61d;" />
           </ui:TitleBarButton>
-          <ui:TitleBarButton Click="NavigateToMainContentViewClickHandler" ToolTip="主页">
+          <ui:TitleBarButton
+            Click="NavigateToMainContentViewClickHandler"
+            ToolTip="主页"
+            Visibility="{Binding IsHomeButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe674;" />
           </ui:TitleBarButton>
         </StackPanel>
