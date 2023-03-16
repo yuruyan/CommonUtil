@@ -7,15 +7,25 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:navigation="clr-namespace:CommonUtil.View.Navigation"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
   Title="NavigationContentView"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
-  <navigation:NavigationContentListView
-    Margin="0,40,0,0"
-    Closed="PageClosedHandler"
-    SelectedMenuChanged="SelectedMenuChangedHandler"
-    ToolMenuItems="{Binding ToolMenuItems}" />
+  <Grid>
+    <ui:Frame Name="ContentFrame" Margin="{StaticResource PageMargin}" />
+    <navigation:NavigationContentListView
+      x:Name="NavigationContentListView"
+      Width="{StaticResource NavigationContentListViewWidth}"
+      Margin="0,40,0,0"
+      HorizontalAlignment="Left"
+      utils:DropShadowEffectHelper.Weight="Lighter"
+      Background="{DynamicResource ApplicationBackgroundBrush}"
+      Closed="PageClosedHandler"
+      MouseUp="CloseNavigationContentListViewHandler"
+      SelectedMenuChanged="SelectedMenuChangedHandler"
+      ToolMenuItems="{Binding ToolMenuItems}"
+      Visibility="Collapsed" />
+  </Grid>
 </Page>

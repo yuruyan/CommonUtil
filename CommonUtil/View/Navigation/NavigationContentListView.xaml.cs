@@ -10,6 +10,8 @@ public partial class NavigationContentListView : UserControl {
     /// 关闭页面，参数为 ViewType
     /// </summary>
     public event EventHandler<Type>? Closed;
+    private const string RootLoadingStoryboardName = "RootLoadingStoryboard";
+    private readonly Storyboard RootLoadingStoryboard;
 
     public ExtendedObservableCollection<ToolMenuItemDO> ToolMenuItems {
         get { return (ExtendedObservableCollection<ToolMenuItemDO>)GetValue(ToolMenuItemsProperty); }
@@ -18,6 +20,13 @@ public partial class NavigationContentListView : UserControl {
 
     public NavigationContentListView() {
         InitializeComponent();
+        RootLoadingStoryboard = (Storyboard)Resources[RootLoadingStoryboardName];
+        // Begin Animation
+        IsVisibleChanged += (s, e) => {
+            if (e.NewValue is true) {
+                RootLoadingStoryboard.Begin();
+            }
+        };
     }
 
     /// <summary>
@@ -44,6 +53,17 @@ public partial class NavigationContentListView : UserControl {
         var item = e.AddedItems.OfType<ToolMenuItemDO>().FirstOrDefault();
         if (item is not null) {
             SelectedMenuChanged?.Invoke(sender, item.ViewType);
+        }
+    }
+
+    /// <summary>
+    /// 选中菜单项
+    /// </summary>
+    /// <param name="viewType"></param>
+    public void SelectItem(Type viewType) {
+        var targetIndex = ToolMenuItems.IndexOf(item => item.ViewType == viewType);
+        if (targetIndex != -1) {
+            MenuItemListBox.SelectedIndex = targetIndex;
         }
     }
 }

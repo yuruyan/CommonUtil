@@ -8,7 +8,8 @@
 
   <system:Double x:Key="NavigationViewMinWidth">50</system:Double>
   <system:Double x:Key="NavigationViewMaxWidth">250</system:Double>
-  <Thickness x:Key="PageMargin" Top="{x:Static ui:TitleBar.HeightKey}" />
+  <Thickness x:Key="PageMargin" Top="32" />
+  <system:Double x:Key="NavigationContentListViewWidth">300</system:Double>
 
   <!--  avalonEdit:TextEditor  -->
   <Style x:Key="GlobalAvalonEditTextEditorStyle" TargetType="avalonEdit:TextEditor">

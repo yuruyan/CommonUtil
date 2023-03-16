@@ -11,7 +11,15 @@ public partial class MainWindow : BaseWindow {
     private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
     public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
+    public static readonly DependencyProperty IsNavigationButtonVisibleProperty = DependencyProperty.Register("IsNavigationButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
+    /// <summary>
+    /// 导航按钮是否可见
+    /// </summary>
+    public bool IsNavigationButtonVisible {
+        get { return (bool)GetValue(IsNavigationButtonVisibleProperty); }
+        set { SetValue(IsNavigationButtonVisibleProperty, value); }
+    }
     /// <summary>
     /// 标题
     /// </summary>
@@ -49,19 +57,21 @@ public partial class MainWindow : BaseWindow {
     }
     private readonly Storyboard MainWindowBackgroundStoryboard;
     private readonly RouterService RouterService;
+    private bool IsNavigationContentViewInitialized;
 
     public MainWindow() {
         InitializeComponent();
         RouterService = InitRouterService();
         MainWindowBackgroundStoryboard = (Storyboard)Resources["MainWindowBackgroundStoryboard"];
+        ElementVisibilityHelper.SetOpenOnClick(NavigationButton, ElementVisibilityHelperNames.NavigationContentListView);
 
-        // 导航到 MainContentView
-        Loaded += async (_, _) => {
+        // Navigate to MainContentView
+        this.SetLoadedOnceEventHandler(async (_, _) => {
             // 延迟加载，减少卡顿
             await Task.Delay(1000);
             RouterService.Navigate(typeof(MainContentView));
             ShowLoadingBox = false;
-        };
+        });
         // ThemeChanged
         ThemeManager.Current.ThemeChanged += (_, mode) => {
             CurrentThemeMode = mode;
@@ -74,9 +84,10 @@ public partial class MainWindow : BaseWindow {
     private RouterService InitRouterService() {
         return new RouterService(
             ContentFrame,
-            Global.MenuItems.Select(t => t.ClassType).Join(new Type[] {
-                typeof(MainContentView)
-            })
+            new Type[] {
+                typeof(MainContentView),
+                typeof(NavigationContentView)
+            }
         );
     }
 
@@ -86,7 +97,22 @@ public partial class MainWindow : BaseWindow {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void ContentFrameNavigatedHandler(object sender, NavigationEventArgs e) {
-        //Type contentType = e.Content.GetType();
+        // Show NavigationButton
+        if (e.Content is NavigationContentView contentView) {
+            IsNavigationButtonVisible = true;
+            // Set IsNavigationButtonVisible
+            if (!IsNavigationContentViewInitialized) {
+                var menuItems = contentView.ToolMenuItems;
+                menuItems.CollectionChanged += (sender, args) => {
+                    IsNavigationButtonVisible = menuItems.Count != 0;
+                };
+            }
+            IsNavigationContentViewInitialized = true;
+        }
+        if (e.Content is INavigationRequest<NavigationRequestArgs> navigator) {
+            navigator.NavigationRequested -= ContentNavigationRequested;
+            navigator.NavigationRequested += ContentNavigationRequested;
+        }
         //// 修改 title
         //if (contentType == typeof(MainContentView)) {
         //    RouteViewTitle = Global.AppTitle;
@@ -94,6 +120,15 @@ public partial class MainWindow : BaseWindow {
         //    RouteViewTitle = Global.MenuItems.First(t => t.ClassType == e.Content.GetType()).Name;
         //}
         //ShowLoadingBox = false;
+    }
+
+    /// <summary>
+    /// 导航请求
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ContentNavigationRequested(object? sender, NavigationRequestArgs e) {
+        RouterService.Navigate(e.ViewType, e.Data);
     }
 
     /// <summary>
@@ -122,5 +157,15 @@ public partial class MainWindow : BaseWindow {
             () => ThemeManager.Current.SwitchToDarkTheme(),
             1000
         );
+    }
+
+    /// <summary>
+    /// 导航到主页
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void NavigateToMainContentViewClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        RouterService.Navigate(typeof(MainContentView));
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace CommonUtil.View;
 
-public partial class MainContentView : Page {
+public partial class MainContentView : Page, INavigationRequest<NavigationRequestArgs> {
     private static readonly DependencyPropertyKey MenuItemsKey = DependencyProperty.RegisterReadOnly("MenuItems", typeof(ObservableCollection<ToolMenuItem>), typeof(MainContentView), new PropertyMetadata());
     public static readonly DependencyProperty MenuItemsProperty = MenuItemsKey.DependencyProperty;
     public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainContentView), new PropertyMetadata(Colors.Transparent));
@@ -9,6 +9,8 @@ public partial class MainContentView : Page {
     private const string ItemBackgroundBrushProxyKey = "MainContentViewItemBackgroundBrushProxy";
     private const string ItemBackgroundBrushKey = "MainContentViewItemBackgroundBrush";
     private const string MainContentViewBackgroundBrushKey = "MainContentViewBackgroundBrush";
+    private readonly Storyboard MainContentViewBackgroundStoryboard;
+    public event EventHandler<NavigationRequestArgs>? NavigationRequested;
 
     /// <summary>
     /// 菜单项目列表
@@ -28,7 +30,6 @@ public partial class MainContentView : Page {
         get { return (Color)GetValue(CurrentBackgroundColorProperty); }
         set { SetValue(CurrentBackgroundColorProperty, value); }
     }
-    private readonly Storyboard MainContentViewBackgroundStoryboard;
 
     public MainContentView() {
         SetValue(MenuItemsKey, new ObservableCollection<ToolMenuItem>());
@@ -41,7 +42,13 @@ public partial class MainContentView : Page {
             Resources[ItemBackgroundBrushProxyKey] = FindResource(ItemBackgroundBrushKey);
         };
         #endregion
-        // 监听主题变化
+        WatchThemeChanged();
+    }
+
+    /// <summary>
+    /// 监听主题变化
+    /// </summary>
+    private void WatchThemeChanged() {
         ThemeManager.Current.ThemeChanged += (_, _) => {
             if (IsVisible) {
                 // 设置透明
@@ -88,12 +95,12 @@ public partial class MainContentView : Page {
     /// <param name="e"></param>
     private void MenuMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        if (sender is FrameworkElement element && element.DataContext is ToolMenuItem menuItem) {
-            var routerService = MainWindowRouter.GetCurrentRouteService(this.GetType());
-            if (routerService != null) {
-                routerService.Navigate(menuItem.ClassType, NavigationTransitionEffect.DrillIn);
-                MainWindowRouter.PushRouteStack(routerService);
-            }
+        var menuItem = sender.GetElementDataContext<ToolMenuItem>();
+        if (menuItem != default) {
+            NavigationRequested?.Invoke(
+                sender,
+                new(typeof(NavigationContentView), menuItem.ClassType)
+            );
         }
     }
 }

@@ -10,7 +10,24 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
+  <UserControl.RenderTransform>
+    <TranslateTransform x:Name="RootTranslateTransform" />
+  </UserControl.RenderTransform>
+  <UserControl.Resources>
+    <!--  Combined with code  -->
+    <Storyboard x:Key="RootLoadingStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="RootTranslateTransform"
+        Storyboard.TargetProperty="X"
+        From="{StaticResource NavigationContentListViewWidth}"
+        To="0"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
+  </UserControl.Resources>
+
   <ListBox
+    x:Name="MenuItemListBox"
     VerticalAlignment="Top"
     utils:RemoveListBoxDefaultSelectionBehavior.IsEnabled="True"
     ItemsSource="{Binding ToolMenuItems, ElementName=NavigationContentListRoot}"

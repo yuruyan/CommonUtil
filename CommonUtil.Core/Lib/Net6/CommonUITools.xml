@@ -402,6 +402,11 @@
             状态
             </summary>
         </member>
+        <member name="T:CommonUITools.Model.INavigationService">
+            <summary>
+            该接口方法由 <see cref="T:CommonUITools.Route.RouterService"/> 调用
+            </summary>
+        </member>
         <member name="T:CommonUITools.Model.ShowCommands">
             <summary>
             Sets the specified window's show state.
@@ -461,153 +466,22 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="P:CommonUITools.Route.RouterNode.Name">
+        <member name="T:CommonUITools.Route.RouterService">
             <summary>
-            路由名称，会清除两边的 <see cref="F:CommonUITools.Route.Router.RouterSeparator"/>
+            如果需要接受参数，需要实现 <see cref="T:CommonUITools.Model.INavigationService"/> 接口
             </summary>
         </member>
-        <member name="P:CommonUITools.Route.RouterNode.PageType">
+        <member name="F:CommonUITools.Route.RouterService.RouterInstanceDict">
             <summary>
-            页面 Type
+            页面实例
             </summary>
         </member>
-        <member name="P:CommonUITools.Route.RouterNode.FrameName">
+        <member name="F:CommonUITools.Route.RouterService.PageArgsDict">
             <summary>
-            Frame 名称，即 Name 属性
+            额外参数
             </summary>
         </member>
-        <member name="P:CommonUITools.Route.RouterNode.Children">
-            <summary>
-            子节点
-            </summary>
-        </member>
-        <member name="T:CommonUITools.Route.Router">
-            <summary>
-            路由，一个 Window 最多一个路由
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Route.Router.RouterInternalNode.Instance">
-            <summary>
-            对象实例
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RouterInternalNode.HasChild">
-            <summary>
-            是否有子节点
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RouterInternalNode.IsCreated">
-            <summary>
-            是否已创建
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RouterInternalNode.IsCreating">
-            <summary>
-            是否正在创建
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RouterInternalNode.Children">
-            <summary>
-            子节点
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RouterInternalNode.ChildrenDict">
-            <summary>
-            (Name, RouterInternalNode)
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Route.Router.RouterInternalNode.CreateFromRouterNode(CommonUITools.Route.RouterNode)">
-            <summary>
-            从 RouterNode 创建
-            </summary>
-            <param name="node"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonUITools.Route.Router.RouterInternalNode.GetInstance">
-            <summary>
-            获取对象，如未创建则立即创建
-            </summary>
-            <returns></returns>
-            <exception cref="T:System.ArgumentException">对象创建失败</exception>
-        </member>
-        <member name="M:CommonUITools.Route.Router.RouterInternalNode.InitFromExisting(System.Windows.Controls.Frame,System.Object)">
-            <summary>
-            从已创建结点初始化
-            </summary>
-            <param name="frame"></param>
-            <param name="instance"></param>
-        </member>
-        <member name="F:CommonUITools.Route.Router.RouterSeparator">
-            <summary>
-            路由分隔符
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.RootNode">
-            <summary>
-            根节点
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Route.Router.CurrentRoute">
-            <summary>
-            当前路由
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Route.Router.RouteStack">
-            <summary>
-            导航路径
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Route.Router.GetRoutes(System.String)">
-            <summary>
-            获取路由
-            </summary>
-            <param name="routePath">全路径</param>
-            <returns>not empty routes</returns>
-            <exception cref="T:System.ArgumentException">
-            routePath isNullOrEmpty or routes is empty
-            </exception>
-        </member>
-        <member name="M:CommonUITools.Route.Router.GetRouteNodesWithoutRoot(CommonUITools.Route.Router.RouterInternalNode,System.String)">
-            <summary>
-            获取路由结点，不包括根节点
-            </summary>
-            <param name="routePath">全路径</param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentException">路由不匹配</exception>
-        </member>
-        <member name="M:CommonUITools.Route.Router.EnsureNodeAreCreated(System.Collections.Generic.IList{CommonUITools.Route.Router.RouterInternalNode})">
-            <summary>
-            确保路径结点都已经初始化
-            </summary>
-            <param name="routeNodes"></param>
-            <returns>全部初始化完成返回 true，正在初始化返回 false</returns>
-        </member>
-        <member name="M:CommonUITools.Route.Router.Navigate(System.String,System.Object)">
-            <summary>
-            导航
-            </summary>
-            <param name="routePath">路由以 <see cref="F:CommonUITools.Route.Router.RouterSeparator"/> 分隔，包含根路由</param>
-            <param name="args">额外参数</param>
-        </member>
-        <member name="M:CommonUITools.Route.Router.GetInstance(System.String)">
-            <summary>
-            获取路由对应实例对象
-            </summary>
-            <param name="routePath"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonUITools.Route.Router.GoBack">
-            <summary>
-            回到上一级
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Route.Router.CanGoBack">
-            <summary>
-            是否能回退
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="F:CommonUITools.Route.RouterService.DefalutNavigationTransitionEffect">
+        <member name="F:CommonUITools.Route.RouterService.DefaultTransitionEffect">
             <summary>
             默认 NavigationTransitionInfo
             </summary>
@@ -631,10 +505,25 @@
             <summary>
             获取实例对象，对象未创建则会动态创建
             </summary>
-            <param name="view"></param>
+            <param name="pageType"></param>
             <returns></returns>
             <exception cref="T:System.Collections.Generic.KeyNotFoundException">View 不存在</exception>
             <exception cref="T:System.NullReferenceException">对象创建失败</exception>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.GetInstance``1">
+            <inheritdoc cref="M:CommonUITools.Route.RouterService.GetInstance(System.Type)"/>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.RemovePage``1">
+            <summary>
+            移除页面实例
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.RemovePage(System.Type)">
+            <summary>
+            移除页面实例
+            </summary>
+            <param name="pageType"></param>
         </member>
         <member name="M:CommonUITools.Route.RouterService.GetRouteTypes">
             <summary>
@@ -642,12 +531,29 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type,CommonUITools.Route.NavigationTransitionEffect)">
+        <member name="M:CommonUITools.Route.RouterService.FrameNavigatedHandler(System.Object,System.Windows.Navigation.NavigationEventArgs)">
             <summary>
-            导航至页面
+            传递参数
             </summary>
-            <param name="view">路由</param>
-            <param name="effect">过渡动画</param>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type)">
+            <inheritdoc cref="M:CommonUITools.Route.RouterService.Navigate(System.Type,System.Object,CommonUITools.Model.NavigationTransitionEffect)"/>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type,CommonUITools.Model.NavigationTransitionEffect)">
+            <inheritdoc cref="M:CommonUITools.Route.RouterService.Navigate(System.Type,System.Object,CommonUITools.Model.NavigationTransitionEffect)"/>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type,System.Object)">
+            <inheritdoc cref="M:CommonUITools.Route.RouterService.Navigate(System.Type,System.Object,CommonUITools.Model.NavigationTransitionEffect)"/>
+        </member>
+        <member name="M:CommonUITools.Route.RouterService.Navigate(System.Type,System.Object,CommonUITools.Model.NavigationTransitionEffect)">
+            <summary>
+            导航
+            </summary>
+            <param name="view">PageType</param>
+            <param name="args">Extra data</param>
+            <param name="effect">Navigation animation</param>
         </member>
         <member name="M:CommonUITools.Route.RouterService.Back">
             <summary>

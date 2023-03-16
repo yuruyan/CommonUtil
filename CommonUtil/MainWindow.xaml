@@ -44,20 +44,20 @@
       LastChildFill="False">
       <ui:SimpleStackPanel Orientation="Horizontal">
         <!--  Navigation, Home  -->
-        <ui:SimpleStackPanel Orientation="Horizontal">
-          <ui:TitleBarButton>
+        <StackPanel Orientation="Horizontal">
+          <ui:TitleBarButton Name="NavigationButton" Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
             <TextBlock
               Style="{StaticResource IconFontStyle}"
               Text="&#xe61d;"
               ToolTip="导航" />
           </ui:TitleBarButton>
-          <ui:TitleBarButton>
+          <ui:TitleBarButton Click="NavigateToMainContentViewClickHandler">
             <TextBlock
               Style="{StaticResource IconFontStyle}"
               Text="&#xe674;"
               ToolTip="主页" />
           </ui:TitleBarButton>
-        </ui:SimpleStackPanel>
+        </StackPanel>
         <!--  Icon, Title  -->
         <ui:SimpleStackPanel Orientation="Horizontal">
           <Image

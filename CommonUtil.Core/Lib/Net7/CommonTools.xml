@@ -79,6 +79,66 @@
             加载错误
             </summary>
         </member>
+        <member name="M:CommonTools.Model.ISortable.Ascend">
+            <summary>
+            升序
+            </summary>
+        </member>
+        <member name="M:CommonTools.Model.ISortable.AscendBy``1(``0)">
+            <summary>
+            升序
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Model.ISortable.Descend">
+            <summary>
+            降序
+            </summary>
+        </member>
+        <member name="M:CommonTools.Model.ISortable.DescendBy``1(``0)">
+            <summary>
+            降序
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Model.ISortable`1.Ascend">
+            <summary>
+            升序
+            </summary>
+        </member>
+        <member name="M:CommonTools.Model.ISortable`1.AscendBy``1(``0)">
+            <summary>
+            升序
+            </summary>
+            <typeparam name="Sorter"></typeparam>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Model.ISortable`1.Descend">
+            <summary>
+            降序
+            </summary>
+        </member>
+        <member name="M:CommonTools.Model.ISortable`1.DescendBy``1(``0)">
+            <summary>
+            降序
+            </summary>
+            <typeparam name="Sorter"></typeparam>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:CommonTools.Model.ISortable`2.AscendBy(`0)" -->
+        <member name="M:CommonTools.Model.ISortable`2.DescendBy(`0)">
+            <summary>
+            降序
+            </summary>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
         <member name="E:CommonTools.Model.ObservableProperty`1.ValueChanged">
             <summary>
             值改变时触发
