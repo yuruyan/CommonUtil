@@ -1,15 +1,15 @@
 ﻿namespace CommonUtil.View;
 
-public partial class EdgeBookmarkView : Page {
+public partial class BrowserBookmarkView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static readonly DependencyProperty EdgeBookmarkFilePathProperty = DependencyProperty.Register("EdgeBookmarkFilePath", typeof(string), typeof(EdgeBookmarkView), new PropertyMetadata(""));
+    public static readonly DependencyProperty EdgeBookmarkFilePathProperty = DependencyProperty.Register("EdgeBookmarkFilePath", typeof(string), typeof(BrowserBookmarkView), new PropertyMetadata(""));
 
     public string EdgeBookmarkFilePath {
         get { return (string)GetValue(EdgeBookmarkFilePathProperty); }
         set { SetValue(EdgeBookmarkFilePathProperty, value); }
     }
 
-    public EdgeBookmarkView() {
+    public BrowserBookmarkView() {
         InitializeComponent();
         string edgeBookmarkFilePath = $@"C:\Users\{Environment.GetEnvironmentVariable("UserName")}\AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks";
         if (File.Exists(edgeBookmarkFilePath)) {
