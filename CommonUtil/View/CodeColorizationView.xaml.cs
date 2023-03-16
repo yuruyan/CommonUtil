@@ -75,8 +75,10 @@ public partial class CodeColorizationView : Page, IDisposable {
 
     public void Dispose() {
         TextEditor.Clear();
+        LanguageComboBox.ClearValue(ItemsControl.ItemsSourceProperty);
         DataContext = null;
         Languages.Clear();
         Languages = null!;
+        GC.SuppressFinalize(this);
     }
 }

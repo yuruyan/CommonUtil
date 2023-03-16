@@ -27,19 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="favicon.ico" />
-    <None Remove="Resource\iconfont.ttf" />
-    <None Remove="Resource\image\JapaneseSymbol.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Config\AppConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resource\image\FileIcon\icon.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resource\lib\uncrustify\defaults.cfg">

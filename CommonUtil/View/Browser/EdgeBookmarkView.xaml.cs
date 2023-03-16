@@ -2,12 +2,12 @@
 
 public partial class EdgeBookmarkView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    public static readonly DependencyProperty EdgeBookmarkFilePathProperty = DependencyProperty.Register("EdgeBookmarkFilePath", typeof(string), typeof(EdgeBookmarkView), new PropertyMetadata(""));
 
     public string EdgeBookmarkFilePath {
         get { return (string)GetValue(EdgeBookmarkFilePathProperty); }
         set { SetValue(EdgeBookmarkFilePathProperty, value); }
     }
-    public static readonly DependencyProperty EdgeBookmarkFilePathProperty = DependencyProperty.Register("EdgeBookmarkFilePath", typeof(string), typeof(EdgeBookmarkView), new PropertyMetadata(""));
 
     public EdgeBookmarkView() {
         InitializeComponent();

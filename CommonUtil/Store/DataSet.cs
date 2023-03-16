@@ -41,7 +41,7 @@ public static class DataSet {
         new("成语接龙", $"{Global.ImagePath}IdiomMatching.png", typeof(IdiomMatchingView)),
         new("正则匹配提取", $"{Global.ImagePath}regex.png", typeof(RegexExtractionView)),
         //new("FTP 服务器", $"{Global.ImagePath}ftp.png", typeof(FtpServerView)),
-        new("浏览器书签导出", $"{Global.ImagePath}Edge.png", typeof(EdgeBookmarkView)),
+        new("浏览器书签导出", $"{Global.ImagePath}MicrosoftEdge.png", typeof(EdgeBookmarkView)),
         new("代码生成器", $"{Global.ImagePath}CodeGenerator.png", typeof(CodeGeneratorView)),
         new("临时文件版本控制", $"{Global.ImagePath}FileVersion.png", typeof(TempFileVersionControlView)),
         new("简单文件服务器", $"{Global.ImagePath}file-server.png", typeof(SimpleFileSystemServerView)),
