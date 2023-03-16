@@ -40,7 +40,12 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
     /// <param name="_"></param>
     /// <param name="viewType"></param>
     private void PageClosedHandler(object _, Type viewType) {
+        #region Clean Memory
+        if (RouterService.GetInstance(viewType) is IDisposable disposable) {
+            disposable.Dispose();
+        }
         RouterService.RemovePage(viewType);
+        #endregion
         // Navigate to MainContentView
         if (ToolMenuItems.Count == 0) {
             NavigationRequested?.Invoke(
@@ -51,6 +56,7 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
             // Select first item
             NavigationContentListView.SelectItem(ToolMenuItems.First().ViewType);
         }
+        GC.Collect();
     }
 
     public void Navigated(object? data) {

@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class CodeColorizationView : Page {
+public partial class CodeColorizationView : Page, IDisposable {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty LanguagesProperty = DependencyProperty.Register("Languages", typeof(ExtendedObservableCollection<string>), typeof(CodeColorizationView), new PropertyMetadata());
@@ -15,12 +15,10 @@ public partial class CodeColorizationView : Page {
     public CodeColorizationView() {
         Languages = new();
         // 后台加载
-        Task.Run(() => {
+        Dispatcher.BeginInvoke(() => {
             var languages = CodeColorization.Languages.ToArray();
             Array.Sort(languages);
-            Dispatcher.Invoke(() => {
-                Languages.AddRange(languages);
-            });
+            Languages.AddRange(languages);
         });
         InitializeComponent();
         LanguageComboBox.SelectedValue = "C#";
@@ -35,7 +33,12 @@ public partial class CodeColorizationView : Page {
     /// </summary>
     /// <param name="themeMode"></param>
     private void SetCurrentSyntaxHighlighting(ThemeMode themeMode) {
-        TextEditor.SyntaxHighlighting = CodeColorization.GetHighlighting(LanguageComboBox.SelectedValue.ToString()!, themeMode);
+        if (LanguageComboBox.SelectedValue is object value) {
+            TextEditor.SyntaxHighlighting = CodeColorization.GetHighlighting(
+                value.ToString()!,
+                themeMode
+            );
+        }
     }
 
     /// <summary>
@@ -68,5 +71,12 @@ public partial class CodeColorizationView : Page {
     private void LanguageComboBoxSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
         e.Handled = true;
         SetCurrentSyntaxHighlighting(ThemeManager.Current.CurrentMode);
+    }
+
+    public void Dispose() {
+        TextEditor.Clear();
+        DataContext = null;
+        Languages.Clear();
+        Languages = null!;
     }
 }
