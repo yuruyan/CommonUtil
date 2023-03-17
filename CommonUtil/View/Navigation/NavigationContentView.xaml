@@ -21,7 +21,7 @@
       Width="{StaticResource NavigationContentListViewWidth}"
       Padding="0,40,0,0"
       HorizontalAlignment="Left"
-      utils:DropShadowEffectHelper.Weight="Lighter"
+      utils:DropShadowEffectHelper.Weight="Normal"
       Background="{DynamicResource ApplicationBackgroundBrush}"
       Closed="PageClosedHandler"
       MouseUp="CloseNavigationContentListViewHandler"

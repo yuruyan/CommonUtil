@@ -38,6 +38,10 @@ public partial class NavigationContentListView : UserControl {
         e.Handled = true;
         var menuItem = sender.GetElementDataContext<ToolMenuItemDO>();
         if (menuItem is not null) {
+            // If Removed item is current selected item, then select first item
+            if (MenuItemListBox.SelectedItem == menuItem) {
+                MenuItemListBox.SelectedIndex = 0;
+            }
             ToolMenuItems.Remove(menuItem);
             Closed?.Invoke(sender, menuItem.ViewType);
         }

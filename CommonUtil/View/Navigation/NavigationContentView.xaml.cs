@@ -46,19 +46,20 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
         }
         RouterService.RemovePage(viewType);
         #endregion
+
         // Navigate to MainContentView
         if (ToolMenuItems.Count == 0) {
             NavigationRequested?.Invoke(
                 this,
                 new(typeof(MainContentView))
             );
-        } else {
-            // Select first item
-            NavigationContentListView.SelectItem(ToolMenuItems.First().ViewType);
         }
-        GC.Collect();
     }
 
+    /// <summary>
+    /// 导航到目标页面
+    /// </summary>
+    /// <param name="data">The type of target page</param>
     public void Navigated(object? data) {
         if (data is Type pageType) {
             // 不已存在实例
