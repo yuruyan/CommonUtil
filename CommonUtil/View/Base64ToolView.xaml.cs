@@ -7,7 +7,8 @@ public partial class Base64ToolView : Page, IDisposable {
     private static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
-    public static readonly DependencyProperty FileProcessStatusesProperty = DependencyProperty.Register("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64ToolView), new PropertyMetadata());
+    public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64ToolView), new PropertyMetadata());
+    public static readonly DependencyProperty FileProcessStatusesProperty = FileProcessStatusesPropertyKey.DependencyProperty;
 
     /// <summary>
     /// 保存文件对话框
@@ -23,6 +24,13 @@ public partial class Base64ToolView : Page, IDisposable {
         Description = "选择保存目录",
         UseDescriptionForTitle = true
     };
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = App.Current.MainWindow;
+    private CancellationTokenSource EncodeCancellationTokenSource = new();
+    private CancellationTokenSource DecodeCancellationTokenSource = new();
+    private readonly double ExpansionThreshold;
 
     /// <summary>
     /// 输入
@@ -62,36 +70,27 @@ public partial class Base64ToolView : Page, IDisposable {
     /// <summary>
     /// 文件处理列表
     /// </summary>
-    public ObservableCollection<FileProcessStatus> FileProcessStatuses {
-        get { return (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty); }
-        set { SetValue(FileProcessStatusesProperty, value); }
-    }
-    /// <summary>
-    /// 当前 Window
-    /// </summary>
-    private Window Window = App.Current.MainWindow;
-    private CancellationTokenSource EncodeCancellationTokenSource = new();
-    private CancellationTokenSource DecodeCancellationTokenSource = new();
-    private readonly double ExpansionThreshold;
+    public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
 
     public Base64ToolView() {
-        FileProcessStatuses = new();
+        SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
         ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (sender, _) => {
-            if (sender is DependencyObject dp) {
-                Window = Window.GetWindow(dp);
-                IsExpanded = Window.ActualWidth >= ExpansionThreshold;
+        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+            if (sender is Base64ToolView view) {
+                var window = Window.GetWindow(view);
+                view.CurrentWindow = window;
+                view.IsExpanded = window.ActualWidth >= view.ExpansionThreshold;
                 DependencyPropertyDescriptor
                     .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                    .AddValueChanged(Window, WindowWidthChangedHandler);
+                    .AddValueChanged(window, view.WindowWidthChangedHandler);
             }
         });
     }
 
     private void WindowWidthChangedHandler(object? sender, EventArgs e) {
-        IsExpanded = Window.ActualWidth >= ExpansionThreshold;
+        IsExpanded = CurrentWindow.ActualWidth >= ExpansionThreshold;
     }
 
     /// <summary>
@@ -194,7 +193,7 @@ public partial class Base64ToolView : Page, IDisposable {
             EncodeCancellationTokenSource,
             FileProcessStatuses,
             Base64Tool.Base64EncodeFile,
-            Window,
+            CurrentWindow,
             Logger
         );
     }
@@ -212,7 +211,7 @@ public partial class Base64ToolView : Page, IDisposable {
             DecodeCancellationTokenSource,
             FileProcessStatuses,
             Base64Tool.Base64DecodeFile,
-            Window,
+            CurrentWindow,
             Logger
         );
     }
@@ -242,7 +241,7 @@ public partial class Base64ToolView : Page, IDisposable {
     /// 清空输入
     /// </summary>
     private void ClearInput() {
-        OutputText = string.Empty;
+        InputText = OutputText = string.Empty;
         // 没有正在处理的任务
         if (!IsDecodeRunning && !IsEncodeRunning) {
             FileProcessStatuses.Clear();
@@ -328,14 +327,13 @@ public partial class Base64ToolView : Page, IDisposable {
     }
 
     public void Dispose() {
-        DataContext = null;
+        DragDropTextBox.Dispose();
         DependencyPropertyDescriptor
             .FromProperty(Window.ActualWidthProperty, typeof(Window))
-            .RemoveValueChanged(Window, WindowWidthChangedHandler);
+            .RemoveValueChanged(CurrentWindow, WindowWidthChangedHandler);
+        ClearValue(DataContextProperty);
         ClearInput();
         FileProcessStatuses.Clear();
-        FileProcessStatuses = null!;
-        Window = null!;
         EncodeCancellationTokenSource.Dispose();
         DecodeCancellationTokenSource.Dispose();
         GC.SuppressFinalize(this);

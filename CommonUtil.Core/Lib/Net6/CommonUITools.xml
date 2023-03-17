@@ -833,30 +833,28 @@
         <member name="T:CommonUITools.Utils.DragDropHelper">
             <summary>
             DragDropHelper，DragOver 时背景会发生变化
-            默认背景为 ApplicationBackgroundBrushLight1
+            默认背景为 DragDropOverBackgroundBrush
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.DragDropHelper.GetIsEnabled(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.DragDropHelper.SetBackgroundProperty(System.Windows.DependencyObject,System.Windows.DependencyProperty)">
+            <summary>
+            BackgroundPropertyProperty
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否启用
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.DragDropHelper.GetOverBackground(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.DragDropHelper.SetOverBackground(System.Windows.DependencyObject,System.Windows.Media.Brush)">
             <summary>
             拖拽进入区域时背景颜色
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
-        </member>
-        <member name="F:CommonUITools.Utils.DragDropHelper.ElementBackgroundDict">
-            <summary>
-            元素初始状态设置的 Background
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Utils.DragDropHelper.ElementPropertyDict">
-            <summary>
-            元素 Background PropertyInfo
-            </summary>
         </member>
         <member name="M:CommonUITools.Utils.DragDropHelper.TextBoxPreviewDragOverHandler(System.Object,System.Windows.DragEventArgs)">
             <summary>
@@ -864,6 +862,18 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.ResetBackground(System.Object)">
+            <summary>
+            重置 Background
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.DragDropHelper.Dispose(System.Windows.DependencyObject)">
+            <summary>
+            释放引用
+            </summary>
+            <param name="dp"></param>
         </member>
         <member name="T:CommonUITools.Utils.LoadingBoxHelper">
             <summary>
@@ -1482,6 +1492,13 @@
         <member name="M:CommonUITools.Utils.UIUtilsExtension.GetImageSource(System.String)">
             <inheritdoc cref="M:CommonUITools.Utils.UIUtils.CopyImageSource(System.String)"/>
         </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.GetApplicationResourceBitmapImage(System.Uri)">
+            <summary>
+            获取资源文件 BitmapImage
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.ToBitmap(System.Windows.Media.Imaging.BitmapSource)">
             <inheritdoc cref="M:CommonUITools.Utils.UIUtils.BitmapSourceToBitmap(System.Windows.Media.Imaging.BitmapSource)"/>
         </member>
@@ -1941,6 +1958,26 @@
             DragDropEvent，参数为 本次拖拽的 FileNames
             </summary>
         </member>
+        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileNameSet">
+            <summary>
+            文件名集合
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileData">
+            <summary>
+            文件数据
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileNames">
+            <summary>
+            获取完整文件名列表
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileListInfoBorderFadeOutStoryboard">
+            <summary>
+            FileListInfoBorderFadeOut 动画
+            </summary>
+        </member>
         <member name="P:CommonUITools.Widget.MultiDragDropTextBox.InputText">
             <summary>
             输入文本，默认双向绑定
@@ -1969,26 +2006,6 @@
         <member name="P:CommonUITools.Widget.MultiDragDropTextBox.IsSupportDirectory">
             <summary>
             是否支持文件夹，默认 false
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileNameSet">
-            <summary>
-            文件名集合
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileData">
-            <summary>
-            文件数据
-            </summary>
-        </member>
-        <member name="P:CommonUITools.Widget.MultiDragDropTextBox.FileNames">
-            <summary>
-            获取完整文件名列表
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Widget.MultiDragDropTextBox.FileListInfoBorderFadeOutStoryboard">
-            <summary>
-            FileListInfoBorderFadeOut 动画
             </summary>
         </member>
         <member name="M:CommonUITools.Widget.MultiDragDropTextBox.PreviewDropHandler(System.Object,System.Windows.DragEventArgs)">

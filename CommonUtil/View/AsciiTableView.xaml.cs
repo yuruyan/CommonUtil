@@ -47,7 +47,7 @@ public partial class AsciiTableView : Page, IDisposable {
     public void Dispose() {
         DataContext = null;
         AsciiListView.ClearValue(ItemsControl.ItemsSourceProperty);
-        AsciiTableList.Clear();
+        AsciiTableList?.Clear();
         AsciiTableList = null!;
         GC.SuppressFinalize(this);
     }
