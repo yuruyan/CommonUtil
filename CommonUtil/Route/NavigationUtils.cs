@@ -17,11 +17,11 @@ internal static class NavigationUtils {
         RouterService routerService,
         Frame frame
     ) {
-        MainWindowRouter.AddPageFrame(routerService.GetRouteTypes(), routerService);
+        MainWindowRouter.AddPageFrame(routerService.RouteTypes, routerService);
         // 主动导航跳转
         navigationView.SelectionChanged += (s, e) => {
             if (e.SelectedItem is FrameworkElement element) {
-                routerService.Navigate(routerService.GetRouteTypes().First(t => t.Name == element.Name));
+                routerService.Navigate(routerService.RouteTypes.First(t => t.Name == element.Name));
                 MainWindowRouter.PushRouteStack(routerService);
             }
         };

@@ -511,6 +511,11 @@
             当前页面实例
             </summary>
         </member>
+        <member name="P:CommonUITools.Route.RouterService.RouteTypes">
+            <summary>
+            路由类型信息
+            </summary>
+        </member>
         <member name="M:CommonUITools.Route.RouterService.GetInstance(System.Type)">
             <summary>
             获取实例对象，对象未创建则会动态创建
@@ -534,12 +539,6 @@
             移除页面实例
             </summary>
             <param name="pageType"></param>
-        </member>
-        <member name="M:CommonUITools.Route.RouterService.GetRouteTypes">
-            <summary>
-            获取子路由类型信息
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:CommonUITools.Route.RouterService.FrameNavigatedHandler(System.Object,System.Windows.Navigation.NavigationEventArgs)">
             <summary>
