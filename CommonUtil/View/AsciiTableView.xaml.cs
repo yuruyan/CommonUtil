@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class AsciiTableView : Page, IDisposable {
+public partial class AsciiTableView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty AsciiTableListProperty = DependencyProperty.Register("AsciiTableList", typeof(ExtendedObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
 
@@ -15,10 +15,11 @@ public partial class AsciiTableView : Page, IDisposable {
     public AsciiTableView() {
         AsciiTableList = new();
         InitializeComponent();
-        // 加载数据
-        Task.Run(() => {
-            var list = AsciiTable.GetAsciiInfoList();
-            Dispatcher.Invoke(() => AsciiTableList.AddRange(list));
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
+            if (sender is not AsciiTableView self) {
+                return;
+            }
+            self.AsciiTableList.AddRange(AsciiTable.GetAsciiInfoList());
         });
     }
 
@@ -42,13 +43,5 @@ public partial class AsciiTableView : Page, IDisposable {
         }
         Clipboard.SetDataObject(sb.ToString());
         MessageBoxUtils.Success("已复制");
-    }
-
-    public void Dispose() {
-        DataContext = null;
-        AsciiListView.ClearValue(ItemsControl.ItemsSourceProperty);
-        AsciiTableList?.Clear();
-        AsciiTableList = null!;
-        GC.SuppressFinalize(this);
     }
 }
