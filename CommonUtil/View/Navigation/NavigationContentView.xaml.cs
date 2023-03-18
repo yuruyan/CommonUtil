@@ -15,7 +15,7 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
         SetValue(ToolMenuItemsPropertyKey, new ExtendedObservableCollection<ToolMenuItemDO>());
         InitializeComponent();
         RouterService = GetRouterService();
-        ElementVisibilityHelper.EnableAutoHideOnClickOuter(NavigationContentListView, ElementVisibilityHelperNames.NavigationContentListView);
+        AutoHideHelper.EnableAutoHideOnClickOuter(NavigationContentListView, ElementVisibilityHelperNames.NavigationContentListView);
     }
 
     private RouterService GetRouterService() {

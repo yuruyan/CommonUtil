@@ -651,28 +651,35 @@
             显示时开始动画
             </summary>
         </member>
+        <member name="T:CommonUITools.Utils.ScaleAnimationHelper.ScaleTransformFactory">
+            <summary>
+            ScaleTransformFactory
+            </summary>
+        </member>
         <member name="F:CommonUITools.Utils.ScaleAnimationHelper.StoryboardDict">
             <summary>
             Storyboard 缓存
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.GetIsEnabled(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否启用
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.GetScaleOption(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.SetScaleOption(System.Windows.DependencyObject,CommonUITools.Model.ScaleAnimationOption)">
             <summary>
             缩放选项
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.ScaleAnimationHelper.ScaleOptionPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
             <summary>
-            ScaleOptionPropertyChangedHandler
+            ScaleAnimationOptionPropertyChangedHandler
             </summary>
             <param name="d"></param>
             <param name="e"></param>
@@ -706,38 +713,46 @@
             <param name="element"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement,CommonUITools.Utils.ScaleAnimationHelper.ScaleOption)">
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement,CommonUITools.Model.ScaleAnimationOption)">
             <summary>
             创建 ScaleTransform
             </summary>
             <param name="element"></param>
             <returns></returns>
         </member>
-        <member name="T:CommonUITools.Utils.ScaleAnimationHelper.ScaleTransformFactory">
+        <member name="M:CommonUITools.Utils.ScaleAnimationHelper.Dispose(System.Windows.FrameworkElement)">
             <summary>
-            ScaleTransformFactory
+            清除引用
             </summary>
+            <param name="element"></param>
         </member>
-        <member name="T:CommonUITools.Utils.MouseEventScaleAnimationHelper">
+        <member name="T:CommonUITools.Utils.CenterScaleAnimationHelper">
             <summary>
             点击自身开始缩放动画
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.GetTriggerCollection(System.Windows.FrameworkElement)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.GetTriggerCollection(System.Windows.FrameworkElement)">
             <summary>
             获取 TriggerCollection
             </summary>
             <param name="element"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateTriggerCollection(System.Windows.FrameworkElement)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.CreateTriggerCollection(System.Windows.FrameworkElement)">
             <summary>
             创建 TriggerCollection
             </summary>
             <param name="element"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateTrigger(System.Windows.FrameworkElement,System.Windows.RoutedEvent,System.Double)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.CreateTrigger(System.Windows.FrameworkElement,System.Windows.RoutedEvent,System.Double)">
             <summary>
             创建 Trigger
             </summary>
@@ -746,50 +761,60 @@
             <param name="to"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateDoubleAnimation(System.Windows.FrameworkElement,System.Double,CommonUITools.Utils.MouseEventScaleAnimationHelper.Direction,System.Int32)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.CreateDoubleAnimation(System.Windows.FrameworkElement,System.Double,CommonUITools.Utils.CenterScaleAnimationHelper.Direction,System.Int32)">
             <summary>
             创建 DoubleAnimation
             </summary>
             <param name="element"></param>
+            <param name="to"></param>
             <param name="direction"></param>
+            <param name="beginTime"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CheckAndSetRenderTransform(System.Windows.FrameworkElement)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.CheckAndSetRenderTransform(System.Windows.FrameworkElement)">
             <summary>
             检查并设置 RenderTransform
             </summary>
             <param name="element"></param>
         </member>
-        <member name="M:CommonUITools.Utils.MouseEventScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement)">
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.CreateScaleTransform(System.Windows.FrameworkElement)">
             <summary>
             创建 ScaleTransform
             </summary>
             <param name="element"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonUITools.Utils.CenterScaleAnimationHelper.Dispose(System.Windows.FrameworkElement)">
+            <summary>
+            清除引用
+            </summary>
+            <param name="element"></param>
+        </member>
         <member name="T:CommonUITools.Utils.FadeInAnimationHelper">
             <summary>
             淡入动画
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.GetEnabled(System.Windows.DependencyObject)">
-            <summary>
-            是否启用
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.GetDuration(System.Windows.DependencyObject)">
-            <summary>
-            持续时间 ms
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-        </member>
         <member name="F:CommonUITools.Utils.FadeInAnimationHelper.DefaultDuration">
             <summary>
             默认动画持续时间
             </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.SetEnabled(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            是否启用
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.SetDuration(System.Windows.DependencyObject,System.Int32)">
+            <summary>
+            持续时间 ms
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+            <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.FadeInAnimationHelper.IsEnabledPropertyChangedHandler(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
             <summary>
@@ -819,15 +844,23 @@
             <param name="element"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonUITools.Utils.FadeInAnimationHelper.Dispose(System.Windows.FrameworkElement)">
+            <summary>
+            清除引用
+            </summary>
+            <param name="element"></param>
+        </member>
         <member name="T:CommonUITools.Utils.GridViewColumnHelper">
             <summary>
             GridViewColumnHelper
             </summary>
         </member>
-        <member name="F:CommonUITools.Utils.GridViewColumnHelper.HeaderMinWidthProperty">
+        <member name="M:CommonUITools.Utils.GridViewColumnHelper.SetHeaderMinWidth(System.Windows.DependencyObject,System.Double)">
             <summary>
-            Header 最小宽度
+            HeaderColumn 最小宽度
             </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
         </member>
         <member name="T:CommonUITools.Utils.DragDropHelper">
             <summary>
@@ -879,35 +912,31 @@
             加载状态
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.LoadingBoxHelper.GetIsLoading(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.SetIsLoading(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否显示加载
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.LoadingBoxHelper.GetSize(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.SetSize(System.Windows.DependencyObject,System.Double)">
             <summary>
             loading size
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="F:CommonUITools.Utils.LoadingBoxHelper.UndoneTasks">
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.EnsureLoadingBoxIsInitialized(System.Windows.FrameworkElement)">
             <summary>
-            未完成的任务
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Utils.LoadingBoxHelper.Proceed(System.Windows.FrameworkElement,System.Boolean)">
-            <summary>
-            继续
+            确保已创建 LoadingBox
             </summary>
             <param name="element"></param>
-            <param name="isLoading"></param>
         </member>
-        <member name="M:CommonUITools.Utils.LoadingBoxHelper.AddLoadingAdorner(System.Windows.FrameworkElement)">
+        <member name="M:CommonUITools.Utils.LoadingBoxHelper.Dispose(System.Windows.FrameworkElement)">
             <summary>
-            添加 LoadingAdorner
+            清除引用
             </summary>
             <param name="element"></param>
         </member>
@@ -916,11 +945,12 @@
             Name
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.NameHelper.GetName(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.NameHelper.SetName(System.Windows.DependencyObject,System.String)">
             <summary>
             Name
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="T:CommonUITools.Utils.LongPressHelper">
@@ -931,13 +961,6 @@
             注意在其他自定义事件中根据 <see cref="M:CommonUITools.Utils.LongPressHelper.GetIsLongPressEventHappend(System.Windows.DependencyObject)"/> 来做进一步处理
             </remarks>
         </member>
-        <member name="M:CommonUITools.Utils.LongPressHelper.GetLongPress(System.Windows.DependencyObject)">
-            <summary>
-            长按事件
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-        </member>
         <member name="M:CommonUITools.Utils.LongPressHelper.GetIsLongPressEventHappend(System.Windows.DependencyObject)">
             <summary>
             是否触发了长按事件
@@ -945,57 +968,51 @@
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonUITools.Utils.LongPressHelper.GetIsEnabled(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.LongPressHelper.SetLongPress(System.Windows.DependencyObject,System.EventHandler)">
+            <summary>
+            长按事件
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.LongPressHelper.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否启用
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="T:CommonUITools.Utils.LoadedStoryboardHelper">
+        <member name="M:CommonUITools.Utils.LongPressHelper.Dispose(System.Windows.FrameworkElement)">
             <summary>
-            加载动画
+            清除引用
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="T:CommonUITools.Utils.VisibilityAnimationHelper">
+            <summary>
+            显示 / 隐藏动画
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.GetStoryboard(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.VisibilityAnimationHelper.SetVisibleStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
             <summary>
-            动画
+            显示动画
             </summary>
             <param name="obj"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.GetTimes(System.Windows.DependencyObject)">
-            <summary>
-            执行时间，小于 0 表示无限执行，默认 -1
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-            <remarks>
-            只能设置一次，多次设置无效
-            </remarks>
-        </member>
-        <member name="F:CommonUITools.Utils.LoadedStoryboardHelper.ElementInvokeTimesDict">
-            <summary>
-            执行次数
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Utils.LoadedStoryboardHelper.ElementLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            元素加载
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
+            <param name="value"></param>
         </member>
         <member name="T:CommonUITools.Utils.DropShadowEffectHelper">
             <summary>
             添加阴影
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.DropShadowEffectHelper.GetWeight(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.DropShadowEffectHelper.SetWeight(System.Windows.DependencyObject,CommonUITools.Model.DropShadowEffectWeight)">
             <summary>
             阴影程度
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="T:CommonUITools.Utils.RemoveListBoxDefaultSelectionBehavior">
@@ -1003,11 +1020,12 @@
             移除 ListBox DragSelection 行为
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.RemoveListBoxDefaultSelectionBehavior.GetIsEnabled(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.RemoveListBoxDefaultSelectionBehavior.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否启用
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="T:CommonUITools.Utils.RemoveListBoxItemDefaultSelectionBehavior">
@@ -1015,11 +1033,12 @@
             移除 ListBoxItem MouseRightClickSelection 行为
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.RemoveListBoxItemDefaultSelectionBehavior.GetIsEnabled(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.RemoveListBoxItemDefaultSelectionBehavior.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
             是否启用
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="T:CommonUITools.Utils.DoubleMouseClickHelper">
@@ -1027,11 +1046,12 @@
             双击鼠标事件，DoubleMouseUp
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.DoubleMouseClickHelper.GetHandler(System.Windows.DependencyObject)">
+        <member name="M:CommonUITools.Utils.DoubleMouseClickHelper.SetHandler(System.Windows.DependencyObject,System.Windows.Input.MouseButtonEventHandler)">
             <summary>
             MouseButtonEventHandler
             </summary>
             <param name="obj"></param>
+            <param name="value"></param>
             <returns></returns>
         </member>
         <member name="T:CommonUITools.Utils.ListViewGroupHelper">
@@ -1083,26 +1103,36 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="T:CommonUITools.Utils.ElementVisibilityHelper">
+        <member name="T:CommonUITools.Utils.AutoHideHelper">
             <summary>
-            控件自动显示 / 隐藏
+            控件自动显示 / 隐藏。点击外部隐藏，点击内部不会
             </summary>
         </member>
-        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.EnableAutoHideOnClickOuter(System.Windows.FrameworkElement,System.String)">
+        <member name="F:CommonUITools.Utils.AutoHideHelper.TargetElementStateDict">
+            <summary>
+            One to one
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.AutoHideHelper.SourceElementTargetIdDict">
+            <summary>
+            Many to one
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoHideHelper.EnableAutoHideOnClickOuter(System.Windows.FrameworkElement,System.String)">
             <summary>
             启用当点击 <paramref name="element"/> 外部时自动隐藏
             </summary>
             <param name="element">要隐藏 / 显示的控件</param>
             <param name="targetId">标识 <paramref name="element"/> id</param>
         </member>
-        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.SetOpenOnClick(System.Windows.UIElement,System.String)">
+        <member name="M:CommonUITools.Utils.AutoHideHelper.SetOpenOnClick(System.Windows.DependencyObject,System.String)">
             <summary>
-            设置点击 <paramref name="element"/> 时显示 <paramref name="targetId"/> 对应的控件
+            设置点击 <paramref name="dp"/> 时显示 <paramref name="targetId"/> 对应的控件
             </summary>
-            <param name="element"></param>
+            <param name="dp"></param>
             <param name="targetId"></param>
         </member>
-        <member name="M:CommonUITools.Utils.ElementVisibilityHelper.HandleMouseEvent(System.Object)">
+        <member name="M:CommonUITools.Utils.AutoHideHelper.HandleMouseEvent(System.Object)">
             <summary>
             Toggle open state
             </summary>
@@ -1125,49 +1155,49 @@
             <summary>
             提示消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Waring(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             警告消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Success(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             成功消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Error(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             失败消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.NotifyInfo(System.String,System.String,System.Windows.DependencyObject,System.UInt32,System.Action)">
             <summary>
             提示消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType,System.Action)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.NotifyWarning(System.String,System.String,System.Windows.DependencyObject,System.UInt32,System.Action)">
             <summary>
             警告消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType,System.Action)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.NotifySuccess(System.String,System.String,System.Windows.DependencyObject,System.UInt32,System.Action)">
             <summary>
             成功消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType,System.Action)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.NotifyError(System.String,System.String,System.Windows.DependencyObject,System.UInt32,System.Action)">
             <summary>
             失败消息
             </summary>
-            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType,System.Action)"/>
+            <inheritdoc cref="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
         </member>
         <member name="M:CommonUITools.Utils.PInvokeUtils.ShellExecuteW(System.IntPtr,System.String,System.String,System.String,System.String,CommonUITools.Model.ShowCommands)">
             <summary>
@@ -1568,23 +1598,9 @@
             文件数据
             </summary>
         </member>
-        <member name="M:CommonUITools.Widget.DragDropTextBox.TextBoxPropertyChangedHandler(System.Object,System.EventArgs)">
-            <summary>
-            TextBox 变化
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
         <member name="M:CommonUITools.Widget.DragDropTextBox.FileDragOverHandler(System.Object,System.Windows.DragEventArgs)">
             <summary>
             更改 TextBox 默认拖拽行为
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:CommonUITools.Widget.DragDropTextBox.HasFilePropertyChangedHandler(System.Object,System.EventArgs)">
-            <summary>
-            HasFile 变化
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
@@ -1610,6 +1626,20 @@
             <summary>
             EmptyView
             </summary>
+        </member>
+        <member name="M:CommonUITools.Widget.EmptyView.RootLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Load Image
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Widget.EmptyView.RootUnloadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Release Memory
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="M:CommonUITools.Widget.EmptyView.InitializeComponent">
             <summary>
@@ -1638,13 +1668,6 @@
             <summary>
             是否自动获取 Icon，默认 true
             </summary>
-        </member>
-        <member name="M:CommonUITools.Widget.FileNameIconWidget.AutoIconPropertyChangedHandler(System.Object,System.EventArgs)">
-            <summary>
-            AutoIconProperty 改变
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
         <member name="M:CommonUITools.Widget.FileNameIconWidget.InitializeComponent">
             <summary>
@@ -1726,14 +1749,14 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.ViewLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.RootLoadedHandler(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             开启定时器
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.ViewUnloadedHandler(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:CommonUITools.Widget.FileProcessStatusWidget.RootUnloadedHandler(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             暂停定时器
             </summary>
@@ -1769,13 +1792,6 @@
             <summary>
             后缀
             </summary>
-        </member>
-        <member name="M:CommonUITools.Widget.FileSizeWidget.FileNamePropertyChangedHandler(System.Object,System.EventArgs)">
-            <summary>
-            FileNamePropertyChanged
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
         <member name="M:CommonUITools.Widget.FileSizeWidget.InitializeComponent">
             <summary>
@@ -1909,7 +1925,7 @@
             <param name="window"></param>
             <param name="panel"></param>
         </member>
-        <member name="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType)">
+        <member name="M:CommonUITools.Widget.MessageBox.ShowMessage(System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType)">
             <summary>
             ShowMessage
             </summary>
@@ -2121,7 +2137,7 @@
             <param name="window"></param>
             <param name="panel"></param>
         </member>
-        <member name="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Widget.MessageType,System.Action)">
+        <member name="M:CommonUITools.Widget.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)">
             <summary>
             显示通知消息
             </summary>
@@ -2170,41 +2186,30 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:CommonUITools.Widget.WorkingButton">
+        <member name="T:CommonUITools.Widget.ToggleControl">
             <summary>
-            状态 Button
-            注意不要直接设置 Content、ClickEventHandler
-            NormalContent、WorkingContent 如果设置 Binding 则会失效
+            ToggleControl
             </summary>
         </member>
-        <member name="P:CommonUITools.Widget.WorkingButton.IsWorking">
+        <member name="P:CommonUITools.Widget.ToggleControl.FirstControl">
             <summary>
-            是否正在工作，默认 false
+            当 <see cref="P:CommonUITools.Widget.ToggleControl.State"/> 为 true 时显示
             </summary>
         </member>
-        <member name="P:CommonUITools.Widget.WorkingButton.NormalContent">
+        <member name="P:CommonUITools.Widget.ToggleControl.State">
             <summary>
-            非 working 时内容
+            状态
             </summary>
         </member>
-        <member name="P:CommonUITools.Widget.WorkingButton.WorkingContent">
+        <member name="P:CommonUITools.Widget.ToggleControl.SecondControl">
             <summary>
-            Working 时内容
+            当 <see cref="P:CommonUITools.Widget.ToggleControl.State"/> 为 false 时显示
             </summary>
         </member>
-        <member name="M:CommonUITools.Widget.WorkingButton.ClickHandler(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:CommonUITools.Widget.ToggleControl.InitializeComponent">
             <summary>
-            Click 事件
+            InitializeComponent
             </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:CommonUITools.Widget.WorkingButton.IsWorkingPropertyChangedHandler(System.Object,System.EventArgs)">
-            <summary>
-            IsWorking 切换
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
         <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
             <summary>

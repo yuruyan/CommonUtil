@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class Base64ToolView : Page, IDisposable {
+public partial class Base64ToolView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
@@ -77,20 +77,19 @@ public partial class Base64ToolView : Page, IDisposable {
         InitializeComponent();
         ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
-            if (sender is Base64ToolView view) {
-                var window = Window.GetWindow(view);
-                view.CurrentWindow = window;
-                view.IsExpanded = window.ActualWidth >= view.ExpansionThreshold;
-                DependencyPropertyDescriptor
-                    .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                    .AddValueChanged(window, view.WindowWidthChangedHandler);
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
+            if (sender is not Base64ToolView self) {
+                return;
             }
+
+            self.CurrentWindow = Window.GetWindow(self);
+            self.SizeChanged += self.PageSizeChangedHandler;
+            self.IsExpanded = self.CurrentWindow.ActualWidth >= self.ExpansionThreshold;
         });
     }
 
-    private void WindowWidthChangedHandler(object? sender, EventArgs e) {
-        IsExpanded = CurrentWindow.ActualWidth >= ExpansionThreshold;
+    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
     }
 
     /// <summary>
@@ -324,18 +323,5 @@ public partial class Base64ToolView : Page, IDisposable {
     private void CancelEncodeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         EncodeCancellationTokenSource.Cancel();
-    }
-
-    public void Dispose() {
-        DragDropTextBox.Dispose();
-        DependencyPropertyDescriptor
-            .FromProperty(Window.ActualWidthProperty, typeof(Window))
-            .RemoveValueChanged(CurrentWindow, WindowWidthChangedHandler);
-        ClearValue(DataContextProperty);
-        ClearInput();
-        FileProcessStatuses.Clear();
-        EncodeCancellationTokenSource.Dispose();
-        DecodeCancellationTokenSource.Dispose();
-        GC.SuppressFinalize(this);
     }
 }

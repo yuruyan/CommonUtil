@@ -39,6 +39,7 @@
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Border
+          utils:CenterScaleAnimationHelper.IsEnabled="True"
           utils:HoverVisibleHelper.TargetElement="{Binding ElementName=CloseButton}"
           utils:RemoveListBoxItemDefaultSelectionBehavior.IsEnabled="True"
           Background="Transparent"

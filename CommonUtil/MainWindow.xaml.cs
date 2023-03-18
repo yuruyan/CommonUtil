@@ -71,7 +71,7 @@ public partial class MainWindow : BaseWindow {
         InitializeComponent();
         RouterService = InitRouterService();
         MainWindowBackgroundStoryboard = (Storyboard)Resources["MainWindowBackgroundStoryboard"];
-        ElementVisibilityHelper.SetOpenOnClick(NavigationButton, ElementVisibilityHelperNames.NavigationContentListView);
+        AutoHideHelper.SetOpenOnClick(NavigationButton, ElementVisibilityHelperNames.NavigationContentListView);
 
         // Navigate to MainContentView
         this.SetLoadedOnceEventHandler(async (_, _) => {
