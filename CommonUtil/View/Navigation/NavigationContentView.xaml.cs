@@ -40,6 +40,12 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
     /// <param name="_"></param>
     /// <param name="viewType"></param>
     private void PageClosedHandler(object _, Type viewType) {
+        // If closing current page, navigate to first item
+        if (RouterService.CurrentPageType == viewType) {
+            if (ToolMenuItems.FirstOrDefault() is ToolMenuItemDO firstItem) {
+                NavigationContentListView.SelectItem(firstItem.ViewType);
+            }
+        }
         // Clean
         RouterService.RemovePage(viewType);
 
