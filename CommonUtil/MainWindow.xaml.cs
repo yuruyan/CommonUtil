@@ -11,22 +11,22 @@ public partial class MainWindow : BaseWindow {
     private static readonly DependencyProperty CurrentThemeModeProperty = DependencyProperty.Register("CurrentThemeMode", typeof(ThemeMode), typeof(MainWindow), new PropertyMetadata(ThemeMode.Light));
     public static readonly DependencyProperty PreviousBackgroundColorProperty = DependencyProperty.Register("PreviousBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
-    public static readonly DependencyProperty IsNavigationButtonVisibleProperty = DependencyProperty.Register("IsNavigationButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsHomeButtonVisibleProperty = DependencyProperty.Register("IsHomeButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsNavigationButtonVisibleProperty = DependencyProperty.Register("IsNavigationButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false, IsNavigationButtonVisibleChangedHandler));
+    public static readonly DependencyProperty IsHomeButtonVisibleProperty = DependencyProperty.Register("IsHomeButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false, IsHomeButtonVisiblePropertyChangedHandler));
 
     /// <summary>
     /// 导航按钮是否可见
     /// </summary>
     public bool IsNavigationButtonVisible {
         get { return (bool)GetValue(IsNavigationButtonVisibleProperty); }
-        set { SetValue(IsNavigationButtonVisibleProperty, value); }
+        private set { SetValue(IsNavigationButtonVisibleProperty, value); }
     }
     /// <summary>
     /// 主页按钮是否可见
     /// </summary>
     public bool IsHomeButtonVisible {
         get { return (bool)GetValue(IsHomeButtonVisibleProperty); }
-        set { SetValue(IsHomeButtonVisibleProperty, value); }
+        private set { SetValue(IsHomeButtonVisibleProperty, value); }
     }
     /// <summary>
     /// 标题
@@ -87,6 +87,28 @@ public partial class MainWindow : BaseWindow {
             CurrentBackgroundColor = ((SolidColorBrush)FindResource("WindowBackgroundBrush")).Color;
             MainWindowBackgroundStoryboard.Begin();
         };
+    }
+
+    /// <summary>
+    /// Begin Animation
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="e"></param>
+    private static void IsHomeButtonVisiblePropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is MainWindow self) {
+            self.HomeButton.SetVisible((bool)e.NewValue);
+        }
+    }
+
+    /// <summary>
+    /// Begin Animation
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="e"></param>
+    private static void IsNavigationButtonVisibleChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is MainWindow self) {
+            self.NavigationButton.SetVisible((bool)e.NewValue);
+        }
     }
 
     private RouterService InitRouterService() {

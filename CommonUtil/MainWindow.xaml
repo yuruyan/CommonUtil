@@ -24,14 +24,53 @@
     <Style BasedOn="{StaticResource TitleBarButtonstyle}" TargetType="ui:TitleBarButton">
       <Setter Property="Margin" Value="0" />
     </Style>
+
     <Storyboard x:Key="MainWindowBackgroundStoryboard">
       <ColorAnimation
         Storyboard.TargetName="WindowRoot"
         Storyboard.TargetProperty="(Window.Background).(SolidColorBrush.Color)"
         From="{Binding PreviousBackgroundColor}"
         To="{Binding CurrentBackgroundColor}"
-        Duration="{StaticResource AnimationDuration}" />
+        Duration="{StaticResource AnimationDurationLong}" />
     </Storyboard>
+
+    <!--#region HomeButton Storyboard-->
+    <Storyboard x:Key="HomeButtonVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="HomeButton"
+        Storyboard.TargetProperty="Width"
+        From="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <Storyboard x:Key="HomeButtonInVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="HomeButton"
+        Storyboard.TargetProperty="Width"
+        To="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <!--#endregion-->
+
+    <!--#region NavigationButton Storyboard-->
+    <Storyboard x:Key="NavigationButtonVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationButton"
+        Storyboard.TargetProperty="Width"
+        From="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <Storyboard x:Key="NavigationButtonInVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationButton"
+        Storyboard.TargetProperty="Width"
+        To="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <!--#endregion-->
   </Window.Resources>
 
   <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
@@ -47,12 +86,17 @@
         <StackPanel Orientation="Horizontal">
           <ui:TitleBarButton
             Name="NavigationButton"
+            utils:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource NavigationButtonInVisibleStoryboard}"
+            utils:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource NavigationButtonVisibleStoryboard}"
             Click="NavigateToNavigationContentViewClickHandler"
             ToolTip="导航"
             Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
             <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe61d;" />
           </ui:TitleBarButton>
           <ui:TitleBarButton
+            Name="HomeButton"
+            utils:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource HomeButtonInVisibleStoryboard}"
+            utils:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource HomeButtonVisibleStoryboard}"
             Click="NavigateToMainContentViewClickHandler"
             ToolTip="主页"
             Visibility="{Binding IsHomeButtonVisible, Converter={StaticResource HideIfFalseConverter}}">

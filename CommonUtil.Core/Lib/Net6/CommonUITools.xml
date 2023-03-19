@@ -994,10 +994,18 @@
             <summary>
             显示 / 隐藏动画
             </summary>
+            <remarks>不应直接设置 Visibility, 而是使用 <see cref="M:CommonUITools.Utils.VisibilityAnimationHelper.SetVisible(System.Windows.FrameworkElement,System.Boolean)"/></remarks>
         </member>
         <member name="M:CommonUITools.Utils.VisibilityAnimationHelper.SetVisibleStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
             <summary>
             显示动画
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.VisibilityAnimationHelper.SetInVisibleStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
+            <summary>
+            隐藏动画
             </summary>
             <param name="obj"></param>
             <param name="value"></param>
