@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class BMICalculatorView : Page {
+public partial class BMICalculatorView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty HeightTextProperty = DependencyProperty.Register("HeightText", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
@@ -8,7 +8,6 @@ public partial class BMICalculatorView : Page {
     public static readonly DependencyProperty BMIProperty = DependencyProperty.Register("BMI", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthProperty = DependencyProperty.Register("Health", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthColorProperty = DependencyProperty.Register("HealthColor", typeof(string), typeof(BMICalculatorView), new PropertyMetadata("#DBDBDB"));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(BMICalculatorView), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
 
     /// <summary>
     /// 身高
@@ -45,36 +44,14 @@ public partial class BMICalculatorView : Page {
         get { return (string)GetValue(HealthColorProperty); }
         set { SetValue(HealthColorProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
-
-    private readonly double ExpansionThreshold;
 
     public BMICalculatorView() {
         InitializeComponent();
         ExpansionThreshold = (double)Resources["ExpansionThreshold"];
-
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
-            if (sender is not BMICalculatorView self) {
-                return;
-            }
-            self.IsExpanded = self.ActualWidth >= self.ExpansionThreshold;
-            self.SizeChanged += self.PageSizeChangedHandler;
-        });
     }
 
-    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
-    }
-
-    private static void IsExpandedPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        if (d is not BMICalculatorView self) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsivePage page, DependencyPropertyChangedEventArgs e) {
+        if (page is not BMICalculatorView self) {
             return;
         }
         if (e.NewValue is true) {

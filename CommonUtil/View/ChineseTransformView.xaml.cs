@@ -1,11 +1,10 @@
 ﻿namespace CommonUtil.View;
 
-public partial class ChineseTransformView : Page {
+public partial class ChineseTransformView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(ChineseTransformView), new PropertyMetadata(""));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(ChineseTransformView), new PropertyMetadata(""));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(true));
     public static readonly DependencyProperty IsToSimplifiedWorkingProperty = DependencyProperty.Register("IsToSimplifiedWorking", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(false));
     public static readonly DependencyProperty IsToTraditionalWorkingProperty = DependencyProperty.Register("IsToTraditionalWorking", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(false));
     public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(ChineseTransformView), new PropertyMetadata());
@@ -24,13 +23,6 @@ public partial class ChineseTransformView : Page {
     public string OutputText {
         get { return (string)GetValue(OutputTextProperty); }
         set { SetValue(OutputTextProperty, value); }
-    }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
     }
     /// <summary>
     /// 是否正在转简体
@@ -71,7 +63,6 @@ public partial class ChineseTransformView : Page {
     private Window CurrentWindow = App.Current.MainWindow;
     private CancellationTokenSource ToSimplifiedCancellationTokenSource = new();
     private CancellationTokenSource ToTraditionalCancellationTokenSource = new();
-    private readonly double ExpansionThreshold;
 
     public ChineseTransformView() {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
@@ -81,17 +72,10 @@ public partial class ChineseTransformView : Page {
         Task.Run(ChineseTransform.InitializeExplicitly);
         // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
-            if (sender is not ChineseTransformView self) {
-                return;
+            if (sender is ChineseTransformView self) {
+                self.CurrentWindow = Window.GetWindow(self);
             }
-            self.CurrentWindow = Window.GetWindow(self);
-            self.IsExpanded = self.ActualWidth >= self.ExpansionThreshold;
-            self.SizeChanged += self.PageSizeChangedHandler;
         });
-    }
-
-    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
     }
 
     /// <summary>

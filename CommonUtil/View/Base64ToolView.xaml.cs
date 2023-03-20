@@ -1,10 +1,9 @@
 ﻿namespace CommonUtil.View;
 
-public partial class Base64ToolView : Page {
+public partial class Base64ToolView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
-    private static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
     public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64ToolView), new PropertyMetadata());
@@ -30,7 +29,6 @@ public partial class Base64ToolView : Page {
     private Window CurrentWindow = App.Current.MainWindow;
     private CancellationTokenSource EncodeCancellationTokenSource = new();
     private CancellationTokenSource DecodeCancellationTokenSource = new();
-    private readonly double ExpansionThreshold;
 
     /// <summary>
     /// 输入
@@ -45,13 +43,6 @@ public partial class Base64ToolView : Page {
     public string OutputText {
         get { return (string)GetValue(OutputTextProperty); }
         set { SetValue(OutputTextProperty, value); }
-    }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    private bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
     }
     /// <summary>
     /// 是否正在解码
@@ -78,18 +69,10 @@ public partial class Base64ToolView : Page {
         ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 响应式布局
         this.SetLoadedOnceEventHandler(static (sender, _) => {
-            if (sender is not Base64ToolView self) {
-                return;
+            if (sender is Base64ToolView self) {
+                self.CurrentWindow = Window.GetWindow(self);
             }
-
-            self.CurrentWindow = Window.GetWindow(self);
-            self.SizeChanged += self.PageSizeChangedHandler;
-            self.IsExpanded = self.CurrentWindow.ActualWidth >= self.ExpansionThreshold;
         });
-    }
-
-    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
     }
 
     /// <summary>
