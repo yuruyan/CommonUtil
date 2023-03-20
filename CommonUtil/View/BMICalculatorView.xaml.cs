@@ -8,7 +8,7 @@ public partial class BMICalculatorView : Page {
     public static readonly DependencyProperty BMIProperty = DependencyProperty.Register("BMI", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthProperty = DependencyProperty.Register("Health", typeof(string), typeof(BMICalculatorView), new PropertyMetadata(""));
     public static readonly DependencyProperty HealthColorProperty = DependencyProperty.Register("HealthColor", typeof(string), typeof(BMICalculatorView), new PropertyMetadata("#DBDBDB"));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(BMICalculatorView), new PropertyMetadata(true));
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(BMICalculatorView), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
 
     /// <summary>
     /// 身高
@@ -53,35 +53,41 @@ public partial class BMICalculatorView : Page {
         set { SetValue(IsExpandedProperty, value); }
     }
 
+    private readonly double ExpansionThreshold;
+
     public BMICalculatorView() {
         InitializeComponent();
-        #region 响应式布局
-        DependencyPropertyDescriptor
-            .FromProperty(IsExpandedProperty, this.GetType())
-            .AddValueChanged(this, (_, _) => {
-                if (IsExpanded) {
-                    SecondRowDefinition.Height = new(0);
-                    SecondColumnDefinition.Width = new(1, GridUnitType.Star);
-                    Grid.SetColumn(ReferencePanel, 1);
-                    Grid.SetRow(ReferencePanel, 0);
-                } else {
-                    SecondRowDefinition.Height = new(1, GridUnitType.Star);
-                    SecondColumnDefinition.Width = new(0);
-                    Grid.SetColumn(ReferencePanel, 0);
-                    Grid.SetRow(ReferencePanel, 1);
-                }
-            });
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
+
+        // 响应式布局
+        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+            if (sender is not BMICalculatorView self) {
+                return;
+            }
+            self.IsExpanded = self.ActualWidth >= self.ExpansionThreshold;
+            self.SizeChanged += self.PageSizeChangedHandler;
         });
-        #endregion
+    }
+
+    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
+    }
+
+    private static void IsExpandedPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is not BMICalculatorView self) {
+            return;
+        }
+        if (e.NewValue is true) {
+            self.SecondRowDefinition.Height = new(0);
+            self.SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+            Grid.SetColumn(self.ReferencePanel, 1);
+            Grid.SetRow(self.ReferencePanel, 0);
+        } else {
+            self.SecondRowDefinition.Height = new(1, GridUnitType.Star);
+            self.SecondColumnDefinition.Width = new(0);
+            Grid.SetColumn(self.ReferencePanel, 0);
+            Grid.SetRow(self.ReferencePanel, 1);
+        }
     }
 
     /// <summary>
@@ -142,4 +148,3 @@ public partial class BMICalculatorView : Page {
         }
     }
 }
-
