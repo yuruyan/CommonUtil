@@ -51,19 +51,16 @@ public partial class BMICalculatorView : ResponsivePage {
     }
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage page, DependencyPropertyChangedEventArgs e) {
-        if (page is not BMICalculatorView self) {
-            return;
-        }
         if (e.NewValue is true) {
-            self.SecondRowDefinition.Height = new(0);
-            self.SecondColumnDefinition.Width = new(1, GridUnitType.Star);
-            Grid.SetColumn(self.ReferencePanel, 1);
-            Grid.SetRow(self.ReferencePanel, 0);
+            SecondRowDefinition.Height = new(0);
+            SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+            Grid.SetColumn(ReferencePanel, 1);
+            Grid.SetRow(ReferencePanel, 0);
         } else {
-            self.SecondRowDefinition.Height = new(1, GridUnitType.Star);
-            self.SecondColumnDefinition.Width = new(0);
-            Grid.SetColumn(self.ReferencePanel, 0);
-            Grid.SetRow(self.ReferencePanel, 1);
+            SecondRowDefinition.Height = new(1, GridUnitType.Star);
+            SecondColumnDefinition.Width = new(0);
+            Grid.SetColumn(ReferencePanel, 0);
+            Grid.SetRow(ReferencePanel, 1);
         }
     }
 

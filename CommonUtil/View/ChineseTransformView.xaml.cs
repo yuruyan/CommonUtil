@@ -70,7 +70,6 @@ public partial class ChineseTransformView : ResponsivePage {
         ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 后台加载
         Task.Run(ChineseTransform.InitializeExplicitly);
-        // 响应式布局
         UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
             if (sender is ChineseTransformView self) {
                 self.CurrentWindow = Window.GetWindow(self);

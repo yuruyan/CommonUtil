@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class KeywordFinderView : Page {
+public partial class KeywordFinderView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty SearchDirectoryProperty = DependencyProperty.Register("SearchDirectory", typeof(string), typeof(KeywordFinderView), new PropertyMetadata(""));
@@ -13,7 +13,6 @@ public partial class KeywordFinderView : Page {
     public static readonly DependencyProperty IsExcludeDirectorySelectedProperty = DependencyProperty.Register("IsExcludeDirectorySelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
     public static readonly DependencyProperty IsExcludeFileSelectedProperty = DependencyProperty.Register("IsExcludeFileSelected", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(false));
     public static readonly DependencyProperty IsSearchingFinishedProperty = DependencyProperty.Register("IsSearchingFinished", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(KeywordFinderView), new PropertyMetadata(true));
 
     /// <summary>
     /// 搜索目录
@@ -71,13 +70,6 @@ public partial class KeywordFinderView : Page {
         get { return (bool)GetValue(IsSearchingFinishedProperty); }
         set { SetValue(IsSearchingFinishedProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
     private KeywordFinder? KeywordFinder;
     /// <summary>
     /// 上次查询目录
@@ -92,33 +84,26 @@ public partial class KeywordFinderView : Page {
         KeywordResults = new();
         KeywordResults.CollectionChanged += KeywordResultsCollectionChanged;
         InitializeComponent();
-        #region 响应式布局
-        DependencyPropertyDescriptor
-            .FromProperty(IsExpandedProperty, this.GetType())
-            .AddValueChanged(this, (_, _) => {
-                if (IsExpanded) {
-                    SecondRowDefinition.Height = new(0);
-                    SecondColumnDefinition.Width = new(1, GridUnitType.Star);
-                    Grid.SetColumn(ResultPanel, 1);
-                    Grid.SetRow(ResultPanel, 0);
-                } else {
-                    SecondRowDefinition.Height = new(1, GridUnitType.Star);
-                    SecondColumnDefinition.Width = new(0);
-                    Grid.SetColumn(ResultPanel, 0);
-                    Grid.SetRow(ResultPanel, 1);
-                }
-            });
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            CurrentWindow = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = CurrentWindow.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(CurrentWindow, (_, _) => {
-                    IsExpanded = CurrentWindow.ActualWidth >= expansionThreshold;
-                });
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
+        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+            if (sender is KeywordFinderView self) {
+                self.CurrentWindow = Window.GetWindow(self);
+            }
         });
-        #endregion
+    }
+
+    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+        if (IsExpanded) {
+            SecondRowDefinition.Height = new(0);
+            SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+            Grid.SetColumn(ResultPanel, 1);
+            Grid.SetRow(ResultPanel, 0);
+        } else {
+            SecondRowDefinition.Height = new(1, GridUnitType.Star);
+            SecondColumnDefinition.Width = new(0);
+            Grid.SetColumn(ResultPanel, 0);
+            Grid.SetRow(ResultPanel, 1);
+        }
     }
 
     private void KeywordResultsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) {
