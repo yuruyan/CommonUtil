@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class CollectionToolView : Page {
+public partial class CollectionToolView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty InputText1Property = DependencyProperty.Register("InputText1", typeof(string), typeof(CollectionToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty InputText2Property = DependencyProperty.Register("InputText2", typeof(string), typeof(CollectionToolView), new PropertyMetadata(string.Empty));
@@ -9,7 +9,6 @@ public partial class CollectionToolView : Page {
     public static readonly DependencyProperty HasFile1Property = DependencyProperty.Register("HasFile1", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(false));
     public static readonly DependencyProperty FileName2Property = DependencyProperty.Register("FileName2", typeof(string), typeof(CollectionToolView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFile2Property = DependencyProperty.Register("HasFile2", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(CollectionToolView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输入
@@ -60,13 +59,7 @@ public partial class CollectionToolView : Page {
         get { return (string)GetValue(FileName2Property); }
         set { SetValue(FileName2Property, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
+
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -75,17 +68,7 @@ public partial class CollectionToolView : Page {
 
     public CollectionToolView() {
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
-        });
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>
