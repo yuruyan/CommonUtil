@@ -8,22 +8,8 @@ public partial class ChineseTransformView : Page {
     public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(true));
     public static readonly DependencyProperty IsToSimplifiedWorkingProperty = DependencyProperty.Register("IsToSimplifiedWorking", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(false));
     public static readonly DependencyProperty IsToTraditionalWorkingProperty = DependencyProperty.Register("IsToTraditionalWorking", typeof(bool), typeof(ChineseTransformView), new PropertyMetadata(false));
-    public static readonly DependencyProperty FileProcessStatusesProperty = DependencyProperty.Register("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(ChineseTransformView), new PropertyMetadata());
-
-    /// <summary>
-    /// 保存文件对话框
-    /// </summary>
-    private readonly SaveFileDialog SaveFileDialog = new() {
-        Title = "保存文件",
-        Filter = "文本文件|*.txt|All Files|*.*"
-    };
-    /// <summary>
-    /// 保存目录对话框
-    /// </summary>
-    private readonly VistaFolderBrowserDialog SaveDirectoryDialog = new() {
-        Description = "选择保存目录",
-        UseDescriptionForTitle = true
-    };
+    public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(ChineseTransformView), new PropertyMetadata());
+    public static readonly DependencyProperty FileProcessStatusesProperty = FileProcessStatusesPropertyKey.DependencyProperty;
 
     /// <summary>
     /// 输入文本
@@ -63,33 +49,49 @@ public partial class ChineseTransformView : Page {
     /// <summary>
     /// 文件处理列表
     /// </summary>
-    public ObservableCollection<FileProcessStatus> FileProcessStatuses {
-        get { return (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty); }
-        set { SetValue(FileProcessStatusesProperty, value); }
-    }
+    public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
+
+    /// <summary>
+    /// 保存文件对话框
+    /// </summary>
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Title = "保存文件",
+        Filter = "文本文件|*.txt|All Files|*.*"
+    };
+    /// <summary>
+    /// 保存目录对话框
+    /// </summary>
+    private readonly VistaFolderBrowserDialog SaveDirectoryDialog = new() {
+        Description = "选择保存目录",
+        UseDescriptionForTitle = true
+    };
     /// <summary>
     /// 当前 Window
     /// </summary>
-    private Window Window = App.Current.MainWindow;
+    private Window CurrentWindow = App.Current.MainWindow;
     private CancellationTokenSource ToSimplifiedCancellationTokenSource = new();
     private CancellationTokenSource ToTraditionalCancellationTokenSource = new();
+    private readonly double ExpansionThreshold;
 
     public ChineseTransformView() {
-        FileProcessStatuses = new();
+        SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 后台加载
-        Task.Run(() => ChineseTransform.InitializeExplicitly());
+        Task.Run(ChineseTransform.InitializeExplicitly);
         // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = Window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(Window, (_, _) => {
-                    IsExpanded = Window.ActualWidth >= expansionThreshold;
-                });
+        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+            if (sender is not ChineseTransformView self) {
+                return;
+            }
+            self.CurrentWindow = Window.GetWindow(self);
+            self.IsExpanded = self.ActualWidth >= self.ExpansionThreshold;
+            self.SizeChanged += self.PageSizeChangedHandler;
         });
+    }
+
+    private void PageSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
     }
 
     /// <summary>
@@ -178,7 +180,7 @@ public partial class ChineseTransformView : Page {
             ToSimplifiedCancellationTokenSource,
             FileProcessStatuses,
             ChineseTransform.FileToSimplified,
-            Window,
+            CurrentWindow,
             Logger
         );
     }
@@ -195,7 +197,7 @@ public partial class ChineseTransformView : Page {
             ToTraditionalCancellationTokenSource,
             FileProcessStatuses,
             ChineseTransform.FileToTraditional,
-            Window,
+            CurrentWindow,
             Logger
         );
     }
