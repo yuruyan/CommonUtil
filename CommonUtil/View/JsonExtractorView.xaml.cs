@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class JsonExtractorView : Page {
+public partial class JsonExtractorView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(""));
@@ -8,7 +8,6 @@ public partial class JsonExtractorView : Page {
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(JsonExtractorView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(false));
     public static readonly DependencyProperty ResultListProperty = DependencyProperty.Register("ResultList", typeof(ExtendedObservableCollection<IList<string>>), typeof(JsonExtractorView), new PropertyMetadata());
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(JsonExtractorView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "CSV|*.csv"
@@ -49,30 +48,13 @@ public partial class JsonExtractorView : Page {
         get { return (ExtendedObservableCollection<IList<string>>)GetValue(ResultListProperty); }
         set { SetValue(ResultListProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
     public JsonExtractorView() {
         ResultList = new();
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
         PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
-        });
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>
