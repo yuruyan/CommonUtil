@@ -1,22 +1,26 @@
-﻿namespace CommonUtil.View.Navigation;
+﻿using System.Collections.Specialized;
+
+namespace CommonUtil.View.Navigation;
 
 public partial class NavigationContentListView : UserControl {
-    public static readonly DependencyProperty ToolMenuItemsProperty = DependencyProperty.Register("ToolMenuItems", typeof(ExtendedObservableCollection<ToolMenuItemDO>), typeof(NavigationContentListView), new PropertyMetadata());
+    public static readonly DependencyProperty ToolMenuItemsProperty = DependencyProperty.Register("ToolMenuItems", typeof(ExtendedObservableCollection<ToolMenuItemDO>), typeof(NavigationContentListView), new PropertyMetadata(ToolMenuItemsPropertyChangedHandler));
+
+    public ExtendedObservableCollection<ToolMenuItemDO> ToolMenuItems {
+        get { return (ExtendedObservableCollection<ToolMenuItemDO>)GetValue(ToolMenuItemsProperty); }
+        set { SetValue(ToolMenuItemsProperty, value); }
+    }
+
     /// <summary>
-    /// 选中项改变，参数为 ViewType
+    /// 选中项改变，参数为 ViewType, 当为 null 时，则表示 <see cref="ToolMenuItems"/> 为空
     /// </summary>
-    public event EventHandler<Type>? SelectedMenuChanged;
+    public event EventHandler<Type?>? SelectedMenuChanged;
     /// <summary>
     /// 关闭页面，参数为 ViewType
     /// </summary>
     public event EventHandler<Type>? Closed;
     private const string RootLoadingStoryboardName = "RootLoadingStoryboard";
     private readonly Storyboard RootLoadingStoryboard;
-
-    public ExtendedObservableCollection<ToolMenuItemDO> ToolMenuItems {
-        get { return (ExtendedObservableCollection<ToolMenuItemDO>)GetValue(ToolMenuItemsProperty); }
-        set { SetValue(ToolMenuItemsProperty, value); }
-    }
+    private Type? CurrentPageType;
 
     public NavigationContentListView() {
         InitializeComponent();
@@ -30,6 +34,32 @@ public partial class NavigationContentListView : UserControl {
     }
 
     /// <summary>
+    /// 数据改变，选中第一个
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="e"></param>
+    private static void ToolMenuItemsPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is not NavigationContentListView self) {
+            return;
+        }
+        self.ToolMenuItems.CollectionChanged -= self.ToolMenuItemsCollectionChangedHandler;
+        self.ToolMenuItems.CollectionChanged += self.ToolMenuItemsCollectionChangedHandler;
+        // Select first item
+        if (self.ToolMenuItems.FirstOrDefault() is ToolMenuItemDO firstItem) {
+            self.SelectItem(firstItem.ViewType);
+        }
+    }
+
+    private void ToolMenuItemsCollectionChangedHandler(object? sender, NotifyCollectionChangedEventArgs e) {
+        if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Reset) {
+            // When the first item was added
+            if (CurrentPageType == null && e.NewItems?.Count > 0) {
+                SelectItem(ToolMenuItems.First().ViewType);
+            }
+        }
+    }
+
+    /// <summary>
     /// 关闭页面
     /// </summary>
     /// <param name="sender"></param>
@@ -39,6 +69,15 @@ public partial class NavigationContentListView : UserControl {
         var menuItem = sender.GetElementDataContext<ToolMenuItemDO>();
         if (menuItem is not null) {
             ToolMenuItems.Remove(menuItem);
+            // Empty list
+            if (ToolMenuItems.Count == 0) {
+                CurrentPageType = null;
+                SelectedMenuChanged?.Invoke(sender, null);
+            }
+            // Close current page, navigate to first item
+            else if (CurrentPageType == menuItem.ViewType) {
+                SelectItem(ToolMenuItems.First().ViewType);
+            }
             Closed?.Invoke(sender, menuItem.ViewType);
         }
     }
@@ -52,6 +91,7 @@ public partial class NavigationContentListView : UserControl {
         e.Handled = true;
         var item = e.AddedItems.OfType<ToolMenuItemDO>().FirstOrDefault();
         if (item is not null) {
+            CurrentPageType = item.ViewType;
             SelectedMenuChanged?.Invoke(sender, item.ViewType);
         }
     }

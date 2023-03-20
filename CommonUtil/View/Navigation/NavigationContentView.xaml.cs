@@ -3,13 +3,11 @@
 public partial class NavigationContentView : Page, INavigationRequest<NavigationRequestArgs>, INavigationService {
     internal static readonly DependencyPropertyKey ToolMenuItemsPropertyKey = DependencyProperty.RegisterReadOnly("ToolMenuItems", typeof(ExtendedObservableCollection<ToolMenuItemDO>), typeof(NavigationContentView), new PropertyMetadata());
     public static readonly DependencyProperty ToolMenuItemsProperty = ToolMenuItemsPropertyKey.DependencyProperty;
+
+    public ExtendedObservableCollection<ToolMenuItemDO> ToolMenuItems => (ExtendedObservableCollection<ToolMenuItemDO>)GetValue(ToolMenuItemsProperty);
+
     private readonly RouterService RouterService;
     public event EventHandler<NavigationRequestArgs>? NavigationRequested;
-    ///// <summary>
-    ///// 每一个内容页面关闭事件
-    ///// </summary>
-    //public event EventHandler<ToolMenuItemDO>? ContentViewClosed;
-    public ExtendedObservableCollection<ToolMenuItemDO> ToolMenuItems => (ExtendedObservableCollection<ToolMenuItemDO>)GetValue(ToolMenuItemsProperty);
 
     public NavigationContentView() {
         SetValue(ToolMenuItemsPropertyKey, new ExtendedObservableCollection<ToolMenuItemDO>());
@@ -30,27 +28,12 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="viewType"></param>
-    private void SelectedMenuChangedHandler(object _, Type viewType) {
-        RouterService.Navigate(viewType);
-    }
-
-    /// <summary>
-    /// 页面关闭
-    /// </summary>
-    /// <param name="_"></param>
-    /// <param name="viewType"></param>
-    private void PageClosedHandler(object _, Type viewType) {
-        // If closing current page, navigate to first item
-        if (RouterService.CurrentPageType == viewType) {
-            if (ToolMenuItems.FirstOrDefault() is ToolMenuItemDO firstItem) {
-                NavigationContentListView.SelectItem(firstItem.ViewType);
-            }
+    private void SelectedMenuChangedHandler(object _, Type? viewType) {
+        if (viewType != null) {
+            RouterService.Navigate(viewType);
         }
-        // Clean
-        RouterService.RemovePage(viewType);
-
         // Navigate to MainContentView
-        if (ToolMenuItems.Count == 0) {
+        else {
             NavigationRequested?.Invoke(
                 this,
                 new(typeof(MainContentView))
@@ -59,12 +42,22 @@ public partial class NavigationContentView : Page, INavigationRequest<Navigation
     }
 
     /// <summary>
+    /// 页面关闭
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="viewType"></param>
+    private void PageClosedHandler(object _, Type viewType) {
+        // Clean
+        RouterService.RemovePage(viewType);
+    }
+
+    /// <summary>
     /// 导航到目标页面
     /// </summary>
     /// <param name="data">The type of target page</param>
     public void Navigated(object? data) {
         if (data is Type pageType) {
-            // 不已存在实例
+            // 不存在实例
             if (ToolMenuItems.IndexOf(item => item.ViewType == pageType) == -1) {
                 ToolMenuItems.Add(MapperUtils.Instance.Map<ToolMenuItemDO>(
                     DataSet.ToolMenuItems.First(src => src.ClassType == pageType)
