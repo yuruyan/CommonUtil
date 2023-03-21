@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class EncodingTemplate : UserControl {
+public partial class EncodingTemplate : ResponsiveUserControl {
     private static Logger Logger = LogManager.GetCurrentClassLogger();
 
     public event Action? EncodingClick;
@@ -10,7 +10,6 @@ public partial class EncodingTemplate : UserControl {
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EncodingTemplate), new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     public static readonly DependencyProperty EncodingButtonTextProperty = DependencyProperty.Register("EncodingButtonText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
     public static readonly DependencyProperty DecodingButtonTextProperty = DependencyProperty.Register("DecodingButtonText", typeof(string), typeof(EncodingTemplate), new PropertyMetadata(""));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(EncodingTemplate), new PropertyMetadata(true));
 
     /// <summary>
     /// 输入文本
@@ -40,27 +39,9 @@ public partial class EncodingTemplate : UserControl {
         get { return (string)GetValue(DecodingButtonTextProperty); }
         set { SetValue(DecodingButtonTextProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
     public EncodingTemplate() {
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
-        });
     }
 
     /// <summary>

@@ -1,8 +1,8 @@
 ﻿namespace CommonUtil.View;
 
-public class ResponsivePage : Page, IResponsiveElement {
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsivePage), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
-    public static readonly DependencyProperty ExpansionThresholdProperty = DependencyProperty.Register("ExpansionThreshold", typeof(double), typeof(ResponsivePage), new PropertyMetadata(0.0));
+public class ResponsiveUserControl : UserControl, IResponsiveElement {
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsiveUserControl), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
+    public static readonly DependencyProperty ExpansionThresholdProperty = DependencyProperty.Register("ExpansionThreshold", typeof(double), typeof(ResponsiveUserControl), new PropertyMetadata(0.0));
 
     public virtual bool IsExpanded {
         get { return (bool)GetValue(IsExpandedProperty); }
@@ -17,7 +17,7 @@ public class ResponsivePage : Page, IResponsiveElement {
     protected override void OnInitialized(EventArgs e) {
         base.OnInitialized(e);
         // 自动设置值
-        if (ExpansionThresholdProperty.GetMetadata(this).DefaultValue != GetValue(ExpansionThresholdProperty)) {
+        if (ExpansionThresholdProperty.GetMetadata(this).DefaultValue == GetValue(ExpansionThresholdProperty)) {
             if (Resources[ExpansionThresholdKey] is double value) {
                 ExpansionThreshold = value;
             }
@@ -40,10 +40,10 @@ public class ResponsivePage : Page, IResponsiveElement {
     /// </summary>
     /// <param name="self"></param>
     /// <param name="e"></param>
-    protected virtual void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) { }
+    protected virtual void IsExpandedPropertyChangedHandler(ResponsiveUserControl self, DependencyPropertyChangedEventArgs e) { }
 
     private static void IsExpandedPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-        if (d is ResponsivePage self) {
+        if (d is ResponsiveUserControl self) {
             self.IsExpandedPropertyChangedHandler(self, e);
         }
     }

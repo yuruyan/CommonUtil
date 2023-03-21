@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<local:ResponsiveUserControl
   x:Class="CommonUtil.View.EncodingTemplate"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -65,4 +65,4 @@
       Style="{StaticResource MultilineTextBoxStyle}"
       Text="{Binding OutputText, ElementName=EncodingTemplateRoot}" />
   </Grid>
-</UserControl>
+</local:ResponsiveUserControl>
