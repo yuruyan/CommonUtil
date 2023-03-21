@@ -1,11 +1,10 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomGeneratorView : Page {
+public partial class RandomGeneratorView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RandomGeneratorView), new PropertyMetadata(""));
     public static readonly DependencyProperty GenerateCountProperty = DependencyProperty.Register("GenerateCount", typeof(double), typeof(RandomGeneratorView), new PropertyMetadata(16.0));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(RandomGeneratorView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输出
@@ -21,15 +20,8 @@ public partial class RandomGeneratorView : Page {
         get { return (double)GetValue(GenerateCountProperty); }
         set { SetValue(GenerateCountProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
-    private readonly Type[] Routers = {
+    private static readonly Type[] Routers = {
         typeof(RandomStringGeneratorView),
         typeof(RandomNumberGeneratorView),
         typeof(RandomGeneratorWithRegexView),
@@ -60,34 +52,20 @@ public partial class RandomGeneratorView : Page {
             RouterService,
             ContentFrame
         );
-        #region 响应式布局
-        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
-        DependencyPropertyDescriptor
-            .FromProperty(IsExpandedProperty, this.GetType())
-            .AddValueChanged(this, (_, _) => {
-                if (IsExpanded) {
-                    SecondRowDefinition.Height = new(0);
-                    SecondColumnDefinition.Width = new(1, GridUnitType.Star);
-                    Grid.SetColumn(OutputTextBox, 1);
-                    Grid.SetRow(OutputTextBox, 0);
-                } else {
-                    SecondRowDefinition.Height = new(1, GridUnitType.Star);
-                    SecondColumnDefinition.Width = new(0);
-                    Grid.SetColumn(OutputTextBox, 0);
-                    Grid.SetRow(OutputTextBox, 1);
-                }
-            });
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
-        });
-        #endregion
+    }
+
+    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+        if (e.NewValue is true) {
+            SecondRowDefinition.Height = new(0);
+            SecondColumnDefinition.Width = new(1, GridUnitType.Star);
+            Grid.SetColumn(OutputTextBox, 1);
+            Grid.SetRow(OutputTextBox, 0);
+        } else {
+            SecondRowDefinition.Height = new(1, GridUnitType.Star);
+            SecondColumnDefinition.Width = new(0);
+            Grid.SetColumn(OutputTextBox, 0);
+            Grid.SetRow(OutputTextBox, 1);
+        }
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:ResponsivePage
   x:Class="CommonUtil.View.RandomGeneratorView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -239,4 +239,4 @@
         Text="{Binding OutputText}" />
     </Grid>
   </ui:NavigationView>
-</Page>
+</local:ResponsivePage>
