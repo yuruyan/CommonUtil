@@ -25,7 +25,7 @@ public partial class FileSplitView : Page {
         {FileSizeType.Gb, 1024 * 1024 * 1024 },
     };
 
-    public static readonly DependencyProperty SplitFilePathProperty = DependencyProperty.Register("SplitFilePath", typeof(string), typeof(FileSplitView), new PropertyMetadata(""));
+    public static readonly DependencyProperty SplitFilePathProperty = DependencyProperty.Register("SplitFilePath", typeof(string), typeof(FileSplitView), new PropertyMetadata("", SplitFilePathPropertyChangedHandler));
     public static readonly DependencyProperty SplitBySizeProperty = DependencyProperty.Register("SplitBySize", typeof(double), typeof(FileSplitView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty SplitFileSaveDirectoryProperty = DependencyProperty.Register("SplitFileSaveDirectory", typeof(string), typeof(FileSplitView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileSizeTypeOptionsProperty = DependencyProperty.Register("FileSizeTypeOptions", typeof(IList<FileSizeType>), typeof(FileSplitView), new PropertyMetadata());
@@ -116,11 +116,15 @@ public partial class FileSplitView : Page {
     private Window CurrentWindow = Application.Current.MainWindow;
 
     public FileSplitView() {
-        DependencyPropertyDescriptor.FromProperty(SplitFilePathProperty, typeof(FileSplitView))
-            .AddValueChanged(this, (o, e) => SplitFileSize = (ulong)new FileInfo(SplitFilePath).Length);
         FileSizeTypeOptions = FileSizeTypeOptionMap.Keys.ToArray();
         InitializeComponent();
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+    }
+
+    private static void SplitFilePathPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is FileSplitView self) {
+            self.SplitFileSize = (ulong)new FileInfo(self.SplitFilePath).Length;
+        }
     }
 
     /// <summary>

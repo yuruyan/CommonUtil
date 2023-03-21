@@ -9,7 +9,7 @@ public partial class FileMergeView : Page {
     private const int UpdateProcessInterval = 250;
     public static readonly DependencyProperty MergeFileDirectoryProperty = DependencyProperty.Register("MergeFileDirectory", typeof(string), typeof(FileMergeView), new PropertyMetadata(""));
     public static readonly DependencyProperty MergeFileSavePathProperty = DependencyProperty.Register("MergeFileSavePath", typeof(string), typeof(FileMergeView), new PropertyMetadata(""));
-    public static readonly DependencyProperty MergeFilesProperty = DependencyProperty.Register("MergeFiles", typeof(ObservableCollection<string>), typeof(FileMergeView), new PropertyMetadata());
+    public static readonly DependencyProperty MergeFilesProperty = DependencyProperty.Register("MergeFiles", typeof(ObservableCollection<string>), typeof(FileMergeView), new PropertyMetadata(MergeFilesPropertyChangedHandler));
     public static readonly DependencyProperty TotalFileSizeProperty = DependencyProperty.Register("TotalFileSize", typeof(ulong), typeof(FileMergeView), new PropertyMetadata(0UL));
     public static readonly DependencyProperty WorkingProcessProperty = DependencyProperty.Register("WorkingProcess", typeof(double), typeof(FileMergeView), new PropertyMetadata(0.0));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(FileMergeView), new PropertyMetadata(false));
@@ -74,8 +74,6 @@ public partial class FileMergeView : Page {
     private Window CurrentWindow = Application.Current.MainWindow;
 
     public FileMergeView() {
-        DependencyPropertyDescriptor.FromProperty(MergeFilesProperty, typeof(FileMergeView))
-            .AddValueChanged(this, CalculateTotalFileSizeHandler);
         MergeFiles = new();
         InitializeComponent();
         UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
@@ -84,10 +82,12 @@ public partial class FileMergeView : Page {
     /// <summary>
     /// 计算文件总大小
     /// </summary>
-    /// <param name="sender"></param>
+    /// <param name="d"></param>
     /// <param name="e"></param>
-    private void CalculateTotalFileSizeHandler(object? sender, EventArgs e) {
-        TotalFileSize = (ulong)MergeFiles.Select(f => new FileInfo(f).Length).Sum();
+    private static void MergeFilesPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is FileMergeView self) {
+            self.TotalFileSize = (ulong)self.MergeFiles.Select(f => new FileInfo(f).Length).Sum();
+        }
     }
 
     /// <summary>
