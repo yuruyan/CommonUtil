@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class OrdinalTextGeneratorView : Page {
+public partial class OrdinalTextGeneratorView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(OrdinalTextGeneratorView), new PropertyMetadata(""));
@@ -8,8 +8,6 @@ public partial class OrdinalTextGeneratorView : Page {
     public static readonly DependencyProperty StartIndexProperty = DependencyProperty.Register("StartIndex", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
     public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
-    public static readonly DependencyProperty OrdinalTypeDictProperty = DependencyProperty.Register("OrdinalTypeDict", typeof(IDictionary<string, OrdinalTextType>), typeof(OrdinalTextGeneratorView), new PropertyMetadata());
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输入文本
@@ -46,37 +44,19 @@ public partial class OrdinalTextGeneratorView : Page {
         get { return (bool)GetValue(IsAscendantProperty); }
         set { SetValue(IsAscendantProperty, value); }
     }
+
     /// <summary>
     /// 数字类型
     /// </summary>
-    public IDictionary<string, OrdinalTextType> OrdinalTypeDict {
-        get { return (IDictionary<string, OrdinalTextType>)GetValue(OrdinalTypeDictProperty); }
-        private set { SetValue(OrdinalTypeDictProperty, value); }
-    }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
+    public readonly IDictionary<string, OrdinalTextType> OrdinalTypeDict;
 
     public OrdinalTextGeneratorView() {
-        InitializeComponent();
-        OrdinalTypeDict = new Dictionary<string, OrdinalTextType>(DataSet.OrdinalTextTypeDict);
         InputText = "abc{} {{ }}";
+        InitializeComponent();
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
+        OrdinalTypeDict = new Dictionary<string, OrdinalTextType>(DataSet.OrdinalTextTypeDict);
+        OrdinalTypeComboBox.ItemsSource = OrdinalTypeDict.Keys;
         GenerateText();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
-        });
     }
 
     /// <summary>
