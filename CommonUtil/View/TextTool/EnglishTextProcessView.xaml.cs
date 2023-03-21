@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class EnglishTextProcessView : Page {
+public partial class EnglishTextProcessView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(""));
@@ -8,7 +8,6 @@ public partial class EnglishTextProcessView : Page {
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishTextProcessView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(false));
     public static readonly DependencyProperty ProcessPatternDictProperty = DependencyProperty.Register("ProcessPatternDict", typeof(IDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>), typeof(EnglishTextProcessView), new PropertyMetadata());
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(EnglishTextProcessView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -49,28 +48,10 @@ public partial class EnglishTextProcessView : Page {
         get { return (IDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>)GetValue(ProcessPatternDictProperty); }
         private set { SetValue(ProcessPatternDictProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
     public EnglishTextProcessView() {
         ProcessPatternDict = new Dictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>(DataSet.EnglishTextProcessOptionDict);
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
-        });
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class PrependLineNumberView : Page {
+public partial class PrependLineNumberView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(PrependLineNumberView), new PropertyMetadata(""));
@@ -8,7 +8,6 @@ public partial class PrependLineNumberView : Page {
     public static readonly DependencyProperty SplitTextOptionsProperty = DependencyProperty.Register("SplitTextOptions", typeof(List<string>), typeof(PrependLineNumberView), new PropertyMetadata());
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(PrependLineNumberView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(PrependLineNumberView), new PropertyMetadata(false));
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(PrependLineNumberView), new PropertyMetadata(true));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -49,30 +48,12 @@ public partial class PrependLineNumberView : Page {
         get { return (List<string>)GetValue(SplitTextOptionsProperty); }
         set { SetValue(SplitTextOptionsProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
     private readonly IDictionary<string, string> SplitTextDict;
 
     public PrependLineNumberView() {
         SplitTextDict = new Dictionary<string, string>(DataSet.PrependLineNumberSplitOptionDict);
         SplitTextOptions = new(SplitTextDict.Keys);
         InitializeComponent();
-        // 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                 .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                 .AddValueChanged(window, (_, _) => {
-                     IsExpanded = window.ActualWidth >= expansionThreshold;
-                 });
-        });
     }
 
     /// <summary>

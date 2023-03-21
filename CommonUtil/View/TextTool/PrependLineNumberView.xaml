@@ -1,4 +1,4 @@
-﻿<Page
+﻿<view:ResponsivePage
   x:Class="CommonUtil.View.PrependLineNumberView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,6 +6,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:view="clr-namespace:CommonUtil.View"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="PrependLineNumberView"
   Margin="{StaticResource NavigationContentViewMargin}"
@@ -71,4 +72,4 @@
       Style="{StaticResource MultilineTextBoxStyle}"
       Text="{Binding OutputText}" />
   </Grid>
-</Page>
+</view:ResponsivePage>
