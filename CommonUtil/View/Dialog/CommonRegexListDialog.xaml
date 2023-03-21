@@ -19,22 +19,22 @@
     <system:Double x:Key="RegexListItemsControlMaxWidth">500</system:Double>
   </uiwidget:BaseDialog.Resources>
 
-  <ScrollViewer>
-    <ItemsControl
-      x:Name="RegexListItemsControl"
-      Width="350"
-      ItemsSource="{Binding RegexList}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <DockPanel>
-            <TextBlock Width="150" Text="{Binding Key}" />
-            <TextBox
-              IsReadOnly="True"
-              Style="{StaticResource BorderlessTextBoxStyle}"
-              Text="{Binding Value, Mode=OneTime}" />
-          </DockPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
-  </ScrollViewer>
+  <ListBox ItemsSource="{Binding RegexList}" Style="{StaticResource TransparentListBoxStyle}">
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <TextBlock Width="150" Text="{Binding Key}" />
+          <TextBox
+            Grid.Column="1"
+            IsReadOnly="True"
+            Style="{StaticResource BorderlessTextBoxStyle}"
+            Text="{Binding Value, Mode=OneTime}" />
+        </Grid>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+  </ListBox>
 </uiwidget:BaseDialog>

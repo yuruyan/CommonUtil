@@ -2,6 +2,7 @@
 
 public partial class CommonRegexListDialog : BaseDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    public static readonly DependencyProperty RegexListProperty = DependencyProperty.Register("RegexList", typeof(IEnumerable<KeyValuePair<string, string>>), typeof(CommonRegexListDialog), new PropertyMetadata());
     private static readonly IEnumerable<KeyValuePair<string, string>> CommonRegexList;
 
     /// <summary>
@@ -11,9 +12,6 @@ public partial class CommonRegexListDialog : BaseDialog {
         get { return (IEnumerable<KeyValuePair<string, string>>)GetValue(RegexListProperty); }
         set { SetValue(RegexListProperty, value); }
     }
-    public static readonly DependencyProperty RegexListProperty = DependencyProperty.Register("RegexList", typeof(IEnumerable<KeyValuePair<string, string>>), typeof(CommonRegexListDialog), new PropertyMetadata());
-    private readonly double RegexListItemsControlMinWidth;
-    private readonly double RegexListItemsControlMaxWidth;
 
     /// <summary>
     /// 加载 CommonRegexList
@@ -31,26 +29,9 @@ public partial class CommonRegexListDialog : BaseDialog {
     public CommonRegexListDialog() {
         RegexList = CommonRegexList;
         InitializeComponent();
-        RegexListItemsControlMinWidth = (double)Resources["RegexListItemsControlMinWidth"];
-        RegexListItemsControlMaxWidth = (double)Resources["RegexListItemsControlMaxWidth"];
-        // 动态更新 width
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            var window = Window.GetWindow(this);
-            UpdateDialogWidth(window.ActualWidth / 2);
-            window.SizeChanged += (_, arg) => UpdateDialogWidth(arg.NewSize.Width / 2);
-        });
-    }
-
-    /// <summary>
-    /// 更新 RegexListItemsControl Width
-    /// </summary>
-    /// <param name="newWidth"></param>
-    private void UpdateDialogWidth(double newWidth) {
-        if (newWidth < RegexListItemsControlMinWidth) {
-            newWidth = RegexListItemsControlMinWidth;
-        } else if (newWidth > RegexListItemsControlMaxWidth) {
-            newWidth = RegexListItemsControlMaxWidth;
-        }
-        RegexListItemsControl.Width = newWidth;
+        this.EnableContentDialogAutoResize(
+            (double)Resources["RegexListItemsControlMinWidth"],
+            (double)Resources["RegexListItemsControlMaxWidth"]
+        );
     }
 }
