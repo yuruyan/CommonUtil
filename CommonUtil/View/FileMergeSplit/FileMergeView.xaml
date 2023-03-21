@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUtil.Widget"
+  xmlns:controls="clr-namespace:CommonUtil.Controls"
   Title="FileSplitView"
   Margin="8,0,0,0"
   d:DesignHeight="450"
@@ -103,7 +103,7 @@
     </UniformGrid>
 
     <!--  进度条  -->
-    <widget:ProgressBar
+    <controls:ProgressBar
       Grid.Row="1"
       Process="{Binding WorkingProcess}"
       Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
