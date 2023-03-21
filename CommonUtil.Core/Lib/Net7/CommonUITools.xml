@@ -2194,11 +2194,6 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:CommonUITools.Widget.ToggleControl">
-            <summary>
-            ToggleControl
-            </summary>
-        </member>
         <member name="P:CommonUITools.Widget.ToggleControl.FirstControl">
             <summary>
             当 <see cref="P:CommonUITools.Widget.ToggleControl.State"/> 为 true 时显示
@@ -2212,11 +2207,6 @@
         <member name="P:CommonUITools.Widget.ToggleControl.SecondControl">
             <summary>
             当 <see cref="P:CommonUITools.Widget.ToggleControl.State"/> 为 false 时显示
-            </summary>
-        </member>
-        <member name="M:CommonUITools.Widget.ToggleControl.InitializeComponent">
-            <summary>
-            InitializeComponent
             </summary>
         </member>
         <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">

@@ -10,7 +10,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
   Title="QRCodeToolView"
-  Margin="8,0,0,0"
+  Margin="8,0,8,8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -46,7 +46,7 @@
         Content="链接二维码"
         ToolTip="链接二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe6ca;" />
+          <ui:FontIcon Glyph="&#xe6ca;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -54,7 +54,7 @@
         Content="短信二维码"
         ToolTip="短信二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe61a;" />
+          <ui:FontIcon Glyph="&#xe61a;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -62,7 +62,7 @@
         Content="WiFi 二维码"
         ToolTip="WiFi 二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe65f;" />
+          <ui:FontIcon Glyph="&#xe65f;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -70,7 +70,7 @@
         Content="邮件二维码"
         ToolTip="邮件二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe620;" />
+          <ui:FontIcon Glyph="&#xe620;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -78,7 +78,7 @@
         Content="拨打电话二维码"
         ToolTip="拨打电话二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe67d;" />
+          <ui:FontIcon Glyph="&#xe67d;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -86,146 +86,11 @@
         Content="地理位置二维码"
         ToolTip="地理位置二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Foreground="#30A4C5" Glyph="&#xe76f;" />
+          <ui:FontIcon Glyph="&#xe76f;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
     </ui:NavigationView.MenuItems>
 
-    <Grid x:Name="ContentPanel">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition />
-        <ColumnDefinition>
-          <ColumnDefinition.Style>
-            <Style TargetType="ColumnDefinition">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IsQRCodeDecodeViewSelected}" Value="True">
-                  <Setter Property="Width" Value="0" />
-                </DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </ColumnDefinition.Style>
-        </ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <!--  Control  -->
-      <ui:SimpleStackPanel Orientation="Vertical">
-        <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0">
-          <ui:Frame.Style>
-            <Style TargetType="ui:Frame">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IsQRCodeDecodeViewSelected}" Value="True">
-                  <Setter Property="Height" Value="{Binding ElementName=ContentPanel, Path=ActualHeight}" />
-                </DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </ui:Frame.Style>
-        </ui:Frame>
-        <!--  非二维码解析页面的组件  -->
-        <ui:SimpleStackPanel
-          Grid.Row="1"
-          Orientation="Vertical"
-          Spacing="{StaticResource MediumItemSpacing}"
-          Visibility="{Binding IsQRCodeDecodeViewSelected, Converter={StaticResource HideIfTrueConverter}}">
-          <ui:SimpleStackPanel.Resources>
-            <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-              <Setter Property="Orientation" Value="Horizontal" />
-            </Style>
-          </ui:SimpleStackPanel.Resources>
-
-          <!--  前景色选择  -->
-          <ui:SimpleStackPanel>
-            <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="二维码颜色：" />
-            <Rectangle
-              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
-              Height="40"
-              ContextMenuService.IsEnabled="True"
-              Fill="{Binding QRCodeForeground, Converter={StaticResource ColorToBrushConverter}}"
-              MouseUp="QRCodeForegroundRectangleMouseUp">
-              <Rectangle.ContextMenu>
-                <ContextMenu Width="240">
-                  <ContextMenu.Resources>
-                    <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPressed" Color="Transparent" />
-                  </ContextMenu.Resources>
-                  <StackPanel Background="Transparent" MouseUp="QRCodeForegroundColorPickerPanelMouseUp">
-                    <colorpicker:SquarePicker
-                      x:Name="QRCodeForegroundColorPicker"
-                      Width="200"
-                      Height="200"
-                      Loaded="QRCodeForegroundColorPickerLoadedHandler"
-                      SelectedColor="{Binding QRCodeForeground, Mode=TwoWay}" />
-                  </StackPanel>
-                </ContextMenu>
-              </Rectangle.ContextMenu>
-            </Rectangle>
-            <TextBox
-              Margin="8,0,0,0"
-              KeyUp="QRCodeForegroundKeyUpHandler"
-              Text="{Binding QRCodeForegroundText, UpdateSourceTrigger=PropertyChanged}" />
-          </ui:SimpleStackPanel>
-
-          <!--  二维码容错率  -->
-          <ui:SimpleStackPanel>
-            <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="容错率：" />
-            <ComboBox
-              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
-              ItemsSource="{Binding ECCLevels}"
-              SelectedIndex="{Binding ECCLevelComboxSelectedIndex}">
-              <ComboBox.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Style="{StaticResource ASCIIFontStyle}" Text="{Binding ., StringFormat='{}{0} %'}" />
-                </DataTemplate>
-              </ComboBox.ItemTemplate>
-            </ComboBox>
-          </ui:SimpleStackPanel>
-
-          <!--  二维码图片质量  -->
-          <ui:SimpleStackPanel>
-            <TextBlock Width="{StaticResource QRCodeToolView_DescriptionWidth}" Text="图片质量：" />
-            <ComboBox
-              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
-              ItemsSource="{Binding ImageQualityList}"
-              SelectedIndex="{Binding ImageQualityComboSelectedIndex}" />
-          </ui:SimpleStackPanel>
-
-          <!--  图标  -->
-          <ui:SimpleStackPanel>
-            <TextBlock
-              Width="{StaticResource QRCodeToolView_DescriptionWidth}"
-              MouseUp="ChooseIconMouseUpHandler"
-              Style="{StaticResource HyperLinkStyle}"
-              Text="图标："
-              ToolTip="点击选择图标" />
-            <Image
-              x:Name="IconImage"
-              Width="{StaticResource QRCodeToolView_TextBoxWidth}"
-              Height="50"
-              HorizontalAlignment="Left"
-              Stretch="Uniform" />
-            <Button
-              Click="ClearIconImageClickHandler"
-              Content="清除"
-              Visibility="{Binding Source, ElementName=IconImage, Converter={StaticResource HideIfNullConverter}}" />
-          </ui:SimpleStackPanel>
-          <!--  Control  -->
-          <ui:SimpleStackPanel Spacing="{StaticResource MediumItemSpacing}">
-            <widget:IconButton
-              Click="GenerateImageClick"
-              Icon="&#xe601;"
-              Text="生成" />
-            <widget:IconButton
-              Click="SaveImageClick"
-              Icon="&#xe616;"
-              Text="保存"
-              Visibility="{Binding QRCodeImageSource, Converter={StaticResource HideIfNullConverter}}" />
-          </ui:SimpleStackPanel>
-        </ui:SimpleStackPanel>
-      </ui:SimpleStackPanel>
-      <!--  二维码输出，解码界面时隐藏  -->
-      <Image
-        Grid.Column="1"
-        Source="{Binding QRCodeImageSource}"
-        Stretch="Uniform"
-        Visibility="{Binding IsQRCodeDecodeViewSelected, Converter={StaticResource HideIfTrueConverter}}" />
-    </Grid>
+    <ui:Frame x:Name="ContentFrame" Margin="8,8,0,0" />
   </ui:NavigationView>
 </Page>
