@@ -1,10 +1,9 @@
 ﻿namespace CommonUtil.View;
 
-public partial class CSharpDependencyView : Page {
+public partial class CSharpDependencyView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(CSharpDependencyView), new PropertyMetadata(""));
     public static readonly DependencyProperty TypeInfosProperty = DependencyProperty.Register("TypeInfos", typeof(ObservableCollection<TypeInfo>), typeof(CSharpDependencyView), new PropertyMetadata());
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(CSharpDependencyView), new PropertyMetadata(true));
 
     /// <summary>
     /// 输出文本
@@ -17,29 +16,11 @@ public partial class CSharpDependencyView : Page {
         get { return (ObservableCollection<TypeInfo>)GetValue(TypeInfosProperty); }
         private set { SetValue(TypeInfosProperty, value); }
     }
-    /// <summary>
-    /// 是否扩宽
-    /// </summary>
-    public bool IsExpanded {
-        get { return (bool)GetValue(IsExpandedProperty); }
-        set { SetValue(IsExpandedProperty, value); }
-    }
 
     public CSharpDependencyView() {
         TypeInfos = new();
         InitializeComponent();
-        #region 响应式布局
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
-            Window window = Window.GetWindow(this);
-            double expansionThreshold = (double)Resources["ExpansionThreshold"];
-            IsExpanded = window.ActualWidth >= expansionThreshold;
-            DependencyPropertyDescriptor
-                .FromProperty(Window.ActualWidthProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    IsExpanded = window.ActualWidth >= expansionThreshold;
-                });
-        });
-        #endregion
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>
