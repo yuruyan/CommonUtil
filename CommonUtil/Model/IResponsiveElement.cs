@@ -2,7 +2,7 @@
 
 /// <summary>
 /// 响应式元素，需要在 <see cref="FrameworkElement.Resources"/> 设置 <see cref="ExpansionThresholdKey"/>, 
-/// 并适当重写 IsExpandedPropertyChangedHandler 方法
+/// 并适当重写 IsExpandedPropertyChangedHandler 方法。如果重写 OnInitialized 方法，则注意调用 "base.OnInitialized(e);"
 /// </summary>
 public interface IResponsiveElement {
     /// <summary>

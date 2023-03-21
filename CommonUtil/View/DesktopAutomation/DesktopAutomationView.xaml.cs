@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class DesktopAutomationView : Page {
+public partial class DesktopAutomationView : ResponsivePage {
     private class AutomationDialogItem {
         public Type DialogType { get; }
         public DesktopAutomationDialog? Dialog { get; set; }
@@ -83,6 +83,26 @@ public partial class DesktopAutomationView : Page {
             }
         };
         UpdateCurrentMousePositionTimer.Start();
+    }
+
+    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+        if (e.NewValue is true) {
+            GridPanel.RowDefinitions.Clear();
+            GridPanel.ColumnDefinitions.Add(new() {
+                Width = new(1, GridUnitType.Star)
+            });
+            GridPanel.ColumnDefinitions.Add(new() {
+                Width = new(2, GridUnitType.Star)
+            });
+        } else {
+            GridPanel.ColumnDefinitions.Clear();
+            GridPanel.RowDefinitions.Add(new() {
+                Height = new(1, GridUnitType.Star)
+            });
+            GridPanel.RowDefinitions.Add(new() {
+                Height = new(1, GridUnitType.Star)
+            });
+        }
     }
 
     /// <summary>
