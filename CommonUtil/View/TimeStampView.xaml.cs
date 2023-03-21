@@ -79,7 +79,6 @@ public partial class TimeStampView : ResponsivePage {
 
     public TimeStampView() {
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         #region 初始化 TimeStamp
         TimeStampOptions = DataSet.TimeStampOptions.ToArray();
         MillisecondValue = TimeStampOptions[0];

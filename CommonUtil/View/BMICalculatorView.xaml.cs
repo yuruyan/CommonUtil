@@ -47,7 +47,6 @@ public partial class BMICalculatorView : ResponsivePage {
 
     public BMICalculatorView() {
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage page, DependencyPropertyChangedEventArgs e) {

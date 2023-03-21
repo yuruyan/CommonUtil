@@ -20,7 +20,6 @@ public partial class CSharpDependencyView : ResponsivePage {
     public CSharpDependencyView() {
         TypeInfos = new();
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>

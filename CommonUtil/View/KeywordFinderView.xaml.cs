@@ -84,7 +84,6 @@ public partial class KeywordFinderView : ResponsivePage {
         KeywordResults = new();
         KeywordResults.CollectionChanged += KeywordResultsCollectionChanged;
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
             if (sender is KeywordFinderView self) {
                 self.CurrentWindow = Window.GetWindow(self);

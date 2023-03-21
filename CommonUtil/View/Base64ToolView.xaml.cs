@@ -66,7 +66,6 @@ public partial class Base64ToolView : ResponsivePage {
     public Base64ToolView() {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 响应式布局
         this.SetLoadedOnceEventHandler(static (sender, _) => {
             if (sender is Base64ToolView self) {

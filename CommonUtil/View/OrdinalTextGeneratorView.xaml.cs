@@ -53,7 +53,6 @@ public partial class OrdinalTextGeneratorView : ResponsivePage {
     public OrdinalTextGeneratorView() {
         InputText = "abc{} {{ }}";
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         OrdinalTypeDict = new Dictionary<string, OrdinalTextType>(DataSet.OrdinalTextTypeDict);
         OrdinalTypeComboBox.ItemsSource = OrdinalTypeDict.Keys;
         GenerateText();

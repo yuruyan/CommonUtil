@@ -68,7 +68,6 @@ public partial class CollectionToolView : ResponsivePage {
 
     public CollectionToolView() {
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>

@@ -54,7 +54,6 @@ public partial class JsonExtractorView : ResponsivePage {
         InputText = Resource.Resource.JsonExtractorViewDemoJson;
         PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>

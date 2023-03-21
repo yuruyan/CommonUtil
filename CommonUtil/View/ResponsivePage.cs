@@ -17,7 +17,7 @@ public class ResponsivePage : Page, IResponsiveElement {
     protected override void OnInitialized(EventArgs e) {
         base.OnInitialized(e);
         // 自动设置值
-        if (ExpansionThresholdProperty.GetMetadata(this).DefaultValue != GetValue(ExpansionThresholdProperty)) {
+        if (ExpansionThresholdProperty.GetMetadata(this).DefaultValue == GetValue(ExpansionThresholdProperty)) {
             if (Resources[ExpansionThresholdKey] is double value) {
                 ExpansionThreshold = value;
             }

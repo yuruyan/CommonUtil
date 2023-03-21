@@ -80,7 +80,6 @@ public partial class RegexExtractionView : ResponsivePage {
     public RegexExtractionView() {
         MatchList = Array.Empty<string>();
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     /// <summary>

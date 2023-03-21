@@ -67,7 +67,6 @@ public partial class ChineseTransformView : ResponsivePage {
     public ChineseTransformView() {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         // 后台加载
         Task.Run(ChineseTransform.InitializeExplicitly);
         UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
