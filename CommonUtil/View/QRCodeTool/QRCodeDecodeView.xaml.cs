@@ -3,9 +3,8 @@ using Image = System.Windows.Controls.Image;
 
 namespace CommonUtil.View;
 
-public partial class QRCodeDecodeView : Page {
+public partial class QRCodeDecodeView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
     public static readonly DependencyProperty DecodeTextProperty = DependencyProperty.Register("DecodeText", typeof(string), typeof(QRCodeDecodeView), new PropertyMetadata(string.Empty));
 
     /// <summary>
@@ -18,9 +17,16 @@ public partial class QRCodeDecodeView : Page {
 
     public QRCodeDecodeView() {
         InitializeComponent();
-        Loaded += (_, _) => {
-            this.Focus();
-        };
+    }
+
+    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+        if (e.NewValue is true) {
+            MainContentPanel.Rows = 1;
+            MainContentPanel.Columns = 2;
+        } else {
+            MainContentPanel.Rows = 2;
+            MainContentPanel.Columns = 1;
+        }
     }
 
     /// <summary>
@@ -159,4 +165,13 @@ public partial class QRCodeDecodeView : Page {
         }, 1000);
     }
 
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        DragDropHelper.SetIsEnabled(ImagePanel, true);
+        DragDropHelper.SetBackgroundProperty(ImagePanel, Panel.BackgroundProperty);
+        Focus();
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        DragDropHelper.Dispose(ImagePanel);
+    }
 }
