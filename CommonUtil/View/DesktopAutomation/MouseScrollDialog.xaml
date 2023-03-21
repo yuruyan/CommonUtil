@@ -25,7 +25,7 @@
       <TextBlock Width="{StaticResource HeaderWidth}" Text="偏移量：" />
       <ui:NumberBox
         Maximum="100000"
-        Minimum="0"
+        Minimum="-100000"
         SmallChange="10"
         Style="{StaticResource IntegerNumberBoxStyle}"
         Value="{Binding ScrollOffset}" />

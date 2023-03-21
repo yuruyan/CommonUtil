@@ -47,6 +47,7 @@ public partial class MouseScrollDialog : DesktopAutomationDialog {
 
     public override void ParseParameters(object[] parameters) {
         ScrollDirectionComboBox.SelectedIndex = ButtonCodeValues.IndexOf((ButtonCode)parameters[0]);
-        ScrollOffset = (double)parameters[1];
+        // Unboxing failure: double type cast
+        ScrollOffset = (int)parameters[1];
     }
 }
