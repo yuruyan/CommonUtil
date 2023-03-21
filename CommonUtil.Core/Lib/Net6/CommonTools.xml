@@ -710,6 +710,15 @@
             <param name="data"></param>
             <returns>A new list which contains all data from <paramref name="source"/> and <paramref name="data"/></returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Contains``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
+            <summary>
+            查看是否包含指定 Predicate 的元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
         <member name="T:CommonTools.Utils.MessageUtils">
             <summary>
             消息工具

@@ -35,16 +35,20 @@
     dd:DragDrop.UseDefaultDragAdorner="True"
     utils:RemoveListBoxDefaultSelectionBehavior.IsEnabled="True"
     ItemsSource="{Binding ToolMenuItems, ElementName=NavigationContentListRoot}"
-    SelectionChanged="MenuItemSelectionChangedHandler">
+    SelectionChanged="MenuItemSelectionChangedHandler"
+    Style="{StaticResource TransparentListBoxStyle}">
     <ListBox.ItemTemplate>
       <DataTemplate>
         <Border
+          Padding="1"
           utils:CenterScaleAnimationHelper.IsEnabled="True"
           utils:HoverVisibleHelper.TargetElement="{Binding ElementName=CloseButton}"
           utils:RemoveListBoxItemDefaultSelectionBehavior.IsEnabled="True"
-          Background="Transparent"
-          BorderThickness="0,1">
-          <Grid>
+          BorderThickness="0"
+          IsVisibleChanged="MenuItemListBoxVisibleChangedHandler"
+          Loaded="MenuItemListBoxLoadedHandler"
+          Unloaded="MenuItemListBoxUnloadedHandler">
+          <Grid Background="{DynamicResource ApplicationBackgroundBrush}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="auto" />
               <ColumnDefinition />

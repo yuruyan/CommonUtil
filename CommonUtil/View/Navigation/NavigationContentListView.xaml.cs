@@ -106,4 +106,28 @@ public partial class NavigationContentListView : UserControl {
             MenuItemListBox.SelectedIndex = targetIndex;
         }
     }
+
+    private void MenuItemListBoxVisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e) {
+        if (sender is FrameworkElement element) {
+            if (e.NewValue is true) {
+                RevealBackgroundHelper.SetIsEnabled(element, true);
+                RevealBackgroundHelper.SetBackgroundProperty(element, Control.BackgroundProperty);
+                return;
+            }
+            RevealBackgroundHelper.Dispose(element);
+        }
+    }
+
+    private void MenuItemListBoxLoadedHandler(object sender, RoutedEventArgs e) {
+        if (sender is FrameworkElement element) {
+            RevealBackgroundHelper.SetIsEnabled(element, true);
+            RevealBackgroundHelper.SetBackgroundProperty(element, Control.BackgroundProperty);
+        }
+    }
+
+    private void MenuItemListBoxUnloadedHandler(object sender, RoutedEventArgs e) {
+        if (sender is FrameworkElement element) {
+            RevealBackgroundHelper.Dispose(element);
+        }
+    }
 }
