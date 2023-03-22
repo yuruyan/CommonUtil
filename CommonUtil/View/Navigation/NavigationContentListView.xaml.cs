@@ -111,7 +111,8 @@ public partial class NavigationContentListView : UserControl {
         if (sender is FrameworkElement element) {
             if (e.NewValue is true) {
                 RevealBackgroundHelper.SetIsEnabled(element, true);
-                RevealBackgroundHelper.SetBackgroundProperty(element, Control.BackgroundProperty);
+                element.SetResourceReference(RevealBackgroundHelper.BrushColorProperty, "ApplicationForeground");
+                RevealBackgroundHelper.SetBackgroundProperty(element, BackgroundProperty);
                 return;
             }
             RevealBackgroundHelper.Dispose(element);
@@ -121,7 +122,8 @@ public partial class NavigationContentListView : UserControl {
     private void MenuItemListBoxLoadedHandler(object sender, RoutedEventArgs e) {
         if (sender is FrameworkElement element) {
             RevealBackgroundHelper.SetIsEnabled(element, true);
-            RevealBackgroundHelper.SetBackgroundProperty(element, Control.BackgroundProperty);
+            element.SetResourceReference(RevealBackgroundHelper.BrushColorProperty, "ApplicationForeground");
+            RevealBackgroundHelper.SetBackgroundProperty(element, BackgroundProperty);
         }
     }
 
