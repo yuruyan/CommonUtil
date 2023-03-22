@@ -357,6 +357,12 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:CommonUITools.Model.ShowCommands">
+            <summary>
+            Sets the specified window's show state.
+            </summary>
+            <see href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow"/>
+        </member>
         <member name="F:CommonUITools.Model.ProcessResult.NotStarted">
             <summary>
             未开始
@@ -416,12 +422,6 @@
             <summary>
             该接口方法由 <see cref="T:CommonUITools.Route.RouterService"/> 调用
             </summary>
-        </member>
-        <member name="T:CommonUITools.Model.ShowCommands">
-            <summary>
-            Sets the specified window's show state.
-            </summary>
-            <see href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow"/>
         </member>
         <member name="T:CommonUITools.Resource.Resource">
             <summary>
@@ -582,6 +582,26 @@
         <member name="F:CommonUITools.Utils.CommandUtils.CanExecuteHandler">
             <summary>
             CanExecute = true
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.TargetBindingElement">
+            <summary>
+            绑定对象，为 null 则绑定到 adornedElement
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindWidth">
+            <summary>
+            是否绑定 Width
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindHeight">
+            <summary>
+            是否绑定 Height
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Utils.CommonAdorner.Elements">
+            <summary>
+            UIElement 集合
             </summary>
         </member>
         <member name="T:CommonUITools.Utils.FileIconUtils">
@@ -1254,26 +1274,6 @@
             </summary>
             <returns></returns>
             <see cref="!:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime"/>
-        </member>
-        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.TargetBindingElement">
-            <summary>
-            绑定对象，为 null 则绑定到 adornedElement
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindWidth">
-            <summary>
-            是否绑定 Width
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Utils.CommonAdorner.ElementInfo.BindHeight">
-            <summary>
-            是否绑定 Height
-            </summary>
-        </member>
-        <member name="F:CommonUITools.Utils.CommonAdorner.Elements">
-            <summary>
-            UIElement 集合
-            </summary>
         </member>
         <member name="T:CommonUITools.Utils.UIUtils">
             <summary>

@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="Base64Tool"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -25,7 +25,7 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input Box  -->
-    <widget:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
+    <tools:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
 
     <!--  Control  -->
     <ui:SimpleStackPanel
@@ -41,12 +41,12 @@
 
       <ui:SimpleStackPanel>
         <Grid>
-          <widget:IconButton
+          <tools:IconButton
             Click="EncodeClickHandler"
             Icon="&#xe63e;"
             Text="编码"
             Visibility="{Binding IsEncodeRunning, Converter={StaticResource HideIfTrueConverter}}" />
-          <widget:IconButton
+          <tools:IconButton
             Click="CancelEncodeClickHandler"
             Icon="&#xe614;"
             Style="{StaticResource GlobalErrorButtonStyle}"
@@ -54,12 +54,12 @@
             Visibility="{Binding IsEncodeRunning, Converter={StaticResource HideIfFalseConverter}}" />
         </Grid>
         <Grid>
-          <widget:IconButton
+          <tools:IconButton
             Click="DecodeClickHandler"
             Icon="&#xe640;"
             Text="解码"
             Visibility="{Binding IsDecodeRunning, Converter={StaticResource HideIfTrueConverter}}" />
-          <widget:IconButton
+          <tools:IconButton
             Click="CancelDecodeClickHandler"
             Icon="&#xe614;"
             Style="{StaticResource GlobalErrorButtonStyle}"
@@ -68,11 +68,11 @@
         </Grid>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <widget:IconButton
+        <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
           Text="复制结果" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ClearInputClick"
           Icon="&#xe680;"
           Style="{StaticResource GlobalErrorButtonStyle}"
@@ -82,7 +82,7 @@
 
     <!--  Output  -->
     <Grid Grid.Row="2">
-      <widget:FileProcessStatusWidget
+      <tools:FileProcessStatusWidget
         x:Name="FileProcessStatusWidget"
         FileProcessStatusList="{Binding FileProcessStatuses}"
         Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />

@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="CodeFormatingView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -36,11 +36,11 @@
           SelectedIndex="{Binding SelectedLanguageIndex}" />
       </StackPanel>
       <Button Click="FormatClick" Content="格式化" />
-      <widget:IconButton
+      <tools:IconButton
         Click="CopyResultClick"
         Icon="&#xe6ef;"
         Text="复制结果" />
-      <widget:IconButton
+      <tools:IconButton
         Click="ClearInputClick"
         Icon="&#xe680;"
         Style="{StaticResource GlobalErrorButtonStyle}"

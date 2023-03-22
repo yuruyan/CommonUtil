@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="ChineseTransformView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -25,7 +25,7 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input  -->
-    <widget:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
+    <tools:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
 
     <!--  Control  -->
     <ui:SimpleStackPanel
@@ -63,11 +63,11 @@
         </Grid>
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <widget:IconButton
+        <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
           Text="复制结果" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ClearInputClick"
           Icon="&#xe680;"
           Style="{StaticResource GlobalErrorButtonStyle}"
@@ -77,7 +77,7 @@
 
     <!--  Output  -->
     <Grid Grid.Row="2">
-      <widget:FileProcessStatusWidget FileProcessStatusList="{Binding FileProcessStatuses}" Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
+      <tools:FileProcessStatusWidget FileProcessStatusList="{Binding FileProcessStatuses}" Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
       <TextBox
         IsReadOnly="True"
         Style="{StaticResource MultilineTextBoxStyle}"

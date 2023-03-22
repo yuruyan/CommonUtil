@@ -1,4 +1,4 @@
-﻿<widget:BaseWindow
+﻿<tools:BaseWindow
   x:Class="CommonUtil.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,8 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Name="WindowRoot"
   Title="MainWindow"
   Width="1000"
@@ -73,7 +72,7 @@
     <!--#endregion-->
   </Window.Resources>
 
-  <Grid utils:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" utils:LoadingBoxHelper.Size="50">
+  <Grid tools:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" tools:LoadingBoxHelper.Size="50">
     <!--  Content  -->
     <ui:Frame x:Name="ContentFrame" Navigated="ContentFrameNavigatedHandler" />
     <!--  标题  -->
@@ -86,8 +85,8 @@
         <StackPanel Orientation="Horizontal">
           <ui:TitleBarButton
             Name="NavigationButton"
-            utils:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource NavigationButtonInVisibleStoryboard}"
-            utils:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource NavigationButtonVisibleStoryboard}"
+            tools:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource NavigationButtonInVisibleStoryboard}"
+            tools:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource NavigationButtonVisibleStoryboard}"
             Click="NavigateToNavigationContentViewClickHandler"
             ToolTip="导航"
             Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
@@ -95,8 +94,8 @@
           </ui:TitleBarButton>
           <ui:TitleBarButton
             Name="HomeButton"
-            utils:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource HomeButtonInVisibleStoryboard}"
-            utils:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource HomeButtonVisibleStoryboard}"
+            tools:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource HomeButtonInVisibleStoryboard}"
+            tools:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource HomeButtonVisibleStoryboard}"
             Click="NavigateToMainContentViewClickHandler"
             ToolTip="主页"
             Visibility="{Binding IsHomeButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
@@ -131,4 +130,4 @@
       </Grid>
     </DockPanel>
   </Grid>
-</widget:BaseWindow>
+</tools:BaseWindow>

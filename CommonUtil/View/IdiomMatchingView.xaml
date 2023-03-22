@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="IdiomMatchingView"
   Margin="0,0,0,8"
   d:DesignHeight="450"
@@ -35,7 +35,7 @@
           Text="{Binding InputIdiom, Mode=TwoWay}"
           TextChanged="InputIdiomChanged" />
       </StackPanel>
-      <widget:IconButton
+      <tools:IconButton
         Click="GenerateClick"
         Icon="&#xe601;"
         Text="生    成" />

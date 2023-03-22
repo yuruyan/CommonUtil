@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="JsonExtractorView"
   Margin="{StaticResource PageMargin}"
   d:DesignHeight="450"
@@ -16,7 +16,7 @@
   mc:Ignorable="d">
   <Page.Resources>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
-    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
+    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="tools:IconButton">
       <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
     <ContextMenu x:Key="ResultViewItemContextMenu">
@@ -31,17 +31,17 @@
   <UniformGrid Columns="2">
     <UniformGrid Margin="0,0,4,0" Rows="2">
       <!--  Input  -->
-      <widget:DragDropTextBox
+      <tools:DragDropTextBox
         Name="DragDropTextBox"
         DragDropEvent="DragDropEventHandler"
         HasFile="{Binding HasFile, Mode=TwoWay}">
-        <widget:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.TextBox>
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-        </widget:DragDropTextBox.TextBox>
-        <widget:DragDropTextBox.FileView>
-          <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-        </widget:DragDropTextBox.FileView>
-      </widget:DragDropTextBox>
+        </tools:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.FileView>
+          <tools:FileNameSizeWidget FileName="{Binding FileName}" />
+        </tools:DragDropTextBox.FileView>
+      </tools:DragDropTextBox>
       <ui:SimpleStackPanel
         HorizontalAlignment="Stretch"
         VerticalAlignment="Center"
@@ -63,11 +63,11 @@
             HorizontalAlignment="Center"
             Click="JsonExtractClickHandler"
             Content="数据提取" />
-          <widget:IconButton
+          <tools:IconButton
             Click="CopyResultClick"
             Icon="&#xe6ef;"
             Text="复制结果" />
-          <widget:IconButton
+          <tools:IconButton
             Click="ClearInputClick"
             Icon="&#xe680;"
             Style="{StaticResource GlobalErrorButtonStyle}"

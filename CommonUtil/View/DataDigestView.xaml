@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="DataDigestView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -25,18 +25,18 @@
       <RowDefinition Height="2*" />
     </Grid.RowDefinitions>
     <!--  输入  -->
-    <widget:DragDropTextBox
+    <tools:DragDropTextBox
       Name="DragDropTextBox"
       Margin="0,0,8,0"
       DragDropEvent="DragDropEventHandler"
       HasFile="{Binding HasFile, Mode=OneWayToSource}">
-      <widget:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.TextBox>
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      </widget:DragDropTextBox.TextBox>
-      <widget:DragDropTextBox.FileView>
-        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-      </widget:DragDropTextBox.FileView>
-    </widget:DragDropTextBox>
+      </tools:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.FileView>
+        <tools:FileNameSizeWidget FileName="{Binding FileName}" />
+      </tools:DragDropTextBox.FileView>
+    </tools:DragDropTextBox>
     <!--  Control  -->
     <Grid Grid.Row="1" Margin="0,0,8,0">
       <ui:SimpleStackPanel
@@ -60,23 +60,23 @@
           </ui:FlyoutService.Flyout>
         </Button>
         <Grid>
-          <widget:IconButton
+          <tools:IconButton
             Click="StartClick"
             Icon="&#xe601;"
             Text="计算"
             Visibility="{Binding IsWorking, Converter={StaticResource HideIfTrueConverter}}" />
-          <widget:IconButton
+          <tools:IconButton
             Click="StopDigestClick"
             Icon="&#xe614;"
             Style="{StaticResource GlobalErrorButtonStyle}"
             Text="取消"
             Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
         </Grid>
-        <widget:IconButton
+        <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
           Text="复制结果" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ClearInputClick"
           Icon="&#xe680;"
           Style="{StaticResource GlobalErrorButtonStyle}"

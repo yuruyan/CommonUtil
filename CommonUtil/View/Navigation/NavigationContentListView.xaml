@@ -6,7 +6,7 @@
   xmlns:dd="urn:gong-wpf-dragdrop"
   xmlns:local="clr-namespace:CommonUtil.View.Navigation"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   x:Name="NavigationContentListRoot"
   d:DesignHeight="450"
   d:DesignWidth="800"
@@ -33,7 +33,7 @@
     dd:DragDrop.IsDragSource="True"
     dd:DragDrop.IsDropTarget="True"
     dd:DragDrop.UseDefaultDragAdorner="True"
-    utils:RemoveListBoxDefaultSelectionBehavior.IsEnabled="True"
+    tools:RemoveListBoxDefaultSelectionBehavior.IsEnabled="True"
     ItemsSource="{Binding ToolMenuItems, ElementName=NavigationContentListRoot}"
     SelectionChanged="MenuItemSelectionChangedHandler"
     Style="{StaticResource TransparentListBoxStyle}">

@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="WhiteSpaceProcessView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -25,17 +25,17 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input Box  -->
-    <widget:DragDropTextBox
+    <tools:DragDropTextBox
       Name="DragDropTextBox"
       DragDropEvent="DragDropEventHandler"
       HasFile="{Binding HasFile, Mode=TwoWay}">
-      <widget:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.TextBox>
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      </widget:DragDropTextBox.TextBox>
-      <widget:DragDropTextBox.FileView>
-        <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-      </widget:DragDropTextBox.FileView>
-    </widget:DragDropTextBox>
+      </tools:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.FileView>
+        <tools:FileNameSizeWidget FileName="{Binding FileName}" />
+      </tools:DragDropTextBox.FileView>
+    </tools:DragDropTextBox>
 
     <!--  Control  -->
     <ui:SimpleStackPanel
@@ -69,11 +69,11 @@
         <Button Click="TextProcessClick" Content="文本处理" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <widget:IconButton
+        <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
           Text="复制结果" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ClearInputClick"
           Icon="&#xe680;"
           Style="{StaticResource GlobalErrorButtonStyle}"

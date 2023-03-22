@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="KeywordFinderView"
   Margin="8,0,0,8"
   d:DesignHeight="450"
@@ -79,12 +79,12 @@
           Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
       </DockPanel>
       <Grid>
-        <widget:IconButton
+        <tools:IconButton
           Click="FindKeywordClick"
           Icon="&#xe612;"
           Text="查找"
           Visibility="{Binding IsSearchingFinished, Converter={StaticResource HideIfFalseConverter}}" />
-        <widget:IconButton
+        <tools:IconButton
           Click="CancelFindKeywordClick"
           Icon="&#xe614;"
           Text="取消"

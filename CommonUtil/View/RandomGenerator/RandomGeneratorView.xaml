@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="RandomGenerator"
   Margin="0,0,8,8"
   d:DesignHeight="450"
@@ -214,12 +214,12 @@
             </StackPanel>
             <!--  Control  -->
             <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource MediumItemSpacing}">
-              <widget:IconButton
+              <tools:IconButton
                 Width="120"
                 Click="GenerateClick"
                 Icon="&#xe601;"
                 Text="生成" />
-              <widget:IconButton
+              <tools:IconButton
                 Width="120"
                 Click="CopyResultClick"
                 Icon="&#xe6ef;"

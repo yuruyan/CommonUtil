@@ -8,7 +8,6 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:utils="clr-namespace:CommonUITools.Utils;assembly=CommonUITools"
   Title="DesktopAutomationView"
   Margin="8,0,8,8"
   d:DesignHeight="450"

@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="CollectionToolView"
   Margin="8,0,8,8"
   d:DesignHeight="450"
@@ -32,25 +32,25 @@
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
-        <widget:IconButton
+        <tools:IconButton
           Click="UnionClickHandler"
           Icon="&#xe61c;"
           Text="并集" />
-        <widget:IconButton
+        <tools:IconButton
           Click="IntersectClickHandler"
           Icon="&#xe61f;"
           Text="交集" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ExceptClickHandler"
           Icon="&#xe615;"
           Text="差集" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <widget:IconButton
+        <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
           Text="复制结果" />
-        <widget:IconButton
+        <tools:IconButton
           Click="ClearInputClick"
           Icon="&#xe680;"
           Style="{StaticResource GlobalErrorButtonStyle}"
@@ -64,29 +64,29 @@
       Margin="0,8,0,0"
       Columns="3">
       <!--  Input Box  -->
-      <widget:DragDropTextBox
+      <tools:DragDropTextBox
         Name="DragDropTextBox1"
         DragDropEvent="DragDropEventHandler1"
         HasFile="{Binding HasFile1, Mode=TwoWay}">
-        <widget:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.TextBox>
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText1}" />
-        </widget:DragDropTextBox.TextBox>
-        <widget:DragDropTextBox.FileView>
-          <widget:FileNameSizeWidget FileName="{Binding FileName1}" />
-        </widget:DragDropTextBox.FileView>
-      </widget:DragDropTextBox>
-      <widget:DragDropTextBox
+        </tools:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.FileView>
+          <tools:FileNameSizeWidget FileName="{Binding FileName1}" />
+        </tools:DragDropTextBox.FileView>
+      </tools:DragDropTextBox>
+      <tools:DragDropTextBox
         Name="DragDropTextBox2"
         Margin="8,0"
         DragDropEvent="DragDropEventHandler2"
         HasFile="{Binding HasFile2, Mode=TwoWay}">
-        <widget:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.TextBox>
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText2}" />
-        </widget:DragDropTextBox.TextBox>
-        <widget:DragDropTextBox.FileView>
-          <widget:FileNameSizeWidget FileName="{Binding FileName2}" />
-        </widget:DragDropTextBox.FileView>
-      </widget:DragDropTextBox>
+        </tools:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.FileView>
+          <tools:FileNameSizeWidget FileName="{Binding FileName2}" />
+        </tools:DragDropTextBox.FileView>
+      </tools:DragDropTextBox>
 
       <!--  Output Box  -->
       <TextBox

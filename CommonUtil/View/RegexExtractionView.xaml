@@ -7,7 +7,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=System.Runtime"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:widget="clr-namespace:CommonUITools.Widget;assembly=CommonUITools"
+  xmlns:tools="wpf-common-ui-tools"
   Title="RegexExtractionView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -17,7 +17,7 @@
   <Page.Resources>
     <system:Double x:Key="HeaderWidth">100</system:Double>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
-    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="widget:IconButton">
+    <Style BasedOn="{StaticResource GlobalIconButtonStyle}" TargetType="tools:IconButton">
       <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
   </Page.Resources>
@@ -28,17 +28,17 @@
       Margin="0,0,4,0"
       Rows="2">
       <!--  输入  -->
-      <widget:DragDropTextBox
+      <tools:DragDropTextBox
         Name="DragDropTextBox"
         DragDropEvent="DragDropEventHandler"
         HasFile="{Binding HasFile, Mode=TwoWay}">
-        <widget:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.TextBox>
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-        </widget:DragDropTextBox.TextBox>
-        <widget:DragDropTextBox.FileView>
-          <widget:FileNameSizeWidget FileName="{Binding FileName}" />
-        </widget:DragDropTextBox.FileView>
-      </widget:DragDropTextBox>
+        </tools:DragDropTextBox.TextBox>
+        <tools:DragDropTextBox.FileView>
+          <tools:FileNameSizeWidget FileName="{Binding FileName}" />
+        </tools:DragDropTextBox.FileView>
+      </tools:DragDropTextBox>
       <!--  control  -->
       <ScrollViewer>
         <ui:SimpleStackPanel
@@ -81,15 +81,15 @@
             </DockPanel>
           </ui:SimpleStackPanel>
           <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
-            <widget:IconButton
+            <tools:IconButton
               Click="SearchClick"
               Icon="&#xe612;"
               Text="查找" />
-            <widget:IconButton
+            <tools:IconButton
               Click="CopyResultClick"
               Icon="&#xe6ef;"
               Text="复制结果" />
-            <widget:IconButton
+            <tools:IconButton
               Click="ClearInputClick"
               Icon="&#xe680;"
               Style="{StaticResource GlobalErrorButtonStyle}"
