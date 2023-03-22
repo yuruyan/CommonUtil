@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using ModernWpf;
+using System.Collections.Specialized;
 
 namespace CommonUtil.View.Navigation;
 
@@ -121,6 +122,9 @@ public partial class NavigationContentListView : UserControl {
 
     private void MenuItemListBoxLoadedHandler(object sender, RoutedEventArgs e) {
         if (sender is FrameworkElement element) {
+            RemoveListBoxItemDefaultSelectionBehavior.SetIsEnabled(element, true);
+            HoverVisibleHelper.SetTargetElement(element, element.FindDescendantByName("CloseButton"));
+            CenterScaleAnimationHelper.SetIsEnabled(element, true);
             RevealBackgroundHelper.SetIsEnabled(element, true);
             element.SetResourceReference(RevealBackgroundHelper.BrushColorProperty, "ApplicationForeground");
             RevealBackgroundHelper.SetBackgroundProperty(element, BackgroundProperty);
@@ -129,6 +133,9 @@ public partial class NavigationContentListView : UserControl {
 
     private void MenuItemListBoxUnloadedHandler(object sender, RoutedEventArgs e) {
         if (sender is FrameworkElement element) {
+            RemoveListBoxItemDefaultSelectionBehavior.Dispose(element);
+            CenterScaleAnimationHelper.Dispose(element);
+            HoverVisibleHelper.Dispose(element);
             RevealBackgroundHelper.Dispose(element);
         }
     }

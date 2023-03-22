@@ -41,9 +41,6 @@
       <DataTemplate>
         <Border
           Padding="1"
-          utils:CenterScaleAnimationHelper.IsEnabled="True"
-          utils:HoverVisibleHelper.TargetElement="{Binding ElementName=CloseButton}"
-          utils:RemoveListBoxItemDefaultSelectionBehavior.IsEnabled="True"
           BorderThickness="0"
           IsVisibleChanged="MenuItemListBoxVisibleChangedHandler"
           Loaded="MenuItemListBoxLoadedHandler"
