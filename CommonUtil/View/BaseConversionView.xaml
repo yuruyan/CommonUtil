@@ -16,6 +16,7 @@
       <TextBlock Text="{Binding Path=., StringFormat={}{0} 进制}" />
     </DataTemplate>
   </Page.Resources>
+
   <Grid>
     <UniformGrid Columns="2">
       <!--  输入  -->
@@ -34,10 +35,10 @@
           <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBlock Text="进制选择：" />
             <ComboBox
+              x:Name="BaseOptionsFromComboBox"
               Width="120"
               VerticalAlignment="Center"
               ItemTemplate="{StaticResource BaseOptionDataTemplate}"
-              ItemsSource="{Binding BaseOptions}"
               SelectedIndex="{Binding SourceBaseIndex}"
               SelectionChanged="BaseSelectionChanged" />
           </StackPanel>
@@ -59,10 +60,10 @@
           <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBlock Text="进制选择：" />
             <ComboBox
+              x:Name="BaseOptionsToComboBox"
               Width="120"
               VerticalAlignment="Center"
               ItemTemplate="{StaticResource BaseOptionDataTemplate}"
-              ItemsSource="{Binding BaseOptions}"
               SelectedIndex="{Binding TargetBaseIndex}"
               SelectionChanged="BaseSelectionChanged" />
           </StackPanel>

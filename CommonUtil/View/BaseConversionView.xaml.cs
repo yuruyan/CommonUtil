@@ -1,19 +1,13 @@
 ﻿namespace CommonUtil.View;
 
 public partial class BaseConversionView : Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
-    public static readonly DependencyPropertyKey BaseOptionsPropertyKey = DependencyProperty.RegisterReadOnly("BaseOptions", typeof(IList<int>), typeof(BaseConversionView), new PropertyMetadata());
-    public static readonly DependencyProperty BaseOptionsProperty = BaseOptionsPropertyKey.DependencyProperty;
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly IReadOnlyList<int> BaseOptions = Enumerable.Range(2, 35).ToList();
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(BaseConversionView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(BaseConversionView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty SourceBaseIndexProperty = DependencyProperty.Register("SourceBaseIndex", typeof(int), typeof(BaseConversionView), new PropertyMetadata(8));
     public static readonly DependencyProperty TargetBaseIndexProperty = DependencyProperty.Register("TargetBaseIndex", typeof(int), typeof(BaseConversionView), new PropertyMetadata(8));
 
-    /// <summary>
-    /// 进制选择
-    /// </summary>
-    public IList<int> BaseOptions => (IList<int>)GetValue(BaseOptionsProperty);
     /// <summary>
     /// 输入
     /// </summary>
@@ -44,8 +38,8 @@ public partial class BaseConversionView : Page {
     }
 
     public BaseConversionView() {
-        SetValue(BaseOptionsPropertyKey, Enumerable.Range(2, 35).ToList());
         InitializeComponent();
+        BaseOptionsToComboBox.ItemsSource = BaseOptionsFromComboBox.ItemsSource = BaseOptions;
     }
 
     /// <summary>
@@ -86,6 +80,4 @@ public partial class BaseConversionView : Page {
         }
         OutputText = sb.ToString();
     }
-
 }
-
