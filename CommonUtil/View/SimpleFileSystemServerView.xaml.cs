@@ -4,14 +4,14 @@ using System.Net.Sockets;
 namespace CommonUtil.View;
 
 public partial class SimpleFileSystemServerView : Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     /// <summary>
     /// 端口被占用时下一个端口即为当前端口值+该值
     /// </summary>
     private const int PortInterval = 256;
 
     public static readonly DependencyProperty SharingDirectoryProperty = DependencyProperty.Register("SharingDirectory", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
-    public static readonly DependencyProperty IsServerStartedProperty = DependencyProperty.Register("IsServerStarted", typeof(bool), typeof(SimpleFileSystemServerView), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsServerStartedProperty = DependencyProperty.Register("IsServerStarted", typeof(bool), typeof(SimpleFileSystemServerView), new PropertyMetadata(false, IsServerStartedPropertyChangedHandler));
     public static readonly DependencyProperty ServerPortProperty = DependencyProperty.Register("ServerPort", typeof(int), typeof(SimpleFileSystemServerView), new PropertyMetadata(3000));
     public static readonly DependencyProperty ServerURLProperty = DependencyProperty.Register("ServerURL", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
 
@@ -22,7 +22,6 @@ public partial class SimpleFileSystemServerView : Page {
         get { return (string)GetValue(SharingDirectoryProperty); }
         set { SetValue(SharingDirectoryProperty, value); }
     }
-    private CommonUtil.Core.SimpleFileSystemServer? SimpleFileSystemServer;
     /// <summary>
     /// 服务器是否启动
     /// </summary>
@@ -44,32 +43,38 @@ public partial class SimpleFileSystemServerView : Page {
         get { return (string)GetValue(ServerURLProperty); }
         set { SetValue(ServerURLProperty, value); }
     }
+
+    private SimpleFileSystemServer? SimpleFileSystemServer;
     /// <summary>
     /// 当前 Window
     /// </summary>
     private Window CurrentWindow = Application.Current.MainWindow;
+    private readonly VistaFolderBrowserDialog SelectSharingFolderDialog = new() {
+        Description = "选择分享目录",
+        UseDescriptionForTitle = true
+    };
 
     public SimpleFileSystemServerView() {
         InitializeComponent();
         SharingDirectory = Directory.GetCurrentDirectory();
-        DependencyPropertyDescriptor.FromProperty(IsServerStartedProperty, typeof(SimpleFileSystemServerView)).AddValueChanged(this, ServerStateChangedHandler);
-        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
+            if (sender is SimpleFileSystemServerView self) {
+                self.CurrentWindow = Window.GetWindow(self);
+            }
+        });
     }
 
-    /// <summary>
-    /// 服务器状态变化 Handler
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ServerStateChangedHandler(object? sender, EventArgs e) {
-        if (IsServerStarted) {
-            ServerURL = $"http://{NetworkUtils.GetLocalIpAddress()}:{ServerPort}";
+    private static void IsServerStartedPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is not SimpleFileSystemServerView self) {
+            return;
+        }
+        if (e.NewValue is true) {
+            self.ServerURL = $"http://{NetworkUtils.GetLocalIpAddress()}:{self.ServerPort}";
             // 复制到剪贴板
-            Clipboard.SetDataObject(ServerURL);
+            Clipboard.SetDataObject(self.ServerURL);
             // 监听停止状态
-            CommonUtils.NullCheck(SimpleFileSystemServer)
-            .Stopped += (s, e) => {
-                Dispatcher.Invoke(() => IsServerStarted = false);
+            self.SimpleFileSystemServer!.Stopped += (s, e) => {
+                self.Dispatcher.Invoke(() => self.IsServerStarted = false);
             };
         }
     }
@@ -81,12 +86,8 @@ public partial class SimpleFileSystemServerView : Page {
     /// <param name="e"></param>
     private void SelectSharingDirectoryClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        var dialog = new VistaFolderBrowserDialog {
-            Description = "选择分享目录",
-            UseDescriptionForTitle = true
-        };
-        if (dialog.ShowDialog(CurrentWindow) == true) {
-            SharingDirectory = dialog.SelectedPath;
+        if (SelectSharingFolderDialog.ShowDialog(CurrentWindow) == true) {
+            SharingDirectory = SelectSharingFolderDialog.SelectedPath;
         }
     }
 
@@ -191,4 +192,3 @@ public partial class SimpleFileSystemServerView : Page {
         }
     }
 }
-
