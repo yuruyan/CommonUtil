@@ -14,6 +14,7 @@
         <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml" />
         <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/OtherResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <FontFamily x:Key="IconFontUrI">/CommonUtil.Data;component/Resources/#IconFont</FontFamily>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

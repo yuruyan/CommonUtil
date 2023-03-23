@@ -5,9 +5,10 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:store="clr-namespace:CommonUtil.Store"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomGenerator"
   Margin="0,0,8,8"
   d:DesignHeight="450"
@@ -154,7 +155,7 @@
         Content="生成随机日本姓名"
         ToolTip="生成随机日本姓名">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="/resource/image/JapaneseSymbol.png" />
+          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImage}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -162,7 +163,7 @@
         Content="生成随机日本姓氏"
         ToolTip="生成随机日本姓氏">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="/resource/image/JapaneseSymbol.png" />
+          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImage}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem

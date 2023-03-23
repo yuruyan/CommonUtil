@@ -1,4 +1,5 @@
 ﻿using System.IO.Pipes;
+using System.Reflection;
 
 namespace CommonUtil;
 
@@ -10,7 +11,10 @@ public partial class App : Application {
         // 确保路径为当前可执行程序目录
         Environment.CurrentDirectory = Path.GetDirectoryName(Environment.ProcessPath)!;
         if (BootstrapPipeName is null) {
-            new SplashScreen("/Resource/SplashWindow.png").Show(true);
+            new SplashScreen(
+                Assembly.Load("CommonUtil.Data"),
+                "Resources/SplashWindow.png"
+            ).Show(true);
         }
     }
 

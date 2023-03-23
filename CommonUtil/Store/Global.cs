@@ -6,7 +6,8 @@ public static class Global {
     /// </summary>
     public const int ConcurrentTaskCount = 8;
     public const string AppTitle = "工具集";
-    public const string ImagePath = "/Resource/image/";
+    public const string DataSource = "/CommonUtil.Data;component/Resources";
+    public const string ImageSource = $"{DataSource}/Images/";
     /// <summary>
     /// 当前可执行文件目录别名
     /// </summary>
@@ -32,4 +33,8 @@ public static class Global {
     /// 菜单项目
     /// </summary>
     internal static readonly IReadOnlyList<ToolMenuItem> MenuItems = DataSet.ToolMenuItems;
+
+    #region Images
+    public const string JapaneseSymbolImage = $"{ImageSource}JapaneseSymbol.png";
+    #endregion
 }

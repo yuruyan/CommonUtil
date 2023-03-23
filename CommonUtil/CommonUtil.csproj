@@ -20,36 +20,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Resource\lib\nodejs\**" />
-    <EmbeddedResource Remove="Resource\lib\nodejs\**" />
-    <None Remove="Resource\lib\nodejs\**" />
-    <Page Remove="Resource\lib\nodejs\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Config\AppConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resource\lib\uncrustify\defaults.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resource\lib\uncrustify\uncrustify.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
+    <ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="favicon.ico" />
-    <Resource Include="Resource\iconfont.ttf" />
-    <Resource Include="Resource\image\*" />
-    <Resource Include="Resource\SplashWindow.png" />
   </ItemGroup>
 
   <Choose>
@@ -233,6 +218,5 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 
 </Project>
