@@ -10,7 +10,8 @@ public partial class TimeStampView : ResponsivePage {
     public static readonly DependencyProperty StringToTimeStampInputProperty = DependencyProperty.Register("StringToTimeStampInput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampOutputProperty = DependencyProperty.Register("StringToTimeStampOutput", typeof(string), typeof(TimeStampView), new PropertyMetadata(""));
     public static readonly DependencyProperty StringToTimeStampChoiceProperty = DependencyProperty.Register("StringToTimeStampChoice", typeof(string), typeof(TimeStampView), new PropertyMetadata("毫秒(ms)"));
-    public static readonly DependencyProperty TimeStampOptionsProperty = DependencyProperty.Register("TimeStampOptions", typeof(IList<string>), typeof(TimeStampView), new PropertyMetadata());
+    public static readonly DependencyPropertyKey TimeStampOptionsPropertyKey = DependencyProperty.RegisterReadOnly("TimeStampOptions", typeof(IList<string>), typeof(TimeStampView), new PropertyMetadata());
+    public static readonly DependencyProperty TimeStampOptionsProperty = TimeStampOptionsPropertyKey.DependencyProperty;
 
     /// <summary>
     /// 当前时间戳
@@ -64,10 +65,7 @@ public partial class TimeStampView : ResponsivePage {
     /// <summary>
     /// 时间戳选项
     /// </summary>
-    public IList<string> TimeStampOptions {
-        get { return (IList<string>)GetValue(TimeStampOptionsProperty); }
-        set { SetValue(TimeStampOptionsProperty, value); }
-    }
+    public IList<string> TimeStampOptions => (IList<string>)GetValue(TimeStampOptionsProperty);
     /// <summary>
     /// 更新时间 Timer
     /// </summary>
@@ -78,9 +76,9 @@ public partial class TimeStampView : ResponsivePage {
     private readonly string MillisecondValue;
 
     public TimeStampView() {
+        SetValue(TimeStampOptionsPropertyKey, DataSet.TimeStampOptions.ToArray());
         InitializeComponent();
         #region 初始化 TimeStamp
-        TimeStampOptions = DataSet.TimeStampOptions.ToArray();
         MillisecondValue = TimeStampOptions[0];
         CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
         StringToTimeStampOutput = TimeStampToStringInput = CurrentTimeStamp;
@@ -91,7 +89,6 @@ public partial class TimeStampView : ResponsivePage {
         UpdateTimeStampTimer.Tick += (_, _) => {
             CurrentTimeStamp = TimeStamp.GetCurrentMilliSeconds().ToString();
         };
-        UpdateTimeStampTimer.Start();
         #endregion
     }
 
@@ -146,5 +143,13 @@ public partial class TimeStampView : ResponsivePage {
             Logger.Info(error);
             MessageBoxUtils.Error("转换失败！");
         }
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        UpdateTimeStampTimer.Start();
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        UpdateTimeStampTimer.Stop();
     }
 }
