@@ -1,26 +1,21 @@
 ﻿namespace CommonUtil.View;
 
 public partial class AsciiTableView : Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static readonly DependencyProperty AsciiTableListProperty = DependencyProperty.Register("AsciiTableList", typeof(ExtendedObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    public static readonly DependencyPropertyKey AsciiTableListPropertyKey = DependencyProperty.RegisterReadOnly("AsciiTableList", typeof(ExtendedObservableCollection<AsciiInfo>), typeof(AsciiTableView), new PropertyMetadata());
+    public static readonly DependencyProperty AsciiTableListProperty = AsciiTableListPropertyKey.DependencyProperty;
 
     /// <summary>
     /// ASCII 列表
     /// </summary>
-    public ExtendedObservableCollection<AsciiInfo> AsciiTableList {
-        get { return (ExtendedObservableCollection<AsciiInfo>)GetValue(AsciiTableListProperty); }
-        set { SetValue(AsciiTableListProperty, value); }
-    }
+    public ExtendedObservableCollection<AsciiInfo> AsciiTableList => (ExtendedObservableCollection<AsciiInfo>)GetValue(AsciiTableListProperty);
 
     public AsciiTableView() {
-        AsciiTableList = new();
+        SetValue(
+            AsciiTableListPropertyKey,
+            new ExtendedObservableCollection<AsciiInfo>(AsciiTable.GetAsciiInfoList())
+        );
         InitializeComponent();
-        this.SetLoadedOnceEventHandler(static (sender, _) => {
-            if (sender is not AsciiTableView self) {
-                return;
-            }
-            self.AsciiTableList.AddRange(AsciiTable.GetAsciiInfoList());
-        });
     }
 
     /// <summary>
