@@ -130,7 +130,7 @@ public partial class DataDigestView : Page {
         DigestAlgorithms = DigestInfoDict.Keys.ToArray();
         InitializeComponent();
         // 初始化 AlgorithmMenuFlyout
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => {
+        this.SetLoadedOnceEventHandler((_, _) => {
             DigestAlgorithms.ForEach(item => {
                 var menuItem = new MenuItem() {
                     Header = item,

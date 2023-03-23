@@ -74,7 +74,7 @@ public sealed partial class DownloadInfoDialog : BaseDialog {
         ProxyTypes = DataSet.ProxyTypes.ToArray();
         SaveDir = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
         InitializeComponent();
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>

@@ -34,7 +34,7 @@
         <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
       </tools:DragDropTextBox.TextBox>
       <tools:DragDropTextBox.FileView>
-        <tools:FileNameSizeWidget FileName="{Binding FileName}" />
+        <tools:FileNameSizeBox FileName="{Binding FileName}" />
       </tools:DragDropTextBox.FileView>
     </tools:DragDropTextBox>
     <!--  Control  -->

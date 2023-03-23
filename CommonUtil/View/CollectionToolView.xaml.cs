@@ -101,8 +101,8 @@ public partial class CollectionToolView : ResponsivePage {
         OutputText = string.Join(
                         '\n',
                         func(
-                            CommonUtils.NormalizeMultipleLineText(InputText1).Split('\n'),
-                            CommonUtils.NormalizeMultipleLineText(InputText2).Split('\n')
+                            InputText1.ReplaceLineFeedWithLinuxStyle().Split('\n'),
+                            InputText2.ReplaceLineFeedWithLinuxStyle().Split('\n')
                         )
                      );
     }
@@ -118,8 +118,8 @@ public partial class CollectionToolView : ResponsivePage {
         }
         var savePath = SaveFileDialog.FileName;
         // 解码
-        var list1 = CommonUtils.NormalizeMultipleLineText(InputText1).Split('\n');
-        var list2 = CommonUtils.NormalizeMultipleLineText(InputText2).Split('\n');
+        var list1 = InputText1.ReplaceLineFeedWithLinuxStyle().Split('\n');
+        var list2 = InputText2.ReplaceLineFeedWithLinuxStyle().Split('\n');
         // 读取文件
         try {
             if (HasFile1) {

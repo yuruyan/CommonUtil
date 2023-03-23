@@ -33,7 +33,7 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
 
     public MainContentView() {
         SetValue(MenuItemsKey, new ObservableCollection<ToolMenuItem>());
-        UIUtils.SetLoadedOnceEventHandler(this, InitializeLoadedHandler);
+        this.SetLoadedOnceEventHandler(InitializeLoadedHandler);
         InitializeComponent();
         #region 设置 Storyboard
         MainContentViewBackgroundStoryboard = (Storyboard)Resources["MainContentViewBackgroundStoryboard"];

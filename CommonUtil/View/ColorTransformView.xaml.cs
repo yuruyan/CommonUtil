@@ -216,14 +216,15 @@ public partial class ColorTransformView : Page {
         InitializeComponent();
         SelectedColor = Colors.White;
     }
-
+    private readonly Debounce UpdateColorDebounce = new(UpdateInterval, true);
+    private readonly Debounce SliderValueChangedDebounce = new(UpdateInterval, true);
     /// <summary>
     /// 更新颜色
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void UpdateColor(Color color) {
-        DebounceUtils.Debounce(UpdateColor, () => {
+        UpdateColorDebounce.Run(() => {
             UpdateColorResults.Clear();
             foreach (var item in Dispatcher.Invoke(() => ColorItems)) {
                 UpdateColorResults.Add(item.ColorToString(color));
@@ -235,7 +236,7 @@ public partial class ColorTransformView : Page {
                     ColorItems[i].Color = UpdateColorResults[i];
                 }
             });
-        }, true, UpdateInterval);
+        });
     }
 
     /// <summary>
@@ -300,7 +301,7 @@ public partial class ColorTransformView : Page {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void SliderValueChangedHandler(object? sender, EventArgs e) {
-        DebounceUtils.Debounce(SliderValueChangedHandler, () => {
+        SliderValueChangedDebounce.Run(() => {
             Dispatcher.Invoke(() => {
                 if (sender is SliderInfo info) {
                     var colorItem = SliderInfoColorItemDict[info];
@@ -310,7 +311,7 @@ public partial class ColorTransformView : Page {
                     UpdateInputColor(color);
                 }
             });
-        }, true, UpdateInterval);
+        });
     }
 
     /// <summary>

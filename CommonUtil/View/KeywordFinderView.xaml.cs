@@ -84,7 +84,7 @@ public partial class KeywordFinderView : ResponsivePage {
         KeywordResults = new();
         KeywordResults.CollectionChanged += KeywordResultsCollectionChanged;
         InitializeComponent();
-        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
             if (sender is KeywordFinderView self) {
                 self.CurrentWindow = Window.GetWindow(self);
             }
@@ -141,7 +141,7 @@ public partial class KeywordFinderView : ResponsivePage {
         var excludeFiles = new List<string>();
         if (IsExcludeDirectorySelected) {
             excludeDirs.AddRange(
-                CommonUtils.NormalizeMultipleLineText(ExcludeDirectory)
+                ExcludeDirectory.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Select(s => s.Trim())
                 .Where(s => s.Any())
@@ -149,7 +149,7 @@ public partial class KeywordFinderView : ResponsivePage {
         }
         if (IsExcludeFileSelected) {
             excludeFiles.AddRange(
-                CommonUtils.NormalizeMultipleLineText(ExcludeFile)
+                ExcludeFile.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Select(s => s.Trim())
                 .Where(s => s.Any())
@@ -234,7 +234,7 @@ public partial class KeywordFinderView : ResponsivePage {
     private void OpenSearchDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (sender is TextBlock element) {
-            UIUtils.OpenFileInExplorerAsync(element.Text);
+            element.Text.OpenFileInExplorerAsync();
         }
     }
 
@@ -246,7 +246,7 @@ public partial class KeywordFinderView : ResponsivePage {
     private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
-            UIUtils.OpenFileWithAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
+            Path.Combine(SearchDirectory, result.Filename).OpenFileWithAsync();
         }
     }
 
@@ -258,7 +258,7 @@ public partial class KeywordFinderView : ResponsivePage {
     private void OpenDirectoryClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is KeywordResult result) {
-            UIUtils.OpenFileInExplorerAsync(System.IO.Path.Combine(SearchDirectory, result.Filename));
+            Path.Combine(SearchDirectory, result.Filename).OpenFileInExplorerAsync();
         }
     }
 

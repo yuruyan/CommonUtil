@@ -49,8 +49,7 @@ internal class ThemeManager : DependencyObject {
     /// <param name="newSource"></param>
     /// <returns></returns>
     private bool ReplaceResourceDictionary(string oldSource, string newSource) {
-        return UIUtils.ReplaceResourceDictionary(
-            App.Current.Resources.MergedDictionaries,
+        return App.Current.Resources.MergedDictionaries.ReplaceResourceDictionary(
             oldSource,
             newSource
         );

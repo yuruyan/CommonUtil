@@ -28,10 +28,10 @@ public partial class DownloadedView : Page {
             string filepath = Path.Combine(task.SaveDirectory.FullName, task.FileName);
             // 文件存在
             if (File.Exists(filepath)) {
-                UIUtils.OpenFileInExplorerAsync(filepath);
+                filepath.OpenFileInExplorerAsync();
             } else {
                 // 不存在则打开所在文件夹
-                UIUtils.OpenFileInExplorerAsync(task.SaveDirectory.FullName);
+                task.SaveDirectory.FullName.OpenFileInExplorerAsync();
             }
         }
     }
@@ -59,7 +59,7 @@ public partial class DownloadedView : Page {
     private void OpenFileClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         if (sender is FrameworkElement element && element.DataContext is DownloadTask result) {
-            UIUtils.OpenFileWithAsync(Path.Join(result.SaveDirectory.FullName, result.FileName));
+            Path.Join(result.SaveDirectory.FullName, result.FileName).OpenFileWithAsync();
         }
     }
 

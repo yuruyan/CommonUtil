@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="CollectionToolView"
   Margin="8,0,8,8"
   d:DesignHeight="450"
@@ -72,7 +72,7 @@
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText1}" />
         </tools:DragDropTextBox.TextBox>
         <tools:DragDropTextBox.FileView>
-          <tools:FileNameSizeWidget FileName="{Binding FileName1}" />
+          <tools:FileNameSizeBox FileName="{Binding FileName1}" />
         </tools:DragDropTextBox.FileView>
       </tools:DragDropTextBox>
       <tools:DragDropTextBox
@@ -84,7 +84,7 @@
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText2}" />
         </tools:DragDropTextBox.TextBox>
         <tools:DragDropTextBox.FileView>
-          <tools:FileNameSizeWidget FileName="{Binding FileName2}" />
+          <tools:FileNameSizeBox FileName="{Binding FileName2}" />
         </tools:DragDropTextBox.FileView>
       </tools:DragDropTextBox>
 

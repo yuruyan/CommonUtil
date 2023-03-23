@@ -18,7 +18,7 @@ public partial class App : Application {
         base.OnStartup(e);
         var mainWindow = new MainWindow();
         // 显式初始化 FileIcon
-        UIUtils.SetLoadedOnceEventHandler(mainWindow, (_, _) => {
+        mainWindow.SetLoadedOnceEventHandler((_, _) => {
             Task.Run(() => FileIconUtils.InitializeExplicitly());
             if (BootstrapPipeName is null) {
                 return;

@@ -17,7 +17,7 @@ public class Downloader {
     /// 更新进度视图间隔时间
     /// </summary>
     public const short UpdateProcessInterval = 500;
-
+    private readonly Debounce DownloadProgressDebounce = new(callRegular: true);
     public event EventHandler<DownloadTask>? DownloadCompleted;
     public event EventHandler<DownloadTask>? DownloadFailed;
 
@@ -103,7 +103,7 @@ public class Downloader {
         if (sender is not DownloadService service) {
             return;
         }
-        DebounceUtils.Debounce(service, () => {
+        DownloadProgressDebounce.Run(() => {
             if (!DownloadTaskInfoDict.TryGetValue(service, out var taskInfo)) {
                 return;
             }
@@ -114,7 +114,6 @@ public class Downloader {
                 taskInfo.DownloadSpeed = e.BytesPerSecondSpeed;
                 taskInfo.Process = (byte)e.ProgressPercentage;
             });
-        }, true);
+        });
     }
-
 }

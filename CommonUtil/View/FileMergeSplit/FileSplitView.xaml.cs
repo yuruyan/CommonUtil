@@ -118,7 +118,7 @@ public partial class FileSplitView : Page {
     public FileSplitView() {
         FileSizeTypeOptions = FileSizeTypeOptionMap.Keys.ToArray();
         InitializeComponent();
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     private static void SplitFilePathPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {

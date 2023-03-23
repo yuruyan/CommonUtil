@@ -1,5 +1,4 @@
-﻿using CommonUITools.Widget;
-using CommonUtil.View;
+﻿using CommonUtil.View;
 using System.Windows.Navigation;
 
 namespace CommonUtil;

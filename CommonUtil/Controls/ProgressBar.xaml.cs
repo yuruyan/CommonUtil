@@ -21,7 +21,7 @@ public partial class ProgressBar : UserControl {
     public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(SolidColorBrush), typeof(ProgressBar), new PropertyMetadata());
 
     public ProgressBar() {
-        ProgressBarForeground = (TryFindResource("SuccessBackground") as SolidColorBrush) ?? UIUtils.StringToBrush("#28A745");
+        ProgressBarForeground = (TryFindResource("SuccessBackground") as SolidColorBrush) ?? "#28A745".ToBrush();
         InitializeComponent();
     }
 }

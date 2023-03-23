@@ -52,7 +52,7 @@ public partial class FtpServerView : Page {
         InitializeComponent();
         // 启动 nodejs 服务
         Task.Run(() => TaskUtils.Try(() => Server.CheckNodeJsServer()));
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public partial class FtpServerView : Page {
     /// <param name="e"></param>
     private void OpenRootDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
-        UIUtils.OpenFileInExplorerAsync(RootDirectory);
+        RootDirectory.OpenFileInExplorerAsync();
     }
 
     /// <summary>

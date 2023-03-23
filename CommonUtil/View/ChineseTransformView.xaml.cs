@@ -69,7 +69,7 @@ public partial class ChineseTransformView : ResponsivePage {
         InitializeComponent();
         // 后台加载
         Task.Run(ChineseTransform.InitializeExplicitly);
-        UIUtils.SetLoadedOnceEventHandler(this, static (sender, _) => {
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
             if (sender is ChineseTransformView self) {
                 self.CurrentWindow = Window.GetWindow(self);
             }

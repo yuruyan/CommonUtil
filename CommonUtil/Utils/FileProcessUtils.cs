@@ -171,7 +171,7 @@ public static class FileProcessUtils {
                 status.Status = ProcessResult.Successful;
                 status.Process = 1;
                 status.FileSize = new FileInfo(saveFilename).Length;
-                UIUtils.NotificationOpenFileInExplorerAsync(saveFilename, title: "处理成功");
+                saveFilename.NotificationOpenFileInExplorerAsync(title: "处理成功");
             }
         } catch (IOException error) {
             status.Status = ProcessResult.Failed;

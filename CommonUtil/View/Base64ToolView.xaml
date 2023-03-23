@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="Base64Tool"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -82,8 +82,8 @@
 
     <!--  Output  -->
     <Grid Grid.Row="2">
-      <tools:FileProcessStatusWidget
-        x:Name="FileProcessStatusWidget"
+      <tools:FileProcessStatusBox
+        x:Name="FileProcessStatusBox"
         FileProcessStatusList="{Binding FileProcessStatuses}"
         Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
       <TextBox

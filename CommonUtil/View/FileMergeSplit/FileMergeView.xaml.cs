@@ -76,7 +76,7 @@ public partial class FileMergeView : Page {
     public FileMergeView() {
         MergeFiles = new();
         InitializeComponent();
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>

@@ -178,21 +178,6 @@
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.CommonUtils.GetSamePrefix(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            获取集合相同前缀
-            </summary>
-            <param name="list"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Utils.CommonUtils.NormalizeMultipleLineText(System.String)">
-            <summary>
-            标准化多行输入文本
-            将 "\r\n" 替换为 '\n'
-            </summary>
-            <param name="text"></param>
-            <returns></returns>
-        </member>
         <member name="F:CommonTools.Utils.CommonUtils.SingletonDict">
             <summary>
             单例模式对象 Dict
@@ -397,14 +382,14 @@
             当前时间戳(s)
             </summary>
         </member>
-        <member name="M:CommonTools.Utils.DateTimeUtils.ConvertToTimestamp(System.DateTime)">
+        <member name="M:CommonTools.Utils.DateTimeUtils.ToTimestamp(System.DateTime)">
             <summary>
             DateTime 转 Timestamp
             </summary>
             <param name="value"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.DateTimeUtils.ConvertToDateTime(System.String,System.String)">
+        <member name="M:CommonTools.Utils.DateTimeUtils.ToDateTime(System.String,System.String)">
             <summary>
             string 日期转 DateTime
             </summary>
@@ -412,7 +397,7 @@
             <param name="pattern"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.DateTimeUtils.ConvertToDateTime(System.Int64,System.Boolean)">
+        <member name="M:CommonTools.Utils.DateTimeUtils.ToDateTime(System.Int64,System.Boolean)">
             <summary>
             时间戳转 DateTime
             </summary>
@@ -441,27 +426,21 @@
             <param name="date"></param>
             <returns></returns>
         </member>
-        <member name="F:CommonTools.Utils.DebounceUtils.NoResponseTimes">
+        <member name="F:CommonTools.Utils.Debounce.NoResponseTimes">
             <summary>
-            超过 interval * <see cref="F:CommonTools.Utils.DebounceUtils.NoResponseTimes"/> 时间没有请求，则暂停定时器
+            超过 interval * <see cref="F:CommonTools.Utils.Debounce.NoResponseTimes"/> 时间没有请求，则暂停定时器
             </summary>
         </member>
-        <member name="M:CommonTools.Utils.DebounceUtils.Debounce(System.Object,System.Action,System.Boolean,System.Int32)">
+        <member name="P:CommonTools.Utils.Debounce.CanInvoke">
             <summary>
-            防抖
+            是否可以调用
             </summary>
-            <param name="identifier"></param>
-            <param name="callback"></param>
-            <param name="callRegular">是否每隔 interval 时间调用一次</param>
-            <param name="interval"></param>
+            <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.DebounceUtils.Debounce``1(System.Action{``0},System.Int32)">
+        <member name="P:CommonTools.Utils.Debounce.CanStop">
             <summary>
-            防抖函数
+            是否可以停止计时以节省资源
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="callback"></param>
-            <param name="interval"></param>
             <returns></returns>
         </member>
         <member name="F:CommonTools.Utils.DigestUtils.ReadBufferSize">
@@ -532,6 +511,9 @@
             <summary>
             扩展方法
             </summary>
+            <summary>
+            for string
+            </summary>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Remove``1(System.Collections.Generic.ICollection{``0},System.Func{``0,System.Boolean})">
             <summary>
@@ -598,20 +580,6 @@
             <param name="target"></param>
             <param name="source"></param>
             <param name="converter">转换器</param>
-        </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
-            <summary>
-            替换 '/' 为 '\\'
-            </summary>
-            <param name="source"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceBackSlashWithSlash(System.String)">
-            <summary>
-            替换 '\\' 为 '/'
-            </summary>
-            <param name="source"></param>
-            <returns></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
             <summary>
@@ -717,6 +685,34 @@
             <typeparam name="T"></typeparam>
             <param name="source"></param>
             <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.GetSamePrefix(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            获取集合相同前缀
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
+            <summary>
+            替换 '/' 为 '\\'
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceBackSlashWithSlash(System.String)">
+            <summary>
+            替换 '\\' 为 '/'
+            </summary>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceLineFeedWithLinuxStyle(System.String)">
+            <summary>
+            将换行符替换为 Linux 样式 (\n)
+            </summary>
+            <param name="source"></param>
             <returns></returns>
         </member>
         <member name="T:CommonTools.Utils.MessageUtils">
@@ -895,6 +891,7 @@
             简化 try 代码块，以异步方式
             </summary>
             <param name="task"></param>
+            <param name="defaultValue"></param>
         </member>
         <member name="M:CommonTools.Utils.TaskUtils.DelayTaskAsync(System.Int32,System.Action)">
             <summary>
@@ -932,26 +929,26 @@
             调用过的方法 Set
             </summary>
         </member>
-        <member name="F:CommonTools.Utils.TaskUtils.MethodCalledTupleSet">
-            <summary>
-            调用过的方法 Set
-            </summary>
-        </member>
         <member name="F:CommonTools.Utils.TaskUtils.MethodCalledLockDict">
             <summary>
             Tuple lock
             </summary>
         </member>
-        <member name="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate)">
+        <member name="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate,System.Boolean,System.Object)">
             <summary>
             确保方法只调用一次
             </summary>
             <param name="identifier">唯一标识</param>
             <param name="callback">回调方法</param>
+            <param name="hasParameters">是否有参数</param>
+            <param name="args"><paramref name="callback"/> 参数</param>
             <returns>返回 true 则未调用过，否则返回 false</returns>
         </member>
-        <member name="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.ValueTuple{System.Object,System.Object},System.Delegate)">
-            <inheritdoc cref="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate)"/>
+        <member name="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate,System.Object)">
+            <inheritdoc cref="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate,System.Boolean,System.Object)"/>
+        </member>
+        <member name="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate)">
+            <inheritdoc cref="M:CommonTools.Utils.TaskUtils.EnsureCalledOnce(System.Object,System.Delegate,System.Boolean,System.Object)"/>
         </member>
         <member name="F:CommonTools.Utils.TaskUtils.PreviousTaskDict">
             <summary>

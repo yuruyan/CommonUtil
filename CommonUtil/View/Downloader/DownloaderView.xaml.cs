@@ -85,8 +85,7 @@ public partial class DownloaderView : Page {
         }
         bool anySuccess = false;
         WebProxy? proxy = null;
-        var urls = CommonUtils
-            .NormalizeMultipleLineText(DownloadInfoDialog.URL)
+        var urls = DownloadInfoDialog.URL.ReplaceLineFeedWithLinuxStyle()
             .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(u => (u.StartsWith("http://") || u.StartsWith("https://")) ? u : $"https://{u}");
         // 设置代理

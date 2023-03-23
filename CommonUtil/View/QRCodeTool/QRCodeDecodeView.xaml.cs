@@ -85,7 +85,7 @@ public partial class QRCodeDecodeView : ResponsivePage {
     [NoException]
     private void DoParseQRCodeImage(string filepath)
         => HandleParseQRCodeImageExceptionAsync(async () => {
-            QRCodeImage.Source = UIUtils.CopyImageSource(filepath);
+            QRCodeImage.Source = filepath.GetImageSource();
             return await Task.Run(() => QRCodeTool.DecodeQRCode(filepath));
         });
 
@@ -96,13 +96,13 @@ public partial class QRCodeDecodeView : ResponsivePage {
     [NoException]
     private void DoParseQRCodeImage(BitmapSource bitmapSource)
         => HandleParseQRCodeImageExceptionAsync(async () => {
-            using var bitmap = UIUtils.BitmapSourceToBitmap(bitmapSource);
+            using var bitmap = bitmapSource.ToBitmap();
             // 加载图片失败
             if (bitmap is null) {
                 throw new FormatException();
             }
             return await Task.Run(() => {
-                using var stream = UIUtils.BitmapToStream(bitmap);
+                using var stream = bitmap.ToStream();
                 return QRCodeTool.DecodeQRCode(stream);
             });
         });
@@ -132,7 +132,7 @@ public partial class QRCodeDecodeView : ResponsivePage {
         if (string.IsNullOrEmpty(DecodeText)) {
             return;
         }
-        TaskUtils.Try(() => UIUtils.OpenInBrowser(DecodeText));
+        TaskUtils.Try(() => DecodeText.OpenInBrowser());
     }
 
     /// <summary>

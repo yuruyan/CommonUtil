@@ -165,7 +165,7 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
         try {
             await File.WriteAllBytesAsync(path, data);
             MessageBoxUtils.NotifySuccess("保存成功", "点击打开", callback: () => {
-                UIUtils.OpenFileInExplorerAsync(path);
+                path.OpenFileInExplorerAsync();
             });
         } catch {
             MessageBoxUtils.Error("保存失败！");
@@ -278,7 +278,7 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
     /// <param name="e"></param>
     private void QRCodeForegroundKeyUpHandler(object sender, KeyEventArgs e) {
         if (sender is TextBox textBox) {
-            var color = TaskUtils.Try(() => UIUtils.StringToColor(textBox.Text) as Color?);
+            var color = TaskUtils.Try(() => textBox.Text.ToColor() as Color?);
             // 转换失败
             if (color is null) {
                 return;
@@ -300,7 +300,7 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
         IconPath = OpenFileDialog.FileName;
         // 尝试加载图标
         try {
-            var iconBi = UIUtils.CopyImageSource(IconPath);
+            var iconBi = IconPath.GetImageSource();
             IconImage.Source = iconBi;
             // 释放资源
             IconBitmapImage?.StreamSource?.Close();

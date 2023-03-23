@@ -29,7 +29,7 @@ public partial class CommonRegexListDialog : BaseDialog {
     public CommonRegexListDialog() {
         RegexList = CommonRegexList;
         InitializeComponent();
-        this.EnableContentDialogAutoResize(
+        this.EnableAutoResize(
             (double)Resources["RegexListItemsControlMinWidth"],
             (double)Resources["RegexListItemsControlMaxWidth"]
         );

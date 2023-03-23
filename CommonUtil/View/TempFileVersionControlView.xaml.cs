@@ -65,7 +65,7 @@ public partial class TempFileVersionControlView : Page {
     public TempFileVersionControlView() {
         WatchFiles = new();
         InitializeComponent();
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>

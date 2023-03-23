@@ -167,8 +167,8 @@ public static class RandomGenerator {
     /// <param name="count"></param>
     /// <returns></returns>
     public static DateTime[] GenerateRandomDateTime(DateTime minDateTime, DateTime maxDateTime, uint count) {
-        long minMills = DateTimeUtils.ConvertToTimestamp(minDateTime);
-        long maxMills = DateTimeUtils.ConvertToTimestamp(maxDateTime);
+        long minMills = minDateTime.ToTimestamp();
+        long maxMills = maxDateTime.ToTimestamp();
         long gap = maxMills - minMills;
         var data = new DateTime[count];
         for (int i = 0; i < count; i++) {

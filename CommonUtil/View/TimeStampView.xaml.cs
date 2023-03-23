@@ -97,8 +97,8 @@ public partial class TimeStampView : ResponsivePage {
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
         // 反转顺序
-        UIUtils.ReversePanelChildrenOrder(StringToTimeStampPanel);
-        UIUtils.ReversePanelChildrenOrder(TimeStampToStringPanel);
+        StringToTimeStampPanel.ReverseChildrenOrder();
+        TimeStampToStringPanel.ReverseChildrenOrder();
     }
 
     /// <summary>

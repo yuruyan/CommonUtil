@@ -72,7 +72,7 @@ public partial class BaseConversionView : Page {
     /// </summary>
     private void ConvertNumber() {
         var sb = new StringBuilder();
-        string[] numbers = CommonUtils.NormalizeMultipleLineText(InputText).Split('\n');
+        string[] numbers = InputText.ReplaceLineFeedWithLinuxStyle().Split('\n');
         foreach (var number in numbers) {
             if (string.IsNullOrEmpty(number.Trim())) {
                 sb.Append('\n');

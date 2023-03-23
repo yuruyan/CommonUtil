@@ -241,7 +241,7 @@ public static class QRCodeTool {
         var data = generator.CreateQrCode(payload, qRCodeInfo.ECCLevel);
         return new PdfByteQRCode(data).GetGraphic(
             qRCodeInfo.PixelPerModule,
-            $"#{UIUtils.DrawingColorToColor(qRCodeInfo.Foreground).ToString()[3..]}",
+            $"#{qRCodeInfo.Foreground.ToColor().ToString()[3..]}",
             "#FFFFFF"
         );
     }

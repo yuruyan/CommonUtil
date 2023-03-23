@@ -53,7 +53,7 @@ public partial class SimpleFileSystemServerView : Page {
         InitializeComponent();
         SharingDirectory = Directory.GetCurrentDirectory();
         DependencyPropertyDescriptor.FromProperty(IsServerStartedProperty, typeof(SimpleFileSystemServerView)).AddValueChanged(this, ServerStateChangedHandler);
-        UIUtils.SetLoadedOnceEventHandler(this, (_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public partial class SimpleFileSystemServerView : Page {
     private void OpenSharingDirectoryMouseUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
         if (sender is TextBlock element) {
-            UIUtils.OpenFileInExplorerAsync(element.Text);
+            element.Text.OpenFileInExplorerAsync();
         }
     }
 

@@ -91,13 +91,13 @@ public static class TextTool {
         if (!trim) {
             return string.Join(
                 mergeSymbol,
-                new HashSet<string>(CommonUtils.NormalizeMultipleLineText(text).Split(splitSymbol))
+                new HashSet<string>(text.ReplaceLineFeedWithLinuxStyle().Split(splitSymbol))
             );
         }
         return string.Join(
             mergeSymbol,
             new HashSet<string>(
-                CommonUtils.NormalizeMultipleLineText(text).Split(splitSymbol, StringSplitOptions.TrimEntries)
+                text.ReplaceLineFeedWithLinuxStyle().Split(splitSymbol, StringSplitOptions.TrimEntries)
             )
         );
     }
@@ -110,7 +110,7 @@ public static class TextTool {
     public static string RemoveWhiteSpaceLine(string text) {
         return string.Join(
             '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
+            text.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Where(s => s.Trim().Any())
         );
@@ -133,7 +133,7 @@ public static class TextTool {
     public static string TrimLine(string text) {
         return string.Join(
             '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
+            text.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Select(s => s.Trim())
         );
@@ -147,7 +147,7 @@ public static class TextTool {
     public static string TrimLineStart(string text) {
         return string.Join(
             '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
+            text.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Select(s => s.TrimStart())
         );
@@ -161,7 +161,7 @@ public static class TextTool {
     public static string TrimLineEnd(string text) {
         return string.Join(
             '\n',
-            CommonUtils.NormalizeMultipleLineText(text)
+            text.ReplaceLineFeedWithLinuxStyle()
                 .Split('\n')
                 .Select(s => s.TrimEnd())
         );
@@ -204,7 +204,7 @@ public static class TextTool {
     /// <param name="separator">数字与文本分隔符</param>
     /// <returns></returns>
     public static string PrependLineNumber(string text, string separator) {
-        string[] lines = CommonUtils.NormalizeMultipleLineText(text).Split('\n');
+        string[] lines = text.ReplaceLineFeedWithLinuxStyle().Split('\n');
         for (int i = 0; i < lines.Length; i++) {
             lines[i] = $"{i + 1}{separator}" + lines[i];
         }
@@ -318,7 +318,7 @@ public static class TextTool {
     /// <param name="mode"></param>
     /// <returns></returns>
     public static string InvertText(string text, InversionMode mode) {
-        text = CommonUtils.NormalizeMultipleLineText(text);
+        text = text.ReplaceLineFeedWithLinuxStyle();
         return mode switch {
             InversionMode.Horizontal => string.Join('\n', text.Split('\n').Select(s => string.Join("", s.Reverse()))),
             InversionMode.Vertical => string.Join('\n', text.Split('\n').Reverse()),
