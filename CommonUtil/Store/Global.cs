@@ -35,6 +35,6 @@ public static class Global {
     internal static readonly IReadOnlyList<ToolMenuItem> MenuItems = DataSet.ToolMenuItems;
 
     #region Images
-    public const string JapaneseSymbolImage = $"{ImageSource}JapaneseSymbol.png";
+    public static readonly Uri JapaneseSymbolImageUri = new($"{ImageSource}JapaneseSymbol.png", UriKind.Relative);
     #endregion
 }

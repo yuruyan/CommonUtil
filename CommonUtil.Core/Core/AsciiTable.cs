@@ -27,7 +27,7 @@ public static class AsciiTable {
     /// </summary>
     static AsciiTable() {
         var list = JsonConvert.DeserializeObject<List<AsciiInfo>>(
-            Encoding.UTF8.GetString(Resource.Resource.Ascii)
+            Encoding.UTF8.GetString(DataResource.Ascii)
         );
         if (list == null) {
             throw new Exception("加载 AsciiTable 失败");

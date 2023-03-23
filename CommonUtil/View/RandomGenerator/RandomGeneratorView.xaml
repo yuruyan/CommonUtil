@@ -6,7 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:store="clr-namespace:CommonUtil.Store"
-  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  xmlns:system="clr-namespace:System;assembly=System.Runtime"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomGenerator"
@@ -26,6 +26,11 @@
     <Style TargetType="ui:BitmapIcon">
       <Setter Property="Margin" Value="0,0,-14,0" />
     </Style>
+    <ObjectDataProvider x:Key="JapaneseSymbolImageUri" ObjectType="{x:Type system:Uri}">
+      <ObjectDataProvider.ConstructorParameters>
+        <x:Static Member="store:Global.JapaneseSymbolImage" />
+      </ObjectDataProvider.ConstructorParameters>
+    </ObjectDataProvider>
   </Page.Resources>
 
   <ui:NavigationView
@@ -155,7 +160,7 @@
         Content="生成随机日本姓名"
         ToolTip="生成随机日本姓名">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImage}" />
+          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -163,7 +168,7 @@
         Content="生成随机日本姓氏"
         ToolTip="生成随机日本姓氏">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImage}" />
+          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem

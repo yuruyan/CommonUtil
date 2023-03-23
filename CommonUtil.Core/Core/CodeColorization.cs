@@ -20,7 +20,7 @@ public static class CodeColorization {
 
     static CodeColorization() {
         var themes = JsonConvert.DeserializeObject<List<SchemeInfo>>(
-            Encoding.UTF8.GetString(Resource.Resource.CodeColorSchemeConfig)
+            Encoding.UTF8.GetString(DataResource.CodeColorSchemeConfig)
         );
         if (themes is null) {
             Logger.Fatal("解析代码颜色配置文件失败");
@@ -28,8 +28,8 @@ public static class CodeColorization {
         }
         Schemes = themes;
         Languages = themes.Select(s => s.Name).ToList();
-        RegisterThemes(Resource.Resource.CodeColorSchemeLight, ThemeMode.Light);
-        RegisterThemes(Resource.Resource.CodeColorSchemeDark, ThemeMode.Dark);
+        RegisterThemes(DataResource.CodeColorSchemeLight, ThemeMode.Light);
+        RegisterThemes(DataResource.CodeColorSchemeDark, ThemeMode.Dark);
         Logger.Debug("注册代码颜色配置文件成功");
     }
 

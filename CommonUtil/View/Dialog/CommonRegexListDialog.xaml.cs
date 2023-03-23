@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using CommonUtil.Data;
+
+namespace CommonUtil.View;
 
 public partial class CommonRegexListDialog : BaseDialog {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -18,7 +20,7 @@ public partial class CommonRegexListDialog : BaseDialog {
     /// </summary>
     static CommonRegexListDialog() {
         var list = JsonConvert.DeserializeObject<IEnumerable<KeyValuePair<string, string>>>(
-            Encoding.UTF8.GetString(CommonUtil.Core.Resource.Resource.CommonRegex)
+            Encoding.UTF8.GetString(DataResource.CommonRegex)
         );
         if (list == null) {
             throw new JsonSerializationException("解析 CommonRegexList 失败");

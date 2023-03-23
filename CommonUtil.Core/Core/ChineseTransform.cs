@@ -21,7 +21,7 @@ public static class ChineseTransform {
     /// </summary>
     static ChineseTransform() {
         TraditionalSimplifiedMap = JsonConvert.DeserializeObject<Dictionary<char, char>>(
-           Encoding.UTF8.GetString(Resource.Resource.ChineseCharacterMap)
+           Encoding.UTF8.GetString(DataResource.ChineseCharacterMap)
         )!;
         SimplifiedTraditionalMap = new Dictionary<char, char>();
         // 填充 SimplifiedTraditionalMap

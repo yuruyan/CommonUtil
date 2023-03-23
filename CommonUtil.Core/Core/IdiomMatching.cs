@@ -48,7 +48,7 @@ public static class IdiomMatching {
 
     static IdiomMatching() {
         var wordDict = new Dictionary<char, List<string>>();
-        var wordList = Resource.Resource.Idioms
+        var wordList = DataResource.Idioms
             .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         _IdiomList = new List<string>(wordList);
         foreach (var word in wordList) {

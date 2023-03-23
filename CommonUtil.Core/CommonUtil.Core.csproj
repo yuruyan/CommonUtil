@@ -13,21 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resource\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resource\Resource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AvalonEdit" Version="6.2.0.78" />
     <PackageReference Include="ColorMinePortable" Version="2.0.1" />
@@ -56,6 +41,10 @@
     <PackageReference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing" Version="0.16.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
+  </ItemGroup>
+
   <Choose>
     <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))'=='true' ">
       <ItemGroup>
@@ -78,11 +67,5 @@
       </ItemGroup>
     </When>
   </Choose>
-
-  <ItemGroup>
-    <None Update="Resource\RandomDataSource.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 
 </Project>
