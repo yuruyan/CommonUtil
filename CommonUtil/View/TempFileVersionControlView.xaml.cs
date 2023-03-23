@@ -37,17 +37,16 @@ public partial class TempFileVersionControlView : Page {
         }
     }
 
-    public static readonly DependencyProperty WatchFilesProperty = DependencyProperty.Register("WatchFiles", typeof(ObservableCollection<WatchFile>), typeof(TempFileVersionControlView), new PropertyMetadata());
+    public static readonly DependencyPropertyKey WatchFilesPropertyKey = DependencyProperty.RegisterReadOnly("WatchFiles", typeof(ObservableCollection<WatchFile>), typeof(TempFileVersionControlView), new PropertyMetadata());
+    public static readonly DependencyProperty WatchFilesProperty = WatchFilesPropertyKey.DependencyProperty;
     public static readonly DependencyProperty SelectedWatchFileProperty = DependencyProperty.Register("SelectedWatchFile", typeof(WatchFile), typeof(TempFileVersionControlView), new PropertyMetadata());
 
-    public ObservableCollection<WatchFile> WatchFiles {
-        get { return (ObservableCollection<WatchFile>)GetValue(WatchFilesProperty); }
-        set { SetValue(WatchFilesProperty, value); }
-    }
+    public ObservableCollection<WatchFile> WatchFiles => (ObservableCollection<WatchFile>)GetValue(WatchFilesProperty);
     public WatchFile? SelectedWatchFile {
         get { return (WatchFile)GetValue(SelectedWatchFileProperty); }
         set { SetValue(SelectedWatchFileProperty, value); }
     }
+
     private int fileId = 0;
     private readonly OpenFileDialog SelectFileDialog = new() {
         Title = "选择文件",
@@ -63,9 +62,13 @@ public partial class TempFileVersionControlView : Page {
     private Window CurrentWindow = Application.Current.MainWindow;
 
     public TempFileVersionControlView() {
-        WatchFiles = new();
+        SetValue(WatchFilesPropertyKey, new ObservableCollection<WatchFile>());
         InitializeComponent();
-        this.SetLoadedOnceEventHandler((_, _) => CurrentWindow = Window.GetWindow(this));
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
+            if (sender is TempFileVersionControlView self) {
+                self.CurrentWindow = Window.GetWindow(self);
+            }
+        });
     }
 
     /// <summary>

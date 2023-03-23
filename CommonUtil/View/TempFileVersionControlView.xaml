@@ -13,13 +13,16 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <Page.Resources>
+    <Thickness x:Key="ListBoxItemMargin">8,12</Thickness>
+  </Page.Resources>
 
   <UniformGrid Columns="2">
     <!--  监听文件列表  -->
-    <ListBox ItemsSource="{Binding WatchFiles}" SelectionChanged="WatchFilesSelectionChangedHandler">
+    <ListBox ItemsSource="{Binding WatchFiles, Mode=OneTime}" SelectionChanged="WatchFilesSelectionChangedHandler">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding Filename, Converter={StaticResource FileNameConverter}}" />
+          <TextBlock Margin="{StaticResource ListBoxItemMargin}" Text="{Binding Filename, Converter={StaticResource FileNameConverter}}" />
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
@@ -72,7 +75,7 @@
         ItemsSource="{Binding SelectedWatchFile.GeneratedFilenames}">
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <TextBlock Text="{Binding ., Converter={StaticResource FileNameConverter}}" />
+            <TextBlock Margin="{StaticResource ListBoxItemMargin}" Text="{Binding ., Converter={StaticResource FileNameConverter}}" />
           </DataTemplate>
         </ListBox.ItemTemplate>
       </ListBox>
