@@ -3,6 +3,9 @@
 public partial class BrowserBookmarkView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty EdgeBookmarkFilePathProperty = DependencyProperty.Register("EdgeBookmarkFilePath", typeof(string), typeof(BrowserBookmarkView), new PropertyMetadata(""));
+    private readonly SaveFileDialog ExportFileDialog = new() {
+        Filter = "Excel|*.xlsx",
+    };
 
     public string EdgeBookmarkFilePath {
         get { return (string)GetValue(EdgeBookmarkFilePathProperty); }
@@ -24,18 +27,17 @@ public partial class BrowserBookmarkView : Page {
     /// <param name="e"></param>
     private void ExportBookmarkClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        var dialog = new SaveFileDialog {
-            Filter = "Excel|*.xlsx",
-        };
-        if (dialog.ShowDialog() != true) {
+        if (ExportFileDialog.ShowDialog() != true) {
             return;
         }
-        Task.Factory.StartNew(() => {
+        var sourcePath = EdgeBookmarkFilePath;
+        Task.Run(() => {
             try {
-                new EdgeBookmark().ExportBookmarks(Dispatcher.Invoke(() => EdgeBookmarkFilePath), dialog.FileName);
-                MessageBoxUtils.NotifySuccess("导出成功！", "点击打开", callback: () => {
-                    dialog.FileName.OpenFileInExplorerAsync();
-                });
+                new EdgeBookmark().ExportBookmarks(
+                    sourcePath,
+                    ExportFileDialog.FileName
+                );
+                ExportFileDialog.FileName.NotificationOpenFileInExplorerAsync("导出成功！");
             } catch (Exception error) {
                 MessageBoxUtils.Error("导出失败！" + error.Message);
                 Logger.Error(error);
