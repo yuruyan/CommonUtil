@@ -3,7 +3,7 @@
 namespace CommonUtil.View;
 
 public partial class IdiomMatchingView : System.Windows.Controls.Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty InputIdiomProperty = DependencyProperty.Register("InputIdiom", typeof(string), typeof(IdiomMatchingView), new PropertyMetadata(""));
     public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register("MatchList", typeof(List<string>), typeof(IdiomMatchingView), new PropertyMetadata());
@@ -25,7 +25,7 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
 
     public IdiomMatchingView() {
         InitializeComponent();
-        Task.Run(() => IdiomMatching.InitializeExplicitly());
+        Task.Run(IdiomMatching.InitializeExplicitly);
     }
 
     /// <summary>
@@ -33,27 +33,27 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void GenerateClick(object sender, RoutedEventArgs e) {
+    private async void GenerateClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        GenerateMatchList();
+        await GenerateMatchList();
     }
 
     /// <summary>
     /// 生成成语接龙
     /// </summary>
-    private void GenerateMatchList() {
+    private async Task GenerateMatchList() {
         if (InputIdiom.Trim() == string.Empty) {
             MessageBoxUtils.Info("请输入文本");
             return;
         }
         string idiom = InputIdiom.Trim();
-        Task.Run(() => {
-            List<List<string>> matches = IdiomMatching.GetMatchList(idiom);
+        MatchList = await Task.Run(() => {
+            var matches = IdiomMatching.GetMatchList(idiom);
             var list = new List<string>(matches.Count);
             foreach (var item in matches) {
                 list.Add(string.Join(" => ", item));
             }
-            Dispatcher.Invoke(() => MatchList = list);
+            return list;
         });
     }
 
@@ -75,10 +75,10 @@ public partial class IdiomMatchingView : System.Windows.Controls.Page {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void IdiomInputBoxKeyUp(object sender, KeyEventArgs e) {
+    private async void IdiomInputBoxKeyUp(object sender, KeyEventArgs e) {
         e.Handled = true;
         if (e.Key == Key.Enter) {
-            GenerateMatchList();
+            await GenerateMatchList();
         }
     }
 
