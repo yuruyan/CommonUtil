@@ -52,6 +52,7 @@ public partial class RandomGeneratorView : ResponsivePage {
             RouterService,
             ContentFrame
         );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
