@@ -1,7 +1,7 @@
 ﻿namespace CommonUtil.View;
 
 public partial class CollectionToolView : ResponsivePage {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty InputText1Property = DependencyProperty.Register("InputText1", typeof(string), typeof(CollectionToolView), new PropertyMetadata(""));
     public static readonly DependencyProperty InputText2Property = DependencyProperty.Register("InputText2", typeof(string), typeof(CollectionToolView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(CollectionToolView), new PropertyMetadata(""));
@@ -64,7 +64,7 @@ public partial class CollectionToolView : ResponsivePage {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
     };
-    public delegate IList<string> ProcessHanlder(IEnumerable<string> list1, IEnumerable<string> list2);
+    public delegate IList<string> ProcessHandler(IEnumerable<string> list1, IEnumerable<string> list2);
 
     public CollectionToolView() {
         InitializeComponent();
@@ -97,14 +97,12 @@ public partial class CollectionToolView : ResponsivePage {
     /// 文本处理
     /// </summary>
     /// <param name="func"></param>
-    private void StringProcess(ProcessHanlder func) {
-        OutputText = string.Join(
-                        '\n',
-                        func(
-                            InputText1.ReplaceLineFeedWithLinuxStyle().Split('\n'),
-                            InputText2.ReplaceLineFeedWithLinuxStyle().Split('\n')
-                        )
-                     );
+    private void StringProcess(ProcessHandler func) {
+        OutputText = string.Join('\n',
+            func(
+                InputText1.ReplaceLineFeedWithLinuxStyle().Split('\n'),
+                InputText2.ReplaceLineFeedWithLinuxStyle().Split('\n')
+            ));
     }
 
     /// <summary>
@@ -112,7 +110,7 @@ public partial class CollectionToolView : ResponsivePage {
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
-    private async Task FileProcess(ProcessHanlder func) {
+    private async Task FileProcess(ProcessHandler func) {
         if (SaveFileDialog.ShowDialog() != true) {
             return;
         }
