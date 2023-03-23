@@ -14,7 +14,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.ContextMenu>
-    <ContextMenu ItemsSource="{Binding ColorItems}">
+    <ContextMenu ItemsSource="{Binding ColorItems, Mode=OneTime}">
       <ContextMenu.Resources>
         <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
           <EventSetter Event="Click" Handler="CopyColorClick" />
@@ -33,6 +33,44 @@
       </ContextMenu.ItemTemplate>
     </ContextMenu>
   </Page.ContextMenu>
+
+  <Page.Resources>
+    <ContextMenu
+      x:Key="ColorItemSliderContextMenu"
+      Width="250"
+      Closed="ColorItemSliderContextMenuClosedHandler"
+      Opened="ColorItemSliderContextMenuOpenedHandler">
+      <ContextMenu.Resources>
+        <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPointerOver" Color="Transparent" />
+        <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPressed" Color="Transparent" />
+      </ContextMenu.Resources>
+      <ItemsControl ItemsSource="{Binding Sliders}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <TextBlock
+                Width="20"
+                Foreground="{DynamicResource ApplicationForegroundBrush}"
+                Text="{Binding Header}" />
+              <Slider
+                Grid.Column="1"
+                Margin="0,4"
+                AutoToolTipPlacement="TopLeft"
+                AutoToolTipPrecision="{Binding ToolTipPrecision}"
+                Maximum="{Binding MaxValue, Mode=OneTime}"
+                Minimum="{Binding MinValue, Mode=OneTime}"
+                SmallChange="{Binding SmallChange, Mode=OneTime}"
+                Value="{Binding Value}" />
+            </Grid>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ContextMenu>
+  </Page.Resources>
 
   <UniformGrid Columns="2">
     <!--  调色板  -->
@@ -56,50 +94,17 @@
     </Grid>
 
     <ScrollViewer Margin="8,0,0,0">
-      <ItemsControl ItemsSource="{Binding ColorItems}">
+      <ItemsControl ItemsSource="{Binding ColorItems, Mode=OneTime}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <DockPanel Margin="0,5">
               <TextBlock
                 Width="100"
+                ContextMenu="{StaticResource ColorItemSliderContextMenu}"
                 FontSize="{DynamicResource HeaderFontSize}"
                 MouseUp="ColorItemHeaderMouseUpHandler"
                 Style="{StaticResource HyperLinkStyle}"
-                Text="{Binding Tag, StringFormat='{}{0}：'}">
-                <TextBlock.ContextMenu>
-                  <ContextMenu Width="250" Loaded="ColorItemContextMenuLoadedHandler">
-                    <ContextMenu.Resources>
-                      <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPointerOver" Color="Transparent" />
-                      <SolidColorBrush x:Key="MenuFlyoutItemRevealBackgroundPressed" Color="Transparent" />
-                    </ContextMenu.Resources>
-                    <ItemsControl ItemsSource="{Binding Sliders}">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <Grid>
-                            <Grid.ColumnDefinitions>
-                              <ColumnDefinition Width="20" />
-                              <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                              Width="20"
-                              Foreground="{DynamicResource ApplicationForegroundBrush}"
-                              Text="{Binding Header}" />
-                            <Slider
-                              Grid.Column="1"
-                              Margin="0,4"
-                              AutoToolTipPlacement="TopLeft"
-                              AutoToolTipPrecision="{Binding ToolTipPrecision}"
-                              Maximum="{Binding MaxValue, Mode=OneTime}"
-                              Minimum="{Binding MinValue, Mode=OneTime}"
-                              SmallChange="{Binding SmallChange, Mode=OneTime}"
-                              Value="{Binding Value}" />
-                          </Grid>
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                  </ContextMenu>
-                </TextBlock.ContextMenu>
-              </TextBlock>
+                Text="{Binding Tag, StringFormat='{}{0}：'}" />
               <TextBox
                 HorizontalAlignment="Stretch"
                 BorderThickness="0"
