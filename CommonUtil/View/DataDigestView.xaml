@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="DataDigestView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -88,42 +88,43 @@
       </ui:SimpleStackPanel>
     </Grid>
     <!--  输出  -->
-    <ScrollViewer Grid.Row="2">
-      <ItemsControl ItemsSource="{Binding DigestInfoDict}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <Grid x:Name="Wrapper" Visibility="{Binding Value.IsVivible, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='True|Collapsed'}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="auto" />
-              </Grid.ColumnDefinitions>
-              <TextBlock
-                Width="150"
-                FontWeight="Bold"
-                Foreground="{DynamicResource HighLightKeywordForeground}"
-                Text="{Binding Key}"
-                TextWrapping="Wrap" />
-              <TextBox
-                Grid.Column="1"
-                Padding="0"
-                FontFamily="{StaticResource ASCIIFontFamily}"
-                IsReadOnly="True"
-                Style="{StaticResource BorderlessTextBoxStyle}"
-                Text="{Binding Value.Text}"
-                TextWrapping="Wrap" />
-              <TextBlock
-                Grid.Column="2"
-                Padding="0,0,8,0"
-                Style="{StaticResource ASCIIFontStyle}"
-                Foreground="{DynamicResource HighLightKeywordForeground}"
-                Text="{Binding Value.Process, StringFormat='{}{0:P0}'}"
-                Visibility="{Binding Value.Process, Converter={StaticResource ProcessVisibilityConverter}}" />
-            </Grid>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>
+    <ListBox
+      Grid.Row="2"
+      ItemsSource="{Binding DigestInfoDict, Mode=OneTime}"
+      Style="{StaticResource TransparentListBoxStyle}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Grid x:Name="Wrapper" Visibility="{Binding Value.IsVivible, Converter={StaticResource VisibilityNotEqualConverter}, ConverterParameter='True|Collapsed'}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="auto" />
+              <ColumnDefinition />
+              <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+              Width="150"
+              FontWeight="Bold"
+              Foreground="{DynamicResource HighLightKeywordForeground}"
+              Text="{Binding Key}"
+              TextWrapping="Wrap" />
+            <TextBox
+              Grid.Column="1"
+              Padding="0"
+              FontFamily="{StaticResource ASCIIFontFamily}"
+              IsReadOnly="True"
+              Style="{StaticResource BorderlessTextBoxStyle}"
+              Text="{Binding Value.Text}"
+              TextWrapping="Wrap" />
+            <TextBlock
+              Grid.Column="2"
+              Padding="0,0,8,0"
+              Foreground="{DynamicResource HighLightKeywordForeground}"
+              Style="{StaticResource ASCIIFontStyle}"
+              Text="{Binding Value.Process, StringFormat='{}{0:P0}'}"
+              Visibility="{Binding Value.Process, Converter={StaticResource ProcessVisibilityConverter}}" />
+          </Grid>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
   </Grid>
 
 </Page>

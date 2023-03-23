@@ -68,7 +68,8 @@ public partial class DataDigestView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(DataDigestView), new PropertyMetadata(false));
     public static readonly DependencyProperty DigestOptionsProperty = DependencyProperty.Register("DigestOptions", typeof(List<string>), typeof(DataDigestView), new PropertyMetadata());
-    private static readonly DependencyProperty DigestInfoDictProperty = DependencyProperty.Register("DigestInfoDict", typeof(IDictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
+    private static readonly DependencyPropertyKey DigestInfoDictPropertyKey = DependencyProperty.RegisterReadOnly("DigestInfoDict", typeof(IDictionary<string, DigestInfo>), typeof(DataDigestView), new PropertyMetadata());
+    private static readonly DependencyProperty DigestInfoDictProperty = DigestInfoDictPropertyKey.DependencyProperty;
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(DataDigestView), new PropertyMetadata(""));
     public static readonly DependencyProperty RunningProcessProperty = DependencyProperty.Register("RunningProcess", typeof(int), typeof(DataDigestView), new PropertyMetadata(0));
     public static readonly DependencyProperty FileSizeProperty = DependencyProperty.Register("FileSize", typeof(long), typeof(DataDigestView), new PropertyMetadata(0L));
@@ -98,10 +99,7 @@ public partial class DataDigestView : Page {
     /// <summary>
     /// 摘要算法 Dict
     /// </summary>
-    private IDictionary<string, DigestInfo> DigestInfoDict {
-        get { return (IDictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty); }
-        set { SetValue(DigestInfoDictProperty, value); }
-    }
+    private IDictionary<string, DigestInfo> DigestInfoDict => (IDictionary<string, DigestInfo>)GetValue(DigestInfoDictProperty);
     /// <summary>
     /// 文件大小
     /// </summary>
@@ -116,6 +114,7 @@ public partial class DataDigestView : Page {
         get { return (bool)GetValue(IsWorkingProperty); }
         set { SetValue(IsWorkingProperty, value); }
     }
+
     /// <summary>
     /// 散列算法选择
     /// </summary>
@@ -123,10 +122,10 @@ public partial class DataDigestView : Page {
     private CancellationTokenSource CancellationTokenSource = new();
 
     public DataDigestView() {
-        DigestInfoDict = DataSet.DigestOptions.ToDictionary(
+        SetValue(DigestInfoDictPropertyKey, DataSet.DigestOptions.ToDictionary(
             item => item.Item1,
             item => new DigestInfo(item.Item2, item.Item3)
-        );
+        ));
         DigestAlgorithms = DigestInfoDict.Keys.ToArray();
         InitializeComponent();
         // 初始化 AlgorithmMenuFlyout
@@ -136,7 +135,7 @@ public partial class DataDigestView : Page {
                     Header = item,
                     Tag = item,
                     // 默认选项
-                    IsChecked = item == "MD5" || item == "SHA256",
+                    IsChecked = item is "MD5" or "SHA256",
                 };
                 // 防止点击关闭
                 menuItem.PreviewMouseUp += (sender, e) => {
