@@ -19,7 +19,6 @@ public partial class QRCodeToolView {
     public QRCodeToolView() {
         InitializeComponent();
         RouterService = new(ContentFrame, Routers);
-        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     /// <summary>
@@ -38,5 +37,13 @@ public partial class QRCodeToolView {
         } else {
             RouterService.Navigate(typeof(QRCodeGeneratorView), targetType);
         }
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
     }
 }

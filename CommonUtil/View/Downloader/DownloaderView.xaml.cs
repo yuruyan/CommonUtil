@@ -37,11 +37,6 @@ public partial class DownloaderView : Page {
     public DownloaderView() {
         InitializeComponent();
         RouterService = new RouterService(ContentFrame, NavigationDict.Values);
-        NavigationUtils.EnableNavigation(
-            NavigationView,
-            RouterService,
-            ContentFrame
-        );
         // 显式初始化
         DownloadingTaskList = ((DownloadingView)RouterService.GetInstance(typeof(DownloadingView))).DownloadTaskList;
         DownloadedTaskList = ((DownloadedView)RouterService.GetInstance(typeof(DownloadedView))).DownloadTaskList;
@@ -108,5 +103,17 @@ public partial class DownloaderView : Page {
         if (anySuccess) {
             MessageBoxUtils.Info($"开始下载");
         }
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            RouterService,
+            ContentFrame
+        );
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.DisableNavigation(NavigationView);
     }
 }

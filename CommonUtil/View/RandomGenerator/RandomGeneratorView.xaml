@@ -14,6 +14,8 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
+  Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Page.Resources>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
@@ -30,7 +32,6 @@
       <ui:NavigationViewItem
         Name="RandomStringGeneratorView"
         Content="生成字符串"
-        IsSelected="True"
         ToolTip="生成字符串">
         <ui:NavigationViewItem.Icon>
           <ui:FontIcon Foreground="#C8834E" Glyph="&#xe687;" />

@@ -10,13 +10,12 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
+  Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
     <ui:NavigationView.MenuItems>
-      <ui:NavigationViewItem
-        x:Name="CSharpDependencyView"
-        Content="C# DependencyObject"
-        IsSelected="True" />
+      <ui:NavigationViewItem x:Name="CSharpDependencyView" Content="C# DependencyObject" />
     </ui:NavigationView.MenuItems>
     <ui:Frame x:Name="ContentFrame" />
   </ui:NavigationView>

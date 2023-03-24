@@ -36,7 +36,8 @@ internal static class NavigationUtils {
     /// <param name="routerService"></param>
     /// <param name="frame"></param>
     /// <remarks>
-    /// 需要在 xaml 里设置 NavigationItem，并且 Name 属性设置为 PageType.Name 属性
+    /// 需要在 xaml 里设置 NavigationItem，并且 Name 属性设置为 PageType.Name 属性 <br/>
+    /// 默认选中第一项
     /// </remarks>
     public static void EnableNavigation(
         NavigationView navigationView,
@@ -45,9 +46,14 @@ internal static class NavigationUtils {
     ) {
         NavigationViewRouterServiceDict[navigationView] = routerService;
         FrameNavigationViewDict[frame] = navigationView;
+
         // 主动导航跳转
         navigationView.SelectionChanged -= NavigationViewSelectionChangedHandler;
         navigationView.SelectionChanged += NavigationViewSelectionChangedHandler;
+        // 默认选择第一项
+        if (navigationView.SelectedItem is null && navigationView.MenuItems.Count > 0) {
+            navigationView.SelectedItem = navigationView.MenuItems[0];
+        }
         // 自动导航跳转
         frame.Navigated -= FrameNavigatedHandler;
         frame.Navigated += FrameNavigatedHandler;

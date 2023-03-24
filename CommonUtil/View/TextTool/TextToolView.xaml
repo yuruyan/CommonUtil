@@ -10,6 +10,8 @@
   Margin="8,0,0,0"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  Loaded="ViewLoadedHandler"
+  Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Grid>
     <ui:NavigationView Name="NavigationView">
@@ -17,7 +19,6 @@
         <ui:NavigationViewItem
           x:Name="RemoveDuplicateView"
           Content="文本去重"
-          IsSelected="True"
           ToolTip="文本去重">
           <ui:NavigationViewItem.Icon>
             <ui:FontIcon Glyph="&#xe677;" />

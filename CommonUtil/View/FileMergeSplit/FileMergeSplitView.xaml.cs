@@ -10,10 +10,17 @@ public partial class FileMergeSplitView : Page {
 
     public FileMergeSplitView() {
         InitializeComponent();
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.EnableNavigation(
             NavigationView,
             new(ContentFrame, Routers),
             ContentFrame
         );
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.DisableNavigation(NavigationView);
     }
 }

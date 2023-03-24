@@ -47,12 +47,6 @@ public partial class RandomGeneratorView : ResponsivePage {
     public RandomGeneratorView() {
         InitializeComponent();
         RouterService = new(ContentFrame, Routers);
-        NavigationUtils.EnableNavigation(
-            NavigationView,
-            RouterService,
-            ContentFrame
-        );
-        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
@@ -90,5 +84,19 @@ public partial class RandomGeneratorView : ResponsivePage {
         if (RouterService.GetInstance(ContentFrame.CurrentSourcePageType) is IGenerable<uint, IEnumerable<string>> generator) {
             OutputText = string.Join('\n', generator.Generate((uint)GenerateCount));
         }
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.EnableNavigation(
+            NavigationView,
+            RouterService,
+            ContentFrame
+        );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.DisableNavigation(NavigationView);
+        NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
     }
 }

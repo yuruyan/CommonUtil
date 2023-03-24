@@ -10,14 +10,13 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
+  Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Grid>
     <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
       <ui:NavigationView.MenuItems>
-        <ui:NavigationViewItem
-          x:Name="UnicodeEncodingView"
-          Content="Unicode 编解码"
-          IsSelected="True" />
+        <ui:NavigationViewItem x:Name="UnicodeEncodingView" Content="Unicode 编解码" />
         <ui:NavigationViewItem x:Name="UTF8EncodingView" Content="UTF8 编解码" />
         <ui:NavigationViewItem x:Name="URLEncodingView" Content="URL 编解码" />
         <ui:NavigationViewItem x:Name="HexEncodingView" Content="Hex 编解码" />

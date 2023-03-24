@@ -14,11 +14,19 @@ public partial class TextToolView : Page {
 
     public TextToolView() {
         InitializeComponent();
+    }
+
+    private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.EnableNavigation(
             NavigationView,
             new(ContentFrame, Routers),
             ContentFrame
         );
         NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
+    }
+
+    private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
+        NavigationUtils.DisableNavigation(NavigationView);
+        NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
     }
 }
