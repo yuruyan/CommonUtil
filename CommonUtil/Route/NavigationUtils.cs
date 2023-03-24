@@ -1,8 +1,33 @@
-﻿using NavigationView = ModernWpf.Controls.NavigationView;
+﻿using System.Windows.Navigation;
+using NavigationView = ModernWpf.Controls.NavigationView;
 
 namespace CommonUtil.Route;
 
 internal static class NavigationUtils {
+    private const string NavigationViewMaxWidthKey = "NavigationViewMaxWidth";
+    private const string AnimationDurationKey = "AnimationDuration";
+    private const string AnimationEaseFunctionKey = "AnimationEaseFunction";
+    private const string OpenPaneLengthProperty = "OpenPaneLength";
+
+    private readonly struct NavigationViewInfo {
+        public double InitialOpenPaneLength { get; }
+        public Storyboard ExpandStoryboard { get; }
+        public Storyboard ShrinkStoryboard { get; }
+
+        public NavigationViewInfo(double initialOpenPaneLength, Storyboard expandStoryboard, Storyboard shrinkStoryboard) {
+            InitialOpenPaneLength = initialOpenPaneLength;
+            ExpandStoryboard = expandStoryboard;
+            ShrinkStoryboard = shrinkStoryboard;
+        }
+    }
+
+    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
+    private static readonly IDictionary<Window, WindowState> WindowPreviousStateDict = new Dictionary<Window, WindowState>();
+    private static readonly IDictionary<Window, object> WindowKeyDict = new Dictionary<Window, object>();
+
+    private static readonly IDictionary<NavigationView, RouterService> NavigationViewRouterServiceDict = new Dictionary<NavigationView, RouterService>();
+    private static readonly IDictionary<Frame, NavigationView> FrameNavigationViewDict = new Dictionary<Frame, NavigationView>();
+
     /// <summary>
     /// 启用导航
     /// </summary>
@@ -17,39 +42,48 @@ internal static class NavigationUtils {
         RouterService routerService,
         Frame frame
     ) {
-        MainWindowRouter.AddPageFrame(routerService.RouteTypes, routerService);
+        NavigationViewRouterServiceDict[navigationView] = routerService;
+        FrameNavigationViewDict[frame] = navigationView;
         // 主动导航跳转
-        navigationView.SelectionChanged += (s, e) => {
-            if (e.SelectedItem is FrameworkElement element) {
-                routerService.Navigate(routerService.RouteTypes.First(t => t.Name == element.Name));
-                MainWindowRouter.PushRouteStack(routerService);
-            }
-        };
+        navigationView.SelectionChanged -= NavigationViewSelectionChangedHandler;
+        navigationView.SelectionChanged += NavigationViewSelectionChangedHandler;
         // 自动导航跳转
-        frame.Navigated += (s, e) => {
-            navigationView.SelectedItem = navigationView.MenuItems
-                .Cast<FrameworkElement>()
-                .FirstOrDefault(item => item.Name == e.Content.GetType().Name);
-        };
+        frame.Navigated -= FrameNavigatedHandler;
+        frame.Navigated += FrameNavigatedHandler;
     }
 
-    private readonly struct NavigationViewInfo {
-        public readonly double InitialOpenPaneLength { get; }
-        public readonly Storyboard ExpandStoryboard { get; }
-        public readonly Storyboard ShrinkStoryboard { get; }
-
-        public NavigationViewInfo(double initialOpenPaneLength, Storyboard expandStoryboard, Storyboard shrinkStoryboard) {
-            InitialOpenPaneLength = initialOpenPaneLength;
-            ExpandStoryboard = expandStoryboard;
-            ShrinkStoryboard = shrinkStoryboard;
+    private static void NavigationViewSelectionChangedHandler(NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args) {
+        if (args.SelectedItem is FrameworkElement element) {
+            var routerService = NavigationViewRouterServiceDict[sender];
+            routerService.Navigate(
+                routerService.RouteTypes.First(t => t.Name == element.Name)
+            );
         }
     }
 
-    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
+    private static void FrameNavigatedHandler(object sender, NavigationEventArgs e) {
+        if (sender is Frame frame) {
+            var navigationView = FrameNavigationViewDict[frame];
+            navigationView.SelectedItem = navigationView.MenuItems
+                .Cast<FrameworkElement>()
+                .FirstOrDefault(item => item.Name == e.Content.GetType().Name);
+        }
+    }
 
-    private static readonly IDictionary<Window, WindowState> WindowPreviousStateDict = new Dictionary<Window, WindowState>();
+    /// <summary>
+    /// 禁用导航，移除引用
+    /// </summary>
+    /// <param name="navigationView"></param>
+    public static void DisableNavigation(NavigationView navigationView) {
+        NavigationViewRouterServiceDict.Remove(navigationView);
+        navigationView.SelectionChanged -= NavigationViewSelectionChangedHandler;
 
-    private static readonly IDictionary<Window, object> WindowKeyDict = new Dictionary<Window, object>();
+        var targetFrame = FrameNavigationViewDict.FirstOrDefault(kv => kv.Value == navigationView);
+        if (!object.Equals(targetFrame, default(KeyValuePair<Frame, NavigationView>))) {
+            targetFrame.Key.Navigated -= FrameNavigatedHandler;
+            FrameNavigationViewDict.Remove(targetFrame);
+        }
+    }
 
     /// <summary>
     /// 启用响应式 NavigationView 布局
@@ -142,26 +176,26 @@ internal static class NavigationUtils {
     private static Storyboard GetNavigationViewExpandStoryboard(NavigationView navigationView) {
         var animation = new DoubleAnimation(
             navigationView.OpenPaneLength,
-            (double)navigationView.FindResource("NavigationViewMaxWidth"),
-            (Duration)navigationView.FindResource("AnimationDuration")
+            (double)navigationView.FindResource(NavigationViewMaxWidthKey),
+            (Duration)navigationView.FindResource(AnimationDurationKey)
         ) {
-            EasingFunction = (IEasingFunction)navigationView.FindResource("AnimationEaseFunction")
+            EasingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey)
         };
         Storyboard.SetTarget(animation, navigationView);
-        Storyboard.SetTargetProperty(animation, new("OpenPaneLength"));
+        Storyboard.SetTargetProperty(animation, new(OpenPaneLengthProperty));
         return new() { Children = { animation } };
     }
 
     private static Storyboard GetNavigationViewShrinkStoryboard(NavigationView navigationView) {
         var animation = new DoubleAnimation(
-            (double)navigationView.FindResource("NavigationViewMaxWidth"),
+            (double)navigationView.FindResource(NavigationViewMaxWidthKey),
             navigationView.OpenPaneLength,
-            (Duration)navigationView.FindResource("AnimationDuration")
+            (Duration)navigationView.FindResource(AnimationDurationKey)
         ) {
-            EasingFunction = (IEasingFunction)navigationView.FindResource("AnimationEaseFunction")
+            EasingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey)
         };
         Storyboard.SetTarget(animation, navigationView);
-        Storyboard.SetTargetProperty(animation, new("OpenPaneLength"));
+        Storyboard.SetTargetProperty(animation, new(OpenPaneLengthProperty));
         return new() { Children = { animation } };
     }
 }
