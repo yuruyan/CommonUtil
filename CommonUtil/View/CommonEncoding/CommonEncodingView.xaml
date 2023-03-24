@@ -11,14 +11,8 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-
   <Grid>
-    <ui:NavigationView
-      Name="NavigationView"
-      IsBackButtonVisible="Collapsed"
-      IsSettingsVisible="False"
-      IsTabStop="False"
-      PaneDisplayMode="Top">
+    <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
       <ui:NavigationView.MenuItems>
         <ui:NavigationViewItem
           x:Name="UnicodeEncodingView"

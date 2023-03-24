@@ -5,8 +5,8 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="DonwloaderView"
   Margin="8,0,8,0"
   d:DesignHeight="450"
@@ -14,11 +14,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Grid>
-    <ui:NavigationView
-      Name="NavigationView"
-      IsBackButtonVisible="Collapsed"
-      IsSettingsVisible="False"
-      PaneDisplayMode="Top">
+    <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
       <ui:NavigationView.Resources>
         <Style TargetType="ui:FontIcon">
           <Setter Property="FontFamily" Value="{StaticResource IconFontUrI}" />

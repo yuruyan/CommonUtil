@@ -4,29 +4,30 @@ using NavigationView = ModernWpf.Controls.NavigationView;
 namespace CommonUtil.Route;
 
 internal static class NavigationUtils {
-    private const string NavigationViewMaxWidthKey = "NavigationViewMaxWidth";
+    private const string NavigationViewExpansionWidthKey = "NavigationViewExpansionWidth";
     private const string AnimationDurationKey = "AnimationDuration";
     private const string AnimationEaseFunctionKey = "AnimationEaseFunction";
     private const string OpenPaneLengthProperty = "OpenPaneLength";
+    private const string NavigationViewExpansionThresholdWidthKey = "NavigationViewExpansionThresholdWidth";
 
-    private readonly struct NavigationViewInfo {
-        public double InitialOpenPaneLength { get; }
-        public Storyboard ExpandStoryboard { get; }
-        public Storyboard ShrinkStoryboard { get; }
+    private struct NavigationViewInfo {
+        public readonly double InitialOpenPaneLength { get; }
+        public readonly double ExpansionThresholdWidth { get; }
+        public readonly Storyboard ExpandStoryboard { get; }
+        public readonly Storyboard ShrinkStoryboard { get; }
+        public bool IsExpanded { get; set; }
 
-        public NavigationViewInfo(double initialOpenPaneLength, Storyboard expandStoryboard, Storyboard shrinkStoryboard) {
+        public NavigationViewInfo(double initialOpenPaneLength, double expansionThresholdWidth, Storyboard expandStoryboard, Storyboard shrinkStoryboard) {
             InitialOpenPaneLength = initialOpenPaneLength;
+            ExpansionThresholdWidth = expansionThresholdWidth;
             ExpandStoryboard = expandStoryboard;
             ShrinkStoryboard = shrinkStoryboard;
         }
     }
 
-    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
-    private static readonly IDictionary<Window, WindowState> WindowPreviousStateDict = new Dictionary<Window, WindowState>();
-    private static readonly IDictionary<Window, object> WindowKeyDict = new Dictionary<Window, object>();
-
     private static readonly IDictionary<NavigationView, RouterService> NavigationViewRouterServiceDict = new Dictionary<NavigationView, RouterService>();
     private static readonly IDictionary<Frame, NavigationView> FrameNavigationViewDict = new Dictionary<Frame, NavigationView>();
+    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
 
     /// <summary>
     /// 启用导航
@@ -90,18 +91,27 @@ internal static class NavigationUtils {
     /// </summary>
     /// <param name="navigationView"></param>
     /// <remarks>
-    /// Duration: 静态资源为 AnimationDuration <br/>
-    /// ExpandOpenPaneLength：静态资源为 NavigationViewMaxWidth <br/>
-    /// EasingFunction：静态资源为 AnimationEaseFunction <br/>
+    /// Duration: 静态资源为 <see cref="AnimationDurationKey"/> <br/>
+    /// ExpandOpenPaneLength：静态资源为 <see cref="NavigationViewExpansionWidthKey"/> <br/>
+    /// EasingFunction：静态资源为 <see cref="AnimationEaseFunctionKey"/> <br/>
     /// </remarks>
     public static void EnableNavigationPanelResponsive(NavigationView navigationView) {
-        TaskUtils.EnsureCalledOnce(navigationView, () => {
-            if (navigationView.IsLoaded) {
-                EnableNavigationPanelResponsiveInternal(navigationView);
-            }
-            // 等待加载
-            navigationView.Loaded += NavigationViewLoadedHandler;
-        });
+        if (navigationView.IsLoaded) {
+            EnableNavigationPanelResponsiveInternal(navigationView);
+            return;
+        }
+        // 等待加载
+        navigationView.Loaded += NavigationViewLoadedHandler;
+    }
+
+    /// <summary>
+    /// 禁用响应式布局，移除引用
+    /// </summary>
+    /// <param name="navigationView"></param>
+    public static void DisableNavigationPanelResponsive(NavigationView navigationView) {
+        navigationView.Loaded -= NavigationViewLoadedHandler;
+        navigationView.SizeChanged -= NavigationViewSizeChangedHandler;
+        NavigationViewInfoDict.Remove(navigationView);
     }
 
     private static void NavigationViewLoadedHandler(object sender, RoutedEventArgs e) {
@@ -111,89 +121,76 @@ internal static class NavigationUtils {
         }
     }
 
-    /// <summary>
-    /// IsLoaded 时加载
-    /// </summary>
-    /// <param name="navigationView"></param>
     private static void EnableNavigationPanelResponsiveInternal(NavigationView navigationView) {
+        double openPaneDefaultLength = navigationView.OpenPaneLength;
+        double openPaneExpansionLength = (double)navigationView.FindResource(NavigationViewExpansionWidthKey);
+        Duration duration = (Duration)navigationView.FindResource(AnimationDurationKey);
+        IEasingFunction easingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey);
+
         NavigationViewInfoDict[navigationView] = new(
-            navigationView.OpenPaneLength,
-            GetNavigationViewExpandStoryboard(navigationView),
-            GetNavigationViewShrinkStoryboard(navigationView)
+            openPaneDefaultLength,
+            (double)navigationView.FindResource(NavigationViewExpansionThresholdWidthKey),
+            GetNavigationViewExpandStoryboard(navigationView, openPaneDefaultLength, openPaneExpansionLength, duration, easingFunction),
+            GetNavigationViewShrinkStoryboard(navigationView, openPaneDefaultLength, openPaneExpansionLength, duration, easingFunction)
         );
-        var window = Window.GetWindow(navigationView);
-        #region 设置 Dict
-        if (!WindowKeyDict.ContainsKey(window)) {
-            WindowKeyDict[window] = new object();
+        navigationView.SizeChanged -= NavigationViewSizeChangedHandler;
+        navigationView.SizeChanged += NavigationViewSizeChangedHandler;
+        // Explicitly invoke
+        HandleNavigationViewSizeChanged(navigationView, openPaneDefaultLength);
+    }
+
+    private static void NavigationViewSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        if (sender is NavigationView view) {
+            HandleNavigationViewSizeChanged(view, e.NewSize.Width);
         }
-        WindowPreviousStateDict[window] = window.WindowState;
-        #endregion
-        BeginStoryBoard(window, new NavigationView[] { navigationView });
-        // 每个Window执行一次，同时执行所有动画
-        TaskUtils.EnsureCalledOnce(WindowKeyDict[window], () => {
-            DependencyPropertyDescriptor
-                .FromProperty(Window.WindowStateProperty, typeof(Window))
-                .AddValueChanged(window, (_, _) => {
-                    // 从最小化变化而来则不执行
-                    if (WindowPreviousStateDict[window] != WindowState.Minimized) {
-                        BeginStoryBoard(window, NavigationViewInfoDict.Keys);
-                    }
-                    WindowPreviousStateDict[window] = window.WindowState;
-                });
-        });
     }
 
     /// <summary>
-    /// 开始动画
+    /// Handle SizeChanged event
     /// </summary>
-    /// <param name="window"></param>
-    /// <param name="navigationViews"></param>
-    private static void BeginStoryBoard(Window window, IEnumerable<NavigationView> navigationViews) {
-        // 展开
-        if (window.WindowState == WindowState.Maximized) {
-            // 并行
-            foreach (var item in navigationViews) {
-                // 为了减少卡顿
-                _ = TaskUtils.DelayTaskAsync(
-                    200,
-                    () => UIUtils.RunOnUIThread(() => NavigationViewInfoDict[item].ExpandStoryboard.Begin())
-                );
-            }
+    /// <param name="view"></param>
+    /// <param name="newWidth"></param>
+    private static void HandleNavigationViewSizeChanged(NavigationView view, double newWidth) {
+        var info = NavigationViewInfoDict[view];
+        if (newWidth >= info.ExpansionThresholdWidth && !info.IsExpanded) {
+            info.IsExpanded = true;
+            info.ExpandStoryboard.Begin();
+        } else if (newWidth < info.ExpansionThresholdWidth && info.IsExpanded) {
+            info.IsExpanded = false;
+            info.ShrinkStoryboard.Begin();
         }
-        // 收缩
-        else if (window.WindowState == WindowState.Normal) {
-            // 并行
-            foreach (var item in navigationViews) {
-                // 为了减少卡顿
-                _ = TaskUtils.DelayTaskAsync(
-                    200,
-                    () => UIUtils.RunOnUIThread(() => NavigationViewInfoDict[item].ShrinkStoryboard.Begin())
-                );
-            }
-        }
+        NavigationViewInfoDict[view] = info;
     }
 
-    private static Storyboard GetNavigationViewExpandStoryboard(NavigationView navigationView) {
+    private static Storyboard GetNavigationViewExpandStoryboard(
+        NavigationView navigationView,
+        double openPaneDefaultLength,
+        double openPaneExpansionLength,
+        Duration duration,
+        IEasingFunction easingFunction
+    ) {
         var animation = new DoubleAnimation(
-            navigationView.OpenPaneLength,
-            (double)navigationView.FindResource(NavigationViewMaxWidthKey),
-            (Duration)navigationView.FindResource(AnimationDurationKey)
-        ) {
-            EasingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey)
-        };
+            openPaneDefaultLength,
+            openPaneExpansionLength,
+            duration
+        ) { EasingFunction = easingFunction };
         Storyboard.SetTarget(animation, navigationView);
         Storyboard.SetTargetProperty(animation, new(OpenPaneLengthProperty));
         return new() { Children = { animation } };
     }
 
-    private static Storyboard GetNavigationViewShrinkStoryboard(NavigationView navigationView) {
+    private static Storyboard GetNavigationViewShrinkStoryboard(
+        NavigationView navigationView,
+        double openPaneDefaultLength,
+        double openPaneExpansionLength,
+        Duration duration,
+        IEasingFunction easingFunction
+    ) {
         var animation = new DoubleAnimation(
-            (double)navigationView.FindResource(NavigationViewMaxWidthKey),
-            navigationView.OpenPaneLength,
-            (Duration)navigationView.FindResource(AnimationDurationKey)
-        ) {
-            EasingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey)
-        };
+            openPaneExpansionLength,
+            openPaneDefaultLength,
+            duration
+        ) { EasingFunction = easingFunction };
         Storyboard.SetTarget(animation, navigationView);
         Storyboard.SetTargetProperty(animation, new(OpenPaneLengthProperty));
         return new() { Children = { animation } };

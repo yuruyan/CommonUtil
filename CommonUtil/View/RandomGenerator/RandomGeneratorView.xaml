@@ -10,15 +10,12 @@
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RandomGenerator"
-  Margin="0,0,8,8"
+  Margin="8,0,8,8"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="Transparent" />
-    <SolidColorBrush x:Key="NavigationViewTopPaneBackground" Color="Transparent" />
-    <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="Transparent" />
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
     <Style BasedOn="{StaticResource GlobalFontIconStyle}" TargetType="ui:FontIcon">
       <Setter Property="Margin" Value="0,0,-8,0" />
@@ -26,21 +23,9 @@
     <Style TargetType="ui:BitmapIcon">
       <Setter Property="Margin" Value="0,0,-14,0" />
     </Style>
-    <ObjectDataProvider x:Key="JapaneseSymbolImageUri" ObjectType="{x:Type system:Uri}">
-      <ObjectDataProvider.ConstructorParameters>
-        <x:Static Member="store:Global.JapaneseSymbolImage" />
-      </ObjectDataProvider.ConstructorParameters>
-    </ObjectDataProvider>
   </Page.Resources>
 
-  <ui:NavigationView
-    x:Name="NavigationView"
-    IsBackButtonVisible="Collapsed"
-    IsPaneToggleButtonVisible="False"
-    IsSettingsVisible="False"
-    IsTabStop="False"
-    OpenPaneLength="{StaticResource NavigationViewMinWidth}"
-    PaneDisplayMode="Left">
+  <ui:NavigationView x:Name="NavigationView" OpenPaneLength="50">
     <ui:NavigationView.MenuItems>
       <ui:NavigationViewItem
         Name="RandomStringGeneratorView"

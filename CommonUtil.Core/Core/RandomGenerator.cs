@@ -19,7 +19,7 @@ public static class RandomGenerator {
     private const string LowerCaseCharacter = "abcdefghijklmnopqrstuvwxyz";
     private const string SpacialCharacter = @"$%&'()*+,-./\:;<=>?@[]^_`{|}~";
 
-    private const string RandomDataSourcePath = "Resource/RandomDataSource.zip";
+    private const string RandomDataSourcePath = "Resources/RandomDataSource.zip";
     private const string ChineseNameEntryName = "ChineseNames.txt";
     private const string ChineseFamilyNameEntryName = "ChineseFamilyNames.txt";
     private const string JapaneseNameEntryName = "JapaneseNames.txt";
