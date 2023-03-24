@@ -96,9 +96,7 @@ public partial class PressKeyShortcutDialog : DesktopAutomationDialog {
     /// <param name="e"></param>
     private void KeyCodeListItemLoadedHandler(object sender, RoutedEventArgs e) {
         if (sender is ComboBox comboBox) {
-            TaskUtils.EnsureCalledOnce(sender, () => {
-                comboBox.ItemsSource = KeyCodeNameList;
-            });
+            comboBox.ItemsSource = KeyCodeNameList;
         }
     }
 }
