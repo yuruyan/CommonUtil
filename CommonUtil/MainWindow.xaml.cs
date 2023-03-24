@@ -164,7 +164,7 @@ public partial class MainWindow : BaseWindow {
         e.Handled = true;
         ThrottleUtils.Throttle(
             ThemeManager.Current,
-            () => ThemeManager.Current.SwitchToLightTheme(),
+            ThemeManager.Current.SwitchToLightTheme,
             1000
         );
     }
@@ -178,7 +178,7 @@ public partial class MainWindow : BaseWindow {
         e.Handled = true;
         ThrottleUtils.Throttle(
             ThemeManager.Current,
-            () => ThemeManager.Current.SwitchToDarkTheme(),
+            ThemeManager.Current.SwitchToDarkTheme,
             1000
         );
     }

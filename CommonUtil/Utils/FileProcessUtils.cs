@@ -93,7 +93,7 @@ public static class FileProcessUtils {
                 inputFile,
                 outputFile,
                 source.Token,
-                proc => ThrottleUtils.Throttle(status, () => {
+                proc => ThrottleUtils.Throttle($"{nameof(FileProcessUtils)}|{nameof(ProcessMultiFilesAsync)}|{status.GetHashCode()}", () => {
                     ProcessStatusUtils.UpdateProcessStatus(status, proc);
                 })
             ),
@@ -203,7 +203,7 @@ public static class FileProcessUtils {
                 inputFile,
                 outputFile,
                 source.Token,
-                proc => ThrottleUtils.Throttle(status, () => {
+                proc => ThrottleUtils.Throttle($"{nameof(FileProcessUtils)}|{nameof(ProcessOneFileAsync)}|{status.GetHashCode()}", () => {
                     ProcessStatusUtils.UpdateProcessStatus(status, proc);
                 })
             ),

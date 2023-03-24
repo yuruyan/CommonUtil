@@ -151,7 +151,7 @@ public partial class QRCodeDecodeView : ResponsivePage {
     /// <param name="e"></param>
     private void PasteImageExecutedHandler(object sender, ExecutedRoutedEventArgs e) {
         e.Handled = true;
-        ThrottleUtils.Throttle(PasteImageExecutedHandler, () => {
+        ThrottleUtils.Throttle($"{nameof(QRCodeDecodeView)} | {nameof(PasteImageExecutedHandler)}|{GetHashCode()}", () => {
             var source = Clipboard.GetImage();
             if (source is null) {
                 return;

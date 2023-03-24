@@ -122,7 +122,7 @@ public partial class SimpleFileSystemServerView : Page {
             return;
         }
         // 开启服务器
-        ThrottleUtils.ThrottleAsync(ToggleServerStateClickHandler, async () => {
+        ThrottleUtils.ThrottleAsync($"{nameof(SimpleFileSystemServerView)}  |  {nameof(ToggleServerStateClickHandler)}|{GetHashCode()}", async () => {
             bool state = await StartServerAsync();
             IsServerStarted = state;
             // 开启成功

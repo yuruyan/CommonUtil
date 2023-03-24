@@ -96,7 +96,7 @@ public partial class PrependLineNumberView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            PrependLineNumberClick,
+            $"{nameof(PrependLineNumberView)}|{nameof(PrependLineNumberClick)}|{GetHashCode()}",
             () => FilePrependLineNumber(separator)
         );
     }

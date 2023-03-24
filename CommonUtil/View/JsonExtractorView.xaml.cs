@@ -79,7 +79,7 @@ public partial class JsonExtractorView : ResponsivePage {
         }
 
         ResultDetailTextBlock.Visibility = Visibility.Visible;
-        if (!ThrottleUtils.CheckStateAndSet(HandleExtract)) {
+        if (!ThrottleUtils.CheckStateAndSet($"{nameof(JsonExtractorView)} | {nameof(HandleExtract)}|{GetHashCode()}")) {
             return;
         }
         try {
@@ -96,7 +96,7 @@ public partial class JsonExtractorView : ResponsivePage {
         } catch {
             MessageBoxUtils.Error("失败");
         } finally {
-            ThrottleUtils.SetFinished(HandleExtract);
+            ThrottleUtils.SetFinished($"{nameof(JsonExtractorView)} | {nameof(HandleExtract)}|{GetHashCode()}");
         }
     }
 

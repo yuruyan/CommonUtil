@@ -129,7 +129,7 @@ public partial class RegexExtractionView : ResponsivePage {
             StringExtract();
             return;
         }
-        ThrottleUtils.ThrottleAsync(SearchResult, FileExtract);
+        ThrottleUtils.ThrottleAsync($"{nameof(RegexExtractionView)}  |  {nameof(SearchResult)}|{GetHashCode()}", FileExtract);
     }
 
     /// <summary>

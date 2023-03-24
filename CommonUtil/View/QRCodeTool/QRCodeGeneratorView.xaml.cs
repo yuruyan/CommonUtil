@@ -179,7 +179,7 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
     /// <param name="e"></param>
     private void GenerateImageClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        ThrottleUtils.ThrottleAsync(GenerateImageClick, async () => {
+        ThrottleUtils.ThrottleAsync($"{nameof(QRCodeGeneratorView)} | {nameof(GenerateImageClick)}|{GetHashCode()}", async () => {
             byte[]? data = await GenerateImage();
             // 生成失败
             if (data is null) {

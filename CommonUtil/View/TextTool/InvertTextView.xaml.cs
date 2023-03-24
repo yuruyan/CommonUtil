@@ -73,7 +73,7 @@ public partial class InvertTextView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            TextProcessClick,
+            $"{nameof(InvertTextView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
             () => FileTextProcess(inversionMode)
         );
     }

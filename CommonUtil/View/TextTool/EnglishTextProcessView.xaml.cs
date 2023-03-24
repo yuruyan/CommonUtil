@@ -146,7 +146,7 @@ public partial class EnglishTextProcessView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            TextProcessClick,
+            $"{nameof(EnglishTextProcessView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
             () => FileTextProcess(fileProcess)
         );
     }

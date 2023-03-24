@@ -254,7 +254,7 @@ public partial class DataDigestView : Page {
             return info.StreamDigest(
                 stream,
                 CancellationTokenSource.Token,
-                process => ThrottleUtils.Throttle(info, () => {
+                process => ThrottleUtils.Throttle($"{nameof(DataDigestView)}|{nameof(CalculateFileDigestAsync)}|{info.GetHashCode()}", () => {
                     Dispatcher.Invoke(() => info.Process = process);
                 })
             );

@@ -62,7 +62,7 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
-          x:Name="AddEnglishWordBraces"
+          x:Name="AddEnglishWordBracesView"
           Content="中英文之间加空格"
           ToolTip="中英文之间加空格">
           <ui:NavigationViewItem.Icon>

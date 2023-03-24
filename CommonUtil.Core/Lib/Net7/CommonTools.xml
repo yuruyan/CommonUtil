@@ -770,6 +770,18 @@
             <param name="groupName">组名称，区分大小写</param>
             <param name="handler"></param>
         </member>
+        <member name="M:CommonTools.Utils.NameUtils.FullNameOf``1(``0,System.String)">
+            <summary>
+            获取全名称表达式
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="_"></param>
+            <param name="fullName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.NameUtilsExtension.FullNameOf``1(``0,System.String)">
+            <inheritdoc cref="M:CommonTools.Utils.NameUtils.FullNameOf``1(``0,System.String)"/>
+        </member>
         <member name="M:CommonTools.Utils.NetworkUtils.GetLocalIpAddress">
             <summary>
             获取本机 IP 地址

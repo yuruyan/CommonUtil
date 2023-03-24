@@ -80,8 +80,8 @@ public partial class WhiteSpaceProcessView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            TextProcessClick,
-            () => TextProcessFile()
+            $"{nameof(WhiteSpaceProcessView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
+            TextProcessFile
         );
     }
 

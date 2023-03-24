@@ -130,7 +130,7 @@ public partial class RemoveDuplicateView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            RemoveDuplicateClick,
+            $"{nameof(RemoveDuplicateView)}|{nameof(RemoveDuplicateClick)}|{GetHashCode()}",
             () => FileRemoveDuplicate(splitSymbol, mergeSymbol, trim)
         );
     }

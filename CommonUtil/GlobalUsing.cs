@@ -33,3 +33,4 @@ global using System.Windows.Input;
 global using System.Windows.Media;
 global using System.Windows.Media.Animation;
 global using System.Windows.Threading;
+global using static CommonTools.Utils.NameUtils;

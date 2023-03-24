@@ -62,7 +62,10 @@ public partial class SortLinesView : ResponsivePage {
             StringTextProcess();
             return;
         }
-        ThrottleUtils.ThrottleAsync(TextProcessClick, FileTextProcess);
+        ThrottleUtils.ThrottleAsync(
+            $"{nameof(SortLinesView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
+            FileTextProcess
+        );
     }
 
     /// <summary>

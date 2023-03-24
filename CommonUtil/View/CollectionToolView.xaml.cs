@@ -173,7 +173,7 @@ public partial class CollectionToolView : ResponsivePage {
         if (!await CheckBinaryFile()) {
             return;
         }
-        ThrottleUtils.ThrottleAsync(UnionClickHandler, () => FileProcess(CollectionTool.Union));
+        ThrottleUtils.ThrottleAsync($"{nameof(CollectionToolView)}|{nameof(UnionClickHandler)}|{GetHashCode()}", () => FileProcess(CollectionTool.Union));
     }
 
     /// <summary>
@@ -191,7 +191,7 @@ public partial class CollectionToolView : ResponsivePage {
         if (!await CheckBinaryFile()) {
             return;
         }
-        ThrottleUtils.ThrottleAsync(IntersectClickHandler, () => FileProcess(CollectionTool.Intersect));
+        ThrottleUtils.ThrottleAsync($"{nameof(CollectionToolView)}|{nameof(IntersectClickHandler)}|{GetHashCode()}", () => FileProcess(CollectionTool.Intersect));
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ public partial class CollectionToolView : ResponsivePage {
         if (!await CheckBinaryFile()) {
             return;
         }
-        ThrottleUtils.ThrottleAsync(ExceptClickHandler, () => FileProcess(CollectionTool.Except));
+        ThrottleUtils.ThrottleAsync($"{nameof(CollectionToolView)} | {nameof(ExceptClickHandler)}|{GetHashCode()}", () => FileProcess(CollectionTool.Except));
     }
 
     /// <summary>
