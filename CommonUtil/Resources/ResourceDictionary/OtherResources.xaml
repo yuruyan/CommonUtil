@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary
-  x:Class="CommonUtil.Resource.ResourceDictionary.OtherResources"
+  x:Class="CommonUtil.Resources.ResourceDictionary.OtherResources"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"

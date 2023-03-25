@@ -51,8 +51,8 @@ public partial class JsonExtractorView : ResponsivePage {
 
     public JsonExtractorView() {
         ResultList = new();
-        InputText = Resource.Resource.JsonExtractorViewDemoJson;
-        PatternText = Resource.Resource.JsonExtractorViewDemoPattern;
+        InputText = CommonUtil.Resources.Resource.JsonExtractorViewDemoJson;
+        PatternText = CommonUtil.Resources.Resource.JsonExtractorViewDemoPattern;
         InitializeComponent();
     }
 

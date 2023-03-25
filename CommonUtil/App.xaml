@@ -11,8 +11,8 @@
         <ui:XamlControlsResources />
         <ResourceDictionary Source="/CommonUITools;component/Themes/Generic.xaml" />
         <!--#endregion-->
-        <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml" />
-        <ResourceDictionary Source="/CommonUtil;component/Resource/ResourceDictionary/OtherResources.xaml" />
+        <ResourceDictionary Source="/CommonUtil;component/Resources/ResourceDictionary/LightThemeResources.xaml" />
+        <ResourceDictionary Source="/CommonUtil;component/Resources/ResourceDictionary/OtherResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <FontFamily x:Key="IconFontUrI">/CommonUtil.Data;component/Resources/#IconFont</FontFamily>
     </ResourceDictionary>

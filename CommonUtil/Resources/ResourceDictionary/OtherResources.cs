@@ -1,6 +1,6 @@
 ﻿using ModernWpf.Controls;
 
-namespace CommonUtil.Resource.ResourceDictionary;
+namespace CommonUtil.Resources.ResourceDictionary;
 
 public partial class OtherResources {
     /// <summary>

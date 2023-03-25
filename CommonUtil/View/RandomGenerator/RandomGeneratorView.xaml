@@ -191,7 +191,7 @@
         <ColumnDefinition />
         <ColumnDefinition Name="SecondColumnDefinition" />
       </Grid.ColumnDefinitions>
-      <ScrollViewer>
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <ui:SimpleStackPanel
           Name="ControlPanel"
           Margin="8,0,0,0"

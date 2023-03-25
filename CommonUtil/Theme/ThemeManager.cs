@@ -1,8 +1,8 @@
 ﻿namespace CommonUtil.Theme;
 
 internal class ThemeManager : DependencyObject {
-    private const string LightThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/LightThemeResources.xaml";
-    private const string DarkThemeSource = "/CommonUtil;component/Resource/ResourceDictionary/DarkThemeResources.xaml";
+    private const string LightThemeSource = "/CommonUtil;component/Resources/ResourceDictionary/LightThemeResources.xaml";
+    private const string DarkThemeSource = "/CommonUtil;component/Resources/ResourceDictionary/DarkThemeResources.xaml";
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
