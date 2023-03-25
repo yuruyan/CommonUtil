@@ -19,6 +19,7 @@
   mc:Ignorable="d">
   <Page.Resources>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <system:Double x:Key="NavigationViewOpenPaneDefaultWidth">50</system:Double>
     <Style BasedOn="{StaticResource GlobalFontIconStyle}" TargetType="ui:FontIcon">
       <Setter Property="Margin" Value="0,0,-8,0" />
     </Style>
@@ -27,7 +28,7 @@
     </Style>
   </Page.Resources>
 
-  <ui:NavigationView x:Name="NavigationView" OpenPaneLength="50">
+  <ui:NavigationView x:Name="NavigationView" OpenPaneLength="{StaticResource NavigationViewOpenPaneDefaultWidth}">
     <ui:NavigationView.MenuItems>
       <ui:NavigationViewItem
         Name="RandomStringGeneratorView"

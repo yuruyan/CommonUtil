@@ -6,9 +6,9 @@
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019">
 
-  <system:Double x:Key="NavigationViewExpansionWidth">250</system:Double>
+  <system:Double x:Key="NavigationViewOpenPaneDefaultWidth">40</system:Double>
+  <system:Double x:Key="NavigationViewOpenPaneExpansionWidth">250</system:Double>
   <system:Double x:Key="NavigationViewExpansionThresholdWidth">1100</system:Double>
-  <system:Double x:Key="DefaultNavigationViewOpenPaneLength">40</system:Double>
   <Thickness x:Key="NavigationContentViewMargin">8</Thickness>
   <Thickness x:Key="PageMargin" Top="33" />
   <system:Double x:Key="NavigationContentListViewWidth">300</system:Double>
@@ -126,7 +126,7 @@
     <Setter Property="IsSettingsVisible" Value="False" />
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="PaneDisplayMode" Value="Left" />
-    <Setter Property="OpenPaneLength" Value="{StaticResource DefaultNavigationViewOpenPaneLength}" />
+    <Setter Property="OpenPaneLength" Value="{StaticResource NavigationViewOpenPaneDefaultWidth}" />
   </Style>
   <Style BasedOn="{StaticResource GlobalNavigationViewStyle}" TargetType="ui:NavigationView" />
   <!--#endregion-->

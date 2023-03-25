@@ -4,7 +4,8 @@ using NavigationView = ModernWpf.Controls.NavigationView;
 namespace CommonUtil.Route;
 
 internal static class NavigationUtils {
-    private const string NavigationViewExpansionWidthKey = "NavigationViewExpansionWidth";
+    private const string NavigationViewOpenPaneDefaultWidthKey = "NavigationViewOpenPaneDefaultWidth";
+    private const string NavigationViewOpenPaneExpansionWidthKey = "NavigationViewOpenPaneExpansionWidth";
     private const string AnimationDurationKey = "AnimationDuration";
     private const string AnimationEaseFunctionKey = "AnimationEaseFunction";
     private const string OpenPaneLengthProperty = "OpenPaneLength";
@@ -97,9 +98,8 @@ internal static class NavigationUtils {
     /// </summary>
     /// <param name="navigationView"></param>
     /// <remarks>
-    /// Duration: 静态资源为 <see cref="AnimationDurationKey"/> <br/>
-    /// ExpandOpenPaneLength：静态资源为 <see cref="NavigationViewExpansionWidthKey"/> <br/>
-    /// EasingFunction：静态资源为 <see cref="AnimationEaseFunctionKey"/> <br/>
+    /// OpenPaneExpansionWidth：资源为 <see cref="NavigationViewOpenPaneExpansionWidthKey"/> <br/>
+    /// OpenPaneDefaultWidth：资源为 <see cref="NavigationViewOpenPaneDefaultWidthKey"/> <br/>
     /// </remarks>
     public static void EnableNavigationPanelResponsive(NavigationView navigationView) {
         if (navigationView.IsLoaded) {
@@ -128,8 +128,8 @@ internal static class NavigationUtils {
     }
 
     private static void EnableNavigationPanelResponsiveInternal(NavigationView navigationView) {
-        double openPaneDefaultLength = navigationView.OpenPaneLength;
-        double openPaneExpansionLength = (double)navigationView.FindResource(NavigationViewExpansionWidthKey);
+        double openPaneDefaultLength = (double)navigationView.FindResource(NavigationViewOpenPaneDefaultWidthKey);
+        double openPaneExpansionLength = (double)navigationView.FindResource(NavigationViewOpenPaneExpansionWidthKey);
         Duration duration = (Duration)navigationView.FindResource(AnimationDurationKey);
         IEasingFunction easingFunction = (IEasingFunction)navigationView.FindResource(AnimationEaseFunctionKey);
 
@@ -142,7 +142,7 @@ internal static class NavigationUtils {
         navigationView.SizeChanged -= NavigationViewSizeChangedHandler;
         navigationView.SizeChanged += NavigationViewSizeChangedHandler;
         // Explicitly invoke
-        HandleNavigationViewSizeChanged(navigationView, openPaneDefaultLength);
+        HandleNavigationViewSizeChanged(navigationView, navigationView.ActualWidth, true);
     }
 
     private static void NavigationViewSizeChangedHandler(object sender, SizeChangedEventArgs e) {
@@ -156,12 +156,14 @@ internal static class NavigationUtils {
     /// </summary>
     /// <param name="view"></param>
     /// <param name="newWidth"></param>
-    private static void HandleNavigationViewSizeChanged(NavigationView view, double newWidth) {
+    /// <param name="isInitial">是否初次调用</param>
+    private static void HandleNavigationViewSizeChanged(NavigationView view, double newWidth, bool isInitial = false) {
         var info = NavigationViewInfoDict[view];
-        if (newWidth >= info.ExpansionThresholdWidth && !info.IsExpanded) {
+
+        if (newWidth >= info.ExpansionThresholdWidth && (isInitial || !info.IsExpanded)) {
             info.IsExpanded = true;
             info.ExpandStoryboard.Begin();
-        } else if (newWidth < info.ExpansionThresholdWidth && info.IsExpanded) {
+        } else if (newWidth < info.ExpansionThresholdWidth && (isInitial || info.IsExpanded)) {
             info.IsExpanded = false;
             info.ShrinkStoryboard.Begin();
         }
