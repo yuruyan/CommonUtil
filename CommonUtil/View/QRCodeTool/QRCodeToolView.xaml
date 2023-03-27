@@ -6,6 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:store="clr-namespace:CommonUtil.Store"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -33,7 +34,7 @@
         Content="链接二维码"
         ToolTip="链接二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe6ca;" />
+          <ui:FontIcon Foreground="#30a4c5" Glyph="&#xe6ca;" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -41,7 +42,7 @@
         Content="短信二维码"
         ToolTip="短信二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe61a;" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.MessageImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -49,7 +50,7 @@
         Content="WiFi 二维码"
         ToolTip="WiFi 二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe65f;" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.WIFIImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -57,7 +58,7 @@
         Content="邮件二维码"
         ToolTip="邮件二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe620;" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.GMailImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -65,7 +66,7 @@
         Content="拨打电话二维码"
         ToolTip="拨打电话二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe67d;" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.PhoneCallImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -73,7 +74,7 @@
         Content="地理位置二维码"
         ToolTip="地理位置二维码">
         <ui:NavigationViewItem.Icon>
-          <ui:FontIcon Glyph="&#xe76f;" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.LocationImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
     </ui:NavigationView.MenuItems>
