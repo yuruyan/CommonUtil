@@ -23,11 +23,12 @@ public static class DataSet {
     /// </summary>
     public static readonly IReadOnlyList<ToolMenuItem> ToolMenuItems = new List<ToolMenuItem>() {
         new("编码/解码工具", $"{Global.ImageSource}encoding.png", typeof(CommonEncodingView)),
+        new("加密/解密工具", $"{Global.ImageSource}Encryption.png", typeof(EncryptionView)),
         new("随机数/文本生成器", $"{Global.ImageSource}random.png", typeof(RandomGeneratorView)),
         new("简体繁体转换", $"{Global.ImageSource}ChineseTransform.png", typeof(ChineseTransformView)),
         new("时间戳转换", $"{Global.ImageSource}DateTime.png", typeof(TimeStampView)),
         new("文件分割/合并", $"{Global.ImageSource}Merge.png", typeof(FileMergeSplitView)),
-        new("数据散列工具", $"{Global.ImageSource}Encryption.png", typeof(DataDigestView)),
+        new("数据散列工具", $"{Global.ImageSource}DataDigest.png", typeof(DataDigestView)),
         new("ASCII 表格", $"{Global.ImageSource}ascii.png", typeof(AsciiTableView)),
         new("BMI 计算", $"{Global.ImageSource}bmi.png", typeof(BMICalculatorView)),
         new("进制转换", $"{Global.ImageSource}BaseConversion.png", typeof(BaseConversionView)),
