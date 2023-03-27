@@ -29,7 +29,7 @@ public partial class URLEncodingView : Page {
     /// </summary>
     private void EncodingClick() {
         try {
-            OutputText = CommonEncoding.UrlEncode(InputText);
+            OutputText = UrlEncoding.UrlEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("编码失败");
@@ -41,7 +41,7 @@ public partial class URLEncodingView : Page {
     /// </summary>
     private void DecodingClick() {
         try {
-            OutputText = CommonEncoding.UrlDecode(InputText);
+            OutputText = UrlEncoding.UrlDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("解码失败");

@@ -30,7 +30,7 @@ public partial class HexEncodingView : Page {
     /// </summary>
     private void EncodingClick() {
         try {
-            OutputText = CommonEncoding.HexEncode(InputText);
+            OutputText = HexEncoding.HexEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("编码失败");
@@ -42,7 +42,7 @@ public partial class HexEncodingView : Page {
     /// </summary>
     private void DecodingClick() {
         try {
-            OutputText = CommonEncoding.HexDecode(InputText);
+            OutputText = HexEncoding.HexDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("解码失败");

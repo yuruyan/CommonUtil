@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using UnicodeEncoding = CommonUtil.Core.UnicodeEncoding;
+
+namespace CommonUtil.View;
 
 public partial class UnicodeEncodingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -30,7 +32,7 @@ public partial class UnicodeEncodingView : Page {
     /// </summary>
     private void EncodingClick() {
         try {
-            OutputText = CommonEncoding.UnicodeEncode(InputText);
+            OutputText = UnicodeEncoding.UnicodeEncode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("编码失败");
@@ -42,7 +44,7 @@ public partial class UnicodeEncodingView : Page {
     /// </summary>
     private void DecodingClick() {
         try {
-            OutputText = CommonEncoding.UnicodeDecode(InputText);
+            OutputText = UnicodeEncoding.UnicodeDecode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("解码失败");

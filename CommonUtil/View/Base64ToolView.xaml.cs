@@ -84,7 +84,7 @@ public partial class Base64ToolView : ResponsivePage {
             SaveFileDialog,
             DecodeCancellationTokenSource,
             FileProcessStatuses,
-            Base64Tool.Base64DecodeFile,
+            Base64Encoding.Base64DecodeFile,
             Logger
         );
     }
@@ -100,7 +100,7 @@ public partial class Base64ToolView : ResponsivePage {
             SaveFileDialog,
             EncodeCancellationTokenSource,
             FileProcessStatuses,
-            Base64Tool.Base64EncodeFile,
+            Base64Encoding.Base64EncodeFile,
             Logger
         );
     }
@@ -112,7 +112,7 @@ public partial class Base64ToolView : ResponsivePage {
         if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
             return;
         }
-        string? output = TaskUtils.Try(() => Base64Tool.Base64DecodeString(InputText));
+        string? output = TaskUtils.Try(() => Base64Encoding.Base64DecodeString(InputText));
         if (output is null) {
             MessageBoxUtils.Error("解码失败");
             return;
@@ -127,7 +127,7 @@ public partial class Base64ToolView : ResponsivePage {
         if (!UIUtils.CheckInputNullOrEmpty(InputText)) {
             return;
         }
-        string? output = TaskUtils.Try(() => Base64Tool.Base64EncodeString(InputText));
+        string? output = TaskUtils.Try(() => Base64Encoding.Base64EncodeString(InputText));
         if (output is null) {
             MessageBoxUtils.Error("编码失败");
             return;
@@ -173,7 +173,7 @@ public partial class Base64ToolView : ResponsivePage {
             SaveDirectoryDialog,
             EncodeCancellationTokenSource,
             FileProcessStatuses,
-            Base64Tool.Base64EncodeFile,
+            Base64Encoding.Base64EncodeFile,
             CurrentWindow,
             Logger
         );
@@ -191,7 +191,7 @@ public partial class Base64ToolView : ResponsivePage {
             SaveDirectoryDialog,
             DecodeCancellationTokenSource,
             FileProcessStatuses,
-            Base64Tool.Base64DecodeFile,
+            Base64Encoding.Base64DecodeFile,
             CurrentWindow,
             Logger
         );

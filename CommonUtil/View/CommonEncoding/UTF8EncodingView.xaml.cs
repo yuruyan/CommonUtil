@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using UTF8Encoding = CommonUtil.Core.UTF8Encoding;
+
+namespace CommonUtil.View;
 
 public partial class UTF8EncodingView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -30,7 +32,7 @@ public partial class UTF8EncodingView : Page {
     /// </summary>
     private void EncodingClick() {
         try {
-            OutputText = CommonEncoding.UTF8Encode(InputText);
+            OutputText = UTF8Encoding.UTF8Encode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("编码失败");
@@ -42,7 +44,7 @@ public partial class UTF8EncodingView : Page {
     /// </summary>
     private void DecodingClick() {
         try {
-            OutputText = CommonEncoding.UTF8Decode(InputText);
+            OutputText = UTF8Encoding.UTF8Decode(InputText);
         } catch (Exception error) {
             Logger.Error(error);
             MessageBoxUtils.Error("解码失败");
