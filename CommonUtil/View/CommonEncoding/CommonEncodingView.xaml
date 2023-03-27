@@ -16,6 +16,7 @@
   <Grid>
     <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
       <ui:NavigationView.MenuItems>
+        <ui:NavigationViewItem x:Name="Base64EncodingView" Content="Base64 编解码" />
         <ui:NavigationViewItem x:Name="UnicodeEncodingView" Content="Unicode 编解码" />
         <ui:NavigationViewItem x:Name="UTF8EncodingView" Content="UTF8 编解码" />
         <ui:NavigationViewItem x:Name="URLEncodingView" Content="URL 编解码" />

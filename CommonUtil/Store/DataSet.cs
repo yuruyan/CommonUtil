@@ -22,10 +22,9 @@ public static class DataSet {
     /// 菜单功能
     /// </summary>
     public static readonly IReadOnlyList<ToolMenuItem> ToolMenuItems = new List<ToolMenuItem>() {
-        new("Base64 编码/解码", $"{Global.ImageSource}base64.png", typeof(Base64ToolView)),
+        new("编码/解码工具", $"{Global.ImageSource}encoding.png", typeof(CommonEncodingView)),
         new("随机数/文本生成器", $"{Global.ImageSource}random.png", typeof(RandomGeneratorView)),
         new("简体繁体转换", $"{Global.ImageSource}ChineseTransform.png", typeof(ChineseTransformView)),
-        new("编码/解码工具", $"{Global.ImageSource}encoding.png", typeof(CommonEncodingView)),
         new("时间戳转换", $"{Global.ImageSource}DateTime.png", typeof(TimeStampView)),
         new("文件分割/合并", $"{Global.ImageSource}Merge.png", typeof(FileMergeSplitView)),
         new("数据散列工具", $"{Global.ImageSource}Encryption.png", typeof(DataDigestView)),

@@ -1,12 +1,12 @@
 ﻿namespace CommonUtil.View;
 
-public partial class Base64ToolView : ResponsivePage {
+public partial class Base64EncodingView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
-    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64ToolView), new PropertyMetadata(""));
-    private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
-    private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64ToolView), new PropertyMetadata(false));
-    public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64ToolView), new PropertyMetadata());
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(Base64EncodingView), new PropertyMetadata(""));
+    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(Base64EncodingView), new PropertyMetadata(""));
+    private static readonly DependencyProperty IsDecodeRunningProperty = DependencyProperty.Register("IsDecodeRunning", typeof(bool), typeof(Base64EncodingView), new PropertyMetadata(false));
+    private static readonly DependencyProperty IsEncodeRunningProperty = DependencyProperty.Register("IsEncodeRunning", typeof(bool), typeof(Base64EncodingView), new PropertyMetadata(false));
+    public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(Base64EncodingView), new PropertyMetadata());
     public static readonly DependencyProperty FileProcessStatusesProperty = FileProcessStatusesPropertyKey.DependencyProperty;
 
     /// <summary>
@@ -63,12 +63,12 @@ public partial class Base64ToolView : ResponsivePage {
     /// </summary>
     public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
 
-    public Base64ToolView() {
+    public Base64EncodingView() {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
         // 响应式布局
         this.SetLoadedOnceEventHandler(static (sender, _) => {
-            if (sender is Base64ToolView self) {
+            if (sender is Base64EncodingView self) {
                 self.CurrentWindow = Window.GetWindow(self);
             }
         });

@@ -1,8 +1,9 @@
 ﻿namespace CommonUtil.View;
 
 public partial class CommonEncodingView : Page {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly Type[] Routers = {
+        typeof(Base64EncodingView),
         typeof(UnicodeEncodingView),
         typeof(UTF8EncodingView),
         typeof(URLEncodingView),
