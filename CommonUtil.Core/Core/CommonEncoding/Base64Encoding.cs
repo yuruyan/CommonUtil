@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.Core;
 
-public static class Base64Tool {
+public static class Base64Encoding {
     /// <summary>
     /// base64 字符串解码
     /// </summary>
