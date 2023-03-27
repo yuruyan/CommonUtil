@@ -33,8 +33,4 @@ public static class Global {
     /// 菜单项目
     /// </summary>
     internal static readonly IReadOnlyList<ToolMenuItem> MenuItems = DataSet.ToolMenuItems;
-
-    #region Images
-    public static readonly Uri JapaneseSymbolImageUri = new($"{ImageSource}JapaneseSymbol.png", UriKind.Relative);
-    #endregion
 }

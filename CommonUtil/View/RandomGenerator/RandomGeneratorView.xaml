@@ -147,7 +147,7 @@
         Content="生成随机日本姓名"
         ToolTip="生成随机日本姓名">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImageUri}" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.JapaneseSymbolImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
@@ -155,7 +155,7 @@
         Content="生成随机日本姓氏"
         ToolTip="生成随机日本姓氏">
         <ui:NavigationViewItem.Icon>
-          <ui:BitmapIcon Foreground="#22adac" UriSource="{x:Static store:Global.JapaneseSymbolImageUri}" />
+          <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.JapaneseSymbolImageUri}" />
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem

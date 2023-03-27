@@ -10,6 +10,7 @@
   <ItemGroup>
     <Resource Include="Resources/iconfont.ttf" />
     <Resource Include="Resources/images/*" />
+    <None Remove="Resources\images\UTF8Encoding.png" />
     <Resource Include="Resources/SplashWindow.png" />
   </ItemGroup>
 

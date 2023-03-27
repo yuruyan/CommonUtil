@@ -5,8 +5,10 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:store="clr-namespace:CommonUtil.Store"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="CommonEncodingView"
+  Margin="8,0,0,0"
   d:DesignHeight="450"
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -14,13 +16,48 @@
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Grid>
-    <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
+    <ui:NavigationView Name="NavigationView">
       <ui:NavigationView.MenuItems>
-        <ui:NavigationViewItem x:Name="Base64EncodingView" Content="Base64 编解码" />
-        <ui:NavigationViewItem x:Name="UnicodeEncodingView" Content="Unicode 编解码" />
-        <ui:NavigationViewItem x:Name="UTF8EncodingView" Content="UTF8 编解码" />
-        <ui:NavigationViewItem x:Name="URLEncodingView" Content="URL 编解码" />
-        <ui:NavigationViewItem x:Name="HexEncodingView" Content="Hex 编解码" />
+        <ui:NavigationViewItem
+          x:Name="Base64EncodingView"
+          Content="Base64 编解码"
+          ToolTip="Base64 编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.Base64ImageUri}" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="UnicodeEncodingView"
+          Content="Unicode 编解码"
+          ToolTip="Unicode 编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#d06591" Glyph="&#xe63d;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="UTF8EncodingView"
+          Content="UTF8 编解码"
+          ToolTip="UTF8 编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.UTF8ImageUri}" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="URLEncodingView"
+          Content="URL 编解码"
+          ToolTip="URL 编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="#6583D0" Glyph="&#xe66f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="HexEncodingView"
+          Content="Hex 编解码"
+          ToolTip="Hex 编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Foreground="Gray" Glyph="&#xe6ee;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

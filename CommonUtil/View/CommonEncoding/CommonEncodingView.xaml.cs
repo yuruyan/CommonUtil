@@ -20,9 +20,11 @@ public partial class CommonEncodingView : Page {
             new(ContentFrame, Routers),
             ContentFrame
         );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.DisableNavigation(NavigationView);
+        NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
     }
 }
