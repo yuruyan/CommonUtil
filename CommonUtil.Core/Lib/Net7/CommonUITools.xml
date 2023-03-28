@@ -1840,6 +1840,95 @@
             <param name="obj"></param>
             <param name="value"></param>
         </member>
+        <member name="T:CommonUITools.Utils.AutoSizeHelper">
+            <summary>
+            自动设置 Width, Height
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.AddToGroupInfo(CommonUITools.Utils.AutoSizeHelper.GroupInfo,System.Boolean,System.Collections.Generic.IEnumerable{System.ValueTuple{System.Windows.FrameworkElement,System.Windows.DependencyProperty,System.Windows.DependencyProperty}})">
+            <summary>
+            Add to GroupInfoDictionary
+            </summary>
+            <param name="groupInfo"></param>
+            <param name="matchMax"></param>
+            <param name="elements">(element, getter, setter)</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.UpdateWidth(System.String)">
+            <summary>
+            显式更新 Width
+            </summary>
+            <param name="groupId"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.UpdateHeight(System.String)">
+            <summary>
+            显式更新 Height
+            </summary>
+            <param name="groupId"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoWidth(System.String,System.Collections.Generic.IEnumerable{System.Windows.FrameworkElement},System.Boolean)">
+            <summary>
+            设置自动宽度
+            </summary>
+            <param name="groupId"></param>
+            <param name="elements">默认 <see cref="F:System.Windows.FrameworkElement.WidthProperty"/> (set), <see cref="F:System.Windows.FrameworkElement.ActualWidthProperty"/> (get)</param>
+            <param name="matchMax">设置为最大宽度</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoWidth(System.String,System.Collections.Generic.IEnumerable{System.Windows.FrameworkElement},System.Windows.DependencyProperty,System.Windows.DependencyProperty,System.Boolean)">
+            <summary>
+            设置自动宽度
+            </summary>
+            <param name="groupId">分组 Id</param>
+            <param name="elements"></param>
+            <param name="widthGetterProperty"></param>
+            <param name="widthSetterProperty"></param>
+            <param name="matchMax">设置为最大宽度</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoWidth(System.String,System.Collections.Generic.IEnumerable{System.ValueTuple{System.Windows.FrameworkElement,System.Windows.DependencyProperty,System.Windows.DependencyProperty}},System.Boolean)">
+            <summary>
+            设置自动 Width
+            </summary>
+            <param name="groupId">分组 Id</param>
+            <param name="elementInfos">(element, getter, setter)</param>
+            <param name="matchMax">设置为最大 Width</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoHeight(System.String,System.Collections.Generic.IEnumerable{System.Windows.FrameworkElement},System.Boolean)">
+            <summary>
+            设置自动 Height
+            </summary>
+            <param name="groupId">分组 Id</param>
+            <param name="elements">默认 <see cref="F:System.Windows.FrameworkElement.HeightProperty"/> (set), <see cref="F:System.Windows.FrameworkElement.ActualHeightProperty"/> (get)</param>
+            <param name="matchMax">设置为最大 Height</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoHeight(System.String,System.Collections.Generic.IEnumerable{System.Windows.FrameworkElement},System.Windows.DependencyProperty,System.Windows.DependencyProperty,System.Boolean)">
+            <summary>
+            设置自动 Height
+            </summary>
+            <param name="groupId">分组 Id</param>
+            <param name="elements"></param>
+            <param name="heightGetterProperty"></param>
+            <param name="heightSetterProperty"></param>
+            <param name="matchMax">设置为最大 Height</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.SetAutoHeight(System.String,System.Collections.Generic.IEnumerable{System.ValueTuple{System.Windows.FrameworkElement,System.Windows.DependencyProperty,System.Windows.DependencyProperty}},System.Boolean)">
+            <summary>
+            设置自动 Height
+            </summary>
+            <param name="groupId"></param>
+            <param name="elementInfos">(element, getter, setter)</param>
+            <param name="matchMax">设置为最大 Height</param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.DisableAutoWidth(System.String)">
+            <summary>
+            Disable auto adjust Width
+            </summary>
+            <param name="groupId"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.AutoSizeHelper.DisableAutoHeight(System.String)">
+            <summary>
+            Disable auto adjust Height
+            </summary>
+            <param name="groupId"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
@@ -2168,6 +2257,22 @@
         </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.SetLoadedOnceEventHandler(System.Windows.FrameworkContentElement,System.Windows.RoutedEventHandler)">
             <inheritdoc cref="M:CommonUITools.Utils.UIUtilsExtension.SetLoadedOnceEventHandler(System.Windows.FrameworkElement,System.Windows.RoutedEventHandler)"/>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.FindDescendantBy(System.Windows.DependencyObject,System.Predicate{System.Windows.DependencyObject})">
+            <summary>
+            递归查询匹配的子元素
+            </summary>
+            <param name="element"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.FindDescendantsBy(System.Windows.DependencyObject,System.Predicate{System.Windows.DependencyObject})">
+            <summary>
+            递归查询所有匹配的子元素
+            </summary>
+            <param name="element"></param>
+            <param name="predicate"></param>
+            <returns></returns>
         </member>
         <member name="F:CommonUITools.Utils.UIUtilsExtension.ContentDialogResizeRatio">
             <summary>

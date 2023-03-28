@@ -2,13 +2,99 @@
   x:Class="CommonUtil.View.AESCryptoView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:core="clr-namespace:CommonUtil.Core;assembly=CommonUtil.Core"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=netstandard"
+  xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="AESEncryption"
   d:DesignHeight="450"
   d:DesignWidth="800"
+  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+  Loaded="ViewLoadedHandler"
+  Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
-
-  <Grid />
+  <UniformGrid Columns="2">
+    <UniformGrid Rows="2">
+      <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <ui:SimpleStackPanel Margin="0,8" Orientation="Vertical">
+          <ui:SimpleStackPanel.Resources>
+            <system:Double x:Key="InputBoxMinWidth">200</system:Double>
+            <Style TargetType="StackPanel">
+              <Setter Property="Orientation" Value="Horizontal" />
+            </Style>
+          </ui:SimpleStackPanel.Resources>
+          <StackPanel>
+            <TextBlock Tag="DescriptionHeader" Text="加密模式：" />
+            <ComboBox
+              x:Name="CryptoModeComboBox"
+              SelectedItem="{Binding CryptoMode}"
+              SelectionChanged="CryptoModeComboBoxSelectionChangedHandler" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Tag="DescriptionHeader" Text="填充模式：" />
+            <ComboBox x:Name="PaddingModeComboBox" SelectedItem="{Binding PaddingMode}" />
+          </StackPanel>
+          <DockPanel>
+            <TextBlock Tag="DescriptionHeader" Text="Key：" />
+            <TextBox
+              MinWidth="{StaticResource InputBoxMinWidth}"
+              ui:ControlHelper.PlaceholderText="32,48,64位十六进制字符串"
+              MaxLength="64"
+              Text="{Binding Key}"
+              TextWrapping="Wrap" />
+          </DockPanel>
+          <DockPanel Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.ECB}}">
+            <StackPanel Tag="DescriptionHeader">
+              <TextBlock Text="IV：" />
+              <CheckBox x:Name="IvCheckBox" Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.CTR}}" />
+            </StackPanel>
+            <TextBox
+              MinWidth="{StaticResource InputBoxMinWidth}"
+              ui:ControlHelper.PlaceholderText="32位十六进制字符串"
+              IsEnabled="{Binding IsChecked, ElementName=IvCheckBox, Mode=OneWay}"
+              MaxLength="32"
+              Text="{Binding Iv}" />
+          </DockPanel>
+          <StackPanel>
+            <TextBlock Tag="DescriptionHeader" Text="输入格式：" />
+            <ComboBox x:Name="InputFormatComboBox" SelectedItem="{Binding InputFormat}" />
+          </StackPanel>
+          <StackPanel>
+            <TextBlock Tag="DescriptionHeader" Text="输出格式：" />
+            <ComboBox x:Name="OutputFormatComboBox" SelectedItem="{Binding OutputFormat}" />
+          </StackPanel>
+          <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <tools:IconButton
+              Click="EncryptClickHandler"
+              Icon="&#xe87a;"
+              Text="加密" />
+            <tools:IconButton
+              Click="DecryptClickHandler"
+              Icon="&#xe6d3;"
+              Text="解密" />
+          </ui:SimpleStackPanel>
+          <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <tools:IconButton
+              Click="CopyResultClick"
+              Icon="&#xe6ef;"
+              Text="复制结果" />
+            <tools:IconButton
+              Click="ClearInputClick"
+              Icon="&#xe680;"
+              Style="{StaticResource GlobalErrorButtonStyle}"
+              Text="清空输入" />
+          </ui:SimpleStackPanel>
+        </ui:SimpleStackPanel>
+      </ScrollViewer>
+    </UniformGrid>
+    <TextBox
+      Margin="8,0,0,0"
+      IsReadOnly="True"
+      Style="{StaticResource MultilineTextBoxStyle}"
+      Text="{Binding OutputText}" />
+  </UniformGrid>
 </local:ResponsivePage>

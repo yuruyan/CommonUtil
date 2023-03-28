@@ -10,7 +10,7 @@ public enum AESCryptoMode {
     /// <summary>
     /// Must not with iv
     /// </summary>
-    //ECB,
+    ECB,
     CBC,
     CFB,
     OFB,
