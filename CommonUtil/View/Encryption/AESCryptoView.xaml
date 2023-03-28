@@ -16,57 +16,95 @@
   Loaded="ViewLoadedHandler"
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
-  <UniformGrid Columns="2">
-    <UniformGrid Rows="2">
-      <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
-      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-        <ui:SimpleStackPanel Margin="0,8" Orientation="Vertical">
-          <ui:SimpleStackPanel.Resources>
-            <system:Double x:Key="InputBoxMinWidth">200</system:Double>
-            <Style TargetType="StackPanel">
-              <Setter Property="Orientation" Value="Horizontal" />
+  <local:ResponsivePage.Resources>
+    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+  </local:ResponsivePage.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+      <ScrollViewer.Style>
+        <Style BasedOn="{StaticResource {x:Type ScrollViewer}}" TargetType="ScrollViewer">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <Setter Property="Grid.ColumnSpan" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <Setter Property="Grid.ColumnSpan" Value="2" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </ScrollViewer.Style>
+      <ui:SimpleStackPanel Margin="0,8" Orientation="Vertical">
+        <ui:SimpleStackPanel.Resources>
+          <system:Double x:Key="InputBoxMinWidth">200</system:Double>
+          <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+          </Style>
+        </ui:SimpleStackPanel.Resources>
+        <StackPanel>
+          <TextBlock Tag="DescriptionHeader" Text="加密模式：" />
+          <ComboBox
+            x:Name="CryptoModeComboBox"
+            SelectedItem="{Binding CryptoMode}"
+            SelectionChanged="CryptoModeComboBoxSelectionChangedHandler" />
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Tag="DescriptionHeader" Text="填充模式：" />
+          <ComboBox x:Name="PaddingModeComboBox" SelectedItem="{Binding PaddingMode}" />
+        </StackPanel>
+        <DockPanel>
+          <TextBlock Tag="DescriptionHeader" Text="Key：" />
+          <TextBox
+            MinWidth="{StaticResource InputBoxMinWidth}"
+            ui:ControlHelper.PlaceholderText="32,48,64位十六进制字符串"
+            MaxLength="64"
+            Text="{Binding Key}"
+            TextWrapping="Wrap" />
+        </DockPanel>
+        <DockPanel Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.ECB}}">
+          <StackPanel Tag="DescriptionHeader">
+            <TextBlock Text="Iv：" />
+            <CheckBox x:Name="IvCheckBox" Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.CTR}}" />
+          </StackPanel>
+          <TextBox
+            MinWidth="{StaticResource InputBoxMinWidth}"
+            ui:ControlHelper.PlaceholderText="32位十六进制字符串"
+            IsEnabled="{Binding IsChecked, ElementName=IvCheckBox, Mode=OneWay}"
+            MaxLength="32"
+            Text="{Binding Iv}"
+            TextWrapping="Wrap" />
+        </DockPanel>
+        <StackPanel>
+          <TextBlock Tag="DescriptionHeader" Text="输入格式：" />
+          <ComboBox x:Name="InputFormatComboBox" SelectedItem="{Binding InputFormat}" />
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Tag="DescriptionHeader" Text="输出格式：" />
+          <ComboBox x:Name="OutputFormatComboBox" SelectedItem="{Binding OutputFormat}" />
+        </StackPanel>
+        <!--  Buttons  -->
+        <ui:SimpleStackPanel HorizontalAlignment="Center">
+          <ui:SimpleStackPanel.Style>
+            <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                  <Setter Property="Orientation" Value="Vertical" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                  <Setter Property="Orientation" Value="Horizontal" />
+                </DataTrigger>
+              </Style.Triggers>
             </Style>
-          </ui:SimpleStackPanel.Resources>
-          <StackPanel>
-            <TextBlock Tag="DescriptionHeader" Text="加密模式：" />
-            <ComboBox
-              x:Name="CryptoModeComboBox"
-              SelectedItem="{Binding CryptoMode}"
-              SelectionChanged="CryptoModeComboBoxSelectionChangedHandler" />
-          </StackPanel>
-          <StackPanel>
-            <TextBlock Tag="DescriptionHeader" Text="填充模式：" />
-            <ComboBox x:Name="PaddingModeComboBox" SelectedItem="{Binding PaddingMode}" />
-          </StackPanel>
-          <DockPanel>
-            <TextBlock Tag="DescriptionHeader" Text="Key：" />
-            <TextBox
-              MinWidth="{StaticResource InputBoxMinWidth}"
-              ui:ControlHelper.PlaceholderText="32,48,64位十六进制字符串"
-              MaxLength="64"
-              Text="{Binding Key}"
-              TextWrapping="Wrap" />
-          </DockPanel>
-          <DockPanel Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.ECB}}">
-            <StackPanel Tag="DescriptionHeader">
-              <TextBlock Text="IV：" />
-              <CheckBox x:Name="IvCheckBox" Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.CTR}}" />
-            </StackPanel>
-            <TextBox
-              MinWidth="{StaticResource InputBoxMinWidth}"
-              ui:ControlHelper.PlaceholderText="32位十六进制字符串"
-              IsEnabled="{Binding IsChecked, ElementName=IvCheckBox, Mode=OneWay}"
-              MaxLength="32"
-              Text="{Binding Iv}" />
-          </DockPanel>
-          <StackPanel>
-            <TextBlock Tag="DescriptionHeader" Text="输入格式：" />
-            <ComboBox x:Name="InputFormatComboBox" SelectedItem="{Binding InputFormat}" />
-          </StackPanel>
-          <StackPanel>
-            <TextBlock Tag="DescriptionHeader" Text="输出格式：" />
-            <ComboBox x:Name="OutputFormatComboBox" SelectedItem="{Binding OutputFormat}" />
-          </StackPanel>
+          </ui:SimpleStackPanel.Style>
           <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <tools:IconButton
               Click="EncryptClickHandler"
@@ -89,12 +127,25 @@
               Text="清空输入" />
           </ui:SimpleStackPanel>
         </ui:SimpleStackPanel>
-      </ScrollViewer>
-    </UniformGrid>
+      </ui:SimpleStackPanel>
+    </ScrollViewer>
     <TextBox
+      Grid.Column="1"
       Margin="8,0,0,0"
       IsReadOnly="True"
-      Style="{StaticResource MultilineTextBoxStyle}"
-      Text="{Binding OutputText}" />
-  </UniformGrid>
+      Text="{Binding OutputText}">
+      <TextBox.Style>
+        <Style BasedOn="{StaticResource MultilineTextBoxStyle}" TargetType="TextBox">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <Setter Property="Grid.RowSpan" Value="2" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <Setter Property="Grid.RowSpan" Value="1" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </TextBox.Style>
+    </TextBox>
+  </Grid>
 </local:ResponsivePage>

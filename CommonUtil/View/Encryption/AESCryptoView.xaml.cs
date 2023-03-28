@@ -1,5 +1,4 @@
-﻿using NPOI.SS.Formula.Functions;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace CommonUtil.View;
 
@@ -219,7 +218,7 @@ public partial class AESCryptoView : ResponsivePage {
                 MessageBoxUtils.Error("Iv 不能为空");
                 return false;
             }
-            if (!IvRegex.IsMatch(Key)) {
+            if (!IvRegex.IsMatch(Iv)) {
                 MessageBoxUtils.Error("Iv 无效");
                 return false;
             }
