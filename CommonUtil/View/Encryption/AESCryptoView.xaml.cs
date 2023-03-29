@@ -1,6 +1,4 @@
-﻿using SharpVectors.Scripting;
-using System.Text.RegularExpressions;
-using ZXing.Aztec.Internal;
+﻿using System.Text.RegularExpressions;
 
 namespace CommonUtil.View;
 
@@ -139,7 +137,7 @@ public partial class AESCryptoView : ResponsivePage {
     /// <param name="e"></param>
     private async void EncryptClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        // 正在编码
+        // 正在加密
         if (IsEncrypting) {
             return;
         }
@@ -162,12 +160,29 @@ public partial class AESCryptoView : ResponsivePage {
         IsEncrypting = false;
     }
 
-    private void DecryptClickHandler(object sender, RoutedEventArgs e) {
+    private async void DecryptClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 正在解密
+        if (IsDecrypting) {
+            return;
+        }
+        // 输入检查
         if (!CheckInputValidation()) {
             return;
         }
-        DecryptText();
+        var hasFile = DragDropTextBox.HasFile;
+
+        // 处理文本
+        if (!hasFile) {
+            DecryptText();
+            return;
+        }
+
+        DecryptionCancellationTokenSource.Dispose();
+        DecryptionCancellationTokenSource = new();
+        IsDecrypting = true;
+        await DecryptFile();
+        IsDecrypting = false;
     }
 
     /// <summary>
@@ -184,6 +199,19 @@ public partial class AESCryptoView : ResponsivePage {
     }
 
     /// <summary>
+    /// 解密文件
+    /// </summary>
+    [NoException]
+    private async Task DecryptFile() {
+        var fileNames = DragDropTextBox.FileNames;
+        if (fileNames.Count == 1) {
+            await DecryptOneFile(fileNames[0]);
+        } else {
+            await DecryptMultiFiles(fileNames);
+        }
+    }
+
+    /// <summary>
     /// 加密单个文件
     /// </summary>
     /// <returns></returns>
@@ -196,6 +224,39 @@ public partial class AESCryptoView : ResponsivePage {
             FileProcessStatuses,
             EncryptFile,
             Logger
+        );
+    }
+
+    /// <summary>
+    /// 解密单个文件
+    /// </summary>
+    /// <returns></returns>
+    [NoException]
+    private async Task DecryptOneFile(string filename) {
+        await FileProcessUtils.ProcessOneFileAsync(
+            filename,
+            SaveFileDialog,
+            DecryptionCancellationTokenSource,
+            FileProcessStatuses,
+            DecryptFile,
+            Logger
+        );
+    }
+
+    private void DecryptFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
+        var (cryptoMode, paddingMode, key, iv, isIvChecked) = Dispatcher.Invoke(() => {
+            return (CryptoMode, PaddingMode, Key, Iv, IvCheckBox.IsChecked is true);
+        });
+
+        AESCryptoUtils.DecryptFile(
+            cryptoMode,
+            paddingMode,
+            inputFile,
+            outputFile,
+            ParseKey(key),
+            ParseIv(iv, cryptoMode, isIvChecked),
+            token,
+            callback
         );
     }
 
@@ -229,6 +290,24 @@ public partial class AESCryptoView : ResponsivePage {
             EncryptionCancellationTokenSource,
             FileProcessStatuses,
             EncryptFile,
+            CurrentWindow,
+            Logger
+        );
+    }
+
+    /// <summary>
+    /// 解密多个文件
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <returns></returns>
+    [NoException]
+    private async Task DecryptMultiFiles(ICollection<string> filenames) {
+        await FileProcessUtils.ProcessMultiFilesAsync(
+            filenames,
+            SaveDirectoryDialog,
+            DecryptionCancellationTokenSource,
+            FileProcessStatuses,
+            DecryptFile,
             CurrentWindow,
             Logger
         );
