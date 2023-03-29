@@ -20,7 +20,36 @@ public partial class AESCryptoView : ResponsivePage {
     public static readonly DependencyProperty PaddingModeProperty = DependencyProperty.Register("PaddingMode", typeof(AESPaddingMode), typeof(AESCryptoView), new PropertyMetadata(AESPaddingMode.PKCS7Padding));
     public static readonly DependencyProperty OutputFormatProperty = DependencyProperty.Register("OutputFormat", typeof(TextFormat), typeof(AESCryptoView), new PropertyMetadata(TextFormat.Base64));
     public static readonly DependencyProperty InputFormatProperty = DependencyProperty.Register("InputFormat", typeof(TextFormat), typeof(AESCryptoView), new PropertyMetadata(TextFormat.UTF8));
+    private static readonly DependencyProperty IsEncryptingProperty = DependencyProperty.Register("IsEncrypting", typeof(bool), typeof(AESCryptoView), new PropertyMetadata(false));
+    private static readonly DependencyProperty IsDecryptingProperty = DependencyProperty.Register("IsDecrypting", typeof(bool), typeof(AESCryptoView), new PropertyMetadata(false));
+    public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(AESCryptoView), new PropertyMetadata());
+    public static readonly DependencyProperty FileProcessStatusesProperty = FileProcessStatusesPropertyKey.DependencyProperty;
     private readonly string DescriptionHeaderAutoWidthGroupId;
+    /// <summary>
+    /// 保存文件对话框
+    /// </summary>
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Title = "保存文件",
+        Filter = "All Files|*.*"
+    };
+    /// <summary>
+    /// 保存目录对话框
+    /// </summary>
+    private readonly VistaFolderBrowserDialog SaveDirectoryDialog = new() {
+        Description = "选择保存目录",
+        UseDescriptionForTitle = true
+    };
+    /// <summary>
+    /// 当前 Window
+    /// </summary>
+    private Window CurrentWindow = App.Current.MainWindow;
+    private CancellationTokenSource EncryptionCancellationTokenSource = new();
+    private CancellationTokenSource DecryptionCancellationTokenSource = new();
+    /// <summary>
+    /// 文件处理列表
+    /// </summary>
+    public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
+
 #if NET7_0_OR_GREATER
     private readonly Regex KeyRegex = GetKeyRegex();
     private readonly Regex IvRegex = GetIvRegex();
@@ -71,13 +100,33 @@ public partial class AESCryptoView : ResponsivePage {
         get { return (TextFormat)GetValue(InputFormatProperty); }
         set { SetValue(InputFormatProperty, value); }
     }
+    /// <summary>
+    /// 是否正在加密
+    /// </summary>
+    private bool IsEncrypting {
+        get { return (bool)GetValue(IsEncryptingProperty); }
+        set { SetValue(IsEncryptingProperty, value); }
+    }
+    /// <summary>
+    /// 是否正在解密
+    /// </summary>
+    private bool IsDecrypting {
+        get { return (bool)GetValue(IsDecryptingProperty); }
+        set { SetValue(IsDecryptingProperty, value); }
+    }
 
     public AESCryptoView() {
+        SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         DescriptionHeaderAutoWidthGroupId = $"{nameof(AESCryptoView)}_{GetHashCode()}_DescriptionHeader";
         InitializeComponent();
         CryptoModeComboBox.ItemsSource = CryptoModes;
         PaddingModeComboBox.ItemsSource = PaddingModes;
         InputFormatComboBox.ItemsSource = OutputFormatComboBox.ItemsSource = TextFormats;
+        this.SetLoadedOnceEventHandler(static (sender, _) => {
+            if (sender is AESCryptoView self) {
+                self.CurrentWindow = Window.GetWindow(self);
+            }
+        });
     }
 
     private void EncryptClickHandler(object sender, RoutedEventArgs e) {
@@ -244,6 +293,11 @@ public partial class AESCryptoView : ResponsivePage {
     /// <param name="e"></param>
     private void ClearInputClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 没有正在处理的任务
+        if (!IsEncrypting && !IsDecrypting) {
+            FileProcessStatuses.Clear();
+        }
+        DragDropTextBox.Clear();
         InputText = OutputText = Key = Iv = string.Empty;
     }
 

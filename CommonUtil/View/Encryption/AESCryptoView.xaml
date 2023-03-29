@@ -29,7 +29,9 @@
       <ColumnDefinition />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <!--  Input Box  -->
+    <tools:MultiDragDropTextBox Name="DragDropTextBox" InputText="{Binding InputText}" />
+    <!--  ControlBox  -->
     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
       <ScrollViewer.Style>
         <Style BasedOn="{StaticResource {x:Type ScrollViewer}}" TargetType="ScrollViewer">
@@ -83,11 +85,11 @@
             Text="{Binding Iv}"
             TextWrapping="Wrap" />
         </DockPanel>
-        <StackPanel>
+        <StackPanel Visibility="{Binding HasFile, ElementName=DragDropTextBox, Converter={StaticResource HideIfTrueConverter}}">
           <TextBlock Tag="DescriptionHeader" Text="输入格式：" />
           <ComboBox x:Name="InputFormatComboBox" SelectedItem="{Binding InputFormat}" />
         </StackPanel>
-        <StackPanel>
+        <StackPanel Visibility="{Binding HasFile, ElementName=DragDropTextBox, Converter={StaticResource HideIfTrueConverter}}">
           <TextBlock Tag="DescriptionHeader" Text="输出格式：" />
           <ComboBox x:Name="OutputFormatComboBox" SelectedItem="{Binding OutputFormat}" />
         </StackPanel>
@@ -129,13 +131,10 @@
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ScrollViewer>
-    <TextBox
-      Grid.Column="1"
-      Margin="8,0,0,0"
-      IsReadOnly="True"
-      Text="{Binding OutputText}">
-      <TextBox.Style>
-        <Style BasedOn="{StaticResource MultilineTextBoxStyle}" TargetType="TextBox">
+    <!--  Output  -->
+    <Grid Grid.Column="1" Margin="8,0,0,0">
+      <Grid.Style>
+        <Style TargetType="Grid">
           <Style.Triggers>
             <DataTrigger Binding="{Binding IsExpanded}" Value="True">
               <Setter Property="Grid.RowSpan" Value="2" />
@@ -145,7 +144,16 @@
             </DataTrigger>
           </Style.Triggers>
         </Style>
-      </TextBox.Style>
-    </TextBox>
+      </Grid.Style>
+      <tools:FileProcessStatusBox
+        x:Name="FileProcessStatusBox"
+        FileProcessStatusList="{Binding FileProcessStatuses}"
+        Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfZeroConverter}}" />
+      <TextBox
+        IsReadOnly="True"
+        Style="{StaticResource MultilineTextBoxStyle}"
+        Text="{Binding OutputText}"
+        Visibility="{Binding FileProcessStatuses.Count, Converter={StaticResource HideIfNotZeroConverter}}" />
+    </Grid>
   </Grid>
 </local:ResponsivePage>
