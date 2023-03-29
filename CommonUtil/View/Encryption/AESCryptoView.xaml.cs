@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using SharpVectors.Scripting;
+using System.Text.RegularExpressions;
+using ZXing.Aztec.Internal;
 
 namespace CommonUtil.View;
 
@@ -9,6 +11,7 @@ public partial class AESCryptoView : ResponsivePage {
         Hex,
     }
 
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IReadOnlyList<AESCryptoMode> CryptoModes = Enum.GetValues<AESCryptoMode>();
     private readonly IReadOnlyList<AESPaddingMode> PaddingModes = Enum.GetValues<AESPaddingMode>();
     private readonly IReadOnlyList<TextFormat> TextFormats = Enum.GetValues<TextFormat>();
@@ -129,12 +132,34 @@ public partial class AESCryptoView : ResponsivePage {
         });
     }
 
-    private void EncryptClickHandler(object sender, RoutedEventArgs e) {
+    /// <summary>
+    /// 加密
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void EncryptClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 正在编码
+        if (IsEncrypting) {
+            return;
+        }
+        // 输入检查
         if (!CheckInputValidation()) {
             return;
         }
-        EncryptText();
+        var hasFile = DragDropTextBox.HasFile;
+
+        // 处理文本
+        if (!hasFile) {
+            EncryptText();
+            return;
+        }
+
+        EncryptionCancellationTokenSource.Dispose();
+        EncryptionCancellationTokenSource = new();
+        IsEncrypting = true;
+        await EncryptFile();
+        IsEncrypting = false;
     }
 
     private void DecryptClickHandler(object sender, RoutedEventArgs e) {
@@ -143,6 +168,70 @@ public partial class AESCryptoView : ResponsivePage {
             return;
         }
         DecryptText();
+    }
+
+    /// <summary>
+    /// 加密文件
+    /// </summary>
+    [NoException]
+    private async Task EncryptFile() {
+        var fileNames = DragDropTextBox.FileNames;
+        if (fileNames.Count == 1) {
+            await EncryptOneFile(fileNames[0]);
+        } else {
+            await EncryptMultiFiles(fileNames);
+        }
+    }
+
+    /// <summary>
+    /// 加密单个文件
+    /// </summary>
+    /// <returns></returns>
+    [NoException]
+    private async Task EncryptOneFile(string filename) {
+        await FileProcessUtils.ProcessOneFileAsync(
+            filename,
+            SaveFileDialog,
+            EncryptionCancellationTokenSource,
+            FileProcessStatuses,
+            EncryptFile,
+            Logger
+        );
+    }
+
+    private void EncryptFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
+        var (cryptoMode, paddingMode, key, iv, isIvChecked) = Dispatcher.Invoke(() => {
+            return (CryptoMode, PaddingMode, Key, Iv, IvCheckBox.IsChecked is true);
+        });
+
+        AESCryptoUtils.EncryptFile(
+            cryptoMode,
+            paddingMode,
+            inputFile,
+            outputFile,
+            ParseKey(key),
+            ParseIv(iv, cryptoMode, isIvChecked),
+            token,
+            callback
+        );
+    }
+
+    /// <summary>
+    /// 加密多个文件
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <returns></returns>
+    [NoException]
+    private async Task EncryptMultiFiles(ICollection<string> filenames) {
+        await FileProcessUtils.ProcessMultiFilesAsync(
+            filenames,
+            SaveDirectoryDialog,
+            EncryptionCancellationTokenSource,
+            FileProcessStatuses,
+            EncryptFile,
+            CurrentWindow,
+            Logger
+        );
     }
 
     /// <summary>
@@ -195,6 +284,16 @@ public partial class AESCryptoView : ResponsivePage {
         return false;
     }
 
+    private static byte[] ParseKey(string key) => Convert.FromHexString(key);
+
+    private static byte[]? ParseIv(string iv, AESCryptoMode mode, bool isIvChecked) {
+        return mode == AESCryptoMode.ECB
+            ? null
+            : mode == AESCryptoMode.CTR || isIvChecked
+                ? Convert.FromHexString(iv)
+                : null;
+    }
+
     /// <summary>
     /// 加密文本
     /// </summary>
@@ -208,9 +307,8 @@ public partial class AESCryptoView : ResponsivePage {
                 CryptoMode,
                 PaddingMode,
                 data,
-                Convert.FromHexString(Key),
-                CryptoMode != AESCryptoMode.ECB && (CryptoMode == AESCryptoMode.CTR || IvCheckBox.IsChecked is true)
-                    ? Convert.FromHexString(Iv) : null
+                ParseKey(Key),
+                ParseIv(Iv, CryptoMode, IvCheckBox.IsChecked is true)
             );
             if (TryFormatOutput(output, out var result)) {
                 OutputText = result;
@@ -233,9 +331,8 @@ public partial class AESCryptoView : ResponsivePage {
                 CryptoMode,
                 PaddingMode,
                 data,
-                Convert.FromHexString(Key),
-                CryptoMode != AESCryptoMode.ECB && (CryptoMode == AESCryptoMode.CTR || IvCheckBox.IsChecked is true)
-                    ? Convert.FromHexString(Iv) : null
+                ParseKey(Key),
+                ParseIv(Iv, CryptoMode, IvCheckBox.IsChecked is true)
             );
             if (TryFormatOutput(output, out var result)) {
                 OutputText = result;
