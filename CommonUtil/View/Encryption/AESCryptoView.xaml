@@ -2,10 +2,10 @@
   x:Class="CommonUtil.View.AESCryptoView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:core="clr-namespace:CommonUtil.Core;assembly=CommonUtil.Core"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:model="clr-namespace:CommonUtil.Core.Model;assembly=CommonUtil.Core"
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -72,10 +72,10 @@
             Text="{Binding Key}"
             TextWrapping="Wrap" />
         </DockPanel>
-        <DockPanel Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.ECB}}">
+        <DockPanel Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static model:AESCryptoMode.ECB}}">
           <StackPanel Tag="DescriptionHeader">
             <TextBlock Text="Iv：" />
-            <CheckBox x:Name="IvCheckBox" Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static core:AESCryptoMode.CTR}}" />
+            <CheckBox x:Name="IvCheckBox" Visibility="{Binding SelectedItem, ElementName=CryptoModeComboBox, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter={x:Static model:AESCryptoMode.CTR}}" />
           </StackPanel>
           <TextBox
             MinWidth="{StaticResource InputBoxMinWidth}"

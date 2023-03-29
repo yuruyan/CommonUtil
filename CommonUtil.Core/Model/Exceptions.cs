@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CommonUtil.Core;
+namespace CommonUtil.Core.Model;
 
 /// <summary>
 /// 模式解析失败

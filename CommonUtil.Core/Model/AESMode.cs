@@ -1,4 +1,4 @@
-﻿namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core.Model;
 
 public enum AESPaddingMode {
     NoPadding,
