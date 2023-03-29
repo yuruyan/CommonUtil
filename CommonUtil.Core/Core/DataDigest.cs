@@ -53,15 +53,15 @@ public static class DataDigest {
     ) {
         var buffer = new byte[FileReadBuffer];
         var resultBuffer = new byte[digest.GetDigestSize()];
-        int readCound;
+        int readCount;
         long totalRead = 0, streamLength = stream.Length;
-        while ((readCound = stream.Read(buffer, 0, buffer.Length)) > 0) {
+        while ((readCount = stream.Read(buffer, 0, buffer.Length)) > 0) {
             // 终止计算
             if (cancellationToken?.IsCancellationRequested == true) {
                 return null;
             }
-            digest.BlockUpdate(buffer, 0, readCound);
-            totalRead += readCound;
+            digest.BlockUpdate(buffer, 0, readCount);
+            totalRead += readCount;
             callback?.Invoke((double)totalRead / streamLength);
         }
         digest.DoFinal(resultBuffer, 0);
