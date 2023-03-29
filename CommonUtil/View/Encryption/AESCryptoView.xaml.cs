@@ -217,14 +217,7 @@ public partial class AESCryptoView : ResponsivePage {
     /// <returns></returns>
     [NoException]
     private async Task EncryptOneFile(string filename) {
-        await FileProcessUtils.ProcessOneFileAsync(
-            filename,
-            SaveFileDialog,
-            EncryptionCancellationTokenSource,
-            FileProcessStatuses,
-            EncryptFile,
-            Logger
-        );
+        await ProcessOneFile(filename, true);
     }
 
     /// <summary>
@@ -233,39 +226,59 @@ public partial class AESCryptoView : ResponsivePage {
     /// <returns></returns>
     [NoException]
     private async Task DecryptOneFile(string filename) {
+        await ProcessOneFile(filename, false);
+    }
+
+    /// <summary>
+    /// 处理单文件
+    /// </summary>
+    /// <param name="filename"></param>
+    /// <param name="isEncryption"></param>
+    /// <returns></returns>
+    private async Task ProcessOneFile(string filename, bool isEncryption) {
+        var (source, func) = ((CancellationTokenSource, CommonFileProcess))(isEncryption ?
+            (EncryptionCancellationTokenSource, EncryptFile)
+            : (DecryptionCancellationTokenSource, DecryptFile)
+        );
         await FileProcessUtils.ProcessOneFileAsync(
             filename,
             SaveFileDialog,
-            DecryptionCancellationTokenSource,
+            source,
             FileProcessStatuses,
-            DecryptFile,
+            func,
             Logger
         );
     }
 
     private void DecryptFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
-        var (cryptoMode, paddingMode, key, iv, isIvChecked) = Dispatcher.Invoke(() => {
-            return (CryptoMode, PaddingMode, Key, Iv, IvCheckBox.IsChecked is true);
-        });
-
-        AESCryptoUtils.DecryptFile(
-            cryptoMode,
-            paddingMode,
-            inputFile,
-            outputFile,
-            ParseKey(key),
-            ParseIv(iv, cryptoMode, isIvChecked),
-            token,
-            callback
-        );
+        ProcessFile(inputFile, outputFile, false, token, callback);
     }
 
     private void EncryptFile(string inputFile, string outputFile, CancellationToken? token = null, Action<double>? callback = null) {
+        ProcessFile(inputFile, outputFile, true, token, callback);
+    }
+
+    /// <summary>
+    /// 处理单个文件
+    /// </summary>
+    /// <param name="inputFile"></param>
+    /// <param name="outputFile"></param>
+    /// <param name="isEncryption"></param>
+    /// <param name="token"></param>
+    /// <param name="callback"></param>
+    private void ProcessFile(
+        string inputFile,
+        string outputFile,
+        bool isEncryption,
+        CancellationToken? token = null,
+        Action<double>? callback = null
+    ) {
         var (cryptoMode, paddingMode, key, iv, isIvChecked) = Dispatcher.Invoke(() => {
             return (CryptoMode, PaddingMode, Key, Iv, IvCheckBox.IsChecked is true);
         });
-
-        AESCryptoUtils.EncryptFile(
+        var func = (Action<AESCryptoMode, AESPaddingMode, string, string, byte[], byte[]?, CancellationToken?, Action<double>?>)
+                    (isEncryption ? AESCryptoUtils.EncryptFile : AESCryptoUtils.DecryptFile);
+        func(
             cryptoMode,
             paddingMode,
             inputFile,
@@ -284,15 +297,7 @@ public partial class AESCryptoView : ResponsivePage {
     /// <returns></returns>
     [NoException]
     private async Task EncryptMultiFiles(ICollection<string> filenames) {
-        await FileProcessUtils.ProcessMultiFilesAsync(
-            filenames,
-            SaveDirectoryDialog,
-            EncryptionCancellationTokenSource,
-            FileProcessStatuses,
-            EncryptFile,
-            CurrentWindow,
-            Logger
-        );
+        await ProcessMultiFiles(filenames, true);
     }
 
     /// <summary>
@@ -302,12 +307,27 @@ public partial class AESCryptoView : ResponsivePage {
     /// <returns></returns>
     [NoException]
     private async Task DecryptMultiFiles(ICollection<string> filenames) {
+        await ProcessMultiFiles(filenames, false);
+    }
+
+    /// <summary>
+    /// 处理多文件
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <param name="isEncryption"></param>
+    /// <returns></returns>
+    [NoException]
+    private async Task ProcessMultiFiles(ICollection<string> filenames, bool isEncryption) {
+        var (source, func) = ((CancellationTokenSource, CommonFileProcess))(isEncryption ?
+             (EncryptionCancellationTokenSource, EncryptFile)
+             : (DecryptionCancellationTokenSource, DecryptFile));
+
         await FileProcessUtils.ProcessMultiFilesAsync(
             filenames,
             SaveDirectoryDialog,
-            DecryptionCancellationTokenSource,
+            source,
             FileProcessStatuses,
-            DecryptFile,
+            func,
             CurrentWindow,
             Logger
         );
