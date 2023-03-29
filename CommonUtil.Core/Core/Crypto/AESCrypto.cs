@@ -43,17 +43,31 @@ public static class AESCryptoUtils {
     /// <inheritdoc cref="Encrypt(AESCryptoMode, AESPaddingMode, byte[], byte[], byte[]?)"/>
     /// <param name="inputPath">要加密的文件</param>
     /// <param name="outputPath">加密后的文件</param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="callback">进度回调，参数为进度百分比</param>
     public static void EncryptFile(
         AESCryptoMode cryptoMode,
         AESPaddingMode paddingMode,
         string inputPath,
         string outputPath,
         byte[] key,
-        byte[]? iv = null
+        byte[]? iv = null,
+        CancellationToken? cancellationToken = null,
+        Action<double>? callback = null
     ) {
         using var readStream = File.OpenRead(inputPath);
         using var writeStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
-        DoCrypto(cryptoMode, paddingMode, true, readStream, writeStream, key, iv);
+        DoCrypto(
+            cryptoMode,
+            paddingMode,
+            true,
+            readStream,
+            writeStream,
+            key,
+            iv,
+            cancellationToken,
+            callback
+        );
     }
 
     /// <summary>
@@ -62,17 +76,31 @@ public static class AESCryptoUtils {
     /// <inheritdoc cref="Decrypt(AESCryptoMode, AESPaddingMode, byte[], byte[], byte[]?)"/>
     /// <param name="inputPath">要解密的文件</param>
     /// <param name="outputPath">解密后的文件</param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="callback">进度回调，参数为进度百分比</param>
     public static void DecryptFile(
         AESCryptoMode cryptoMode,
         AESPaddingMode paddingMode,
         string inputPath,
         string outputPath,
         byte[] key,
-        byte[]? iv = null
+        byte[]? iv = null,
+        CancellationToken? cancellationToken = null,
+        Action<double>? callback = null
     ) {
         using var readStream = File.OpenRead(inputPath);
         using var writeStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
-        DoCrypto(cryptoMode, paddingMode, false, readStream, writeStream, key, iv);
+        DoCrypto(
+            cryptoMode,
+            paddingMode,
+            false,
+            readStream,
+            writeStream,
+            key,
+            iv,
+            cancellationToken,
+            callback
+        );
     }
 
     /// <summary>
@@ -106,6 +134,8 @@ public static class AESCryptoUtils {
     /// <inheritdoc cref="DoCrypto(AESCryptoMode, AESPaddingMode, bool, byte[], byte[], byte[]?)"/>
     /// <param name="inputStream">输入流</param>
     /// <param name="outputStream">输出流</param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="callback">进度回调，参数为进度百分比</param>
     private static void DoCrypto(
         AESCryptoMode cryptoMode,
         AESPaddingMode paddingMode,
@@ -113,7 +143,9 @@ public static class AESCryptoUtils {
         Stream inputStream,
         Stream outputStream,
         byte[] key,
-        byte[]? iv = null
+        byte[]? iv = null,
+        CancellationToken? cancellationToken = null,
+        Action<double>? callback = null
     ) {
         var keyParameter = ParameterUtilities.CreateKeyParameter("AES", key);
         var cipher = CipherUtilities.GetCipher($"AES/{cryptoMode}/{paddingMode}");
@@ -125,12 +157,20 @@ public static class AESCryptoUtils {
         var readBuffer = new byte[ReadBuffer];
         var writeBuffer = new byte[ReadBuffer];
         int readCount;
+        long totalRead = 0, streamLength = inputStream.Length;
         inputStream.Position = 0;
-        // processing
+        // Processing
         while ((readCount = inputStream.Read(readBuffer)) > 0) {
+            // Terminate
+            if (cancellationToken?.IsCancellationRequested is true) {
+                return;
+            }
             var writeCount = cipher.ProcessBytes(readBuffer, 0, readCount, writeBuffer, 0);
             outputStream.Write(writeBuffer, 0, writeCount);
+            totalRead += readCount;
+            callback?.Invoke((double)totalRead / streamLength);
         }
-        outputStream.Write(cipher.DoFinal());
+        outputStream.Write(writeBuffer, 0, cipher.DoFinal(writeBuffer, 0));
+        callback?.Invoke(1);
     }
 }
