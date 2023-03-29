@@ -525,4 +525,24 @@ public partial class AESCryptoView : ResponsivePage {
     private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
         AutoSizeHelper.DisableAutoWidth(DescriptionHeaderAutoWidthGroupId);
     }
+
+    /// <summary>
+    /// 取消加密
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelEncryptClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        EncryptionCancellationTokenSource.Cancel();
+    }
+
+    /// <summary>
+    /// 取消解密
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CancelDecryptClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        DecryptionCancellationTokenSource.Cancel();
+    }
 }
