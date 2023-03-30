@@ -2,6 +2,7 @@
 
 public partial class CommonEncodingView : Page {
     //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly RouterService RouterService;
     private readonly Type[] Routers = {
         typeof(Base64EncodingView),
         typeof(UnicodeEncodingView),
@@ -12,12 +13,13 @@ public partial class CommonEncodingView : Page {
 
     public CommonEncodingView() {
         InitializeComponent();
+        RouterService = new(ContentFrame, Routers);
     }
 
     private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.EnableNavigation(
             NavigationView,
-            new(ContentFrame, Routers),
+            RouterService,
             ContentFrame
         );
         NavigationUtils.EnableNavigationPanelResponsive(NavigationView);

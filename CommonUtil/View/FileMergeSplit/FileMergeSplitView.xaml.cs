@@ -2,7 +2,7 @@
 
 public partial class FileMergeSplitView : Page {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+    private readonly RouterService RouterService;
     private readonly Type[] Routers = {
         typeof(FileMergeView),
         typeof(FileSplitView),
@@ -10,12 +10,13 @@ public partial class FileMergeSplitView : Page {
 
     public FileMergeSplitView() {
         InitializeComponent();
+        RouterService = new(ContentFrame, Routers);
     }
 
     private void ViewLoadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.EnableNavigation(
             NavigationView,
-            new(ContentFrame, Routers),
+            RouterService,
             ContentFrame
         );
     }
