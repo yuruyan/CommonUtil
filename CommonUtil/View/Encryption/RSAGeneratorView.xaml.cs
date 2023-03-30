@@ -114,8 +114,10 @@ public partial class RSAGeneratorView : ResponsivePage {
         Clipboard.SetDataObject(
             $"-----BEGIN PUBLIC KEY-----\n"
             + $"{PublicKey}\n"
+            + $"-----END PUBLIC KEY-----\n"
             + $"-----BEGIN PRIVATE KEY-----\n"
             + $"{PrivateKey}\n"
+            + $"-----END PRIVATE KEY-----\n"
         );
         MessageBoxUtils.Success("已复制");
     }
