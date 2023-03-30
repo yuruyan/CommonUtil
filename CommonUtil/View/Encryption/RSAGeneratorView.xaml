@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RSAGeneratorView"
@@ -12,6 +13,10 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <local:ResponsivePage.Resources>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
+  </local:ResponsivePage.Resources>
+
   <UniformGrid Rows="2">
     <!--  Input  -->
     <UniformGrid Columns="2">
@@ -45,26 +50,48 @@
         <TextBlock Text="密钥长度：" />
         <ComboBox Name="StrengthComboBox" SelectedIndex="0" />
       </StackPanel>
-      <ui:SimpleStackPanel Orientation="Horizontal">
-        <tools:IconButton
-          Click="GenerateClickHandler"
-          Icon="&#xe601;"
-          IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
-          Text="生成" />
-        <tools:IconButton
-          Click="ValidateClickHandler"
-          Icon="&#xe646;"
-          IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
-          Text="验证" />
-        <tools:IconButton
-          Click="CopyResultClick"
-          Icon="&#xe6ef;"
-          Text="复制结果" />
-        <tools:IconButton
-          Click="ClearInputClick"
-          Icon="&#xe680;"
-          Style="{StaticResource GlobalErrorButtonStyle}"
-          Text="清空输入" />
+      <ui:SimpleStackPanel>
+        <ui:SimpleStackPanel.Style>
+          <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                <Setter Property="Orientation" Value="Horizontal" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                <Setter Property="Orientation" Value="Vertical" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ui:SimpleStackPanel.Style>
+        <ui:SimpleStackPanel.Resources>
+          <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+          </Style>
+        </ui:SimpleStackPanel.Resources>
+        <ui:SimpleStackPanel Orientation="Horizontal">
+          <tools:IconButton
+            Click="GenerateClickHandler"
+            Icon="&#xe601;"
+            IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
+            Text="生成" />
+          <tools:IconButton
+            Click="ValidateClickHandler"
+            Icon="&#xe646;"
+            IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
+            Text="验证" />
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel Orientation="Horizontal">
+          <tools:IconButton
+            Click="CopyResultClick"
+            Icon="&#xe6ef;"
+            Text="复制结果" />
+          <tools:IconButton
+            Click="ClearInputClick"
+            Icon="&#xe680;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="清空输入" />
+        </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
   </UniformGrid>
