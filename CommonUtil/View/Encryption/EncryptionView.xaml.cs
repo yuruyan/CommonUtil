@@ -19,9 +19,11 @@ public partial class EncryptionView : Page {
             RouterService,
             ContentFrame
         );
+        NavigationUtils.EnableNavigationPanelResponsive(NavigationView);
     }
 
     private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.DisableNavigation(NavigationView);
+        NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
     }
 }

@@ -16,13 +16,34 @@
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Grid>
-    <ui:NavigationView Name="NavigationView" PaneDisplayMode="Top">
+    <ui:NavigationView Name="NavigationView">
       <ui:NavigationView.MenuItems>
-        <ui:NavigationViewItem x:Name="AESCryptoView" Content="AES 加解密" />
-        <ui:NavigationViewItem x:Name="RSAGeneratorView" Content="RSA 秘钥生成" />
-        <ui:NavigationViewItem x:Name="RSACryptoView" Content="RSA 加解密" />
+        <ui:NavigationViewItem
+          x:Name="AESCryptoView"
+          Content="AES 加解密"
+          ToolTip="AES 加解密">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe603;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="RSAGeneratorView"
+          Content="RSA 秘钥生成"
+          ToolTip="RSA 秘钥生成">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe62b;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="RSACryptoView"
+          Content="RSA 加解密"
+          ToolTip="RSA 加解密">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe62b;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
-      <ui:Frame x:Name="ContentFrame" Margin="0,8,0,0" />
+      <ui:Frame x:Name="ContentFrame" Margin="8,8,0,0" />
     </ui:NavigationView>
   </Grid>
 </Page>
