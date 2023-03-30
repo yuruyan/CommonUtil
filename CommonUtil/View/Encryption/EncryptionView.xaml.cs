@@ -3,6 +3,8 @@
 public partial class EncryptionView : Page {
     private readonly Type[] Routers = {
         typeof(AESCryptoView),
+        typeof(RSAGeneratorView),
+        typeof(RSACryptoView),
     };
 
     public EncryptionView() {
