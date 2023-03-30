@@ -44,55 +44,57 @@
     </UniformGrid>
     <UniformGrid Columns="2">
       <!--  Controls  -->
-      <ui:SimpleStackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Orientation="Vertical">
-        <ui:SimpleStackPanel.Resources>
-          <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-            <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                <Setter Property="Orientation" Value="Horizontal" />
-              </DataTrigger>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-                <Setter Property="Orientation" Value="Vertical" />
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </ui:SimpleStackPanel.Resources>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-          <TextBlock Text="算法：" />
-          <ComboBox
-            Name="AlgorithmComboBox"
-            ItemsSource="{x:Static core:RSAAlgorithm.AllAlgorithms}"
-            SelectedIndex="0" />
-        </StackPanel>
-        <ui:SimpleStackPanel>
-          <tools:IconButton
-            Click="EncryptClickHandler"
-            Icon="&#xe87a;"
-            IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
-            Text="加密" />
-          <tools:IconButton
-            Click="DecryptClickHandler"
-            Icon="&#xe6d3;"
-            IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
-            Text="解密" />
+      <ScrollViewer Margin="0,8,4,0" HorizontalScrollBarVisibility="Disabled">
+        <ui:SimpleStackPanel
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          Orientation="Vertical">
+          <ui:SimpleStackPanel.Resources>
+            <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
+              <Setter Property="Orientation" Value="Horizontal" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                  <Setter Property="Orientation" Value="Horizontal" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+                  <Setter Property="Orientation" Value="Vertical" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </ui:SimpleStackPanel.Resources>
+          <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="算法：" />
+            <ComboBox
+              Name="AlgorithmComboBox"
+              ItemsSource="{x:Static core:RSAAlgorithm.AllAlgorithms}"
+              SelectedIndex="0" />
+          </StackPanel>
+          <ui:SimpleStackPanel>
+            <tools:IconButton
+              Click="EncryptClickHandler"
+              Icon="&#xe87a;"
+              IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
+              Text="加密" />
+            <tools:IconButton
+              Click="DecryptClickHandler"
+              Icon="&#xe6d3;"
+              IsEnabled="{Binding IsWorking, Converter={StaticResource InvertBoolConverter}}"
+              Text="解密" />
+          </ui:SimpleStackPanel>
+          <ui:SimpleStackPanel>
+            <tools:IconButton
+              Click="CopyResultClick"
+              Icon="&#xe6ef;"
+              Text="复制结果" />
+            <tools:IconButton
+              Click="ClearInputClick"
+              Icon="&#xe680;"
+              Style="{StaticResource GlobalErrorButtonStyle}"
+              Text="清空输入" />
+          </ui:SimpleStackPanel>
         </ui:SimpleStackPanel>
-        <ui:SimpleStackPanel>
-          <tools:IconButton
-            Click="CopyResultClick"
-            Icon="&#xe6ef;"
-            Text="复制结果" />
-          <tools:IconButton
-            Click="ClearInputClick"
-            Icon="&#xe680;"
-            Style="{StaticResource GlobalErrorButtonStyle}"
-            Text="清空输入" />
-        </ui:SimpleStackPanel>
-      </ui:SimpleStackPanel>
+      </ScrollViewer>
       <TextBox
         Margin="4,8,0,0"
         AcceptsReturn="False"

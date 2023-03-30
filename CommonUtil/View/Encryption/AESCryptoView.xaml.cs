@@ -556,6 +556,5 @@ public partial class AESCryptoView : ResponsivePage {
     protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
         base.ElementSizeChangedHandler(sender, e);
         IsExpanded2 = e.NewSize.Width >= ExpansionThreshold2;
-        Console.WriteLine(e.NewSize.Width);
     }
 }
