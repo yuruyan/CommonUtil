@@ -25,6 +25,7 @@ public partial class AESCryptoView : ResponsivePage {
     private static readonly DependencyProperty IsDecryptingProperty = DependencyProperty.Register("IsDecrypting", typeof(bool), typeof(AESCryptoView), new PropertyMetadata(false));
     public static readonly DependencyPropertyKey FileProcessStatusesPropertyKey = DependencyProperty.RegisterReadOnly("FileProcessStatuses", typeof(ObservableCollection<FileProcessStatus>), typeof(AESCryptoView), new PropertyMetadata());
     public static readonly DependencyProperty FileProcessStatusesProperty = FileProcessStatusesPropertyKey.DependencyProperty;
+    public static readonly DependencyProperty IsExpanded2Property = DependencyProperty.Register("IsExpanded2", typeof(bool), typeof(AESCryptoView), new PropertyMetadata(false));
     private readonly string DescriptionHeaderAutoWidthGroupId;
     /// <summary>
     /// 保存文件对话框
@@ -46,10 +47,7 @@ public partial class AESCryptoView : ResponsivePage {
     private Window CurrentWindow = App.Current.MainWindow;
     private CancellationTokenSource EncryptionCancellationTokenSource = new();
     private CancellationTokenSource DecryptionCancellationTokenSource = new();
-    /// <summary>
-    /// 文件处理列表
-    /// </summary>
-    public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
+    private readonly double ExpansionThreshold2;
 
 #if NET7_0_OR_GREATER
     private readonly Regex KeyRegex = GetKeyRegex();
@@ -63,6 +61,10 @@ public partial class AESCryptoView : ResponsivePage {
     private readonly Regex IvRegex = new(@"^[a-z0-9]{32}$", RegexOptions.IgnoreCase);
 #endif
 
+    /// <summary>
+    /// 文件处理列表
+    /// </summary>
+    public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
     public string Key {
         get { return (string)GetValue(KeyProperty); }
         set { SetValue(KeyProperty, value); }
@@ -115,11 +117,16 @@ public partial class AESCryptoView : ResponsivePage {
         get { return (bool)GetValue(IsDecryptingProperty); }
         set { SetValue(IsDecryptingProperty, value); }
     }
+    public bool IsExpanded2 {
+        get { return (bool)GetValue(IsExpanded2Property); }
+        set { SetValue(IsExpanded2Property, value); }
+    }
 
     public AESCryptoView() {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         DescriptionHeaderAutoWidthGroupId = $"{nameof(AESCryptoView)}_{GetHashCode()}_DescriptionHeader";
         InitializeComponent();
+        ExpansionThreshold2 = (double)Resources["ExpansionThreshold2"];
         CryptoModeComboBox.ItemsSource = CryptoModes;
         PaddingModeComboBox.ItemsSource = PaddingModes;
         InputFormatComboBox.ItemsSource = OutputFormatComboBox.ItemsSource = TextFormats;
@@ -544,5 +551,11 @@ public partial class AESCryptoView : ResponsivePage {
     private void CancelDecryptClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         DecryptionCancellationTokenSource.Cancel();
+    }
+
+    protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        base.ElementSizeChangedHandler(sender, e);
+        IsExpanded2 = e.NewSize.Width >= ExpansionThreshold2;
+        Console.WriteLine(e.NewSize.Width);
     }
 }

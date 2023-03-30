@@ -17,7 +17,8 @@
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <local:ResponsivePage.Resources>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
+    <system:Double x:Key="ExpansionThreshold2">800</system:Double>
   </local:ResponsivePage.Resources>
 
   <Grid>
@@ -36,10 +37,10 @@
       <ScrollViewer.Style>
         <Style BasedOn="{StaticResource {x:Type ScrollViewer}}" TargetType="ScrollViewer">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+            <DataTrigger Binding="{Binding IsExpanded2}" Value="True">
               <Setter Property="Grid.ColumnSpan" Value="1" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+            <DataTrigger Binding="{Binding IsExpanded2}" Value="False">
               <Setter Property="Grid.ColumnSpan" Value="2" />
             </DataTrigger>
           </Style.Triggers>
@@ -98,12 +99,33 @@
           <ui:SimpleStackPanel.Style>
             <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
               <Style.Triggers>
-                <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                  <Setter Property="Orientation" Value="Vertical" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-                  <Setter Property="Orientation" Value="Horizontal" />
-                </DataTrigger>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsExpanded}" Value="False" />
+                    <!--<Condition Binding="{Binding IsExpanded2}" Value="False" />-->
+                  </MultiDataTrigger.Conditions>
+                  <MultiDataTrigger.Setters>
+                    <Setter Property="Orientation" Value="Vertical" />
+                  </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsExpanded}" Value="True" />
+                    <Condition Binding="{Binding IsExpanded2}" Value="False" />
+                  </MultiDataTrigger.Conditions>
+                  <MultiDataTrigger.Setters>
+                    <Setter Property="Orientation" Value="Horizontal" />
+                  </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsExpanded}" Value="True" />
+                    <Condition Binding="{Binding IsExpanded2}" Value="True" />
+                  </MultiDataTrigger.Conditions>
+                  <MultiDataTrigger.Setters>
+                    <Setter Property="Orientation" Value="Vertical" />
+                  </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
               </Style.Triggers>
             </Style>
           </ui:SimpleStackPanel.Style>
@@ -158,10 +180,10 @@
       <Grid.Style>
         <Style TargetType="Grid">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+            <DataTrigger Binding="{Binding IsExpanded2}" Value="True">
               <Setter Property="Grid.RowSpan" Value="2" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+            <DataTrigger Binding="{Binding IsExpanded2}" Value="False">
               <Setter Property="Grid.RowSpan" Value="1" />
             </DataTrigger>
           </Style.Triggers>
