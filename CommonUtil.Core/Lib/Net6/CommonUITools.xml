@@ -861,13 +861,6 @@
         <member name="M:CommonUITools.Converter.ProcessResultVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
         </member>
-        <member name="T:CommonUITools.Converter.VisibilityEqualConverter">
-            <summary>
-            value 与 parameter 内容相同，返回 parameter 指定的 Visibility
-            不满足则返回 Visible
-            parameter 格式：value|Visibility(大小写均可)
-            </summary>
-        </member>
         <member name="T:CommonUITools.Converter.VisibilityIncludesConverter">
             <summary>
             value 与 parameter 包括的内容匹配，返回 parameter 指定的 Visibility
@@ -880,6 +873,13 @@
             value 与 parameter 包括的内容不匹配，返回 parameter 指定的 Visibility
             不满足则返回 Visible
             parameter 格式：[a b c]|Visibility(大小写均可)
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converter.VisibilityEqualConverter">
+            <summary>
+            value 与 parameter 内容相同，返回 parameter 指定的 Visibility
+            不满足则返回 Visible
+            parameter 格式：value|Visibility(大小写均可)
             </summary>
         </member>
         <member name="T:CommonUITools.Converter.VisibilityNotEqualConverter">
@@ -988,6 +988,11 @@
         <member name="M:CommonUITools.View.WarningDialog.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Extensions.ImageStaticExtension">
+            <summary>
+            将 ImagePath 加载为 BitmapImage
             </summary>
         </member>
         <member name="T:CommonUITools.Model.ShowCommands">
@@ -2274,6 +2279,13 @@
             <param name="predicate"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.SetIconSize(ModernWpf.Controls.NavigationViewItem,System.Double)">
+            <summary>
+            Set NavigationViewItem icon size
+            </summary>
+            <param name="navigationViewItem"></param>
+            <param name="size"></param>
+        </member>
         <member name="F:CommonUITools.Utils.UIUtilsExtension.ContentDialogResizeRatio">
             <summary>
             ContentDialogResizeRatio
@@ -2312,36 +2324,6 @@
             Clean dict
             </summary>
             <param name="window"></param>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
-            </summary>
         </member>
     </members>
 </doc>
