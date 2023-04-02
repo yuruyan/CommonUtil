@@ -160,6 +160,23 @@ public static class RandomGenerator {
     }
 
     /// <summary>
+    /// 根据数据源随机挑选
+    /// </summary>
+    /// <param name="dataSource"></param>
+    /// <param name="count">生成个数</param>
+    /// <returns></returns>
+    public static string[] GenerateRandomStringChoices(IList<string> dataSource, uint count) {
+        string[] results = new string[count];
+        if (!dataSource.Any()) {
+            return results;
+        }
+        for (int i = 0, sourceLength = dataSource.Count; i < count; i++) {
+            results[i] = dataSource[Random.Shared.Next(sourceLength)];
+        }
+        return results;
+    }
+
+    /// <summary>
     /// 生成随机 DateTime
     /// </summary>
     /// <param name="minDateTime"></param>

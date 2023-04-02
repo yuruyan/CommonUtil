@@ -63,6 +63,14 @@
         </ui:NavigationViewItem.Icon>
       </ui:NavigationViewItem>
       <ui:NavigationViewItem
+        Name="RandomChoiceGeneratorView"
+        Content="生成随机选项"
+        ToolTip="生成随机选项">
+        <ui:NavigationViewItem.Icon>
+          <ui:FontIcon Foreground="#22ADAC" Glyph="&#xfc5a;" />
+        </ui:NavigationViewItem.Icon>
+      </ui:NavigationViewItem>
+      <ui:NavigationViewItem
         Name="RandomDateTimeGeneratorView"
         Content="生成随机日期时间"
         ToolTip="生成随机日期时间">

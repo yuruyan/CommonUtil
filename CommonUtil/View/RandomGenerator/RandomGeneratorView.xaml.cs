@@ -26,6 +26,7 @@ public partial class RandomGeneratorView : ResponsivePage {
         typeof(RandomNumberGeneratorView),
         typeof(RandomGeneratorWithRegexView),
         typeof(RandomGeneratorWithDataSourceView),
+        typeof(RandomChoiceGeneratorView),
         typeof(RandomChineseNameGeneratorView),
         typeof(RandomChineseFamilyNameGeneratorView),
         typeof(RandomChineseAncientNameGeneratorView),

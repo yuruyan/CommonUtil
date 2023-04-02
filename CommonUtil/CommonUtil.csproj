@@ -93,6 +93,9 @@
     <Compile Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -146,6 +149,9 @@
     <Page Update="View\RandomGenerator\RandomDateTimeGeneratorView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="View\RandomGenerator\RandomMACAddressGeneratorView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
