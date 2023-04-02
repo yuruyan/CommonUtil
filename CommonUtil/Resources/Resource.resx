@@ -159,4 +159,26 @@
     <value>roots/bookmark_bar/children[*]/id
 roots/bookmark_bar/children[*]/url</value>
   </data>
+  <data name="RandomChoiceGeneratorDefaultDataSource" xml:space="preserve">
+    <value>Python
+C
+Java
+C++
+C#
+Visual Basic
+JavaScript
+SQL
+PHP
+Go
+Assembly language
+MATLAB
+Delphi/Object Pascal
+Scratch
+Classic Visual Basic
+R
+Fortran
+Ruby
+Rust
+Swift</value>
+  </data>
 </root>

@@ -98,5 +98,33 @@ namespace CommonUtil.Resources {
                 return ResourceManager.GetString("JsonExtractorViewDemoPattern", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Python
+        ///C
+        ///Java
+        ///C++
+        ///C#
+        ///Visual Basic
+        ///JavaScript
+        ///SQL
+        ///PHP
+        ///Go
+        ///Assembly language
+        ///MATLAB
+        ///Delphi/Object Pascal
+        ///Scratch
+        ///Classic Visual Basic
+        ///R
+        ///Fortran
+        ///Ruby
+        ///Rust
+        ///Swift.
+        /// </summary>
+        internal static string RandomChoiceGeneratorDefaultDataSource {
+            get {
+                return ResourceManager.GetString("RandomChoiceGeneratorDefaultDataSource", resourceCulture);
+            }
+        }
     }
 }

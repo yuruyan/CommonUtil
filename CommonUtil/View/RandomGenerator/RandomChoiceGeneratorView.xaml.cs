@@ -1,9 +1,11 @@
-﻿namespace CommonUtil.View;
+﻿using CommonUtil.Resources;
+
+namespace CommonUtil.View;
 
 public partial class RandomChoiceGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    private readonly string DefaultDataSource = string.Join('\n', "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray());
+    private readonly string DefaultDataSource = string.Join('\n', Resource.RandomChoiceGeneratorDefaultDataSource.ReplaceLineFeedWithLinuxStyle().Split('\n'));
     public static readonly DependencyProperty DataSourceTextProperty = DependencyProperty.Register("DataSourceText", typeof(string), typeof(RandomChoiceGeneratorView), new PropertyMetadata(string.Empty));
 
     /// <summary>
