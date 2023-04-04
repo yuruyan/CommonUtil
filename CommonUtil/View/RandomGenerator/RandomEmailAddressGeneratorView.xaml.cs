@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomEmailAddressGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomEmailAddressGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public RandomEmailAddressGeneratorView() {
@@ -11,7 +11,7 @@ public partial class RandomEmailAddressGeneratorView : Page, IGenerable<uint, IE
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomEmailAddresses(generateCount);
         } catch (Exception e) {

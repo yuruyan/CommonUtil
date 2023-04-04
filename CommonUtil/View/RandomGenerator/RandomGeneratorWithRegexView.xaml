@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:RandomGeneratorPage
   x:Class="CommonUtil.View.RandomGeneratorWithRegexView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,18 +12,13 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <ui:SimpleStackPanel>
-    <ui:SimpleStackPanel.Resources>
-      <Style TargetType="StackPanel">
-        <Setter Property="Orientation" Value="Horizontal" />
-      </Style>
-    </ui:SimpleStackPanel.Resources>
-    <StackPanel>
-      <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="正则表达式：" />
+  <ui:SimpleStackPanel HorizontalAlignment="Stretch">
+    <DockPanel>
+      <TextBlock Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" Text="正则表达式：" />
       <TextBox
-        Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWithEdgeWidth}}"
         MinWidth="{StaticResource RandomGenerator_TextBoxWidth}"
+        DockPanel.Dock="Right"
         Text="{Binding RegexInputText}" />
-    </StackPanel>
+    </DockPanel>
   </ui:SimpleStackPanel>
-</Page>
+</local:RandomGeneratorPage>

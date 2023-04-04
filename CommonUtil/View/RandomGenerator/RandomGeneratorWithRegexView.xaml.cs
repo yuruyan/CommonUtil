@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomGeneratorWithRegexView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty RegexInputTextProperty = DependencyProperty.Register("RegexInputText", typeof(string), typeof(RandomGeneratorWithRegexView), new PropertyMetadata("\\d{8,}"));
@@ -23,7 +23,7 @@ public partial class RandomGeneratorWithRegexView : Page, IGenerable<uint, IEnum
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         if (string.IsNullOrEmpty(RegexInputText)) {
             MessageBoxUtils.Info("正则表达式不能为空！");
             return Array.Empty<string>();

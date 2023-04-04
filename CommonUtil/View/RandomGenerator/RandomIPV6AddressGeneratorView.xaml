@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:RandomGeneratorPage
   x:Class="CommonUtil.View.RandomIPV6AddressGeneratorView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,10 +13,10 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <ui:SimpleStackPanel Orientation="Horizontal">
-    <TextBlock Text="大小写：" />
+    <TextBlock Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" Text="大小写：" />
     <ui:ToggleSwitch
       IsOn="{Binding IsUpperCase}"
       OffContent="小写"
       OnContent="大写" />
   </ui:SimpleStackPanel>
-</Page>
+</local:RandomGeneratorPage>

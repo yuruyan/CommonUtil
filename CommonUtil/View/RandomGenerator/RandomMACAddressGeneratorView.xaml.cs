@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomMACAddressGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomMACAddressGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     /// <summary>
     /// 是否是大写
@@ -19,7 +19,7 @@ public partial class RandomMACAddressGeneratorView : Page, IGenerable<uint, IEnu
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomMACAddresses(generateCount, IsUpperCase);
         } catch (Exception e) {

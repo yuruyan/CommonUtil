@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using System.Windows.Navigation;
+
+namespace CommonUtil.View;
 
 public partial class RandomGeneratorView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -99,5 +101,19 @@ public partial class RandomGeneratorView : ResponsivePage {
     private void ViewUnloadedHandler(object sender, RoutedEventArgs e) {
         NavigationUtils.DisableNavigation(NavigationView);
         NavigationUtils.DisableNavigationPanelResponsive(NavigationView);
+    }
+
+    private void ContentFrameNavigatedHandler(object sender, NavigationEventArgs e) {
+        if (RouterService.CurrentPage is not FrameworkElement element) {
+            return;
+        }
+        // Update description width
+        element.SetLoadedOnceEventHandler((_, _) => {
+            GenerationCountTextBlock.ClearValue(WidthProperty);
+            GenerationCountTextBlock.UpdateLayout();
+            var newWidth = Math.Max(RandomGeneratorHelper.DescriptionWidth, GenerationCountTextBlock.ActualWidth);
+            GenerationCountTextBlock.Width = newWidth;
+            RandomGeneratorHelper.UpdateDescriptionWidth(newWidth);
+        });
     }
 }

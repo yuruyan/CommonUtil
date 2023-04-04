@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomDateTimeGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomDateTimeGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty StartDateTimeProperty = DependencyProperty.Register("StartDateTime", typeof(DateTime), typeof(RandomDateTimeGeneratorView), new PropertyMetadata(new DateTime(DateTime.UtcNow.Year - 1, 1, 1)));
@@ -28,7 +28,7 @@ public partial class RandomDateTimeGeneratorView : Page, IGenerable<uint, IEnume
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             if (EndDateTime < StartDateTime) {
                 throw new Exception("结束日期不能小于开始日期");

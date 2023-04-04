@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:RandomGeneratorPage
   x:Class="CommonUtil.View.RandomStringGeneratorView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -18,12 +18,15 @@
     <CheckBox Content="大写字母 (A...Z)" IsChecked="{Binding UppercaseChecked}" />
     <CheckBox Content="特殊字符" IsChecked="{Binding SpecialCharacterChecked}" />
     <StackPanel Orientation="Horizontal">
-      <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="字符串长度：" />
+      <TextBlock
+        Width="{DynamicResource RandomGenerator_DescriptionWidth}"
+        Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}"
+        Text="字符串长度：" />
       <!--  最小值  -->
       <ui:NumberBox Style="{StaticResource RandomGenerator_StringLengthNumberBoxStyle}" Value="{Binding MinStringLength}" />
-      <TextBlock Padding="4,0" Text="~" />
+      <TextBlock Padding="4,0" Text=" ~ " />
       <!--  最大值  -->
       <ui:NumberBox Style="{StaticResource RandomGenerator_StringLengthNumberBoxStyle}" Value="{Binding MaxStringLength}" />
     </StackPanel>
   </ui:SimpleStackPanel>
-</Page>
+</local:RandomGeneratorPage>

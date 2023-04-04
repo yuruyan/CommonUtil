@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:RandomGeneratorPage
   x:Class="CommonUtil.View.RandomChoiceGeneratorView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,13 +13,14 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <!--  输入  -->
-  <StackPanel Orientation="Horizontal">
-    <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="数据源：" />
+  <DockPanel>
+    <TextBlock Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" Text="数据源：" />
     <TextBox
-      Width="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter={StaticResource RandomGenerator_DescriptionWithEdgeWidth}}"
+      Margin="0,0,8,0"
       ui:ControlHelper.PlaceholderText="每行一个"
+      DockPanel.Dock="Right"
       MaxLines="16"
       Style="{StaticResource MultilineTextBoxStyle}"
       Text="{Binding DataSourceText}" />
-  </StackPanel>
-</Page>
+  </DockPanel>
+</local:RandomGeneratorPage>

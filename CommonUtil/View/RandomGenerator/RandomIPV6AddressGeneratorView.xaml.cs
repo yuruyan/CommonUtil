@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomIPV6AddressGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomIPV6AddressGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     /// <summary>
     /// 是否是大写
@@ -19,7 +19,7 @@ public partial class RandomIPV6AddressGeneratorView : Page, IGenerable<uint, IEn
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomIPV6Addresses(generateCount, IsUpperCase);
         } catch (Exception e) {

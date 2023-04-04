@@ -2,7 +2,7 @@
 
 namespace CommonUtil.View;
 
-public partial class RandomChoiceGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomChoiceGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private readonly string DefaultDataSource = string.Join('\n', Resource.RandomChoiceGeneratorDefaultDataSource.ReplaceLineFeedWithLinuxStyle().Split('\n'));
@@ -25,7 +25,7 @@ public partial class RandomChoiceGeneratorView : Page, IGenerable<uint, IEnumera
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         // 检查数据源
         if (string.IsNullOrEmpty(DataSourceText)) {
             MessageBoxUtils.Info("请输入数据源");
@@ -36,5 +36,4 @@ public partial class RandomChoiceGeneratorView : Page, IGenerable<uint, IEnumera
             generateCount
         );
     }
-
 }

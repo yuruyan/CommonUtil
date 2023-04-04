@@ -17,7 +17,7 @@
   Loaded="ViewLoadedHandler"
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
-  <Page.Resources>
+  <local:ResponsivePage.Resources>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
     <system:Double x:Key="NavigationViewOpenPaneDefaultWidth">50</system:Double>
     <Style BasedOn="{StaticResource GlobalFontIconStyle}" TargetType="ui:FontIcon">
@@ -26,7 +26,7 @@
     <Style TargetType="ui:BitmapIcon">
       <Setter Property="Margin" Value="0,0,-14,0" />
     </Style>
-  </Page.Resources>
+  </local:ResponsivePage.Resources>
 
   <ui:NavigationView x:Name="NavigationView" OpenPaneLength="{StaticResource NavigationViewOpenPaneDefaultWidth}">
     <ui:NavigationView.MenuItems>
@@ -203,14 +203,14 @@
       <ScrollViewer HorizontalScrollBarVisibility="Disabled">
         <ui:SimpleStackPanel
           Name="ControlPanel"
-          Margin="8,0,0,0"
+          Margin="8,8,8,0"
           Orientation="Vertical"
           Spacing="{StaticResource MediumItemSpacing}">
-          <ui:Frame x:Name="ContentFrame" Margin="0,16,0,0" />
+          <ui:Frame x:Name="ContentFrame" Navigated="ContentFrameNavigatedHandler" />
           <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
             <!--  生成个数  -->
             <StackPanel Orientation="Horizontal">
-              <TextBlock Width="{StaticResource RandomGenerator_DescriptionWidth}" Text="生成数量：" />
+              <TextBlock x:Name="GenerationCountTextBlock" Text="生成数量：" />
               <ui:NumberBox Style="{StaticResource RandomGenerator_GenerateCountNumberBoxStyle}" Value="{Binding GenerateCount}" />
             </StackPanel>
             <!--  Control  -->
@@ -234,7 +234,7 @@
       <TextBox
         x:Name="OutputTextBox"
         Grid.Column="1"
-        Margin="0,16,0,0"
+        Margin="0,8,0,0"
         IsReadOnly="True"
         Style="{StaticResource MultilineTextBoxStyle}"
         Text="{Binding OutputText}" />

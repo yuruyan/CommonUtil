@@ -1762,6 +1762,13 @@
             <returns></returns>
             <remarks>设置在 ContextMenu 上</remarks>
         </member>
+        <member name="M:CommonUITools.Utils.ContextMenuHelper.SetCenterHorizontal(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            是否水平居中
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.ContextMenuHelper.ShowContextMenuHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             显示 ContextMenu

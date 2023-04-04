@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomChineseNameGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomChineseNameGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public RandomChineseNameGeneratorView() {
@@ -15,7 +15,7 @@ public partial class RandomChineseNameGeneratorView : Page, IGenerable<uint, IEn
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomChineseNames(generateCount);
         } catch (Exception e) {

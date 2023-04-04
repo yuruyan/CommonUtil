@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomGeneratorWithDataSourceView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomGeneratorWithDataSourceView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private const string DefaultDataSource = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -38,7 +38,7 @@ public partial class RandomGeneratorWithDataSourceView : Page, IGenerable<uint, 
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         Range? range = CommonUtils.CheckRange(MinStringLength, MaxStringLength);
         if (range is null) {
             MessageBoxUtils.Error("字符串范围无效");

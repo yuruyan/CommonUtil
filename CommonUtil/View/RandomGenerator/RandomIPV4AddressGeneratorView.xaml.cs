@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomIPV4AddressGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomIPV4AddressGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public RandomIPV4AddressGeneratorView() {
@@ -11,7 +11,7 @@ public partial class RandomIPV4AddressGeneratorView : Page, IGenerable<uint, IEn
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomIPV4Addresses(generateCount);
         } catch (Exception e) {

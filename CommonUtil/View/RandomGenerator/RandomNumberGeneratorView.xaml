@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:RandomGeneratorPage
   x:Class="CommonUtil.View.RandomNumberGeneratorView"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -18,7 +18,7 @@
         <Setter Property="Orientation" Value="Horizontal" />
       </Style>
       <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-        <Setter Property="Width" Value="{StaticResource RandomGenerator_DescriptionWidth}" />
+        <Setter Property="Tag" Value="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" />
       </Style>
       <Style BasedOn="{StaticResource RandomGenerator_NumberBoxStyle}" TargetType="ui:NumberBox" />
     </ui:SimpleStackPanel.Resources>
@@ -37,4 +37,4 @@
         Value="{Binding MaxValue}" />
     </StackPanel>
   </ui:SimpleStackPanel>
-</Page>
+</local:RandomGeneratorPage>

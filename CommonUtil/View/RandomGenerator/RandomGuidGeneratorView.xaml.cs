@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomGuidGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomGuidGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>
@@ -20,7 +20,7 @@ public partial class RandomGuidGeneratorView : Page, IGenerable<uint, IEnumerabl
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomGuids(generateCount, IsUpperCase);
         } catch (Exception e) {

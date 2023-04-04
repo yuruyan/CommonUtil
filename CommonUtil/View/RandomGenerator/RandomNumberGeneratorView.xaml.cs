@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomNumberGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomNumberGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register("MinValue", typeof(double), typeof(RandomNumberGeneratorView), new PropertyMetadata(1.0));
@@ -28,7 +28,7 @@ public partial class RandomNumberGeneratorView : Page, IGenerable<uint, IEnumera
     /// <summary>
     /// 生成
     /// </summary>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         int minValue = (int)MinValue;
         int maxValue = (int)MaxValue;
         if (minValue > maxValue) {

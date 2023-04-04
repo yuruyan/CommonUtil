@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RandomJapaneseNameGeneratorView : Page, IGenerable<uint, IEnumerable<string>> {
+public partial class RandomJapaneseNameGeneratorView : RandomGeneratorPage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public RandomJapaneseNameGeneratorView() {
@@ -15,7 +15,7 @@ public partial class RandomJapaneseNameGeneratorView : Page, IGenerable<uint, IE
     /// 生成
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<string> Generate(uint generateCount) {
+    public override IEnumerable<string> Generate(uint generateCount) {
         try {
             return RandomGenerator.GenerateRandomJapaneseNames(generateCount);
         } catch (Exception e) {
