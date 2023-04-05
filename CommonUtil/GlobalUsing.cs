@@ -4,7 +4,6 @@ global using CommonUITools.Controls;
 global using CommonUITools.Model;
 global using CommonUITools.Route;
 global using CommonUITools.Utils;
-global using CommonUITools.View;
 global using CommonUtil.Core;
 global using CommonUtil.Core.Model;
 global using CommonUtil.Model;

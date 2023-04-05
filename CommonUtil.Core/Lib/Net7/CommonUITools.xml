@@ -655,179 +655,230 @@
             当 <see cref="P:CommonUITools.Controls.ToggleControl.State"/> 为 false 时显示
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.SafeDoubleConverter">
+        <member name="P:CommonUITools.Controls.BaseDialog.DetailText">
+            <summary>
+            DetailText
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Controls.InfoDialog">
+            <summary>
+            InfoDialog
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Controls.InfoDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Controls.SimpleInputDialog">
+            <summary>
+            SimpleInputDialog
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Controls.SimpleInputDialog.Header">
+            <summary>
+            Input Header
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Controls.SimpleInputDialog.Show">
+            <summary>
+            Show Dialog
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Controls.SimpleInputDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Controls.WarningDialog">
+            <summary>
+            WarningDialog
+            </summary>
+        </member>
+        <member name="F:CommonUITools.Controls.WarningDialog.Shared">
+            <summary>
+            全局 WarningDialog
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Controls.WarningDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:CommonUITools.Converters.SafeDoubleConverter">
             <summary>
             转 double，不抛异常，失败返回 0
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DivideHalfThreeConverter">
+        <member name="T:CommonUITools.Converters.DivideHalfThreeConverter">
             <summary>
             除以 1.5 Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DivideTwoConverter">
+        <member name="T:CommonUITools.Converters.DivideTwoConverter">
             <summary>
             除以 2 Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DivideThreeConverter">
+        <member name="T:CommonUITools.Converters.DivideThreeConverter">
             <summary>
             除以 3 Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.AddConvert">
+        <member name="T:CommonUITools.Converters.AddConvert">
             <summary>
             加法 Convert，value + parameter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.SubtractConverter">
+        <member name="T:CommonUITools.Converters.SubtractConverter">
             <summary>
             减法 Converter，value - parameter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.SubtractInvertConverter">
+        <member name="T:CommonUITools.Converters.SubtractInvertConverter">
             <summary>
             减法 Converter，parameter - value
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.MultiplyConverter">
+        <member name="T:CommonUITools.Converters.MultiplyConverter">
             <summary>
             乘法 Converter，value * parameter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DivideConverter">
+        <member name="T:CommonUITools.Converters.DivideConverter">
             <summary>
             除法 Converter，value / parameter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DivideInvertConverter">
+        <member name="T:CommonUITools.Converters.DivideInvertConverter">
             <summary>
             除法 Converter，parameter / value
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.ToNegativeConverter">
+        <member name="T:CommonUITools.Converters.ToNegativeConverter">
             <summary>
             转为负数
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.ToPositiveConverter">
+        <member name="T:CommonUITools.Converters.ToPositiveConverter">
             <summary>
             转为正数
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.ColorToBrushConverter">
+        <member name="T:CommonUITools.Converters.ColorToBrushConverter">
             <summary>
             Color 转 Brush
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.BrushToColorConverter">
+        <member name="T:CommonUITools.Converters.BrushToColorConverter">
             <summary>
             Brush 转 Color
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.StringToBrushConverter">
+        <member name="T:CommonUITools.Converters.StringToBrushConverter">
             <summary>
             string 转 Brush
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.StringToColorConverter">
+        <member name="T:CommonUITools.Converters.StringToColorConverter">
             <summary>
             string 转 Color
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideZeroConverter">
+        <member name="T:CommonUITools.Converters.HideZeroConverter">
             <summary>
             为 0 则返回 ""
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.EqualConverter">
+        <member name="T:CommonUITools.Converters.EqualConverter">
             <summary>
             相等则返回 True
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.NotEqualConverter">
+        <member name="T:CommonUITools.Converters.NotEqualConverter">
             <summary>
             不相等则返回 True
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CommonUITools.Converter.StringAppendConverter" -->
-        <member name="T:CommonUITools.Converter.FileNameConverter">
+        <!-- Badly formed XML comment ignored for member "T:CommonUITools.Converters.StringAppendConverter" -->
+        <member name="T:CommonUITools.Converters.FileNameConverter">
             <summary>
             显示文件名 Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.FileSizeConverter">
+        <member name="T:CommonUITools.Converters.FileSizeConverter">
             <summary>
             文件大小 Converter，自动显示相应大小
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.BoolToStringConverter">
+        <member name="T:CommonUITools.Converters.BoolToStringConverter">
             <summary>
             Bool 条件转 String
             parameter 格式：trueValue|falseValue
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.NumberToGridLengthConverter">
+        <member name="T:CommonUITools.Converters.NumberToGridLengthConverter">
             <summary>
             数值转 GridLength
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.NumberToThicknessConverter">
+        <member name="T:CommonUITools.Converters.NumberToThicknessConverter">
             <summary>
             数值转 Thickness
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.NumberToCornerRadiusConverter">
+        <member name="T:CommonUITools.Converters.NumberToCornerRadiusConverter">
             <summary>
             数值转 CornerRadius
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.ObjectToStringConverter">
+        <member name="T:CommonUITools.Converters.ObjectToStringConverter">
             <summary>
             对象转字符串
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.InvertBoolConverter">
+        <member name="T:CommonUITools.Converters.InvertBoolConverter">
             <summary>
             反转 Bool
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DateTimeToDateTimeStringConverter">
+        <member name="T:CommonUITools.Converters.DateTimeToDateTimeStringConverter">
             <summary>
             DateTime 转 DateTime String Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.DateTimeToDateStringConverter">
+        <member name="T:CommonUITools.Converters.DateTimeToDateStringConverter">
             <summary>
             DateTime 转 Date String Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.TimeStampStringConverter">
+        <member name="T:CommonUITools.Converters.TimeStampStringConverter">
             <summary>
             时间戳转字符串
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.AgeConverter">
+        <member name="T:CommonUITools.Converters.AgeConverter">
             <summary>
             DateTime 转年龄
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.FileIconConverter">
+        <member name="T:CommonUITools.Converters.FileIconConverter">
             <summary>
             文件图标 Converter，返回 string，以 '/' 开头
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.FilePngIconConverter">
+        <member name="T:CommonUITools.Converters.FilePngIconConverter">
             <summary>
             文件图标 Converter
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.ProcessResultIconConverter">
+        <member name="T:CommonUITools.Converters.ProcessResultIconConverter">
             <summary>
             ResultIcon
             </summary>
         </member>
-        <member name="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+        <member name="M:CommonUITools.Converters.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
             Convert
             </summary>
@@ -837,157 +888,106 @@
             <param name="culture"></param>
             <returns></returns>
         </member>
-        <member name="T:CommonUITools.Converter.ProcessResultMessageConverter">
+        <member name="T:CommonUITools.Converters.ProcessResultMessageConverter">
             <summary>
             ResultMessage
             </summary>
         </member>
-        <member name="M:CommonUITools.Converter.ProcessResultMessageConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        <member name="M:CommonUITools.Converters.ProcessResultMessageConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converters.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
         </member>
-        <member name="T:CommonUITools.Converter.ProcessResultIconForegroundConverter">
+        <member name="T:CommonUITools.Converters.ProcessResultIconForegroundConverter">
             <summary>
             ResultIconForeground
             </summary>
         </member>
-        <member name="M:CommonUITools.Converter.ProcessResultIconForegroundConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        <member name="M:CommonUITools.Converters.ProcessResultIconForegroundConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converters.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
         </member>
-        <member name="T:CommonUITools.Converter.ProcessResultVisibilityConverter">
+        <member name="T:CommonUITools.Converters.ProcessResultVisibilityConverter">
             <summary>
             ResultVisibility
             </summary>
         </member>
-        <member name="M:CommonUITools.Converter.ProcessResultVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <inheritdoc cref="M:CommonUITools.Converter.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
+        <member name="M:CommonUITools.Converters.ProcessResultVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc cref="M:CommonUITools.Converters.ProcessResultIconConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)"/>
         </member>
-        <member name="T:CommonUITools.Converter.VisibilityIncludesConverter">
+        <member name="T:CommonUITools.Converters.VisibilityIncludesConverter">
             <summary>
             value 与 parameter 包括的内容匹配，返回 parameter 指定的 Visibility
             不满足则返回 Visible
             parameter 格式：[a b c]|Visibility(大小写均可)
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.VisibilityNotIncludesConverter">
+        <member name="T:CommonUITools.Converters.VisibilityNotIncludesConverter">
             <summary>
             value 与 parameter 包括的内容不匹配，返回 parameter 指定的 Visibility
             不满足则返回 Visible
             parameter 格式：[a b c]|Visibility(大小写均可)
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.VisibilityEqualConverter">
+        <member name="T:CommonUITools.Converters.VisibilityEqualConverter">
             <summary>
             value 与 parameter 内容相同，返回 parameter 指定的 Visibility
             不满足则返回 Visible
             parameter 格式：value|Visibility(大小写均可)
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.VisibilityNotEqualConverter">
+        <member name="T:CommonUITools.Converters.VisibilityNotEqualConverter">
             <summary>
             value 与 parameter 内容不相同，返回 parameter 指定的 Visibility
             不满足则返回 Visible
             parameter 格式：value|Visibility(大小写均可)
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfEuqalConverter">
+        <member name="T:CommonUITools.Converters.HideIfEuqalConverter">
             <summary>
             相等则隐藏，比较的是 ToString
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfNotEuqalConverter">
+        <member name="T:CommonUITools.Converters.HideIfNotEuqalConverter">
             <summary>
             不相等则隐藏，比较的是 ToString
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfZeroConverter">
+        <member name="T:CommonUITools.Converters.HideIfZeroConverter">
             <summary>
             为 0 则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfNotZeroConverter">
+        <member name="T:CommonUITools.Converters.HideIfNotZeroConverter">
             <summary>
             不为 0 则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfEmptyConverter">
+        <member name="T:CommonUITools.Converters.HideIfEmptyConverter">
             <summary>
             为空则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfNotEmptyConverter">
+        <member name="T:CommonUITools.Converters.HideIfNotEmptyConverter">
             <summary>
             不为空则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfTrueConverter">
+        <member name="T:CommonUITools.Converters.HideIfTrueConverter">
             <summary>
             为True则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfFalseConverter">
+        <member name="T:CommonUITools.Converters.HideIfFalseConverter">
             <summary>
             为False则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfNullConverter">
+        <member name="T:CommonUITools.Converters.HideIfNullConverter">
             <summary>
             为 Null 则隐藏
             </summary>
         </member>
-        <member name="T:CommonUITools.Converter.HideIfNotNullConverter">
+        <member name="T:CommonUITools.Converters.HideIfNotNullConverter">
             <summary>
             不为 Null 则隐藏
-            </summary>
-        </member>
-        <member name="P:CommonUITools.View.BaseDialog.DetailText">
-            <summary>
-            DetailText
-            </summary>
-        </member>
-        <member name="T:CommonUITools.View.InfoDialog">
-            <summary>
-            InfoDialog
-            </summary>
-        </member>
-        <member name="M:CommonUITools.View.InfoDialog.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:CommonUITools.View.SimpleInputDialog">
-            <summary>
-            SimpleInputDialog
-            </summary>
-        </member>
-        <member name="P:CommonUITools.View.SimpleInputDialog.Header">
-            <summary>
-            Input Header
-            </summary>
-        </member>
-        <member name="M:CommonUITools.View.SimpleInputDialog.Show">
-            <summary>
-            Show Dialog
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:CommonUITools.View.SimpleInputDialog.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:CommonUITools.View.WarningDialog">
-            <summary>
-            WarningDialog
-            </summary>
-        </member>
-        <member name="F:CommonUITools.View.WarningDialog.Shared">
-            <summary>
-            全局 WarningDialog
-            </summary>
-        </member>
-        <member name="M:CommonUITools.View.WarningDialog.InitializeComponent">
-            <summary>
-            InitializeComponent
             </summary>
         </member>
         <member name="T:CommonUITools.Extensions.ImageStaticExtension">
@@ -2331,6 +2331,36 @@
             Clean dict
             </summary>
             <param name="window"></param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>

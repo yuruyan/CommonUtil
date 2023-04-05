@@ -1,4 +1,4 @@
-﻿<view:BaseDialog
+﻿<tools:BaseDialog
   x:Class="CommonUtil.View.DownloadInfoDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,16 +6,16 @@
   xmlns:local="using:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
+  xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  xmlns:view="clr-namespace:CommonUITools.View;assembly=CommonUITools"
   Title="下载"
   Background="{DynamicResource ApplicationBackgroundBrush}"
   Closing="DialogClosingHandler"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <view:BaseDialog.Resources>
+  <tools:BaseDialog.Resources>
     <system:Double x:Key="HeaderWidth">90</system:Double>
-  </view:BaseDialog.Resources>
+  </tools:BaseDialog.Resources>
   <ScrollViewer Padding="0,0,16,0">
     <ui:SimpleStackPanel
       Name="RootPanel"
@@ -104,4 +104,4 @@
       </StackPanel>
     </ui:SimpleStackPanel>
   </ScrollViewer>
-</view:BaseDialog>
+</tools:BaseDialog>
