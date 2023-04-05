@@ -18,6 +18,11 @@ public partial class InputTextDialog : DesktopAutomationDialog {
         AutomationMethod = DesktopAutomation.InputText;
         Title = DescriptionHeader = "输入文本";
         InitializeComponent();
+        this.EnableAutoResize(
+            (double)FindResource("ContentDialogMinWidth"),
+            (double)FindResource("ContentDialogMaxWidth"),
+            3
+        );
     }
 
     /// <summary>
