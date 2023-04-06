@@ -801,7 +801,11 @@
             不相等则返回 True
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:CommonUITools.Converters.StringAppendConverter" -->
+        <member name="T:CommonUITools.Converters.StringAppendConverter">
+            <summary>
+            StringAppend Converter，前后用 '||' 分开
+            </summary>
+        </member>
         <member name="T:CommonUITools.Converters.FileNameConverter">
             <summary>
             显示文件名 Converter

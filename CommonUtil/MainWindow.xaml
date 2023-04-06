@@ -114,20 +114,21 @@
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
       <!--  切换主题  -->
-      <Grid Margin="0,0,140,0" DockPanel.Dock="Right">
-        <ui:TitleBarButton
-          Click="SwitchToLightThemeClickHandler"
-          ToolTip="切换为亮色模式"
-          Visibility="{Binding CurrentThemeMode, Converter={StaticResource HideIfEuqalConverter}, ConverterParameter='Light'}">
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe88e;" />
-        </ui:TitleBarButton>
-        <ui:TitleBarButton
-          Click="SwitchToDarkThemeClickHandler"
-          ToolTip="切换为暗色模式"
-          Visibility="{Binding CurrentThemeMode, Converter={StaticResource HideIfTrueConverter}, ConverterParameter='Dark'}">
-          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe71e;" />
-        </ui:TitleBarButton>
-      </Grid>
+      <tools:ToggleControl
+        Margin="0,0,140,0"
+        DockPanel.Dock="Right"
+        State="{Binding CurrentThemeMode, Converter={StaticResource EqualConverter}, ConverterParameter={x:Static tools:ThemeMode.Light}}">
+        <tools:ToggleControl.FirstControl>
+          <ui:TitleBarButton Click="SwitchToDarkThemeClickHandler" ToolTip="切换为暗色模式">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe71e;" />
+          </ui:TitleBarButton>
+        </tools:ToggleControl.FirstControl>
+        <tools:ToggleControl.SecondControl>
+          <ui:TitleBarButton Click="SwitchToLightThemeClickHandler" ToolTip="切换为亮色模式">
+            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe88e;" />
+          </ui:TitleBarButton>
+        </tools:ToggleControl.SecondControl>
+      </tools:ToggleControl>
     </DockPanel>
   </Grid>
 </tools:BaseWindow>
