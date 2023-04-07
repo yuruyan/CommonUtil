@@ -139,6 +139,23 @@
             <param name="sorter"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Model.JsonResponse`1.From(System.Boolean,`0,System.String)">
+            <summary>
+            成功返回 <see cref="M:CommonTools.Model.JsonResponse`1.Success(`0)"/>，失败返回 <see cref="M:CommonTools.Model.JsonResponse`1.Failed(`0)"/>
+            </summary>
+            <param name="success"></param>
+            <param name="data"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Model.JsonResponse.From(System.Boolean,System.String)">
+            <summary>
+            成功返回 <see cref="P:CommonTools.Model.JsonResponse.Success"/>，是否返回 <see cref="P:CommonTools.Model.JsonResponse.Failed"/>
+            </summary>
+            <param name="success"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
         <member name="E:CommonTools.Model.ObservableProperty`1.ValueChanged">
             <summary>
             值改变时触发
