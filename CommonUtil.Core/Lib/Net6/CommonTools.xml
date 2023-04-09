@@ -139,7 +139,7 @@
             <param name="sorter"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Model.JsonResponse`1.From(System.Boolean,`0,System.String)">
+        <member name="M:CommonTools.Model.JsonResponse`1.When(System.Boolean,`0,System.String)">
             <summary>
             成功返回 <see cref="M:CommonTools.Model.JsonResponse`1.Success(`0)"/>，失败返回 <see cref="M:CommonTools.Model.JsonResponse`1.Failed(`0)"/>
             </summary>
@@ -148,7 +148,15 @@
             <param name="message"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Model.JsonResponse.From(System.Boolean,System.String)">
+        <member name="M:CommonTools.Model.JsonResponse`1.From(`0,System.String)">
+            <summary>
+            <paramref name="data"/> 不为 null 返回 <see cref="M:CommonTools.Model.JsonResponse`1.Success(`0)"/>，否则返回 <see cref="M:CommonTools.Model.JsonResponse`1.Failed(`0)"/>
+            </summary>
+            <param name="data"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Model.JsonResponse.When(System.Boolean,System.String)">
             <summary>
             成功返回 <see cref="P:CommonTools.Model.JsonResponse.Success"/>，是否返回 <see cref="P:CommonTools.Model.JsonResponse.Failed"/>
             </summary>
