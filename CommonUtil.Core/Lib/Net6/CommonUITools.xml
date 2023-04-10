@@ -1945,6 +1945,25 @@
             </summary>
             <param name="groupId"></param>
         </member>
+        <member name="T:CommonUITools.Utils.PasswordBoxHelper">
+            <summary>
+            添加 Password 附加属性，OneWayToSource
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.PasswordBoxHelper.SetPasswordProperty(System.Windows.DependencyObject,System.Windows.DependencyProperty)">
+            <summary>
+            Password Property
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.PasswordBoxHelper.SetTarget(System.Windows.DependencyObject,System.Windows.DependencyObject)">
+            <summary>
+            Password 所属 Element
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息

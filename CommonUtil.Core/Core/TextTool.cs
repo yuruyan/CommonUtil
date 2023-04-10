@@ -2,11 +2,7 @@
 
 namespace CommonUtil.Core;
 
-#if NET7_0_OR_GREATER
 public static partial class TextTool {
-#elif NET6_0_OR_GREATER
-public static class TextTool {
-#endif
     public delegate string TextProcess(string text);
     public delegate void FileProcess(string inputFile, string outputFile);
 
@@ -548,6 +544,15 @@ public static class TextTool {
     /// <param name="outputPath"></param>
     public static void FileSortLines(string inputPath, string outputPath) {
         ProcessFileText(inputPath, outputPath, SortLines);
+    }
+
+    /// <summary>
+    /// 文件打乱文本行
+    /// </summary>
+    /// <param name="inputPath"></param>
+    /// <param name="outputPath"></param>
+    public static void FileShuffleLines(string inputPath, string outputPath) {
+        File.WriteAllLines(outputPath, ShuffleLines(File.ReadAllLines(inputPath)));
     }
     #endregion
 }
