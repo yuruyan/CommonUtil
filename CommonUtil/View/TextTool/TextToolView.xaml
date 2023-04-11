@@ -72,6 +72,14 @@
             <ui:FontIcon Glyph="&#xe65e;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="ShuffleLinesView"
+          Content="文本行打乱"
+          ToolTip="文本行打乱">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe7fd;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

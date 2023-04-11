@@ -11,6 +11,7 @@ public partial class TextToolView : Page {
         typeof(AddEnglishWordBracesView),
         typeof(InvertTextView),
         typeof(SortLinesView),
+        typeof(ShuffleLinesView),
     };
 
     public TextToolView() {

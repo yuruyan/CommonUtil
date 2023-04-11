@@ -277,6 +277,13 @@
             <param name="path"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.CommonUtils.GetUniqueRandomFileName(System.String)">
+            <summary>
+            获取随机唯一文件名
+            </summary>
+            <param name="dirPath">随机文件所在路径，默认为 <see cref="P:System.Environment.CurrentDirectory"/></param>
+            <returns></returns>
+        </member>
         <member name="F:CommonTools.Utils.ConstantUtils.OneKbSize">
             <summary>
             1 KB 大小，以 byte 为单位
