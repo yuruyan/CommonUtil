@@ -292,6 +292,54 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:CommonUITools.Controls.InplaceTextBox">
+            <summary>
+            InplaceTextBox
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Controls.InplaceTextBox.IsTextBoxVisible">
+            <summary>
+            编辑框是否可见
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Controls.InplaceTextBox.Text">
+            <summary>
+            文本
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Controls.InplaceTextBox.UpdateTextHandler(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Submit
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Controls.InplaceTextBox.TextBoxLostFocusHandler(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Submit
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Controls.InplaceTextBox.ShowTextBoxHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Show textbox
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Controls.InplaceTextBox.TextBoxIsVisibleChangedHandler(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Focus TextBox
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Controls.InplaceTextBox.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
         <member name="T:CommonUITools.Controls.LoadingBox">
             <summary>
             LoadingBox
@@ -640,14 +688,14 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="P:CommonUITools.Controls.ToggleControl.FirstControl">
-            <summary>
-            当 <see cref="P:CommonUITools.Controls.ToggleControl.State"/> 为 true 时显示
-            </summary>
-        </member>
         <member name="P:CommonUITools.Controls.ToggleControl.State">
             <summary>
             状态
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Controls.ToggleControl.FirstControl">
+            <summary>
+            当 <see cref="P:CommonUITools.Controls.ToggleControl.State"/> 为 true 时显示
             </summary>
         </member>
         <member name="P:CommonUITools.Controls.ToggleControl.SecondControl">
@@ -1571,7 +1619,7 @@
         </member>
         <member name="T:CommonUITools.Utils.LoadingBoxHelper">
             <summary>
-            加载状态
+            加载状态，无法作用于 <see cref="T:System.Windows.Window"/>
             </summary>
         </member>
         <member name="M:CommonUITools.Utils.LoadingBoxHelper.SetIsLoading(System.Windows.DependencyObject,System.Boolean)">
@@ -2357,6 +2405,36 @@
             Clean dict
             </summary>
             <param name="window"></param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>
