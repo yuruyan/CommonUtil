@@ -1013,15 +1013,15 @@
         </member>
         <member name="F:CommonTools.Utils.TaskUtils.PreviousTaskDict">
             <summary>
-            (Identifier, 上一个任务)
+            (identifier, 上一个任务)
             </summary>
         </member>
-        <member name="M:CommonTools.Utils.TaskUtils.AddToTaskQueue(System.Object,System.Action{System.Threading.Tasks.Task})">
+        <member name="M:CommonTools.Utils.TaskUtils.GetPreviousTaskQueueTask(System.Object)">
             <summary>
-            添加到任务队列
+            Get last task, auto Initialie
             </summary>
-            <param name="Identifier">标识</param>
-            <param name="newTaskCallback">第一个参数为已经执行完的上一个任务，第二个参数为需要执行的任务</param>
+            <param name="Identifier"></param>
+            <returns></returns>
         </member>
         <member name="F:CommonTools.Utils.ThrottleUtils.Interval">
             <summary>

@@ -20,7 +20,17 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Input  -->
-    <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+    <tools:DragDropTextBox
+      Name="DragDropTextBox"
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasFile, Mode=TwoWay}">
+      <tools:DragDropTextBox.TextBox>
+        <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
+      </tools:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.FileView>
+        <tools:FileNameSizeBox FileName="{Binding FileName}" />
+      </tools:DragDropTextBox.FileView>
+    </tools:DragDropTextBox>
     <!--  Control  -->
     <ui:SimpleStackPanel
       Grid.Row="1"
