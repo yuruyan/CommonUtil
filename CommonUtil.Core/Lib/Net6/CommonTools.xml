@@ -195,6 +195,11 @@
               Looks up a localized resource of type System.Byte[].
             </summary>
         </member>
+        <member name="F:CommonTools.Utils.CommonUtils.PathSpliterRegex">
+            <summary>
+            路径分隔符正则
+            </summary>
+        </member>
         <member name="M:CommonTools.Utils.CommonUtils.Copy``1(``0)">
             <summary>
             拷贝对象
@@ -216,12 +221,11 @@
             <returns></returns>
             <exception cref="T:System.Exception">对象创建失败</exception>
         </member>
-        <member name="M:CommonTools.Utils.CommonUtils.GetSingletonInstance``1(System.Type)">
+        <member name="M:CommonTools.Utils.CommonUtils.GetSingletonInstance``1">
             <summary>
             获取单例对象
             </summary>
             <typeparam name="T"></typeparam>
-            <param name="type"></param>
             <returns></returns>
             <exception cref="T:System.Exception">对象创建失败</exception>
         </member>
@@ -233,19 +237,13 @@
             <param name="init"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.CommonUtils.GetSingletonInstance``1(System.Type,System.Func{System.Object})">
+        <member name="M:CommonTools.Utils.CommonUtils.GetSingletonInstance``1(System.Func{System.Object})">
             <summary>
             根据 init 函数创建单例对象
             </summary>
             <typeparam name="T"></typeparam>
-            <param name="type"></param>
             <param name="init"></param>
             <returns></returns>
-        </member>
-        <member name="F:CommonTools.Utils.CommonUtils.PathSpliterRegex">
-            <summary>
-            路径分隔符正则
-            </summary>
         </member>
         <member name="M:CommonTools.Utils.CommonUtils.RemovePathSpliter(System.String)">
             <summary>
