@@ -2113,12 +2113,44 @@
             </summary>
             <param name="task"></param>
         </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThreadAsync(System.Action)">
+            <summary>
+            在 UI 线程中异步运行
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThread``1(System.Action{``0},``0)">
+            <summary>
+            在 UI 线程中运行
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="task"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThreadAsync``1(System.Action{``0},``0)">
+            <summary>
+            在 UI 线程中异步运行
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="task"></param>
+            <param name="state"></param>
+        </member>
         <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThread``1(System.Func{``0})">
             <summary>
             在 UI 线程中运行
             </summary>
             <typeparam name="T"></typeparam>
             <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtils.RunOnUIThread``2(System.Func{``0,``1},``0)">
+            <summary>
+            在 UI 线程中运行
+            </summary>
+            <typeparam name="TArgument"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="task"></param>
+            <param name="arg"></param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.UIUtils.CheckInputNullOrEmpty(System.String,System.Boolean,System.String)">

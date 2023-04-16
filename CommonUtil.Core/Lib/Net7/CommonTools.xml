@@ -741,6 +741,16 @@
             <param name="list"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.TryGet``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0},``0@)">
+            <summary>
+            获取一个符合 <paramref name="predicate"/> 的元素
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="predicate"></param>
+            <param name="result"></param>
+            <returns>成功返回 true，失败返回 false</returns>
+        </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
             <summary>
             替换 '/' 为 '\\'
@@ -760,6 +770,20 @@
             将换行符替换为 Linux 样式 (\n)
             </summary>
             <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.FileLockUtils.TryLockFile(System.String)">
+            <summary>
+            尝试锁定文件
+            </summary>
+            <param name="filepath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.FileLockUtils.IsFileLocked(System.String)">
+            <summary>
+            文件是否锁定
+            </summary>
+            <param name="filepath"></param>
             <returns></returns>
         </member>
         <member name="T:CommonTools.Utils.MessageUtils">
