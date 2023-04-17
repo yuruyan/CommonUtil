@@ -34,7 +34,10 @@
   <system:Double x:Key="RandomGenerator_MaxGenerateCount">10000</system:Double>
   <system:Double x:Key="RandomGenerator_MinStringLength">1</system:Double>
   <system:Double x:Key="RandomGenerator_MaxStringLength">1024</system:Double>
-  <Style x:Key="RandomGenerator_NumberBoxStyle" TargetType="ui:NumberBox">
+  <Style
+    x:Key="RandomGenerator_NumberBoxStyle"
+    BasedOn="{StaticResource GlobalNumberBoxStyle}"
+    TargetType="ui:NumberBox">
     <Setter Property="Width" Value="{StaticResource RandomGenerator_TextBoxWidth}" />
     <Setter Property="AcceptsExpression" Value="False" />
     <EventSetter Event="LostFocus" Handler="RandomGenerator_NumberBoxLostFocus" />
