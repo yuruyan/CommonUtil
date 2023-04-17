@@ -3,7 +3,7 @@
 namespace CommonUtil.Utils;
 
 public class MapperUtils {
-    public static IMapper Instance => CommonUtils.GetSingletonInstance<IMapper>(typeof(MapperUtils), () => {
+    public static IMapper Instance => CommonUtils.GetSingletonInstance<IMapper>(() => {
         return new MapperConfiguration(cfg => {
             cfg.ClearPrefixes();
             cfg.SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
