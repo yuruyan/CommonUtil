@@ -2027,6 +2027,11 @@
             <param name="obj"></param>
             <param name="value"></param>
         </member>
+        <member name="T:CommonUITools.Utils.NumberBoxStyleHelper">
+            <summary>
+            NumberBoxStyleHelper
+            </summary>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
