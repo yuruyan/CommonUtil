@@ -28,11 +28,11 @@ public static partial class TextTool {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    private static readonly Regex EnglishWordRegex = new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)|(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    private static readonly Regex EnglishWordRegex = new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
-    private static readonly Regex EnglishWordNumberRegex = new(@"\s*(?<word>[\da-z]+(?:(?:'[\da-z]+)|(?: [\da-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    private static readonly Regex EnglishWordNumberRegex = new(@"\s*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?: [\da-z]+)+)?)\s*", RegexOptions.IgnoreCase);
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
@@ -49,9 +49,9 @@ public static partial class TextTool {
     #endregion
 
 #if NET7_0_OR_GREATER
-    [GeneratedRegex("\\s*(?<word>[a-z]+(?:(?:'[a-z]+)|(?: [a-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
+    [GeneratedRegex("\\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordRegex();
-    [GeneratedRegex("\\s*(?<word>[\\da-z]+(?:(?:'[\\da-z]+)|(?: [\\da-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
+    [GeneratedRegex("\\s*(?<word>[\\da-z]+(?:(?:'[\\da-z]+)?(?: [\\da-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordNumberRegex();
     [GeneratedRegex("[\\t\\r\\f ]{2,}")]
     private static partial Regex GetMultipleWhiteSpaceRegex();
