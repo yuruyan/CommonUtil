@@ -8,7 +8,7 @@ public partial class TextToolView : Page {
         typeof(WhiteSpaceProcessView),
         typeof(EnglishTextProcessView),
         typeof(PrependLineNumberView),
-        typeof(AddEnglishWordBracesView),
+        typeof(EnglishWordBracesView),
         typeof(InvertTextView),
         typeof(SortLinesView),
         typeof(ShuffleLinesView),

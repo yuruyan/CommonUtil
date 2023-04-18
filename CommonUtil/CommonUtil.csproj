@@ -108,7 +108,7 @@
     <Compile Update="View\TextTool\InvertTextView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\TextTool\AddEnglishWordBracesView.xaml.cs">
+    <Compile Update="View\TextTool\EnglishWordBracesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -212,7 +212,7 @@
     <Page Update="View\TextTool\InvertTextView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-    <Page Update="View\TextTool\AddEnglishWordBracesView.xaml">
+    <Page Update="View\TextTool\EnglishWordBracesView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

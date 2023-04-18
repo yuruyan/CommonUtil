@@ -1,12 +1,12 @@
 ﻿namespace CommonUtil.View;
 
-public partial class AddEnglishWordBracesView : ResponsivePage {
+public partial class EnglishWordBracesView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(AddEnglishWordBracesView), new PropertyMetadata(""));
-    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(AddEnglishWordBracesView), new PropertyMetadata(""));
-    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(AddEnglishWordBracesView), new PropertyMetadata(string.Empty));
-    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(AddEnglishWordBracesView), new PropertyMetadata(false));
+    public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(""));
+    public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(""));
+    public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty HasFileProperty = DependencyProperty.Register("HasFile", typeof(bool), typeof(EnglishWordBracesView), new PropertyMetadata(false));
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -41,7 +41,7 @@ public partial class AddEnglishWordBracesView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public AddEnglishWordBracesView() {
+    public EnglishWordBracesView() {
         InitializeComponent();
     }
 
@@ -64,7 +64,7 @@ public partial class AddEnglishWordBracesView : ResponsivePage {
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            $"{nameof(AddEnglishWordBracesView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
+            $"{nameof(EnglishWordBracesView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
             () => FileTextProcess(includeNumber)
         );
     }
