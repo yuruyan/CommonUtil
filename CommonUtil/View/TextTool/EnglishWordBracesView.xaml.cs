@@ -46,11 +46,11 @@ public partial class EnglishWordBracesView : ResponsivePage {
     }
 
     /// <summary>
-    /// 文本处理
+    /// 添加两边空格
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void TextProcessClick(object sender, RoutedEventArgs e) {
+    private async void AddBracesClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         // 输入检查
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
@@ -60,28 +60,54 @@ public partial class EnglishWordBracesView : ResponsivePage {
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(includeNumber);
+            StringTextProcess(TextTool.AddEnglishWordBraces, includeNumber);
             return;
         }
         ThrottleUtils.ThrottleAsync(
-            $"{nameof(EnglishWordBracesView)}|{nameof(TextProcessClick)}|{GetHashCode()}",
-            () => FileTextProcess(includeNumber)
+            $"{nameof(EnglishWordBracesView)}|{nameof(AddBracesClickHandler)}|{GetHashCode()}",
+            () => FileTextProcess(TextTool.FileAddEnglishWordBraces, includeNumber)
+        );
+    }
+
+    /// <summary>
+    /// 移除两边空格
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void RemoveBracesClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        // 输入检查
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
+            return;
+        }
+        bool includeNumber = IncludeNumberCheckBox.IsChecked ?? false;
+
+        // 文本处理
+        if (!HasFile) {
+            StringTextProcess(TextTool.RemoveEnglishWordBraces, includeNumber);
+            return;
+        }
+        ThrottleUtils.ThrottleAsync(
+            $"{nameof(EnglishWordBracesView)}|{nameof(RemoveBracesClickHandler)}|{GetHashCode()}",
+            () => FileTextProcess(TextTool.FileRemoveEnglishWordBraces, includeNumber)
         );
     }
 
     /// <summary>
     /// 文本处理
     /// </summary>
+    /// <param name="func"></param>
     /// <param name="includeNumber"></param>
-    private void StringTextProcess(bool includeNumber) {
-        OutputText = TextTool.AddEnglishWordBraces(InputText, includeNumber);
+    private void StringTextProcess(Func<string, bool, string> func, bool includeNumber) {
+        OutputText = func(InputText, includeNumber);
     }
 
     /// <summary>
     /// 文件文本处理
     /// </summary>
+    /// <param name="func"></param>
     /// <param name="includeNumber"></param>
-    private async Task FileTextProcess(bool includeNumber) {
+    private async Task FileTextProcess(Action<string, string, bool> func, bool includeNumber) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -91,7 +117,7 @@ public partial class EnglishWordBracesView : ResponsivePage {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FileAddEnglishWordBraces,
+            func,
             outputPath,
             args: new object[] { inputPath, outputPath, includeNumber }
         );
@@ -137,4 +163,5 @@ public partial class EnglishWordBracesView : ResponsivePage {
             }
         }
     }
+
 }

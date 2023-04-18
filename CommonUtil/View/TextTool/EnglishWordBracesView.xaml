@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="WhiteSpaceProcessView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -40,12 +40,12 @@
       Grid.Row="1"
       Margin="0,8"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
-      <CheckBox
-        x:Name="IncludeNumberCheckBox"
-        HorizontalAlignment="Center"
-        Content="包括数字" />
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <Button Click="TextProcessClick" Content="文本处理" />
+        <CheckBox x:Name="IncludeNumberCheckBox" Content="包括数字" />
+        <Button Click="AddBracesClickHandler" Content="添加空格" />
+        <Button Click="RemoveBracesClickHandler" Content="移除空格" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
