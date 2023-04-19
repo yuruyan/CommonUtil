@@ -1836,6 +1836,20 @@
             <param name="obj"></param>
             <param name="value"></param>
         </member>
+        <member name="M:CommonUITools.Utils.ContextMenuHelper.SetOpeningBottomStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
+            <summary>
+            Open Storyboard
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ContextMenuHelper.SetOpeningTopStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
+            <summary>
+            OpeningTopStoryboard
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.ContextMenuHelper.ShowContextMenuHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             显示 ContextMenu
@@ -1890,6 +1904,11 @@
             </summary>
             <param name="obj"></param>
             <param name="value"></param>
+        </member>
+        <member name="T:CommonUITools.Utils.RevealBackgroundHelper">
+            <summary>
+            RevealBackgroundHelper
+            </summary>
         </member>
         <member name="M:CommonUITools.Utils.RevealBackgroundHelper.SetIsEnabled(System.Windows.DependencyObject,System.Boolean)">
             <summary>
@@ -2031,6 +2050,39 @@
             <summary>
             NumberBoxStyleHelper
             </summary>
+        </member>
+        <member name="T:CommonUITools.Utils.ComboBoxHelper">
+            <summary>
+            ComboBoxHelper
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.ComboBoxHelper.SetEnableStylePopup(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            设置 Popup 样式
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ComboBoxHelper.SetPopupBottomStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
+            <summary>
+            Popup bottom Storyboard
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ComboBoxHelper.SetPopupTopStoryboard(System.Windows.DependencyObject,System.Windows.Media.Animation.Storyboard)">
+            <summary>
+            Popup Top Storyboard
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ComboBoxHelper.PopupOpenedHandler(System.Object,System.EventArgs)">
+            <summary>
+            Begin animation
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
@@ -2457,6 +2509,36 @@
             Clean dict
             </summary>
             <param name="window"></param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>

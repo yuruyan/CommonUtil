@@ -324,6 +324,7 @@ public partial class ColorTransformView : Page {
     /// <param name="e"></param>
     private void ColorItemHeaderMouseUpHandler(object sender, MouseButtonEventArgs e) {
         if (sender is FrameworkElement element) {
+            element.ContextMenu.PlacementTarget = element;
             element.ContextMenu.DataContext = element.DataContext;
             element.ContextMenu.IsOpen = true;
         }
