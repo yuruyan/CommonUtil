@@ -16,6 +16,7 @@
   <tools:BaseDialog.Resources>
     <system:Double x:Key="HeaderWidth">90</system:Double>
   </tools:BaseDialog.Resources>
+
   <ScrollViewer Padding="0,0,16,0">
     <ui:SimpleStackPanel
       Name="RootPanel"
