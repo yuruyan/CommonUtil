@@ -242,18 +242,6 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
     }
 
     /// <summary>
-    /// 打开 ColorPicker
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void QRCodeForegroundRectangleMouseUp(object sender, MouseButtonEventArgs e) {
-        if (sender is FrameworkElement element) {
-            element.ContextMenu.IsOpen = true;
-            element.ContextMenu.UpdateDefaultStyle();
-        }
-    }
-
-    /// <summary>
     /// 防止 ContextMenu 关闭
     /// </summary>
     /// <param name="sender"></param>
