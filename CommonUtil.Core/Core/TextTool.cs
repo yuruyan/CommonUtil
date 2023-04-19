@@ -41,11 +41,11 @@ public static partial class TextTool {
     /// <summary>
     /// 半角全角 Dict
     /// </summary>
-    private static readonly Dictionary<char, char> HalfFullCharDict = new();
+    private static readonly IReadOnlyDictionary<char, char> HalfFullCharDict;
     /// <summary>
     /// 全角半角 Dict
     /// </summary>
-    private static readonly Dictionary<char, char> FullHalfCharDict = new();
+    private static readonly IReadOnlyDictionary<char, char> FullHalfCharDict;
     #endregion
 
 #if NET7_0_OR_GREATER
@@ -58,16 +58,20 @@ public static partial class TextTool {
 #endif
 
     static TextTool() {
+        var halfFullCharDict = new Dictionary<char, char>();
+        var fullHalfCharDict = new Dictionary<char, char>();
         // 空格
-        HalfFullCharDict[(char)32] = (char)12288;
+        halfFullCharDict[(char)32u] = (char)12288;
         // 其余字符
         for (char i = (char)33; i < 127; i++) {
-            HalfFullCharDict[i] = (char)(i + 65248);
+            halfFullCharDict[i] = (char)(i + 65248);
         }
         // 填充 FullHalfCharDict
-        foreach (var item in HalfFullCharDict) {
-            FullHalfCharDict[item.Value] = item.Key;
+        foreach (var item in halfFullCharDict) {
+            fullHalfCharDict[item.Value] = item.Key;
         }
+        HalfFullCharDict = halfFullCharDict;
+        FullHalfCharDict = fullHalfCharDict;
     }
 
     #region 文本处理
