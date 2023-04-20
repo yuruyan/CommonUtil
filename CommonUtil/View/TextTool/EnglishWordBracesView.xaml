@@ -40,12 +40,20 @@
       Grid.Row="1"
       Margin="0,8"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+      <ui:SimpleStackPanel.Resources>
+        <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="Orientation" Value="Horizontal" />
+          <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+      </ui:SimpleStackPanel.Resources>
+      <ui:SimpleStackPanel>
         <CheckBox x:Name="IncludeNumberCheckBox" Content="包括数字" />
+      </ui:SimpleStackPanel>
+      <ui:SimpleStackPanel>
         <Button Click="AddBracesClickHandler" Content="添加空格" />
         <Button Click="RemoveBracesClickHandler" Content="移除空格" />
       </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+      <ui:SimpleStackPanel>
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
