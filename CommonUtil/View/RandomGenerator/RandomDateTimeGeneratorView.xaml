@@ -12,16 +12,30 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
+  <local:RandomGeneratorPage.Resources>
+    <system:Double x:Key="ExpansionThreshold">500</system:Double>
+  </local:RandomGeneratorPage.Resources>
+
   <ui:SimpleStackPanel Orientation="Vertical">
-    <ui:SimpleStackPanel Orientation="Horizontal">
-      <TextBlock Text="开始时间" />
-      <DatePicker Width="120" SelectedDate="{Binding StartDateTime}" />
-      <ui:SimpleTimePicker PickerVisibility="All" SelectedDateTime="{Binding StartDateTime}" />
-    </ui:SimpleStackPanel>
-    <ui:SimpleStackPanel Orientation="Horizontal">
-      <TextBlock Text="结束时间" />
-      <DatePicker Width="120" SelectedDate="{Binding EndDateTime}" />
-      <ui:SimpleTimePicker PickerVisibility="All" SelectedDateTime="{Binding EndDateTime}" />
-    </ui:SimpleStackPanel>
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" Text="开始时间：" />
+      <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+        <DatePicker MaxWidth="120" SelectedDate="{Binding StartDateTime}" />
+        <ui:SimpleTimePicker
+          VerticalAlignment="Center"
+          PickerVisibility="All"
+          SelectedDateTime="{Binding StartDateTime}" />
+      </ui:SimpleStackPanel>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Tag="{x:Static local:RandomGeneratorHelper.DescriptionHeaderTag}" Text="结束时间：" />
+      <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+        <DatePicker MaxWidth="120" SelectedDate="{Binding EndDateTime}" />
+        <ui:SimpleTimePicker
+          VerticalAlignment="Center"
+          PickerVisibility="All"
+          SelectedDateTime="{Binding EndDateTime}" />
+      </ui:SimpleStackPanel>
+    </StackPanel>
   </ui:SimpleStackPanel>
 </local:RandomGeneratorPage>
