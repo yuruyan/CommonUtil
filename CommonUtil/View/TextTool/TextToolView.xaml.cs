@@ -12,6 +12,7 @@ public partial class TextToolView : Page {
         typeof(InvertTextView),
         typeof(SortLinesView),
         typeof(ShuffleLinesView),
+        typeof(PunctuationReplacementView),
     };
 
     public TextToolView() {

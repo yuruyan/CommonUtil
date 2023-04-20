@@ -80,6 +80,14 @@
             <ui:FontIcon Glyph="&#xe7fd;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="PunctuationReplacementView"
+          Content="标点符号替换"
+          ToolTip="标点符号替换">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe74f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>
