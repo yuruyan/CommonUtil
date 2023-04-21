@@ -47,11 +47,11 @@ public static partial class DataResourceHelper {
 
 public static partial class DataResourceHelper {
     public static IReadOnlyList<AsciiInfo> AsciiInfoList => _AsciiInfoList.Value;
-    private static IReadOnlyDictionary<char, char> ChineseTraditionalSimplifiedCharacterDict => _ChineseTraditionalSimplifiedCharacterDict.Value;
-    private static IReadOnlyList<CodeColorizationSchemeInfo> CodeColorizationSchemeInfoList => _CodeColorizationSchemeInfoList.Value;
-    private static byte[] CodeColorizationColorSchemeDark => _CodeColorizationColorSchemeDark.Value;
-    private static byte[] CodeColorizationColorSchemeLight => _CodeColorizationColorSchemeLight.Value;
-    private static IReadOnlyList<KeyValuePair<string, string>> CommonRegexList => _CommonRegexList.Value;
-    private static IReadOnlyList<string> ChineseIdioms => _ChineseIdioms.Value;
-    private static IReadOnlyDictionary<string, string> ProgramingGetTimeStampList => _ProgramingGetTimeStampList.Value;
+    public static IReadOnlyDictionary<char, char> ChineseTraditionalSimplifiedCharacterDict => _ChineseTraditionalSimplifiedCharacterDict.Value;
+    public static IReadOnlyList<CodeColorizationSchemeInfo> CodeColorizationSchemeInfoList => _CodeColorizationSchemeInfoList.Value;
+    public static byte[] CodeColorizationColorSchemeDark => _CodeColorizationColorSchemeDark.Value;
+    public static byte[] CodeColorizationColorSchemeLight => _CodeColorizationColorSchemeLight.Value;
+    public static IReadOnlyList<KeyValuePair<string, string>> CommonRegexList => _CommonRegexList.Value;
+    public static IReadOnlyList<string> ChineseIdioms => _ChineseIdioms.Value;
+    public static IReadOnlyDictionary<string, string> ProgramingGetTimeStampList => _ProgramingGetTimeStampList.Value;
 }

@@ -10,24 +10,23 @@ public static class ChineseTransform {
     /// <summary>
     /// (繁体，简体) Dict
     /// </summary>
-    private static readonly IDictionary<char, char> TraditionalSimplifiedMap;
+    private static readonly IReadOnlyDictionary<char, char> TraditionalSimplifiedMap;
     /// <summary>
     /// (简体，繁体) Dict
     /// </summary>
-    private static readonly IDictionary<char, char> SimplifiedTraditionalMap;
+    private static readonly IReadOnlyDictionary<char, char> SimplifiedTraditionalMap;
 
     /// <summary>
     /// 加载数据
     /// </summary>
     static ChineseTransform() {
-        TraditionalSimplifiedMap = JsonConvert.DeserializeObject<Dictionary<char, char>>(
-           Encoding.UTF8.GetString(DataResource.ChineseCharacterMap)
-        )!;
-        SimplifiedTraditionalMap = new Dictionary<char, char>();
+        TraditionalSimplifiedMap = DataResourceHelper.ChineseTraditionalSimplifiedCharacterDict;
+        var simplifiedTraditionalMap = new Dictionary<char, char>();
         // 填充 SimplifiedTraditionalMap
         foreach (var item in TraditionalSimplifiedMap) {
-            SimplifiedTraditionalMap[item.Value] = item.Key;
+            simplifiedTraditionalMap[item.Value] = item.Key;
         }
+        SimplifiedTraditionalMap = simplifiedTraditionalMap;
         Logger.Debug("加载中文简繁体完毕");
     }
 
