@@ -36,7 +36,8 @@
         <Button
           HorizontalAlignment="Right"
           Click="AddWatchFileClickHandler"
-          Content="添加文件" />
+          Content="添加文件"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <ui:SimpleStackPanel
           Orientation="Vertical"
           Spacing="{StaticResource MediumItemSpacing}"
@@ -54,6 +55,7 @@
               <Button
                 Click="ToggleWatchFileStateClickHandler"
                 Content="开始监听"
+                Style="{StaticResource GlobalAccentButtonStyle}"
                 Visibility="{Binding SelectedWatchFile.Started, Converter={StaticResource HideIfTrueConverter}}" />
               <Button
                 Click="ToggleWatchFileStateClickHandler"

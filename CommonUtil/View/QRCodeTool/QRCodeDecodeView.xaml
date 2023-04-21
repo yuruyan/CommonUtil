@@ -44,7 +44,10 @@
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
-    <Button Click="SelectImageClickHandler" Content="选择图片" />
+    <Button
+      Click="SelectImageClickHandler"
+      Content="选择图片"
+      Style="{StaticResource GlobalAccentButtonStyle}" />
 
     <!--  MainContent  -->
     <UniformGrid

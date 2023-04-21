@@ -21,7 +21,8 @@
       <Button
         HorizontalAlignment="Center"
         Click="SelectSharingDirectoryClick"
-        Content="选择分享目录" />
+        Content="选择分享目录"
+        Style="{StaticResource GlobalAccentButtonStyle}" />
       <TextBlock
         Padding="0,8"
         HorizontalAlignment="Center"
@@ -42,6 +43,7 @@
         HorizontalAlignment="Center"
         Click="ToggleServerStateClickHandler"
         Content="开启服务"
+        Style="{StaticResource GlobalAccentButtonStyle}"
         Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfTrueConverter}}" />
       <Button
         HorizontalAlignment="Center"

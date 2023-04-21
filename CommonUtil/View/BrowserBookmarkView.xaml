@@ -20,6 +20,7 @@
     <Button
       HorizontalAlignment="Center"
       Click="ExportBookmarkClick"
-      Content="导出Edge书签" />
+      Content="导出Edge书签"
+      Style="{StaticResource GlobalAccentButtonStyle}" />
   </ui:SimpleStackPanel>
 </Page>

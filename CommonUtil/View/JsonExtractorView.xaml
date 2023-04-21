@@ -62,7 +62,8 @@
           <Button
             HorizontalAlignment="Center"
             Click="JsonExtractClickHandler"
-            Content="数据提取" />
+            Content="数据提取"
+            Style="{StaticResource GlobalAccentButtonStyle}" />
           <tools:IconButton
             Click="CopyResultClick"
             Icon="&#xe6ef;"

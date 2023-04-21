@@ -55,10 +55,9 @@
       VerticalAlignment="Top">
       <Button
         Click="DownloadTaskClickHandler"
+        Content="&#xe703;"
         Style="{StaticResource GlobalSingleIconButtonStyle}"
-        ToolTip="添加下载任务">
-        <TextBlock Text="&#xe703;" />
-      </Button>
+        ToolTip="添加下载任务" />
     </Grid>
   </Grid>
 </Page>

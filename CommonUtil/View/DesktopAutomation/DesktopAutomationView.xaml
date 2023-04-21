@@ -77,7 +77,8 @@
           <Button
             Click="StartClickHandler"
             Content="开始"
-            IsEnabled="{Binding IsRunning, Converter={StaticResource InvertBoolConverter}}" />
+            IsEnabled="{Binding IsRunning, Converter={StaticResource InvertBoolConverter}}"
+            Style="{StaticResource GlobalAccentButtonStyle}" />
         </Grid>
       </ui:SimpleStackPanel>
       <!--  Steps List  -->
