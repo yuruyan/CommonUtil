@@ -12,6 +12,7 @@ public partial class MainWindow : BaseWindow {
     public static readonly DependencyProperty CurrentBackgroundColorProperty = DependencyProperty.Register("CurrentBackgroundColor", typeof(Color), typeof(MainWindow), new PropertyMetadata(Colors.Transparent));
     public static readonly DependencyProperty IsNavigationButtonVisibleProperty = DependencyProperty.Register("IsNavigationButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false, IsNavigationButtonVisibleChangedHandler));
     public static readonly DependencyProperty IsHomeButtonVisibleProperty = DependencyProperty.Register("IsHomeButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false, IsHomeButtonVisiblePropertyChangedHandler));
+    public static readonly DependencyProperty IsSettingButtonVisibleProperty = DependencyProperty.Register("IsSettingButtonVisible", typeof(bool), typeof(MainWindow), new PropertyMetadata(false, IsSettingButtonVisiblePropertyChangedHandler));
 
     /// <summary>
     /// 导航按钮是否可见
@@ -26,6 +27,13 @@ public partial class MainWindow : BaseWindow {
     public bool IsHomeButtonVisible {
         get { return (bool)GetValue(IsHomeButtonVisibleProperty); }
         private set { SetValue(IsHomeButtonVisibleProperty, value); }
+    }
+    /// <summary>
+    /// 设置按钮是否可见
+    /// </summary>
+    public bool IsSettingButtonVisible {
+        get { return (bool)GetValue(IsSettingButtonVisibleProperty); }
+        private set { SetValue(IsSettingButtonVisibleProperty, value); }
     }
     /// <summary>
     /// 标题
@@ -112,12 +120,24 @@ public partial class MainWindow : BaseWindow {
         }
     }
 
+    /// <summary>
+    /// Begin Animation
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="e"></param>
+    private static void IsSettingButtonVisiblePropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (d is MainWindow self) {
+            self.SettingButton.SetVisible((bool)e.NewValue);
+        }
+    }
+
     private RouterService InitRouterService() {
         return new RouterService(
             ContentFrame,
             new Type[] {
                 typeof(MainContentView),
-                typeof(NavigationContentView)
+                typeof(NavigationContentView),
+                typeof(SettingsView)
             }
         );
     }
@@ -142,6 +162,7 @@ public partial class MainWindow : BaseWindow {
         }
         // Update IsHomeButtonVisible
         IsHomeButtonVisible = e.Content is not MainContentView;
+        IsSettingButtonVisible = e.Content is not SettingsView;
         if (e.Content is INavigationRequest<NavigationRequestArgs> navigator) {
             navigator.NavigationRequested -= ContentNavigationRequested;
             navigator.NavigationRequested += ContentNavigationRequested;
@@ -155,34 +176,6 @@ public partial class MainWindow : BaseWindow {
     /// <param name="e"></param>
     private void ContentNavigationRequested(object? sender, NavigationRequestArgs e) {
         RouterService.Navigate(e.ViewType, e.Data);
-    }
-
-    /// <summary>
-    /// 切换为 LightTheme
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void SwitchToLightThemeClickHandler(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        ThrottleUtils.Throttle(
-            ThemeManager.Current,
-            ThemeManager.Current.SwitchToLightTheme,
-            1000
-        );
-    }
-
-    /// <summary>
-    /// 切换为 DarkTheme
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void SwitchToDarkThemeClickHandler(object sender, RoutedEventArgs e) {
-        e.Handled = true;
-        ThrottleUtils.Throttle(
-            ThemeManager.Current,
-            ThemeManager.Current.SwitchToDarkTheme,
-            1000
-        );
     }
 
     /// <summary>
@@ -203,5 +196,15 @@ public partial class MainWindow : BaseWindow {
     private void NavigateToNavigationContentViewClickHandler(object sender, RoutedEventArgs e) {
         // Do not set 'e.Handled = true'
         RouterService.Navigate(typeof(NavigationContentView));
+    }
+
+    /// <summary>
+    /// Navigate to setting view
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void SettingClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        RouterService.Navigate(typeof(SettingsView));
     }
 }

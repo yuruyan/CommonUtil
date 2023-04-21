@@ -70,6 +70,25 @@
         Duration="{StaticResource AnimationDurationLong}" />
     </Storyboard>
     <!--#endregion-->
+
+    <!--#region SettingButton Storyboard-->
+    <Storyboard x:Key="SettingButtonVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="SettingButton"
+        Storyboard.TargetProperty="Width"
+        From="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <Storyboard x:Key="SettingButtonInVisibleStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="SettingButton"
+        Storyboard.TargetProperty="Width"
+        To="0"
+        Duration="{StaticResource AnimationDurationLong}" />
+    </Storyboard>
+    <!--#endregion-->
   </Window.Resources>
 
   <Grid tools:LoadingBoxHelper.IsLoading="{Binding ShowLoadingBox}" tools:LoadingBoxHelper.Size="50">
@@ -80,7 +99,7 @@
       x:Name="TitleBar"
       VerticalAlignment="Top"
       LastChildFill="False">
-      <ui:SimpleStackPanel Orientation="Horizontal">
+      <ui:SimpleStackPanel DockPanel.Dock="Left" Orientation="Horizontal">
         <!--  Navigation, Home  -->
         <StackPanel Orientation="Horizontal">
           <ui:TitleBarButton
@@ -113,22 +132,18 @@
           <TextBlock Text="{Binding RouteViewTitle}" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
-      <!--  切换主题  -->
-      <tools:ToggleControl
+      <!--  Settings  -->
+      <ui:TitleBarButton
+        x:Name="SettingButton"
         Margin="0,0,140,0"
+        tools:VisibilityAnimationHelper.InVisibleStoryboard="{StaticResource SettingButtonInVisibleStoryboard}"
+        tools:VisibilityAnimationHelper.VisibleStoryboard="{StaticResource SettingButtonVisibleStoryboard}"
+        Click="SettingClickHandler"
         DockPanel.Dock="Right"
-        State="{Binding CurrentThemeMode, Converter={StaticResource EqualConverter}, ConverterParameter={x:Static tools:ThemeMode.Light}}">
-        <tools:ToggleControl.FirstControl>
-          <ui:TitleBarButton Click="SwitchToDarkThemeClickHandler" ToolTip="切换为暗色模式">
-            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe71e;" />
-          </ui:TitleBarButton>
-        </tools:ToggleControl.FirstControl>
-        <tools:ToggleControl.SecondControl>
-          <ui:TitleBarButton Click="SwitchToLightThemeClickHandler" ToolTip="切换为亮色模式">
-            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe88e;" />
-          </ui:TitleBarButton>
-        </tools:ToggleControl.SecondControl>
-      </tools:ToggleControl>
+        ToolTip="设置"
+        Visibility="{Binding IsSettingButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
+        <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6c9;" />
+      </ui:TitleBarButton>
     </DockPanel>
   </Grid>
 </tools:BaseWindow>
