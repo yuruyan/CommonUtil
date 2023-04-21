@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="KeywordFinderView"
   Margin="8,0,0,8"
   d:DesignHeight="450"
@@ -30,7 +30,10 @@
 
     <ui:SimpleStackPanel Spacing="10">
       <StackPanel Orientation="Horizontal">
-        <Button Click="SelectSearchDirectoryClick" Content="选择搜索目录" />
+        <Button
+          Click="SelectSearchDirectoryClick"
+          Content="选择搜索目录"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <TextBlock
           MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=StackPanel}, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=200}"
           Padding="8,0,0,0"

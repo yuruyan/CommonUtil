@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="WhiteSpaceProcessView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -56,7 +56,10 @@
           SelectedIndex="0" />
       </StackPanel>
       <ui:SimpleStackPanel>
-        <Button Click="TextProcessClick" Content="文本翻转" />
+        <Button
+          Click="TextProcessClick"
+          Content="文本翻转"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"

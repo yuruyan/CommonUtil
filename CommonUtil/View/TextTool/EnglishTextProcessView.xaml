@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="HalfFullCharTransformView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -50,7 +50,10 @@
           SelectedIndex="0" />
       </StackPanel>
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <Button Click="TextProcessClick" Content="文本处理" />
+        <Button
+          Click="TextProcessClick"
+          Content="文本处理"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"

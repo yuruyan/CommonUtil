@@ -50,8 +50,14 @@
         <CheckBox x:Name="IncludeNumberCheckBox" Content="包括数字" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <Button Click="AddBracesClickHandler" Content="添加空格" />
-        <Button Click="RemoveBracesClickHandler" Content="移除空格" />
+        <Button
+          Click="AddBracesClickHandler"
+          Content="添加空格"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
+        <Button
+          Click="RemoveBracesClickHandler"
+          Content="移除空格"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <tools:IconButton

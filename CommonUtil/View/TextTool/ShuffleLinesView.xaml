@@ -37,7 +37,10 @@
       Margin="0,8"
       HorizontalAlignment="Center"
       Orientation="Horizontal">
-      <Button Click="TextProcessClickHandler" Content="文本处理" />
+      <Button
+        Click="TextProcessClickHandler"
+        Content="文本处理"
+        Style="{StaticResource GlobalAccentButtonStyle}" />
       <tools:IconButton
         Click="CopyResultClick"
         Icon="&#xe6ef;"

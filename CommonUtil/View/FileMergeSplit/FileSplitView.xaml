@@ -31,7 +31,10 @@
     <ui:SimpleStackPanel Orientation="Vertical">
       <!--  选择分割文件  -->
       <ui:SimpleStackPanel Orientation="Horizontal">
-        <Button Click="SelectFileClick" Content="选择分割文件" />
+        <Button
+          Click="SelectFileClick"
+          Content="选择分割文件"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <!--  文件信息  -->
         <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource NarrowItemSpacing}">
           <TextBlock
@@ -50,7 +53,10 @@
       </ui:SimpleStackPanel>
       <!--  选择保存目录  -->
       <ui:SimpleStackPanel Orientation="Horizontal">
-        <Button Click="SelectSaveFolderClickHandler" Content="选择保存目录" />
+        <Button
+          Click="SelectSaveFolderClickHandler"
+          Content="选择保存目录"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <TextBlock
           FontWeight="Bold"
           Foreground="{DynamicResource HighLightKeywordForeground}"
@@ -93,10 +99,12 @@
         <Button
           Click="StartClickHandler"
           Content="开始"
+          Style="{StaticResource GlobalAccentButtonStyle}"
           Visibility="{Binding IsWorking, Converter={StaticResource HideIfTrueConverter}}" />
         <Button
           Click="CancelClickHandler"
           Content="取消"
+          Style="{StaticResource GlobalErrorButtonStyle}"
           Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
       </Grid>
     </ui:SimpleStackPanel>

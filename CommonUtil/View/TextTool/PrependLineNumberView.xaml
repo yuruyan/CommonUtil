@@ -5,9 +5,9 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
+  xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:view="clr-namespace:CommonUtil.View"
-  xmlns:tools="wpf-common-ui-tools"
   Title="PrependLineNumberView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -52,7 +52,10 @@
           SelectedIndex="0" />
       </StackPanel>
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <Button Click="PrependLineNumberClick" Content="增加行号" />
+        <Button
+          Click="PrependLineNumberClick"
+          Content="增加行号"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"

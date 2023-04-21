@@ -60,7 +60,8 @@
       <Button
         HorizontalAlignment="Center"
         Click="CalculateBMIClick"
-        Content="计算 BMI" />
+        Content="计算 BMI"
+        Style="{StaticResource GlobalAccentButtonStyle}" />
       <StackPanel Orientation="Horizontal" Visibility="{Binding BMI, Converter={StaticResource HideIfEmptyConverter}}">
         <!--  覆盖上面定义的样式  -->
         <StackPanel.Resources>

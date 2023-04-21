@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="ChineseTransformView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -43,6 +43,7 @@
           <Button
             Click="ToTraditionalClickHandler"
             Content="转繁体"
+            Style="{StaticResource GlobalAccentButtonStyle}"
             Visibility="{Binding IsToTraditionalWorking, Converter={StaticResource HideIfTrueConverter}}" />
           <Button
             Click="CancelToTraditionalClickHandler"
@@ -54,6 +55,7 @@
           <Button
             Click="ToSimplifiedClickHandler"
             Content="转简体"
+            Style="{StaticResource GlobalAccentButtonStyle}"
             Visibility="{Binding IsToSimplifiedWorking, Converter={StaticResource HideIfTrueConverter}}" />
           <Button
             Click="CancelToSimplifiedClickHandler"

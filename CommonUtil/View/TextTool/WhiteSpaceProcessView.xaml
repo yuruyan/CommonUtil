@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="WhiteSpaceProcessView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -49,24 +49,20 @@
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
-        <Button Content="选择模式">
+        <Button Content="选择模式" Style="{StaticResource GlobalAccentButtonStyle}">
           <Button.Resources>
             <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
               <Setter Property="IsCheckable" Value="True" />
             </Style>
           </Button.Resources>
           <ui:FlyoutService.Flyout>
-            <ui:MenuFlyout x:Name="ProcessOptionsMenuFlyout">
-              <!--<MenuItem x:Name="TrimTextMenuItem" Header="去除首尾空白" />
-              <MenuItem x:Name="TrimLineStartMenuItem" Header="去除每行首部空白" />
-              <MenuItem x:Name="TrimLineEndMenuItem" Header="去除每行尾部空白" />
-              <MenuItem x:Name="TrimLineMenuItem" Header="去除每行首尾空白" />
-              <MenuItem x:Name="RemoveWhiteSpaceLineMenuItem" Header="去除空白行" />
-              <MenuItem x:Name="ReplaceMultipleWhiteSpaceWithOneMenuItem" Header="多个空白字符替换为一个空格" />-->
-            </ui:MenuFlyout>
+            <ui:MenuFlyout x:Name="ProcessOptionsMenuFlyout" />
           </ui:FlyoutService.Flyout>
         </Button>
-        <Button Click="TextProcessClick" Content="文本处理" />
+        <Button
+          Click="TextProcessClick"
+          Content="文本处理"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <tools:IconButton

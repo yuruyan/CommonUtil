@@ -32,7 +32,10 @@
       <ui:SimpleStackPanel Orientation="Vertical">
         <!--  选择合并目录  -->
         <ui:SimpleStackPanel Orientation="Horizontal">
-          <Button Click="SelectMergeFileDirClick" Content="选择合并目录" />
+          <Button
+            Click="SelectMergeFileDirClick"
+            Content="选择合并目录"
+            Style="{StaticResource GlobalAccentButtonStyle}" />
           <TextBlock
             FontWeight="Bold"
             Foreground="{DynamicResource HighLightKeywordForeground}"
@@ -42,7 +45,10 @@
 
         <!--  选择保存路径  -->
         <ui:SimpleStackPanel Orientation="Horizontal">
-          <Button Click="SelectMergeFileSaveClick" Content="选择保存路径" />
+          <Button
+            Click="SelectMergeFileSaveClick"
+            Content="选择保存路径"
+            Style="{StaticResource GlobalAccentButtonStyle}" />
           <TextBlock
             FontWeight="Bold"
             Foreground="{DynamicResource HighLightKeywordForeground}"
@@ -55,10 +61,12 @@
           <Button
             HorizontalAlignment="Left"
             Click="MergeFileClick"
-            Content="开始" />
+            Content="开始"
+            Style="{StaticResource GlobalAccentButtonStyle}" />
           <Button
             Click="CancelClickHandler"
             Content="取消"
+            Style="{StaticResource GlobalErrorButtonStyle}"
             Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
         </Grid>
       </ui:SimpleStackPanel>

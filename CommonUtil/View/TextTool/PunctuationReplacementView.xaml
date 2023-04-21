@@ -41,8 +41,14 @@
       Margin="0,8"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <Button Click="ReplaceWithChinesePunctuationClickHandler" Content="替换为中文标点" />
-        <Button Click="ReplaceWithEnglishPunctuationClickHandler" Content="替换为英文标点" />
+        <Button
+          Click="ReplaceWithChinesePunctuationClickHandler"
+          Content="替换为中文标点"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
+        <Button
+          Click="ReplaceWithEnglishPunctuationClickHandler"
+          Content="替换为英文标点"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <tools:IconButton

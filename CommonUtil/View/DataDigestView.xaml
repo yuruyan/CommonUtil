@@ -43,7 +43,7 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Orientation="Horizontal">
-        <Button Content="选择算法">
+        <Button Content="选择算法" Style="{StaticResource GlobalAccentButtonStyle}">
           <Button.Resources>
             <Style BasedOn="{StaticResource GlobalMenuItemStyle}" TargetType="MenuItem">
               <Setter Property="IsCheckable" Value="True" />

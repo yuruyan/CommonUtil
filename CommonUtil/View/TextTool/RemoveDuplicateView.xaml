@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="RemoveDuplicateView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -91,7 +91,10 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Orientation="Horizontal">
-        <Button Click="RemoveDuplicateClick" Content="文本去重" />
+        <Button
+          Click="RemoveDuplicateClick"
+          Content="文本去重"
+          Style="{StaticResource GlobalAccentButtonStyle}" />
         <tools:IconButton
           Click="CopyResultClick"
           Icon="&#xe6ef;"
