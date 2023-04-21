@@ -17,6 +17,9 @@ internal class ThemeManager : DependencyObject {
 
     private ThemeManager() {
         ThemeModeProperty.ValueChanged += ThemeModeChanged;
+        SystemColorsHelper.SystemAccentColorChanged += (_, _) => {
+            CommonUITools.Themes.ThemeManager.UpdateTheme();
+        };
     }
 
     private void ThemeModeChanged(ThemeMode oldVal, ThemeMode newVal) {
