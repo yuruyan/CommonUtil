@@ -12,24 +12,17 @@ public static class CodeColorization {
     /// <summary>
     /// 代码着色配置列表
     /// </summary>
-    private static readonly IReadOnlyList<SchemeInfo> Schemes;
+    private static readonly IReadOnlyList<CodeColorizationSchemeInfo> Schemes;
     /// <summary>
     /// 语言名称
     /// </summary>
     public static readonly IReadOnlyList<string> Languages;
 
     static CodeColorization() {
-        var themes = JsonConvert.DeserializeObject<List<SchemeInfo>>(
-            Encoding.UTF8.GetString(DataResource.CodeColorSchemeConfig)
-        );
-        if (themes is null) {
-            Logger.Fatal("解析代码颜色配置文件失败");
-            throw new JsonSerializationException($"解析代码颜色配置文件失败");
-        }
-        Schemes = themes;
-        Languages = themes.Select(s => s.Name).ToList();
-        RegisterThemes(DataResource.CodeColorSchemeLight, ThemeMode.Light);
-        RegisterThemes(DataResource.CodeColorSchemeDark, ThemeMode.Dark);
+        Schemes = DataResourceHelper.CodeColorizationSchemeInfoList;
+        Languages = Schemes.Select(s => s.Name).ToList();
+        RegisterThemes(DataResourceHelper.CodeColorizationColorSchemeLight, ThemeMode.Light);
+        RegisterThemes(DataResourceHelper.CodeColorizationColorSchemeDark, ThemeMode.Dark);
         Logger.Debug("注册代码颜色配置文件成功");
     }
 
@@ -60,17 +53,5 @@ public static class CodeColorization {
     /// <returns></returns>
     public static IHighlightingDefinition GetHighlighting(string lang, ThemeMode themeMode) {
         return HighlightingManager.Instance.GetDefinition($"{lang}-{themeMode}");
-    }
-
-    private struct SchemeInfo {
-        public string Name;
-        public string[] FileTypes;
-        public string ResourceName;
-
-        public SchemeInfo(string name, string[] fileTypes, string resourceName) {
-            Name = name;
-            FileTypes = fileTypes;
-            ResourceName = resourceName;
-        }
     }
 }
