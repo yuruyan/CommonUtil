@@ -1,8 +1,6 @@
 ﻿namespace CommonUtil.Core;
 
 public static class IdiomMatching {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
     public class Idiom {
         /// <summary>
         /// 深度
@@ -35,24 +33,21 @@ public static class IdiomMatching {
         }
     }
 
-    private static readonly IReadOnlyCollection<string> _IdiomList;
-    public static IReadOnlyCollection<string> IdiomList {
-        get { return _IdiomList; }
-    }
-
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly IReadOnlyList<string> _IdiomList;
     private static readonly IReadOnlyDictionary<char, List<string>> WordDict;
     /// <summary>
     /// 最大接龙个数
     /// </summary>
     private const int MaxLayer = 16;
 
+    public static IReadOnlyList<string> IdiomList => _IdiomList;
+
     static IdiomMatching() {
         var wordDict = new Dictionary<char, List<string>>();
-        var wordList = DataResource.Idioms
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        _IdiomList = new List<string>(wordList);
-        foreach (var word in wordList) {
-            char c = word.First();
+        _IdiomList = DataResourceHelper.ChineseIdioms;
+        foreach (var word in _IdiomList) {
+            char c = word[0];
             if (!wordDict.ContainsKey(c)) {
                 wordDict[c] = new();
             }
