@@ -1274,6 +1274,11 @@
             返回
             </summary>
         </member>
+        <member name="M:CommonUITools.Themes.ThemeManager.UpdateTheme">
+            <summary>
+            Update Current Theme
+            </summary>
+        </member>
         <member name="M:CommonUITools.Themes.ThemeManager.SwitchToLightTheme">
             <summary>
             切换为 LightTheme

@@ -87,8 +87,6 @@ public partial class MainWindow : BaseWindow {
             RouterService.Navigate(typeof(MainContentView));
             ShowLoadingBox = false;
         });
-        // Ensure current theme won't follow system
-        ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
         // ThemeChanged
         ThemeManager.Current.ThemeChanged += (_, mode) => {
             CurrentThemeMode = mode;
@@ -96,6 +94,7 @@ public partial class MainWindow : BaseWindow {
             CurrentBackgroundColor = ((SolidColorBrush)FindResource("WindowBackgroundBrush")).Color;
             MainWindowBackgroundStoryboard.Begin();
         };
+        ThemeManager.Current.SwitchToAutoTheme();
     }
 
     /// <summary>

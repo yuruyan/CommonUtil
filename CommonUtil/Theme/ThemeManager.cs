@@ -5,41 +5,61 @@ internal class ThemeManager : DependencyObject {
     private const string DarkThemeSource = "/CommonUtil;component/Resources/ResourceDictionary/DarkThemeResources.xaml";
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly ObservableProperty<ThemeMode> ThemeModeProperty = ThemeMode.Light;
 
     public event EventHandler<ThemeMode>? ThemeChanged;
     public static readonly ThemeManager Current;
-    public ThemeMode CurrentMode { get; private set; } = ThemeMode.Light;
+    public ThemeMode CurrentMode => ThemeModeProperty.Value;
 
     static ThemeManager() {
         Current = UIUtils.RunOnUIThread(() => new ThemeManager());
     }
 
-    private ThemeManager() { }
+    private ThemeManager() {
+        ThemeModeProperty.ValueChanged += ThemeModeChanged;
+    }
+
+    private void ThemeModeChanged(ThemeMode oldVal, ThemeMode newVal) {
+        if (newVal == ThemeMode.Light) {
+            ReplaceResourceDictionary(DarkThemeSource, LightThemeSource);
+            CommonUITools.Themes.ThemeManager.SwitchToLightTheme();
+            ThemeChanged?.Invoke(Current, ThemeMode.Light);
+        } else {
+            ReplaceResourceDictionary(LightThemeSource, DarkThemeSource);
+            CommonUITools.Themes.ThemeManager.SwitchToDarkTheme();
+            ThemeChanged?.Invoke(Current, ThemeMode.Dark);
+        }
+    }
 
     /// <summary>
     /// 切换为 LightTheme
     /// </summary>
     public void SwitchToLightTheme() {
-        if (CurrentMode == ThemeMode.Light) {
-            return;
-        }
-        CurrentMode = ThemeMode.Light;
-        ReplaceResourceDictionary(DarkThemeSource, LightThemeSource);
-        CommonUITools.Themes.ThemeManager.SwitchToLightTheme();
-        ThemeChanged?.Invoke(Current, ThemeMode.Light);
+        SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
+        ThemeModeProperty.Value = ThemeMode.Light;
     }
 
     /// <summary>
     /// 切换为 DarkTheme
     /// </summary>
     public void SwitchToDarkTheme() {
-        if (CurrentMode == ThemeMode.Dark) {
-            return;
-        }
-        CurrentMode = ThemeMode.Dark;
-        ReplaceResourceDictionary(LightThemeSource, DarkThemeSource);
-        CommonUITools.Themes.ThemeManager.SwitchToDarkTheme();
-        ThemeChanged?.Invoke(Current, ThemeMode.Dark);
+        SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
+        ThemeModeProperty.Value = ThemeMode.Dark;
+    }
+
+    /// <summary>
+    /// 跟随系统
+    /// </summary>
+    public void SwitchToAutoTheme() {
+        SystemColorsHelper.SystemThemeChanged += SystemThemeChangedHandler;
+        // Change theme
+        SystemThemeChangedHandler(null, SystemColorsHelper.CurrentSystemTheme);
+    }
+
+    private void SystemThemeChangedHandler(object? sender, ThemeMode e) {
+        ThemeModeProperty.Value = e == ThemeMode.Light
+            ? ThemeMode.Light
+            : ThemeMode.Dark;
     }
 
     /// <summary>

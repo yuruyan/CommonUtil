@@ -17,23 +17,13 @@ public partial class SettingsView : Page {
         if (sender is not Selector selector || selector.SelectedValue is not ThemeOptions theme) {
             return;
         }
-        SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
+
         if (theme == ThemeOptions.Light) {
             ThemeManager.Current.SwitchToLightTheme();
         } else if (theme == ThemeOptions.Dark) {
             ThemeManager.Current.SwitchToDarkTheme();
         } else {
-            SystemColorsHelper.SystemThemeChanged += SystemThemeChangedHandler;
-            // Change theme
-            SystemThemeChangedHandler(null, SystemColorsHelper.CurrentSystemTheme);
-        }
-    }
-
-    private void SystemThemeChangedHandler(object? sender, ThemeMode e) {
-        if (e == ThemeMode.Light) {
-            ThemeManager.Current.SwitchToLightTheme();
-        } else {
-            ThemeManager.Current.SwitchToDarkTheme();
+            ThemeManager.Current.SwitchToAutoTheme();
         }
     }
 
