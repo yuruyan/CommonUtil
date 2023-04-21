@@ -62,10 +62,10 @@
               Grid.Column="2"
               Margin="16,0"
               Click="ClosePageClickHandler"
+              Content="&#xe614;"
+              FontSize="{StaticResource SystemFontSizeSmall}"
               Style="{StaticResource GlobalSingleIconButtonStyle}"
-              Visibility="Collapsed">
-              <TextBlock FontSize="{StaticResource SystemFontSizeSmall}" Text="&#xe614;" />
-            </Button>
+              Visibility="Collapsed" />
           </Grid>
         </Border>
       </DataTemplate>
