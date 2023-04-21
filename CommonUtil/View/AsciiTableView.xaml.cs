@@ -13,7 +13,7 @@ public partial class AsciiTableView : Page {
     public AsciiTableView() {
         SetValue(
             AsciiTableListPropertyKey,
-            new ExtendedObservableCollection<AsciiInfo>(AsciiTable.GetAsciiInfoList())
+            new ExtendedObservableCollection<AsciiInfo>(AsciiTable.AsciiInfoList)
         );
         InitializeComponent();
     }

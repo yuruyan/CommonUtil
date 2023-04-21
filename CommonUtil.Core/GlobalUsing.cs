@@ -13,5 +13,5 @@ global using System.Text;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Windows;
-global using CommonUtil.Data;
+global using CommonUtil.Data.Resources;
 global using CommonUtil.Data.Model;

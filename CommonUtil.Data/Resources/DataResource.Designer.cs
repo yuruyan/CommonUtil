@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CommonUtil.Data {
+namespace CommonUtil.Data.Resources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,21 +22,21 @@ namespace CommonUtil.Data {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DataResource {
-
+    internal class DataResource {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal DataResource() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CommonUtil.Data.Resources.DataResource", typeof(DataResource).Assembly);
@@ -45,13 +45,13 @@ namespace CommonUtil.Data {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -59,67 +59,67 @@ namespace CommonUtil.Data {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] Ascii {
+        internal static byte[] Ascii {
             get {
                 object obj = ResourceManager.GetObject("Ascii", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ChineseCharacterMap {
+        internal static byte[] ChineseCharacterMap {
             get {
                 object obj = ResourceManager.GetObject("ChineseCharacterMap", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CodeColorSchemeConfig {
+        internal static byte[] CodeColorSchemeConfig {
             get {
                 object obj = ResourceManager.GetObject("CodeColorSchemeConfig", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CodeColorSchemeDark {
+        internal static byte[] CodeColorSchemeDark {
             get {
                 object obj = ResourceManager.GetObject("CodeColorSchemeDark", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CodeColorSchemeLight {
+        internal static byte[] CodeColorSchemeLight {
             get {
                 object obj = ResourceManager.GetObject("CodeColorSchemeLight", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] CommonRegex {
+        internal static byte[] CommonRegex {
             get {
                 object obj = ResourceManager.GetObject("CommonRegex", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 阿保之功
         ///阿保之劳
@@ -208,16 +208,16 @@ namespace CommonUtil.Data {
         ///挨挨抢抢
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Idioms {
+        internal static string Idioms {
             get {
                 return ResourceManager.GetString("Idioms", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ProgramingGetTimeStamp {
+        internal static byte[] ProgramingGetTimeStamp {
             get {
                 object obj = ResourceManager.GetObject("ProgramingGetTimeStamp", resourceCulture);
                 return ((byte[])(obj));

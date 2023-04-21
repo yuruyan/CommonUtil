@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\DataResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DataResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

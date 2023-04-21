@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace CommonUtil.Data;
+namespace CommonUtil.Data.Resources;
 
 public static partial class DataResourceHelper {
     private static readonly Lazy<IReadOnlyList<AsciiInfo>> _AsciiInfoList = new(() => {
