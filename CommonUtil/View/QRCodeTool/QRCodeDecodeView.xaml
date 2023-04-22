@@ -60,6 +60,11 @@
         AllowDrop="True"
         Background="Transparent"
         Drop="QRCodeImageDropHandler">
+        <Rectangle
+          RadiusX="4"
+          RadiusY="4"
+          Stroke="{DynamicResource ApplicationForegroundBrush}"
+          StrokeDashArray="6,2" />
         <TextBlock
           Text="拖拽图片至此"
           TextAlignment="Center"
