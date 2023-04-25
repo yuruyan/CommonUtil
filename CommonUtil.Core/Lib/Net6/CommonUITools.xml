@@ -1279,6 +1279,11 @@
             Update Current Theme
             </summary>
         </member>
+        <member name="M:CommonUITools.Themes.ThemeManager.SwitchToAutoTheme">
+            <summary>
+            Auto theme
+            </summary>
+        </member>
         <member name="M:CommonUITools.Themes.ThemeManager.SwitchToLightTheme">
             <summary>
             切换为 LightTheme
@@ -2192,6 +2197,16 @@
             </summary>
             <returns></returns>
             <see cref="!:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime"/>
+        </member>
+        <member name="E:CommonUITools.Utils.SystemColorsHelper.SystemThemeChanged">
+            <summary>
+            Running on UI thread
+            </summary>
+        </member>
+        <member name="E:CommonUITools.Utils.SystemColorsHelper.SystemAccentColorChanged">
+            <summary>
+            Running on UI thread
+            </summary>
         </member>
         <member name="T:CommonUITools.Utils.UIUtils">
             <summary>
