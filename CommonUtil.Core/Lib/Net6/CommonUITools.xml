@@ -1274,6 +1274,13 @@
             返回
             </summary>
         </member>
+        <member name="M:CommonUITools.Themes.ThemeManager.CurrentThemeChanged(CommonUITools.Model.ThemeMode,CommonUITools.Model.ThemeMode)">
+            <summary>
+            ThemeChanged
+            </summary>
+            <param name="oldVal"></param>
+            <param name="newVal"></param>
+        </member>
         <member name="M:CommonUITools.Themes.ThemeManager.UpdateTheme">
             <summary>
             Update Current Theme
@@ -2482,6 +2489,13 @@
             <param name="oldSource"></param>
             <param name="newSource"></param>
             <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.UpdateResourceDictionary(System.Windows.ResourceDictionary,System.Uri)">
+            <summary>
+            更新 ResourceDictionary
+            </summary>
+            <param name="resource"></param>
+            <param name="newSource"></param>
         </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.GetElementDataContext``1(System.Object)">
             <summary>
