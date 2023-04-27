@@ -2137,6 +2137,18 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="T:CommonUITools.Utils.WindowHelper">
+            <summary>
+            WindowHelper
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.WindowHelper.SetBackDropStyle(System.Windows.DependencyObject,CommonUITools.Model.BackdropStyle)">
+            <summary>
+            BackDropStyle
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
@@ -2184,6 +2196,11 @@
             失败消息
             </summary>
             <inheritdoc cref="M:CommonUITools.Controls.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
+        </member>
+        <member name="T:CommonUITools.Utils.PInvokeUtils">
+            <summary>
+            Window Backdrop
+            </summary>
         </member>
         <member name="M:CommonUITools.Utils.PInvokeUtils.ShellExecuteW(System.IntPtr,System.String,System.String,System.String,System.String,CommonUITools.Model.ShowCommands)">
             <summary>

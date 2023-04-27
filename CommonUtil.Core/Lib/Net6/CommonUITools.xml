@@ -2137,6 +2137,18 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="T:CommonUITools.Utils.WindowHelper">
+            <summary>
+            WindowHelper
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.WindowHelper.SetBackDropStyle(System.Windows.DependencyObject,CommonUITools.Model.BackdropStyle)">
+            <summary>
+            BackDropStyle
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
@@ -2185,6 +2197,11 @@
             </summary>
             <inheritdoc cref="M:CommonUITools.Controls.NotificationBox.ShowNotification(System.String,System.String,System.Windows.DependencyObject,System.UInt32,CommonUITools.Model.MessageType,System.Action)"/>
         </member>
+        <member name="T:CommonUITools.Utils.PInvokeUtils">
+            <summary>
+            Window Backdrop
+            </summary>
+        </member>
         <member name="M:CommonUITools.Utils.PInvokeUtils.ShellExecuteW(System.IntPtr,System.String,System.String,System.String,System.String,CommonUITools.Model.ShowCommands)">
             <summary>
             Performs an operation on a specified file.
@@ -2197,13 +2214,6 @@
             <param name="nShowCmd"></param>
             <returns></returns>
             <see href="https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew"/>
-        </member>
-        <member name="M:CommonUITools.Utils.PInvokeUtils.GetDoubleClickTime">
-            <summary>
-            Retrieves the current double-click time for the mouse. A double-click is a series of two clicks of the mouse button, the second occurring within a specified time after the first. The double-click time is the maximum number of milliseconds that may occur between the first and second click of a double-click. The maximum double-click time is 5000 milliseconds.
-            </summary>
-            <returns></returns>
-            <see cref="!:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime"/>
         </member>
         <member name="E:CommonUITools.Utils.SystemColorsHelper.SystemThemeChanged">
             <summary>

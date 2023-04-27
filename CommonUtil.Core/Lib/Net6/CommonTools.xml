@@ -743,6 +743,14 @@
             <param name="result"></param>
             <returns>成功返回 true，失败返回 false</returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            随机排序
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
             <summary>
             替换 '/' 为 '\\'
