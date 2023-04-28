@@ -2149,6 +2149,17 @@
             <param name="obj"></param>
             <param name="value"></param>
         </member>
+        <member name="P:CommonUITools.Utils.WindowHelper.IsSystemSupport">
+            <summary>
+            Is system support feature
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.WindowHelper.ApplyOptimalThemeStyle(System.Windows.Window)">
+            <summary>
+            Apply the optimal theme
+            </summary>
+            <param name="window"></param>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
