@@ -87,14 +87,19 @@ public partial class MainWindow : BaseWindow {
             RouterService.Navigate(typeof(MainContentView));
             ShowLoadingBox = false;
         });
-        // ThemeChanged
-        ThemeManager.Current.ThemeChanged += (_, mode) => {
-            CurrentThemeMode = mode;
-            PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
-            CurrentBackgroundColor = ((SolidColorBrush)FindResource("WindowBackgroundBrush")).Color;
-            MainWindowBackgroundStoryboard.Begin();
-        };
-        ThemeManager.Current.SwitchToAutoTheme();
+        if (WindowHelper.IsSystemSupport) {
+            Background = new SolidColorBrush(Colors.Transparent);
+            WindowHelper.SetBackDropStyle(this, BackdropStyle.Mica);
+        } else {
+            Background = new SolidColorBrush(Colors.White);
+            // ThemeChanged
+            ThemeManager.Current.ThemeChanged += (_, mode) => {
+                CurrentThemeMode = mode;
+                PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
+                CurrentBackgroundColor = ((SolidColorBrush)FindResource("WindowBackgroundBrush")).Color;
+                MainWindowBackgroundStoryboard.Begin();
+            };
+        }
     }
 
     /// <summary>

@@ -15,7 +15,6 @@
   MinHeight="400"
   ui:TitleBar.ExtendViewIntoTitleBar="True"
   ui:WindowHelper.UseModernWindowStyle="True"
-  Background="White"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   WindowStartupLocation="CenterScreen"
   mc:Ignorable="d">
