@@ -553,7 +553,7 @@
             for string
             </summary>
         </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.Remove``1(System.Collections.Generic.ICollection{``0},System.Func{``0,System.Boolean})">
+        <member name="M:CommonTools.Utils.ExtensionUtils.Remove``1(System.Collections.Generic.ICollection{``0},System.Predicate{``0})">
             <summary>
             从 collection 中移除符合 predicate 条件的第一个元素
             </summary>
@@ -566,7 +566,7 @@
             original System.Collections.Generic.ICollection
             </returns>
         </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.RemoveAll``1(System.Collections.Generic.ICollection{``0},System.Func{``0,System.Boolean})">
+        <member name="M:CommonTools.Utils.ExtensionUtils.RemoveAll``1(System.Collections.Generic.ICollection{``0},System.Predicate{``0})">
             <summary>
             从 collection 中移除符合 predicate 条件的所有元素
             </summary>
@@ -592,20 +592,14 @@
             <param name="source"></param>
             <param name="keys"></param>
         </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.Print``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+        <member name="M:CommonTools.Utils.ExtensionUtils.Print``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.String)">
             <summary>
             打印集合
             </summary>
             <typeparam name="T"></typeparam>
             <param name="values"></param>
             <param name="count">打印输出个数，-1 代表打印所有</param>
-        </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.PrintArray(System.Array,System.Int32)">
-            <summary>
-            打印数组
-            </summary>
-            <param name="array"></param>
-            <param name="count">打印输出个数，-1 代表打印所有</param>
+            <param name="separator">分隔符</param>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.UpdateWithCollection``2(System.Collections.ObjectModel.ObservableCollection{``0},System.Collections.Generic.ICollection{``1},System.Action{``1,``0},System.Func{``1,``0})">
             <summary>
@@ -662,7 +656,7 @@
             <param name="predicate"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.Cast``1(System.Collections.IList,System.Func{System.Object,``0})">
+        <member name="M:CommonTools.Utils.ExtensionUtils.Cast``1(System.Collections.ICollection,System.Func{System.Object,``0})">
             <summary>
             转换
             </summary>
@@ -679,7 +673,7 @@
             <param name="source"></param>
             <param name="length"></param>
             <param name="defaultValue">填充默认值</param>
-            <returns></returns>
+            <returns><paramref name="source"/></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ResizeByCount``1(System.Collections.Generic.ICollection{``0},System.Int32,``0)">
             <summary>
@@ -689,7 +683,7 @@
             <param name="source"></param>
             <param name="count"></param>
             <param name="defaultValue">填充默认值</param>
-            <returns></returns>
+            <returns><paramref name="source"/></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Transpose``1(``0[0:,0:])">
             <summary>
@@ -697,7 +691,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="source"></param>
-            <returns></returns>
+            <returns>A new array</returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Transpose``1(System.Collections.Generic.ICollection{System.Collections.Generic.IList{``0}})">
             <summary>
@@ -705,7 +699,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="source"></param>
-            <returns></returns>
+            <returns>A new collection</returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0}[])">
             <summary>
@@ -714,7 +708,10 @@
             <typeparam name="T"></typeparam>
             <param name="source"></param>
             <param name="data"></param>
-            <returns>this</returns>
+            <returns><paramref name="source"/></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},``0[])">
+            <inheritdoc cref="M:CommonTools.Utils.ExtensionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0}[])"/>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Join``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0}[])">
             <summary>
@@ -734,13 +731,6 @@
             <param name="predicate"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.ExtensionUtils.GetSamePrefix(System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            获取集合相同前缀
-            </summary>
-            <param name="list"></param>
-            <returns></returns>
-        </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.TryGet``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0},``0@)">
             <summary>
             获取一个符合 <paramref name="predicate"/> 的元素
@@ -750,6 +740,13 @@
             <param name="predicate"></param>
             <param name="result"></param>
             <returns>成功返回 true，失败返回 false</returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.GetSamePrefix(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            获取集合相同前缀
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
