@@ -70,22 +70,17 @@ public partial class App : Application {
                 MessageBoxButton.OK,
                 MessageBoxImage.Error
             );
-            Shutdown();
         }
+        Shutdown();
     }
 
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
         e.Handled = true;
         Logger.Fatal(e.Exception);
-        string message = e.Exception switch {
-            FileNotFoundException f => $"文件{f.FileName}找不到",
-            DirectoryNotFoundException d => $"目录找不到\n{d.Message}",
-            _ => e.Exception.Message
-        };
         // 提示信息
         System.Windows.MessageBox.Show(
             Current.MainWindow,
-            message,
+            e.Exception.Message,
             "错误",
             MessageBoxButton.OK,
             MessageBoxImage.Error
