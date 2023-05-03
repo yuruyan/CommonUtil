@@ -8,6 +8,15 @@ public partial class SettingsView : Page {
         {"浅色", ThemeOptions.Light },
         {"深色", ThemeOptions.Dark },
     };
+    public static readonly DependencyProperty IsWindowTopMostProperty = DependencyProperty.Register("IsWindowTopMost", typeof(bool), typeof(SettingsView), new PropertyMetadata(false, IsWindowTopMostPropertyChangedHandler));
+
+    /// <summary>
+    /// 窗口是否置顶
+    /// </summary>
+    public bool IsWindowTopMost {
+        get { return (bool)GetValue(IsWindowTopMostProperty); }
+        set { SetValue(IsWindowTopMostProperty, value); }
+    }
 
     public SettingsView() {
         InitializeComponent();
@@ -38,4 +47,16 @@ public partial class SettingsView : Page {
             selector.SelectedIndex = 0;
         }
     }
+
+    /// <summary>
+    /// Update window TopMost property
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="e"></param>
+    private static void IsWindowTopMostPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        if (Window.GetWindow(d) is Window window) {
+            window.Topmost = (bool)e.NewValue;
+        }
+    }
+
 }

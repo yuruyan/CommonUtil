@@ -14,6 +14,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <ScrollViewer VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled">
+    <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
     <!--  Theme Options  -->
     <DockPanel LastChildFill="False">
       <TextBlock Width="120" Text="主题" />
@@ -24,5 +25,10 @@
         SelectedValuePath="Value"
         SelectionChanged="ThemeComboBoxSelectionChangedHandler" />
     </DockPanel>
+      <!--  Window TopMost  -->
+      <DockPanel LastChildFill="False">
+        <TextBlock Width="120" Text="窗口置顶" />
+        <ui:ToggleSwitch IsOn="{Binding IsWindowTopMost}" Style="{StaticResource ToggleSwitchNoContentStyle}" />
+      </DockPanel>
   </ScrollViewer>
 </Page>
