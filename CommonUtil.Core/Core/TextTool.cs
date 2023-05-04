@@ -10,42 +10,34 @@ public static partial class TextTool {
     /// <summary>
     /// 英文句子分隔符
     /// </summary>
-    private const char EnglishSentenceSeparator = '.';
+    internal const char EnglishSentenceSeparator = '.';
 #if NET7_0_OR_GREATER
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    private static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
+    internal static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
-    private static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
+    internal static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
-    private static readonly Regex MultipleWhiteSpaceRegex = GetMultipleWhiteSpaceRegex();
+    internal static readonly Regex MultipleWhiteSpaceRegex = GetMultipleWhiteSpaceRegex();
 #elif NET6_0_OR_GREATER
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    private static readonly Regex EnglishWordRegex = new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    internal static readonly Regex EnglishWordRegex = new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
-    private static readonly Regex EnglishWordNumberRegex = new(@"\s*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?: [\da-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    internal static readonly Regex EnglishWordNumberRegex = new(@"\s*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?: [\da-z]+)+)?)\s*", RegexOptions.IgnoreCase);
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
-    private static readonly Regex MultipleWhiteSpaceRegex = new(@"[\t\r\f ]{2,}");
+    internal static readonly Regex MultipleWhiteSpaceRegex = new(@"[\t\r\f ]{2,}");
 #endif
-    /// <summary>
-    /// 半角全角 Dict
-    /// </summary>
-    private static readonly IReadOnlyDictionary<char, char> HalfFullCharDict;
-    /// <summary>
-    /// 全角半角 Dict
-    /// </summary>
-    private static readonly IReadOnlyDictionary<char, char> FullHalfCharDict;
     /// <summary>
     /// 英文中文标点符号
     /// </summary>
@@ -89,23 +81,6 @@ public static partial class TextTool {
     [GeneratedRegex("[\\t\\r\\f ]{2,}")]
     private static partial Regex GetMultipleWhiteSpaceRegex();
 #endif
-
-    static TextTool() {
-        var halfFullCharDict = new Dictionary<char, char>();
-        var fullHalfCharDict = new Dictionary<char, char>();
-        // 空格
-        halfFullCharDict[(char)32u] = (char)12288;
-        // 其余字符
-        for (char i = (char)33; i < 127; i++) {
-            halfFullCharDict[i] = (char)(i + 65248);
-        }
-        // 填充 FullHalfCharDict
-        foreach (var item in halfFullCharDict) {
-            fullHalfCharDict[item.Value] = item.Key;
-        }
-        HalfFullCharDict = halfFullCharDict;
-        FullHalfCharDict = fullHalfCharDict;
-    }
 
     #region 文本处理
     /// <summary>
@@ -201,36 +176,6 @@ public static partial class TextTool {
     }
 
     /// <summary>
-    /// 半角转全角
-    /// </summary>
-    /// <param name="halfCharText"></param>
-    /// <returns></returns>
-    public static string HalfCharToFullChar(string halfCharText) {
-        char[] array = halfCharText.ToCharArray();
-        for (int i = 0; i < array.Length; i++) {
-            if (HalfFullCharDict.ContainsKey(array[i])) {
-                array[i] = HalfFullCharDict[array[i]];
-            }
-        }
-        return new(array);
-    }
-
-    /// <summary>
-    /// 全角转半角
-    /// </summary>
-    /// <param name="fullCharText"></param>
-    /// <returns></returns>
-    public static string FullCharToHalfChar(string fullCharText) {
-        char[] array = fullCharText.ToCharArray();
-        for (int i = 0; i < array.Length; i++) {
-            if (FullHalfCharDict.ContainsKey(array[i])) {
-                array[i] = FullHalfCharDict[array[i]];
-            }
-        }
-        return new(array);
-    }
-
-    /// <summary>
     /// 添加行号
     /// </summary>
     /// <param name="text"></param>
@@ -277,84 +222,6 @@ public static partial class TextTool {
     /// <returns></returns>
     public static string ReplaceMultipleWhiteSpaceWithOne(string text) {
         return MultipleWhiteSpaceRegex.Replace(text, " ");
-    }
-
-    /// <summary>
-    /// 小写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToLowerCase(string text) => text.ToLowerInvariant();
-
-    /// <summary>
-    /// 大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToUpperCase(string text) => text.ToUpperInvariant();
-
-    /// <summary>
-    /// 切换大小写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToggleCase(string text) {
-        char[] chars = text.ToCharArray();
-        for (int i = 0; i < chars.Length; i++) {
-            char ch = chars[i];
-            chars[i] = ch switch {
-                >= 'a' and <= 'z' => char.ToUpper(ch),
-                >= 'A' and <= 'Z' => char.ToLower(ch),
-                _ => ch
-            };
-        }
-        return new(chars);
-    }
-
-    /// <summary>
-    /// 将每个单词首字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string CapitalizeWords(string text)
-        => EnglishWordRegex.Replace(
-            ToLowerCase(text),
-            match => CapitalizeFirstWordCharacter(match.Value)
-        );
-
-    /// <summary>
-    /// 将文本第一个字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    private static string CapitalizeFirstWordCharacter(string text) {
-        var chars = text.ToCharArray();
-        for (int i = 0; i < chars.Length; i++) {
-            char ch = chars[i];
-            if (char.IsLetter(ch)) {
-                chars[i] = char.ToUpper(ch);
-                break;
-            }
-        }
-        return new(chars);
-    }
-
-    /// <summary>
-    /// 将每一句话首字母大写
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public static string ToSentenceCase(string text) {
-        var lines = ToLowerCase(text).Split('\n');
-        // 对每一行根据 EnglishSentenceSeparator 分割
-        for (int i = 0; i < lines.Length; i++) {
-            var sentences = lines[i].Split(EnglishSentenceSeparator);
-            for (int j = 0; j < sentences.Length; j++) {
-                sentences[j] = CapitalizeFirstWordCharacter(sentences[j]);
-            }
-            lines[i] = string.Join(EnglishSentenceSeparator, sentences);
-        }
-        return string.Join('\n', lines);
     }
 
     /// <summary>
@@ -437,7 +304,7 @@ public static partial class TextTool {
     /// <param name="inputPath"></param>
     /// <param name="outputPath"></param>
     /// <param name="func"></param>
-    private static void ProcessFileText(string inputPath, string outputPath, Func<string, string> func) {
+    internal static void ProcessFileText(string inputPath, string outputPath, Func<string, string> func) {
         File.WriteAllText(outputPath, func(File.ReadAllText(inputPath)));
     }
 
@@ -523,24 +390,6 @@ public static partial class TextTool {
     }
 
     /// <summary>
-    /// 文件文本半角转全角
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileHalfCharToFullChar(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, HalfCharToFullChar);
-    }
-
-    /// <summary>
-    /// 文件文本全角转半角
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileFullCharToHalfChar(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, FullCharToHalfChar);
-    }
-
-    /// <summary>
     /// 文件文本添加行号
     /// </summary>
     /// <param name="inputPath"></param>
@@ -571,51 +420,6 @@ public static partial class TextTool {
     /// <returns></returns>
     public static void FileRemoveEnglishWordBraces(string inputPath, string outputPath, bool includeNumber = false) {
         File.WriteAllText(outputPath, RemoveEnglishWordBraces(File.ReadAllText(inputPath), includeNumber));
-    }
-
-    /// <summary>
-    /// 文件文本小写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileToLowerCase(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, ToLowerCase);
-    }
-
-    /// <summary>
-    /// 文件文本大写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileToUpperCase(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, ToUpperCase);
-    }
-
-    /// <summary>
-    /// 文件文本切换大小写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileToggleCase(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, ToggleCase);
-    }
-
-    /// <summary>
-    /// 文件文本将每个单词首字母大写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileCapitalizeWords(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, CapitalizeWords);
-    }
-
-    /// <summary>
-    /// 文件文本将每一句话首字母大写
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    public static void FileToSentenceCase(string inputPath, string outputPath) {
-        ProcessFileText(inputPath, outputPath, ToSentenceCase);
     }
 
     /// <summary>

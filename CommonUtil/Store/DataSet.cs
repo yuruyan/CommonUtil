@@ -126,13 +126,13 @@ public static class DataSet {
     /// 英文文本处理选项
     /// </summary>
     public static readonly IReadOnlyDictionary<string, (TextTool.TextProcess, TextTool.FileProcess)> EnglishTextProcessOptionDict = new Dictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>() {
-        {"大写", (TextTool.ToUpperCase, TextTool.FileToUpperCase) },
-        {"小写", (TextTool.ToLowerCase, TextTool.FileToLowerCase) },
-        {"切换大小写", (TextTool.ToggleCase, TextTool.FileToggleCase) },
-        {"转全角", (TextTool.HalfCharToFullChar, TextTool.FileHalfCharToFullChar) },
-        {"转半角", (TextTool.FullCharToHalfChar, TextTool.FileFullCharToHalfChar) },
-        {"单词首字母大写", (TextTool.CapitalizeWords, TextTool.FileCapitalizeWords) },
-        {"句子首字母大写", (TextTool.ToSentenceCase, TextTool.FileToSentenceCase) },
+        {"大写", (EnglishTextProcess.ToUpperCase, EnglishTextProcess.FileToUpperCase) },
+        {"小写", (EnglishTextProcess.ToLowerCase, EnglishTextProcess.FileToLowerCase) },
+        {"切换大小写", (EnglishTextProcess.ToggleCase, EnglishTextProcess.FileToggleCase) },
+        {"转全角", (EnglishTextProcess.HalfCharToFullChar, EnglishTextProcess.FileHalfCharToFullChar) },
+        {"转半角", (EnglishTextProcess.FullCharToHalfChar, EnglishTextProcess.FileFullCharToHalfChar) },
+        {"单词首字母大写", (EnglishTextProcess.CapitalizeWords, EnglishTextProcess.FileCapitalizeWords) },
+        {"句子首字母大写", (EnglishTextProcess.ToSentenceCase, EnglishTextProcess.FileToSentenceCase) },
     };
 
     /// <summary>
