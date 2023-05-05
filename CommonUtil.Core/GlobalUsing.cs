@@ -15,3 +15,4 @@ global using System.Threading.Tasks;
 global using System.Windows;
 global using CommonUtil.Data.Resources;
 global using CommonUtil.Data.Model;
+global using System.Text.RegularExpressions;

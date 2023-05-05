@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace CommonUtil.Core;
+﻿namespace CommonUtil.Core;
 
 public static partial class TextTool {
     public delegate string TextProcess(string text);
@@ -17,10 +15,6 @@ public static partial class TextTool {
     /// </summary>
     internal static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
     /// <summary>
-    /// 英文单词、数字正则
-    /// </summary>
-    internal static readonly Regex EnglishWordNumberRegex = GetEnglishWordNumberRegex();
-    /// <summary>
     /// 多个空白字符正则
     /// </summary>
     internal static readonly Regex MultipleWhiteSpaceRegex = GetMultipleWhiteSpaceRegex();
@@ -29,10 +23,6 @@ public static partial class TextTool {
     /// 英文单词正则
     /// </summary>
     internal static readonly Regex EnglishWordRegex = new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
-    /// <summary>
-    /// 英文单词、数字正则
-    /// </summary>
-    internal static readonly Regex EnglishWordNumberRegex = new(@"\s*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?: [\da-z]+)+)?)\s*", RegexOptions.IgnoreCase);
     /// <summary>
     /// 多个空白字符正则
     /// </summary>
@@ -76,8 +66,6 @@ public static partial class TextTool {
 #if NET7_0_OR_GREATER
     [GeneratedRegex("\\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordRegex();
-    [GeneratedRegex("\\s*(?<word>[\\da-z]+(?:(?:'[\\da-z]+)?(?: [\\da-z]+)+)?)\\s*", RegexOptions.IgnoreCase)]
-    private static partial Regex GetEnglishWordNumberRegex();
     [GeneratedRegex("[\\t\\r\\f ]{2,}")]
     private static partial Regex GetMultipleWhiteSpaceRegex();
 #endif
@@ -187,32 +175,6 @@ public static partial class TextTool {
             lines[i] = $"{i + 1}{separator}" + lines[i];
         }
         return string.Join('\n', lines);
-    }
-
-    /// <summary>
-    /// 英文两边加空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="includeNumber">包括数字</param>
-    /// <returns></returns>
-    public static string AddEnglishWordBraces(string text, bool includeNumber = false) {
-        var regex = includeNumber ? EnglishWordNumberRegex : EnglishWordRegex;
-        return regex.Replace(text, ReplaceMatchEvaluator);
-
-        static string ReplaceMatchEvaluator(Match match) => $" {match.Groups["word"]} ";
-    }
-
-    /// <summary>
-    /// 移除英文两边空格
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="includeNumber">包括数字</param>
-    /// <returns></returns>
-    public static string RemoveEnglishWordBraces(string text, bool includeNumber = false) {
-        var regex = includeNumber ? EnglishWordNumberRegex : EnglishWordRegex;
-        return regex.Replace(text, ReplaceMatchEvaluator);
-
-        static string ReplaceMatchEvaluator(Match match) => $"{match.Groups["word"]}";
     }
 
     /// <summary>
@@ -398,28 +360,6 @@ public static partial class TextTool {
     /// <returns></returns>
     public static void FilePrependLineNumber(string inputPath, string outputPath, string separator) {
         File.WriteAllText(outputPath, PrependLineNumber(File.ReadAllText(inputPath), separator));
-    }
-
-    /// <summary>
-    /// 文件文本英文两边加空格
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    /// <param name="includeNumber">包括数字</param>
-    /// <returns></returns>
-    public static void FileAddEnglishWordBraces(string inputPath, string outputPath, bool includeNumber = false) {
-        File.WriteAllText(outputPath, AddEnglishWordBraces(File.ReadAllText(inputPath), includeNumber));
-    }
-
-    /// <summary>
-    /// 文件文本英文两边移除空格
-    /// </summary>
-    /// <param name="inputPath"></param>
-    /// <param name="outputPath"></param>
-    /// <param name="includeNumber">包括数字</param>
-    /// <returns></returns>
-    public static void FileRemoveEnglishWordBraces(string inputPath, string outputPath, bool includeNumber = false) {
-        File.WriteAllText(outputPath, RemoveEnglishWordBraces(File.ReadAllText(inputPath), includeNumber));
     }
 
     /// <summary>
