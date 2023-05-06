@@ -83,7 +83,7 @@ public partial class InvertTextView : ResponsivePage {
     /// </summary>
     /// <param name="includeNumber"></param>
     private void StringTextProcess(InversionMode mode) {
-        OutputText = TextTool.InvertText(InputText, mode);
+        OutputText = TextInvert.InvertText(InputText, mode);
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public partial class InvertTextView : ResponsivePage {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FileInvertText,
+            TextInvert.FileInvertText,
             outputPath,
             args: new object[] { inputPath, outputPath, mode }
         );
