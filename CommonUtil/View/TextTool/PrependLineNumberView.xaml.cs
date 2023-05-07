@@ -106,7 +106,7 @@ public partial class PrependLineNumberView : ResponsivePage {
     /// </summary>
     /// <param name="separator">分隔符</param>
     private void StringPrependLineNumber(string separator) {
-        OutputText = TextTool.PrependLineNumber(InputText, separator);
+        OutputText = LineNumberPrepend.PrependLineNumber(InputText, separator);
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public partial class PrependLineNumberView : ResponsivePage {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FilePrependLineNumber,
+            LineNumberPrepend.FilePrependLineNumber,
             outputPath,
             args: new object[] { inputPath, outputPath, separator }
         );
