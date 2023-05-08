@@ -57,12 +57,19 @@ public partial class PunctuationReplacementView : ResponsivePage {
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(ChineseToEnglish ? TextTool.ReplaceChinesePunctuationWithEnglish : TextTool.ReplaceEnglishPunctuationWithChinese);
+            StringTextProcess(ChineseToEnglish
+                ? PunctuationReplacement.ReplaceChinesePunctuationWithEnglish
+                : PunctuationReplacement.ReplaceEnglishPunctuationWithChinese
+            );
             return;
         }
         ThrottleUtils.ThrottleAsync(
             $"{nameof(PunctuationReplacementView)}|{nameof(TextProcess)}|{GetHashCode()}",
-            () => FileTextProcess(ChineseToEnglish ? TextTool.FileReplaceChinesePunctuationWithEnglish : TextTool.FileReplaceEnglishPunctuationWithChinese)
+            () => FileTextProcess(
+                ChineseToEnglish
+                ? PunctuationReplacement.FileReplaceChinesePunctuationWithEnglish
+                : PunctuationReplacement.FileReplaceEnglishPunctuationWithChinese
+            )
         );
     }
 
