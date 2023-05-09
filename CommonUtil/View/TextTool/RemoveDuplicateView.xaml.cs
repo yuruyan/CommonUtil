@@ -83,7 +83,7 @@ public partial class RemoveDuplicateView : ResponsivePage {
     /// <param name="mergeSymbol"></param>
     /// <param name="trim"></param>
     private void StringRemoveDuplicate(string splitSymbol, string mergeSymbol, bool trim) {
-        OutputText = TextTool.RemoveDuplicate(InputText, splitSymbol, mergeSymbol, trim);
+        OutputText = DuplicateRemoval.RemoveDuplicate(InputText, splitSymbol, mergeSymbol, trim);
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public partial class RemoveDuplicateView : ResponsivePage {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FileRemoveDuplicate,
+            DuplicateRemoval.FileRemoveDuplicate,
             outputPath,
             args: new object[] { inputPath, outputPath, splitSymbol, mergeSymbol, trim }
         );
