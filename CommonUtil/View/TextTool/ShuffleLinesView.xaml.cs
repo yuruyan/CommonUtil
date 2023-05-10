@@ -87,7 +87,7 @@ public partial class ShuffleLinesView : Page {
     /// 文本处理
     /// </summary>
     private void StringTextProcess() {
-        OutputText = string.Join('\n', TextTool.ShuffleLines(
+        OutputText = string.Join('\n', LineShuffle.ShuffleLines(
             InputText.ReplaceLineFeedWithLinuxStyle().Split('\n')
         ));
     }
@@ -105,7 +105,7 @@ public partial class ShuffleLinesView : Page {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FileShuffleLines,
+            LineShuffle.FileShuffleLines,
             outputPath,
             args: new object[] { inputPath, outputPath }
         );
