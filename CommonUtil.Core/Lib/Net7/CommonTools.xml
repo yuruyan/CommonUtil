@@ -645,7 +645,7 @@
             <typeparam name="Source"></typeparam>
             <param name="source"></param>
             <param name="target"></param>
-            <returns></returns>
+            <returns>失败返回 -1</returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.IndexOf``1(System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
             <summary>
@@ -654,7 +654,7 @@
             <typeparam name="Source"></typeparam>
             <param name="source"></param>
             <param name="predicate"></param>
-            <returns></returns>
+            <returns>失败返回 -1</returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.Cast``1(System.Collections.ICollection,System.Func{System.Object,``0})">
             <summary>
@@ -663,7 +663,7 @@
             <typeparam name="Target"></typeparam>
             <param name="source"></param>
             <param name="func"></param>
-            <returns></returns>
+            <returns>A new list which contains elements that returned from <paramref name="func"/></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ResizeToLength``1(System.Collections.Generic.ICollection{``0},System.Int32,``0)">
             <summary>
@@ -699,7 +699,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="source"></param>
-            <returns>A new collection</returns>
+            <returns>A new list</returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.AddRange``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0}[])">
             <summary>
@@ -754,6 +754,14 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.RemoveDuplicates``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            移除重复项，保证元素顺序
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
             <returns></returns>
         </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
