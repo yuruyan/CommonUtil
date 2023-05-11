@@ -72,7 +72,7 @@ public partial class SortLinesView : ResponsivePage {
     /// 文本处理
     /// </summary>
     private void StringTextProcess() {
-        OutputText = TextTool.SortLines(InputText);
+        OutputText = LineSort.SortLines(InputText);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public partial class SortLinesView : ResponsivePage {
 
         // 处理
         await UIUtils.CreateFileProcessTask(
-            TextTool.FileSortLines,
+            LineSort.FileSortLines,
             outputPath,
             args: new object[] { inputPath, outputPath }
         );
