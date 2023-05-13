@@ -12,14 +12,14 @@ public static partial class TextTool {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    internal static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
+    internal static readonly Regex EnglishPhraseRegex = GetEnglishPhraseRegex();
     #endregion
 
 #if NET7_0_OR_GREATER
     [GeneratedRegex(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase)]
-    private static partial Regex GetEnglishWordRegex();
+    private static partial Regex GetEnglishPhraseRegex();
 #elif NET6_0_OR_GREATER
-    private static Regex GetEnglishWordRegex() => new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    private static Regex GetEnglishPhraseRegex() => new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
 #endif
 
     /// <summary>

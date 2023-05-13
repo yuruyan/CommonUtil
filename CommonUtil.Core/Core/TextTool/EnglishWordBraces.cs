@@ -4,7 +4,7 @@ public static partial class EnglishWordProcess {
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    private static readonly Regex EnglishWordRegex = TextTool.EnglishWordRegex;
+    private static readonly Regex EnglishWordRegex = TextTool.EnglishPhraseRegex;
 #if NET7_0_OR_GREATER
     /// <summary>
     /// 英文单词、数字正则

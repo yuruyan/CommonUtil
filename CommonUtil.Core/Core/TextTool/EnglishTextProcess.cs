@@ -68,7 +68,7 @@ public static class EnglishTextProcess {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string CapitalizeWords(string text)
-        => TextTool.EnglishWordRegex.Replace(
+        => TextTool.EnglishPhraseRegex.Replace(
             ToLowerCase(text),
             match => CapitalizeFirstWordCharacter(match.Value)
         );
