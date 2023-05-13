@@ -79,14 +79,12 @@ public static class EnglishTextProcess {
     /// <param name="text"></param>
     /// <returns></returns>
     private static string CapitalizeFirstWordCharacter(string text) {
-        var chars = text.ToCharArray();
-        for (int i = 0; i < chars.Length; i++) {
-            char ch = chars[i];
-            if (char.IsLetter(ch)) {
-                chars[i] = char.ToUpper(ch);
-                break;
-            }
+        var index = text.IndexOf(char.IsLetter);
+        if (index < 0) {
+            return text;
         }
+        var chars = text.ToCharArray();
+        chars[index] = char.ToUpperInvariant(chars[index]);
         return new(chars);
     }
 
