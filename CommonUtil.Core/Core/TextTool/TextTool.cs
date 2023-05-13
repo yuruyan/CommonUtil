@@ -10,16 +10,23 @@ public static partial class TextTool {
     /// </summary>
     internal const char EnglishSentenceSeparator = '.';
     /// <summary>
-    /// 英文单词正则
+    /// 英文短语正则
     /// </summary>
     internal static readonly Regex EnglishPhraseRegex = GetEnglishPhraseRegex();
+    /// <summary>
+    /// 英文单词正则
+    /// </summary>
+    internal static readonly Regex EnglishWordRegex = GetEnglishWordRegex();
     #endregion
 
 #if NET7_0_OR_GREATER
     [GeneratedRegex(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishPhraseRegex();
+    [GeneratedRegex(@"[a-z]+(?:'[a-z]+)?", RegexOptions.IgnoreCase)]
+    private static partial Regex GetEnglishWordRegex();
 #elif NET6_0_OR_GREATER
     private static Regex GetEnglishPhraseRegex() => new(@"\s*(?<word>[a-z]+(?:(?:'[a-z]+)?(?: [a-z]+)+)?)\s*", RegexOptions.IgnoreCase);
+    private static Regex GetEnglishWordRegex() => new(@"[a-z]+(?:'[a-z]+)?", RegexOptions.IgnoreCase);
 #endif
 
     /// <summary>

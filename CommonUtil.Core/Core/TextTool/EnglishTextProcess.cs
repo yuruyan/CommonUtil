@@ -54,8 +54,8 @@ public static class EnglishTextProcess {
         for (int i = 0; i < chars.Length; i++) {
             char ch = chars[i];
             chars[i] = ch switch {
-                >= 'a' and <= 'z' => char.ToUpper(ch),
-                >= 'A' and <= 'Z' => char.ToLower(ch),
+                >= 'a' and <= 'z' => char.ToUpperInvariant(ch),
+                >= 'A' and <= 'Z' => char.ToLowerInvariant(ch),
                 _ => ch
             };
         }
@@ -68,7 +68,7 @@ public static class EnglishTextProcess {
     /// <param name="text"></param>
     /// <returns></returns>
     public static string CapitalizeWords(string text)
-        => TextTool.EnglishPhraseRegex.Replace(
+        => TextTool.EnglishWordRegex.Replace(
             ToLowerCase(text),
             match => CapitalizeFirstWordCharacter(match.Value)
         );
