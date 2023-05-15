@@ -7,6 +7,8 @@ namespace CommonUtil.Store;
 /// 数据集
 /// </summary>
 public static class DataSet {
+    public static readonly IReadOnlyList<int> ApplicationFontSizeOptions = Enumerable.Range(15, 11).ToList();
+
     /// <summary>
     /// 代理类型
     /// </summary>

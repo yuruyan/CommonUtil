@@ -9,6 +9,7 @@ public partial class SettingsView : Page {
         {"深色", ThemeOptions.Dark },
     };
     public static readonly DependencyProperty IsWindowTopMostProperty = DependencyProperty.Register("IsWindowTopMost", typeof(bool), typeof(SettingsView), new PropertyMetadata(false, IsWindowTopMostPropertyChangedHandler));
+    private const string SystemFontSizeKey = "SystemFontSize";
 
     /// <summary>
     /// 窗口是否置顶
@@ -20,6 +21,7 @@ public partial class SettingsView : Page {
 
     public SettingsView() {
         InitializeComponent();
+        Loaded += (_, _) => FontSizeComboBox.SelectedItem = Convert.ToInt32(Application.Current.Resources[SystemFontSizeKey]);
     }
 
     private void ThemeComboBoxSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
@@ -59,4 +61,9 @@ public partial class SettingsView : Page {
         }
     }
 
+    private void FontSizeComboBoxSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
+        if (sender is ComboBox box && box.SelectedItem is int fontsize) {
+            Application.Current.Resources[SystemFontSizeKey] = fontsize;
+        }
+    }
 }

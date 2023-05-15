@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:store="clr-namespace:CommonUtil.Store"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="SettingsView"
@@ -15,20 +16,29 @@
   mc:Ignorable="d">
   <ScrollViewer VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled">
     <ui:SimpleStackPanel Orientation="Vertical" Spacing="{StaticResource MediumItemSpacing}">
-    <!--  Theme Options  -->
-    <DockPanel LastChildFill="False">
-      <TextBlock Width="120" Text="主题" />
-      <ComboBox
-        DisplayMemberPath="Key"
-        ItemsSource="{x:Static local:SettingsView.ThemeOptionsDict}"
-        Loaded="ThemeComboBoxLoadedHandler"
-        SelectedValuePath="Value"
-        SelectionChanged="ThemeComboBoxSelectionChangedHandler" />
-    </DockPanel>
+      <!--  Theme Options  -->
+      <DockPanel LastChildFill="False">
+        <TextBlock Width="120" Text="主题" />
+        <ComboBox
+          DisplayMemberPath="Key"
+          ItemsSource="{x:Static local:SettingsView.ThemeOptionsDict}"
+          Loaded="ThemeComboBoxLoadedHandler"
+          SelectedValuePath="Value"
+          SelectionChanged="ThemeComboBoxSelectionChangedHandler" />
+      </DockPanel>
       <!--  Window TopMost  -->
       <DockPanel LastChildFill="False">
         <TextBlock Width="120" Text="窗口置顶" />
         <ui:ToggleSwitch IsOn="{Binding IsWindowTopMost}" Style="{StaticResource ToggleSwitchNoContentStyle}" />
       </DockPanel>
+      <!--  FontSize Options  -->
+      <DockPanel LastChildFill="False">
+        <TextBlock Width="120" Text="字体大小" />
+        <ComboBox
+          Name="FontSizeComboBox"
+          ItemsSource="{x:Static store:DataSet.ApplicationFontSizeOptions}"
+          SelectionChanged="FontSizeComboBoxSelectionChangedHandler" />
+      </DockPanel>
+    </ui:SimpleStackPanel>
   </ScrollViewer>
 </Page>
