@@ -51,6 +51,7 @@ public partial class App : Application {
 
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
         Logger.Error(e.Exception);
+        e.SetObserved();
         // 提示信息
         System.Windows.MessageBox.Show(
             e.Exception.Message,
@@ -71,12 +72,13 @@ public partial class App : Application {
                 MessageBoxImage.Error
             );
         }
-        Shutdown();
+        Environment.Exit(-1);
     }
 
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
-        e.Handled = true;
+        //e.Handled = true;
         Logger.Fatal(e.Exception);
+        Environment.Exit(-1);
         // 提示信息
         System.Windows.MessageBox.Show(
             Current.MainWindow,
