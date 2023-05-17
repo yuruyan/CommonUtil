@@ -63,7 +63,7 @@ public partial class SettingsView : Page {
 
     private void FontSizeComboBoxSelectionChangedHandler(object sender, SelectionChangedEventArgs e) {
         if (sender is ComboBox box && box.SelectedItem is int fontsize) {
-            Application.Current.Resources[SystemFontSizeKey] = fontsize;
+            Application.Current.Resources[SystemFontSizeKey] = (double)fontsize;
         }
     }
 }
