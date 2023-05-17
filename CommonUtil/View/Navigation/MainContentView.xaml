@@ -67,6 +67,7 @@
           Height="70"
           Margin="8,6"
           CornerRadius="4"
+          MouseLeftButtonDown="MenuMouseLeftButtonDownHandler"
           MouseLeftButtonUp="MenuMouseLeftButtonUp">
           <Border.RenderTransform>
             <TranslateTransform x:Name="MenuItemBorderTranslateYTransform" />

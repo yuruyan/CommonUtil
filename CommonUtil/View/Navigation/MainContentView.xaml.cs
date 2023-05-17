@@ -11,6 +11,10 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
     private const string MainContentViewBackgroundBrushKey = "MainContentViewBackgroundBrush";
     private readonly Storyboard MainContentViewBackgroundStoryboard;
     public event EventHandler<NavigationRequestArgs>? NavigationRequested;
+    /// <summary>
+    /// MouseDownMenuItem flag
+    /// </summary>
+    private object? MouseDownMenuItem;
 
     /// <summary>
     /// 菜单项目列表
@@ -95,6 +99,12 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
     /// <param name="e"></param>
     private void MenuMouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
         e.Handled = true;
+        // No MouseDown event
+        if (MouseDownMenuItem != sender) {
+            return;
+        }
+        // Clear flag
+        MouseDownMenuItem = null;
         var menuItem = sender.GetElementDataContext<ToolMenuItem>();
         if (menuItem != default) {
             NavigationRequested?.Invoke(
@@ -102,5 +112,14 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
                 new(typeof(NavigationContentView), menuItem.ClassType)
             );
         }
+    }
+
+    /// <summary>
+    /// MenuMouseLeftButtonDown
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuMouseLeftButtonDownHandler(object sender, MouseButtonEventArgs e) {
+        MouseDownMenuItem = sender;
     }
 }
