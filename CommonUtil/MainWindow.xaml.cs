@@ -84,8 +84,13 @@ public partial class MainWindow : BaseWindow {
         this.SetLoadedOnceEventHandler(async (_, _) => {
             // 延迟加载，减少卡顿
             await Task.Delay(1000);
-            RouterService.Navigate(typeof(MainContentView));
             ShowLoadingBox = false;
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1) {
+                RouterService.Navigate(typeof(NavigationContentView), args[1]);
+            } else {
+                RouterService.Navigate(typeof(MainContentView));
+            }
         });
         if (WindowHelper.IsSystemSupport) {
             Background = new SolidColorBrush(Colors.Transparent);
