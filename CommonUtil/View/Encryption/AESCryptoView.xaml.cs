@@ -49,17 +49,12 @@ public partial class AESCryptoView : ResponsivePage {
     private CancellationTokenSource DecryptionCancellationTokenSource = new();
     private readonly double ExpansionThreshold2;
 
-#if NET7_0_OR_GREATER
     private readonly Regex KeyRegex = GetKeyRegex();
     private readonly Regex IvRegex = GetIvRegex();
     [GeneratedRegex("^((?:[a-z0-9]{32})|(?:[a-z0-9]{48})|(?:[a-z0-9]{64}))$", RegexOptions.IgnoreCase)]
     private static partial Regex GetKeyRegex();
     [GeneratedRegex("^[a-z0-9]{32}$", RegexOptions.IgnoreCase)]
     private static partial Regex GetIvRegex();
-#elif NET6_0_OR_GREATER
-    private readonly Regex KeyRegex = new(@"^((?:[a-z0-9]{32})|(?:[a-z0-9]{48})|(?:[a-z0-9]{64}))$", RegexOptions.IgnoreCase);
-    private readonly Regex IvRegex = new(@"^[a-z0-9]{32}$", RegexOptions.IgnoreCase);
-#endif
 
     /// <summary>
     /// 文件处理列表

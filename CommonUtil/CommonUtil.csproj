@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net7.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
+    <TargetFramework>net7.0-windows10.0.17763.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Platforms>x64</Platforms>
@@ -37,28 +37,14 @@
     <Resource Include="favicon.ico" />
   </ItemGroup>
 
-  <Choose>
-    <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))' == 'true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
-        </Reference>
-        <Reference Include="CommonUITools">
-          <HintPath>..\CommonUtil.Core\Lib\Net7\CommonUITools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(TargetFramework.StartsWith(`net6.0`))' == 'true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>..\CommonUtil.Core\Lib\Net6\CommonTools.dll</HintPath>
-        </Reference>
-        <Reference Include="CommonUITools">
-          <HintPath>..\CommonUtil.Core\Lib\Net6\CommonUITools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+  <ItemGroup>
+    <Reference Include="CommonTools">
+      <HintPath>..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonUITools">
+      <HintPath>..\CommonUtil.Core\Lib\Net7\CommonUITools.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Resources\Resource.Designer.cs">
