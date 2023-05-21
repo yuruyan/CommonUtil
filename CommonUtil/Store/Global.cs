@@ -14,6 +14,10 @@ public static class Global {
     public static readonly string ApplicationPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase ?? string.Empty;
     private static readonly string _CacheDirectory = Path.Combine(Global.ApplicationPath, "cache");
     /// <summary>
+    /// MenuItemsDll 目录，文件名和 <see cref="ToolMenuItem.Id"/> 一致
+    /// </summary>
+    public static readonly string MenuItemsDllDirectory = Path.Combine(Global.ApplicationPath, "resources/MenuItems");
+    /// <summary>
     /// 缓存文件目录
     /// </summary>
     public static string CacheDirectory {

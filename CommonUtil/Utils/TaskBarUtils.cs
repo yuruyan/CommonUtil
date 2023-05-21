@@ -16,6 +16,7 @@ public static class TaskBarUtils {
         }
         JumpList.AddToRecentCategory(new JumpTask {
             ApplicationPath = Environment.ProcessPath,
+            IconResourcePath = Path.Join(Global.MenuItemsDllDirectory, $"{menuItem.Id}.dll"),
             Arguments = menuItem.Id,
             Description = menuItem.Name,
             Title = menuItem.Name,
