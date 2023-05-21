@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "engines": {
+    "node": ">= 18.16.0"
+  }
+}
