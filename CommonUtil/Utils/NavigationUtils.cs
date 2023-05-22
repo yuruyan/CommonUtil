@@ -1,7 +1,7 @@
 ﻿using System.Windows.Navigation;
 using NavigationView = ModernWpf.Controls.NavigationView;
 
-namespace CommonUtil.Route;
+namespace CommonUtil.Utils;
 
 internal static class NavigationUtils {
     private const string NavigationViewOpenPaneDefaultWidthKey = "NavigationViewOpenPaneDefaultWidth";

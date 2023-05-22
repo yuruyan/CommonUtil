@@ -8,7 +8,6 @@ global using CommonUtil.Core;
 global using CommonUtil.Data.Model;
 global using CommonUtil.Core.Model;
 global using CommonUtil.Model;
-global using CommonUtil.Route;
 global using CommonUtil.Store;
 global using CommonUtil.Theme;
 global using CommonUtil.Utils;
