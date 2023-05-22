@@ -1,5 +1,6 @@
 ﻿using System.Windows.Navigation;
-using NavigationView = ModernWpf.Controls.NavigationView;
+using ModernWpf.Controls;
+using Frame = System.Windows.Controls.Frame;
 
 namespace CommonUtil.Utils;
 
@@ -10,6 +11,10 @@ internal static class NavigationUtils {
     private const string AnimationEaseFunctionKey = "AnimationEaseFunction";
     private const string OpenPaneLengthProperty = "OpenPaneLength";
     private const string NavigationViewExpansionThresholdWidthKey = "NavigationViewExpansionThresholdWidth";
+
+    private static readonly IDictionary<NavigationView, RouterService> NavigationViewRouterServiceDict = new Dictionary<NavigationView, RouterService>();
+    private static readonly IDictionary<Frame, NavigationView> FrameNavigationViewDict = new Dictionary<Frame, NavigationView>();
+    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
 
     private struct NavigationViewInfo {
         public readonly double InitialOpenPaneLength { get; }
@@ -26,9 +31,28 @@ internal static class NavigationUtils {
         }
     }
 
-    private static readonly IDictionary<NavigationView, RouterService> NavigationViewRouterServiceDict = new Dictionary<NavigationView, RouterService>();
-    private static readonly IDictionary<Frame, NavigationView> FrameNavigationViewDict = new Dictionary<Frame, NavigationView>();
-    private static readonly IDictionary<NavigationView, NavigationViewInfo> NavigationViewInfoDict = new Dictionary<NavigationView, NavigationViewInfo>();
+    /// <summary>
+    /// 初始化 NavigationViewItems
+    /// </summary>
+    /// <param name="navigationView"></param>
+    /// <param name="navigationItems"></param>
+    public static void InitializeNavigationViewItems(NavigationView navigationView, IEnumerable<NavigationItemInfo> navigationItems) {
+        foreach (var item in navigationItems) {
+            IconElement icon = item.IconImage is null
+                ? new FontIcon() { Glyph = item.Icon }
+                : new BitmapIcon() { ShowAsMonochrome = item.ShowAsMonochrome, UriSource = item.IconImage };
+            // Set icon color
+            if (item.IconColor is string color && icon is FontIcon fontIcon) {
+                fontIcon.Foreground = color.ToBrush();
+            }
+            navigationView.MenuItems.Add(new NavigationViewItem() {
+                Name = item.Name,
+                Content = item.Content,
+                ToolTip = new ToolTip() { Content = item.ToolTip ?? item.Content },
+                Icon = icon,
+            });
+        }
+    }
 
     /// <summary>
     /// 启用导航
