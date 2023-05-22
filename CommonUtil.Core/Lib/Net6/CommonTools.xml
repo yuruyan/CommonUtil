@@ -756,6 +756,42 @@
             <param name="source"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Range(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Int32 序列
+            </summary>
+            <param name="start">起始值</param>
+            <param name="count">个数</param>
+            <param name="step">间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Range(System.Int64,System.Int32,System.Int64)">
+            <summary>
+            Int64 序列
+            </summary>
+            <param name="start">起始值</param>
+            <param name="count">个数</param>
+            <param name="step">间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Range(System.Double,System.Int32,System.Double)">
+            <summary>
+            Double 序列
+            </summary>
+            <param name="start">起始值</param>
+            <param name="count">个数</param>
+            <param name="step">间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ExtensionUtils.Range(System.Single,System.Int32,System.Single)">
+            <summary>
+            Double 序列
+            </summary>
+            <param name="start">起始值</param>
+            <param name="count">个数</param>
+            <param name="step">间隔</param>
+            <returns></returns>
+        </member>
         <member name="M:CommonTools.Utils.ExtensionUtils.ReplaceSlashWithBackSlash(System.String)">
             <summary>
             替换 '/' 为 '\\'

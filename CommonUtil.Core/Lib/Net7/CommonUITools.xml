@@ -2160,6 +2160,25 @@
             </summary>
             <param name="window"></param>
         </member>
+        <member name="T:CommonUITools.Utils.GridSplitterHelper">
+            <summary>
+            GridSplitterHelper，鼠标悬浮一段时间会出现背景
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Utils.GridSplitterHelper.TimerElapsedHandler(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            When this is invoked, timer stops
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.GridSplitterHelper.GetOrInitAnimation(System.Windows.Controls.GridSplitter)">
+            <summary>
+            Get or init AnimationTimeline
+            </summary>
+            <param name="splitter"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonUITools.Utils.MessageBoxUtils.Info(System.String,System.Windows.DependencyObject,System.UInt32)">
             <summary>
             提示消息
