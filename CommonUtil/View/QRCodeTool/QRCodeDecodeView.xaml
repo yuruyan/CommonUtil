@@ -61,15 +61,31 @@
         Background="Transparent"
         Drop="QRCodeImageDropHandler">
         <Rectangle
-          RadiusX="4"
-          RadiusY="4"
-          Stroke="{DynamicResource ApplicationForegroundBrush}"
-          StrokeDashArray="6,2" />
+          Fill="Transparent"
+          RadiusX="{Binding TopLeft, Source={StaticResource ControlCornerRadius}, Mode=OneTime}"
+          RadiusY="{Binding RadiusX, RelativeSource={RelativeSource Mode=Self}}"
+          StrokeDashArray="6,2">
+          <Rectangle.Style>
+            <Style TargetType="Rectangle">
+              <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter Property="Stroke" Value="{DynamicResource TextControlForegroundPointerOver}" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                  <Setter Property="Stroke" Value="{DynamicResource TextControlBorderBrush}" />
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </Rectangle.Style>
+        </Rectangle>
         <TextBlock
           Text="拖拽图片至此"
           TextAlignment="Center"
           Visibility="{Binding Source, ElementName=QRCodeImage, Converter={StaticResource HideIfNotNullConverter}}" />
-        <Image Name="QRCodeImage" Stretch="Uniform">
+        <Image
+          Name="QRCodeImage"
+          Margin="4"
+          Stretch="Uniform">
           <Image.ContextMenu>
             <ContextMenu>
               <MenuItem Click="OpenInBrowserHandler" Header="在浏览器中打开">
