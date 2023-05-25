@@ -11,6 +11,10 @@ internal static class NavigationUtils {
     private const string AnimationEaseFunctionKey = "AnimationEaseFunction";
     private const string OpenPaneLengthProperty = "OpenPaneLength";
     private const string NavigationViewExpansionThresholdWidthKey = "NavigationViewExpansionThresholdWidth";
+    /// <summary>
+    /// Delay handle responsive layout
+    /// </summary>
+    private const int HandleResponsiveDelayDuration = 250;
 
     private static readonly IDictionary<NavigationView, RouterService> NavigationViewRouterServiceDict = new Dictionary<NavigationView, RouterService>();
     private static readonly IDictionary<Frame, NavigationView> FrameNavigationViewDict = new Dictionary<Frame, NavigationView>();
@@ -181,8 +185,14 @@ internal static class NavigationUtils {
     /// <param name="view"></param>
     /// <param name="newWidth"></param>
     /// <param name="isInitial">是否初次调用</param>
-    private static void HandleNavigationViewSizeChanged(NavigationView view, double newWidth, bool isInitial = false) {
-        var info = NavigationViewInfoDict[view];
+    private static async void HandleNavigationViewSizeChanged(NavigationView view, double newWidth, bool isInitial = false) {
+        // Delay
+        if (!isInitial) {
+            await Task.Delay(HandleResponsiveDelayDuration);
+        }
+        if (!NavigationViewInfoDict.TryGetValue(view, out var info)) {
+            return;
+        }
 
         if (newWidth >= info.ExpansionThresholdWidth && (isInitial || !info.IsExpanded)) {
             info.IsExpanded = true;
