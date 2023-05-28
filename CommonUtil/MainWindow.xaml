@@ -68,6 +68,23 @@
         To="0"
         Duration="{StaticResource AnimationDurationLong}" />
     </Storyboard>
+    <Storyboard x:Key="NavigationButtonClickedStoryboard">
+      <DoubleAnimation
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationButtonContent"
+        Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleX)"
+        To="0.5"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
+    <Storyboard x:Key="NavigationButtonReleasedStoryboard">
+      <DoubleAnimation
+        BeginTime="{StaticResource AnimationTimeSpan}"
+        EasingFunction="{StaticResource AnimationEaseFunction}"
+        Storyboard.TargetName="NavigationButtonContent"
+        Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleX)"
+        To="1"
+        Duration="{StaticResource AnimationDuration}" />
+    </Storyboard>
     <!--#endregion-->
 
     <!--#region SettingButton Storyboard-->
@@ -108,7 +125,23 @@
             Click="NavigateToNavigationContentViewClickHandler"
             ToolTip="导航"
             Visibility="{Binding IsNavigationButtonVisible, Converter={StaticResource HideIfFalseConverter}}">
-            <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe61d;" />
+            <ui:TitleBarButton.Triggers>
+              <EventTrigger RoutedEvent="PreviewMouseLeftButtonDown">
+                <BeginStoryboard Storyboard="{StaticResource NavigationButtonClickedStoryboard}" />
+              </EventTrigger>
+              <EventTrigger RoutedEvent="PreviewMouseLeftButtonUp">
+                <BeginStoryboard Storyboard="{StaticResource NavigationButtonReleasedStoryboard}" />
+              </EventTrigger>
+            </ui:TitleBarButton.Triggers>
+            <TextBlock
+              x:Name="NavigationButtonContent"
+              RenderTransformOrigin="0.5,0.5"
+              Style="{StaticResource IconFontStyle}"
+              Text="&#xe61d;">
+              <TextBlock.RenderTransform>
+                <ScaleTransform />
+              </TextBlock.RenderTransform>
+            </TextBlock>
           </ui:TitleBarButton>
           <ui:TitleBarButton
             Name="HomeButton"
