@@ -27,7 +27,6 @@
     <!--  输入  -->
     <tools:DragDropTextBox
       Name="DragDropTextBox"
-      Margin="0,0,8,0"
       DragDropEvent="DragDropEventHandler"
       HasFile="{Binding HasFile, Mode=OneWayToSource}">
       <tools:DragDropTextBox.TextBox>
