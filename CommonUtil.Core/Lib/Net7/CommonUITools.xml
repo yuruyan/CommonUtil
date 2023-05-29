@@ -723,6 +723,17 @@
             DetailText
             </summary>
         </member>
+        <member name="P:CommonUITools.Controls.BaseDialog.IsFirstLoadingAnimationDisabled">
+            <summary>
+            初次加载动画是否启用
+            </summary>
+        </member>
+        <member name="M:CommonUITools.Controls.BaseDialog.ShowAsync">
+            <inheritdoc cref="M:ModernWpf.Controls.ContentDialog.ShowAsync"/>
+        </member>
+        <member name="M:CommonUITools.Controls.BaseDialog.ShowAsync(ModernWpf.Controls.ContentDialogPlacement)">
+            <inheritdoc cref="M:ModernWpf.Controls.ContentDialog.ShowAsync(ModernWpf.Controls.ContentDialogPlacement)"/>
+        </member>
         <member name="T:CommonUITools.Controls.InfoDialog">
             <summary>
             InfoDialog
@@ -2392,7 +2403,7 @@
             Extention for UIUtils
             </summary>
             <summary>
-            For ContentDialogAutoResize
+            For ContentDialog
             </summary>
         </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.IsLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
@@ -2626,6 +2637,21 @@
             Clean dict
             </summary>
             <param name="window"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ShowSafeAsync(ModernWpf.Controls.ContentDialog)">
+            <summary>
+            ShowAsync with no exception
+            </summary>
+            <param name="dialog"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ShowSafeAsync(ModernWpf.Controls.ContentDialog,ModernWpf.Controls.ContentDialogPlacement)">
+            <summary>
+            ShowAsync with no exception
+            </summary>
+            <param name="dialog"></param>
+            <param name="placement"></param>
+            <returns></returns>
         </member>
         <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
             <summary>
