@@ -8,7 +8,7 @@
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Name="WindowRoot"
-  Title="MainWindow"
+  Title="CommonUtil"
   Width="1000"
   Height="600"
   MinWidth="500"
