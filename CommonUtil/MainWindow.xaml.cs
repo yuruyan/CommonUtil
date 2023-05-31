@@ -82,6 +82,8 @@ public partial class MainWindow : BaseWindow {
 
         // Navigate to MainContentView
         this.SetLoadedOnceEventHandler(async (_, _) => {
+            SystemMenuUtils.RegisterMenus(this);
+            SystemMenuUtils.SettingClicked += (_, _) => RouterService.Navigate(typeof(SettingsView));
             // 延迟加载，减少卡顿
             await Task.Delay(1000);
             ShowLoadingBox = false;

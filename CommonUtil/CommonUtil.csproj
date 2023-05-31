@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
     <ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.124" />
   </ItemGroup>
 
   <ItemGroup>
