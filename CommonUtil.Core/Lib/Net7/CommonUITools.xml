@@ -1073,6 +1073,16 @@
             将 ImagePath 加载为 BitmapImage
             </summary>
         </member>
+        <member name="T:CommonUITools.Extensions.MenuIconExtension">
+            <summary>
+            将 Icon 加载为 TextBlock Icon
+            </summary>
+        </member>
+        <member name="P:CommonUITools.Extensions.MenuIconExtension.Style">
+            <summary>
+            Default style is <see cref="F:CommonUITools.Extensions.MenuIconExtension.DefaultStyle"/>
+            </summary>
+        </member>
         <member name="T:CommonUITools.Model.ShowCommands">
             <summary>
             Sets the specified window's show state.
@@ -1878,7 +1888,14 @@
             <param name="obj"></param>
             <param name="value"></param>
         </member>
-        <member name="M:CommonUITools.Utils.ContextMenuHelper.ShowContextMenuHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+        <member name="M:CommonUITools.Utils.ContextMenuHelper.ShowContextMenuLeftButtonDownHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Capture mouse
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CommonUITools.Utils.ContextMenuHelper.ShowContextMenuLeftButtonUpHandler(System.Object,System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             显示 ContextMenu
             </summary>
@@ -2437,6 +2454,13 @@
         <member name="M:CommonUITools.Utils.UIUtilsExtension.ToBrush(System.String)">
             <summary>
             <see cref="T:System.String"/> 转 <see cref="T:System.Windows.Media.SolidColorBrush"/>
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.ToBrush(System.Windows.Media.Color)">
+            <summary>
+            Color to SolidColorBrush
             </summary>
             <param name="color"></param>
             <returns></returns>
