@@ -91,11 +91,20 @@ public partial class MainWindow : BaseWindow {
             } else {
                 RouterService.Navigate(typeof(MainContentView));
             }
+            SetWindowBackground();
         });
+    }
+
+    /// <summary>
+    /// Apply window background
+    /// </summary>
+    private void SetWindowBackground() {
         if (WindowHelper.IsSystemSupport) {
             Background = new SolidColorBrush(Colors.Transparent);
             WindowHelper.SetBackDropStyle(this, BackdropStyle.Mica);
-        } else {
+        }
+        // SolidColor
+        else {
             Background = new SolidColorBrush(Colors.White);
             // ThemeChanged
             ThemeManager.Current.ThemeChanged += (_, mode) => {
