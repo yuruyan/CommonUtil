@@ -1,4 +1,4 @@
-﻿<ui:ContentDialog
+﻿<tools:BaseDialog
   x:Class="CommonUtil.View.AddFtpServerUserDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=mscorlib"
+  xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="{Binding Title}"
   d:DesignHeight="450"
@@ -46,4 +47,4 @@
       </ComboBox>
     </DockPanel>
   </ui:SimpleStackPanel>
-</ui:ContentDialog>
+</tools:BaseDialog>

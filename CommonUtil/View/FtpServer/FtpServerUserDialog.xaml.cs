@@ -1,8 +1,6 @@
-﻿using ModernWpf.Controls;
+﻿namespace CommonUtil.View;
 
-namespace CommonUtil.View;
-
-public partial class AddFtpServerUserDialog : ContentDialog {
+public partial class AddFtpServerUserDialog : BaseDialog {
 
     public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(AddFtpServerUserDialog), new PropertyMetadata(""));
     public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(string), typeof(AddFtpServerUserDialog), new PropertyMetadata(""));
