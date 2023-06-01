@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="CSharpDependencyView"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
@@ -16,7 +16,6 @@
   mc:Ignorable="d">
   <Page.Resources>
     <Thickness x:Key="ItemGap">8</Thickness>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
   </Page.Resources>
 
   <Grid>
@@ -86,7 +85,7 @@
     <ui:SimpleStackPanel
       Name="ControlPanel"
       Grid.Row="1"
-      Margin="8"
+      Margin="0,8"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
       Orientation="Horizontal"
