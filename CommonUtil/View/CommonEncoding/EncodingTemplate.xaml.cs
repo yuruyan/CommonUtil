@@ -93,6 +93,4 @@ public partial class EncodingTemplate : ResponsiveUserControl {
         InputText = string.Empty;
         OutputText = string.Empty;
     }
-
 }
-

@@ -6,17 +6,13 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   x:Name="EncodingTemplateRoot"
   Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
   d:DesignWidth="800"
   mc:Ignorable="d">
-  <UserControl.Resources>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
-  </UserControl.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
@@ -26,6 +22,7 @@
     <!--  Input  -->
     <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText, ElementName=EncodingTemplateRoot}" />
     <ui:SimpleStackPanel
+      x:Name="ControlPanel"
       Grid.Row="1"
       Margin="0,8"
       DataContext="{Binding ElementName=EncodingTemplateRoot}"
