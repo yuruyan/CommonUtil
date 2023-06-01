@@ -98,8 +98,10 @@
             HorizontalAlignment="Left"
             Stretch="Uniform" />
           <Button
+            Margin="8,0,0,0"
             Click="ClearIconImageClickHandler"
             Content="清除"
+            Style="{StaticResource GlobalErrorButtonStyle}"
             Visibility="{Binding Source, ElementName=IconImage, Converter={StaticResource HideIfNullConverter}}" />
         </ui:SimpleStackPanel>
         <!--  Control  -->
