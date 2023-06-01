@@ -8,8 +8,7 @@
   xmlns:system="clr-namespace:System;assembly=netstandard"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
-  Title="下载"
-  Background="{DynamicResource ApplicationBackgroundBrush}"
+  Title="DownloadInfoDialog"
   Closing="DialogClosingHandler"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
