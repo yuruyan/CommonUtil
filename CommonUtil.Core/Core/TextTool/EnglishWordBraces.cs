@@ -1,13 +1,13 @@
 ﻿namespace CommonUtil.Core;
 
 public static partial class EnglishWordProcess {
-    private const string EnglishWordNumberPattern = @"[\t ]*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?: [\da-z]+)+)?)[\t ]*";
-    private const string ASCIIWordPattern = @"[\t ]*(?<word>[\x21-\x7e]+)[\t ]*";
-
+    private const string EnglishPhrasePattern = @"[\t ]*(?<word>[a-z]+(?:(?:'[a-z]+)?(?:[\t ][a-z]+)+)?)[\t ]*";
+    private const string EnglishWordNumberPattern = @"[\t ]*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?:[\t ][\da-z]+)+)?)[\t ]*";
+    private const string ASCIIWordPattern = @"[\t ]*(?<word>[\x21-\x7e]+([\t ]+[\x21-\x7e]+)*)[\t ]*";
     /// <summary>
     /// 英文单词正则
     /// </summary>
-    private static readonly Regex EnglishPhraseRegex = TextTool.EnglishPhraseRegex;
+    private static readonly Regex EnglishPhraseRegex = GetEnglishPhraseRegex();
     /// <summary>
     /// 英文单词、数字正则
     /// </summary>
@@ -18,11 +18,14 @@ public static partial class EnglishWordProcess {
     private static readonly Regex ASCIIWordRegex = GetASCIIWordRegex();
 
 #if NET7_0_OR_GREATER
+    [GeneratedRegex(EnglishPhrasePattern, RegexOptions.IgnoreCase)]
+    private static partial Regex GetEnglishPhraseRegex();
     [GeneratedRegex(EnglishWordNumberPattern, RegexOptions.IgnoreCase)]
     private static partial Regex GetEnglishWordNumberRegex();
     [GeneratedRegex(ASCIIWordPattern, RegexOptions.IgnoreCase)]
     private static partial Regex GetASCIIWordRegex();
 #else
+    private static Regex GetEnglishPhraseRegex() => new(EnglishPhrasePattern, RegexOptions.IgnoreCase);
     private static Regex GetEnglishWordNumberRegex() => new(EnglishWordNumberPattern, RegexOptions.IgnoreCase);
     private static Regex GetASCIIWordRegex() => new(ASCIIWordPattern);
 #endif
