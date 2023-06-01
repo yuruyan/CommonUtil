@@ -1,7 +1,8 @@
 ﻿namespace CommonUtil.View;
 
 /// <summary>
-/// 如果重写 OnInitialized 方法，则注意调用 "base.OnInitialized(e);"
+/// 如果重写 OnInitialized 方法，则注意调用 "base.OnInitialized(e);"<br/>
+/// 设置 Panel 的 Name 属性为 <see cref="ResponsivePage.ControlPanelName"/>
 /// </summary>
 public class ResponsivePage : Page {
     protected static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsivePage), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
