@@ -2,7 +2,11 @@
 
 public partial class EnglishWordBracesView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
+    public static readonly IReadOnlyList<KeyValuePair<string, EnglishWordBracesMode>> EnglishWordBracesModes = new List<KeyValuePair<string, EnglishWordBracesMode>> {
+        new ("默认", EnglishWordBracesMode.Default),
+        new ("英文包括数字", EnglishWordBracesMode.IncludeNumber),
+        new ("英文包括ASCII", EnglishWordBracesMode.IncludeASCII),
+    };
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(""));
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(""));
     public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register("FileName", typeof(string), typeof(EnglishWordBracesView), new PropertyMetadata(string.Empty));
@@ -43,6 +47,9 @@ public partial class EnglishWordBracesView : ResponsivePage {
 
     public EnglishWordBracesView() {
         InitializeComponent();
+        this.SetLoadedOnceEventHandler((_, _) => {
+            EnglishWordBracesModeComboBox.SelectedIndex = 0;
+        });
     }
 
     /// <summary>
@@ -52,20 +59,22 @@ public partial class EnglishWordBracesView : ResponsivePage {
     /// <param name="e"></param>
     private async void AddBracesClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (EnglishWordBracesModeComboBox.SelectedValue is not EnglishWordBracesMode mode) {
+            return;
+        }
         // 输入检查
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
-        bool includeNumber = IncludeNumberCheckBox.IsChecked ?? false;
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(EnglishWordProcess.AddEnglishWordBraces, includeNumber);
+            StringTextProcess(EnglishWordProcess.AddEnglishWordBraces, mode);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             $"{nameof(EnglishWordBracesView)}|{nameof(AddBracesClickHandler)}|{GetHashCode()}",
-            () => FileTextProcess(EnglishWordProcess.FileAddEnglishWordBraces, includeNumber)
+            () => FileTextProcess(EnglishWordProcess.FileAddEnglishWordBraces, mode)
         );
     }
 
@@ -76,20 +85,22 @@ public partial class EnglishWordBracesView : ResponsivePage {
     /// <param name="e"></param>
     private async void RemoveBracesClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (EnglishWordBracesModeComboBox.SelectedValue is not EnglishWordBracesMode mode) {
+            return;
+        }
         // 输入检查
         if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
             return;
         }
-        bool includeNumber = IncludeNumberCheckBox.IsChecked ?? false;
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(EnglishWordProcess.RemoveEnglishWordBraces, includeNumber);
+            StringTextProcess(EnglishWordProcess.RemoveEnglishWordBraces, mode);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             $"{nameof(EnglishWordBracesView)}|{nameof(RemoveBracesClickHandler)}|{GetHashCode()}",
-            () => FileTextProcess(EnglishWordProcess.FileRemoveEnglishWordBraces, includeNumber)
+            () => FileTextProcess(EnglishWordProcess.FileRemoveEnglishWordBraces, mode)
         );
     }
 
@@ -97,17 +108,17 @@ public partial class EnglishWordBracesView : ResponsivePage {
     /// 文本处理
     /// </summary>
     /// <param name="func"></param>
-    /// <param name="includeNumber"></param>
-    private void StringTextProcess(Func<string, bool, string> func, bool includeNumber) {
-        OutputText = func(InputText, includeNumber);
+    /// <param name="mode"></param>
+    private void StringTextProcess(Func<string, EnglishWordBracesMode, string> func, EnglishWordBracesMode mode) {
+        OutputText = func(InputText, mode);
     }
 
     /// <summary>
     /// 文件文本处理
     /// </summary>
     /// <param name="func"></param>
-    /// <param name="includeNumber"></param>
-    private async Task FileTextProcess(Action<string, string, bool> func, bool includeNumber) {
+    /// <param name="mode"></param>
+    private async Task FileTextProcess(Action<string, string, EnglishWordBracesMode> func, EnglishWordBracesMode mode) {
         var text = InputText;
         var inputPath = FileName;
         if (SaveFileDialog.ShowDialog() != true) {
@@ -119,7 +130,7 @@ public partial class EnglishWordBracesView : ResponsivePage {
         await UIUtils.CreateFileProcessTask(
             func,
             outputPath,
-            args: new object[] { inputPath, outputPath, includeNumber }
+            args: new object[] { inputPath, outputPath, mode }
         );
     }
 

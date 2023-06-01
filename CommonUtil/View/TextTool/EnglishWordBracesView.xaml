@@ -15,7 +15,7 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">600</system:Double>
+    <system:Double x:Key="ExpansionThreshold">700</system:Double>
   </Page.Resources>
 
   <Grid>
@@ -47,7 +47,13 @@
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
-        <CheckBox x:Name="IncludeNumberCheckBox" Content="包括数字" />
+        <TextBlock Text="模式：" />
+        <ComboBox
+          x:Name="EnglishWordBracesModeComboBox"
+          VerticalAlignment="Center"
+          DisplayMemberPath="Key"
+          ItemsSource="{x:Static local:EnglishWordBracesView.EnglishWordBracesModes}"
+          SelectedValuePath="Value" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
         <Button
