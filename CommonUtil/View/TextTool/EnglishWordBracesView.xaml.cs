@@ -69,12 +69,12 @@ public partial class EnglishWordBracesView : ResponsivePage {
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(EnglishWordProcess.AddEnglishWordBraces, mode);
+            StringTextProcess(EnglishWordBraces.AddEnglishWordBraces, mode);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             $"{nameof(EnglishWordBracesView)}|{nameof(AddBracesClickHandler)}|{GetHashCode()}",
-            () => FileTextProcess(EnglishWordProcess.FileAddEnglishWordBraces, mode)
+            () => FileTextProcess(EnglishWordBraces.FileAddEnglishWordBraces, mode)
         );
     }
 
@@ -95,12 +95,12 @@ public partial class EnglishWordBracesView : ResponsivePage {
 
         // 文本处理
         if (!HasFile) {
-            StringTextProcess(EnglishWordProcess.RemoveEnglishWordBraces, mode);
+            StringTextProcess(EnglishWordBraces.RemoveEnglishWordBraces, mode);
             return;
         }
         ThrottleUtils.ThrottleAsync(
             $"{nameof(EnglishWordBracesView)}|{nameof(RemoveBracesClickHandler)}|{GetHashCode()}",
-            () => FileTextProcess(EnglishWordProcess.FileRemoveEnglishWordBraces, mode)
+            () => FileTextProcess(EnglishWordBraces.FileRemoveEnglishWordBraces, mode)
         );
     }
 

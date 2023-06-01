@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.Core;
 
-public static partial class EnglishWordProcess {
+public static partial class EnglishWordBraces {
     private const string EnglishPhrasePattern = @"[\t ]*(?<word>[a-z]+(?:(?:'[a-z]+)?(?:[\t ][a-z]+)+)?)[\t ]*";
     private const string EnglishWordNumberPattern = @"[\t ]*(?<word>[\da-z]+(?:(?:'[\da-z]+)?(?:[\t ][\da-z]+)+)?)[\t ]*";
     private const string ASCIIWordPattern = @"[\t ]*(?<word>[\x21-\x7e]+([\t ]+[\x21-\x7e]+)*)[\t ]*";
