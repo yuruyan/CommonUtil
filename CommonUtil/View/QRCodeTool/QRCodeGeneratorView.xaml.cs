@@ -15,6 +15,7 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
     public static readonly DependencyProperty ImageQualityListProperty = DependencyProperty.Register("ImageQualityList", typeof(IList<string>), typeof(QRCodeGeneratorView), new PropertyMetadata());
     public static readonly DependencyProperty IsQRCodeDecodeViewSelectedProperty = DependencyProperty.Register("IsQRCodeDecodeViewSelected", typeof(bool), typeof(QRCodeGeneratorView), new PropertyMetadata(true));
     public static readonly DependencyProperty IconPathProperty = DependencyProperty.Register("IconPath", typeof(string), typeof(QRCodeGeneratorView), new PropertyMetadata(string.Empty));
+    private readonly double ExpansionThreshold;
 
     /// <summary>
     /// 二维码 ImageSource
@@ -106,12 +107,17 @@ public partial class QRCodeGeneratorView : ResponsivePage, INavigationService {
         ImageQualityList = DataSet.QRCodeImageQualityDict.Keys.ToList();
         InitializeComponent();
         RouterService = new(ContentFrame, Routers);
+        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
     private static void QRCodeForegroundPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
         if (d is QRCodeGeneratorView self) {
             self.QRCodeForegroundText = self.QRCodeForeground.ToString();
         }
+    }
+
+    protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+        IsExpanded = ExpansionThreshold <= e.NewSize.Width;
     }
 
     protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
