@@ -1,28 +1,28 @@
 ﻿namespace CommonUtil.View;
 
-public class ResponsiveUserControl : UserControl, IResponsiveElement {
-    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsiveUserControl), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
-    public static readonly DependencyProperty ExpansionThresholdProperty = DependencyProperty.Register("ExpansionThreshold", typeof(double), typeof(ResponsiveUserControl), new PropertyMetadata(0.0));
+/// <summary>
+/// 如果重写 OnInitialized 方法，则注意调用 "base.OnInitialized(e);"
+/// </summary>
+public class ResponsiveUserControl : UserControl {
+    protected static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsiveUserControl), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
+    protected static readonly DependencyProperty ExpansionThresholdProperty = DependencyProperty.Register("ExpansionThreshold", typeof(double), typeof(ResponsiveUserControl), new PropertyMetadata(0.0));
+    private UIElement? ControlPanel;
+    private double ExpandedWidth;
 
-    public virtual bool IsExpanded {
+    protected virtual bool IsExpanded {
         get { return (bool)GetValue(IsExpandedProperty); }
         set { SetValue(IsExpandedProperty, value); }
     }
-    public virtual double ExpansionThreshold {
+    protected virtual double ExpansionThreshold {
         get { return (double)GetValue(ExpansionThresholdProperty); }
         set { SetValue(ExpansionThresholdProperty, value); }
     }
-    public virtual string ExpansionThresholdKey { get; set; } = "ExpansionThreshold";
+    protected virtual string ExpansionThresholdKey { get; set; } = "ExpansionThreshold";
+    protected virtual string ControlPanelName { get; set; } = "ControlPanel";
 
     protected override void OnInitialized(EventArgs e) {
         base.OnInitialized(e);
-        // 自动设置值
-        if (ExpansionThresholdProperty.GetMetadata(this).DefaultValue == GetValue(ExpansionThresholdProperty)) {
-            if (Resources[ExpansionThresholdKey] is double value) {
-                ExpansionThreshold = value;
-            }
-        }
-        IsExpanded = ActualWidth >= ExpansionThreshold;
+        ControlPanel = FindName(ControlPanelName) as UIElement;
         SizeChanged += ElementSizeChangedHandler;
     }
 
@@ -32,7 +32,14 @@ public class ResponsiveUserControl : UserControl, IResponsiveElement {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     protected virtual void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = e.NewSize.Width >= ExpansionThreshold;
+        if (ControlPanel is null) {
+            return;
+        }
+
+        if (IsExpanded) {
+            ExpandedWidth = ControlPanel.RenderSize.Width;
+        }
+        IsExpanded = ExpandedWidth <= e.NewSize.Width;
     }
 
     /// <summary>

@@ -3,7 +3,7 @@
 /// <summary>
 /// 如果重写 OnInitialized 方法，则注意调用 "base.OnInitialized(e);"
 /// </summary>
-public abstract class ResponsivePage : Page {
+public class ResponsivePage : Page {
     protected static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(ResponsivePage), new PropertyMetadata(true, IsExpandedPropertyChangedHandler));
     protected static readonly DependencyProperty ExpansionThresholdProperty = DependencyProperty.Register("ExpansionThreshold", typeof(double), typeof(ResponsivePage), new PropertyMetadata(0.0));
     private UIElement? ControlPanel;
