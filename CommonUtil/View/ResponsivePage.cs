@@ -20,19 +20,46 @@ public class ResponsivePage : Page {
     }
     protected virtual string ExpansionThresholdKey { get; set; } = "ExpansionThreshold";
     protected virtual string ControlPanelName { get; set; } = "ControlPanel";
+    /// <summary>
+    /// If <see cref="ResponsiveMode.Fixed"/> is specified, <see cref="ExpansionThreshold"/> must be provided, which is retrieved by <see cref="ExpansionThresholdKey"/> only once;<br/>
+    /// If <see cref="ResponsiveMode.Variable"/> is specified, <see cref="ControlPanel"/> must be provided, which is retrieved by <see cref="ControlPanelName"/> only once;<br/>
+    /// Default value is <see cref="ResponsiveMode.Fixed"/>
+    /// </summary>
+    protected ResponsiveMode ResponsiveMode { get; }
+
+    public ResponsivePage() : this(ResponsiveMode.Fixed) { }
+
+    public ResponsivePage(ResponsiveMode responsiveMode) {
+        ResponsiveMode = responsiveMode;
+    }
 
     protected override void OnInitialized(EventArgs e) {
         base.OnInitialized(e);
-        ControlPanel = FindName(ControlPanelName) as UIElement;
+        if (ResponsiveMode == ResponsiveMode.Variable) {
+            ControlPanel = FindName(ControlPanelName) as UIElement;
+            SizeChanged += ElementSizeChangedVariableHandler;
+        } else if (ResponsiveMode == ResponsiveMode.Fixed) {
+            ExpansionThreshold = (double)Resources[ExpansionThresholdKey];
+            SizeChanged += ElementSizeChangedFixedHandler;
+        }
         SizeChanged += ElementSizeChangedHandler;
     }
 
     /// <summary>
-    /// Size Changed
+    /// Size changed handler for <see cref="ResponsiveMode.Fixed"/>
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
+    private void ElementSizeChangedFixedHandler(object sender, SizeChangedEventArgs e) {
+        IsExpanded = ExpansionThreshold <= e.NewSize.Width;
+    }
+
+    /// <summary>
+    /// Size changed handler for <see cref="ResponsiveMode.Variable"/>
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ElementSizeChangedVariableHandler(object sender, SizeChangedEventArgs e) {
         if (ControlPanel is null) {
             return;
         }
@@ -42,6 +69,13 @@ public class ResponsivePage : Page {
         }
         IsExpanded = ExpandedWidth <= e.NewSize.Width;
     }
+
+    /// <summary>
+    /// Size changed handler
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected virtual void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) { }
 
     /// <summary>
     /// IsExpanded Changed
