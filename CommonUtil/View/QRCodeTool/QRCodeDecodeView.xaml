@@ -16,7 +16,7 @@
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+    <system:Double x:Key="ExpansionThreshold">600</system:Double>
   </Page.Resources>
 
   <Page.FocusVisualStyle>
