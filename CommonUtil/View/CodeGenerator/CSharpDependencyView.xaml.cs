@@ -17,7 +17,7 @@ public partial class CSharpDependencyView : ResponsivePage {
         private set { SetValue(TypeInfosProperty, value); }
     }
 
-    public CSharpDependencyView() {
+    public CSharpDependencyView() : base(ResponsiveMode.Variable) {
         TypeInfos = new();
         InitializeComponent();
     }

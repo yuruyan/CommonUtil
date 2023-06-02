@@ -16,6 +16,16 @@
   mc:Ignorable="d">
   <Page.Resources>
     <Thickness x:Key="ItemGap">8</Thickness>
+    <ContextMenu x:Key="TypeInfoItemContextMenu">
+      <MenuItem Click="RemovePropertyClick" Header="删除">
+        <MenuItem.Icon>
+          <TextBlock
+            Foreground="{StaticResource ErrorBackground}"
+            Style="{StaticResource ColorIconFontStyle}"
+            Text="&#xe6b4;" />
+        </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
   </Page.Resources>
 
   <Grid>
@@ -55,26 +65,14 @@
         <ListBox.ItemTemplate>
           <DataTemplate>
             <UniformGrid
-              Width="{Binding ElementName=TypeInfoListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}"
               Background="Transparent"
-              Columns="5">
+              Columns="5"
+              ContextMenu="{StaticResource TypeInfoItemContextMenu}">
               <TextBox Text="{Binding Name}" />
               <TextBox Text="{Binding ClassName}" />
               <TextBox Text="{Binding Type}" />
               <TextBox Text="{Binding Value}" />
               <TextBox Text="{Binding Comment}" />
-              <UniformGrid.ContextMenu>
-                <ContextMenu>
-                  <MenuItem Click="RemovePropertyClick" Header="删除">
-                    <MenuItem.Icon>
-                      <TextBlock
-                        Foreground="{StaticResource ErrorBackground}"
-                        Style="{StaticResource ColorIconFontStyle}"
-                        Text="&#xe6b4;" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                </ContextMenu>
-              </UniformGrid.ContextMenu>
             </UniformGrid>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -86,22 +84,10 @@
       Name="ControlPanel"
       Grid.Row="1"
       Margin="0,8"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Center"
-      Orientation="Horizontal"
-      Style="{StaticResource GlobalSimpleStackPanelStyle}">
+      Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <ui:SimpleStackPanel.Resources>
-        <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="False">
-              <Setter Property="Orientation" Value="Vertical" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-              <Setter Property="Orientation" Value="Horizontal" />
-              <Setter Property="HorizontalAlignment" Value="Center" />
-            </DataTrigger>
-          </Style.Triggers>
+        <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
+          <Setter Property="Orientation" Value="Horizontal" />
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
