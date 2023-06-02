@@ -20,6 +20,9 @@ public partial class RSACryptoControl : ResponsiveUserControl {
 
     public RSACryptoControl() : base(ResponsiveMode.Variable) {
         InitializeComponent();
+        this.SetLoadedOnceEventHandler((_, _) => {
+            AlgorithmsComboBox.SelectedIndex = 0;
+        });
     }
 
     private void EncryptClickHandler(object sender, RoutedEventArgs e) {

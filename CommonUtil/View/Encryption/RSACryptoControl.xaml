@@ -28,9 +28,9 @@
     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
       <TextBlock Text="算法：" />
       <ComboBox
+        x:Name="AlgorithmsComboBox"
         ItemsSource="{x:Static core:RSAAlgorithm.AllAlgorithms}"
-        SelectedIndex="0"
-        SelectedItem="{Binding SelectedAlgorithm, ElementName=RSACryptoControlRoot, Mode=OneWayToSource}" />
+        SelectedItem="{Binding SelectedAlgorithm, ElementName=RSACryptoControlRoot}" />
     </StackPanel>
     <ui:SimpleStackPanel>
       <tools:IconButton
