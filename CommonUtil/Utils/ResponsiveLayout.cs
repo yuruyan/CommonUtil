@@ -71,8 +71,9 @@ public sealed class ResponsiveLayout : DependencyObject {
             return;
         }
 
+        ControlPanel.Measure(new(short.MaxValue, short.MaxValue));
         if (IsExpanded) {
-            ExpandedWidth = ControlPanel.RenderSize.Width;
+            ExpandedWidth = ControlPanel.DesiredSize.Width;
         }
         IsExpanded = ExpandedWidth <= e.NewSize.Width;
     }
