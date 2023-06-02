@@ -7,7 +7,6 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="WifiQRCodeView"
-  Margin="{StaticResource NavigationContentViewMargin}"
   d:DesignHeight="450"
   d:DesignWidth="1200"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
