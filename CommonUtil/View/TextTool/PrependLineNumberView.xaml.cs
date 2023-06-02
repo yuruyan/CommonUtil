@@ -50,7 +50,7 @@ public partial class PrependLineNumberView : ResponsivePage {
     }
     private readonly IDictionary<string, string> SplitTextDict;
 
-    public PrependLineNumberView() {
+    public PrependLineNumberView() : base(ResponsiveMode.Variable) {
         SplitTextDict = new Dictionary<string, string>(DataSet.PrependLineNumberSplitOptionDict);
         SplitTextOptions = new(SplitTextDict.Keys);
         InitializeComponent();
