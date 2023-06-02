@@ -6,7 +6,6 @@ namespace CommonUtil.View;
 public partial class QRCodeDecodeView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty DecodeTextProperty = DependencyProperty.Register("DecodeText", typeof(string), typeof(QRCodeDecodeView), new PropertyMetadata(string.Empty));
-    private readonly double ExpansionThreshold;
 
     /// <summary>
     /// 解析后的文本
@@ -18,14 +17,9 @@ public partial class QRCodeDecodeView : ResponsivePage {
 
     public QRCodeDecodeView() {
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
     }
 
-    protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = ExpansionThreshold <= e.NewSize.Width;
-    }
-
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout self, DependencyPropertyChangedEventArgs e) {
         if (e.NewValue is true) {
             MainContentPanel.Rows = 1;
             MainContentPanel.Columns = 2;
