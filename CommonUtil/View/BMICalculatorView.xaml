@@ -13,33 +13,36 @@
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">700</system:Double>
+    <system:Double x:Key="ExpansionThreshold">800</system:Double>
   </Page.Resources>
 
-  <Grid Margin="0,-10,0,0">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="1*" />
-      <RowDefinition x:Name="SecondRowDefinition" Height="0" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition Name="SecondColumnDefinition" />
-    </Grid.ColumnDefinitions>
+  <UniformGrid>
+    <UniformGrid.Style>
+      <Style TargetType="UniformGrid">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
+            <Setter Property="Columns" Value="2" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
+            <Setter Property="Rows" Value="2" />
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+    </UniformGrid.Style>
     <!--  输入  -->
     <ui:SimpleStackPanel
-      Margin="0,10,0,0"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
       Orientation="Vertical"
-      Spacing="15">
+      Spacing="{StaticResource MediumItemSpacing}">
       <ui:SimpleStackPanel.Resources>
-        <Style TargetType="ui:SimpleStackPanel">
+        <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
           <Setter Property="Orientation" Value="Horizontal" />
           <Setter Property="HorizontalAlignment" Value="Center" />
-          <Setter Property="Spacing" Value="8" />
         </Style>
         <Style BasedOn="{StaticResource GlobalTextBlockStyle}" TargetType="TextBlock">
-          <Setter Property="Width" Value="100" />
+          <Setter Property="MinWidth" Value="80" />
+          <Setter Property="TextAlignment" Value="Center" />
         </Style>
         <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
           <Setter Property="Width" Value="130" />
@@ -48,12 +51,12 @@
       </ui:SimpleStackPanel.Resources>
 
       <ui:SimpleStackPanel>
-        <TextBlock Text="我的身高：" />
+        <TextBlock Text="身高：" />
         <TextBox Text="{Binding HeightText, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock Text="厘米 cm" />
       </ui:SimpleStackPanel>
       <ui:SimpleStackPanel>
-        <TextBlock Text="我的体重：" />
+        <TextBlock Text="体重：" />
         <TextBox Text="{Binding WeightText, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock Text="千克 kg" />
       </ui:SimpleStackPanel>
@@ -85,7 +88,6 @@
     <!--  参考  -->
     <StackPanel
       Name="ReferencePanel"
-      Grid.Column="1"
       HorizontalAlignment="Center"
       VerticalAlignment="Center"
       Orientation="Vertical"
@@ -135,5 +137,5 @@
         <TextBlock Text=" ≥ 28.0" />
       </StackPanel>
     </StackPanel>
-  </Grid>
+  </UniformGrid>
 </local:ResponsivePage>

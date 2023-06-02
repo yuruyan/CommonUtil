@@ -49,20 +49,6 @@ public partial class BMICalculatorView : ResponsivePage {
         InitializeComponent();
     }
 
-    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout page, DependencyPropertyChangedEventArgs e) {
-        if (e.NewValue is true) {
-            SecondRowDefinition.Height = new(0);
-            SecondColumnDefinition.Width = new(1, GridUnitType.Star);
-            Grid.SetColumn(ReferencePanel, 1);
-            Grid.SetRow(ReferencePanel, 0);
-        } else {
-            SecondRowDefinition.Height = new(1, GridUnitType.Star);
-            SecondColumnDefinition.Width = new(0);
-            Grid.SetColumn(ReferencePanel, 0);
-            Grid.SetRow(ReferencePanel, 1);
-        }
-    }
-
     /// <summary>
     /// 计算 bmi
     /// </summary>
