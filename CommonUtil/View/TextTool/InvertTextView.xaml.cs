@@ -49,7 +49,7 @@ public partial class InvertTextView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public InvertTextView() {
+    public InvertTextView() : base(ResponsiveMode.Variable) {
         InversionModeDict = new Dictionary<string, InversionMode>(DataSet.InversionModeDict);
         InitializeComponent();
     }
