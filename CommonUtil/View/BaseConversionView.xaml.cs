@@ -1,7 +1,7 @@
 ﻿namespace CommonUtil.View;
 
-public partial class BaseConversionView : Page {
-    //private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+public partial class BaseConversionView : ResponsivePage {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly IReadOnlyList<int> BaseOptions = Enumerable.Range(2, 35).ToList();
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(BaseConversionView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(BaseConversionView), new PropertyMetadata(string.Empty));
