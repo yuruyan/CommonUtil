@@ -104,6 +104,7 @@
     x:Key="ResponsiveSimpleStackPanelStyle"
     BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
     TargetType="ui:SimpleStackPanel">
+    <Setter Property="HorizontalAlignment" Value="Center" />
     <Style.Triggers>
       <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
         <Setter Property="Orientation" Value="Horizontal" />
