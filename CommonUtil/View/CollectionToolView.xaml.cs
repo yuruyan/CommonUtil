@@ -66,7 +66,7 @@ public partial class CollectionToolView : ResponsivePage {
     };
     public delegate IList<string> ProcessHandler(IEnumerable<string> list1, IEnumerable<string> list2);
 
-    public CollectionToolView() {
+    public CollectionToolView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
     }
 

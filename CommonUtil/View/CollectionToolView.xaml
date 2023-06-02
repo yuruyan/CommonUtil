@@ -14,17 +14,13 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">600</system:Double>
-  </Page.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="auto" />
       <RowDefinition />
     </Grid.RowDefinitions>
     <!--  Control  -->
-    <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+    <ui:SimpleStackPanel x:Name="ControlPanel" Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <ui:SimpleStackPanel.Resources>
         <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
           <Setter Property="HorizontalAlignment" Value="Center" />
@@ -59,10 +55,19 @@
     </ui:SimpleStackPanel>
 
     <!--  InputOutput Box  -->
-    <UniformGrid
-      Grid.Row="1"
-      Margin="0,8,0,0"
-      Columns="3">
+    <UniformGrid Grid.Row="1" Margin="0,8,0,0">
+      <UniformGrid.Style>
+        <Style TargetType="UniformGrid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
+              <Setter Property="Columns" Value="3" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
+              <Setter Property="Rows" Value="3" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </UniformGrid.Style>
       <!--  Input Box  -->
       <tools:DragDropTextBox
         Name="DragDropTextBox1"
@@ -77,9 +82,20 @@
       </tools:DragDropTextBox>
       <tools:DragDropTextBox
         Name="DragDropTextBox2"
-        Margin="8,0"
         DragDropEvent="DragDropEventHandler2"
         HasFile="{Binding HasFile2, Mode=TwoWay}">
+        <tools:DragDropTextBox.Style>
+          <Style TargetType="tools:DragDropTextBox">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
+                <Setter Property="Margin" Value="8,0" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
+                <Setter Property="Margin" Value="0,8" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </tools:DragDropTextBox.Style>
         <tools:DragDropTextBox.TextBox>
           <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText2}" />
         </tools:DragDropTextBox.TextBox>
@@ -90,7 +106,6 @@
 
       <!--  Output Box  -->
       <TextBox
-        Grid.Row="2"
         IsReadOnly="True"
         Style="{StaticResource MultilineTextBoxStyle}"
         Text="{Binding OutputText, Mode=OneWay}" />
