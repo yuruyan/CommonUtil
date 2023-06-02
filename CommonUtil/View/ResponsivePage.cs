@@ -1,7 +1,10 @@
 ﻿namespace CommonUtil.View;
 
 public class ResponsivePage : Page {
-    protected ResponsiveLayout ResponsiveLayout { get; }
+    private static readonly DependencyPropertyKey ResponsiveLayoutPropertyKey = DependencyProperty.RegisterReadOnly("ResponsiveLayout", typeof(ResponsiveLayout), typeof(ResponsivePage), new PropertyMetadata());
+    public static readonly DependencyProperty ResponsiveLayoutProperty = ResponsiveLayoutPropertyKey.DependencyProperty;
+
+    public ResponsiveLayout ResponsiveLayout => (ResponsiveLayout)GetValue(ResponsiveLayoutProperty);
 
     public ResponsivePage() : this(ResponsiveMode.Fixed) { }
 
@@ -10,7 +13,7 @@ public class ResponsivePage : Page {
         string expansionThresholdKey = ResponsiveLayout.DefaultExpansionThresholdKey,
         string controlPanelName = ResponsiveLayout.DefaultControlPanelName
     ) {
-        ResponsiveLayout = new(
+        var layout = new ResponsiveLayout(
             this,
             responsiveMode,
             IsExpandedPropertyChangedHandler,
@@ -19,6 +22,7 @@ public class ResponsivePage : Page {
             ExpansionThresholdKey = expansionThresholdKey,
             ControlPanelName = controlPanelName
         };
+        SetValue(ResponsiveLayoutPropertyKey, layout);
     }
 
     /// <summary>
