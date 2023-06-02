@@ -49,7 +49,7 @@ public partial class BMICalculatorView : ResponsivePage {
         InitializeComponent();
     }
 
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage page, DependencyPropertyChangedEventArgs e) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout page, DependencyPropertyChangedEventArgs e) {
         if (e.NewValue is true) {
             SecondRowDefinition.Height = new(0);
             SecondColumnDefinition.Width = new(1, GridUnitType.Star);

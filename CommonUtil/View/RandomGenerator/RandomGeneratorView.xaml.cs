@@ -152,7 +152,7 @@ public partial class RandomGeneratorView : ResponsivePage {
         });
     }
 
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout self, DependencyPropertyChangedEventArgs e) {
         if (e.NewValue is true) {
             SecondRowDefinition.Height = new(0);
             SecondColumnDefinition.Width = new(1, GridUnitType.Star);

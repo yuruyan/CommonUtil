@@ -91,8 +91,8 @@ public partial class KeywordFinderView : ResponsivePage {
         });
     }
 
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
-        if (IsExpanded) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout self, DependencyPropertyChangedEventArgs e) {
+        if (self.IsExpanded) {
             SecondRowDefinition.Height = new(0);
             SecondColumnDefinition.Width = new(1, GridUnitType.Star);
             Grid.SetColumn(ResultPanel, 1);

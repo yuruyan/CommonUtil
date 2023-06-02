@@ -92,7 +92,7 @@ public partial class TimeStampView : ResponsivePage {
         #endregion
     }
 
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout self, DependencyPropertyChangedEventArgs e) {
         // 反转顺序
         StringToTimeStampPanel.ReverseChildrenOrder();
         TimeStampToStringPanel.ReverseChildrenOrder();
