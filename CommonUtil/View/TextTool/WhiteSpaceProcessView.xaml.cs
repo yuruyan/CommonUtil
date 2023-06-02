@@ -11,6 +11,10 @@ public partial class WhiteSpaceProcessView : ResponsivePage {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
     };
+    /// <summary>
+    /// MenuChecked Array
+    /// </summary>
+    private readonly bool[] CheckedArray;
 
     /// <summary>
     /// 输入文本
@@ -40,12 +44,8 @@ public partial class WhiteSpaceProcessView : ResponsivePage {
         get { return (string)GetValue(FileNameProperty); }
         set { SetValue(FileNameProperty, value); }
     }
-    /// <summary>
-    /// MenuChecked Array
-    /// </summary>
-    private readonly bool[] CheckedArray;
 
-    public WhiteSpaceProcessView() {
+    public WhiteSpaceProcessView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
         // 初始化 ProcessOptionsMenuFlyout
         DataSet.WhiteSpaceProcessOptions.ForEach(item => {
