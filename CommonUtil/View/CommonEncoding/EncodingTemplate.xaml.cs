@@ -40,7 +40,7 @@ public partial class EncodingTemplate : ResponsiveUserControl {
         set { SetValue(DecodingButtonTextProperty, value); }
     }
 
-    public EncodingTemplate() {
+    public EncodingTemplate() : base(ResponsiveMode.Variable) {
         InitializeComponent();
     }
 

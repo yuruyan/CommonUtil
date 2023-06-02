@@ -63,7 +63,7 @@ public partial class Base64EncodingView : ResponsivePage {
     /// </summary>
     public ObservableCollection<FileProcessStatus> FileProcessStatuses => (ObservableCollection<FileProcessStatus>)GetValue(FileProcessStatusesProperty);
 
-    public Base64EncodingView() {
+    public Base64EncodingView() : base(ResponsiveMode.Variable) {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
         // 响应式布局
