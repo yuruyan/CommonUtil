@@ -17,7 +17,7 @@ internal class ProcessVisibilityConverter : IValueConverter {
     }
 }
 
-public partial class DataDigestView : Page {
+public partial class DataDigestView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     private class DigestInfo : DependencyObject {
@@ -121,7 +121,7 @@ public partial class DataDigestView : Page {
     private readonly IList<string> DigestAlgorithms;
     private CancellationTokenSource CancellationTokenSource = new();
 
-    public DataDigestView() {
+    public DataDigestView() : base(ResponsiveMode.Variable) {
         SetValue(DigestInfoDictPropertyKey, DataSet.DigestOptions.ToDictionary(
             item => item.Item1,
             item => new DigestInfo(item.Item2, item.Item3)
