@@ -41,7 +41,7 @@ public partial class PunctuationReplacementView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public PunctuationReplacementView() {
+    public PunctuationReplacementView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
     }
 
