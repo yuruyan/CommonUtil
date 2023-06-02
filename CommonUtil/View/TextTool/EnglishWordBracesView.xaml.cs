@@ -45,7 +45,7 @@ public partial class EnglishWordBracesView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public EnglishWordBracesView() {
+    public EnglishWordBracesView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
         this.SetLoadedOnceEventHandler((_, _) => {
             EnglishWordBracesModeComboBox.SelectedIndex = 0;
