@@ -88,6 +88,7 @@
       <ui:SimpleStackPanel.Resources>
         <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
           <Setter Property="Orientation" Value="Horizontal" />
+          <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
       </ui:SimpleStackPanel.Resources>
       <ui:SimpleStackPanel>
