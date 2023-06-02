@@ -71,11 +71,20 @@ public sealed class ResponsiveLayout : DependencyObject {
             return;
         }
 
-        ControlPanel.Measure(new(short.MaxValue, short.MaxValue));
         if (IsExpanded) {
-            ExpandedWidth = ControlPanel.DesiredSize.Width;
+            ExpandedWidth = ControlPanel.RenderSize.Width;
         }
-        IsExpanded = ExpandedWidth <= e.NewSize.Width;
+        if ((int)ExpandedWidth != (int)e.NewSize.Width) {
+            IsExpanded = ExpandedWidth <= e.NewSize.Width;
+        }
+        // Mesure size
+        else {
+            ControlPanel.Measure(new(short.MaxValue, short.MaxValue));
+            if (IsExpanded) {
+                ExpandedWidth = ControlPanel.DesiredSize.Width;
+            }
+            IsExpanded = ExpandedWidth <= e.NewSize.Width;
+        }
     }
 
     /// <summary>
