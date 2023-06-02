@@ -105,11 +105,11 @@
     BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
     TargetType="ui:SimpleStackPanel">
     <Style.Triggers>
-      <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+      <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="HorizontalAlignment" Value="Center" />
       </DataTrigger>
-      <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+      <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
         <Setter Property="Orientation" Value="Vertical" />
         <Setter Property="HorizontalAlignment" Value="Center" />
       </DataTrigger>
