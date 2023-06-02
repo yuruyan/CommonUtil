@@ -53,7 +53,7 @@
       </TreeView.ItemTemplate>
       <TreeView.ItemContainerStyle>
         <Style BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="TreeViewItem">
-          <Setter Property="ResponsiveLayout.IsExpanded" Value="True" />
+          <Setter Property="IsExpanded" Value="True" />
         </Style>
       </TreeView.ItemContainerStyle>
     </TreeView>
