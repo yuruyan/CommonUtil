@@ -49,7 +49,7 @@ public partial class EnglishTextProcessView : ResponsivePage {
         private set { SetValue(ProcessPatternDictProperty, value); }
     }
 
-    public EnglishTextProcessView() {
+    public EnglishTextProcessView() : base(ResponsiveMode.Variable) {
         ProcessPatternDict = new Dictionary<string, (TextTool.TextProcess, TextTool.FileProcess)>(DataSet.EnglishTextProcessOptionDict);
         InitializeComponent();
     }
