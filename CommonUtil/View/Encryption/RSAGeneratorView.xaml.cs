@@ -33,7 +33,7 @@ public partial class RSAGeneratorView : ResponsivePage {
         set { SetValue(IsWorkingProperty, value); }
     }
 
-    public RSAGeneratorView() {
+    public RSAGeneratorView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
         StrengthComboBox.ItemsSource = StrengthOptions;
     }
