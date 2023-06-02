@@ -99,7 +99,7 @@
   </Style>
   <!--#endregion-->
 
-  <!--  响应式布局，需要有 IsExpanded 属性  -->
+  <!--  响应式布局，需要有 ResponsiveLayout.IsExpanded 属性  -->
   <Style
     x:Key="ResponsiveSimpleStackPanelStyle"
     BasedOn="{StaticResource GlobalSimpleStackPanelStyle}"
