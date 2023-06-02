@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class ColorTransformView : Page {
+public partial class ColorTransformView : ResponsivePage {
     public class SliderInfo : DependencyObject {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(SliderInfo), new PropertyMetadata(0.0));
 
