@@ -41,7 +41,7 @@ public partial class SortLinesView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public SortLinesView() {
+    public SortLinesView() : base(ResponsiveMode.Variable) {
         InitializeComponent();
     }
 

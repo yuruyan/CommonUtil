@@ -14,10 +14,6 @@
   d:DesignWidth="800"
   DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
   mc:Ignorable="d">
-  <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">600</system:Double>
-  </Page.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
@@ -37,10 +33,9 @@
     </tools:DragDropTextBox>
 
     <ui:SimpleStackPanel
+      x:Name="ControlPanel"
       Grid.Row="1"
       Margin="0,8"
-      HorizontalAlignment="Center"
-      Orientation="Horizontal"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
       <Button
         Click="TextProcessClick"
