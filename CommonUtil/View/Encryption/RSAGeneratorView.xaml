@@ -50,10 +50,10 @@
         <ui:SimpleStackPanel.Style>
           <Style BasedOn="{StaticResource {x:Type ui:SimpleStackPanel}}" TargetType="ui:SimpleStackPanel">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
                 <Setter Property="Orientation" Value="Horizontal" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
                 <Setter Property="Orientation" Value="Vertical" />
               </DataTrigger>
             </Style.Triggers>

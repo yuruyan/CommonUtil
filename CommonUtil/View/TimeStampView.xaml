@@ -87,12 +87,12 @@
             Click="TimeStampToStringClick"
             Icon="&#xe606;"
             Text="转换"
-            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
+            Visibility="{Binding ResponsiveLayout.IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
           <tools:IconButton
             Click="TimeStampToStringClick"
             Icon="&#xfbdd;"
             Text="转换"
-            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
+            Visibility="{Binding ResponsiveLayout.IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
         </Grid>
         <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding TimeStampToStringOutput}" />
       </ui:SimpleStackPanel>
@@ -111,12 +111,12 @@
             Click="StringToTimeStampClick"
             Icon="&#xe606;"
             Text="转换"
-            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
+            Visibility="{Binding ResponsiveLayout.IsExpanded, Converter={StaticResource HideIfFalseConverter}}" />
           <tools:IconButton
             Click="StringToTimeStampClick"
             Icon="&#xfbdd;"
             Text="转换"
-            Visibility="{Binding IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
+            Visibility="{Binding ResponsiveLayout.IsExpanded, Converter={StaticResource HideIfTrueConverter}}" />
         </Grid>
         <TextBox Style="{StaticResource OutputBoxStyle}" Text="{Binding StringToTimeStampOutput}" />
       </ui:SimpleStackPanel>

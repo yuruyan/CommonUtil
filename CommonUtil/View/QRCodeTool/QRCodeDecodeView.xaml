@@ -109,10 +109,10 @@
         <TextBox.Style>
           <Style BasedOn="{StaticResource GlobalTextBoxStyle}" TargetType="TextBox">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
                 <Setter Property="Margin" Value="8,0,0,0" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding IsExpanded}" Value="False">
+              <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
                 <Setter Property="Margin" Value="0,8,0,0" />
               </DataTrigger>
             </Style.Triggers>
