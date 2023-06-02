@@ -101,7 +101,7 @@
               <Style.Triggers>
                 <MultiDataTrigger>
                   <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsExpanded}" Value="False" />
+                    <Condition Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False" />
                     <!--<Condition Binding="{Binding IsExpanded2}" Value="False" />-->
                   </MultiDataTrigger.Conditions>
                   <MultiDataTrigger.Setters>
@@ -110,7 +110,7 @@
                 </MultiDataTrigger>
                 <MultiDataTrigger>
                   <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsExpanded}" Value="True" />
+                    <Condition Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True" />
                     <Condition Binding="{Binding IsExpanded2}" Value="False" />
                   </MultiDataTrigger.Conditions>
                   <MultiDataTrigger.Setters>
@@ -119,7 +119,7 @@
                 </MultiDataTrigger>
                 <MultiDataTrigger>
                   <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsExpanded}" Value="True" />
+                    <Condition Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True" />
                     <Condition Binding="{Binding IsExpanded2}" Value="True" />
                   </MultiDataTrigger.Conditions>
                   <MultiDataTrigger.Setters>
