@@ -28,7 +28,6 @@ public partial class DesktopAutomationView : ResponsivePage {
         {7, new (typeof(MouseScrollDialog)) },
         {8, new (typeof(WaitDialog)) },
     };
-    private readonly double ExpansionThreshold;
 
     /// <summary>
     /// 当前鼠标位置
@@ -77,7 +76,6 @@ public partial class DesktopAutomationView : ResponsivePage {
         // Place before InitializeComponent();
         InitAutomationItems();
         InitializeComponent();
-        ExpansionThreshold = (double)Resources["ExpansionThreshold"];
         UpdateCurrentMousePositionTimer.Tick += (_, _) => {
             var newPosition = DesktopAutomation.CurrentMousePosition;
             if (newPosition != CurrentMousePosition) {
@@ -87,11 +85,7 @@ public partial class DesktopAutomationView : ResponsivePage {
         UpdateCurrentMousePositionTimer.Start();
     }
 
-    protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        IsExpanded = ExpansionThreshold <= e.NewSize.Width;
-    }
-
-    protected override void IsExpandedPropertyChangedHandler(ResponsivePage self, DependencyPropertyChangedEventArgs e) {
+    protected override void IsExpandedPropertyChangedHandler(ResponsiveLayout self, DependencyPropertyChangedEventArgs e) {
         if (e.NewValue is true) {
             GridPanel.RowDefinitions.Clear();
             GridPanel.ColumnDefinitions.Add(new() {
