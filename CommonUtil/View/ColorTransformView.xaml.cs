@@ -317,17 +317,25 @@ public partial class ColorTransformView : ResponsivePage {
         });
     }
 
+    private object? MouseClickElement;
+
+    private void ColorItemHeaderMouseDownHandler(object sender, MouseButtonEventArgs e) {
+        MouseClickElement = sender;
+    }
+
     /// <summary>
     /// 左键单击显示 ContextMenu
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void ColorItemHeaderMouseUpHandler(object sender, MouseButtonEventArgs e) {
-        if (sender is FrameworkElement element) {
+        if (MouseClickElement == sender && sender is FrameworkElement element) {
             element.ContextMenu.PlacementTarget = element;
             element.ContextMenu.DataContext = element.DataContext;
             element.ContextMenu.IsOpen = true;
         }
+        // Clear state
+        MouseClickElement = null;
     }
 
     private void ColorItemSliderContextMenuOpenedHandler(object sender, RoutedEventArgs e) {

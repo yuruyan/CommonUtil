@@ -7,6 +7,7 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
+  xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="ColorTransformView"
   Margin="{StaticResource NavigationContentViewMargin}"
@@ -136,7 +137,8 @@
                 Width="100"
                 ContextMenu="{StaticResource ColorItemSliderContextMenu}"
                 FontSize="{DynamicResource HeaderFontSize}"
-                MouseUp="ColorItemHeaderMouseUpHandler"
+                MouseLeftButtonDown="ColorItemHeaderMouseDownHandler"
+                MouseLeftButtonUp="ColorItemHeaderMouseUpHandler"
                 Style="{StaticResource HyperLinkStyle}"
                 Text="{Binding Tag, StringFormat='{}{0}：'}" />
               <TextBox
