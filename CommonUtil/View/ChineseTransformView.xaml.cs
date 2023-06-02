@@ -64,7 +64,7 @@ public partial class ChineseTransformView : ResponsivePage {
     private CancellationTokenSource ToSimplifiedCancellationTokenSource = new();
     private CancellationTokenSource ToTraditionalCancellationTokenSource = new();
 
-    public ChineseTransformView() {
+    public ChineseTransformView() : base(ResponsiveMode.Variable) {
         SetValue(FileProcessStatusesPropertyKey, new ObservableCollection<FileProcessStatus>());
         InitializeComponent();
         // 后台加载
