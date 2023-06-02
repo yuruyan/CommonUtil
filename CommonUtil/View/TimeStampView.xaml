@@ -16,7 +16,6 @@
   Unloaded="ViewUnloadedHandler"
   mc:Ignorable="d">
   <Page.Resources>
-    <system:Double x:Key="ExpansionThreshold">800</system:Double>
     <system:Double x:Key="HeaderWidth">70</system:Double>
     <system:Double x:Key="InputWidth">220</system:Double>
     <system:Double x:Key="OutputWidth">220</system:Double>
@@ -56,6 +55,7 @@
   </Page.Resources>
 
   <ui:SimpleStackPanel
+    x:Name="ControlPanel"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"
     Orientation="Vertical"

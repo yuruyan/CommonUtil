@@ -75,7 +75,7 @@ public partial class TimeStampView : ResponsivePage {
     /// </summary>
     private readonly string MillisecondValue;
 
-    public TimeStampView() {
+    public TimeStampView() : base(ResponsiveMode.Variable) {
         SetValue(TimeStampOptionsPropertyKey, DataSet.TimeStampOptions.ToArray());
         InitializeComponent();
         #region 初始化 TimeStamp
