@@ -107,11 +107,9 @@
     <Style.Triggers>
       <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="True">
         <Setter Property="Orientation" Value="Horizontal" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
       </DataTrigger>
       <DataTrigger Binding="{Binding ResponsiveLayout.IsExpanded}" Value="False">
         <Setter Property="Orientation" Value="Vertical" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
       </DataTrigger>
     </Style.Triggers>
   </Style>
