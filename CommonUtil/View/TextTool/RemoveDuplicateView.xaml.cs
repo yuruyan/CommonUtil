@@ -49,7 +49,7 @@ public partial class RemoveDuplicateView : ResponsivePage {
         set { SetValue(FileNameProperty, value); }
     }
 
-    public RemoveDuplicateView() {
+    public RemoveDuplicateView() : base(ResponsiveMode.Variable) {
         SymbolOptions = new(DataSet.RemoveDuplicateSplitSymbolDict.Keys);
         InitializeComponent();
     }
