@@ -1,10 +1,11 @@
 ﻿namespace CommonUtil.View;
 
-public partial class RSACryptoView : ResponsivePage {
+public partial class RSACryptoView : Page {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty KeyProperty = DependencyProperty.Register("Key", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(RSACryptoView), new PropertyMetadata(false));
+    public static readonly DependencyProperty SelectedAlgorithmProperty = DependencyProperty.Register("SelectedAlgorithm", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
 
     /// <summary>
     /// 输入数据
@@ -34,6 +35,13 @@ public partial class RSACryptoView : ResponsivePage {
         get { return (bool)GetValue(IsWorkingProperty); }
         set { SetValue(IsWorkingProperty, value); }
     }
+    /// <summary>
+    /// Algorithm
+    /// </summary>
+    public string SelectedAlgorithm {
+        get { return (string)GetValue(SelectedAlgorithmProperty); }
+        set { SetValue(SelectedAlgorithmProperty, value); }
+    }
 
     public RSACryptoView() {
         InitializeComponent();
@@ -44,7 +52,7 @@ public partial class RSACryptoView : ResponsivePage {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void CopyResultClick(object sender, RoutedEventArgs e) {
+    private void CopyResultClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         Clipboard.SetDataObject(OutputText);
         MessageBoxUtils.Success("已复制");
@@ -55,7 +63,7 @@ public partial class RSACryptoView : ResponsivePage {
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ClearInputClick(object sender, RoutedEventArgs e) {
+    private void ClearInputClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
         InputText = OutputText = Key = string.Empty;
     }
@@ -98,7 +106,7 @@ public partial class RSACryptoView : ResponsivePage {
                 isEncryption ? RSACrypto.Encrypt : RSACrypto.Decrypt
             );
             return Convert.ToBase64String(func(key, Convert.FromBase64String(data), algorithm));
-        }), (Key, InputText, AlgorithmComboBox.SelectedItem as string));
+        }), (Key, InputText, SelectedAlgorithm));
     }
 
     /// <summary>
