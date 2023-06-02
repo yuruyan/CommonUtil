@@ -10,6 +10,7 @@
   <system:Double x:Key="NavigationViewOpenPaneExpansionWidth">250</system:Double>
   <system:Double x:Key="NavigationViewExpansionThresholdWidth">1100</system:Double>
   <Thickness x:Key="NavigationContentViewMargin">8</Thickness>
+  <Thickness x:Key="NavigationContentViewWithoutTopMargin">8,0,8,8</Thickness>
   <Thickness x:Key="PageMargin" Top="33" />
   <system:Double x:Key="NavigationContentListViewWidth">300</system:Double>
   <system:Double x:Key="ContentDialogMinWidth">300</system:Double>
