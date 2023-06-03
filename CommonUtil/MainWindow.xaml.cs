@@ -101,6 +101,7 @@ public partial class MainWindow : BaseWindow {
     /// Apply window background
     /// </summary>
     private void SetWindowBackground() {
+        ThemeManager.Current.SwitchToAutoTheme();
         if (WindowHelper.IsSystemSupport) {
             Background = new SolidColorBrush(Colors.Transparent);
             WindowHelper.SetBackDropStyle(this, BackdropStyle.Mica);

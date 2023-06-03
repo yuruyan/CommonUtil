@@ -53,16 +53,17 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
     /// 监听主题变化
     /// </summary>
     private void WatchThemeChanged() {
-        ThemeManager.Current.ThemeChanged += (_, _) => {
-            if (IsVisible) {
-                // 设置透明
-                Resources[ItemBackgroundBrushProxyKey] = new SolidColorBrush();
-                var brush = (SolidColorBrush)FindResource(MainContentViewBackgroundBrushKey);
-                PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
-                CurrentBackgroundColor = brush.Color;
-                MainContentViewBackgroundStoryboard.Begin();
-            }
-        };
+        ThemeChangedHandler(null, ThemeManager.Current.CurrentMode);
+        ThemeManager.Current.ThemeChanged += ThemeChangedHandler;
+
+        void ThemeChangedHandler(object? sender, ThemeMode mode) {
+            // 设置透明
+            Resources[ItemBackgroundBrushProxyKey] = new SolidColorBrush();
+            var brush = (SolidColorBrush)FindResource(MainContentViewBackgroundBrushKey);
+            PreviousBackgroundColor = ((SolidColorBrush)Background).Color;
+            CurrentBackgroundColor = brush.Color;
+            MainContentViewBackgroundStoryboard.Begin();
+        }
     }
 
     /// <summary>
