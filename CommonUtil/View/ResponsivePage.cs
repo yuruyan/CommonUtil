@@ -16,21 +16,13 @@ public class ResponsivePage : Page {
         var layout = new ResponsiveLayout(
             this,
             responsiveMode,
-            IsExpandedPropertyChangedHandler,
-            ElementSizeChangedHandler
+            IsExpandedPropertyChangedHandler
         ) {
             ExpansionThresholdKey = expansionThresholdKey,
             ControlPanelName = controlPanelName
         };
         SetValue(ResponsiveLayoutPropertyKey, layout);
     }
-
-    /// <summary>
-    /// Size changed handler
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    protected virtual void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) { }
 
     /// <summary>
     /// IsExpanded Changed

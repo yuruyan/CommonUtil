@@ -548,8 +548,12 @@ public partial class AESCryptoView : ResponsivePage {
         DecryptionCancellationTokenSource.Cancel();
     }
 
-    protected override void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
-        base.ElementSizeChangedHandler(sender, e);
+    /// <summary>
+    /// SizeChanged
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) {
         IsExpanded2 = e.NewSize.Width >= ExpansionThreshold2;
     }
 }

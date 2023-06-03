@@ -25,19 +25,16 @@ public sealed class ResponsiveLayout : DependencyObject {
     /// </summary>
     public ResponsiveMode ResponsiveMode { get; }
     public Action<ResponsiveLayout, DependencyPropertyChangedEventArgs> IsExpandedPropertyChanged { get; init; }
-    public Action<FrameworkElement, SizeChangedEventArgs> ElementSizeChanged { get; }
     public FrameworkElement Element { get; }
 
     public ResponsiveLayout(
         FrameworkElement element,
         ResponsiveMode responsiveMode,
-        Action<ResponsiveLayout, DependencyPropertyChangedEventArgs> isExpandedPropertyChanged,
-        Action<FrameworkElement, SizeChangedEventArgs> elementSizeChanged
+        Action<ResponsiveLayout, DependencyPropertyChangedEventArgs> isExpandedPropertyChanged
     ) {
         Element = element;
         ResponsiveMode = responsiveMode;
         this.IsExpandedPropertyChanged = isExpandedPropertyChanged;
-        ElementSizeChanged = elementSizeChanged;
         element.Initialized += ElementInitializedHandler;
     }
 
@@ -49,7 +46,6 @@ public sealed class ResponsiveLayout : DependencyObject {
             ExpansionThreshold = (double)Element.Resources[ExpansionThresholdKey];
             Element.SizeChanged += ElementSizeChangedFixedHandler;
         }
-        Element.SizeChanged += ElementSizeChangedHandler;
     }
 
     /// <summary>
@@ -86,13 +82,6 @@ public sealed class ResponsiveLayout : DependencyObject {
             IsExpanded = ExpandedWidth <= e.NewSize.Width;
         }
     }
-
-    /// <summary>
-    /// Size changed handler
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ElementSizeChangedHandler(object sender, SizeChangedEventArgs e) => ElementSizeChanged((FrameworkElement)sender, e);
 
     private static void IsExpandedPropertyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e) {
         if (d is ResponsiveLayout self) {
