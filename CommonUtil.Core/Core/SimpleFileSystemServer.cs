@@ -8,7 +8,7 @@ public class SimpleFileSystemServer {
     /// <summary>
     /// Server App 路径
     /// </summary>
-    public const string AppPath = "SimpleFileSystemServer.exe";
+    private static readonly string AppPath = Path.Combine(CommonUtils.ProcessDirectory, "SimpleFileSystemServer.exe");
     /// <summary>
     /// 最长未响应次数，超过此值则认为服务器已经关闭
     /// </summary>
@@ -17,11 +17,6 @@ public class SimpleFileSystemServer {
     /// 心跳间隔时间
     /// </summary>
     private const int HeartBeatInterval = 250;
-    /// <summary>
-    /// 端口
-    /// </summary>
-    public int Port { get; }
-    public string WordkingDirectory { get; }
     /// <summary>
     /// 服务器停止事件
     /// </summary>
@@ -46,6 +41,11 @@ public class SimpleFileSystemServer {
     /// 当前未响应次数
     /// </summary>
     private static byte NoResponseTimes;
+    /// <summary>
+    /// 端口
+    /// </summary>
+    public int Port { get; }
+    public string WordkingDirectory { get; }
     /// <summary>
     /// 进程是否启动
     /// </summary>
@@ -111,10 +111,17 @@ public class SimpleFileSystemServer {
         if (ServerProcess is not null) {
             return true;
         }
-        ServerProcess = Process.Start(new ProcessStartInfo {
-            FileName = AppPath,
-            Arguments = $"urls=http://*:{Port} rootDir=\"{WordkingDirectory}\"",
-            CreateNoWindow = true
+        // Check file if exists
+        if (!File.Exists(AppPath)) {
+            MessageBoxUtils.Error($"文件 '{Path.GetFileName(AppPath)}' 不存在");
+            return false;
+        }
+        ServerProcess = TaskUtils.Try(() => {
+            return Process.Start(new ProcessStartInfo {
+                FileName = AppPath,
+                Arguments = $"urls=http://*:{Port} rootDir=\"{WordkingDirectory}\"",
+                CreateNoWindow = true
+            });
         });
         if (ServerProcess is null) {
             return false;
