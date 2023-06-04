@@ -200,6 +200,16 @@
             路径分隔符正则
             </summary>
         </member>
+        <member name="P:CommonTools.Utils.CommonUtils.ProcessPath">
+            <summary>
+            Current process path
+            </summary>
+        </member>
+        <member name="P:CommonTools.Utils.CommonUtils.ProcessDirectory">
+            <summary>
+            Current process directory
+            </summary>
+        </member>
         <member name="M:CommonTools.Utils.CommonUtils.Copy``1(``0)">
             <summary>
             拷贝对象
