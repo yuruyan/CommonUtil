@@ -39,6 +39,7 @@ public partial class MainContentView : Page, INavigationRequest<NavigationReques
         SetValue(MenuItemsKey, new ObservableCollection<ToolMenuItem>());
         this.SetLoadedOnceEventHandler(InitializeLoadedHandler);
         InitializeComponent();
+        Background = new SolidColorBrush(Colors.Transparent);
         #region 设置 Storyboard
         MainContentViewBackgroundStoryboard = (Storyboard)Resources["MainContentViewBackgroundStoryboard"];
         MainContentViewBackgroundStoryboard.Completed += (_, _) => {
