@@ -16,6 +16,21 @@
   mc:Ignorable="d">
   <Page.Resources>
     <system:Double x:Key="ExpansionThreshold">800</system:Double>
+    <ContextMenu x:Key="FoundItemContextMenu" Style="{StaticResource GlobalContextMenuStyle}">
+      <MenuItem Click="OpenFileClickHandler" Header="打开文件">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Click="OpenDirectoryClickHandler" Header="打开所在目录">
+        <MenuItem.Icon>
+          <TextBlock
+            Foreground="#f5a623"
+            Style="{StaticResource ColorIconFontStyle}"
+            Text="&#xe660;" />
+        </MenuItem.Icon>
+      </MenuItem>
+    </ContextMenu>
   </Page.Resources>
 
   <Grid>
@@ -104,7 +119,8 @@
         <!--  共多少文件  -->
         <TextBlock
           x:Name="ResultNumber"
-          FontSize="20"
+          Padding="8,0"
+          FontSize="{StaticResource HeaderFontSize}"
           FontWeight="Bold"
           Text="{Binding KeywordResults.Count, StringFormat={}{0} 条结果}"
           Visibility="Collapsed" />
@@ -123,29 +139,8 @@
         Style="{StaticResource GlobalListBoxStyle}">
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <StackPanel Width="{Binding ElementName=ResultListBox, Path=ActualWidth, Converter={StaticResource SubtractConverter}, ConverterParameter=10}" Background="Transparent">
-              <TextBlock
-                Padding="0,8"
-                FontWeight="Bold"
-                Foreground="{DynamicResource HighLightKeywordForeground}"
-                Text="{Binding Filename}" />
-              <StackPanel.ContextMenu>
-                <ContextMenu Style="{StaticResource GlobalContextMenuStyle}">
-                  <MenuItem Click="OpenFileClickHandler" Header="打开文件">
-                    <MenuItem.Icon>
-                      <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe671;" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                  <MenuItem Click="OpenDirectoryClickHandler" Header="打开所在目录">
-                    <MenuItem.Icon>
-                      <TextBlock
-                        Foreground="#f5a623"
-                        Style="{StaticResource ColorIconFontStyle}"
-                        Text="&#xe660;" />
-                    </MenuItem.Icon>
-                  </MenuItem>
-                </ContextMenu>
-              </StackPanel.ContextMenu>
+            <StackPanel Background="Transparent" ContextMenu="{StaticResource FoundItemContextMenu}">
+              <tools:FileNameIconBox Padding="0,8" FileName="{Binding Filename}" />
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>
