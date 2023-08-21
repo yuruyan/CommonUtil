@@ -88,6 +88,14 @@
             <ui:FontIcon Glyph="&#xe74f;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="MarkdownTableConversionView"
+          Content="Markdown表格生成"
+          ToolTip="Markdown表格生成">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe72c;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

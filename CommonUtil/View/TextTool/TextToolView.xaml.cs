@@ -13,6 +13,7 @@ public partial class TextToolView : Page {
         typeof(SortLinesView),
         typeof(ShuffleLinesView),
         typeof(PunctuationReplacementView),
+        typeof(MarkdownTableConversionView),
     };
 
     public TextToolView() {

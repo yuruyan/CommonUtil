@@ -153,6 +153,14 @@ public static class DataSet {
     };
 
     /// <summary>
+    /// MarkdownTableConversion 列分隔符选项
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, string> MarkdownTableConversionSplitOptionDict = PrependLineNumberSplitOptionDict.ToDictionary(
+        pair => pair.Key,
+        pair => pair.Value
+    );
+
+    /// <summary>
     /// 翻转模式选项
     /// </summary>
     public static readonly IReadOnlyDictionary<string, InversionMode> InversionModeDict = new Dictionary<string, InversionMode>() {
