@@ -15,9 +15,9 @@ public class HomeController : Controller {
         dir = PathUtils.Normalize(dir);
         // 非法访问
         if (!PathUtils.CheckPathRange(dir)) {
-            return JsonResponse<IEnumerable<FileVO>>.Forbidden;
+            return JsonResponse<IEnumerable<FileVO>>.Forbidden();
         }
-        return JsonResponse<IEnumerable<FileVO>>.Success with {
+        return JsonResponse<IEnumerable<FileVO>>.Success() with {
             Data = FileService.ListFiles(dir)
         };
     }

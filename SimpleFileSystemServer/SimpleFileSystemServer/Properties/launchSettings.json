@@ -2,7 +2,7 @@
   "profiles": {
     "SimpleFileSystemServer": {
       "commandName": "Project",
-      //"commandLineArgs": "urls=http://localhost:5000/ rootDir=e:\\temp environment=Development",
+      "commandLineArgs": "rootDir=\"f:/\"",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

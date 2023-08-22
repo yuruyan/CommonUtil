@@ -58,7 +58,7 @@ public class SimpleFileSystemServer {
     /// <param name="dir">分享目录</param>
     public SimpleFileSystemServer(int port, string dir) {
         Port = port;
-        WordkingDirectory = dir;
+        WordkingDirectory = dir.ReplaceBackSlashWithSlash();
         #region 初始化 CheckStartedTimer、HeartBeatTimer
         CheckStartedTimer = new(HeartBeatInterval);
         CheckStartedTimer.Elapsed += async (s, e) => {

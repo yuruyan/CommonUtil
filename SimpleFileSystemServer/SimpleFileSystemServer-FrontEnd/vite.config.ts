@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     cors: true,
-    proxy: {
-      "/": {
-        target: "http://localhost:5000/",
-        ws: true,
-        changeOrigin: true,
-      },
-    },
+    // proxy: {
+    //   "/": {
+    //     target: "http://localhost:5000/",
+    //     ws: true,
+    //     changeOrigin: true,
+    //   },
+    // },
   },
 });
