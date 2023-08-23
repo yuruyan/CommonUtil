@@ -8,6 +8,6 @@ public record CommandArgument {
     public EnvironmentMode EnvironmentMode { get; init; } = EnvironmentMode.Production;
 
     public CommandArgument(string rootDir) {
-        RootDir = rootDir;
+        RootDir = Path.GetFullPath(rootDir);
     }
 }
