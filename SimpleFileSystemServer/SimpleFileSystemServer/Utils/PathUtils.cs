@@ -23,7 +23,7 @@ public class PathUtils {
     /// <param name="path">文件路径，以 '/' 开头</param>
     /// <returns></returns>
     public static string GetAbsolutePath(string path) {
-        return Path.Combine(Global.Argument.RootDir, path[1..]);
+        return Path.GetFullPath(Path.Combine(Global.Argument.RootDir, path[1..]));
     }
 
     /// <summary>
