@@ -300,6 +300,15 @@
             <param name="dirPath">随机文件所在路径，默认为 <see cref="P:System.Environment.CurrentDirectory"/></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.CommonUtils.GetUniqueFileNameFor(System.String,System.UInt32)">
+            <summary>
+            获取唯一文件名称，如果已存在文件，则自动重命名
+            </summary>
+            <param name="filepath"></param>
+            <param name="autoRenameCount">重命名最大次数</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">自动重命名超过最大次数</exception>
+        </member>
         <member name="F:CommonTools.Utils.ConstantUtils.OneKbSize">
             <summary>
             1 KB 大小，以 byte 为单位
