@@ -6,6 +6,9 @@ import FileListView from "./view/FileListView.vue";
   <FileListView />
 </template>
 
-<style scoped>
-
+<style>
+/* .upload-button div.ant-upload-list {
+  max-width: 200px;
+  overflow-y: auto;
+} */
 </style>

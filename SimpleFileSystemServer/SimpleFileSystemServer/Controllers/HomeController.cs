@@ -56,7 +56,6 @@ public class HomeController : Controller {
             var filePath = Path.Combine(absDirPath, fileName);
             // 检查文件是否重复
             filePath = CommonUtils.GetUniqueFileNameFor(filePath);
-            await Console.Out.WriteLineAsync(filePath);
             using var stream = System.IO.File.OpenWrite(filePath);
             await TaskUtils.TryAsync(() => formFile.CopyToAsync(stream));
         }
