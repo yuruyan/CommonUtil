@@ -35,13 +35,6 @@ public class HomeController : Controller {
     }
 
     /// <summary>
-    /// favicon
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("/favicon.ico")]
-    public FileResult Favicon() => File(System.IO.File.OpenRead("favicon.ico"), "image/x-icon");
-
-    /// <summary>
     /// 下载文件
     /// </summary>
     /// <param name="files"></param>
