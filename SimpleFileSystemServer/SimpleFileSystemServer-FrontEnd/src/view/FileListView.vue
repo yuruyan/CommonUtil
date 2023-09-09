@@ -89,7 +89,9 @@ const handleUploadChange = (info: UploadChangeParam) => {
     message.success(`${info.file.name} file uploaded successfully`);
     changeCurrentDirectory(currentDir.value, true)
     setTimeout(() => {
-      uploadFileList.value.splice(0, uploadFileList.value.length)
+      uploadFileList.value.splice(
+        (uploadFileList.value as string[]).indexOf(info.file.name), 1
+      )
     }, 3000);
   } else if (info.file.status === 'error') {
     message.error(`${info.file.name} file upload failed.`);

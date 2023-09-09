@@ -1,0 +1,1 @@
+> 在发布 CommonUtil 时，选择生成单个文件，CommonUtil.Data\Resources\MenuItems 文件夹不会被打包，需要手动将其复制到 Resources 目录下
