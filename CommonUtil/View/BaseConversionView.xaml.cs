@@ -73,7 +73,11 @@ public partial class BaseConversionView : ResponsivePage {
                 continue;
             }
             try {
-                sb.Append($"{BaseConversion.ConvertFromDecimal(BaseConversion.ConvertToDecimal(number, SourceBaseIndex + BaseOptions[0]), TargetBaseIndex + BaseOptions[0])}\n");
+                var result = BaseConversion.ConvertFromDecimal(
+                    BaseConversion.ConvertToDecimal(number, SourceBaseIndex + BaseOptions[0]),
+                    TargetBaseIndex + BaseOptions[0]
+                );
+                sb.Append($"{result}\n");
             } catch {
                 sb.Append('\n');
             }
