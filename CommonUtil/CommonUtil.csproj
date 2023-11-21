@@ -1,221 +1,221 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.17763.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <Platforms>x64</Platforms>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
-    <StartupObject>CommonUtil.App</StartupObject>
-    <LangVersion>11.0</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<Platforms>x64</Platforms>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<StartupObject>CommonUtil.App</StartupObject>
+		<LangVersion>11.0</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<WarningLevel>7</WarningLevel>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<WarningLevel>7</WarningLevel>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Update="Config\AppConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Nlog.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Config\AppConfig.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Nlog.config">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
-    <ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
-    <PackageReference Include="PInvoke.User32" Version="0.7.124" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CommonUtil.Core\CommonUtil.Core.csproj" />
+		<ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
+		<PackageReference Include="PInvoke.User32" Version="0.7.124" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="favicon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="favicon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="CommonTools">
-      <HintPath>..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
-    </Reference>
-    <Reference Include="CommonUITools">
-      <HintPath>..\CommonUtil.Core\Lib\Net7\CommonUITools.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="CommonTools">
+			<HintPath>..\CommonUtil.Core\Lib\Net8\CommonTools.dll</HintPath>
+		</Reference>
+		<Reference Include="CommonUITools">
+			<HintPath>..\CommonUtil.Core\Lib\Net8\CommonUITools.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="View\Downloader\DownloaderView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\CodeColorizationView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\FileMergeSplit\FileMergeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\QRCodeTool\GeolocationQRCodeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\QRCodeTool\MailQRCodeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\QRCodeTool\WIFIQRCodeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\QRCodeTool\SMSQRCodeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\TextTool\PunctuationReplacementView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\TextTool\SortLinesView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\TextTool\InvertTextView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\TextTool\EnglishWordBracesView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\Resource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resource.resx</DependentUpon>
+		</Compile>
+		<Compile Update="View\Downloader\DownloaderView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\CodeColorizationView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\FileMergeSplit\FileMergeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\QRCodeTool\GeolocationQRCodeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\QRCodeTool\MailQRCodeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\QRCodeTool\WIFIQRCodeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\QRCodeTool\SMSQRCodeView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\TextTool\PunctuationReplacementView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\TextTool\SortLinesView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\TextTool\InvertTextView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="View\TextTool\EnglishWordBracesView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Page Update="View\Downloader\DownloaderView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\CodeColorizationView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\FileMergeSplit\FileMergeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\QRCodeTool\GeolocationQRCodeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\QRCodeTool\MailQRCodeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\QRCodeTool\WIFIQRCodeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\QRCodeTool\SMSQRCodeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomDateTimeGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomMACAddressGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomIPV6AddressGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomIPV4AddressGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomGuidGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomEmailAddressGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomEnglishWordGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomChineseWordGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomEnglishChineseNameGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomEnglishNameGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomChineseAncientNameGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomJapaneseFamilyNameGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\TextTool\PunctuationReplacementView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\TextTool\SortLinesView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\TextTool\InvertTextView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="View\TextTool\EnglishWordBracesView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="View\Downloader\DownloaderView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\CodeColorizationView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\FileMergeSplit\FileMergeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\QRCodeTool\GeolocationQRCodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\QRCodeTool\PhoneNumberQRCodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\QRCodeTool\MailQRCodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\QRCodeTool\WIFIQRCodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\QRCodeTool\SMSQRCodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomDateTimeGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomChoiceGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomMACAddressGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomIPV6AddressGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomIPV4AddressGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomGuidGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomEmailAddressGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomEnglishWordGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomChineseWordGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomEnglishChineseNameGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomEnglishNameGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomChineseAncientNameGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomJapaneseFamilyNameGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomChineseNameGeneratorView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomGeneratorWithRegexView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\TextTool\PunctuationReplacementView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\TextTool\SortLinesView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\TextTool\InvertTextView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="View\TextTool\EnglishWordBracesView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Resource.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>

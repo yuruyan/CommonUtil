@@ -1,42 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net7.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Resource Include="Resources/iconfont.ttf" />
-    <Resource Include="Resources/images/*" />
-    <None Remove="Resources\images\UTF8Encoding.png" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <Resource Include="Resources/SplashWindow.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources/iconfont.ttf" />
+		<Resource Include="Resources/images/*" />
+		<None Remove="Resources\images\UTF8Encoding.png" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<Resource Include="Resources/SplashWindow.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources\DataResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DataResource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\DataResource.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>DataResource.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\DataResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DataResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\DataResource.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>DataResource.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\MenuItems\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\RandomDataSource.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Resources\MenuItems\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Resources\RandomDataSource.zip">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

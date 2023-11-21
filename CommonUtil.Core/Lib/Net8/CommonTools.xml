@@ -212,7 +212,9 @@
         </member>
         <member name="M:CommonTools.Utils.CommonUtils.GetPathSpliterRegex">
             <remarks>
-            Pattern explanation:<br/>
+            Pattern:<br/>
+            <code>[/\\\\]</code><br/>
+            Explanation:<br/>
             <code>
             ○ Match a character in the set [/\\].<br/>
             </code>

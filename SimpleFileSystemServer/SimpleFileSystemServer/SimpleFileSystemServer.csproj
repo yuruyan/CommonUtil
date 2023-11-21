@@ -1,65 +1,65 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
-  </PropertyGroup>
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TypeScriptTarget>ESNext</TypeScriptTarget>
+	</PropertyGroup>
 
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <TypeScriptTarget>ESNext</TypeScriptTarget>
-  </PropertyGroup>
+	<PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<TypeScriptTarget>ESNext</TypeScriptTarget>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <PlatformTarget>x64</PlatformTarget>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net6.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PlatformTarget>x64</PlatformTarget>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+	</PropertyGroup>
 
-  <Choose>
-    <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))' == 'true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>..\..\CommonUtil.Core\Lib\Net7\CommonTools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(TargetFramework.StartsWith(`net6.0`))' == 'true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>..\..\CommonUtil.Core\Lib\Net6\CommonTools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+	<Choose>
+		<When Condition=" '$(TargetFramework.StartsWith(`net8.0`))' == 'true' ">
+			<ItemGroup>
+				<Reference Include="CommonTools">
+					<HintPath>..\..\CommonUtil.Core\Lib\Net8\CommonTools.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition=" '$(TargetFramework.StartsWith(`net6.0`))' == 'true' ">
+			<ItemGroup>
+				<Reference Include="CommonTools">
+					<HintPath>..\..\CommonUtil.Core\Lib\Net6\CommonTools.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+	</Choose>
 
-  <ItemGroup>
-    <Content Remove="Scripts\package.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="Scripts\package.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="favicon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="favicon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.5" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="Scripts\package.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="Scripts\package.json" />
+	</ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="node ./scripts/CopyDistToServer-AfterBuild.js $(OutDir)" />
-  </Target>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="node ./scripts/CopyDistToServer-AfterBuild.js $(OutDir)" />
+	</Target>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="node ./scripts/CopyDistToServer-BeforeBuild.js" />
-  </Target>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="node ./scripts/CopyDistToServer-BeforeBuild.js" />
+	</Target>
 
 </Project>

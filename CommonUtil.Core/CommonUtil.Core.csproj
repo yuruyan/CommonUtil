@@ -1,71 +1,71 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net7.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <PlatformTarget>x64</PlatformTarget>
-    <Platforms>x64</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="C:\Users\luxiu\.nuget\packages\windowsinput\6.4.0\contentFiles\any\netcoreapp3.1\.nuget\mouse-keyboard-hook-logo.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="C:\Users\luxiu\.nuget\packages\windowsinput\6.4.0\contentFiles\any\netcoreapp3.1\.nuget\mouse-keyboard-hook-logo.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="AvalonEdit" Version="6.2.0.78" />
-    <PackageReference Include="ColorMinePortable" Version="2.0.1" />
-    <PackageReference Include="Csv" Version="2.0.93" />
-    <PackageReference Include="Downloader" Version="3.0.3" />
-    <PackageReference Include="Flurl" Version="3.0.7" />
-    <PackageReference Include="Flurl.Http" Version="3.2.4" />
-    <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" />
-    <PackageReference Include="ModernWpfUI" Version="0.9.6" />
-    <PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="NLog" Version="5.1.2" />
-    <PackageReference Include="NPOI" Version="2.6.0" />
-    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
-    <PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
-    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-    <PackageReference Include="QRCoder" Version="1.4.3" />
-    <PackageReference Include="RandomDataGenerator.Net" Version="1.0.17" />
-    <PackageReference Include="SharpVectors" Version="1.8.1" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-    <PackageReference Include="WindowsInput" Version="6.4.0" />
-    <PackageReference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing" Version="0.16.7" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AvalonEdit" Version="6.2.0.78" />
+		<PackageReference Include="ColorMinePortable" Version="2.0.1" />
+		<PackageReference Include="Csv" Version="2.0.93" />
+		<PackageReference Include="Downloader" Version="3.0.3" />
+		<PackageReference Include="Flurl" Version="3.0.7" />
+		<PackageReference Include="Flurl.Http" Version="3.2.4" />
+		<PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" />
+		<PackageReference Include="ModernWpfUI" Version="0.9.6" />
+		<PackageReference Include="ModernWpfUI.MahApps" Version="0.9.5" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="NLog" Version="5.1.2" />
+		<PackageReference Include="NPOI" Version="2.6.0" />
+		<PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+		<PackageReference Include="PixiEditor.ColorPicker" Version="3.3.1" />
+		<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+		<PackageReference Include="QRCoder" Version="1.4.3" />
+		<PackageReference Include="RandomDataGenerator.Net" Version="1.0.17" />
+		<PackageReference Include="SharpVectors" Version="1.8.1" />
+		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+		<PackageReference Include="WindowsInput" Version="6.4.0" />
+		<PackageReference Include="ZXing.Net.Bindings.ZKWeb.System.Drawing" Version="0.16.7" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
+	</ItemGroup>
 
-  <Choose>
-    <When Condition=" '$(TargetFramework.StartsWith(`net7.0`))'=='true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>Lib\Net7\CommonTools.dll</HintPath>
-        </Reference>
-        <Reference Include="CommonUITools">
-          <HintPath>Lib\Net7\CommonUITools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(TargetFramework.StartsWith(`net6.0`))'=='true' ">
-      <ItemGroup>
-        <Reference Include="CommonTools">
-          <HintPath>Lib\Net6\CommonTools.dll</HintPath>
-        </Reference>
-        <Reference Include="CommonUITools">
-          <HintPath>Lib\Net6\CommonUITools.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+	<Choose>
+		<When Condition=" '$(TargetFramework.StartsWith(`net8.0`))'=='true' ">
+			<ItemGroup>
+				<Reference Include="CommonTools">
+					<HintPath>Lib\Net8\CommonTools.dll</HintPath>
+				</Reference>
+				<Reference Include="CommonUITools">
+					<HintPath>Lib\Net8\CommonUITools.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition=" '$(TargetFramework.StartsWith(`net6.0`))'=='true' ">
+			<ItemGroup>
+				<Reference Include="CommonTools">
+					<HintPath>Lib\Net6\CommonTools.dll</HintPath>
+				</Reference>
+				<Reference Include="CommonUITools">
+					<HintPath>Lib\Net6\CommonUITools.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+	</Choose>
 
 </Project>
