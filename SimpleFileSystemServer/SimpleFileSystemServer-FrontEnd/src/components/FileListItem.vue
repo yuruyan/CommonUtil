@@ -12,12 +12,12 @@ const fileSizeConvert = computed(() => {
     return `${size} b`;
   }
   if (size < 1024 * 1024) {
-    return `${parseInt((size / 1024).toString())} kb`;
+    return `${(size / 1024).toFixed(1)} kb`;
   }
   if (size < 1024 * 1024 * 1024) {
-    return `${parseInt((size / 1024 / 1024).toString())} mb`;
+    return `${(size / 1024 / 1024).toFixed(1)} mb`;
   }
-  return `${parseInt((size / 1024 / 1024 / 1024).toString())} gb`;
+  return `${(size / 1024 / 1024 / 1024).toFixed(1)} gb`;
 });
 const fileIconConvert = computed(() => {
   return props.fileItem!.isDir ? '#icon-open' : '#icon-file'
