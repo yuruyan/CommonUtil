@@ -94,13 +94,54 @@ public partial class LengthPartitionView : ResponsivePage {
         }
     }
 
-    private void TextPartitionClick(object sender, RoutedEventArgs e) {
+    /// <summary>
+    /// 文本处理
+    /// </summary>
+    /// <param name="length"></param>
+    private void PartStringText(int length) {
+        OutputText = string.Join('\n', LengthPartition.Split(InputText, length));
+    }
+
+    /// <summary>
+    /// 文件处理
+    /// </summary>
+    /// <param name="length"></param>
+    /// <returns></returns>
+    private async Task PartFileText(int length) {
+        var text = InputText;
+        var inputPath = FileName;
+        if (SaveFileDialog.ShowDialog() != true) {
+            return;
+        }
+        var outputPath = SaveFileDialog.FileName;
+
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            LengthPartition.FileSplit,
+            outputPath,
+            args: new object[] { inputPath, outputPath, length }
+        );
+    }
+
+    private async void TextPartitionClick(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        // 输入检查
+        if (!await UIUtils.CheckTextAndFileInputAsync(InputText, HasFile, FileName)) {
+            return;
+        }
+
         int length = (int)PartitionLength;
         if (length < 1) {
             length = 1;
         }
-        OutputText = string.Join('\n', LengthPartition.Split(InputText, length));
+        if (!HasFile) {
+            PartStringText(length);
+            return;
+        }
+        ThrottleUtils.ThrottleAsync(
+            $"{nameof(LengthPartitionView)}|{nameof(TextPartitionClick)}|{GetHashCode()}",
+            () => PartFileText(length)
+        );
     }
 
     /// <summary>
