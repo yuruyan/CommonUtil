@@ -96,6 +96,14 @@
             <ui:FontIcon Glyph="&#xe72c;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="LengthPartitionView"
+          Content="根据长度拆分文本"
+          ToolTip="根据长度拆分文本">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xeb48;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

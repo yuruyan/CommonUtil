@@ -14,6 +14,7 @@ public partial class TextToolView : Page {
         typeof(ShuffleLinesView),
         typeof(PunctuationReplacementView),
         typeof(MarkdownTableConversionView),
+        typeof(LengthPartitionView),
     };
 
     public TextToolView() {
