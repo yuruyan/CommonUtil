@@ -3,9 +3,21 @@
 /// <summary>
 /// 进制数转字符串
 /// </summary>
-static class BaseNumberStringConverter {
+public static partial class BaseNumberStringConverter {
     private const int MaxOctalNumber = 511;
     private const int MaxHexidecimalASCIINumber = 255;
+
+#if NET7_0_OR_GREATER
+    private static readonly Regex OctalNumberRegex = GetOctalNumberRegex();
+    private static readonly Regex HexidecimalASCIINumberRegex = GetHexidecimalASCIINumberRegex();
+    private static readonly Regex HexidecimalUnicodeNumberRegex = GetHexidecimalUnicodeNumberRegex();
+    private static readonly Regex HexidecimalFullUnicodeNumberRegex = GetHexidecimalFullUnicodeNumberRegex();
+#else
+    private static readonly Regex OctalNumberRegex = new(@"\\(?<number>\d{1,3})");
+    private static readonly Regex HexidecimalASCIINumberRegex = new(@"\\x(?<number>[a-f0-9]{1,2})");
+    private static readonly Regex HexidecimalUnicodeNumberRegex = new(@"\\u(?<number>[a-f0-9]{1,4})");
+    private static readonly Regex HexidecimalFullUnicodeNumberRegex = new(@"\\U(?<number>[a-f0-9]{1,8})");
+#endif
 
     /// <summary>
     /// 字符串转 8 进制数字
@@ -32,6 +44,20 @@ static class BaseNumberStringConverter {
             }
         }
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// 8 进制数字转字符串
+    /// </summary>
+    /// <param name="number">8 进制数字，如 \123\456</param>
+    /// <returns></returns>
+    public static string ConvertFromOctalNumber(string number) {
+        var values = OctalNumberRegex
+            .Matches(number)
+            .Select(m => (char)Convert.ToInt32(
+                m.Groups["number"].Value, 8
+            ));
+        return string.Join("", values);
     }
 
     /// <summary>
@@ -62,6 +88,20 @@ static class BaseNumberStringConverter {
     }
 
     /// <summary>
+    /// 16 进制数字转字符串
+    /// </summary>
+    /// <param name="number">16 进制数字，如 \x12\xab</param>
+    /// <returns></returns>
+    public static string ConvertFromHexASCIINumber(string number) {
+        var values = HexidecimalASCIINumberRegex
+            .Matches(number)
+            .Select(m => (char)Convert.ToInt32(
+                m.Groups["number"].Value, 16
+            ));
+        return string.Join("", values);
+    }
+
+    /// <summary>
     /// Unicode 字符串转 16 进制数字
     /// </summary>
     /// <param name="text">Unicode 字符串</param>
@@ -81,6 +121,20 @@ static class BaseNumberStringConverter {
             }
         }
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// 16 进制 Unicode 数字转字符串
+    /// </summary>
+    /// <param name="number">16 进制 Unicode 数字，如 \u1234\uabcd</param>
+    /// <returns></returns>
+    public static string ConvertFromHexUnicodeNumber(string number) {
+        var values = HexidecimalUnicodeNumberRegex
+            .Matches(number)
+            .Select(m => (char)Convert.ToInt32(
+                m.Groups["number"].Value, 16
+            ));
+        return string.Join("", values);
     }
 
     /// <summary>
@@ -118,6 +172,27 @@ static class BaseNumberStringConverter {
     }
 
     /// <summary>
+    /// 16 进制 FullUnicode 数字转字符串
+    /// </summary>
+    /// <param name="number">16 进制 FullUnicode 数字，如 \U12345\Uabcdef</param>
+    /// <returns></returns>
+    public static string ConvertFromHexFullUnicodeNumber(string number) {
+        var numbers = HexidecimalFullUnicodeNumberRegex
+            .Matches(number)
+            .Select(m => m.Groups["number"].Value.PadLeft(8, '0'))
+            .ToArray();
+        var data = new byte[numbers.Length << 2];
+        int i = 0;
+        foreach (var item in numbers) {
+            data[i++] = Convert.ToByte(item[6..8], 16);
+            data[i++] = Convert.ToByte(item[4..6], 16);
+            data[i++] = Convert.ToByte(item[2..4], 16);
+            data[i++] = Convert.ToByte(item[0..2], 16);
+        }
+        return Encoding.UTF32.GetString(data);
+    }
+
+    /// <summary>
     /// 检查字符是否在有效范围内
     /// </summary>
     /// <param name="chars"></param>
@@ -131,4 +206,15 @@ static class BaseNumberStringConverter {
         }
         return true;
     }
+
+#if NET7_0_OR_GREATER
+    [GeneratedRegex(@"\\(?<number>\d{1,3})")]
+    private static partial Regex GetOctalNumberRegex();
+    [GeneratedRegex(@"\\x(?<number>[a-f0-9]{1,2})")]
+    private static partial Regex GetHexidecimalASCIINumberRegex();
+    [GeneratedRegex(@"\\u(?<number>[a-f0-9]{1,4})")]
+    private static partial Regex GetHexidecimalUnicodeNumberRegex();
+    [GeneratedRegex(@"\\U(?<number>[a-f0-9]{1,8})")]
+    private static partial Regex GetHexidecimalFullUnicodeNumberRegex();
+#endif
 }
