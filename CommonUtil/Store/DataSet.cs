@@ -144,10 +144,10 @@ public static class DataSet {
     /// 进制字符串转换
     /// </summary>
     public static readonly IReadOnlyDictionary<string, (BaseNumberStringConverter.ConvertFromNumber, BaseNumberStringConverter.ConvertToNumber)> BaseNumberConversionOptionDict = new Dictionary<string, (BaseNumberStringConverter.ConvertFromNumber, BaseNumberStringConverter.ConvertToNumber)>() {
-        {"八进制", (BaseNumberStringConverter.ConvertFromOctalNumber, BaseNumberStringConverter.ConvertToOctalNumber) },
-        {"十六进制ASCII", (BaseNumberStringConverter.ConvertFromHexASCIINumber, BaseNumberStringConverter.ConvertToHexASCIINumber) },
-        {"十六进制2字节Unicode", (BaseNumberStringConverter.ConvertFromHexUnicodeNumber, BaseNumberStringConverter.ConvertToHexUnicodeNumber) },
-        {"十六进制4字节Unicode", (BaseNumberStringConverter.ConvertFromHexFullUnicodeNumber, BaseNumberStringConverter.ConvertToHexFullUnicodeNumber) },
+        {"8进制", (BaseNumberStringConverter.ConvertFromOctalNumber, BaseNumberStringConverter.ConvertToOctalNumber) },
+        {"16进制ASCII", (BaseNumberStringConverter.ConvertFromHexASCIINumber, BaseNumberStringConverter.ConvertToHexASCIINumber) },
+        {"16进制2字节Unicode", (BaseNumberStringConverter.ConvertFromHexUnicodeNumber, BaseNumberStringConverter.ConvertToHexUnicodeNumber) },
+        {"16进制4字节Unicode", (BaseNumberStringConverter.ConvertFromHexFullUnicodeNumber, BaseNumberStringConverter.ConvertToHexFullUnicodeNumber) },
     };
 
     /// <summary>
