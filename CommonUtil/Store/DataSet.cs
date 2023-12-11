@@ -141,6 +141,16 @@ public static class DataSet {
     };
 
     /// <summary>
+    /// 进制字符串转换
+    /// </summary>
+    public static readonly IReadOnlyDictionary<string, (BaseNumberStringConverter.ConvertFromNumber, BaseNumberStringConverter.ConvertToNumber)> BaseNumberConversionOptionDict = new Dictionary<string, (BaseNumberStringConverter.ConvertFromNumber, BaseNumberStringConverter.ConvertToNumber)>() {
+        {"八进制", (BaseNumberStringConverter.ConvertFromOctalNumber, BaseNumberStringConverter.ConvertToOctalNumber) },
+        {"十六进制 ASCII", (BaseNumberStringConverter.ConvertFromHexASCIINumber, BaseNumberStringConverter.ConvertToHexASCIINumber) },
+        {"十六进制 2字节Unicode", (BaseNumberStringConverter.ConvertFromHexUnicodeNumber, BaseNumberStringConverter.ConvertToHexUnicodeNumber) },
+        {"十六进制 4字节Unicode", (BaseNumberStringConverter.ConvertFromHexFullUnicodeNumber, BaseNumberStringConverter.ConvertToHexFullUnicodeNumber) },
+    };
+
+    /// <summary>
     /// 增加行号分割文本选项
     /// </summary>
     public static readonly IReadOnlyDictionary<string, string> PrependLineNumberSplitOptionDict = new Dictionary<string, string>() {
