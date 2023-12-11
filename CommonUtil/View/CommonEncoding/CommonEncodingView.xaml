@@ -55,7 +55,15 @@
           Content="Hex 编解码"
           ToolTip="Hex 编解码">
           <ui:NavigationViewItem.Icon>
-            <ui:FontIcon Foreground="Gray" Glyph="&#xe6ee;" />
+            <ui:FontIcon Glyph="&#xe6ee;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="BaseNumberEncodingView"
+          Content="进制数字符串编解码"
+          ToolTip="进制数字符串编解码">
+          <ui:NavigationViewItem.Icon>
+            <ui:BitmapIcon ShowAsMonochrome="False" UriSource="{x:Static store:ImagePath.HexidecimalImageUri}" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>

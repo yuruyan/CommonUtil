@@ -9,6 +9,7 @@ public partial class CommonEncodingView : Page {
         typeof(UTF8EncodingView),
         typeof(URLEncodingView),
         typeof(HexEncodingView),
+        typeof(BaseNumberEncodingView),
     };
 
     public CommonEncodingView() {
