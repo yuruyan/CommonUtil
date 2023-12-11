@@ -7,6 +7,9 @@ public static partial class BaseNumberStringConverter {
     private const int MaxOctalNumber = 511;
     private const int MaxHexidecimalASCIINumber = 255;
 
+    public delegate string ConvertToNumber(string text, bool padding = false);
+    public delegate string ConvertFromNumber(string number);
+
 #if NET7_0_OR_GREATER
     private static readonly Regex OctalNumberRegex = GetOctalNumberRegex();
     private static readonly Regex HexidecimalASCIINumberRegex = GetHexidecimalASCIINumberRegex();
