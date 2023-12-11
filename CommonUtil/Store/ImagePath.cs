@@ -9,6 +9,7 @@ internal static class ImagePath {
     public static readonly Uri MessageImageUri = GetUri("Message.png");
     public static readonly Uri GMailImageUri = GetUri("GMail.png");
     public static readonly Uri PhoneCallImageUri = GetUri("PhoneCall.png");
+    public static readonly Uri HexidecimalImageUri = GetUri("Hexidecimal.png");
 
     private static Uri GetUri(string imageName) => new($"{Global.ImageSource}{imageName}", UriKind.Relative);
 }
