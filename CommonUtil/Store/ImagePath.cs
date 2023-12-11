@@ -1,12 +1,14 @@
 ﻿namespace CommonUtil.Store;
 
 internal static class ImagePath {
-    public static readonly Uri JapaneseSymbolImageUri = new($"{Global.ImageSource}JapaneseSymbol.png", UriKind.Relative);
-    public static readonly Uri UTF8ImageUri = new($"{Global.ImageSource}UTF8Encoding.png", UriKind.Relative);
-    public static readonly Uri Base64ImageUri = new($"{Global.ImageSource}base64.png", UriKind.Relative);
-    public static readonly Uri WIFIImageUri = new($"{Global.ImageSource}WIFI.png", UriKind.Relative);
-    public static readonly Uri LocationImageUri = new($"{Global.ImageSource}Location.png", UriKind.Relative);
-    public static readonly Uri MessageImageUri = new($"{Global.ImageSource}Message.png", UriKind.Relative);
-    public static readonly Uri GMailImageUri = new($"{Global.ImageSource}GMail.png", UriKind.Relative);
-    public static readonly Uri PhoneCallImageUri = new($"{Global.ImageSource}PhoneCall.png", UriKind.Relative);
+    public static readonly Uri JapaneseSymbolImageUri = GetUri("JapaneseSymbol.png");
+    public static readonly Uri UTF8ImageUri = GetUri("UTF8Encoding.png");
+    public static readonly Uri Base64ImageUri = GetUri("base64.png");
+    public static readonly Uri WIFIImageUri = GetUri("WIFI.png");
+    public static readonly Uri LocationImageUri = GetUri("Location.png");
+    public static readonly Uri MessageImageUri = GetUri("Message.png");
+    public static readonly Uri GMailImageUri = GetUri("GMail.png");
+    public static readonly Uri PhoneCallImageUri = GetUri("PhoneCall.png");
+
+    private static Uri GetUri(string imageName) => new($"{Global.ImageSource}{imageName}", UriKind.Relative);
 }
