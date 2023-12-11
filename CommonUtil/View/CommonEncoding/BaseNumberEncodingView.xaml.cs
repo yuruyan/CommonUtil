@@ -6,7 +6,16 @@ public partial class BaseNumberEncodingView : ResponsivePage {
     public static readonly DependencyProperty InputTextProperty = DependencyProperty.Register("InputText", typeof(string), typeof(BaseNumberEncodingView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(BaseNumberEncodingView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty ConversionOptionsProperty = DependencyProperty.Register("ConversionOptions", typeof(Dictionary<string, (BaseNumberStringConverter.ConvertFromNumber, BaseNumberStringConverter.ConvertToNumber)>), typeof(BaseNumberEncodingView), new PropertyMetadata());
+    public static readonly DependencyProperty SelectedConversionOptionProperty = DependencyProperty.Register("SelectedConversionOption", typeof(string), typeof(BaseNumberEncodingView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty IsPaddingLeftProperty = DependencyProperty.Register("IsPaddingLeft", typeof(bool), typeof(BaseNumberEncodingView), new PropertyMetadata(true));
 
+    /// <summary>
+    /// 选中的 ConversionOption
+    /// </summary>
+    public string SelectedConversionOption {
+        get { return (string)GetValue(SelectedConversionOptionProperty); }
+        set { SetValue(SelectedConversionOptionProperty, value); }
+    }
     /// <summary>
     /// 输入文本
     /// </summary>
@@ -20,6 +29,13 @@ public partial class BaseNumberEncodingView : ResponsivePage {
     public string OutputText {
         get { return (string)GetValue(OutputTextProperty); }
         set { SetValue(OutputTextProperty, value); }
+    }
+    /// <summary>
+    /// 左侧填充
+    /// </summary>
+    public bool IsPaddingLeft {
+        get { return (bool)GetValue(IsPaddingLeftProperty); }
+        set { SetValue(IsPaddingLeftProperty, value); }
     }
     /// <summary>
     /// 转换模式
@@ -58,20 +74,22 @@ public partial class BaseNumberEncodingView : ResponsivePage {
     /// <summary>
     /// 编码
     /// </summary>
-    private void EncodingClickHandler() {
-        try {
-        } catch (Exception error) {
-            Logger.Error(error);
-            MessageBoxUtils.Error("编码失败");
-        }
-    }
-
-    /// <summary>
-    /// 编码
-    /// </summary>
     private void EncodeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (string.IsNullOrEmpty(InputText)) {
+            MessageBoxUtils.Info("请输入文本");
+            return;
+        }
+        if (!ConversionOptions.TryGetValue(SelectedConversionOption, out var method)) {
+            return;
+        }
 
+        try {
+            OutputText = method.Item2(InputText, IsPaddingLeft) ?? string.Empty;
+        } catch (Exception error) {
+            Logger.Info(error);
+            MessageBoxUtils.Error("编码失败");
+        }
     }
 
     /// <summary>
@@ -79,7 +97,20 @@ public partial class BaseNumberEncodingView : ResponsivePage {
     /// </summary>
     private void DecodeClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
+        if (string.IsNullOrEmpty(InputText)) {
+            MessageBoxUtils.Info("请输入文本");
+            return;
+        }
+        if (!ConversionOptions.TryGetValue(SelectedConversionOption, out var method)) {
+            return;
+        }
 
+        try {
+            OutputText = method.Item1(InputText) ?? string.Empty;
+        } catch (Exception error) {
+            Logger.Info(error);
+            MessageBoxUtils.Error("解码失败");
+        }
     }
 }
 

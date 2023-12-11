@@ -5,6 +5,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:system="clr-namespace:System;assembly=mscorlib"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="BaseNumberEncodingView"
@@ -33,7 +34,15 @@
           Name="ConversionOptionsComboBox"
           VerticalAlignment="Center"
           ItemsSource="{Binding ConversionOptions.Keys}"
-          SelectedIndex="0" />
+          SelectedIndex="0"
+          SelectedValue="{Binding SelectedConversionOption, Mode=OneWayToSource}" />
+        <StackPanel Margin="8,0" Orientation="Horizontal">
+          <StackPanel.Resources>
+            <system:Double x:Key="ToggleSwitchThemeMinWidth">30</system:Double>
+          </StackPanel.Resources>
+          <TextBlock Text="左侧填充：" />
+          <ui:ToggleSwitch IsOn="{Binding IsPaddingLeft}" Style="{StaticResource ToggleSwitchNoContentStyle}" />
+        </StackPanel>
       </StackPanel>
       <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <tools:IconButton
