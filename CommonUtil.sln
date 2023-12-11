@@ -5,14 +5,10 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil", "CommonUtil\CommonUtil.csproj", "{F483C7B6-18B0-4710-8EB3-CDDB22F7825D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{EF1E90A1-5390-424A-9E2D-D8B61724E862}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{566ECEA7-7059-4CB4-9808-DA543A7FF2A9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWpfApp", "TestWpfApp\TestWpfApp.csproj", "{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtil.CoreTests", "CommonUtil.CoreTests\CommonUtil.CoreTests.csproj", "{8F884D85-1D43-4368-B745-0DE472258651}"
 EndProject
@@ -43,16 +39,6 @@ Global
 		{F483C7B6-18B0-4710-8EB3-CDDB22F7825D}.Release|Any CPU.ActiveCfg = Release|x64
 		{F483C7B6-18B0-4710-8EB3-CDDB22F7825D}.Release|x64.ActiveCfg = Release|x64
 		{F483C7B6-18B0-4710-8EB3-CDDB22F7825D}.Release|x64.Build.0 = Release|x64
-		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Debug|x64.Build.0 = Debug|Any CPU
-		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Release|Any CPU.ActiveCfg = Release|x64
-		{EF1E90A1-5390-424A-9E2D-D8B61724E862}.Release|x64.ActiveCfg = Release|Any CPU
-		{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}.Debug|x64.Build.0 = Debug|Any CPU
-		{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}.Release|Any CPU.ActiveCfg = Release|x64
-		{3A7B690E-6E50-41CA-9FF7-4A8ED121CCDD}.Release|x64.ActiveCfg = Release|Any CPU
 		{8F884D85-1D43-4368-B745-0DE472258651}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{8F884D85-1D43-4368-B745-0DE472258651}.Debug|x64.ActiveCfg = Debug|x64
 		{8F884D85-1D43-4368-B745-0DE472258651}.Release|Any CPU.ActiveCfg = Release|x64
