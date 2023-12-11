@@ -24,10 +24,9 @@
     <TextBox Style="{StaticResource MultilineTextBoxStyle}" Text="{Binding InputText}" />
     <!--  Control  -->
     <ui:SimpleStackPanel
-      x:Name="ControlPanel"
       Grid.Row="1"
       Margin="0,8,0,8"
-      Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+      Orientation="Vertical">
       <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
         <TextBlock Text="模式：" />
         <ComboBox
@@ -44,26 +43,28 @@
           <ui:ToggleSwitch IsOn="{Binding IsPaddingLeft}" Style="{StaticResource ToggleSwitchNoContentStyle}" />
         </StackPanel>
       </StackPanel>
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <tools:IconButton
-          Click="EncodeClickHandler"
-          Icon="&#xe63e;"
-          Text="编码" />
-        <tools:IconButton
-          Click="DecodeClickHandler"
-          Icon="&#xe63e;"
-          Text="解码" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <tools:IconButton
-          Click="CopyResultClick"
-          Icon="&#xe6ef;"
-          Text="复制结果" />
-        <tools:IconButton
-          Click="ClearInputClick"
-          Icon="&#xe680;"
-          Style="{StaticResource GlobalErrorButtonStyle}"
-          Text="清空输入" />
+      <ui:SimpleStackPanel x:Name="ControlPanel" Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
+        <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+          <tools:IconButton
+            Click="EncodeClickHandler"
+            Icon="&#xe63e;"
+            Text="编码" />
+          <tools:IconButton
+            Click="DecodeClickHandler"
+            Icon="&#xe63e;"
+            Text="解码" />
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+          <tools:IconButton
+            Click="CopyResultClick"
+            Icon="&#xe6ef;"
+            Text="复制结果" />
+          <tools:IconButton
+            Click="ClearInputClick"
+            Icon="&#xe680;"
+            Style="{StaticResource GlobalErrorButtonStyle}"
+            Text="清空输入" />
+        </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
     <!--  Output  -->
