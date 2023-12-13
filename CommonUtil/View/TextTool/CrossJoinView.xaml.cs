@@ -13,6 +13,10 @@ public partial class CrossJoinView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(CrossJoinView), new PropertyMetadata(""));
     public static readonly DependencyProperty DataListProperty = DependencyProperty.Register("DataList", typeof(ObservableCollection<SimpleText>), typeof(CrossJoinView), new PropertyMetadata());
+    private readonly SaveFileDialog SaveFileDialog = new() {
+        Title = "保存文件",
+        Filter = "文本文件|*.txt|All Files|*.*"
+    };
 
     /// <summary>
     /// 数据列表
@@ -69,8 +73,31 @@ public partial class CrossJoinView : ResponsivePage {
             var dataList = DataList.Select(
                 item => item.Text.ReplaceLineFeedWithLinuxStyle().Split('\n', StringSplitOptions.RemoveEmptyEntries)
             ).ToList();
+            var multiply = dataList.Aggregate(1, (multiply, list) => multiply * list.Length, value => value);
+            var writeToFile = false;
+            var filepath = string.Empty;
+            // 数值过大，渲染会卡顿，则写入文件
+            if (multiply >= 50000) {
+                writeToFile = true;
+                if (SaveFileDialog.ShowDialog() != true) {
+                    return;
+                }
+                filepath = SaveFileDialog.FileName;
+            }
             var result = await Task.Run(() => CrossJoin.Join(dataList));
-            OutputText = string.Join("\n", result);
+            if (!writeToFile) {
+                OutputText = string.Join("\n", result);
+                return;
+            }
+            try {
+                File.WriteAllLines(filepath, result);
+                MessageBoxUtils.NotifySuccess("保存成功", "点击打开", callback: () => {
+                    filepath.OpenFileInExplorerAsync();
+                });
+            } catch (Exception error) {
+                Logger.Info(error);
+                MessageBoxUtils.Error("写入文件失败");
+            }
         });
     }
 
