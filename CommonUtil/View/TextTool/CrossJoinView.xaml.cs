@@ -9,6 +9,7 @@ public partial class CrossJoinView : ResponsivePage {
             set { SetValue(TextProperty, value); }
         }
     }
+
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(CrossJoinView), new PropertyMetadata(""));
     public static readonly DependencyProperty DataListProperty = DependencyProperty.Register("DataList", typeof(ObservableCollection<SimpleText>), typeof(CrossJoinView), new PropertyMetadata());
@@ -64,10 +65,13 @@ public partial class CrossJoinView : ResponsivePage {
     /// <param name="e"></param>
     private void CrossJoinClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        var result = CrossJoin.Join(DataList.Select(
-            item => item.Text.ReplaceLineFeedWithLinuxStyle().Split('\n', StringSplitOptions.RemoveEmptyEntries)
-        ));
-        OutputText = string.Join("\n", result);
+        ThrottleUtils.ThrottleAsync($"{nameof(CrossJoinView)}|{nameof(CrossJoinClickHandler)}|{GetHashCode()}", async () => {
+            var dataList = DataList.Select(
+                item => item.Text.ReplaceLineFeedWithLinuxStyle().Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            ).ToList();
+            var result = await Task.Run(() => CrossJoin.Join(dataList));
+            OutputText = string.Join("\n", result);
+        });
     }
 
     /// <summary>
