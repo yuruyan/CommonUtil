@@ -1,6 +1,6 @@
 ﻿namespace CommonUtil.View;
 
-public partial class CrossJoinView : Page {
+public partial class CrossJoinView : ResponsivePage {
     public class SimpleText : DependencyObject {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SimpleText), new PropertyMetadata(string.Empty));
 
@@ -28,7 +28,7 @@ public partial class CrossJoinView : Page {
         set { SetValue(OutputTextProperty, value); }
     }
 
-    public CrossJoinView() {
+    public CrossJoinView() : base(ResponsiveMode.Variable) {
         DataList = new() { new() };
         InitializeComponent();
     }
