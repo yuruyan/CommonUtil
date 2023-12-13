@@ -89,6 +89,9 @@
 		<Compile Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
+		<Compile Update="View\TextTool\CrossJoinView.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
 		<Compile Update="View\TextTool\PunctuationReplacementView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
@@ -195,6 +198,9 @@
 		<Page Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml">
 			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="View\TextTool\CrossJoinView.xaml">
+		  <SubType>Designer</SubType>
 		</Page>
 		<Page Update="View\TextTool\PunctuationReplacementView.xaml">
 			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

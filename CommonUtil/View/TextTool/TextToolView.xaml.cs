@@ -15,6 +15,7 @@ public partial class TextToolView : Page {
         typeof(PunctuationReplacementView),
         typeof(MarkdownTableConversionView),
         typeof(LengthPartitionView),
+        typeof(CrossJoinView),
     };
 
     public TextToolView() {

@@ -104,6 +104,14 @@
             <ui:FontIcon Glyph="&#xeb48;" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="CrossJoinView"
+          Content="笛卡尔积"
+          ToolTip="笛卡尔积">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe837;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>
