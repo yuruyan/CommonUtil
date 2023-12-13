@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:tools="wpf-common-ui-tools"
@@ -68,6 +69,10 @@
     <ListBox
       x:Name="DataListBox"
       Grid.Row="1"
+      dd:DragDrop.DragDropCopyKeyState="ControlKey"
+      dd:DragDrop.IsDragSource="True"
+      dd:DragDrop.IsDropTarget="True"
+      dd:DragDrop.UseDefaultDragAdorner="True"
       ItemsSource="{Binding DataList}"
       SelectionMode="Extended">
       <ListBox.ItemContainerStyle>

@@ -90,7 +90,7 @@
 			<SubType>Code</SubType>
 		</Compile>
 		<Compile Update="View\TextTool\CrossJoinView.xaml.cs">
-		  <SubType>Code</SubType>
+			<SubType>Code</SubType>
 		</Compile>
 		<Compile Update="View\TextTool\PunctuationReplacementView.xaml.cs">
 			<SubType>Code</SubType>
@@ -200,7 +200,7 @@
 			<SubType>Designer</SubType>
 		</Page>
 		<Page Update="View\TextTool\CrossJoinView.xaml">
-		  <SubType>Designer</SubType>
+			<SubType>Designer</SubType>
 		</Page>
 		<Page Update="View\TextTool\PunctuationReplacementView.xaml">
 			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
