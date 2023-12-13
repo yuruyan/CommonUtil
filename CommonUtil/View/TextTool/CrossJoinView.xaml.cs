@@ -72,7 +72,9 @@ public partial class CrossJoinView : ResponsivePage {
         ThrottleUtils.ThrottleAsync($"{nameof(CrossJoinView)}|{nameof(CrossJoinClickHandler)}|{GetHashCode()}", async () => {
             var dataList = DataList.Select(
                 item => item.Text.ReplaceLineFeedWithLinuxStyle().Split('\n', StringSplitOptions.RemoveEmptyEntries)
-            ).ToList();
+            )
+            .Where(list => list.Length > 0)
+            .ToList();
             var multiply = dataList.Aggregate(1, (multiply, list) => multiply * list.Length, value => value);
             var writeToFile = false;
             var filepath = string.Empty;
