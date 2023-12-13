@@ -109,7 +109,7 @@
           Content="笛卡尔积"
           ToolTip="笛卡尔积">
           <ui:NavigationViewItem.Icon>
-            <ui:FontIcon Glyph="&#xe837;" />
+            <ui:FontIcon Glyph="&#xe837;" Opacity="0.6" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
