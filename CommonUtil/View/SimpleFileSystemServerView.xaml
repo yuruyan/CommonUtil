@@ -53,15 +53,31 @@
         Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}" />
     </Grid>
     <!--  分享链接  -->
-    <StackPanel
-      HorizontalAlignment="Center"
-      Orientation="Horizontal"
-      Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}">
+    <Grid HorizontalAlignment="Center" Visibility="{Binding IsServerStarted, Converter={StaticResource HideIfFalseConverter}}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="auto" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
       <TextBlock Text="URL：" />
-      <TextBox
-        BorderThickness="0"
-        IsReadOnly="True"
-        Text="{Binding ServerURL}" />
-    </StackPanel>
+      <ListBox Grid.Column="1" ItemsSource="{Binding IPAddresses}">
+        <ListBox.Resources>
+          <ContextMenu x:Key="IPAddressItemContextMenu">
+            <MenuItem Click="CopyIPAddressClickHandler" Header="复制">
+              <MenuItem.Icon>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xe6ef;" />
+              </MenuItem.Icon>
+            </MenuItem>
+          </ContextMenu>
+        </ListBox.Resources>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock
+              Padding="8"
+              ContextMenu="{StaticResource IPAddressItemContextMenu}"
+              Text="{Binding}" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Grid>
   </ui:SimpleStackPanel>
 </Page>

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace CommonUtil.View;
@@ -14,6 +15,7 @@ public partial class SimpleFileSystemServerView : Page {
     public static readonly DependencyProperty IsServerStartedProperty = DependencyProperty.Register("IsServerStarted", typeof(bool), typeof(SimpleFileSystemServerView), new PropertyMetadata(false, IsServerStartedPropertyChangedHandler));
     public static readonly DependencyProperty ServerPortProperty = DependencyProperty.Register("ServerPort", typeof(int), typeof(SimpleFileSystemServerView), new PropertyMetadata(3000));
     public static readonly DependencyProperty ServerURLProperty = DependencyProperty.Register("ServerURL", typeof(string), typeof(SimpleFileSystemServerView), new PropertyMetadata(""));
+    public static readonly DependencyProperty IPAddressesProperty = DependencyProperty.Register("IPAddresses", typeof(ObservableCollection<string>), typeof(SimpleFileSystemServerView), new PropertyMetadata());
 
     /// <summary>
     /// 分享文件目录
@@ -43,6 +45,13 @@ public partial class SimpleFileSystemServerView : Page {
         get { return (string)GetValue(ServerURLProperty); }
         set { SetValue(ServerURLProperty, value); }
     }
+    /// <summary>
+    /// IP 地址
+    /// </summary>
+    public ObservableCollection<string> IPAddresses {
+        get { return (ObservableCollection<string>)GetValue(IPAddressesProperty); }
+        set { SetValue(IPAddressesProperty, value); }
+    }
 
     private SimpleFileSystemServer? SimpleFileSystemServer;
     /// <summary>
@@ -55,6 +64,7 @@ public partial class SimpleFileSystemServerView : Page {
     };
 
     public SimpleFileSystemServerView() {
+        IPAddresses = new();
         InitializeComponent();
         SharingDirectory = Directory.GetCurrentDirectory();
         this.SetLoadedOnceEventHandler(static (sender, _) => {
@@ -69,9 +79,16 @@ public partial class SimpleFileSystemServerView : Page {
             return;
         }
         if (e.NewValue is true) {
-            self.ServerURL = $"http://{NetworkUtils.GetLocalIpAddress()}:{self.ServerPort}";
-            // 复制到剪贴板
-            Clipboard.SetDataObject(self.ServerURL);
+            //self.ServerURL = $"http://{NetworkUtils.GetLocalIpAddress()}:{self.ServerPort}";
+            var ipAddresses = TaskUtils.Try(() => self.GetIPAddresses());
+            if (ipAddresses is null) {
+                MessageBoxUtils.Error("获取 IP 失败");
+            } else {
+                self.IPAddresses = new(ipAddresses.Select(ip => $"http://{ip}:{self.ServerPort}"));
+                //self.ServerURL = string.Join('\n', ipAddresses.Select(ip => $"http://{ip}:{self.ServerPort}"));
+                //// 复制到剪贴板
+                //Clipboard.SetDataObject(self.ServerURL);
+            }
             // 监听停止状态
             self.SimpleFileSystemServer!.Stopped += (s, e) => {
                 self.Dispatcher.Invoke(() => self.IsServerStarted = false);
@@ -189,6 +206,41 @@ public partial class SimpleFileSystemServerView : Page {
             return false;
         } catch {
             return true;
+        }
+    }
+
+    /// <summary>
+    /// 获取 IP 地址
+    /// </summary>
+    /// <returns></returns>
+    private List<string> GetIPAddresses() {
+        var ips = new List<string> {
+            Environment.MachineName
+        };
+        foreach (var item in NetworkInterface.GetAllNetworkInterfaces()) {
+            var addressInfo = item
+                .GetIPProperties()
+                .UnicastAddresses
+                .FirstOrDefault(info => info.Address.AddressFamily == AddressFamily.InterNetwork);
+            if (addressInfo is not null) {
+                if (addressInfo.Address.ToString() is var ip && !ip.StartsWith("169.")) {
+                    ips.Add(ip);
+                }
+            }
+        }
+        return ips;
+    }
+
+    /// <summary>
+    /// 复制链接
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void CopyIPAddressClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        if (sender.GetElementDataContext<string>() is string ip) {
+            Clipboard.SetDataObject(ip);
+            MessageBoxUtils.Success("已复制");
         }
     }
 }
