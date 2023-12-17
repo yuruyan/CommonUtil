@@ -1,18 +1,23 @@
 ﻿namespace CommonUtil.View;
 
 public partial class CrossJoinView : ResponsivePage {
-    public class SimpleText : DependencyObject {
+    public class SimpleText : DependencyObject, ICloneable {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SimpleText), new PropertyMetadata(string.Empty));
 
         public string Text {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+
+        public object Clone() => new SimpleText() {
+            Text = Text
+        };
     }
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(CrossJoinView), new PropertyMetadata(""));
-    public static readonly DependencyProperty DataListProperty = DependencyProperty.Register("DataList", typeof(ObservableCollection<SimpleText>), typeof(CrossJoinView), new PropertyMetadata());
+    private static readonly DependencyPropertyKey DataListPropertyKey = DependencyProperty.RegisterReadOnly("DataList", typeof(ObservableCollection<SimpleText>), typeof(CrossJoinView), new PropertyMetadata());
+    public static readonly DependencyProperty DataListProperty = DataListPropertyKey.DependencyProperty;
     private readonly SaveFileDialog SaveFileDialog = new() {
         Title = "保存文件",
         Filter = "文本文件|*.txt|All Files|*.*"
@@ -21,10 +26,7 @@ public partial class CrossJoinView : ResponsivePage {
     /// <summary>
     /// 数据列表
     /// </summary>
-    public ObservableCollection<SimpleText> DataList {
-        get { return (ObservableCollection<SimpleText>)GetValue(DataListProperty); }
-        set { SetValue(DataListProperty, value); }
-    }
+    public ObservableCollection<SimpleText> DataList => (ObservableCollection<SimpleText>)GetValue(DataListProperty);
     /// <summary>
     /// 输出文本
     /// </summary>
@@ -34,7 +36,9 @@ public partial class CrossJoinView : ResponsivePage {
     }
 
     public CrossJoinView() : base(ResponsiveMode.Variable) {
-        DataList = new() { new() };
+        SetValue(DataListPropertyKey, new ObservableCollection<SimpleText>() {
+            new ()
+        });
         InitializeComponent();
     }
 
