@@ -112,6 +112,14 @@
             <ui:FontIcon Glyph="&#xe837;" Opacity="0.6" />
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
+        <ui:NavigationViewItem
+          x:Name="DictionaryReplacementView"
+          Content="字典替换文本"
+          ToolTip="字典替换文本">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe636;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
       </ui:NavigationView.MenuItems>
       <ui:Frame x:Name="ContentFrame" />
     </ui:NavigationView>

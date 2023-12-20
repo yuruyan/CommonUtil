@@ -89,6 +89,9 @@
 		<Compile Update="View\RandomGenerator\RandomGeneratorWithDataSourceView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
+		<Compile Update="View\TextTool\DictionaryReplacementView.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
 		<Compile Update="View\TextTool\CrossJoinView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
