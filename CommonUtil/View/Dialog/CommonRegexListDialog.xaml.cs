@@ -1,5 +1,4 @@
-﻿using CommonUtil.Data;
-using CommonUtil.Data.Resources;
+﻿using CommonUtil.Data.Resources;
 
 namespace CommonUtil.View;
 
