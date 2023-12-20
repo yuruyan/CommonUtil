@@ -1,4 +1,6 @@
-﻿namespace CommonUtil.View;
+﻿using Csv;
+
+namespace CommonUtil.View;
 
 public partial class DictionaryReplacementView : ResponsivePage {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -87,7 +89,9 @@ public partial class DictionaryReplacementView : ResponsivePage {
     /// <param name="e"></param>
     private void ClearInputClickHandler(object sender, RoutedEventArgs e) {
         e.Handled = true;
-        OutputText = string.Empty;
+        DataInputText = DictInputText = OutputText = string.Empty;
+        DragDropDataTextBox.Clear();
+        DragDropDictTextBox.Clear();
     }
 
     /// <summary>
@@ -121,5 +125,87 @@ public partial class DictionaryReplacementView : ResponsivePage {
                 DragDropDictTextBox.Clear();
             }
         }
+    }
+
+    /// <summary>
+    /// 处理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void TextProcessClickHandler(object sender, RoutedEventArgs e) {
+        e.Handled = true;
+        // 输入检查
+        if (!await UIUtils.CheckTextAndFileInputAsync(DataInputText, HasDataFile, DataFileName)) {
+            return;
+        }
+        if (!await UIUtils.CheckTextAndFileInputAsync(DictInputText, HasDictFile, DictFileName)) {
+            return;
+        }
+        // 文本处理
+        if (!HasDataFile) {
+            StringTextProcess();
+            return;
+        }
+        ThrottleUtils.ThrottleAsync(
+            $"{nameof(DictionaryReplacementView)}|{nameof(TextProcessClickHandler)}|{GetHashCode()}",
+            FileTextProcess
+        );
+    }
+
+    /// <summary>
+    /// 文件处理
+    /// </summary>
+    /// <returns></returns>
+    private async Task FileTextProcess() {
+        var inputPath = DataFileName;
+        if (SaveFileDialog.ShowDialog() != true) {
+            return;
+        }
+        var outputPath = SaveFileDialog.FileName;
+
+        // 处理
+        await UIUtils.CreateFileProcessTask(
+            DictionaryReplacement.FileReplaceAggregate,
+            outputPath,
+            args: new object[] { inputPath, outputPath, GetReplacementDictionary() }
+        );
+    }
+
+    /// <summary>
+    /// 文本处理
+    /// </summary>
+    private void StringTextProcess() {
+        OutputText = DictionaryReplacement.ReplaceAggregate(DataInputText, GetReplacementDictionary());
+    }
+
+    /// <summary>
+    /// 获取 ReplacementDictionary
+    /// </summary>
+    /// <returns></returns>
+    private Dictionary<string, string> GetReplacementDictionary() {
+        var dict = new Dictionary<string, string>();
+        if (HasDictFile) {
+            dict = ParseCSV(TaskUtils.Try(() => File.ReadAllText(DictFileName), string.Empty)!);
+        } else {
+            dict = ParseCSV(DictInputText);
+        }
+        return dict;
+    }
+
+    /// <summary>
+    /// 解析 CSV
+    /// </summary>
+    /// <param name="csvText"></param>
+    /// <returns></returns>
+    private static Dictionary<string, string> ParseCSV(string csvText) {
+        var dict = new Dictionary<string, string>();
+        foreach (var line in CsvReader.ReadFromText(csvText)) {
+            if (line.Values.Length >= 2) {
+                dict[line.Values[0]] = line.Values[1];
+            }
+        }
+        // 移除空串
+        dict.Remove(string.Empty);
+        return dict;
     }
 }

@@ -31,20 +31,19 @@
       Margin="0,0,0,8"
       HorizontalAlignment="Center"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <Button Content="文本处理" Style="{StaticResource GlobalAccentButtonStyle}" />
-      </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-        <tools:IconButton
-          Click="CopyResultClickHandler"
-          Icon="&#xe6ef;"
-          Text="复制结果" />
-        <tools:IconButton
-          Click="ClearInputClickHandler"
-          Icon="&#xe680;"
-          Style="{StaticResource GlobalErrorButtonStyle}"
-          Text="清空输入" />
-      </ui:SimpleStackPanel>
+      <Button
+        Click="TextProcessClickHandler"
+        Content="文本处理"
+        Style="{StaticResource GlobalAccentButtonStyle}" />
+      <tools:IconButton
+        Click="CopyResultClickHandler"
+        Icon="&#xe6ef;"
+        Text="复制结果" />
+      <tools:IconButton
+        Click="ClearInputClickHandler"
+        Icon="&#xe680;"
+        Style="{StaticResource GlobalErrorButtonStyle}"
+        Text="清空输入" />
     </ui:SimpleStackPanel>
     <!--  Input  -->
     <tools:DragDropTextBox
