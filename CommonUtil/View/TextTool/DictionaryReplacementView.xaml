@@ -22,11 +22,12 @@
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
       <ColumnDefinition />
+      <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <!--  Control  -->
     <ui:SimpleStackPanel
       x:Name="ControlPanel"
-      Grid.ColumnSpan="2"
+      Grid.ColumnSpan="3"
       Margin="0,0,0,8"
       HorizontalAlignment="Center"
       Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
@@ -45,6 +46,40 @@
           Text="清空输入" />
       </ui:SimpleStackPanel>
     </ui:SimpleStackPanel>
+    <!--  Input  -->
+    <tools:DragDropTextBox
+      Name="DragDropDataTextBox"
+      Grid.Row="1"
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasDataFile, Mode=TwoWay}">
+      <tools:DragDropTextBox.TextBox>
+        <TextBox
+          ui:ControlHelper.PlaceholderText="输入文本"
+          Style="{StaticResource MultilineTextBoxStyle}"
+          Text="{Binding DataInputText}" />
+      </tools:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.FileView>
+        <tools:FileNameSizeBox FileName="{Binding DataFileName}" />
+      </tools:DragDropTextBox.FileView>
+    </tools:DragDropTextBox>
+    <!--  Input  -->
+    <tools:DragDropTextBox
+      Name="DragDropDictTextBox"
+      Grid.Row="1"
+      Grid.Column="1"
+      Margin="8,0"
+      DragDropEvent="DragDropEventHandler"
+      HasFile="{Binding HasDictFile, Mode=TwoWay}">
+      <tools:DragDropTextBox.TextBox>
+        <TextBox
+          ui:ControlHelper.PlaceholderText="字典数据，csv格式"
+          Style="{StaticResource MultilineTextBoxStyle}"
+          Text="{Binding DictInputText}" />
+      </tools:DragDropTextBox.TextBox>
+      <tools:DragDropTextBox.FileView>
+        <tools:FileNameSizeBox FileName="{Binding DictFileName}" />
+      </tools:DragDropTextBox.FileView>
+    </tools:DragDropTextBox>
     <!--  Output  -->
     <TextBox
       Grid.Row="1"
