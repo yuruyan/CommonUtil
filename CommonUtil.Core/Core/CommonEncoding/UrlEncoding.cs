@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Text.Encodings.Web;
+using System.Web;
 
 namespace CommonUtil.Core;
 
@@ -8,7 +9,7 @@ public static class UrlEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string UrlEncode(string s) => HttpUtility.UrlEncode(s);
+    public static string UrlEncode(string s) => UrlEncoder.Default.Encode(s);
 
     /// <summary>
     /// Url 编码，新增到 <paramref name="sb"/> 后面
@@ -32,7 +33,7 @@ public static class UrlEncoding {
     /// <param name="s"></param>
     /// <returns></returns>
     public static string UrlDecode(string s) {
-        return HttpUtility.UrlDecode(s);
+        return HttpUtility.UrlDecode(s, Encoding.UTF8);
     }
 
     /// <summary>
