@@ -9,7 +9,7 @@ public static class UrlEncoding {
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string UrlEncode(string s) => UrlEncoder.Default.Encode(s);
+    public static string UrlEncode(string s) => UrlEncoder.Default.Encode(s).Replace("+", "%2b");
 
     /// <summary>
     /// Url 编码，新增到 <paramref name="sb"/> 后面
