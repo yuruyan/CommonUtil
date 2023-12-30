@@ -35,7 +35,7 @@ public class HomeController : Controller {
     }
 
     /// <summary>
-    /// 下载文件
+    /// 上传文件
     /// </summary>
     /// <param name="files"></param>
     /// <returns></returns>
@@ -52,7 +52,10 @@ public class HomeController : Controller {
         var absDirPath = PathUtils.GetAbsolutePath(dir);
         foreach (var formFile in files) {
             // 检查文件名合法性
-            var fileName = InvalidFileNameCharsRegex.Replace(formFile.FileName, "");
+            var fileName = InvalidFileNameCharsRegex.Replace(Path.GetFileName(formFile.FileName), "");
+            if (string.IsNullOrEmpty(fileName)) {
+                continue;
+            }
             var filePath = Path.Combine(absDirPath, fileName);
             // 检查文件是否重复
             filePath = CommonUtils.GetUniqueFileNameFor(filePath);
