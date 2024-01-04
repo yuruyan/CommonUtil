@@ -84,8 +84,8 @@ public partial class SimpleFileSystemServerView : Page {
             if (ipAddresses is null) {
                 MessageBoxUtils.Error("获取 IP 失败");
             } else {
+                ipAddresses.Sort();
                 self.IPAddresses = new(ipAddresses.Select(ip => $"http://{ip}:{self.ServerPort}"));
-                //self.ServerURL = string.Join('\n', ipAddresses.Select(ip => $"http://{ip}:{self.ServerPort}"));
                 //// 复制到剪贴板
                 //Clipboard.SetDataObject(self.ServerURL);
             }
