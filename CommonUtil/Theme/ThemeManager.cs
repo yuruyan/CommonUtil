@@ -54,15 +54,14 @@ internal class ThemeManager : DependencyObject {
     /// 跟随系统
     /// </summary>
     public void SwitchToAutoTheme() {
+        SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
         SystemColorsHelper.SystemThemeChanged += SystemThemeChangedHandler;
         // Change theme
         SystemThemeChangedHandler(null, SystemColorsHelper.CurrentSystemTheme);
     }
 
     private void SystemThemeChangedHandler(object? sender, ThemeMode e) {
-        ThemeModeProperty.Value = e == ThemeMode.Light
-            ? ThemeMode.Light
-            : ThemeMode.Dark;
+        ThemeModeProperty.Value = e;
     }
 
     /// <summary>
