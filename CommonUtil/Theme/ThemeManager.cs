@@ -39,7 +39,7 @@ internal class ThemeManager : DependencyObject {
     /// </summary>
     public void SwitchToLightTheme() {
         SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
-        ThemeModeProperty.Value = ThemeMode.Light;
+        ThemeModeChanged(ThemeModeProperty.Value, ThemeMode.Light);
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ internal class ThemeManager : DependencyObject {
     /// </summary>
     public void SwitchToDarkTheme() {
         SystemColorsHelper.SystemThemeChanged -= SystemThemeChangedHandler;
-        ThemeModeProperty.Value = ThemeMode.Dark;
+        ThemeModeChanged(ThemeModeProperty.Value, ThemeMode.Dark);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ internal class ThemeManager : DependencyObject {
     }
 
     private void SystemThemeChangedHandler(object? sender, ThemeMode e) {
-        ThemeModeProperty.Value = e;
+        ThemeModeChanged(ThemeModeProperty.Value, e);
     }
 
     /// <summary>
