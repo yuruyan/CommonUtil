@@ -9,15 +9,15 @@ const props = defineProps({
 const fileSizeConvert = computed(() => {
   const size = props.fileItem!.fileSize;
   if (size < 1024) {
-    return `${size} b`;
+    return `${size} B`;
   }
   if (size < 1024 * 1024) {
-    return `${(size / 1024).toFixed(1)} kb`;
+    return `${(size / 1024).toFixed(1)} KB`;
   }
   if (size < 1024 * 1024 * 1024) {
-    return `${(size / 1024 / 1024).toFixed(1)} mb`;
+    return `${(size / 1024 / 1024).toFixed(1)} MB`;
   }
-  return `${(size / 1024 / 1024 / 1024).toFixed(1)} gb`;
+  return `${(size / 1024 / 1024 / 1024).toFixed(1)} GB`;
 });
 const fileIconConvert = computed(() => {
   return props.fileItem!.isDir ? '#icon-open' : '#icon-file'
