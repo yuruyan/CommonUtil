@@ -94,10 +94,10 @@
             Text="清空输入" />
         </ui:SimpleStackPanel>
       </ui:SimpleStackPanel>
-      <ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+      <!--<ui:SimpleStackPanel HorizontalAlignment="Right" Orientation="Horizontal">
         <TextBlock Text="计算中" Visibility="{Binding IsWorking, Converter={StaticResource HideIfFalseConverter}}" />
         <ui:ProgressRing IsActive="{Binding IsWorking}" />
-      </ui:SimpleStackPanel>
+      </ui:SimpleStackPanel>-->
     </Grid>
     <!--  输出  -->
     <ListBox
