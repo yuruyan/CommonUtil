@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-windows10.0.17763.0;net6.0-windows10.0.17763.0</TargetFrameworks>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
 		<PlatformTarget>x64</PlatformTarget>
@@ -45,27 +45,13 @@
 		<ProjectReference Include="..\CommonUtil.Data\CommonUtil.Data.csproj" />
 	</ItemGroup>
 
-	<Choose>
-		<When Condition=" '$(TargetFramework.StartsWith(`net8.0`))'=='true' ">
-			<ItemGroup>
-				<Reference Include="CommonTools">
-					<HintPath>Lib\Net8\CommonTools.dll</HintPath>
-				</Reference>
-				<Reference Include="CommonUITools">
-					<HintPath>Lib\Net8\CommonUITools.dll</HintPath>
-				</Reference>
-			</ItemGroup>
-		</When>
-		<When Condition=" '$(TargetFramework.StartsWith(`net6.0`))'=='true' ">
-			<ItemGroup>
-				<Reference Include="CommonTools">
-					<HintPath>Lib\Net6\CommonTools.dll</HintPath>
-				</Reference>
-				<Reference Include="CommonUITools">
-					<HintPath>Lib\Net6\CommonUITools.dll</HintPath>
-				</Reference>
-			</ItemGroup>
-		</When>
-	</Choose>
+	<ItemGroup>
+		<Reference Include="CommonTools">
+			<HintPath>Lib\Net8\CommonTools.dll</HintPath>
+		</Reference>
+		<Reference Include="CommonUITools">
+			<HintPath>Lib\Net8\CommonUITools.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

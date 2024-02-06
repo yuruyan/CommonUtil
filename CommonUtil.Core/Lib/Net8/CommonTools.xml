@@ -502,69 +502,110 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:CommonTools.Utils.DigestUtils.ReadBufferSize">
+        <member name="M:CommonTools.Utils.DigestUtils.Md5Digest(System.IO.Stream)">
             <summary>
-            默认读取缓冲区大小
+            Md5
             </summary>
-        </member>
-        <member name="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.String,Org.BouncyCastle.Crypto.IDigest)">
-            <summary>
-            摘要算法
-            </summary>
-            <param name="text"></param>
-            <param name="digest"></param>
+            <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)">
+        <member name="M:CommonTools.Utils.DigestUtils.Sha1Digest(System.IO.Stream)">
             <summary>
-            摘要算法
+            Sha1
             </summary>
-            <param name="stream"></param>
-            <param name="digest"></param>
-            <returns>digest</returns>
-            <remarks>不会自动关闭 stream</remarks>
-        </member>
-        <member name="M:CommonTools.Utils.DigestUtils.MD5Digest(System.String)">
-            <summary>
-            md5 摘要
-            </summary>
-            <param name="text"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CommonTools.Utils.DigestUtils.MD5Digest(System.IO.Stream)">
-            <summary>
-            md5 摘要
-            </summary>
-            <param name="stream"></param>
-            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
-        </member>
-        <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.String)">
-            <summary>
-            Sha256Digest 摘要
-            </summary>
-            <param name="text"></param>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.IO.Stream)">
             <summary>
-            Sha256Digest 摘要
+            Sha256
             </summary>
-            <param name="stream"></param>
-            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
+            <param name="data"></param>
+            <returns></returns>
         </member>
-        <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.String)">
+        <member name="M:CommonTools.Utils.DigestUtils.Sha384Digest(System.IO.Stream)">
             <summary>
-            Sha512Digest 摘要
+            Sha384
             </summary>
-            <param name="text"></param>
+            <param name="data"></param>
             <returns></returns>
         </member>
         <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.IO.Stream)">
             <summary>
-            Sha512Digest 摘要
+            Sha512
             </summary>
-            <param name="stream"></param>
-            <inheritdoc cref="M:CommonTools.Utils.DigestUtils.GeneralDigest(System.IO.Stream,Org.BouncyCastle.Crypto.IDigest)"/>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Md5Digest(System.Byte[])">
+            <summary>
+            Md5
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha1Digest(System.Byte[])">
+            <summary>
+            Sha1
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.Byte[])">
+            <summary>
+            Sha256
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha384Digest(System.Byte[])">
+            <summary>
+            Sha384
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.Byte[])">
+            <summary>
+            Sha512
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Md5Digest(System.String)">
+            <summary>
+            Md5
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha1Digest(System.String)">
+            <summary>
+            Sha1
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha256Digest(System.String)">
+            <summary>
+            Sha256
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha384Digest(System.String)">
+            <summary>
+            Sha384
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.DigestUtils.Sha512Digest(System.String)">
+            <summary>
+            Sha512
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
         </member>
         <member name="T:CommonTools.Utils.ExtensionUtils">
             <summary>
