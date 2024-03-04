@@ -1481,6 +1481,7 @@
             创建 ScaleTransform
             </summary>
             <param name="element"></param>
+            <param name="scaleOption"></param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.ScaleAnimationHelper.Dispose(System.Windows.FrameworkElement)">
@@ -2288,7 +2289,7 @@
             Retrieves the current double-click time for the mouse. A double-click is a series of two clicks of the mouse button, the second occurring within a specified time after the first. The double-click time is the maximum number of milliseconds that may occur between the first and second click of a double-click. The maximum double-click time is 5000 milliseconds.
             </summary>
             <returns></returns>
-            <see cref="!:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime"/>
+            <remarks>see https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdoubleclicktime</remarks>
         </member>
         <member name="E:CommonUITools.Utils.SystemColorsHelper.SystemThemeChanged">
             <summary>

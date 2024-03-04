@@ -4,6 +4,11 @@
         <name>CommonTools</name>
     </assembly>
     <members>
+        <member name="T:CommonTools.Converter.MapperUtils">
+            <summary>
+            AutoMapper Type Converter
+            </summary>
+        </member>
         <member name="M:CommonTools.Converter.MapperUtils.AddCommonConverters(AutoMapper.IMapperConfigurationExpression)">
             <summary>
             添加常见类型转换器
@@ -53,7 +58,6 @@
             根据 result 创建 DataTransferResults
             </summary>
             <typeparam name="Source"></typeparam>
-            <typeparam name="Destination"></typeparam>
             <param name="result"></param>
             <returns></returns>
         </member>
@@ -131,7 +135,13 @@
             <param name="sorter"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:CommonTools.Model.ISortable`2.AscendBy(`0)" -->
+        <member name="M:CommonTools.Model.ISortable`2.AscendBy(`0)">
+            <summary>
+            升序
+            </summary>
+            <param name="sorter"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonTools.Model.ISortable`2.DescendBy(`0)">
             <summary>
             降序
@@ -173,6 +183,55 @@
             <summary>
             设置时触发
             </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.Char">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.DictionaryCharString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.DictionaryInt32String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.DictionaryStringString">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:CommonTools.Model.SourceGenerationContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:CommonTools.Model.SourceGenerationContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:CommonTools.Model.SourceGenerationContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CommonTools.Model.SourceGenerationContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
         </member>
         <member name="T:CommonTools.Resources.Resource">
             <summary>
@@ -219,14 +278,6 @@
             ○ Match a character in the set [/\\].<br/>
             </code>
             </remarks>
-        </member>
-        <member name="M:CommonTools.Utils.CommonUtils.Copy``1(``0)">
-            <summary>
-            拷贝对象
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="obj"></param>
-            <returns></returns>
         </member>
         <member name="F:CommonTools.Utils.CommonUtils.SingletonDict">
             <summary>

@@ -50,15 +50,17 @@ public partial class App : Application {
     }
 
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
-        Logger.Error(e.Exception);
+        Logger.Error("TaskSchedulerUnobservedTaskException {sender}", sender);
         e.SetObserved();
-        // 提示信息
-        System.Windows.MessageBox.Show(
-            e.Exception.Message,
-            "错误",
-            MessageBoxButton.OK,
-            MessageBoxImage.Error
-        );
+        if (e.Exception is not null) {
+            // 提示信息
+            System.Windows.MessageBox.Show(
+                e.Exception?.Message,
+                "TaskSchedulerUnobservedTaskException",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
+        }
     }
 
     private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
@@ -67,7 +69,7 @@ public partial class App : Application {
             // 提示信息
             System.Windows.MessageBox.Show(
                 exception.Message,
-                "错误",
+                "DomainUnhandledException",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error
             );
@@ -76,16 +78,17 @@ public partial class App : Application {
     }
 
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
-        //e.Handled = true;
-        Logger.Fatal(e.Exception);
-        Environment.Exit(-1);
+        Logger.Fatal("GlobalDispatcherUnhandledException {sender}", sender);
         // 提示信息
-        System.Windows.MessageBox.Show(
-            Current.MainWindow,
-            e.Exception.Message,
-            "错误",
-            MessageBoxButton.OK,
-            MessageBoxImage.Error
-        );
+        if (e.Exception is not null) {
+            System.Windows.MessageBox.Show(
+                Current.MainWindow,
+                e.Exception.Message,
+                "GlobalDispatcherUnhandledException",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
+        }
+        Environment.Exit(-1);
     }
 }
