@@ -90,7 +90,7 @@ public partial class SimpleFileSystemServerView : Page {
                 //Clipboard.SetDataObject(self.ServerURL);
             }
             // 监听停止状态
-            self.SimpleFileSystemServer!.Stopped += (s, e) => {
+            self.SimpleFileSystemServer!.Stopped += (_, _) => {
                 self.Dispatcher.Invoke(() => self.IsServerStarted = false);
             };
         }

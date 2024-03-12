@@ -61,9 +61,8 @@ public class SimpleFileSystemServer {
         WordkingDirectory = dir.ReplaceBackSlashWithSlash();
         #region 初始化 CheckStartedTimer、HeartBeatTimer
         CheckStartedTimer = new(HeartBeatInterval);
-        CheckStartedTimer.Elapsed += async (s, e) => {
-            JsonResponse? resp = null;
-            resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
+        CheckStartedTimer.Elapsed += async (_, _) => {
+            var resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 启动成功
             if (resp != null && resp.Code == 200) {
                 IsStarted = true;
@@ -71,9 +70,8 @@ public class SimpleFileSystemServer {
             }
         };
         HeartBeatTimer = new(HeartBeatInterval);
-        HeartBeatTimer.Elapsed += async (s, e) => {
-            JsonResponse? resp = null;
-            resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
+        HeartBeatTimer.Elapsed += async (_, _) => {
+            var resp = await TaskUtils.TryAsync(() => $"http://localhost:{Port}/heartbeat".GetJsonAsync<JsonResponse>());
             // 成功
             if (resp != null && resp.Code == 200) {
                 // 清零
@@ -90,13 +88,13 @@ public class SimpleFileSystemServer {
         };
         #endregion
         // 主进程结束，自动结束子进程
-        Application.Current.Exit += (s, e) => Stop();
+        Application.Current.Exit += (_, _) => Stop();
         // 设置启动、退出事件监听程序
-        Started += (s, e) => {
+        Started += (_, _) => {
             HeartBeatTimer.Start();
             Logger.Debug($"{nameof(SimpleFileSystemServer)} has started");
         };
-        Stopped += (s, e) => {
+        Stopped += (_, _) => {
             HeartBeatTimer.Stop();
             Logger.Debug($"{nameof(SimpleFileSystemServer)} has stopped");
         };
