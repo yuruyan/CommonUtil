@@ -158,10 +158,11 @@ public class SimpleFileSystemServer {
         if (ServerProcess is null) {
             return;
         }
-        TaskUtils.Try(() => ServerProcess?.Kill());
-        ServerProcess = null;
-        CheckStartedTimer.Stop();
-        IsStarted = false;
+        TaskUtils.Try(() => ServerProcess.Kill());
         Stopped?.Invoke(this, EventArgs.Empty);
+        CheckStartedTimer.Stop();
+        HeartBeatTimer.Stop();
+        IsStarted = false;
+        ServerProcess = null;
     }
 }

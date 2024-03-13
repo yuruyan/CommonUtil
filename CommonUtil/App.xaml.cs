@@ -50,22 +50,22 @@ public partial class App : Application {
     }
 
     private void TaskSchedulerUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e) {
-        Logger.Error("TaskSchedulerUnobservedTaskException {sender}", sender);
         e.SetObserved();
         if (e.Exception is not null) {
-            // 提示信息
-            System.Windows.MessageBox.Show(
-                e.Exception?.Message,
-                "TaskSchedulerUnobservedTaskException",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error
-            );
+            Logger.Error(e.Exception, "TaskSchedulerUnobservedTaskException");
+            //// 提示信息
+            //System.Windows.MessageBox.Show(
+            //    e.Exception?.Message,
+            //    "TaskSchedulerUnobservedTaskException",
+            //    MessageBoxButton.OK,
+            //    MessageBoxImage.Error
+            //);
         }
     }
 
     private void DomainUnhandledException(object sender, UnhandledExceptionEventArgs e) {
         if (e.ExceptionObject is Exception exception) {
-            Logger.Fatal(exception);
+            Logger.Fatal(exception, "DomainUnhandledException");
             // 提示信息
             System.Windows.MessageBox.Show(
                 exception.Message,
@@ -78,9 +78,9 @@ public partial class App : Application {
     }
 
     private void GlobalDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
-        Logger.Fatal("GlobalDispatcherUnhandledException {sender}", sender);
         // 提示信息
         if (e.Exception is not null) {
+            Logger.Fatal(e.Exception, "GlobalDispatcherUnhandledException");
             System.Windows.MessageBox.Show(
                 Current.MainWindow,
                 e.Exception.Message,

@@ -86,14 +86,15 @@ public partial class SimpleFileSystemServerView : Page {
             } else {
                 ipAddresses.Sort();
                 self.IPAddresses = new(ipAddresses.Select(ip => $"http://{ip}:{self.ServerPort}"));
-                //// 复制到剪贴板
-                //Clipboard.SetDataObject(self.ServerURL);
             }
             // 监听停止状态
-            self.SimpleFileSystemServer!.Stopped += (_, _) => {
-                self.Dispatcher.Invoke(() => self.IsServerStarted = false);
-            };
+            self.SimpleFileSystemServer!.Stopped += self.ServerStoppedEventHandler;
         }
+    }
+
+    private void ServerStoppedEventHandler(object? o, EventArgs args) {
+        IsServerStarted = false;
+        SimpleFileSystemServer!.Stopped -= ServerStoppedEventHandler;
     }
 
     /// <summary>
