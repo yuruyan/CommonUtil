@@ -496,7 +496,7 @@ public partial class AESCryptoView : ResponsivePage {
             FileProcessStatuses.Clear();
         }
         DragDropTextBox.Clear();
-        InputText = OutputText = Key = Iv = string.Empty;
+        InputText = OutputText = string.Empty;
     }
 
     /// <summary>
