@@ -45,6 +45,7 @@
           CopyResultClick="CopyResultClickHandler"
           DecryptClick="DecryptClickHandler"
           EncryptClick="EncryptClickHandler"
+          IsPublicKey="{Binding IsPublicKey, Mode=OneWayToSource}"
           IsWorking="{Binding IsWorking}"
           SelectedAlgorithm="{Binding SelectedAlgorithm, Mode=OneWayToSource}" />
       </ScrollViewer>

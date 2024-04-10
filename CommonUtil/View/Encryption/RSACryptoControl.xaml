@@ -6,6 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:sys="clr-namespace:System;assembly=netstandard"
   xmlns:tools="wpf-common-ui-tools"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   x:Name="RSACryptoControlRoot"
@@ -25,13 +26,19 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
       </Style>
     </ui:SimpleStackPanel.Resources>
-    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-      <TextBlock Text="算法：" />
-      <ComboBox
-        x:Name="AlgorithmsComboBox"
-        ItemsSource="{x:Static core:RSAAlgorithm.AllAlgorithms}"
-        SelectedItem="{Binding SelectedAlgorithm, ElementName=RSACryptoControlRoot}" />
-    </StackPanel>
+    <ui:SimpleStackPanel Orientation="Vertical">
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Text="算法：" />
+        <ComboBox
+          x:Name="AlgorithmsComboBox"
+          ItemsSource="{x:Static core:RSAAlgorithm.AllAlgorithms}"
+          SelectedItem="{Binding SelectedAlgorithm, ElementName=RSACryptoControlRoot}" />
+      </StackPanel>
+      <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <TextBlock Text="是否是公钥：" />
+        <ui:ToggleSwitch IsOn="{Binding IsPublicKey, ElementName=RSACryptoControlRoot}" Style="{StaticResource ToggleSwitchNoContentStyle}" />
+      </StackPanel>
+    </ui:SimpleStackPanel>
     <ui:SimpleStackPanel>
       <tools:IconButton
         Click="EncryptClickHandler"

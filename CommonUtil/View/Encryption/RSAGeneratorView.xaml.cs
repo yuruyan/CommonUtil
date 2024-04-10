@@ -89,8 +89,8 @@ public partial class RSAGeneratorView : ResponsivePage {
             }
             var (pub, pri) = tuple;
             var randomData = Encoding.UTF8.GetBytes($"{Random.Shared.NextDouble()}");
-            var encrypted = RSACrypto.Encrypt(pub, randomData, RSAAlgorithm.RSA);
-            var decrypted = RSACrypto.Decrypt(pri, encrypted, RSAAlgorithm.RSA);
+            var encrypted = RSACrypto.Encrypt(pub, randomData, RSAAlgorithm.RSA, true);
+            var decrypted = RSACrypto.Decrypt(pri, encrypted, RSAAlgorithm.RSA, false);
             return Enumerable.SequenceEqual(randomData, decrypted);
         }), (PublicKey, PrivateKey));
         // Success
