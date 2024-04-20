@@ -68,26 +68,28 @@ public static partial class RSACrypto {
     /// <summary>
     /// 加密
     /// </summary>
-    /// <param name="publicKey">公钥</param>
+    /// <param name="key">秘钥(base64)</param>
     /// <param name="data">要加密的数据</param>
     /// <param name="algorithm"><see cref="RSAAlgorithm"/></param>
+    /// <param name="isPublicKey">是否为公钥</param>
     /// <returns></returns>
-    public static byte[] Encrypt(string publicKey, byte[] data, string algorithm) {
+    public static byte[] Encrypt(string key, byte[] data, string algorithm, bool isPublicKey) {
         IBufferedCipher c = CipherUtilities.GetCipher(algorithm);
-        c.Init(true, GetPublicKey(publicKey));
+        c.Init(true, isPublicKey ? GetPublicKey(key) : GetPrivateKey(key));
         return c.DoFinal(data);
     }
 
     /// <summary>
     /// 解密
     /// </summary>
-    /// <param name="privateKey">私钥</param>
+    /// <param name="key">秘钥(base64)</param>
     /// <param name="data">要解密的数据</param>
     /// <param name="algorithm"><see cref="RSAAlgorithm"/></param>
+    /// <param name="isPublicKey">是否为公钥</param>
     /// <returns></returns>
-    public static byte[] Decrypt(string privateKey, byte[] data, string algorithm) {
+    public static byte[] Decrypt(string key, byte[] data, string algorithm, bool isPublicKey) {
         IBufferedCipher c = CipherUtilities.GetCipher(algorithm);
-        c.Init(false, GetPrivateKey(privateKey));
+        c.Init(false, isPublicKey ? GetPublicKey(key) : GetPrivateKey(key));
         return c.DoFinal(data);
     }
 }

@@ -6,7 +6,15 @@ public partial class RSACryptoView : Page {
     public static readonly DependencyProperty OutputTextProperty = DependencyProperty.Register("OutputText", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(RSACryptoView), new PropertyMetadata(false));
     public static readonly DependencyProperty SelectedAlgorithmProperty = DependencyProperty.Register("SelectedAlgorithm", typeof(string), typeof(RSACryptoView), new PropertyMetadata(string.Empty));
+    public static readonly DependencyProperty IsPublicKeyProperty = DependencyProperty.Register("IsPublicKey", typeof(bool), typeof(RSACryptoView), new PropertyMetadata(true));
 
+    /// <summary>
+    /// 是否是公钥
+    /// </summary>
+    public bool IsPublicKey {
+        get { return (bool)GetValue(IsPublicKeyProperty); }
+        set { SetValue(IsPublicKeyProperty, value); }
+    }
     /// <summary>
     /// 输入数据
     /// </summary>
@@ -80,7 +88,7 @@ public partial class RSACryptoView : Page {
         }
         OutputText = string.Empty;
         IsWorking = true;
-        var encrypted = await DoCrypto(true);
+        var encrypted = await DoCrypto(true, IsPublicKey);
         // Success
         if (encrypted is not null) {
             OutputText = encrypted;
@@ -94,18 +102,19 @@ public partial class RSACryptoView : Page {
     /// 处理
     /// </summary>
     /// <param name="isEncryption"></param>
+    /// <param name="isPublicKey"></param>
     /// <returns></returns>
-    private async Task<string?> DoCrypto(bool isEncryption) {
+    private async Task<string?> DoCrypto(bool isEncryption, bool isPublicKey) {
         return await Task.Factory.StartNew(state => TaskUtils.Try(() => {
             if (state is not ValueTuple<string, string, string> tuple) {
                 return null;
             }
 
             var (key, data, algorithm) = tuple;
-            var func = (Func<string, byte[], string, byte[]>)(
+            var func = (Func<string, byte[], string, bool, byte[]>)(
                 isEncryption ? RSACrypto.Encrypt : RSACrypto.Decrypt
             );
-            return Convert.ToBase64String(func(key, Convert.FromBase64String(data), algorithm));
+            return Convert.ToBase64String(func(key, Convert.FromBase64String(data), algorithm, isPublicKey));
         }), (Key, InputText, SelectedAlgorithm));
     }
 
@@ -121,7 +130,7 @@ public partial class RSACryptoView : Page {
         }
         OutputText = string.Empty;
         IsWorking = true;
-        var decrypted = await DoCrypto(false);
+        var decrypted = await DoCrypto(false, IsPublicKey);
         // Success
         if (decrypted is not null) {
             OutputText = decrypted;

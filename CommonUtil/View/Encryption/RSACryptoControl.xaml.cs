@@ -3,6 +3,7 @@
 public partial class RSACryptoControl : ResponsiveUserControl {
     public static readonly DependencyProperty SelectedAlgorithmProperty = DependencyProperty.Register("SelectedAlgorithm", typeof(string), typeof(RSACryptoControl), new PropertyMetadata());
     public static readonly DependencyProperty IsWorkingProperty = DependencyProperty.Register("IsWorking", typeof(bool), typeof(RSACryptoControl), new PropertyMetadata(false));
+    public static readonly DependencyProperty IsPublicKeyProperty = DependencyProperty.Register("IsPublicKey", typeof(bool), typeof(RSACryptoControl), new PropertyMetadata(true));
 
     public event RoutedEventHandler? EncryptClick;
     public event RoutedEventHandler? DecryptClick;
@@ -16,6 +17,13 @@ public partial class RSACryptoControl : ResponsiveUserControl {
     public bool IsWorking {
         get { return (bool)GetValue(IsWorkingProperty); }
         set { SetValue(IsWorkingProperty, value); }
+    }
+    /// <summary>
+    /// Whether the input is a public key or a private key.
+    /// </summary>
+    public bool IsPublicKey {
+        get { return (bool)GetValue(IsPublicKeyProperty); }
+        set { SetValue(IsPublicKeyProperty, value); }
     }
 
     public RSACryptoControl() : base(ResponsiveMode.Variable) {

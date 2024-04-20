@@ -24,6 +24,8 @@
         <ui:SimpleStackPanel.Resources>
           <Style BasedOn="{StaticResource GlobalSimpleStackPanelStyle}" TargetType="ui:SimpleStackPanel">
             <Setter Property="Orientation" Value="Horizontal" />
+            <!--  对齐文字  -->
+            <Setter Property="Spacing" Value="0" />
           </Style>
         </ui:SimpleStackPanel.Resources>
         <ui:Frame x:Name="ContentFrame" />
