@@ -2531,11 +2531,13 @@
             </summary>
             <param name="panel"></param>
         </member>
-        <member name="M:CommonUITools.Utils.UIUtilsExtension.GetImageSource(System.String)">
+        <member name="M:CommonUITools.Utils.UIUtilsExtension.GetImageSource(System.String,System.Int32,System.Int32)">
             <summary>
             获取 <see cref="T:System.Windows.Media.ImageSource"/>
             </summary>
             <param name="filepath">图像路径</param>
+            <param name="width">指定宽度，0 为原图</param>
+            <param name="height">指定高度，0 为原图</param>
             <returns></returns>
         </member>
         <member name="M:CommonUITools.Utils.UIUtilsExtension.GetApplicationResourceBitmapImage(System.Uri)">

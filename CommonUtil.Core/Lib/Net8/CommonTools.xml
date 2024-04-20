@@ -254,6 +254,49 @@
               Looks up a localized resource of type System.Byte[].
             </summary>
         </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.CheckArgs(System.String[],System.String)">
+            <summary>
+            检查参数是否有参数，没有则输出帮助信息并返回 false
+            </summary>
+            <param name="args"></param>
+            <param name="helpMessage">参数为 0 时的提示消息</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.GetConfiguration(System.String[])">
+            <summary>
+            获取 Configuration
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.ContainsWaitArgument(System.String[])">
+            <summary>
+            是否包含 wait 参数
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.ValidateFileArgument(System.String,System.String)">
+            <summary>
+            检查文件是否存在
+            </summary>
+            <param name="filePath">文件路径</param>
+            <param name="argumentName">命令行参数名称</param>
+            <returns>存在返回 true</returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.ValidateDirectoryArgument(System.String,System.String)">
+            <summary>
+            检查文件夹是否存在
+            </summary>
+            <param name="directory">文件夹路径</param>
+            <param name="argumentName">命令行参数名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.WaitUserInputToExit">
+            <summary>
+            等待用户按键退出
+            </summary>
+        </member>
         <member name="F:CommonTools.Utils.CommonUtils.PathSpliterRegex">
             <summary>
             路径分隔符正则
@@ -361,6 +404,35 @@
             <param name="autoRenameCount">重命名最大次数</param>
             <returns></returns>
             <exception cref="T:System.Exception">自动重命名超过最大次数</exception>
+        </member>
+        <member name="T:CommonTools.Utils.ConsoleUtils">
+            <summary>
+            This class is used to print messages to the console.
+            </summary>
+        </member>
+        <member name="M:CommonTools.Utils.ConsoleUtils.WriteError(System.String)">
+            <summary>
+            打印错误信息
+            </summary>
+            <param name="error"></param>
+        </member>
+        <member name="M:CommonTools.Utils.ConsoleUtils.WriteError(System.Exception)">
+            <summary>
+            打印错误信息
+            </summary>
+            <param name="error"></param>
+        </member>
+        <member name="M:CommonTools.Utils.ConsoleUtils.WriteSuccess(System.String)">
+            <summary>
+            打印成功信息
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CommonTools.Utils.ConsoleUtils.WriteWarning(System.String)">
+            <summary>
+            打印警告信息
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="F:CommonTools.Utils.ConstantUtils.OneKbSize">
             <summary>
@@ -1109,6 +1181,11 @@
             </summary>
             <param name="character">汉字</param>
             <returns>找不到返回空</returns>
+        </member>
+        <member name="M:CommonTools.Utils.SharedLogging.Dispose">
+            <summary>
+            Dispose
+            </summary>
         </member>
         <member name="M:CommonTools.Utils.TaskUtils.Try(System.Action)">
             <summary>
