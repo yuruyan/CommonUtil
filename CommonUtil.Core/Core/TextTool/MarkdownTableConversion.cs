@@ -19,7 +19,7 @@ public static class MarkdownTableConversion {
             // 补足长度
             var content = string.Join(
                 '|',
-                row.ToList().ResizeToLength(maxColumnCount, string.Empty)
+                row.Select(EscapeCharacters).ToList().ResizeToLength(maxColumnCount, string.Empty)
             );
             newRows.Add($"|{content}|");
         }
@@ -33,5 +33,30 @@ public static class MarkdownTableConversion {
             newRows.Insert(1, $"|{content}|");
         }
         return string.Join('\n', newRows);
+    }
+
+    /// <summary>
+    /// 转义Markdown字符
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private static string EscapeCharacters(string text) {
+        return text
+            .Replace("\\", "\\\\")
+            .Replace("`", "\\`")
+            .Replace("|", "\\|")
+            .Replace("*", "\\*")
+            .Replace("_", "\\_")
+            .Replace("{", "\\{")
+            .Replace("}", "\\}")
+            .Replace("[", "\\[")
+            .Replace("]", "\\]")
+            .Replace("(", "\\(")
+            .Replace(")", "\\)")
+            .Replace("#", "\\#")
+            .Replace("+", "\\+")
+            .Replace("-", "\\-")
+            .Replace(".", "\\.")
+            .Replace("!", "\\!");
     }
 }
