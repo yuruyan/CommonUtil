@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:CommonUtil.View"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:system="clr-namespace:System;assembly=netstandard"
-  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:tools="wpf-common-ui-tools"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   Title="OrdinalTextGeneratorView"
   d:DesignHeight="450"
   d:DesignWidth="800"
@@ -25,7 +25,7 @@
         Text="{Binding InputText}" />
       <!--  Control  -->
       <ScrollViewer Margin="0,8,0,0">
-        <ui:SimpleStackPanel HorizontalAlignment="Center">
+        <ui:SimpleStackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <ui:SimpleStackPanel.Resources>
             <Style TargetType="StackPanel">
               <Setter Property="Orientation" Value="Horizontal" />
@@ -57,6 +57,17 @@
               IsOn="{Binding IsAscendant}"
               OffContent="逆序"
               OnContent="正序" />
+          </StackPanel>
+          <StackPanel Visibility="{Binding ElementName=OrdinalTypeComboBox, Path=SelectedIndex, Converter={StaticResource HideIfNotZeroConverter}}">
+            <TextBlock Text="左侧填充：" />
+            <ui:ToggleSwitch
+              Width="{StaticResource OrdinalTextGeneratorView_TextBoxWidth}"
+              IsOn="{Binding IsPaddingLeft}"
+              Style="{StaticResource ToggleSwitchNoContentStyle}" />
+          </StackPanel>
+          <StackPanel Visibility="{Binding ElementName=OrdinalTypeComboBox, Path=SelectedIndex, Converter={StaticResource HideIfNotZeroConverter}}">
+            <TextBlock Text="填充长度：" />
+            <ui:NumberBox Style="{StaticResource OrdinalTextGeneratorView_NumberBoxStyle}" Value="{Binding PaddingLength}" />
           </StackPanel>
           <ui:SimpleStackPanel Style="{StaticResource ResponsiveSimpleStackPanelStyle}">
             <tools:IconButton

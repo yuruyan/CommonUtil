@@ -5,19 +5,19 @@ public static class OrdinalTextGenerator {
         /// <summary>
         /// 文本格式
         /// </summary>
-        public string format;
+        public string Format;
         /// <summary>
         /// 起始序号
         /// </summary>
-        public int startIndex;
+        public int StartIndex;
         /// <summary>
         /// 数字类型
         /// </summary>
-        public OrdinalTextType type;
+        public OrdinalTextType Type;
         /// <summary>
         /// 生成数量
         /// </summary>
-        public uint count;
+        public uint Count;
         /// <summary>
         /// 左侧填充，只正对数字有效
         /// </summary>
@@ -166,10 +166,10 @@ public static class OrdinalTextGenerator {
     /// <param name="option"></param>
     /// <returns></returns>
     public static string[] Generate(OrdinalGeneratorOption option) {
-        var format = option.format;
-        int startIndex = option.startIndex;
-        OrdinalTextType type = option.type;
-        uint count = option.count;
+        var format = option.Format;
+        int startIndex = option.StartIndex;
+        OrdinalTextType type = option.Type;
+        uint count = option.Count;
 
         format = format.Replace("{{", LeftBracketReplacement)
             .Replace("}}", RightBracketReplacement)

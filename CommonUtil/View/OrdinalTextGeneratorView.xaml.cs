@@ -8,6 +8,8 @@ public partial class OrdinalTextGeneratorView : ResponsivePage {
     public static readonly DependencyProperty StartIndexProperty = DependencyProperty.Register("StartIndex", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(1.0));
     public static readonly DependencyProperty GenerationCountProperty = DependencyProperty.Register("GenerationCount", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(10.0));
     public static readonly DependencyProperty IsAscendantProperty = DependencyProperty.Register("IsAscendant", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(true));
+    public static readonly DependencyProperty IsPaddingLeftProperty = DependencyProperty.Register("IsPaddingLeft", typeof(bool), typeof(OrdinalTextGeneratorView), new PropertyMetadata(false));
+    public static readonly DependencyProperty PaddingLengthProperty = DependencyProperty.Register("PaddingLength", typeof(double), typeof(OrdinalTextGeneratorView), new PropertyMetadata(0.0));
 
     /// <summary>
     /// 输入文本
@@ -44,6 +46,20 @@ public partial class OrdinalTextGeneratorView : ResponsivePage {
         get { return (bool)GetValue(IsAscendantProperty); }
         set { SetValue(IsAscendantProperty, value); }
     }
+    /// <summary>
+    /// 是否左侧填充
+    /// </summary>
+    public bool IsPaddingLeft {
+        get { return (bool)GetValue(IsPaddingLeftProperty); }
+        set { SetValue(IsPaddingLeftProperty, value); }
+    }
+    /// <summary>
+    /// 左侧填充长度
+    /// </summary>
+    public double PaddingLength {
+        get { return (double)GetValue(PaddingLengthProperty); }
+        set { SetValue(PaddingLengthProperty, value); }
+    }
 
     /// <summary>
     /// 数字类型
@@ -63,11 +79,15 @@ public partial class OrdinalTextGeneratorView : ResponsivePage {
     /// </summary>
     private void GenerateText() {
         try {
+            var type = OrdinalTypeDict[CommonUtils.NullCheck(OrdinalTypeComboBox.SelectedValue.ToString())];
             var option = new OrdinalTextGenerator.OrdinalGeneratorOption {
-                format = InputText,
-                startIndex = (int)StartIndex,
-                type = OrdinalTypeDict[CommonUtils.NullCheck(OrdinalTypeComboBox.SelectedValue.ToString())],
-                count = (uint)GenerationCount,
+                Format = InputText,
+                StartIndex = (int)StartIndex,
+                Type = type,
+                Count = (uint)GenerationCount,
+                PaddingLeft = IsPaddingLeft && type == OrdinalTextType.Number,
+                PaddingLength = (uint)PaddingLength,
+                PaddingChar = '0',
             };
             var data = OrdinalTextGenerator.Generate(option);
             OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
