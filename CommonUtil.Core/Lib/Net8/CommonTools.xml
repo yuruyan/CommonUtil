@@ -276,6 +276,21 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.ContainsHelpArgument(System.String[])">
+            <summary>
+            是否包含 help 参数
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CommonTools.Utils.ArgumentUtils.ContainsArgument(System.String[],System.String)">
+            <summary>
+            是否包含指定参数
+            </summary>
+            <param name="args"></param>
+            <param name="argument"></param>
+            <returns></returns>
+        </member>
         <member name="M:CommonTools.Utils.ArgumentUtils.ValidateFileArgument(System.String,System.String)">
             <summary>
             检查文件是否存在
@@ -404,6 +419,14 @@
             <param name="autoRenameCount">重命名最大次数</param>
             <returns></returns>
             <exception cref="T:System.Exception">自动重命名超过最大次数</exception>
+        </member>
+        <member name="M:CommonTools.Utils.CommonUtils.EncodeBytesUsingReader(System.Byte[],System.Text.Encoding)">
+            <summary>
+            使用 StreamReader 将字节数组转换为指定的编码字符串
+            </summary>
+            <param name="bytes"></param>
+            <param name="encoding"></param>
+            <returns></returns>
         </member>
         <member name="T:CommonTools.Utils.ConsoleUtils">
             <summary>
