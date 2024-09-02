@@ -1,6 +1,37 @@
 ﻿namespace CommonUtil.Core;
 
 public static class OrdinalTextGenerator {
+    public struct OrdinalGeneratorOption {
+        /// <summary>
+        /// 文本格式
+        /// </summary>
+        public string format;
+        /// <summary>
+        /// 起始序号
+        /// </summary>
+        public int startIndex;
+        /// <summary>
+        /// 数字类型
+        /// </summary>
+        public OrdinalTextType type;
+        /// <summary>
+        /// 生成数量
+        /// </summary>
+        public uint count;
+        /// <summary>
+        /// 左侧填充，只正对数字有效
+        /// </summary>
+        public bool PaddingLeft;
+        /// <summary>
+        /// 左侧填充字符
+        /// </summary>
+        public char PaddingChar;
+        /// <summary>
+        /// 左侧填充长度
+        /// </summary>
+        public uint PaddingLength;
+    }
+
     private const string LeftBracketReplacement = "\0\u0001\u0020\u0300\u1234\uffff\u1234\u0300\u0020\u0001\0";
     private const string RightBracketReplacement = "\uffff\u0001\u0020\u0300\u1234\0\u1234\u0300\u0020\u0001\uffff";
     private static readonly char[] Alphabet = {
@@ -132,12 +163,14 @@ public static class OrdinalTextGenerator {
     /// <summary>
     /// 生成顺序文本
     /// </summary>
-    /// <param name="format"></param>
-    /// <param name="startIndex"></param>
-    /// <param name="type">数字类型</param>
-    /// <param name="count"></param>
+    /// <param name="option"></param>
     /// <returns></returns>
-    public static string[] Generate(string format, int startIndex, OrdinalTextType type, uint count) {
+    public static string[] Generate(OrdinalGeneratorOption option) {
+        var format = option.format;
+        int startIndex = option.startIndex;
+        OrdinalTextType type = option.type;
+        uint count = option.count;
+
         format = format.Replace("{{", LeftBracketReplacement)
             .Replace("}}", RightBracketReplacement)
             .Replace("{}", "{0}")
@@ -146,8 +179,16 @@ public static class OrdinalTextGenerator {
         string[] data = new string[count];
 
         if (type == OrdinalTextType.Number) {
-            for (int i = 0; i < data.Length; i++) {
-                data[i] = string.Format(format, i + startIndex);
+            if (option.PaddingLeft) {
+                for (int i = 0; i < data.Length; i++) {
+                    data[i] = string.Format(format, (i + startIndex).ToString().PadLeft(
+                        (int)option.PaddingLength, option.PaddingChar
+                    ));
+                }
+            } else {
+                for (int i = 0; i < data.Length; i++) {
+                    data[i] = string.Format(format, i + startIndex);
+                }
             }
         } else if (type == OrdinalTextType.Alphabet) {
             for (int i = 0; i < data.Length; i++) {

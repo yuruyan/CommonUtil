@@ -63,12 +63,13 @@ public partial class OrdinalTextGeneratorView : ResponsivePage {
     /// </summary>
     private void GenerateText() {
         try {
-            var data = OrdinalTextGenerator.Generate(
-                InputText,
-                (int)StartIndex,
-                OrdinalTypeDict[CommonUtils.NullCheck(OrdinalTypeComboBox.SelectedValue.ToString())],
-                (uint)GenerationCount
-            );
+            var option = new OrdinalTextGenerator.OrdinalGeneratorOption {
+                format = InputText,
+                startIndex = (int)StartIndex,
+                type = OrdinalTypeDict[CommonUtils.NullCheck(OrdinalTypeComboBox.SelectedValue.ToString())],
+                count = (uint)GenerationCount,
+            };
+            var data = OrdinalTextGenerator.Generate(option);
             OutputText = string.Join('\n', IsAscendant ? data : data.Reverse());
         } catch (FormatException) {
             MessageBoxUtils.Error("格式错误");
