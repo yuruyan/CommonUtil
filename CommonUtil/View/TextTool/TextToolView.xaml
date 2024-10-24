@@ -97,6 +97,14 @@
           </ui:NavigationViewItem.Icon>
         </ui:NavigationViewItem>
         <ui:NavigationViewItem
+          x:Name="HtmlTableConversionView"
+          Content="Html表格生成"
+          ToolTip="Html表格生成">
+          <ui:NavigationViewItem.Icon>
+            <ui:FontIcon Glyph="&#xe62f;" />
+          </ui:NavigationViewItem.Icon>
+        </ui:NavigationViewItem>
+        <ui:NavigationViewItem
           x:Name="LengthPartitionView"
           Content="根据长度拆分文本"
           ToolTip="根据长度拆分文本">
